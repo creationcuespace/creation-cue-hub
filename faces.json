@@ -1,0 +1,16 @@
+{
+  "watch_faces": [
+    {
+      "id": "cue173",
+      "title": "CUE 173 - Tactical",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue173.png",
+      "play_store_url": "market://details?id=com.creation.cue173watchface"
+    },
+    {
+      "id": "cue180",
+      "title": "CUE 180 - Minimalist",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue180.png",
+      "play_store_url": "market://details?id=com.creation.cue180"
+    }
+  ]
+}
