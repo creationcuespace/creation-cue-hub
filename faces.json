@@ -13,10 +13,10 @@
       "play_store_url": "market://details?id=com.creation.cueinduswatchface"
     }, 
     {
-      "id": "cue180",
-      "title": "CUE 180 - Minimalist",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue173.png",
-      "play_store_url": "market://details?id=com.creation.cue173watchface"
+      "id": "cue116",
+      "title": "CUE 116",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue116.png",
+      "play_store_url": "market://details?id=com.creation.cue116watchface"
     }
   ]
 }
