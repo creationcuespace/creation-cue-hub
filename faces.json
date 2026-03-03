@@ -11,7 +11,8 @@
       "title": "CUE146",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue146.png",
       "play_store_url": "market://details?id=com.creation.cue146watchface"
-    }, {
+    },
+    {
       "id": "indus_pro",
       "title": "Indus Pro Watch Face",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/CreationCueSpace2.png",
@@ -22,6 +23,12 @@
       "title": "CUE 116",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue116.png",
       "play_store_url": "market://details?id=com.creation.cue116watchface"
+    },
+    {
+      "id": "more",
+      "title": "See More Designs",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/more.png",
+      "play_store_url": "market://dev?id=7609098870161748513"
     }
   ]
 }
