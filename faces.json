@@ -7,6 +7,12 @@
       "play_store_url": "market://details?id=com.creation.cue173watchface"
     },
     {
+      "id": "CUE158",
+      "title": "CUE158",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/CUE158.png",
+      "play_store_url": "market://details?id=com.creation.cue158watchface"
+    },
+    {
       "id": "CUE146",
       "title": "CUE146",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue146.png",
