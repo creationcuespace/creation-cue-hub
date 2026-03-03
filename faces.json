@@ -7,6 +7,11 @@
       "play_store_url": "market://details?id=com.creation.cue173watchface"
     },
     {
+      "id": "CUE146",
+      "title": "CUE146",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue146.png",
+      "play_store_url": "market://details?id=com.creation.cue146watchface"
+    }, {
       "id": "indus_pro",
       "title": "Indus Pro Watch Face",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/CreationCueSpace2.png",
