@@ -43,6 +43,12 @@
       "play_store_url": "market://details?id=com.creation.cue152watchface"
     },
     {
+      "id": "cue024",
+      "title": "cue024",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue024.png",
+      "play_store_url": "market://details?id=com.creation.cue024watchface"
+    },
+    {
       "id": "more",
       "title": "See More Designs",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/more3.png",
