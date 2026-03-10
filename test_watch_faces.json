@@ -1,1 +1,73 @@
-
+{
+  "watch_faces": [
+        {
+      "id": "cue174_pro",
+      "title": "CUE 174 PRO",
+      "badge_text": "NEW", 
+      "image_url": "...",
+      "play_store_url": "..."
+    },
+    {
+      "id": "cueindus_pro",
+      "title": "Indus Pro",
+      "badge_text": "PRO",
+      "promotion_for": "com.creation.cue174watchface",
+      "image_url": "...",
+      "play_store_url": "..."
+    },
+    {
+      "id": "cue134",
+      "title": "CUE 134",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue134.png",
+      "play_store_url": "market://details?id=com.creation.cue134watchface"
+    },
+    {
+      "id": "cue136",
+      "title": "CUE 136 (Free)",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue136.png",
+      "play_store_url": "market://details?id=com.creation.cue136watchface"
+    },
+    {
+      "id": "cue173",
+      "title": "Watch Face CUE 173",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue173.png",
+      "play_store_url": "market://details?id=com.creation.cue173watchface"
+    },
+    {
+      "id": "CUE158",
+      "title": "CUE 158",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/CUE158.png",
+      "play_store_url": "market://details?id=com.creation.cue158watchface"
+    },
+    {
+      "id": "CUE146",
+      "title": "CUE 146",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue146.png",
+      "play_store_url": "market://details?id=com.creation.cue146watchface"
+    },
+    {
+      "id": "cue116",
+      "title": "CUE 116",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue116.png",
+      "play_store_url": "market://details?id=com.creation.cue116watchface"
+    },
+    {
+      "id": "CUE152",
+      "title": "CUE 152",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/CUE152.png",
+      "play_store_url": "market://details?id=com.creation.cue152watchface"
+    },
+    {
+      "id": "cue024",
+      "title": "CUE 024",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue024.png",
+      "play_store_url": "market://details?id=com.creation.cue024watchface"
+    },
+    {
+      "id": "more",
+      "title": "See More Designs",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/more.png",
+      "play_store_url": "market://dev?id=7609098870161748513"
+    }
+  ]
+}
