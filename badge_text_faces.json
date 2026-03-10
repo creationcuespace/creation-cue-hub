@@ -16,6 +16,13 @@
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue136_plus.png",
       "play_store_url": "market://details?id=com.creation.cue136PLUSwatchface"
     },
+        {
+      "id": "cue173",
+      "title": "Watch Face CUE 173",
+      "badge_text": "new",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue173.png",
+      "play_store_url": "market://details?id=com.creation.cue173watchface"
+    },
     {
       "id": "cue134",
       "title": "CUE 134",
@@ -28,12 +35,6 @@
       "badge_text": "FREE",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue136.png",
       "play_store_url": "market://details?id=com.creation.cue136watchface"
-    },
-    {
-      "id": "cue173",
-      "title": "Watch Face CUE 173",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue173.png",
-      "play_store_url": "market://details?id=com.creation.cue173watchface"
     },
     {
       "id": "CUE158",
