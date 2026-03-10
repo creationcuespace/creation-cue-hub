@@ -1,19 +1,20 @@
 {
   "watch_faces": [
-        {
-      "id": "cue174_pro",
-      "title": "CUE 174 PRO",
-      "badge_text": "NEW", 
-      "image_url": "...",
-      "play_store_url": "..."
-    },
     {
       "id": "cueindus_pro",
-      "title": "Indus Pro",
-      "badge_text": "PRO",
-      "promotion_for": "com.creation.cue174watchface",
-      "image_url": "...",
-      "play_store_url": "..."
+      "title": "Indus Pro (Premium)",
+      "badge_text": "NEW",
+      "promotion_for": "com.creation.cueinduswatchface",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
+      "play_store_url": "market://details?id=com.creation.cueindusprowatchface"
+    },
+    {
+      "id": "cue136_plus",
+      "title": "CUE 136 PLUS",
+      "badge_text": "PLUS",
+      "promotion_for": "com.creation.cue136watchface",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue136_plus.png",
+      "play_store_url": "market://details?id=com.creation.cue136PLUSwatchface"
     },
     {
       "id": "cue134",
