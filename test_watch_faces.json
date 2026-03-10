@@ -3,7 +3,7 @@
     {
       "id": "cueindus_pro",
       "title": "Indus Pro (Premium)",
-      "badge_text": "NEW",
+      "badge_text": "PRO",
       "promotion_for": "com.creation.cueinduswatchface",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
       "play_store_url": "market://details?id=com.creation.cueindusprowatchface"
@@ -19,13 +19,13 @@
     {
       "id": "cue134",
       "title": "CUE 134",
-      "badge_text": "PLUS",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue134.png",
       "play_store_url": "market://details?id=com.creation.cue134watchface"
     },
     {
       "id": "cue136",
       "title": "CUE 136 (Free)",
+      "badge_text": "FREE",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue136.png",
       "play_store_url": "market://details?id=com.creation.cue136watchface"
     },
@@ -50,6 +50,7 @@
     {
       "id": "cue116",
       "title": "CUE 116",
+      "badge_text": "HOT",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue116.png",
       "play_store_url": "market://details?id=com.creation.cue116watchface"
     },
