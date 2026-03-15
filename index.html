@@ -44,6 +44,31 @@
         </div>
     </section>
 
+    <section class="max-w-6xl mx-auto py-16 px-6">
+        <h2 class="text-3xl font-bold mb-10">As Seen On YouTube</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-neutral-900 rounded-3xl overflow-hidden border border-neutral-800 shadow-2xl">
+                <div class="aspect-video">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-2">Android Authority Feature</h3>
+                    <p class="text-neutral-500 text-sm">Recognized among the 10 best watch faces in the world by leading tech experts.</p>
+                </div>
+            </div>
+
+            <div class="bg-neutral-900 rounded-3xl overflow-hidden border border-neutral-800 shadow-2xl">
+                <div class="aspect-video">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-2">Technical Showcase</h3>
+                    <p class="text-neutral-500 text-sm">Deep dives into the functionality and aesthetic of the Creation Cue collection.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="max-w-7xl mx-auto py-16 px-6">
         <div class="flex justify-between items-center mb-10">
             <h2 class="text-3xl font-bold">Watch Face Collection</h2>
@@ -64,30 +89,32 @@
     </footer>
 
     <script>
-        const JSON_URL = 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/badge_text_faces.json';
+        // FIXED URL: Removed /refs/heads/ for better browser compatibility
+        const JSON_URL = 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/badge_text_faces.json';
 
         async function loadGallery() {
             const gallery = document.getElementById('watch-gallery');
             try {
                 const response = await fetch(JSON_URL);
+                if (!response.ok) throw new Error('Network response was not ok');
                 const data = await response.json();
                 
-                gallery.innerHTML = ''; // Clear loading text
+                gallery.innerHTML = ''; 
 
                 data.forEach(face => {
                     const card = document.createElement('div');
-                    card.className = 'watch-card group bg-neutral-900 rounded-3xl overflow-hidden border border-neutral-800 shadow-xl';
+                    card.className = 'watch-card group bg-neutral-900 rounded-3xl overflow-hidden border border-neutral-800 shadow-xl transition-all';
                     
                     card.innerHTML = `
-                        <div class="relative overflow-hidden">
-                            <img src="${face.image_url}" alt="${face.name}" class="w-full h-auto transition duration-500 group-hover:scale-110">
+                        <div class="relative overflow-hidden aspect-square">
+                            <img src="${face.image_url}" alt="${face.name}" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
                             <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                                 <span class="bg-white text-black px-4 py-2 rounded-full font-bold text-sm">Preview</span>
                             </div>
                         </div>
                         <div class="p-5">
                             <h3 class="font-bold text-lg mb-1 truncate">${face.name}</h3>
-                            <p class="text-xs text-neutral-500 mb-4">${face.badge_text || 'Premium Design'}</p>
+                            <p class="text-xs text-neutral-500 mb-4 font-medium uppercase tracking-wider">${face.badge_text || 'Premium Design'}</p>
                             <a href="${face.play_store_url}" target="_blank" class="block text-center bg-neutral-800 hover:bg-amber-600 py-2 rounded-xl transition text-sm font-semibold">
                                 Get it on Google Play
                             </a>
@@ -97,7 +124,11 @@
                 });
             } catch (error) {
                 console.error('Error fetching JSON:', error);
-                gallery.innerHTML = '<p class="text-red-500">Failed to load gallery. Please check your JSON file.</p>';
+                gallery.innerHTML = `
+                    <div class="col-span-full text-center py-10">
+                        <p class="text-red-500 mb-2">Failed to load gallery.</p>
+                        <p class="text-neutral-500 text-sm">Please ensure your JSON file at GitHub is public and correctly formatted.</p>
+                    </div>`;
             }
         }
 
