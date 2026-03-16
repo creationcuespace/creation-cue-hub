@@ -3,101 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy | CreationCue</title>
-    
-    <link rel="icon" type="image/png" href="https://creationcue.space/wp-content/uploads/2025/05/ccLogo-3.png">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <title>Privacy Policy | Creation Cue</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        .gradient-text { background: linear-gradient(to right, #fbbf24, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .custom-banner {
-            background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.9)), 
-                              url('https://scontent.fath5-1.fna.fbcdn.net/v/t39.30808-6/650335507_918774504454114_5325023990017279542_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=2a1932&_nc_ohc=6lAHD4nObCIQ7kNvwGSBFvj&_nc_oc=AdnoQBo7VBUJQF4bPAWNbecga_0GjhFiTMGomGt8zrPOdU12IEHH3M4jbcyOoK4tYiU&_nc_zt=23&_nc_ht=scontent.fath5-1.fna&_nc_gid=WbRvuvHwCa7LafZAcAAXaw&_nc_ss=8&oh=00_AfzzbMZC7xwWVQ4XkN-XU6tFMi_uFL_ZLuvjIZz7-lG1vQ&oe=69BD6B59');
+        :root {
+            --primary: #f1b31c;
+            --bg: #050505;
+            --card-bg: #111;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        header {
+            position: relative;
+            padding: 60px 20px;
+            text-align: center;
+            /* Using your banner image from privacy html with the index.html dark overlay style */
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), 
+                        url('https://scontent.fath5-1.fna.fbcdn.net/v/t39.30808-6/650335507_918774504454114_5325023990017279542_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=2a1932&_nc_ohc=6lAHD4nObCIQ7kNvwGSBFvj&_nc_oc=AdnoQBo7VBUJQF4bPAWNbecga_0GjhFiTMGomGt8zrPOdU12IEHH3M4jbcyOoK4tYiU&_nc_zt=23&_nc_ht=scontent.fath5-1.fna&_nc_gid=WbRvuvHwCa7LafZAcAAXaw&_nc_ss=8&oh=00_AfzzbMZC7xwWVQ4XkN-XU6tFMi_uFL_ZLuvjIZz7-lG1vQ&oe=69BD6B59');
             background-size: cover;
             background-position: center;
         }
-        .policy-section { margin-bottom: 2rem; }
-        .policy-section h2 { color: #fbbf24; font-size: 1.25rem; font-weight: bold; margin-bottom: 1rem; border-left: 4px solid #f59e0b; padding-left: 1rem; }
-        .policy-section h3 { color: #ffffff; font-weight: bold; margin-bottom: 0.5rem; }
+
+        .logo { max-width: 90px; margin-bottom: 15px; }
+        h1 { font-size: 2.5rem; font-weight: 800; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+        h1 span { color: var(--primary); }
+        .tagline { color: var(--text-dim); font-size: 1rem; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }
+
+        .content-width {
+            max-width: 900px;
+            margin: -40px auto 60px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .privacy-card {
+            background: var(--card-bg);
+            border: 1px solid #222;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+            text-transform: uppercase;
+        }
+
+        h3 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: var(--text-dim);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            color: var(--text-dim);
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: #222;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-top: 30px;
+            transition: background 0.3s;
+            border: 1px solid #333;
+        }
+
+        .btn-back:hover {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+        }
+
+        footer { 
+            text-align: center; 
+            padding: 60px 20px; 
+            color: #444; 
+            font-size: 0.8rem;
+            border-top: 1px solid #111;
+        }
+
+        .footer-links { margin-top: 15px; display: flex; justify-content: center; gap: 20px; }
+        .footer-link { color: var(--primary); text-decoration: none; font-weight: bold; }
+
+        @media (max-width: 600px) {
+            .privacy-card { padding: 25px; }
+            h1 { font-size: 2rem; }
+        }
     </style>
 </head>
-<body class="bg-neutral-950 text-neutral-100 font-sans">
+<body>
 
-    <header class="relative py-16 px-6 text-center border-b border-neutral-800 custom-banner">
+    <header>
         <a href="index.html">
-            <img src="https://creationcue.space/wp-content/uploads/2025/05/ccLogo-3.png" alt="Creation Cue Logo" class="h-16 mx-auto mb-4 drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]">
+            <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" alt="Creation Cue" class="logo">
         </a>
-        <h1 class="text-3xl md:text-5xl font-extrabold mb-2 tracking-tighter uppercase">Privacy <span class="gradient-text">Policy</span></h1>
-        <p class="text-xs text-neutral-400">Last Updated: March 12, 2026</p>
+        <h1>CREATION <span>CUE</span></h1>
+        <p class="tagline">Privacy Policy</p>
     </header>
 
-    <main class="max-w-4xl mx-auto py-12 px-6 leading-relaxed">
-        <div class="bg-neutral-900 p-8 md:p-12 rounded-3xl border border-neutral-800 shadow-xl">
+    <main class="content-width">
+        <div class="privacy-card">
+            <p style="font-size: 0.8rem; opacity: 0.5;">Last Updated: March 12, 2026</p>
             
-            <p class="mb-8 text-neutral-300">
+            <p>
                 <strong>Creation Cue</strong> (“we,” “our,” or “us”) provides Wear OS watch faces and a companion Android application. This policy outlines our commitment to your privacy and explains how we handle data.
             </p>
 
-            <div class="policy-section">
-                <h2>1. Data Access and Collection</h2>
-                <p class="mb-4">We prioritize your privacy and do not collect personal or sensitive information for storage on our servers. However, our apps perform the following data activities:</p>
-                
-                <div class="mb-4">
-                    <h3>Health and Fitness Data (Watch Face)</h3>
-                    <p class="text-neutral-400">Our watch faces access real-time sensor data, including <strong>Heart Rate, Step Count, and Physical Activity</strong>, through the Wear OS platform.</p>
-                    <p class="italic text-neutral-500 mt-2">Usage: This data is accessed solely to display it on the watch face interface for your immediate information. It is processed locally and is never transmitted off your device or shared with third parties.</p>
-                </div>
+            <h2>1. Data Access and Collection</h2>
+            <p>We prioritize your privacy and do not collect personal or sensitive information for storage on our servers. However, our apps perform the following data activities:</p>
+            
+            <h3>Health and Fitness Data (Watch Face)</h3>
+            <p>Our watch faces access real-time sensor data, including <strong>Heart Rate, Step Count, and Physical Activity</strong>, through the Wear OS platform.</p>
+            <p style="font-style: italic; color: #777;">Usage: This data is accessed solely to display it on the watch face interface for your immediate information. It is processed locally and is never transmitted off your device or shared with third parties.</p>
 
-                <div>
-                    <h3>Referrer Information (Companion App)</h3>
-                    <p class="text-neutral-400">Our companion app uses the <strong>Google Play Install Referrer API</strong>.</p>
-                    <p class="italic text-neutral-500 mt-2">Usage: This is used to identify the source of your visit to our “Featured Designs” carousel. This helps us improve our marketing and feature the most relevant designs. This information is non-identifying and is not linked to your personal profile.</p>
-                </div>
-            </div>
+            <h3>Referrer Information (Companion App)</h3>
+            <p>Our companion app uses the <strong>Google Play Install Referrer API</strong>.</p>
+            <p style="font-style: italic; color: #777;">Usage: This is used to identify the source of your visit to our “Featured Designs” carousel. This helps us improve our marketing and feature the most relevant designs. This information is non-identifying.</p>
 
-            <div class="policy-section">
-                <h2>2. Data Retention</h2>
-                <p class="text-neutral-400">We do not store your personal, health, or referrer data on any permanent storage or cloud infrastructure.</p>
-                <p class="text-neutral-400 mt-2"><strong>Retention Period:</strong> Because no data is collected or stored by us, there is no retention period. All health data is processed “ephemerally” in the device’s temporary memory (RAM) and vanishes as soon as the watch face is closed or the data is updated.</p>
-            </div>
-
-            <div class="policy-section">
-                <h2>3. Data Deletion</h2>
-                <p class="text-neutral-400">Since we do not collect or store user data on our servers, there is no data to delete from our systems.</p>
-                <div class="mt-4 p-4 bg-neutral-800 rounded-xl">
-                    <h3>User Control</h3>
-                    <ul class="list-disc list-inside text-sm text-neutral-400 space-y-2">
-                        <li>Changing the watch face or uninstalling the companion app.</li>
-                        <li>Revoking “Sensors” or “Physical Activity” permissions in your device’s System Settings.</li>
-                        <li>Uninstallation effectively removes all app-related local configurations.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="policy-section">
-                <h2>4. Security</h2>
-                <p class="text-neutral-400">We follow industry standards for local data handling to ensure that the transient data accessed by the app is handled securely within the Android/Wear OS sandbox environment.</p>
-            </div>
-
-            <div class="policy-section">
-                <h2>5. Contact Information</h2>
-                <p class="text-neutral-400">For more information please contact us at:</p>
-                <a href="mailto:creationcuespace@gmail.com" class="text-amber-500 hover:underline font-bold">creationcuespace@gmail.com</a>
-            </div>
-
-            <div class="mt-12 pt-8 border-t border-neutral-800">
-                <a href="index.html" class="inline-block bg-neutral-800 hover:bg-amber-600 px-8 py-3 rounded-xl text-xs font-bold transition-all">
-                    <i class="fas fa-arrow-left mr-2"></i> BACK TO HOME
-                </a>
-            </div>
-        </div>
-    </main>
-
-    <footer class="py-12 border-t border-neutral-900 text-center text-neutral-600">
-        <p class="text-xs tracking-widest">&copy; 2026 CreationCue</p>
-    </footer>
-
-</body>
-</html>
+            <h2>2. Data Ret
