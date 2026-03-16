@@ -3,177 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creation Cue Hub</title>
-    
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-
+    <title>Creation Cue | Premium Watch Faces</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary-bg: #0a0a0a;
-            --card-bg: #161616;
-            --text-color: #ffffff;
-            --accent: #ff3b3b; /* Adjusted to match your red logo theme */
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            margin: 0;
-            background-color: var(--primary-bg);
-            color: var(--text-color);
-        }
-
-        /* Banner Section */
-        .banner {
-            width: 100%;
-            height: 350px;
-            background-image: url('https://scontent.fath5-1.fna.fbcdn.net/v/t39.30808-6/650335507_918774504454114_5325023990017279542_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=2a1932&_nc_ohc=6lAHD4nObCIQ7kNvwGSBFvj&_nc_oc=AdnoQBo7VBUJQF4bPAWNbecga_0GjhFiTMGomGt8zrPOdU12IEHH3M4jbcyOoK4tYiU&_nc_zt=23&_nc_ht=scontent.fath5-1.fna&_nc_gid=WbRvuvHwCa7LafZAcAAXaw&_nc_ss=8&oh=00_AfzzbMZC7xwWVQ4XkN-XU6tFMi_uFL_ZLuvjIZz7-lG1vQ&oe=69BD6B59');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 2px solid #222;
-        }
-
-        .banner h1 {
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-            background: rgba(0,0,0,0.3);
-            padding: 10px 20px;
-            border-radius: 8px;
-        }
-
-        .carousel-wrapper {
-            position: relative;
-            padding: 50px 0;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Responsive Grid / Carousel */
-        .carousel-track {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 0 20px;
-        }
-
-        /* Only scrollable with arrows on Small Screen PC/Laptops */
-        @media screen and (min-width: 768px) and (max-width: 1366px) {
-            .carousel-track {
-                display: flex;
-                overflow-x: auto;
-                scroll-behavior: smooth;
-                scrollbar-width: none;
-                padding: 10px 60px;
-            }
-            .nav-btn {
-                display: flex !important;
-            }
-        }
-
-        .nav-btn {
-            display: none;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            cursor: pointer;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .prev { left: 15px; }
-        .next { right: 15px; }
-
-        /* Watch Face Cards */
-        .face-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            border: 1px solid #222;
-            transition: 0.3s;
-        }
-
-        .face-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .face-card img { width: 100%; border-radius: 8px; margin-bottom: 15px; }
-        .face-card h3 { margin: 10px 0; font-size: 1.1rem; }
+        .gradient-text { background: linear-gradient(to right, #fbbf24, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .btn-store {
-            display: inline-block;
-            background: var(--accent);
-            color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 0.9rem;
+        /* Mobile Carousel Styles */
+        @media (max-width: 768px) {
+            .mobile-carousel {
+                display: flex !important;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                gap: 16px;
+                padding-bottom: 20px;
+                scrollbar-width: none; /* Hide scrollbar Firefox */
+            }
+            .mobile-carousel::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
+            
+            .watch-card {
+                flex: 0 0 80%; /* Shows 80% of one card so the next is visible */
+                scroll-snap-align: center;
+            }
         }
+
+        .watch-card:hover { transform: translateY(-5px); transition: all 0.3s ease; }
     </style>
 </head>
-<body>
+<body class="bg-neutral-950 text-neutral-100 font-sans">
 
-    <header class="banner">
-        <h1>Watch Face Collection</h1>
+    <header class="relative py-16 px-6 text-center border-b border-neutral-800 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-neutral-900 to-neutral-950">
+        <img src="https://creationcue.space/wp-content/uploads/2025/05/ccLogo-3.png" alt="Creation Cue Logo" class="h-24 mx-auto mb-6 drop-shadow-[0_0_15px_rgba(251,191,36,0.3)]">
+        
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tighter">CREATION <span class="gradient-text">CUE</span></h1>
+        <p class="text-lg text-neutral-400 max-w-2xl mx-auto">Masterfully crafted Wear OS watch faces.</p>
     </header>
 
-    <div class="carousel-wrapper">
-        <button class="nav-btn prev" onclick="scrollTrack(-320)">&#10094;</button>
-        
-        <div class="carousel-track" id="carousel-track">
+    <section class="max-w-6xl mx-auto py-12 px-6">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+            <div class="bg-neutral-900 p-4 rounded-2xl border border-neutral-800">
+                <i class="fas fa-trophy text-amber-500 mb-2"></i>
+                <h3 class="font-bold text-sm">#2 S. Korea</h3>
             </div>
+            <div class="bg-neutral-900 p-4 rounded-2xl border border-neutral-800">
+                <i class="fab fa-youtube text-red-600 mb-2"></i>
+                <h3 class="font-bold text-sm">Featured</h3>
+            </div>
+            <div class="bg-neutral-900 p-4 rounded-2xl border border-neutral-800">
+                <i class="fas fa-handshake text-blue-500 mb-2"></i>
+                <h3 class="font-bold text-sm">Huawei Partner</h3>
+            </div>
+            <div class="bg-neutral-900 p-4 rounded-2xl border border-neutral-800">
+                <i class="fas fa-star text-yellow-400 mb-2"></i>
+                <h3 class="font-bold text-sm">Top 1% Dev</h3>
+            </div>
+        </div>
+    </section>
 
-        <button class="nav-btn next" onclick="scrollTrack(320)">&#10095;</button>
-    </div>
+    <section class="max-w-7xl mx-auto py-12 px-6">
+        <div class="flex justify-between items-end mb-8">
+            <h2 class="text-2xl font-bold italic">Latest Designs</h2>
+            <p class="text-xs text-neutral-500 md:hidden">Swipe to explore →</p>
+        </div>
+        
+        <div id="watch-gallery" class="mobile-carousel grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            </div>
+    </section>
+
+    <footer class="py-12 border-t border-neutral-900 text-center text-neutral-600">
+        <div class="flex justify-center gap-6 mb-4">
+            <a href="mailto:support@creationcue.space" class="hover:text-amber-500"><i class="fas fa-envelope"></i></a>
+            <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" class="hover:text-amber-500"><i class="fab fa-google-play"></i></a>
+        </div>
+        <p class="text-xs uppercase tracking-widest">&copy; 2026 Creation Cue Space</p>
+    </footer>
 
     <script>
-        const track = document.getElementById('carousel-track');
-        // Use the raw URL as intended
-        const jsonUrl = 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/badge_text_faces.json';
+        const JSON_URL = 'https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/badge_text_faces.json';
 
-        async function fetchFaces() {
+        async function loadGallery() {
+            const gallery = document.getElementById('watch-gallery');
             try {
-                const response = await fetch(jsonUrl);
-                if (!response.ok) throw new Error("Failed to fetch");
-                const data = await response.json();
+                const response = await fetch(JSON_URL);
+                const rawData = await response.json();
+                const data = rawData.watch_faces;
+                
+                gallery.innerHTML = ''; 
 
-                // 1. ALWAYS EXCLUDE FIRST 2 FACES
-                const filteredData = data.slice(2);
-
-                if (filteredData.length === 0) {
-                    track.innerHTML = "<p>New faces coming soon!</p>";
-                    return;
-                }
-
-                filteredData.forEach(face => {
+                data.forEach(face => {
+                    let webUrl = face.play_store_url.replace('market://', 'https://play.google.com/store/apps/');
                     const card = document.createElement('div');
-                    card.className = 'face-card';
+                    card.className = 'watch-card bg-neutral-900 rounded-3xl overflow-hidden border border-neutral-800 shadow-xl';
+                    
                     card.innerHTML = `
-                        <img src="${face.image_url}" alt="${face.name}" onerror="this.src='https://via.placeholder.com/300x300?text=No+Preview'">
-                        <h3>${face.name}</h3>
-                        <a href="${face.store_url}" class="btn-store" target="_blank">Get on Play Store</a>
+                        <div class="aspect-square">
+                            <img src="${face.image_url}" alt="${face.title}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/300/171717/888888?text=Watch+Face'">
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-md mb-1 truncate">${face.title}</h3>
+                            <p class="text-[10px] text-amber-500 font-bold mb-4">${face.badge_text || 'PREMIUM'}</p>
+                            <a href="${webUrl}" target="_blank" class="block text-center bg-neutral-800 hover:bg-amber-600 py-2 rounded-xl text-xs font-bold transition-all">
+                                GET IT
+                            </a>
+                        </div>
                     `;
-                    track.appendChild(card);
+                    gallery.appendChild(card);
                 });
-            } catch (err) {
-                console.error(err);
-                track.innerHTML = "<p style='grid-column: 1/-1;'>Unable to load faces. Please try again later.</p>";
+            } catch (error) {
+                gallery.innerHTML = `<p class="text-red-500 text-center col-span-full">Sync Error. Please check Play Store.</p>`;
             }
         }
-
-        function scrollTrack(dist) {
-            track.scrollBy({ left: dist, behavior: 'smooth' });
-        }
-
-        fetchFaces();
+        loadGallery();
     </script>
 </body>
 </html>
