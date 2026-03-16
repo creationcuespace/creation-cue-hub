@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creation Cue | Wear OS Hub</title>
-    <!-- Restored Favicon (Using your logo) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
@@ -28,7 +28,6 @@
             position: relative;
             padding: 80px 20px;
             text-align: center;
-            /* Updated to use your local background if it exists, otherwise dark gradient */
             background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('logo-back.png');
             background-size: cover;
             background-position: center;
@@ -133,13 +132,22 @@
             margin-top: 50px;
         }
 
+        .footer-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
         .footer-link {
             color: var(--primary);
             text-decoration: none;
             font-weight: bold;
-            margin-top: 10px;
-            display: inline-block;
+            transition: opacity 0.2s;
         }
+
+        .footer-link:hover { opacity: 0.8; }
 
         @media (max-width: 600px) {
             h1 { font-size: 2.2rem; }
@@ -150,7 +158,6 @@
 <body>
 
     <header>
-        <!-- Updated Logo Source -->
         <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" alt="Creation Cue" class="logo">
         <h1>CREATION <span>CUE</span></h1>
         <p class="tagline">Masterfully crafted Wear OS watch faces.</p>
@@ -178,14 +185,18 @@
     <div class="content-width">
         <h2 style="margin-bottom: 30px; letter-spacing: 1px;">Featured Designs</h2>
         <div id="faces-container">
-            <!-- Filtered data loads here -->
+            <!-- Data loads here via script -->
         </div>
     </div>
 
     <footer>
         <p>&copy; 2026 Creation Cue. All stats verified via AppBrain.</p>
-        <!-- Restored Email Link -->
-        <a href="mailto:creationcuespace@gmail.com" class="footer-link">creationcuespace@gmail.com</a>
+        <div class="footer-links">
+            <!-- Restored Email Link -->
+            <a href="mailto:creationcuespace@gmail.com" class="footer-link">creationcuespace@gmail.com</a>
+            <!-- Restored Privacy Link -->
+            <a href="privacy.html" class="footer-link">Privacy Policy</a>
+        </div>
     </footer>
 
     <script>
@@ -195,14 +206,13 @@
                 const response = await fetch('badge_text_faces.json');
                 const data = await response.json();
 
-                // 1. Exclude the first 2 cards using .slice(2)
+                // 1. Exclude first 2 cards
                 const facesToShow = data.watch_faces.slice(2);
 
                 facesToShow.forEach((face, index) => {
                     const div = document.createElement('div');
                     div.className = 'face-card';
 
-                    // Convert market:// link for browsers
                     const playUrl = face.play_store_url.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=');
                     
                     // 2. Change text for the LAST card
