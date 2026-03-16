@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creation Cue | Wear OS Hub</title>
+    <!-- Restored Favicon (Using your logo) -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -26,7 +28,8 @@
             position: relative;
             padding: 80px 20px;
             text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('logo-back.png');
+            /* Updated to use your local background if it exists, otherwise dark gradient */
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('logo-back.png');
             background-size: cover;
             background-position: center;
         }
@@ -63,7 +66,7 @@
         .stat-value { display: block; font-size: 2.2rem; font-weight: 800; color: var(--primary); }
         .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); margin-top: 5px; }
 
-        /* Grid */
+        /* Watch Face Grid */
         .content-width { max-width: 1200px; margin: 0 auto; padding: 20px; }
         
         #faces-container {
@@ -82,7 +85,6 @@
             overflow: hidden;
         }
 
-        /* Badge Style */
         .badge {
             position: absolute;
             top: 15px;
@@ -121,9 +123,23 @@
             transition: opacity 0.2s;
         }
 
-        .btn-play:hover { opacity: 0.9; }
+        /* Footer Styles */
+        footer { 
+            text-align: center; 
+            padding: 80px 20px; 
+            color: #666; 
+            font-size: 0.9rem;
+            border-top: 1px solid #111;
+            margin-top: 50px;
+        }
 
-        footer { text-align: center; padding: 60px 20px; color: #444; font-size: 0.8rem; }
+        .footer-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            display: inline-block;
+        }
 
         @media (max-width: 600px) {
             h1 { font-size: 2.2rem; }
@@ -134,7 +150,8 @@
 <body>
 
     <header>
-        <img src="logo.png" alt="Creation Cue" class="logo">
+        <!-- Updated Logo Source -->
+        <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" alt="Creation Cue" class="logo">
         <h1>CREATION <span>CUE</span></h1>
         <p class="tagline">Masterfully crafted Wear OS watch faces.</p>
     </header>
@@ -161,44 +178,50 @@
     <div class="content-width">
         <h2 style="margin-bottom: 30px; letter-spacing: 1px;">Featured Designs</h2>
         <div id="faces-container">
-            <!-- Data from badge_text_faces.json loads here -->
+            <!-- Filtered data loads here -->
         </div>
     </div>
 
     <footer>
         <p>&copy; 2026 Creation Cue. All stats verified via AppBrain.</p>
+        <!-- Restored Email Link -->
+        <a href="mailto:creationcuespace@gmail.com" class="footer-link">creationcuespace@gmail.com</a>
     </footer>
 
     <script>
         async function loadContent() {
             const container = document.getElementById('faces-container');
             try {
-                // Pointing to your specific JSON file
                 const response = await fetch('badge_text_faces.json');
                 const data = await response.json();
 
-                // Accessing the 'watch_faces' array inside your JSON
-                data.watch_faces.forEach(face => {
+                // 1. Exclude the first 2 cards using .slice(2)
+                const facesToShow = data.watch_faces.slice(2);
+
+                facesToShow.forEach((face, index) => {
                     const div = document.createElement('div');
                     div.className = 'face-card';
 
-                    // Convert market:// link to https:// for browser compatibility
+                    // Convert market:// link for browsers
                     const playUrl = face.play_store_url.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=');
                     
-                    // Create Badge if text exists
+                    // 2. Change text for the LAST card
+                    const isLast = index === facesToShow.length - 1;
+                    const buttonText = isLast ? "CreationCue" : "GET IT ON GOOGLE PLAY";
+
                     const badgeHtml = face.badge_text ? `<div class="badge">${face.badge_text}</div>` : '';
 
                     div.innerHTML = `
                         ${badgeHtml}
                         <img src="${face.image_url}" alt="${face.title}" onerror="this.src='https://via.placeholder.com/300'">
                         <h3 style="margin: 10px 0; font-size: 1rem;">${face.title}</h3>
-                        <a href="${playUrl}" target="_blank" class="btn-play">GET IT ON GOOGLE PLAY</a>
+                        <a href="${playUrl}" target="_blank" class="btn-play">${buttonText}</a>
                     `;
                     container.appendChild(div);
                 });
             } catch (e) {
                 console.error("Error loading JSON:", e);
-                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #666;">Unable to load designs. Check badge_text_faces.json file.</p>`;
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #666;">Unable to load designs at this moment.</p>`;
             }
         }
 
