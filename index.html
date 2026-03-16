@@ -22,29 +22,30 @@
             background-color: var(--bg);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
         }
 
         header {
             position: relative;
-            padding: 80px 20px;
+            padding: 60px 20px;
             text-align: center;
             background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('logo-back.png');
             background-size: cover;
             background-position: center;
         }
 
-        .logo { max-width: 100px; margin-bottom: 20px; }
-        h1 { font-size: 3rem; font-weight: 800; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+        .logo { max-width: 90px; margin-bottom: 15px; }
+        h1 { font-size: 2.5rem; font-weight: 800; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
         h1 span { color: var(--primary); }
-        .tagline { color: var(--text-dim); font-size: 1.1rem; margin-top: 10px; }
+        .tagline { color: var(--text-dim); font-size: 1rem; margin-top: 10px; }
 
         /* Stats Grid */
         .stats-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
             max-width: 1100px;
-            margin: -40px auto 40px;
+            margin: -30px auto 40px;
             padding: 0 20px;
             position: relative;
             z-index: 10;
@@ -53,7 +54,7 @@
         .stat-card {
             background: #111;
             border: 1px solid #222;
-            padding: 30px 15px;
+            padding: 20px 10px;
             border-radius: 12px;
             text-align: center;
             text-decoration: none;
@@ -61,16 +62,15 @@
             transition: 0.3s;
         }
 
-        .stat-card:hover { border-color: var(--primary); transform: translateY(-5px); background: #181818; }
-        .stat-value { display: block; font-size: 2.2rem; font-weight: 800; color: var(--primary); }
-        .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); margin-top: 5px; }
+        .stat-value { display: block; font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+        .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 5px; }
 
-        /* Watch Face Grid */
+        /* Watch Face Container (Carousel on Mobile / Grid on Desktop) */
         .content-width { max-width: 1200px; margin: 0 auto; padding: 20px; }
         
         #faces-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
         }
 
@@ -81,19 +81,19 @@
             text-align: center;
             border: 1px solid #222;
             position: relative;
-            overflow: hidden;
+            transition: transform 0.3s;
         }
 
         .badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 10px;
+            right: 10px;
             background: var(--primary);
             color: black;
             font-weight: 900;
-            font-size: 0.7rem;
-            padding: 4px 10px;
-            border-radius: 6px;
+            font-size: 0.6rem;
+            padding: 3px 8px;
+            border-radius: 4px;
             text-transform: uppercase;
             z-index: 5;
         }
@@ -103,56 +103,61 @@
             aspect-ratio: 1/1;
             border-radius: 50%;
             margin-bottom: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            transition: transform 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
         }
-
-        .face-card:hover img { transform: scale(1.05); }
 
         .btn-play {
             display: inline-block;
             background: var(--primary);
             color: black;
-            padding: 12px 24px;
-            border-radius: 30px;
+            padding: 10px 15px;
+            border-radius: 25px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 0.8rem;
-            margin-top: 10px;
-            transition: opacity 0.2s;
+            font-size: 0.75rem;
+            margin-top: 5px;
+            width: 90%;
         }
 
-        /* Footer Styles */
+        /* Responsive Settings for Phone (Carousel Mode) */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .stats-container { grid-template-columns: 1fr 1fr; }
+
+            /* Carousel Magic */
+            #faces-container {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                gap: 10px;
+                padding-bottom: 20px;
+                scrollbar-width: none; /* Hide scrollbar Firefox */
+            }
+            #faces-container::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
+
+            .face-card {
+                flex: 0 0 31%; /* Shows 3 per view roughly */
+                min-width: 110px;
+                padding: 10px;
+                scroll-snap-align: center;
+            }
+
+            .face-card h3 { font-size: 0.7rem; margin: 5px 0; }
+            .btn-play { font-size: 0.6rem; padding: 6px 5px; }
+            .badge { font-size: 0.5rem; padding: 2px 5px; }
+        }
+
         footer { 
             text-align: center; 
-            padding: 80px 20px; 
-            color: #666; 
-            font-size: 0.9rem;
+            padding: 60px 20px; 
+            color: #444; 
+            font-size: 0.8rem;
             border-top: 1px solid #111;
-            margin-top: 50px;
         }
 
-        .footer-links {
-            margin-top: 15px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+        .footer-links { margin-top: 15px; display: flex; justify-content: center; gap: 20px; }
+        .footer-link { color: var(--primary); text-decoration: none; font-weight: bold; }
 
-        .footer-link {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: bold;
-            transition: opacity 0.2s;
-        }
-
-        .footer-link:hover { opacity: 0.8; }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 2.2rem; }
-            .stats-container { grid-template-columns: 1fr 1fr; }
-        }
     </style>
 </head>
 <body>
@@ -170,7 +175,7 @@
         </a>
         <div class="stat-card">
             <span class="stat-value">#2</span>
-            <span class="stat-label">S. Korea (Personalization)</span>
+            <span class="stat-label">S. Korea (Pers.)</span>
         </div>
         <div class="stat-card">
             <span class="stat-value">Top 1%</span>
@@ -183,18 +188,19 @@
     </section>
 
     <div class="content-width">
-        <h2 style="margin-bottom: 30px; letter-spacing: 1px;">Featured Designs</h2>
+        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="margin:0; font-size: 1.2rem;">Featured Designs</h2>
+            <span style="color: #666; font-size: 0.7rem; font-weight: bold;">SWIPE TO BROWSE</span>
+        </div>
         <div id="faces-container">
-            <!-- Data loads here via script -->
+            <!-- Content loaded via JavaScript -->
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 Creation Cue. All stats verified via AppBrain.</p>
+        <p>&copy; 2026 Creation Cue. Stats via AppBrain.</p>
         <div class="footer-links">
-            <!-- Restored Email Link -->
-            <a href="mailto:creationcuespace@gmail.com" class="footer-link">creationcuespace@gmail.com</a>
-            <!-- Restored Privacy Link -->
+            <a href="mailto:creationcuespace@gmail.com" class="footer-link">Email Us</a>
             <a href="privacy.html" class="footer-link">Privacy Policy</a>
         </div>
     </footer>
@@ -206,7 +212,7 @@
                 const response = await fetch('badge_text_faces.json');
                 const data = await response.json();
 
-                // 1. Exclude first 2 cards
+                // 1. Exclude the first 2 cards
                 const facesToShow = data.watch_faces.slice(2);
 
                 facesToShow.forEach((face, index) => {
@@ -217,21 +223,21 @@
                     
                     // 2. Change text for the LAST card
                     const isLast = index === facesToShow.length - 1;
-                    const buttonText = isLast ? "CreationCue" : "GET IT ON GOOGLE PLAY";
+                    const buttonText = isLast ? "CreationCue" : "GOOGLE PLAY";
 
                     const badgeHtml = face.badge_text ? `<div class="badge">${face.badge_text}</div>` : '';
 
                     div.innerHTML = `
                         ${badgeHtml}
                         <img src="${face.image_url}" alt="${face.title}" onerror="this.src='https://via.placeholder.com/300'">
-                        <h3 style="margin: 10px 0; font-size: 1rem;">${face.title}</h3>
+                        <h3 style="margin: 10px 0;">${face.title}</h3>
                         <a href="${playUrl}" target="_blank" class="btn-play">${buttonText}</a>
                     `;
                     container.appendChild(div);
                 });
             } catch (e) {
-                console.error("Error loading JSON:", e);
-                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #666;">Unable to load designs at this moment.</p>`;
+                console.error(e);
+                container.innerHTML = `<p style="text-align:center; width:100%;">Failed to load designs.</p>`;
             }
         }
 
