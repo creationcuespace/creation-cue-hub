@@ -13,7 +13,6 @@
     <style>
         .gradient-text { background: linear-gradient(to right, #fbbf24, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* Banner Styles */
         .custom-banner {
             background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.9)), 
                               url('https://scontent.fath5-1.fna.fbcdn.net/v/t39.30808-6/650335507_918774504454114_5325023990017279542_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=2a1932&_nc_ohc=6lAHD4nObCIQ7kNvwGSBFvj&_nc_oc=AdnoQBo7VBUJQF4bPAWNbecga_0GjhFiTMGomGt8zrPOdU12IEHH3M4jbcyOoK4tYiU&_nc_zt=23&_nc_ht=scontent.fath5-1.fna&_nc_gid=WbRvuvHwCa7LafZAcAAXaw&_nc_ss=8&oh=00_AfzzbMZC7xwWVQ4XkN-XU6tFMi_uFL_ZLuvjIZz7-lG1vQ&oe=69BD6B59');
@@ -21,7 +20,6 @@
             background-position: center;
         }
 
-        /* Mobile Carousel Styles */
         @media (max-width: 768px) {
             .mobile-carousel {
                 display: flex !important;
@@ -36,7 +34,6 @@
             .nav-arrow { display: none !important; }
         }
 
-        /* Small Screen PC (Laptop) Styles: Enable Scrolling + Arrows */
         @media (min-width: 769px) and (max-width: 1366px) {
             .mobile-carousel {
                 display: flex !important;
@@ -51,12 +48,11 @@
             .nav-arrow { display: flex !important; }
         }
 
-        /* Large Desktop: Default Grid, No Arrows */
         @media (min-width: 1367px) {
             .nav-arrow { display: none !important; }
         }
 
-        .watch-card:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+        .watch-card:hover { transform: translateY(-5px); transition: all 0.3s ease; border-color: #fbbf24; }
         .stat-card:hover { border-color: #fbbf24; transition: all 0.3s ease; }
     </style>
 </head>
@@ -129,10 +125,14 @@
                 
                 gallery.innerHTML = ''; 
 
-                data.forEach(face => {
+                data.forEach((face, index) => {
                     let webUrl = face.play_store_url.replace('market://', 'https://play.google.com/store/apps/');
-                    const card = document.createElement('div');
-                    card.className = 'watch-card bg-neutral-900 rounded-3xl overflow-hidden border border-neutral-800 shadow-xl';
+                    const isLast = index === data.length - 1; // Check if it's the last item
+                    
+                    const card = document.createElement('a'); // Make the whole container an <a> tag
+                    card.href = webUrl;
+                    card.target = "_blank";
+                    card.className = 'watch-card block bg-neutral-900 rounded-3xl overflow-hidden border border-neutral-800 shadow-xl no-underline text-inherit transition-all';
                     
                     card.innerHTML = `
                         <div class="aspect-square">
@@ -140,10 +140,12 @@
                         </div>
                         <div class="p-5">
                             <h3 class="font-bold text-md mb-1 truncate">${face.title}</h3>
-                            <p class="text-[10px] text-amber-500 font-bold mb-4">${face.badge_text || 'PREMIUM'}</p>
-                            <a href="${webUrl}" target="_blank" class="block text-center bg-neutral-800 hover:bg-amber-600 py-2 rounded-xl text-xs font-bold transition-all">
-                                GET IT
-                            </a>
+                            <p class="text-[10px] text-amber-500 font-bold ${isLast ? 'mb-0' : 'mb-4'}">${face.badge_text || 'PREMIUM'}</p>
+                            ${!isLast ? `
+                                <div class="text-center bg-neutral-800 hover:bg-amber-600 py-2 rounded-xl text-xs font-bold transition-all">
+                                    GET IT
+                                </div>
+                            ` : ''}
                         </div>
                     `;
                     gallery.appendChild(card);
