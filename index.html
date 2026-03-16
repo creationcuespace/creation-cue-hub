@@ -39,12 +39,12 @@
         h1 span { color: var(--primary); }
         .tagline { color: var(--text-dim); font-size: 1rem; margin-top: 10px; }
 
-        /* Stats Grid */
+        /* Updated Stats Grid for 6 Items */
         .stats-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            max-width: 1100px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            max-width: 1200px;
             margin: -30px auto 40px;
             padding: 0 20px;
             position: relative;
@@ -54,18 +54,23 @@
         .stat-card {
             background: #111;
             border: 1px solid #222;
-            padding: 20px 10px;
+            padding: 18px 10px;
             border-radius: 12px;
             text-align: center;
             text-decoration: none;
             color: white;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100px;
         }
-        .stat-card:hover { border-color: var(--primary); transform: translateY(-5px); }
-        .stat-value { display: block; font-size: 1.8rem; font-weight: 800; color: var(--primary); }
-        .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 5px; }
+        .stat-card:hover { border-color: var(--primary); transform: translateY(-5px); background: #181818; }
+        
+        .stat-value { display: block; font-size: 1.4rem; font-weight: 800; color: var(--primary); }
+        .stat-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 5px; font-weight: 700; }
 
-        /* Layout Container */
+        /* Watch Face Container */
         .content-width { max-width: 1200px; margin: 0 auto; padding: 20px; }
         
         #faces-container {
@@ -74,7 +79,6 @@
             gap: 25px;
         }
 
-        /* Clickable Card Link */
         .face-card {
             background: var(--card-bg);
             border-radius: 20px;
@@ -86,9 +90,7 @@
             text-decoration: none;
             color: inherit;
             display: block;
-            cursor: pointer;
         }
-
         .face-card:hover { border-color: var(--primary); background: #181818; transform: translateY(-5px); }
 
         .badge {
@@ -111,9 +113,7 @@
             border-radius: 50%;
             margin-bottom: 15px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-            transition: transform 0.3s;
         }
-        .face-card:hover img { transform: scale(1.05); }
 
         .btn-play {
             display: inline-block;
@@ -127,8 +127,12 @@
             width: 85%;
         }
 
-        /* Mobile Carousel (3 visible) */
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
+            .stats-container { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+            .stat-value { font-size: 1.1rem; }
+            .stat-label { font-size: 0.55rem; }
+
             #faces-container {
                 display: flex;
                 overflow-x: auto;
@@ -138,15 +142,9 @@
                 scrollbar-width: none;
             }
             #faces-container::-webkit-scrollbar { display: none; }
-            .face-card {
-                flex: 0 0 31%; /* Shows roughly 3 */
-                min-width: 110px;
-                padding: 10px;
-                scroll-snap-align: center;
-            }
-            .face-card h3 { font-size: 0.7rem; margin: 5px 0; }
-            .btn-play { font-size: 0.55rem; padding: 6px 2px; }
-            .badge { font-size: 0.45rem; top: 8px; right: 8px; }
+            .face-card { flex: 0 0 31%; min-width: 110px; padding: 10px; scroll-snap-align: center; }
+            .face-card h3 { font-size: 0.7rem; }
+            .btn-play { font-size: 0.55rem; }
         }
 
         footer { text-align: center; padding: 60px 20px; color: #444; font-size: 0.8rem; border-top: 1px solid #111; }
@@ -163,21 +161,35 @@
     </header>
 
     <section class="stats-container">
+        <!-- 1. Downloads -->
         <a href="https://www.appbrain.com/dev/Creation+Cue" target="_blank" class="stat-card">
             <span class="stat-value">300K+</span>
-            <span class="stat-label">Total Downloads</span>
+            <span class="stat-label">Downloads</span>
         </a>
+        <!-- 2. S. Korea -->
         <div class="stat-card">
             <span class="stat-value">#2</span>
             <span class="stat-label">S. Korea (Pers.)</span>
         </div>
+        <!-- 3. YouTube -->
+        <a href="https://youtu.be/mF8p14P8T98" target="_blank" class="stat-card">
+            <span class="stat-value"><svg style="width:24px; fill:currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span>
+            <span class="stat-label">Featured</span>
+        </a>
+        <!-- 4. Huawei Partner -->
+        <div class="stat-card">
+            <span class="stat-value">Huawei</span>
+            <span class="stat-label">Partner</span>
+        </div>
+        <!-- 5. Rank -->
         <div class="stat-card">
             <span class="stat-value">Top 1%</span>
-            <span class="stat-label">Global Dev Rank</span>
+            <span class="stat-label">Global Rank</span>
         </div>
+        <!-- 6. Designs -->
         <div class="stat-card">
             <span class="stat-value">111+</span>
-            <span class="stat-label">Unique Designs</span>
+            <span class="stat-label">Designs</span>
         </div>
     </section>
 
@@ -203,32 +215,28 @@
         async function loadContent() {
             const container = document.getElementById('faces-container');
             try {
-                // Pointing to your JSON file
                 const response = await fetch('badge_text_faces.json');
                 const data = await response.json();
 
-                // 1. SKIP the first 2 cards automatically
+                // Dynamic Logic: Skip first 2 cards
                 const facesToShow = data.watch_faces.slice(2);
 
                 facesToShow.forEach((face, index) => {
-                    // Create the whole card as a link
                     const card = document.createElement('a');
                     card.className = 'face-card';
                     card.target = '_blank';
 
-                    // 2. CONVERT market:// to https:// automatically via script
+                    // Dynamic Link Conversion (Market to Web)
                     let rawUrl = face.play_store_url;
-                    let webUrl = rawUrl;
-
-                    if (rawUrl.startsWith('market://details?id=')) {
-                        webUrl = rawUrl.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=');
-                    } else if (rawUrl.startsWith('market://dev?id=')) {
-                        webUrl = rawUrl.replace('market://dev?id=', 'https://play.google.com/store/apps/dev?id=');
-                    }
+                    let webUrl = rawUrl.startsWith('market://details?id=') ? 
+                                rawUrl.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=') : 
+                                rawUrl.startsWith('market://dev?id=') ? 
+                                rawUrl.replace('market://dev?id=', 'https://play.google.com/store/apps/dev?id=') : 
+                                rawUrl;
                     
                     card.href = webUrl;
 
-                    // 3. TARGET last card dynamically for special text
+                    // Dynamic Last Item Button Text
                     const isLast = index === facesToShow.length - 1;
                     const buttonText = isLast ? "CreationCue" : "GOOGLE PLAY";
 
@@ -243,11 +251,10 @@
                     container.appendChild(card);
                 });
             } catch (e) {
-                console.error("JSON Link/Load error:", e);
-                container.innerHTML = `<p style="text-align:center; width:100%; color:#555;">Failed to load designs.</p>`;
+                console.error("JSON Error:", e);
+                container.innerHTML = `<p style="text-align:center; width:100%; color:#555;">Designs loading...</p>`;
             }
         }
-
         loadContent();
     </script>
 </body>
