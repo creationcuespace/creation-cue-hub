@@ -127,9 +127,9 @@
 
                 data.forEach((face, index) => {
                     let webUrl = face.play_store_url.replace('market://', 'https://play.google.com/store/apps/');
-                    const isLast = index === data.length - 1; // Check if it's the last item
+                    const isLast = index === data.length - 1; 
                     
-                    const card = document.createElement('a'); // Make the whole container an <a> tag
+                    const card = document.createElement('a'); 
                     card.href = webUrl;
                     card.target = "_blank";
                     card.className = 'watch-card block bg-neutral-900 rounded-3xl overflow-hidden border border-neutral-800 shadow-xl no-underline text-inherit transition-all';
@@ -140,12 +140,10 @@
                         </div>
                         <div class="p-5">
                             <h3 class="font-bold text-md mb-1 truncate">${face.title}</h3>
-                            <p class="text-[10px] text-amber-500 font-bold ${isLast ? 'mb-0' : 'mb-4'}">${face.badge_text || 'PREMIUM'}</p>
-                            ${!isLast ? `
-                                <div class="text-center bg-neutral-800 hover:bg-amber-600 py-2 rounded-xl text-xs font-bold transition-all">
-                                    GET IT
-                                </div>
-                            ` : ''}
+                            <p class="text-[10px] text-amber-500 font-bold mb-4">${face.badge_text || 'PREMIUM'}</p>
+                            <div class="text-center ${isLast ? 'text-neutral-500 italic' : 'bg-neutral-800 hover:bg-amber-600 py-2 rounded-xl text-xs font-bold transition-all'}">
+                                ${isLast ? 'CreationCue' : 'GET IT'}
+                            </div>
                         </div>
                     `;
                     gallery.appendChild(card);
