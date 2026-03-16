@@ -108,7 +108,7 @@
             <a href="mailto:support@creationcue.space" class="hover:text-amber-500"><i class="fas fa-envelope"></i></a>
             <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" class="hover:text-amber-500"><i class="fab fa-google-play"></i></a>
         </div>
-        <p class="text-xs uppercase tracking-widest">&copy; 2026 Creation Cue Space</p>
+        <p class="text-xs tracking-widest">&copy; 2026 CreationCue</p>
     </footer>
 
     <script>
@@ -140,8 +140,9 @@
                         </div>
                         <div class="p-5">
                             <h3 class="font-bold text-md mb-1 truncate">${face.title}</h3>
-                            <p class="text-[10px] text-amber-500 font-bold mb-4">${face.badge_text || 'PREMIUM'}</p>
-                            <div class="text-center ${isLast ? 'text-neutral-500 italic' : 'bg-neutral-800 hover:bg-amber-600 py-2 rounded-xl text-xs font-bold transition-all'}">
+                            <p class="text-[10px] text-amber-500 font-bold mb-4">${isLast ? '&nbsp;' : (face.badge_text || 'PREMIUM')}</p>
+                            
+                            <div class="text-center bg-neutral-800 hover:bg-amber-600 py-2 rounded-xl text-xs font-bold transition-all">
                                 ${isLast ? 'CreationCue' : 'GET IT'}
                             </div>
                         </div>
