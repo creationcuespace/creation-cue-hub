@@ -9,103 +9,114 @@
 
     <style>
         :root {
-            --primary-bg: #121212;
+            --primary-bg: #0a0a0a;
+            --card-bg: #161616;
             --text-color: #ffffff;
-            --accent: #00e676;
+            --accent: #ff3b3b; /* Adjusted to match your red logo theme */
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             margin: 0;
             background-color: var(--primary-bg);
             color: var(--text-color);
-            overflow-x: hidden;
         }
 
         /* Banner Section */
         .banner {
             width: 100%;
-            height: 400px;
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                              url('https://scontent.fath5-1.fna.fbcdn.net/v/t39.30808-6/650335507_918774504454114_5325023990017279542_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=2a1932&_nc_ohc=6lAHD4nObCIQ7kNvwGSBFvj&_nc_oc=AdnoQBo7VBUJQF4bPAWNbecga_0GjhFiTMGomGt8zrPOdU12IEHH3M4jbcyOoK4tYiU&_nc_zt=23&_nc_ht=scontent.fath5-1.fna&_nc_gid=WbRvuvHwCa7LafZAcAAXaw&_nc_ss=8&oh=00_AfzzbMZC7xwWVQ4XkN-XU6tFMi_uFL_ZLuvjIZz7-lG1vQ&oe=69BD6B59');
+            height: 350px;
+            background-image: url('https://scontent.fath5-1.fna.fbcdn.net/v/t39.30808-6/650335507_918774504454114_5325023990017279542_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=2a1932&_nc_ohc=6lAHD4nObCIQ7kNvwGSBFvj&_nc_oc=AdnoQBo7VBUJQF4bPAWNbecga_0GjhFiTMGomGt8zrPOdU12IEHH3M4jbcyOoK4tYiU&_nc_zt=23&_nc_ht=scontent.fath5-1.fna&_nc_gid=WbRvuvHwCa7LafZAcAAXaw&_nc_ss=8&oh=00_AfzzbMZC7xwWVQ4XkN-XU6tFMi_uFL_ZLuvjIZz7-lG1vQ&oe=69BD6B59');
             background-size: cover;
             background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
+            border-bottom: 2px solid #222;
         }
 
-        /* Carousel Layout */
+        .banner h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+
         .carousel-wrapper {
             position: relative;
-            padding: 40px 0;
-            max-width: 1400px;
+            padding: 50px 0;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
+        /* Responsive Grid / Carousel */
         .carousel-track {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
             padding: 0 20px;
         }
 
-        /* Small Screen PC Specific Styles (Scrollable with Arrows) */
-        @media screen and (max-width: 1366px) {
+        /* Only scrollable with arrows on Small Screen PC/Laptops */
+        @media screen and (min-width: 768px) and (max-width: 1366px) {
             .carousel-track {
                 display: flex;
                 overflow-x: auto;
                 scroll-behavior: smooth;
-                scrollbar-width: none; /* Firefox */
-                gap: 30px;
+                scrollbar-width: none;
                 padding: 10px 60px;
             }
-
-            .carousel-track::-webkit-scrollbar {
-                display: none; /* Chrome/Safari */
-            }
-
             .nav-btn {
-                display: flex;
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                background: rgba(0, 0, 0, 0.7);
-                color: white;
-                border: 2px solid var(--accent);
-                border-radius: 50%;
-                width: 50px;
-                height: 50px;
-                cursor: pointer;
-                justify-content: center;
-                align-items: center;
-                font-size: 24px;
-                z-index: 100;
-                transition: 0.3s;
+                display: flex !important;
             }
-
-            .nav-btn:hover { background: var(--accent); color: black; }
-            .prev { left: 10px; }
-            .next { right: 10px; }
         }
 
-        /* Hidden on Large Desktop */
-        @media screen and (min-width: 1367px) {
-            .nav-btn { display: none; }
+        .nav-btn {
+            display: none;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
         }
 
+        .prev { left: 15px; }
+        .next { right: 15px; }
+
+        /* Watch Face Cards */
         .face-card {
-            min-width: 250px;
-            background: #1e1e1e;
-            border-radius: 15px;
-            overflow: hidden;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
             text-align: center;
-            transition: transform 0.3s;
+            border: 1px solid #222;
+            transition: 0.3s;
         }
 
-        .face-card:hover { transform: scale(1.05); }
-        .face-card img { width: 100%; display: block; }
-        .face-card h3 { margin: 15px 0; font-size: 1.1rem; }
+        .face-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .face-card img { width: 100%; border-radius: 8px; margin-bottom: 15px; }
+        .face-card h3 { margin: 10px 0; font-size: 1.1rem; }
+        
+        .btn-store {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -115,46 +126,54 @@
     </header>
 
     <div class="carousel-wrapper">
-        <button class="nav-btn prev" onclick="scrollCarousel(-300)">&#10094;</button>
+        <button class="nav-btn prev" onclick="scrollTrack(-320)">&#10094;</button>
         
         <div class="carousel-track" id="carousel-track">
             </div>
 
-        <button class="nav-btn next" onclick="scrollCarousel(300)">&#10095;</button>
+        <button class="nav-btn next" onclick="scrollTrack(320)">&#10095;</button>
     </div>
 
     <script>
         const track = document.getElementById('carousel-track');
-        const jsonUrl = 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/badge_text_faces.json';
+        // Use the raw URL as intended
+        const jsonUrl = 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/badge_text_faces.json';
 
-        async function loadFaces() {
+        async function fetchFaces() {
             try {
                 const response = await fetch(jsonUrl);
+                if (!response.ok) throw new Error("Failed to fetch");
                 const data = await response.json();
 
-                // EXCLUDE THE FIRST 2 FACES
+                // 1. ALWAYS EXCLUDE FIRST 2 FACES
                 const filteredData = data.slice(2);
+
+                if (filteredData.length === 0) {
+                    track.innerHTML = "<p>New faces coming soon!</p>";
+                    return;
+                }
 
                 filteredData.forEach(face => {
                     const card = document.createElement('div');
                     card.className = 'face-card';
                     card.innerHTML = `
-                        <img src="${face.image_url}" alt="${face.name}">
+                        <img src="${face.image_url}" alt="${face.name}" onerror="this.src='https://via.placeholder.com/300x300?text=No+Preview'">
                         <h3>${face.name}</h3>
-                        <a href="${face.store_url}" target="_blank" style="color: var(--accent); text-decoration: none; padding-bottom: 15px; display: inline-block;">View on Store</a>
+                        <a href="${face.store_url}" class="btn-store" target="_blank">Get on Play Store</a>
                     `;
                     track.appendChild(card);
                 });
-            } catch (error) {
-                console.error("Error loading watch faces:", error);
+            } catch (err) {
+                console.error(err);
+                track.innerHTML = "<p style='grid-column: 1/-1;'>Unable to load faces. Please try again later.</p>";
             }
         }
 
-        function scrollCarousel(distance) {
-            track.scrollBy({ left: distance, behavior: 'smooth' });
+        function scrollTrack(dist) {
+            track.scrollBy({ left: dist, behavior: 'smooth' });
         }
 
-        loadFaces();
+        fetchFaces();
     </script>
 </body>
 </html>
