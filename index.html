@@ -61,11 +61,11 @@
             color: white;
             transition: 0.3s;
         }
-
+        .stat-card:hover { border-color: var(--primary); transform: translateY(-5px); }
         .stat-value { display: block; font-size: 1.8rem; font-weight: 800; color: var(--primary); }
         .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 5px; }
 
-        /* Watch Face Container (Carousel on Mobile / Grid on Desktop) */
+        /* Layout Container */
         .content-width { max-width: 1200px; margin: 0 auto; padding: 20px; }
         
         #faces-container {
@@ -74,6 +74,7 @@
             gap: 25px;
         }
 
+        /* Clickable Card Link */
         .face-card {
             background: var(--card-bg);
             border-radius: 20px;
@@ -81,19 +82,25 @@
             text-align: center;
             border: 1px solid #222;
             position: relative;
-            transition: transform 0.3s;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            cursor: pointer;
         }
+
+        .face-card:hover { border-color: var(--primary); background: #181818; transform: translateY(-5px); }
 
         .badge {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 15px;
+            right: 15px;
             background: var(--primary);
             color: black;
             font-weight: 900;
-            font-size: 0.6rem;
-            padding: 3px 8px;
-            border-radius: 4px;
+            font-size: 0.65rem;
+            padding: 4px 10px;
+            border-radius: 6px;
             text-transform: uppercase;
             z-index: 5;
         }
@@ -104,7 +111,9 @@
             border-radius: 50%;
             margin-bottom: 15px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+            transition: transform 0.3s;
         }
+        .face-card:hover img { transform: scale(1.05); }
 
         .btn-play {
             display: inline-block;
@@ -112,52 +121,37 @@
             color: black;
             padding: 10px 15px;
             border-radius: 25px;
-            text-decoration: none;
             font-weight: bold;
             font-size: 0.75rem;
-            margin-top: 5px;
-            width: 90%;
+            margin-top: 10px;
+            width: 85%;
         }
 
-        /* Responsive Settings for Phone (Carousel Mode) */
+        /* Mobile Carousel (3 visible) */
         @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .stats-container { grid-template-columns: 1fr 1fr; }
-
-            /* Carousel Magic */
             #faces-container {
                 display: flex;
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
-                gap: 10px;
+                gap: 12px;
                 padding-bottom: 20px;
-                scrollbar-width: none; /* Hide scrollbar Firefox */
+                scrollbar-width: none;
             }
-            #faces-container::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
-
+            #faces-container::-webkit-scrollbar { display: none; }
             .face-card {
-                flex: 0 0 31%; /* Shows 3 per view roughly */
+                flex: 0 0 31%; /* Shows roughly 3 */
                 min-width: 110px;
                 padding: 10px;
                 scroll-snap-align: center;
             }
-
             .face-card h3 { font-size: 0.7rem; margin: 5px 0; }
-            .btn-play { font-size: 0.6rem; padding: 6px 5px; }
-            .badge { font-size: 0.5rem; padding: 2px 5px; }
+            .btn-play { font-size: 0.55rem; padding: 6px 2px; }
+            .badge { font-size: 0.45rem; top: 8px; right: 8px; }
         }
 
-        footer { 
-            text-align: center; 
-            padding: 60px 20px; 
-            color: #444; 
-            font-size: 0.8rem;
-            border-top: 1px solid #111;
-        }
-
+        footer { text-align: center; padding: 60px 20px; color: #444; font-size: 0.8rem; border-top: 1px solid #111; }
         .footer-links { margin-top: 15px; display: flex; justify-content: center; gap: 20px; }
         .footer-link { color: var(--primary); text-decoration: none; font-weight: bold; }
-
     </style>
 </head>
 <body>
@@ -188,12 +182,12 @@
     </section>
 
     <div class="content-width">
-        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h2 style="margin:0; font-size: 1.2rem;">Featured Designs</h2>
-            <span style="color: #666; font-size: 0.7rem; font-weight: bold;">SWIPE TO BROWSE</span>
+        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <h2 style="margin:0; font-size: 1.2rem;">FEATURED DESIGNS</h2>
+            <span style="color: #444; font-size: 0.65rem; font-weight: 800; letter-spacing: 1px;">SWIPE TO BROWSE</span>
         </div>
         <div id="faces-container">
-            <!-- Content loaded via JavaScript -->
+            <!-- Loading designs... -->
         </div>
     </div>
 
@@ -209,35 +203,48 @@
         async function loadContent() {
             const container = document.getElementById('faces-container');
             try {
+                // Pointing to your JSON file
                 const response = await fetch('badge_text_faces.json');
                 const data = await response.json();
 
-                // 1. Exclude the first 2 cards
+                // 1. SKIP the first 2 cards automatically
                 const facesToShow = data.watch_faces.slice(2);
 
                 facesToShow.forEach((face, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'face-card';
+                    // Create the whole card as a link
+                    const card = document.createElement('a');
+                    card.className = 'face-card';
+                    card.target = '_blank';
 
-                    const playUrl = face.play_store_url.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=');
+                    // 2. CONVERT market:// to https:// automatically via script
+                    let rawUrl = face.play_store_url;
+                    let webUrl = rawUrl;
+
+                    if (rawUrl.startsWith('market://details?id=')) {
+                        webUrl = rawUrl.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=');
+                    } else if (rawUrl.startsWith('market://dev?id=')) {
+                        webUrl = rawUrl.replace('market://dev?id=', 'https://play.google.com/store/apps/dev?id=');
+                    }
                     
-                    // 2. Change text for the LAST card
+                    card.href = webUrl;
+
+                    // 3. TARGET last card dynamically for special text
                     const isLast = index === facesToShow.length - 1;
                     const buttonText = isLast ? "CreationCue" : "GOOGLE PLAY";
 
                     const badgeHtml = face.badge_text ? `<div class="badge">${face.badge_text}</div>` : '';
 
-                    div.innerHTML = `
+                    card.innerHTML = `
                         ${badgeHtml}
                         <img src="${face.image_url}" alt="${face.title}" onerror="this.src='https://via.placeholder.com/300'">
-                        <h3 style="margin: 10px 0;">${face.title}</h3>
-                        <a href="${playUrl}" target="_blank" class="btn-play">${buttonText}</a>
+                        <h3 style="margin: 10px 0; font-size: 0.9rem;">${face.title}</h3>
+                        <div class="btn-play">${buttonText}</div>
                     `;
-                    container.appendChild(div);
+                    container.appendChild(card);
                 });
             } catch (e) {
-                console.error(e);
-                container.innerHTML = `<p style="text-align:center; width:100%;">Failed to load designs.</p>`;
+                console.error("JSON Link/Load error:", e);
+                container.innerHTML = `<p style="text-align:center; width:100%; color:#555;">Failed to load designs.</p>`;
             }
         }
 
