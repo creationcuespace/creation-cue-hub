@@ -25,17 +25,11 @@
       "svg": null
     },
     {
-      "value": "Top 1%",
-      "label": "Global Rank — AppBrain",
-      "link": "https://www.appbrain.com/dev/Creation+Cue",
-      "svg": null
-    },
-    {
-      "value": "111+",
-      "label": "Faces Published",
-      "link": null,
-      "svg": null
-    },
+  "value": "111+ Faces",
+  "label": "Top 1% Global Rank — AppBrain",
+  "link": "https://www.appbrain.com/dev/Creation+Cue",
+  "svg": null
+},
     {
       "value": "3 Years",
       "label": "Active Since 2023",
