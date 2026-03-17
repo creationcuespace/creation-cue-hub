@@ -161,38 +161,34 @@
         <p class="tagline">Wear OS watch faces.</p>
     </header>
 
-    <section class="stats-container">
-        <!-- 1. Downloads -->
-        <a href="https://www.appbrain.com/dev/Creation+Cue" target="_blank" class="stat-card">
-            <span class="stat-value">300K+</span>
-            <span class="stat-label">Downloads</span>
-        </a>
-        <!-- 2. S. Korea -->
-        <div class="stat-card">
-            <span class="stat-value">#2</span>
-            <span class="stat-label">S. Korea (Personalization)</span>
-        </div>
-        <!-- 3. YouTube -->
-        <a href="https://www.youtube.com/watch?v=zoD0DCDpLrA&list=PLq_hih0jW64xYQhELgx--6_NI9pwlsRbD" target="_blank" class="stat-card">
-            <span class="stat-value"><svg style="width:24px; fill:currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span>
-            <span class="stat-label">Featured - Top10 by Android Authority</span>
-        </a>
-        <!-- 4. Huawei Partner -->
-        <div class="stat-card">
-            <span class="stat-value">Huawei</span>
-            <span class="stat-label">Partner</span>
-        </div>
-        <!-- 5. Rank -->
-        <div class="stat-card">
-            <span class="stat-value">Top 1%</span>
-            <span class="stat-label">Global Rank</span>
-        </div>
-        <!-- 6. Designs -->
-        <div class="stat-card">
-            <span class="stat-value">111+</span>
-            <span class="stat-label">Designs</span>
-        </div>
-    </section>
+    <section class="stats-container" id="stats-container"></section>
+
+<script>
+  async function loadStats() {
+    const container = document.getElementById('stats-container');
+    try {
+      const res = await fetch('https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/stats.json');
+      const data = await res.json();
+
+      data.stats.forEach(stat => {
+        const tag = stat.link ? 'a' : 'div';
+        const el = document.createElement(tag);
+        el.className = 'stat-card';
+        if (stat.link) { el.href = stat.link; el.target = '_blank'; }
+
+        const valueHtml = stat.svg
+          ? stat.svg
+          : `<span class="stat-value">${stat.value}</span>`;
+
+        el.innerHTML = `${valueHtml}<span class="stat-label">${stat.label}</span>`;
+        container.appendChild(el);
+      });
+    } catch (e) {
+      console.error('Stats load error:', e);
+    }
+  }
+  loadStats();
+</script>
 
     <div class="content-width">
         <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
