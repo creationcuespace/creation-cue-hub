@@ -2,7 +2,7 @@
   "stats": [
     {
       "value": "300K+",
-      "label": "Downloads",
+      "label": "Downloads in Under 3 Years",
       "link": "https://www.appbrain.com/dev/Creation+Cue",
       "svg": null
     },
@@ -25,15 +25,9 @@
       "svg": null
     },
     {
-  "value": "111+ Faces",
-  "label": "Top 1% Global Rank — AppBrain",
-  "link": "https://www.appbrain.com/dev/Creation+Cue",
-  "svg": null
-},
-    {
-      "value": "3 Years",
-      "label": "Active Since 2023",
-      "link": null,
+      "value": "111+ Faces",
+      "label": "Top 1% Global Rank — AppBrain",
+      "link": "https://www.appbrain.com/dev/Creation+Cue",
       "svg": null
     }
   ]
