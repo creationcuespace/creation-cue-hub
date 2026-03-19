@@ -68,11 +68,11 @@
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/CUE152.png",
       "play_store_url": "market://details?id=com.creation.cue152watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3DCUE152"
     },
-    {
-      "id": "cue024",
-      "title": "Watch Face CUE024",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue024.png",
-      "play_store_url": "market://details?id=com.creation.cue024watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue024"
+       {
+      "id": "crc034",
+      "title": "Watch face CRC034",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc034.png",
+      "play_store_url": "market://details?id=com.watchfacestudio.crc034&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc034"
     },
     {
       "id": "more",
