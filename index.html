@@ -1,286 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CreationCue™ | Wear OS Hub</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #f1b31c;
-            --bg: #050505;
-            --card-bg: #111;
-            --text-main: #ffffff;
-            --text-dim: #a0a0a0;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
-
-        header {
-            position: relative;
-            padding: 60px 20px;
-            text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('logo-back.png');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .logo { max-width: 90px; margin-bottom: 15px; }
-        h1 { font-size: 2.5rem; font-weight: 800; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
-        h1 span { color: var(--primary); }
-        .tagline { color: var(--text-dim); font-size: 1rem; margin-top: 10px; }
-
-        /* Updated Stats Grid for 6 Items */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px;
-            max-width: 1200px;
-            margin: -30px auto 40px;
-            padding: 0 20px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .stat-card {
-            background: #111;
-            border: 1px solid #222;
-            padding: 18px 10px;
-            border-radius: 12px;
-            text-align: center;
-            text-decoration: none;
-            color: white;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            min-height: 100px;
-        }
-        .stat-card:hover { border-color: var(--primary); transform: translateY(-5px); background: #181818; }
-        
-        .stat-value { display: block; font-size: 1.4rem; font-weight: 800; color: var(--primary); }
-        .stat-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 5px; font-weight: 700; }
-
-        /* Watch Face Container */
-        .content-width { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        
-        #faces-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-    padding-top: 8px;
-}
-
-        .face-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid #222;
-            position: relative;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        .face-card:hover { border-color: var(--primary); background: #181818; transform: translateY(-5px); }
-
-        .badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--primary);
-            color: black;
-            font-weight: 900;
-            font-size: 0.65rem;
-            padding: 4px 10px;
-            border-radius: 6px;
-            text-transform: uppercase;
-            z-index: 5;
-        }
-
-        .face-card img {
-            width: 100%;
-            aspect-ratio: 1/1;
-            border-radius: 50%;
-            margin-bottom: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-        }
-
-        .btn-play {
-            display: inline-block;
-            background: var(--primary);
-            color: black;
-            padding: 10px 15px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 0.75rem;
-            margin-top: 10px;
-            width: 85%;
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .stats-container { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-            .stat-value { font-size: 1.1rem; }
-            .stat-label { font-size: 0.55rem; }
-
-            #faces-container {
-                display: flex;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                gap: 12px;
-                padding-bottom: 20px;
-                scrollbar-width: none;
+    <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Wear OS Watch Faces – CreationCue | 111+ Premium Designs</title>
+        <meta name="description" content="Discover 111+ premium Wear OS watch faces by CreationCue. Free &amp; paid designs for Google Pixel Watch, Samsung Galaxy Watch, and all Wear OS smartwatches. Download on Google Play.">
+        <meta property="og:title" content="CreationCue – Wear OS Watch Faces">
+        <meta property="og:description" content="111+ premium Wear OS watch faces. Free &amp; paid. Top-rated on Google Play with 300K+ downloads.">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://creationcuespace.github.io/creation-cue-hub/">
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+        <style>
+                    :root {
+                                    --primary: #f1b31c;
+                                    --bg: #050505;
+                                    --card-bg: #111;
+                                    --text-main: #ffffff;
+                                    --text-dim: #a0a0a0;
+                    }
+                    body {
+                                    margin: 0;
+                                    padding: 0;
+                                    background-color: var(--bg);
+                                    color: var(--text-main);
+                                    font-family: 'Inter', sans-serif;
+                                    overflow-x: hidden;
+                    }
+                    header {
+                                    position: relative;
+                                    padding: 60px 20px;
+                                    text-align: center;
+                                    background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('logo-back.png');
+                                    background-size: cover;
+                                    background-position: center;
+                    }
+                    .logo { max-width: 90px; margin-bottom: 15px; }
+                    h1 {
+                                    font-size: 2.5rem;
+                                    font-weight: 800;
+                                    margin: 0;
+                                    text-transform: uppercase;
+                                    letter-spacing: 2px;
+                    }
+                    h1 span { color: var(--primary); }
+                    .tagline { color: var(--text-dim); font-size: 1rem; margin-top: 10px; }
+                    /* Updated Stats Grid for 6 Items */
+                    .stats-container {
+                                    display: grid;
+                                    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                                    gap: 12px;
+                                    max-width: 1200px;
+                                    margin: -30px auto 40px;
+                                    padding: 0 20px;
+                                    position: relative;
+                                    z-index: 10;
+                    }
+                    .stat-card {
+                                    background: #111;
+                                    border: 1px solid #222;
+                                    padding: 18px 10px;
+                                    border-radius: 12px;
+                                    text-align: center;
+                                    text-decoration: none;
+                                    color: white;
+                                    transition: all 0.3s ease;
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: center;
+                                    min-height: 100px;
+                    }
+                    .stat-card:hover { border-color: var(--primary); transform: translateY(-5px); background: #181818; }
+                    .stat-value { display: block; font-size: 1.4rem; font-weight: 800; color: var(--primary); }
+                    .stat-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 5px; font-weight: 700; }
+                    /* Watch Face Container */
+                    .content-width { max-width: 1200px; margin: 0 auto; padding: 20px; }
+                    #faces-container {
+                                    display: grid;
+                                    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                                    gap: 25px;
+                                    padding-top: 8px;
+                    }
+                    .face-card {
+                                    background: var(--card-bg);
+                                    border-radius: 20px;
+                                    padding: 20px;
+                                    text-align: center;
+                                    border: 1px solid #222;
+                                    position: relative;
+                                    transition: all 0.3s ease;
+                                    text-decoration: none;
+                                    color: inherit;
+                                    display: block;
+                    }
+                    .face-card:hover { border-color: var(--primary); background: #181818; transform: translateY(-5px); }
+                    .badge {
+                                    position: absolute;
+                                    top: 15px;
+                                    right: 15px;
+                                    background: var(--primary);
+                                    color: black;
+                                    font-weight: 900;
+                                    font-size: 0.65rem;
+                                    padding: 4px 10px;
+                                    border-radius: 6px;
+                                    text-transform: uppercase;
+                                    z-index: 5;
+                    }
+                    .face-card img { width: 100%; aspect-ratio: 1/1; border-radius: 50%; margin-bottom: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.6); }
+                    .btn-play {
+                                    display: inline-block;
+                                    background: var(--primary);
+                                    color: black;
+                                    padding: 10px 15px;
+                                    border-radius: 25px;
+                                    font-weight: bold;
+                                    font-size: 0.75rem;
+                                    margin-top: 10px;
+                                    width: 85%;
+                    }
+                    /* Mobile Adjustments */
+                    @media (max-width: 768px) {
+                                    .stats-container { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+                                    .stat-value { font-size: 1.1rem; }
+                                    .stat-label { font-size: 0.55rem; }
+                                    #faces-container {
+                                                        display: flex;
+                                                        overflow-x: auto;
+                                                        scroll-snap-type: x mandatory;
+                                                        gap: 12px;
+                                                        padding-bottom: 20px;
+                                                        scrollbar-width: none;
+                                    }
+                                    #faces-container::-webkit-scrollbar { display: none; }
+                                    .face-card { flex: 0 0 31%; min-width: 110px; padding: 10px; scroll-snap-align: center; }
+                                    .face-card h3 { font-size: 0.7rem; }
+                                    .btn-play { font-size: 0.55rem; }
+                    }
+                    footer { text-align: center; padding: 60px 20px; color: #444; font-size: 0.8rem; border-top: 1px solid #111; }
+                    .footer-links { margin-top: 15px; display: flex; justify-content: center; gap: 20px; }
+                    .footer-link { color: var(--primary); text-decoration: none; font-weight: bold; }
+                    .cc-footer-social { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 12px; }
+                    .cc-footer-icon { color: var(--primary); display: flex; align-items: center; transition: opacity 0.2s ease; }
+                    .cc-footer-icon:hover { opacity: 0.7; }
+                </style>
+    </head>
+    <body>
+            <header>
+                        <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" alt="Creation Cue" class="logo">
+                        <h1>CREATION<span>CUE™</span></h1>
+                    <p class="tagline">Browse our collection of 111+ Wear OS watch faces for Pixel Watch, Samsung Galaxy Watch, and all Wear OS devices. Crafted by CreationCue — a Huawei partner and top-rated developer on Google Play with over 300,000 downloads.</p>p>
+            </header>
+        <section class="stats-container" id="stats-container"></section>section>
+        <script>
+                async function loadStats() {
+                            const container = document.getElementById('stats-container');
+                            try {
+                                            const res = await fetch('https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/stats.json');
+                                            const data = await res.json();
+                                            data.stats.forEach(stat => {
+                                                                const tag = stat.link ? 'a' : 'div';
+                                                                const el = document.createElement(tag);
+                                                                el.className = 'stat-card';
+                                                                if (stat.link) { el.href = stat.link; el.target = '_blank'; }
+                                                                const valueHtml = stat.svg ? stat.svg : `<span class="stat-value">${stat.value}</span>`;
+                                                                el.innerHTML = `${valueHtml}<span class="stat-label">${stat.label}</span>`;
+                                                                container.appendChild(el);
+                                            });
+                            } catch (e) { console.error('Stats load error:', e); }
+                }
+                loadStats();
+        </script>
+            <div class="content-width">
+                        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                                        <h2 style="margin:0; font-size: 1.2rem;">FEATURED DESIGNS</h2>
+                        </div>div>
+                        <div id="faces-container">
+                                        <!-- Loading designs... -->
+                        </div>div>
+            </div>div>
+            <footer>
+                        <p>&copy; 2026 CreationCue™. Stats verified via Play Store &amp; AppBrain.</p>
+                    <div class="footer-links">
+                                <a href="privacy.html" class="footer-link">Privacy Policy</a>a>
+                    </div>div>
+                    <div class="cc-footer-social">
+                                <a class="cc-footer-icon" href="https://www.facebook.com/profile.php?id=100089647182787" target="_blank" rel="noopener" aria-label="Facebook">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>path></svg>svg>
+                                </a>a>
+                                <a class="cc-footer-icon" href="https://www.instagram.com/creation.cue/" target="_blank" rel="noopener" aria-label="Instagram">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>line></svg>svg>
+                                </a>a>
+                                <a class="cc-footer-icon" href="https://www.tiktok.com/@creationcue" target="_blank" rel="noopener" aria-label="TikTok">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.78a4.85 4.85 0 0 1-1.01-.09z"></path>path></svg>svg>
+                                </a>a>
+                                <a class="cc-footer-icon" href="mailto:creationcuespace@gmail.com" aria-label="Email">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>path><polyline points="22,6 12,13 2,6"></polyline>polyline></svg>svg>
+                                </a>a>
+                    </div>div>
+            </footer>
+        <script>
+            async function loadContent() {
+                        const container = document.getElementById('faces-container');
+                        try {
+                                        const response = await fetch('badge_text_faces.json');
+                                        const data = await response.json();
+                                        // Dynamic Logic: Skip first 2 cards
+                                        const facesToShow = data.watch_faces.slice(2);
+                                        facesToShow.forEach((face, index) => {
+                                                            const card = document.createElement('a');
+                                                            card.className = 'face-card';
+                                                            card.target = '_blank';
+                                                            // Dynamic Link Conversion (Market to Web)
+                                                            let rawUrl = face.play_store_url;
+                                                            let webUrl = rawUrl.startsWith('market://details?id=')
+                                                                                    ? rawUrl.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=')
+                                                                                    : rawUrl.startsWith('market://dev?id=')
+                                                                                    ? rawUrl.replace('market://dev?id=', 'https://play.google.com/store/apps/dev?id=')
+                                                                                    : rawUrl;
+                                                            card.href = webUrl;
+                                                            // Dynamic Last Item Button Text
+                                                            const isLast = index === facesToShow.length - 1;
+                                                            const buttonText = isLast ? "CreationCue" : "GOOGLE PLAY";
+                                                            const badgeHtml = face.badge_text ? `<div class="badge">${face.badge_text}</div>` : '';
+                                                            card.innerHTML = `
+                                                                                ${badgeHtml}
+                                                                                                    <img src="${face.image_url}" alt="${face.title}" onerror="this.src='https://via.placeholder.com/300'">
+                                                                                                                        <h3 style="margin: 10px 0; font-size: 0.9rem;">${face.title}</h3>
+                                                                                                                                            <div class="btn-play">${buttonText}</div>
+                                                                                                                                                            `;
+                                                            container.appendChild(card);
+                                        });
+                        } catch (e) {
+                                        console.error("JSON Error:", e);
+                                        container.innerHTML = `<p style="text-align:center; width:100%; color:#555;">Designs loading...</p>`;
+                        }
             }
-            #faces-container::-webkit-scrollbar { display: none; }
-            .face-card { flex: 0 0 31%; min-width: 110px; padding: 10px; scroll-snap-align: center; }
-            .face-card h3 { font-size: 0.7rem; }
-            .btn-play { font-size: 0.55rem; }
-        }
-
-        footer { text-align: center; padding: 60px 20px; color: #444; font-size: 0.8rem; border-top: 1px solid #111; }
-        .footer-links { margin-top: 15px; display: flex; justify-content: center; gap: 20px; }
-        .footer-link { color: var(--primary); text-decoration: none; font-weight: bold; }
-        .cc-footer-social {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 12px;
-}
-
-.cc-footer-icon {
-    color: var(--primary);
-    display: flex;
-    align-items: center;
-    transition: opacity 0.2s ease;
-}
-
-.cc-footer-icon:hover { opacity: 0.7; }
-    </style>
-</head>
-<body>
-
-    <header>
-        <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" alt="Creation Cue" class="logo">
-        <h1>CREATION<span>CUE™</span></h1>
-        <p class="tagline">Wear OS watch faces.</p>
-    </header>
-
-    <section class="stats-container" id="stats-container"></section>
-
-<script>
-  async function loadStats() {
-    const container = document.getElementById('stats-container');
-    try {
-      const res = await fetch('https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/stats.json');
-      const data = await res.json();
-
-      data.stats.forEach(stat => {
-        const tag = stat.link ? 'a' : 'div';
-        const el = document.createElement(tag);
-        el.className = 'stat-card';
-        if (stat.link) { el.href = stat.link; el.target = '_blank'; }
-
-        const valueHtml = stat.svg
-          ? stat.svg
-          : `<span class="stat-value">${stat.value}</span>`;
-
-        el.innerHTML = `${valueHtml}<span class="stat-label">${stat.label}</span>`;
-        container.appendChild(el);
-      });
-    } catch (e) {
-      console.error('Stats load error:', e);
-    }
-  }
-  loadStats();
-</script>
-
-    <div class="content-width">
-        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-            <h2 style="margin:0; font-size: 1.2rem;">FEATURED DESIGNS</h2>
-        </div>
-        <div id="faces-container">
-            <!-- Loading designs... -->
-        </div>
-    </div>
-
-    <footer>
-    <p>&copy; 2026 CreationCue™. Stats verified via Play Store & AppBrain.</p>
-    <div class="footer-links">
-        <a href="privacy.html" class="footer-link">Privacy Policy</a>
-    </div>
-    <div class="cc-footer-social">
-        <a class="cc-footer-icon" href="https://www.facebook.com/profile.php?id=100089647182787" target="_blank" rel="noopener" aria-label="Facebook">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-        </a>
-        <a class="cc-footer-icon" href="https://www.instagram.com/creation.cue/" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-        </a>
-        <a class="cc-footer-icon" href="https://www.tiktok.com/@creationcue" target="_blank" rel="noopener" aria-label="TikTok">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.78a4.85 4.85 0 0 1-1.01-.09z"></path></svg>
-        </a>
-        <a class="cc-footer-icon" href="mailto:creationcuespace@gmail.com" aria-label="Email">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-        </a>
-    </div>
-</footer>
-
-    <script>
-        async function loadContent() {
-            const container = document.getElementById('faces-container');
-            try {
-                const response = await fetch('badge_text_faces.json');
-                const data = await response.json();
-
-                // Dynamic Logic: Skip first 2 cards
-                const facesToShow = data.watch_faces.slice(2);
-
-                facesToShow.forEach((face, index) => {
-                    const card = document.createElement('a');
-                    card.className = 'face-card';
-                    card.target = '_blank';
-
-                    // Dynamic Link Conversion (Market to Web)
-                    let rawUrl = face.play_store_url;
-                    let webUrl = rawUrl.startsWith('market://details?id=') ? 
-                                rawUrl.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=') : 
-                                rawUrl.startsWith('market://dev?id=') ? 
-                                rawUrl.replace('market://dev?id=', 'https://play.google.com/store/apps/dev?id=') : 
-                                rawUrl;
-                    
-                    card.href = webUrl;
-
-                    // Dynamic Last Item Button Text
-                    const isLast = index === facesToShow.length - 1;
-                    const buttonText = isLast ? "CreationCue" : "GOOGLE PLAY";
-
-                    const badgeHtml = face.badge_text ? `<div class="badge">${face.badge_text}</div>` : '';
-
-                    card.innerHTML = `
-                        ${badgeHtml}
-                        <img src="${face.image_url}" alt="${face.title}" onerror="this.src='https://via.placeholder.com/300'">
-                        <h3 style="margin: 10px 0; font-size: 0.9rem;">${face.title}</h3>
-                        <div class="btn-play">${buttonText}</div>
-                    `;
-                    container.appendChild(card);
-                });
-            } catch (e) {
-                console.error("JSON Error:", e);
-                container.innerHTML = `<p style="text-align:center; width:100%; color:#555;">Designs loading...</p>`;
-            }
-        }
-        loadContent();
-    </script>
-</body>
+            loadContent();
+        </script>
+    </body>
 </html>
