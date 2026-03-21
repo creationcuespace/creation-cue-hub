@@ -1,23 +1,36 @@
 {
-  "app_settings": {
-    "latest_manager_version": "1.0.0",
-    "changelog_en": "Initial release of the Manager app!",
-    "changelog_de": "Erstveröffentlichung der Manager-App!",
-    "changelog_ko": "매니저 앱 초기 출시!"
-  },
-  "faces": [
+  "watch_faces": [
     {
-      "id": "cue107",
-      "package_name": "com.creation.cue107",
-      "title": "CUE 107 Sport",
-      "type": "digital",
-      "image_url": "https://example.com/images/cue107.webp",
-      "play_store_url": "market://details?id=com.creation.cue107",
-      "is_free": false,
-      "is_new": true,
-      "is_featured": true,
-      "description_en": "A modern digital face with 4 complications.",
-      "description_ko": "4개의 컴플리케이션이 있는 현대적인 디지털 페이스."
+      "id": "cueindus_pro",
+      "title": "CUE Indus Pro",
+      "badge_text": "PRO",
+      "promotion_for": "com.creation.cueinduswatchface",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
+      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+    },
+    {
+      "id": "cueindus_pro",
+      "title": "CUE Indus Pro",
+      "badge_text": "PRO",
+      "promotion_for": "com.creation.cueinduswatchface",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
+      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+    },
+    {
+      "id": "cueindus_pro",
+      "title": "CUE Indus Pro",
+      "badge_text": "PRO",
+      "promotion_for": "com.creation.cueinduswatchface",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
+      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+    },
+    {
+      "id": "cueindus_pro",
+      "title": "CUE Indus Pro",
+      "badge_text": "PRO",
+      "promotion_for": "com.creation.cueinduswatchface",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
+      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
     }
   ]
 }
