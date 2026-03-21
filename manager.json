@@ -1,33 +1,18 @@
 {
   "watch_faces": [
     {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
-      "badge_text": "PRO",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
-    },
-    {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
+      "id": "cue174",
+      "title": "Watch Face CUE174",
       "badge_text": "NEW",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue174.png",
+      "play_store_url": "market://details?id=com.creation.cue174watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue174"
     },
     {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
-      "badge_text": "FREE",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
-    },
-    {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
-      "badge_text": "PRO",
-      "promotion_for": "com.creation.cueinduswatchface",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+      "id": "cue173",
+      "title": "Watch Face CUE173",
+      "badge_text": "NEW",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue173.png",
+      "play_store_url": "market://details?id=com.creation.cue173watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue173"
     },
     {
       "id": "cueindus_pro",
@@ -38,92 +23,62 @@
       "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
     },
     {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
-      "badge_text": "PRO",
-      "promotion_for": "com.creation.cueinduswatchface",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+      "id": "cue136_plus",
+      "title": "Watch Face CUE136PLUS",
+      "badge_text": "PLUS",
+      "promotion_for": "com.creation.cue136watchface",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue136_plus.png",
+      "play_store_url": "market://details?id=com.creation.cue136PLUSwatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue136_plus"
     },
     {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
-      "badge_text": "PRO",
-      "promotion_for": "com.creation.cueinduswatchface",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+      "id": "cue116",
+      "title": "Watch Face CUE116",
+      "badge_text": "🔥 HOT",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue116.png",
+      "play_store_url": "market://details?id=com.creation.cue116watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue116"
     },
     {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
-      "badge_text": "PRO",
-      "promotion_for": "com.creation.cueinduswatchface",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+      "id": "cue136",
+      "title": "Watch Face CUE136",
+      "badge_text": "🎀 FREE",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue136.png",
+      "play_store_url": "market://details?id=com.creation.cue136watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue136_free"
     },
     {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
-      "badge_text": "PRO",
-      "promotion_for": "com.creation.cueinduswatchface",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+      "id": "cue163",
+      "title": "Watch Face CUE163",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue163.png",
+      "play_store_url": "market://details?id=com.creation.cue163watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue163"
     },
     {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
-      "badge_text": "PRO",
-      "promotion_for": "com.creation.cueinduswatchface",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+      "id": "CUE158",
+      "title": "Watch Face CUE158",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/CUE158.png",
+      "play_store_url": "market://details?id=com.creation.cue158watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3DCUE158"
     },
     {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
-      "badge_text": "PRO",
-      "promotion_for": "com.creation.cueinduswatchface",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+      "id": "CUE152",
+      "title": "Watch Face CUE152",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/CUE152.png",
+      "play_store_url": "market://details?id=com.creation.cue152watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3DCUE152"
     },
     {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
-      "badge_text": "PRO",
-      "promotion_for": "com.creation.cueinduswatchface",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+      "id": "CUE146",
+      "title": "Watch Face CUE146",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue146.png",
+      "play_store_url": "market://details?id=com.creation.cue146watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3DCUE146"
     },
     {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
-      "badge_text": "PRO",
-      "promotion_for": "com.creation.cueinduswatchface",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+      "id": "crc034",
+      "title": "Watch Face CRC034",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc034.png",
+      "play_store_url": "market://details?id=com.watchfacestudio.crc034&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc034"
     },
     {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
-      "badge_text": "PRO",
-      "promotion_for": "com.creation.cueinduswatchface",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
-    },
-    {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
-      "badge_text": "PRO",
-      "promotion_for": "com.creation.cueinduswatchface",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
-    },
-    {
-      "id": "cueindus_pro",
-      "title": "CUE Indus Pro",
-      "badge_text": "PRO",
-      "promotion_for": "com.creation.cueinduswatchface",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+      "id": "more",
+      "title": "See More Designs",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/more.png",
+      "play_store_url": "market://dev?id=7609098870161748513&referrer=utm_source%3Dhub_app%26utm_campaign%3Dmore_designs"
     }
   ]
 }
