@@ -233,7 +233,9 @@
       "play_store_url": "market://details?id=com.creation.cue154watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue154",
       "description_en": "CUE154 is a refined digital watch face with a balanced layout and practical complications.",
       "description_de": "CUE154 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
-      "filters": [],
+      "filters": [
+        "🌤️ WEATHER"
+      ],
       "type": "digital",
       "is_free": false
     },
@@ -266,7 +268,9 @@
       "play_store_url": "market://details?id=com.creation.cue151watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue151",
       "description_en": "CUE151 is a fan-favourite digital watch face with a bold, eye-catching design and rich complications.",
       "description_de": "CUE151 ist ein beliebtes digitales Zifferblatt mit auffälligem Design und umfangreichen Komplikationen.",
-      "filters": [],
+      "filters": [
+        "🌤️ WEATHER"
+      ],
       "type": "digital",
       "is_free": false
     },
@@ -299,7 +303,9 @@
       "play_store_url": "market://details?id=com.creation.cue148watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue148",
       "description_en": "CUE148 is a polished digital watch face with a minimalist style and essential health and time complications.",
       "description_de": "CUE148 ist ein poliertes digitales Zifferblatt im minimalistischen Stil mit wichtigen Gesundheits- und Zeitkomplikationen.",
-      "filters": [],
+      "filters": [
+        "🌤️ WEATHER"
+      ],
       "type": "digital",
       "is_free": false
     },
@@ -310,7 +316,9 @@
       "play_store_url": "market://details?id=com.creation.cue147watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue147",
       "description_en": "CUE147 is a sleek digital watch face with a modern look and a well-organized complication layout.",
       "description_de": "CUE147 ist ein schlankes digitales Zifferblatt mit modernem Look und übersichtlich angeordneten Komplikationen.",
-      "filters": [],
+      "filters": [
+        "🌤️ WEATHER"
+      ],
       "type": "digital",
       "is_free": false
     },
@@ -321,7 +329,9 @@
       "play_store_url": "market://details?id=com.creation.cue146watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue146",
       "description_en": "CUE146 is a refined digital watch face with a balanced layout and practical complications.",
       "description_de": "CUE146 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
-      "filters": [],
+      "filters": [
+        "🌤️ WEATHER"
+      ],
       "type": "digital",
       "is_free": false
     },
@@ -332,7 +342,9 @@
       "play_store_url": "market://details?id=com.creation.cue145watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue145",
       "description_en": "CUE145 is a stylish digital watch face combining a bold aesthetic with clear, readable complications.",
       "description_de": "CUE145 ist ein stilvolles digitales Zifferblatt mit kühnem Look und gut lesbaren Komplikationen.",
-      "filters": [],
+      "filters": [
+        "🌤️ WEATHER"
+      ],
       "type": "digital",
       "is_free": false
     },
@@ -343,7 +355,9 @@
       "play_store_url": "market://details?id=com.creation.cue144watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue144",
       "description_en": "CUE144 is a modern digital watch face with a clean layout and customizable complications.",
       "description_de": "CUE144 ist ein modernes digitales Zifferblatt mit klarem Layout und anpassbaren Komplikationen.",
-      "filters": [],
+      "filters": [
+        "🌤️ WEATHER"
+      ],
       "type": "digital",
       "is_free": false
     },
@@ -365,7 +379,9 @@
       "play_store_url": "market://details?id=com.creation.cue142watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue142",
       "description_en": "CUE142 is a fresh digital watch face featuring a stylish design with useful complications.",
       "description_de": "CUE142 ist ein frisches digitales Zifferblatt mit stilvollem Design und nützlichen Komplikationen.",
-      "filters": [],
+      "filters": [
+        "🌤️ WEATHER"
+      ],
       "type": "digital",
       "is_free": false
     },
@@ -398,7 +414,9 @@
       "play_store_url": "market://details?id=com.creation.cue139watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue139",
       "description_en": "CUE139 is a sleek digital watch face with a modern look and a well-organized complication layout.",
       "description_de": "CUE139 ist ein schlankes digitales Zifferblatt mit modernem Look und übersichtlich angeordneten Komplikationen.",
-      "filters": [],
+      "filters": [
+        "🌤️ WEATHER"
+      ],
       "type": "digital",
       "is_free": false
     },
@@ -409,7 +427,9 @@
       "play_store_url": "market://details?id=com.creation.cue138watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue138",
       "description_en": "CUE138 is a refined digital watch face with a balanced layout and practical complications.",
       "description_de": "CUE138 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
-      "filters": [],
+      "filters": [
+        "🌤️ WEATHER"
+      ],
       "type": "digital",
       "is_free": false
     },
@@ -1234,7 +1254,6 @@
     {
       "id": "cueindus",
       "title": "Cue Indus",
-      "badge_text": "🎀 FREE",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cueindus.png",
       "play_store_url": "market://details?id=com.creation.cueinduswatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus",
       "description_en": "CUEINDUS is a modern digital watch face with a clean layout and customizable complications.",
@@ -1243,7 +1262,8 @@
         "FREE"
       ],
       "type": "digital",
-      "is_free": true
+      "is_free": true,
+      "badge_text": "🎀 FREE"
     },
     {
       "id": "cueindus_pro",
