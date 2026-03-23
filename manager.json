@@ -33,7 +33,7 @@
       "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro",
       "description_en": "CUE Indus Pro is the premium upgrade of CUE Indus, offering advanced features and an elegant industrial-inspired design.",
       "description_de": "CUE Indus Pro ist das Premium-Upgrade von CUE Indus mit erweiterten Funktionen und einem eleganten Industrie-Design.",
-      "filters": ["PRO"],
+      "filters": [],
       "type": "digital",
       "is_free": false
     },
@@ -46,7 +46,7 @@
       "play_store_url": "market://details?id=com.creation.cue136PLUSwatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue136_plus",
       "description_en": "CUE136PLUS is a premium digital watch face with highly customizable complications and sleek design.",
       "description_de": "CUE136PLUS ist ein Premium-Digital-Zifferblatt mit hochgradig anpassbaren Komplikationen.",
-      "filters": ["PLUS"],
+      "filters": [],
       "type": "digital",
       "is_free": false
     },
