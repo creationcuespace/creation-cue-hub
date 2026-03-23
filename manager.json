@@ -27,7 +27,7 @@
     {
       "id": "cueindus_pro",
       "title": "CUE Indus Pro",
-      "badge_text": "PRO",
+      "badge_text": "",
       "promotion_for": "com.creation.cueinduswatchface",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
       "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro",
@@ -40,7 +40,7 @@
     {
       "id": "cue136_plus",
       "title": "Watch Face CUE136PLUS",
-      "badge_text": "PLUS",
+      "badge_text": "",
       "promotion_for": "com.creation.cue136watchface",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue136_plus.png",
       "play_store_url": "market://details?id=com.creation.cue136PLUSwatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue136_plus",
