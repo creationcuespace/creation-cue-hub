@@ -681,9 +681,12 @@
       "play_store_url": "market://details?id=com.creation.cue108watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue108",
       "description_en": "CUE108 is a polished digital watch face with a minimalist style and essential health and time complications.",
       "description_de": "CUE108 ist ein poliertes digitales Zifferblatt im minimalistischen Stil mit wichtigen Gesundheits- und Zeitkomplikationen.",
-      "filters": [],
+      "filters": [
+        "FREE"
+      ],
       "type": "digital",
-      "is_free": false
+      "is_free": true,
+      "badge_text": "🎀 FREE"
     },
     {
       "id": "cue107",
@@ -890,9 +893,12 @@
       "play_store_url": "market://details?id=com.creationscue.crc080watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc080",
       "description_en": "CRC080 is a modern digital watch face with a clean layout and customizable complications.",
       "description_de": "CRC080 ist ein modernes digitales Zifferblatt mit klarem Layout und anpassbaren Komplikationen.",
-      "filters": [],
+      "filters": [
+        "FREE"
+      ],
       "type": "digital",
-      "is_free": false
+      "is_free": true,
+      "badge_text": "🎀 FREE"
     },
     {
       "id": "crc079",
@@ -934,9 +940,12 @@
       "play_store_url": "market://details?id=com.creationcue.crc069watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc069",
       "description_en": "CRC069 is a distinctive digital watch face with a unique character and a rich set of complications.",
       "description_de": "CRC069 ist ein markantes digitales Zifferblatt mit einzigartigem Charakter und einer Vielzahl von Komplikationen.",
-      "filters": [],
+      "filters": [
+        "FREE"
+      ],
       "type": "digital",
-      "is_free": false
+      "is_free": true,
+      "badge_text": "🎀 FREE"
     },
     {
       "id": "crc068",
@@ -945,9 +954,12 @@
       "play_store_url": "market://details?id=com.creationcue.crc068watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc068",
       "description_en": "CRC068 is a polished digital watch face with a minimalist style and essential health and time complications.",
       "description_de": "CRC068 ist ein poliertes digitales Zifferblatt im minimalistischen Stil mit wichtigen Gesundheits- und Zeitkomplikationen.",
-      "filters": [],
+      "filters": [
+        "FREE"
+      ],
       "type": "digital",
-      "is_free": false
+      "is_free": true,
+      "badge_text": "🎀 FREE"
     },
     {
       "id": "crc066",
@@ -1044,9 +1056,12 @@
       "play_store_url": "market://details?id=com.watchfacestudio.crc041&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc041",
       "description_en": "CRC041 is a stylish digital watch face combining a bold aesthetic with clear, readable complications.",
       "description_de": "CRC041 ist ein stilvolles digitales Zifferblatt mit kühnem Look und gut lesbaren Komplikationen.",
-      "filters": [],
+      "filters": [
+        "FREE"
+      ],
       "type": "digital",
-      "is_free": false
+      "is_free": true,
+      "badge_text": "🎀 FREE"
     },
     {
       "id": "crc039",
@@ -1165,9 +1180,12 @@
       "play_store_url": "market://details?id=com.watchfacestudio.crc023&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc023",
       "description_en": "CRC023 is a fan-favourite digital watch face with a bold, eye-catching design and rich complications.",
       "description_de": "CRC023 ist ein beliebtes digitales Zifferblatt mit auffälligem Design und umfangreichen Komplikationen.",
-      "filters": [],
+      "filters": [
+        "FREE"
+      ],
       "type": "digital",
-      "is_free": false
+      "is_free": true,
+      "badge_text": "🎀 FREE"
     },
     {
       "id": "ccwf022",
@@ -1220,9 +1238,11 @@
       "play_store_url": "market://details?id=com.creation.cueinduswatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus",
       "description_en": "CUEINDUS is a modern digital watch face with a clean layout and customizable complications.",
       "description_de": "CUEINDUS ist ein modernes digitales Zifferblatt mit klarem Layout und anpassbaren Komplikationen.",
-      "filters": [],
+      "filters": [
+        "FREE"
+      ],
       "type": "digital",
-      "is_free": false
+      "is_free": true
     },
     {
       "id": "cueindus_pro",
