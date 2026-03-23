@@ -128,17 +128,6 @@
       "filters": [],
       "type": "digital",
       "is_free": false
-    },
-    {
-      "id": "more",
-      "title": "See More Designs",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/more.png",
-      "play_store_url": "market://dev?id=7609098870161748513&referrer=utm_source%3Dhub_app%26utm_campaign%3Dmore_designs",
-      "description_en": "Explore the full Creation Cue collection on Google Play.",
-      "description_de": "Entdecke die gesamte Creation Cue Kollektion auf Google Play.",
-      "filters": [],
-      "type": "more",
-      "is_free": null
     }
   ]
 }
