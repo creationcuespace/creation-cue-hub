@@ -5,14 +5,24 @@
       "title": "Watch Face CUE174",
       "badge_text": "NEW",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue174.png",
-      "play_store_url": "market://details?id=com.creation.cue174watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue174"
+      "play_store_url": "market://details?id=com.creation.cue174watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue174",
+      "description_en": "CUE174 is a modern digital watch face with a clean layout and customizable complications.",
+      "description_de": "CUE174 ist ein modernes digitales Zifferblatt mit klarem Layout und anpassbaren Komplikationen.",
+      "filters": ["NEW"],
+      "type": "digital",
+      "is_free": false
     },
     {
       "id": "cue173",
       "title": "Watch Face CUE173",
       "badge_text": "NEW",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue173.png",
-      "play_store_url": "market://details?id=com.creation.cue173watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue173"
+      "play_store_url": "market://details?id=com.creation.cue173watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue173",
+      "description_en": "CUE173 is a fresh digital watch face featuring a stylish design with useful complications.",
+      "description_de": "CUE173 ist ein frisches digitales Zifferblatt mit stilvollem Design und nützlichen Komplikationen.",
+      "filters": ["NEW"],
+      "type": "digital",
+      "is_free": false
     },
     {
       "id": "cueindus_pro",
@@ -20,7 +30,12 @@
       "badge_text": "PRO",
       "promotion_for": "com.creation.cueinduswatchface",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/indus_pro.png",
-      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro"
+      "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro",
+      "description_en": "CUE Indus Pro is the premium upgrade of CUE Indus, offering advanced features and an elegant industrial-inspired design.",
+      "description_de": "CUE Indus Pro ist das Premium-Upgrade von CUE Indus mit erweiterten Funktionen und einem eleganten Industrie-Design.",
+      "filters": ["PRO"],
+      "type": "digital",
+      "is_free": false
     },
     {
       "id": "cue136_plus",
@@ -28,57 +43,102 @@
       "badge_text": "PLUS",
       "promotion_for": "com.creation.cue136watchface",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue136_plus.png",
-      "play_store_url": "market://details?id=com.creation.cue136PLUSwatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue136_plus"
+      "play_store_url": "market://details?id=com.creation.cue136PLUSwatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue136_plus",
+      "description_en": "CUE136PLUS is a premium digital watch face with highly customizable complications and sleek design.",
+      "description_de": "CUE136PLUS ist ein Premium-Digital-Zifferblatt mit hochgradig anpassbaren Komplikationen.",
+      "filters": ["PLUS"],
+      "type": "digital",
+      "is_free": false
     },
     {
       "id": "cue116",
       "title": "Watch Face CUE116",
       "badge_text": "🔥 HOT",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue116.png",
-      "play_store_url": "market://details?id=com.creation.cue116watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue116"
+      "play_store_url": "market://details?id=com.creation.cue116watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue116",
+      "description_en": "CUE116 is a fan-favourite digital watch face with a bold, eye-catching design and rich complications.",
+      "description_de": "CUE116 ist ein beliebtes digitales Zifferblatt mit auffälligem Design und umfangreichen Komplikationen.",
+      "filters": ["HOT"],
+      "type": "digital",
+      "is_free": false
     },
     {
       "id": "cue136",
       "title": "Watch Face CUE136",
       "badge_text": "🎀 FREE",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue136.png",
-      "play_store_url": "market://details?id=com.creation.cue136watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue136_free"
+      "play_store_url": "market://details?id=com.creation.cue136watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue136_free",
+      "description_en": "CUE136 is a free digital watch face with a clean and elegant design, perfect for everyday wear.",
+      "description_de": "CUE136 ist ein kostenloses digitales Zifferblatt mit einem sauberen und eleganten Design für den Alltag.",
+      "filters": ["FREE"],
+      "type": "digital",
+      "is_free": true
     },
     {
       "id": "cue163",
       "title": "Watch Face CUE163",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue163.png",
-      "play_store_url": "market://details?id=com.creation.cue163watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue163"
+      "play_store_url": "market://details?id=com.creation.cue163watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue163",
+      "description_en": "CUE163 is a refined digital watch face with a balanced layout and practical complications.",
+      "description_de": "CUE163 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
+      "filters": [],
+      "type": "digital",
+      "is_free": false
     },
     {
       "id": "CUE158",
       "title": "Watch Face CUE158",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/CUE158.png",
-      "play_store_url": "market://details?id=com.creation.cue158watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3DCUE158"
+      "play_store_url": "market://details?id=com.creation.cue158watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3DCUE158",
+      "description_en": "CUE158 is a stylish digital watch face combining a bold aesthetic with clear, readable complications.",
+      "description_de": "CUE158 ist ein stilvolles digitales Zifferblatt mit einem kühnen Look und gut lesbaren Komplikationen.",
+      "filters": [],
+      "type": "digital",
+      "is_free": false
     },
     {
       "id": "CUE152",
       "title": "Watch Face CUE152",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/CUE152.png",
-      "play_store_url": "market://details?id=com.creation.cue152watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3DCUE152"
+      "play_store_url": "market://details?id=com.creation.cue152watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3DCUE152",
+      "description_en": "CUE152 is a sleek digital watch face with a modern look and a well-organized complication layout.",
+      "description_de": "CUE152 ist ein schlankes digitales Zifferblatt mit modernem Look und übersichtlich angeordneten Komplikationen.",
+      "filters": [],
+      "type": "digital",
+      "is_free": false
     },
     {
       "id": "CUE146",
       "title": "Watch Face CUE146",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue146.png",
-      "play_store_url": "market://details?id=com.creation.cue146watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3DCUE146"
+      "play_store_url": "market://details?id=com.creation.cue146watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3DCUE146",
+      "description_en": "CUE146 is a polished digital watch face with a minimalist style and essential health and time complications.",
+      "description_de": "CUE146 ist ein poliertes digitales Zifferblatt im minimalistischen Stil mit wichtigen Gesundheits- und Zeitkomplikationen.",
+      "filters": [],
+      "type": "digital",
+      "is_free": false
     },
     {
       "id": "crc034",
       "title": "Watch Face CRC034",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc034.png",
-      "play_store_url": "market://details?id=com.watchfacestudio.crc034&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc034"
+      "play_store_url": "market://details?id=com.watchfacestudio.crc034&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc034",
+      "description_en": "CRC034 is a distinctive digital watch face with a unique character and a rich set of complications.",
+      "description_de": "CRC034 ist ein markantes digitales Zifferblatt mit einzigartigem Charakter und einer Vielzahl von Komplikationen.",
+      "filters": [],
+      "type": "digital",
+      "is_free": false
     },
     {
       "id": "more",
       "title": "See More Designs",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/more.png",
-      "play_store_url": "market://dev?id=7609098870161748513&referrer=utm_source%3Dhub_app%26utm_campaign%3Dmore_designs"
+      "play_store_url": "market://dev?id=7609098870161748513&referrer=utm_source%3Dhub_app%26utm_campaign%3Dmore_designs",
+      "description_en": "Explore the full Creation Cue collection on Google Play.",
+      "description_de": "Entdecke die gesamte Creation Cue Kollektion auf Google Play.",
+      "filters": [],
+      "type": "more",
+      "is_free": null
     }
   ]
 }
