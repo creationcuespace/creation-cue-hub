@@ -969,19 +969,20 @@
       "is_free": false
     },
     {
-      "id": "crc069",
-      "title": "CRC069",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc069.png",
-      "play_store_url": "market://details?id=com.creationcue.crc069watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc069",
-      "description_en": "CRC069 is a distinctive digital watch face with a unique character and a rich set of complications.",
-      "description_de": "CRC069 ist ein markantes digitales Zifferblatt mit einzigartigem Charakter und einer Vielzahl von Komplikationen.",
-      "filters": [
-        "FREE"
-      ],
-      "type": "digital",
-      "is_free": true,
-      "badge_text": "🎀 FREE"
-    },
+  "id": "crc069",
+  "title": "CRC069",
+  "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc069.png",
+  "play_store_url": "market://details?id=com.creationcue.crc069watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc069",
+  "description_en": "🇰🇷 Ranked #2 in South Korea · Personalization",
+  "description_de": "🇰🇷 Platz 2 in Südkorea · Personalisierung",
+  "description_ko": "🇰🇷 대한민국 2위 · 개인화",
+  "filters": [
+    "FREE"
+  ],
+  "type": "digital",
+  "is_free": true,
+  "badge_text": "🎀 FREE"
+}
     {
       "id": "crc068",
       "title": "CRC068",
