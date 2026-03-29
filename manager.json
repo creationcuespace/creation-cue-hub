@@ -1049,7 +1049,7 @@
       "description_de": "CRC046 ist ein frisches analoges Zifferblatt mit stilvollem Design und nützlichen Komplikationen.",
       "filters": [],
       "type": "analog",
-      "is_free": false
+      "is_free": true
     },
     {
       "id": "crc044",
