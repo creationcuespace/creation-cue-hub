@@ -6,6 +6,20 @@
   },
   "watch_faces": [
     {
+      "id": "cue175",
+      "title": "CUE175",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue175.png",
+      "play_store_url": "market://details?id=com.creation.cue175watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue175",
+      "description_en": "Unique Wear OS watch face: large minutes, rotating hours, clean rich info.",
+      "description_de": "Einzigartiges Wear OS Zifferblatt: große Minutenanzeige, rotierende Stunden und ein sauber gestaltetes Informationslayout.",
+      "filters": [
+        "NEW"
+      ],
+      "type": "digital",
+      "is_free": false,
+      "badge_text": "NEW"
+    },
+    {
       "id": "cue174",
       "title": "CUE174",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue174.png",
