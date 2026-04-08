@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use | Flag Complication – CreationCue</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #f1b31c;
+            --bg: #050505;
+            --card-bg: #111;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+
+        header {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85));
+        }
+
+        .logo { max-width: 90px; margin-bottom: 20px; }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h1 span { color: var(--primary); }
+
+        .tagline {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .content-width {
+            max-width: 900px;
+            margin: -40px auto 60px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #222;
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-top: 45px;
+            margin-bottom: 20px;
+            font-weight: 800;
+            border-left: 4px solid var(--primary);
+            padding-left: 20px;
+            text-transform: uppercase;
+        }
+
+        h2:first-of-type { margin-top: 10px; }
+
+        h3 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        p {
+            color: var(--text-dim);
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .steps {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 25px 0;
+            counter-reset: step-counter;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            margin-bottom: 18px;
+            color: var(--text-dim);
+            font-size: 1rem;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            min-width: 34px;
+            height: 34px;
+            background: rgba(241, 179, 28, 0.12);
+            border: 1px solid rgba(241, 179, 28, 0.35);
+            border-radius: 50%;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .steps li strong {
+            color: #fff;
+        }
+
+        .highlight-box {
+            background: rgba(241, 179, 28, 0.05);
+            border: 1px solid rgba(241, 179, 28, 0.2);
+            padding: 25px 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+        }
+
+        .highlight-box p { margin-bottom: 0; }
+
+        .tip-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid #222;
+            padding: 20px 25px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .tip-label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .tip-box p { margin: 0; font-size: 0.95rem; }
+
+        .complication-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin: 20px 0 30px;
+        }
+
+        .comp-type {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 16px 18px;
+            text-align: center;
+        }
+
+        .comp-type .icon {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        .comp-type .name {
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .comp-type .desc {
+            color: var(--text-dim);
+            font-size: 0.78rem;
+            line-height: 1.4;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #222;
+            margin: 40px 0;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 14px 30px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-top: 40px;
+            transition: 0.3s;
+            border: 1px solid #333;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .btn-back:hover {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .btn-store {
+            display: inline-block;
+            background: var(--primary);
+            color: #000;
+            padding: 14px 30px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            margin-left: 12px;
+            transition: 0.3s;
+            border: 1px solid var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-store:hover {
+            background: #ffc93a;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: #444;
+            font-size: 0.85rem;
+            border-top: 1px solid #111;
+        }
+
+        .footer-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        @media (max-width: 600px) {
+            .card { padding: 25px; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.1rem; }
+            .complication-types { grid-template-columns: 1fr 1fr; }
+            .btn-store { margin-left: 0; margin-top: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html">
+            <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" alt="Creation Cue" class="logo">
+        </a>
+        <h1>HOW TO <span>USE</span></h1>
+        <p class="tagline">Flag Complication – Wear OS Guide</p>
+    </header>
+
+    <main class="content-width">
+        <div class="card">
+
+            <p>
+                <strong>Flag Complication</strong> lets you display any country flag — plus a custom text label — directly in a complication slot on your Wear OS watch face. Over 150 flags included, fully offline.
+            </p>
+
+            <h2>Step 1 – Add the Complication</h2>
+            <p>First, assign the Flag Complication to a slot on your watch face.</p>
+            <ol class="steps">
+                <li><strong>Long-press</strong> your current watch face to enter edit mode.</li>
+                <li>Tap <strong>Edit</strong> or <strong>Customize</strong> (gear or pencil icon depending on your watch).</li>
+                <li>Tap any <strong>complication slot</strong> you want to use.</li>
+                <li>Scroll through the provider list and select <strong>"Flag Complication"</strong>.</li>
+                <li>Choose your preferred display style (see options below) and confirm.</li>
+            </ol>
+
+            <h3>Available display styles</h3>
+            <div class="complication-types">
+                <div class="comp-type">
+                    <div class="icon">🏳️</div>
+                    <div class="name">Short Text</div>
+                    <div class="desc">Flag icon + your custom text label</div>
+                </div>
+                <div class="comp-type">
+                    <div class="icon">🖼️</div>
+                    <div class="name">Small Image</div>
+                    <div class="desc">Flag displayed as a small image only</div>
+                </div>
+                <div class="comp-type">
+                    <div class="icon">📝</div>
+                    <div class="name">Long Text</div>
+                    <div class="desc">Flag icon + longer text label</div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <h2>Step 2 – Configure Your Flag</h2>
+            <p>After adding the complication, tap it on your watch face to open the configuration screen directly on your watch.</p>
+            <ol class="steps">
+                <li>Tap the <strong>complication on your watch face</strong> — the Flag Complication config screen opens on the watch.</li>
+                <li>Use the <strong>Icon Spinner</strong> to scroll through and select your desired flag.</li>
+                <li>Tap the <strong>Text field</strong> to enter a custom label — for example your country initials like <em>GR</em>, <em>US</em>, or any short note.</li>
+                <li>Your selection <strong>saves automatically</strong> and the complication updates instantly on your watch face.</li>
+            </ol>
+
+            <div class="highlight-box">
+                <p>💡 <strong style="color:#fff;">No phone needed.</strong> Everything is configured directly on your watch. No companion app required.</p>
+            </div>
+
+            <hr class="divider">
+
+            <h2>Step 3 – Change Your Flag Anytime</h2>
+            <p>Want to switch to a different flag later? It's easy.</p>
+            <ol class="steps">
+                <li><strong>Tap the complication</strong> on your watch face at any time.</li>
+                <li>Pick a new flag or update your text label.</li>
+                <li>Changes apply <strong>immediately</strong> — no restart needed.</li>
+            </ol>
+
+            <div class="tip-box">
+                <div class="tip-label">Tip</div>
+                <p>You can use the text field for anything short — not just country initials. Try a team abbreviation, a custom symbol, or your initials.</p>
+            </div>
+
+            <hr class="divider">
+
+            <h2>Troubleshooting</h2>
+
+            <h3>The complication is not showing my flag</h3>
+            <p>Tap the complication to open the config screen and confirm your flag selection is saved. If the issue persists, try removing and re-adding the complication slot.</p>
+
+            <h3>I don't see "Flag Complication" in the provider list</h3>
+            <p>Make sure the app is fully installed on your watch. Open the app list on your watch to confirm it appears, then try editing the watch face again.</p>
+
+            <h3>The text label is not updating</h3>
+            <p>After editing, wait a few seconds for the watch face to refresh. If it still doesn't update, long-press the watch face and re-enter edit mode — this forces a redraw.</p>
+
+            <hr class="divider">
+
+            <h2>More Watch Faces</h2>
+            <p>Flag Complication is made by <strong style="color:#fff;">Creation Cue</strong> — creators of 110+ premium Wear OS watch faces. Explore the full collection on Google Play.</p>
+
+            <div style="text-align: center; border-top: 1px solid #222; margin-top: 50px; padding-top: 30px;">
+                <a href="#" onclick="history.back(); return false;" class="btn-back">← Go Back</a>
+                <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank" class="btn-store">Browse Watch Faces ↗</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Creation Cue. All rights reserved.</p>
+        <div style="margin-top: 10px;">
+            <a href="index.html" class="footer-link">Home Hub</a>
+            <a href="privacy.html" class="footer-link">Privacy Policy</a>
+            <a href="mailto:creationcuespace@gmail.com" class="footer-link">Support</a>
+        </div>
+    </footer>
+
+</body>
+</html>
