@@ -104,17 +104,18 @@
 
         .steps li {
             counter-increment: step-counter;
-            display: flex;
-            align-items: flex-start;
-            gap: 18px;
+            display: grid;
+            grid-template-columns: 34px 1fr;
+            gap: 14px;
             margin-bottom: 18px;
             color: var(--text-dim);
             font-size: 1rem;
+            align-items: start;
         }
 
         .steps li::before {
             content: counter(step-counter);
-            min-width: 34px;
+            width: 34px;
             height: 34px;
             background: rgba(241, 179, 28, 0.12);
             border: 1px solid rgba(241, 179, 28, 0.35);
@@ -378,9 +379,4 @@
         <div style="margin-top: 10px;">
             <a href="index.html" class="footer-link">Home Hub</a>
             <a href="privacy.html" class="footer-link">Privacy Policy</a>
-            <a href="mailto:creationcuespace@gmail.com" class="footer-link">Support</a>
-        </div>
-    </footer>
-
-</body>
-</html>
+            <a href="/cdn-cgi/l/email-protection#016273646075686e6f627464727160626441666c60686d2f626e6c" class="footer-link">Support</
