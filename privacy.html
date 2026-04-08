@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy | CreationCue</title>
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
@@ -25,11 +26,11 @@
         }
 
         header {
-            position: relative;
-            padding: 80px 20px;
-            text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85));
-        }
+    position: relative;
+    padding: 80px 20px;
+    text-align: center;
+    background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85));
+}
 
         .logo { max-width: 90px; margin-bottom: 20px; }
         h1 { font-size: 2.5rem; font-weight: 800; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
@@ -85,19 +86,6 @@
 
         li { margin-bottom: 12px; }
 
-        .note {
-            font-style: italic;
-            opacity: 0.7;
-            font-size: 0.9rem;
-        }
-
-        .info-box {
-            background: rgba(255,255,255,0.03);
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-
         .btn-back {
             display: inline-block;
             background: #1a1a1a;
@@ -121,10 +109,10 @@
             transform: scale(1.05);
         }
 
-        footer {
-            text-align: center;
-            padding: 60px 20px;
-            color: #444;
+        footer { 
+            text-align: center; 
+            padding: 60px 20px; 
+            color: #444; 
             font-size: 0.85rem;
             border-top: 1px solid #111;
         }
@@ -145,79 +133,53 @@
             <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" alt="Creation Cue" class="logo">
         </a>
         <h1>PRIVACY <span>POLICY</span></h1>
-        <p class="tagline">Last Updated: April 8, 2026</p>
+        <p class="tagline">Last Updated: March 12, 2026</p>
     </header>
 
     <main class="content-width">
         <div class="privacy-card">
-
+            
             <p>
-                <strong>Creation Cue</strong> ("we," "our," or "us") develops Wear OS watch face apps published on Google Play. This policy outlines our commitment to your privacy and explains how we handle data within our apps.
+                <strong>Creation Cue</strong> (“we,” “our,” or “us”) provides Wear OS watch faces and a companion Android application. This policy outlines our commitment to your privacy and explains how we handle data.
             </p>
 
-            <div class="info-box" style="margin-top: 0; margin-bottom: 30px;">
-                <h3 style="margin-top: 0;">About This App</h3>
-                <p style="margin-bottom: 0;">This is a <strong>free standalone Wear OS watch face</strong> that runs entirely on your watch. It requires no companion phone app. The watch face displays health and fitness metrics and allows you to personalize complication slots directly on your watch by selecting a country flag and entering custom short text (up to 4 characters). It targets Android API 35, supports 64-bit (arm64-v8a), and operates in fully standalone mode.</p>
-            </div>
-
             <h2>1. Data Access and Collection</h2>
-            <p>We prioritize your privacy. We do not collect, transmit, or store any personal data on external servers. All data handled by this app is processed locally on your Wear OS device. The following describes all data activities:</p>
+            <p>We prioritize your privacy and do not collect personal or sensitive information for storage on our servers. However, our apps perform the following data activities:</p>
+            
+            <h3>Health and Fitness Data (Watch Face)</h3>
+            <p>Our watch faces access real-time sensor data, including <strong>Heart Rate, Step Count, and Physical Activity</strong>, through the Wear OS platform.</p>
+            <p style="font-style: italic; opacity: 0.7; font-size: 0.9rem;">Usage: This data is accessed solely to display it on the watch face interface for your immediate information. It is processed locally and is never transmitted off your device or shared with third parties.</p>
 
-            <h3>Health and Fitness Data</h3>
-            <p>The watch face accesses real-time sensor data including <strong>Heart Rate, Step Count, and Physical Activity</strong> through the Wear OS platform.</p>
-            <p class="note">Usage: This data is accessed solely to display it on the watch face for your immediate reference. It is processed entirely on your watch and is never transmitted off your device or shared with any third party.</p>
+            <h3>Referrer Information (Companion App)</h3>
+            <p>Our companion app uses the <strong>Google Play Install Referrer API</strong>.</p>
+            <p style="font-style: italic; opacity: 0.7; font-size: 0.9rem;">Usage: This is used to identify the source of your visit to our “Featured Designs” carousel. This helps us improve our marketing and feature the most relevant designs. This information is non-identifying and is not linked to your personal profile.</p>
 
-            <h3>Complication Preferences</h3>
-            <p>The watch face stores your chosen country flag and custom complication text (up to 4 characters) locally on your watch.</p>
-            <p class="note">Usage: These preferences are saved exclusively on your Wear OS device using standard local storage. They exist solely to personalize what is displayed on your watch face and are never uploaded to any server.</p>
+            <h2>2. Data Retention</h2>
+            <p>We do not store your personal, health, or referrer data on any permanent storage or cloud infrastructure.</p>
+            <p><strong>Retention Period:</strong> Because no data is collected or stored by us, there is no retention period. All health data is processed “ephemerally” in the device’s temporary memory (RAM) and vanishes as soon as the watch face is closed or the data is updated.</p>
 
-            <h3>Cross-Device Communication</h3>
-            <p>The watch face uses the standard <strong>RemoteActivityHelper</strong> API provided by Google to open links on your paired phone when you tap certain elements. A standard Wear OS <strong>ConfirmationOverlay</strong> animation is shown to confirm when such an action is triggered.</p>
-            <p class="note">Usage: This is the official Google-recommended mechanism for cross-device actions on Wear OS. No personal data is transmitted — it simply signals your paired phone to open a specified URL, such as our Google Play page.</p>
-
-            <h2>2. Permissions Explained</h2>
-
-            <div class="info-box">
-                <ul style="margin-bottom: 0;">
-                    <li><strong>BODY_SENSORS / HEALTH_SERVICES</strong> — Required to read heart rate data for display on the watch face.</li>
-                    <li><strong>ACTIVITY_RECOGNITION</strong> — Required to display step count and physical activity metrics on the watch face.</li>
-                    <li><strong>INTERNET</strong> — Used only for cross-device communication via RemoteActivityHelper to open links on your paired phone.</li>
+            <h2>3. Data Deletion</h2>
+            <p>Since we do not collect or store user data on our servers, there is no data to delete from our systems.</p>
+            
+            <div style="background: rgba(255,255,255,0.03); padding: 25px; border-radius: 15px; margin-top: 20px;">
+                <h3>User Control</h3>
+                <ul>
+                    <li>Changing the watch face or uninstalling the companion app.</li>
+                    <li>Revoking “Sensors” or “Physical Activity” permissions in your device’s System Settings.</li>
+                    <li>Uninstallation effectively removes all app-related local configurations.</li>
                 </ul>
             </div>
 
-            <h2>3. Data Retention</h2>
-            <p><strong>Health Data:</strong> Processed ephemerally in the device's temporary memory (RAM) and discarded as soon as the watch face updates or is closed. It is never written to permanent storage.</p>
-            <p><strong>Complication Preferences:</strong> Your selected flag and custom text are stored locally on your Wear OS device only. Uninstalling the watch face removes all locally stored preferences.</p>
+            <h2>4. Security</h2>
+            <p>We follow industry standards for local data handling to ensure that the transient data accessed by the app is handled securely within the Android/Wear OS sandbox environment.</p>
 
-            <h2>4. Data Deletion</h2>
-            <p>Since we do not collect or store any user data on our servers, there is no data to delete from our systems.</p>
-
-            <div class="info-box">
-                <h3 style="margin-top: 0;">User Control</h3>
-                <ul style="margin-bottom: 0;">
-                    <li>Uninstalling the watch face removes all locally stored preferences from your device.</li>
-                    <li>Revoking <strong>Body Sensors</strong> permission in your watch's System Settings stops heart rate access immediately.</li>
-                    <li>Revoking <strong>Physical Activity</strong> permission in your watch's System Settings stops step and activity data access immediately.</li>
-                </ul>
-            </div>
-
-            <h2>5. Security</h2>
-            <p>All data accessed by this app is handled securely within the Wear OS sandbox environment. The app targets the latest Android API (35) and is built with 64-bit (arm64-v8a) support, ensuring it runs on the most up-to-date and secure version of the platform.</p>
-
-            <h2>6. Children's Privacy</h2>
-            <p>Our apps are not directed at children under the age of 13. We do not knowingly collect any information from children.</p>
-
-            <h2>7. Changes to This Policy</h2>
-            <p>We may update this privacy policy from time to time. Any changes will be reflected by the "Last Updated" date at the top of this page. Continued use of our apps after changes are posted constitutes your acceptance of the updated policy.</p>
-
-            <h2>8. Contact Information</h2>
-            <p>For questions or concerns about this privacy policy, please contact us at:</p>
+            <h2>5. Contact Information</h2>
+            <p>For more information please contact us at:</p>
             <a href="mailto:creationcuespace@gmail.com" class="footer-link" style="margin-left: 0; font-size: 1.1rem;">creationcuespace@gmail.com</a>
 
             <div style="text-align: center; border-top: 1px solid #222; margin-top: 50px; padding-top: 20px;">
                 <a href="index.html" class="btn-back">← BACK TO HUB</a>
             </div>
-
         </div>
     </main>
 
