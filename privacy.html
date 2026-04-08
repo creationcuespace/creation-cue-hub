@@ -173,7 +173,7 @@
                 <h3 style="margin-top: 0;">Products Covered by This Policy</h3>
                 <ul style="margin-bottom: 0;">
                     <li><strong>Wear OS Watch Faces</strong> — Watch face apps published on Google Play, running directly on your Wear OS device (e.g. Samsung Galaxy Watch). Targets Android API 35, supports 64-bit (arm64-v8a), and operates in standalone mode without requiring a phone app.</li>
-                    <li><strong>Companion Android App</strong> — A phone-side app that complements certain watch faces, providing configuration options such as custom complication text, flag selection, and access to the CreationCue watch face catalog.</li>
+                    <li><strong>Companion Android App</strong> — A phone-side configuration app that lets you personalize your watch face complication slots by selecting a country flag and entering custom short text (up to 4 characters). Also displays the connection status of your paired watch and features a carousel of CreationCue watch faces.</li>
                 </ul>
             </div>
 
@@ -191,9 +191,14 @@
             <p class="note">Usage: This is the official Google-recommended mechanism for cross-device actions on Wear OS. No personal data is transmitted through this process — it simply signals your paired phone to open a specified URL.</p>
 
             <div class="app-badge">Companion App</div>
-            <h3>User Preferences</h3>
-            <p>The companion app stores your configuration choices locally on your phone, such as your selected flag and custom complication text.</p>
-            <p class="note">Usage: These preferences are saved exclusively on your device using standard Android local storage. They are never uploaded to any server.</p>
+            <h3>Complication Preferences</h3>
+            <p>The companion app stores your chosen country flag and custom complication text (up to 4 characters) locally on your phone. These settings are synced to your watch face complication slots.</p>
+            <p class="note">Usage: These preferences are saved exclusively on your device using standard Android local storage. They are never uploaded to any server and exist solely to personalize what appears on your watch face.</p>
+
+            <div class="app-badge">Companion App</div>
+            <h3>Watch Connection Status</h3>
+            <p>The companion app checks whether your Wear OS watch is currently connected to your phone and displays that status within the app.</p>
+            <p class="note">Usage: This is a local Bluetooth/Wearable API check performed entirely on-device to inform you whether your complication settings will sync to your watch. No data is transmitted externally.</p>
 
             <div class="app-badge">Companion App</div>
             <h3>Referrer Information</h3>
@@ -211,20 +216,20 @@
                 <h3 style="margin-top: 0;">Wear OS Watch Face Permissions</h3>
                 <ul>
                     <li><strong>BODY_SENSORS / HEALTH_SERVICES</strong> — Required to read heart rate and step data for display on the watch face.</li>
-                    <li><strong>ACTIVITY_RECOGNITION</strong> — Required to display physical activity metrics.</li>
-                    <li><strong>INTERNET</strong> — Used only for cross-device communication via RemoteActivityHelper.</li>
+                    <li><strong>ACTIVITY_RECOGNITION</strong> — Required to display physical activity metrics on the watch face.</li>
+                    <li><strong>INTERNET</strong> — Used only for cross-device communication via RemoteActivityHelper to open links on your paired phone.</li>
                 </ul>
                 <h3>Companion App Permissions</h3>
                 <ul style="margin-bottom: 0;">
                     <li><strong>INTERNET</strong> — Required to load the featured watch faces catalog from GitHub.</li>
-                    <li><strong>FOREGROUND_SERVICE / BLUETOOTH</strong> — Used to detect whether your watch is currently connected to your phone and display its connection status.</li>
+                    <li><strong>BLUETOOTH / WEARABLE API</strong> — Used to detect whether your Wear OS watch is currently connected to your phone, so the app can confirm your complication settings (flag and text) will sync correctly to your watch face.</li>
                 </ul>
             </div>
 
             <h2>3. Data Retention</h2>
             <p>We do not store your personal, health, or referrer data on any permanent storage or cloud infrastructure.</p>
             <p><strong>Health Data:</strong> Processed ephemerally in the device's temporary memory (RAM) and discarded as soon as the watch face updates or is closed.</p>
-            <p><strong>User Preferences:</strong> Stored locally on your device only. Uninstalling the companion app removes all locally stored preferences.</p>
+            <p><strong>Complication Preferences:</strong> Your selected flag and custom text are stored locally on your device only. Uninstalling the companion app removes all locally stored preferences.</p>
 
             <h2>4. Data Deletion</h2>
             <p>Since we do not collect or store user data on our servers, there is no data to delete from our systems.</p>
@@ -232,9 +237,10 @@
             <div class="info-box">
                 <h3 style="margin-top: 0;">User Control</h3>
                 <ul style="margin-bottom: 0;">
-                    <li>Changing or uninstalling the watch face removes all face-related local data.</li>
-                    <li>Uninstalling the companion app removes all locally stored preferences and configurations.</li>
+                    <li>Changing or uninstalling the watch face removes all face-related local data from your watch.</li>
+                    <li>Uninstalling the companion app removes all locally stored complication preferences (flag selection and custom text).</li>
                     <li>Revoking <strong>Sensors</strong> or <strong>Physical Activity</strong> permissions in your device's System Settings stops health data access immediately.</li>
+                    <li>Revoking <strong>Bluetooth</strong> permission in your device's System Settings stops watch connection status checks.</li>
                 </ul>
             </div>
 
