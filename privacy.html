@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy | CreationCue</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png">
@@ -26,11 +25,11 @@
         }
 
         header {
-    position: relative;
-    padding: 80px 20px;
-    text-align: center;
-    background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85));
-}
+            position: relative;
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85));
+        }
 
         .logo { max-width: 90px; margin-bottom: 20px; }
         h1 { font-size: 2.5rem; font-weight: 800; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
@@ -86,6 +85,14 @@
 
         li { margin-bottom: 12px; }
 
+        .highlight-box {
+            background: rgba(241, 179, 28, 0.05);
+            border: 1px hide solid rgba(241, 179, 28, 0.2);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
         .btn-back {
             display: inline-block;
             background: #1a1a1a;
@@ -133,48 +140,52 @@
             <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" alt="Creation Cue" class="logo">
         </a>
         <h1>PRIVACY <span>POLICY</span></h1>
-        <p class="tagline">Last Updated: March 12, 2026</p>
+        <p class="tagline">Last Updated: April 8, 2026</p>
     </header>
 
     <main class="content-width">
         <div class="privacy-card">
             
             <p>
-                <strong>Creation Cue</strong> (“we,” “our,” or “us”) provides Wear OS watch faces and a companion Android application. This policy outlines our commitment to your privacy and explains how we handle data.
+                <strong>Creation Cue</strong> (“we,” “our,” or “us”) provides premium Wear OS watch faces and specialized complication utility applications. This policy outlines our commitment to your privacy and explains how we handle data across our entire portfolio of over 110+ products.
             </p>
 
             <h2>1. Data Access and Collection</h2>
-            <p>We prioritize your privacy and do not collect personal or sensitive information for storage on our servers. However, our apps perform the following data activities:</p>
+            <p>We prioritize your privacy and do not collect personal, sensitive, or identifying information for storage on our servers. All data remains on your device.</p>
             
-            <h3>Health and Fitness Data (Watch Face)</h3>
+            <h3>Complication Data & Customization (Flags App)</h3>
+            <p>Our utility applications (such as the <strong>Flags Complication</strong>) allow users to input text and select icons for display on their watch faces.</p>
+            <p style="font-style: italic; opacity: 0.7; font-size: 0.9rem;">Usage: User-selected icons and custom text labels are stored locally on your Wear OS device using SharedPreferences. This data is only used to populate complication slots on your active watch face and is never transmitted to us or any third party.</p>
+
+            <h3>Health and Fitness Data (Watch Faces)</h3>
             <p>Our watch faces access real-time sensor data, including <strong>Heart Rate, Step Count, and Physical Activity</strong>, through the Wear OS platform.</p>
-            <p style="font-style: italic; opacity: 0.7; font-size: 0.9rem;">Usage: This data is accessed solely to display it on the watch face interface for your immediate information. It is processed locally and is never transmitted off your device or shared with third parties.</p>
+            <p style="font-style: italic; opacity: 0.7; font-size: 0.9rem;">Usage: This data is accessed solely to display it on the watch face interface. It is processed locally and is never shared, stored, or transmitted off your device.</p>
 
             <h3>Referrer Information (Companion App)</h3>
             <p>Our companion app uses the <strong>Google Play Install Referrer API</strong>.</p>
-            <p style="font-style: italic; opacity: 0.7; font-size: 0.9rem;">Usage: This is used to identify the source of your visit to our “Featured Designs” carousel. This helps us improve our marketing and feature the most relevant designs. This information is non-identifying and is not linked to your personal profile.</p>
+            <p style="font-style: italic; opacity: 0.7; font-size: 0.9rem;">Usage: Used to identify the source of your visit to our “Featured Designs” carousel to improve our marketing. This information is non-identifying.</p>
 
-            <h2>2. Data Retention</h2>
-            <p>We do not store your personal, health, or referrer data on any permanent storage or cloud infrastructure.</p>
-            <p><strong>Retention Period:</strong> Because no data is collected or stored by us, there is no retention period. All health data is processed “ephemerally” in the device’s temporary memory (RAM) and vanishes as soon as the watch face is closed or the data is updated.</p>
+            <h2>2. Data Retention & Deletion</h2>
+            <p>We do not maintain any cloud-based storage or permanent databases for user data.</p>
+            <ul>
+                <li><strong>Retention:</strong> Local settings (like flag selection or custom text) persist on your device only as long as the app is installed.</li>
+                <li><strong>Deletion:</strong> Uninstalling our application or watch face immediately and permanently removes all locally stored preferences and cached data from your device memory.</li>
+            </ul>
 
-            <h2>3. Data Deletion</h2>
-            <p>Since we do not collect or store user data on our servers, there is no data to delete from our systems.</p>
-            
-            <div style="background: rgba(255,255,255,0.03); padding: 25px; border-radius: 15px; margin-top: 20px;">
-                <h3>User Control</h3>
+            <div class="highlight-box">
+                <h3>User Control & Transparency</h3>
+                <p>You have full control over the permissions granted to our apps:</p>
                 <ul>
-                    <li>Changing the watch face or uninstalling the companion app.</li>
-                    <li>Revoking “Sensors” or “Physical Activity” permissions in your device’s System Settings.</li>
-                    <li>Uninstallation effectively removes all app-related local configurations.</li>
+                    <li>You may revoke “Sensors” or “Physical Activity” permissions at any time via Wear OS System Settings.</li>
+                    <li>Settings changed within our utility apps are updated instantly and can be cleared by the user.</li>
                 </ul>
             </div>
 
-            <h2>4. Security</h2>
-            <p>We follow industry standards for local data handling to ensure that the transient data accessed by the app is handled securely within the Android/Wear OS sandbox environment.</p>
+            <h2>3. Security</h2>
+            <p>We follow industry standards for local data handling to ensure that data accessed by our apps is handled securely within the Android/Wear OS sandbox environment, preventing unauthorized access by other applications.</p>
 
-            <h2>5. Contact Information</h2>
-            <p>For more information please contact us at:</p>
+            <h2>4. Contact Information</h2>
+            <p>For any questions regarding this policy or our 110+ designs, please contact us at:</p>
             <a href="mailto:creationcuespace@gmail.com" class="footer-link" style="margin-left: 0; font-size: 1.1rem;">creationcuespace@gmail.com</a>
 
             <div style="text-align: center; border-top: 1px solid #222; margin-top: 50px; padding-top: 20px;">
