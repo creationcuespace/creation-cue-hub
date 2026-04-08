@@ -52,20 +52,6 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
         }
 
-        .app-badge {
-            display: inline-block;
-            background: rgba(241,179,28,0.1);
-            border: 1px solid rgba(241,179,28,0.3);
-            color: var(--primary);
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 4px 14px;
-            border-radius: 20px;
-            margin-bottom: 8px;
-        }
-
         h2 {
             color: var(--primary);
             font-size: 1.4rem;
@@ -166,86 +152,57 @@
         <div class="privacy-card">
 
             <p>
-                <strong>Creation Cue</strong> ("we," "our," or "us") develops Wear OS watch faces and companion Android applications. This policy outlines our commitment to your privacy and explains how we handle data across all our products.
+                <strong>Creation Cue</strong> ("we," "our," or "us") develops Wear OS watch face apps published on Google Play. This policy outlines our commitment to your privacy and explains how we handle data within our apps.
             </p>
 
             <div class="info-box" style="margin-top: 0; margin-bottom: 30px;">
-                <h3 style="margin-top: 0;">Products Covered by This Policy</h3>
-                <ul style="margin-bottom: 0;">
-                    <li><strong>Wear OS Watch Faces</strong> — Watch face apps published on Google Play, running directly on your Wear OS device (e.g. Samsung Galaxy Watch). Targets Android API 35, supports 64-bit (arm64-v8a), and operates in standalone mode without requiring a phone app.</li>
-                    <li><strong>Companion Android App</strong> — A phone-side configuration app that lets you personalize your watch face complication slots by selecting a country flag and entering custom short text (up to 4 characters). Also displays the connection status of your paired watch and features a carousel of CreationCue watch faces.</li>
-                </ul>
+                <h3 style="margin-top: 0;">About This App</h3>
+                <p style="margin-bottom: 0;">This is a <strong>free standalone Wear OS watch face</strong> that runs entirely on your watch. It requires no companion phone app. The watch face displays health and fitness metrics and allows you to personalize complication slots directly on your watch by selecting a country flag and entering custom short text (up to 4 characters). It targets Android API 35, supports 64-bit (arm64-v8a), and operates in fully standalone mode.</p>
             </div>
 
             <h2>1. Data Access and Collection</h2>
-            <p>We prioritize your privacy and do not collect personal or sensitive information for storage on our servers. The following describes all data activities performed by our apps:</p>
+            <p>We prioritize your privacy. We do not collect, transmit, or store any personal data on external servers. All data handled by this app is processed locally on your Wear OS device. The following describes all data activities:</p>
 
-            <div class="app-badge">Wear OS Watch Face</div>
             <h3>Health and Fitness Data</h3>
-            <p>Our watch faces access real-time sensor data including <strong>Heart Rate, Step Count, and Physical Activity</strong> through the Wear OS platform.</p>
-            <p class="note">Usage: This data is accessed solely to display it on the watch face interface for your immediate reference. It is processed entirely on-device and is never transmitted off your device or shared with any third party.</p>
+            <p>The watch face accesses real-time sensor data including <strong>Heart Rate, Step Count, and Physical Activity</strong> through the Wear OS platform.</p>
+            <p class="note">Usage: This data is accessed solely to display it on the watch face for your immediate reference. It is processed entirely on your watch and is never transmitted off your device or shared with any third party.</p>
 
-            <div class="app-badge">Wear OS Watch Face</div>
-            <h3>Cross-Device Communication</h3>
-            <p>Our watch faces use the standard <strong>RemoteActivityHelper</strong> API provided by Google to facilitate actions such as opening a link on your paired phone. A standard Wear OS <strong>ConfirmationOverlay</strong> animation is shown to inform you when such an action is triggered.</p>
-            <p class="note">Usage: This is the official Google-recommended mechanism for cross-device actions on Wear OS. No personal data is transmitted through this process — it simply signals your paired phone to open a specified URL.</p>
-
-            <div class="app-badge">Companion App</div>
             <h3>Complication Preferences</h3>
-            <p>The companion app stores your chosen country flag and custom complication text (up to 4 characters) locally on your phone. These settings are synced to your watch face complication slots.</p>
-            <p class="note">Usage: These preferences are saved exclusively on your device using standard Android local storage. They are never uploaded to any server and exist solely to personalize what appears on your watch face.</p>
+            <p>The watch face stores your chosen country flag and custom complication text (up to 4 characters) locally on your watch.</p>
+            <p class="note">Usage: These preferences are saved exclusively on your Wear OS device using standard local storage. They exist solely to personalize what is displayed on your watch face and are never uploaded to any server.</p>
 
-            <div class="app-badge">Companion App</div>
-            <h3>Watch Connection Status</h3>
-            <p>The companion app checks whether your Wear OS watch is currently connected to your phone and displays that status within the app.</p>
-            <p class="note">Usage: This is a local Bluetooth/Wearable API check performed entirely on-device to inform you whether your complication settings will sync to your watch. No data is transmitted externally.</p>
-
-            <div class="app-badge">Companion App</div>
-            <h3>Referrer Information</h3>
-            <p>The companion app uses the <strong>Google Play Install Referrer API</strong> to identify the source of your visit to our Featured Designs carousel.</p>
-            <p class="note">Usage: This helps us understand which marketing channels are most effective and ensures relevant designs are featured. This data is non-identifying and is not linked to your personal profile.</p>
-
-            <div class="app-badge">Companion App</div>
-            <h3>Featured Designs Catalog</h3>
-            <p>The companion app loads a catalog of featured watch faces from a publicly hosted JSON file on GitHub.</p>
-            <p class="note">Usage: This is a read-only request to display our latest watch face designs inside the app. No personal data is sent as part of this request.</p>
+            <h3>Cross-Device Communication</h3>
+            <p>The watch face uses the standard <strong>RemoteActivityHelper</strong> API provided by Google to open links on your paired phone when you tap certain elements. A standard Wear OS <strong>ConfirmationOverlay</strong> animation is shown to confirm when such an action is triggered.</p>
+            <p class="note">Usage: This is the official Google-recommended mechanism for cross-device actions on Wear OS. No personal data is transmitted — it simply signals your paired phone to open a specified URL, such as our Google Play page.</p>
 
             <h2>2. Permissions Explained</h2>
 
             <div class="info-box">
-                <h3 style="margin-top: 0;">Wear OS Watch Face Permissions</h3>
-                <ul>
-                    <li><strong>BODY_SENSORS / HEALTH_SERVICES</strong> — Required to read heart rate and step data for display on the watch face.</li>
-                    <li><strong>ACTIVITY_RECOGNITION</strong> — Required to display physical activity metrics on the watch face.</li>
-                    <li><strong>INTERNET</strong> — Used only for cross-device communication via RemoteActivityHelper to open links on your paired phone.</li>
-                </ul>
-                <h3>Companion App Permissions</h3>
                 <ul style="margin-bottom: 0;">
-                    <li><strong>INTERNET</strong> — Required to load the featured watch faces catalog from GitHub.</li>
-                    <li><strong>BLUETOOTH / WEARABLE API</strong> — Used to detect whether your Wear OS watch is currently connected to your phone, so the app can confirm your complication settings (flag and text) will sync correctly to your watch face.</li>
+                    <li><strong>BODY_SENSORS / HEALTH_SERVICES</strong> — Required to read heart rate data for display on the watch face.</li>
+                    <li><strong>ACTIVITY_RECOGNITION</strong> — Required to display step count and physical activity metrics on the watch face.</li>
+                    <li><strong>INTERNET</strong> — Used only for cross-device communication via RemoteActivityHelper to open links on your paired phone.</li>
                 </ul>
             </div>
 
             <h2>3. Data Retention</h2>
-            <p>We do not store your personal, health, or referrer data on any permanent storage or cloud infrastructure.</p>
-            <p><strong>Health Data:</strong> Processed ephemerally in the device's temporary memory (RAM) and discarded as soon as the watch face updates or is closed.</p>
-            <p><strong>Complication Preferences:</strong> Your selected flag and custom text are stored locally on your device only. Uninstalling the companion app removes all locally stored preferences.</p>
+            <p><strong>Health Data:</strong> Processed ephemerally in the device's temporary memory (RAM) and discarded as soon as the watch face updates or is closed. It is never written to permanent storage.</p>
+            <p><strong>Complication Preferences:</strong> Your selected flag and custom text are stored locally on your Wear OS device only. Uninstalling the watch face removes all locally stored preferences.</p>
 
             <h2>4. Data Deletion</h2>
-            <p>Since we do not collect or store user data on our servers, there is no data to delete from our systems.</p>
+            <p>Since we do not collect or store any user data on our servers, there is no data to delete from our systems.</p>
 
             <div class="info-box">
                 <h3 style="margin-top: 0;">User Control</h3>
                 <ul style="margin-bottom: 0;">
-                    <li>Changing or uninstalling the watch face removes all face-related local data from your watch.</li>
-                    <li>Uninstalling the companion app removes all locally stored complication preferences (flag selection and custom text).</li>
-                    <li>Revoking <strong>Sensors</strong> or <strong>Physical Activity</strong> permissions in your device's System Settings stops health data access immediately.</li>
-                    <li>Revoking <strong>Bluetooth</strong> permission in your device's System Settings stops watch connection status checks.</li>
+                    <li>Uninstalling the watch face removes all locally stored preferences from your device.</li>
+                    <li>Revoking <strong>Body Sensors</strong> permission in your watch's System Settings stops heart rate access immediately.</li>
+                    <li>Revoking <strong>Physical Activity</strong> permission in your watch's System Settings stops step and activity data access immediately.</li>
                 </ul>
             </div>
 
             <h2>5. Security</h2>
-            <p>We follow industry standards for local data handling. All transient data accessed by our apps is handled securely within the Android and Wear OS sandbox environment. Our watch faces target the latest Android API (35) and are built with 64-bit support, ensuring compatibility with the most up-to-date security features of the platform.</p>
+            <p>All data accessed by this app is handled securely within the Wear OS sandbox environment. The app targets the latest Android API (35) and is built with 64-bit (arm64-v8a) support, ensuring it runs on the most up-to-date and secure version of the platform.</p>
 
             <h2>6. Children's Privacy</h2>
             <p>Our apps are not directed at children under the age of 13. We do not knowingly collect any information from children.</p>
