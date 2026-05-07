@@ -6,6 +6,19 @@
   },
   "watch_faces": [
     {
+      "id": "cue176",
+      "title": "CUE176",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue176.png",
+      "play_store_url": "market://details?id=com.creation.cue176watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue176",
+      "description_en": "A neon styled watch face",
+      "description_de": Ein neonfarbig gestaltetes Zifferblatt",
+      "filters": ["NEW" ],
+      "type": "hybrid",
+      "is_free":false,
+      "badge_text": "NEW"
+    },
+
+    {
       "id": "cue175",
       "title": "CUE175",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue175.png",
