@@ -26,7 +26,7 @@
       "description_en": "Rugged, bold 3D depth and a modern industrial look.",
       "description_de": "Einzigartiges Wear OS Zifferblatt: sauber gestaltetes Informationslayout, 3D look.",
       "filters": [
-        "NEW"
+        "NEW","HOT"
       ],
       "type": "digital",
       "is_free": false,
@@ -39,9 +39,7 @@
       "play_store_url": "market://details?id=com.creation.cue174watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue174",
       "description_en": "Unique Wear OS watch face: large minutes, rotating hours, clean rich info.",
       "description_de": "Einzigartiges Wear OS Zifferblatt: große Minutenanzeige, rotierende Stunden und ein sauber gestaltetes Informationslayout.",
-      "filters": [
-        "NEW"
-      ],
+      "filters": ["NEW","HOT"],
       "type": "digital",
       "is_free": false,
       "badge_text": "NEW"
@@ -1075,7 +1073,7 @@
       "play_store_url": "market://details?id=com.creationcue.crc046&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc046",
       "description_en": "CRC046 is a fresh analog watch face featuring a stylish design with useful complications.",
       "description_de": "CRC046 ist ein frisches analoges Zifferblatt mit stilvollem Design und nützlichen Komplikationen.",
-      "filters": [],
+      "filters": ["HOT"],
       "badge_text": "🎀 FREE",
       "type": "analog",
       "is_free": true
@@ -1302,9 +1300,7 @@
       "play_store_url": "market://details?id=com.creation.cueinduswatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus",
       "description_en": "CUEINDUS is a modern digital watch face with a clean layout and customizable complications.",
       "description_de": "CUEINDUS ist ein modernes digitales Zifferblatt mit klarem Layout und anpassbaren Komplikationen.",
-      "filters": [
-        "FREE"
-      ],
+      "filters": ["FREE","HOT"],
       "type": "digital",
       "is_free": true,
       "badge_text": "🎀 FREE"
@@ -1316,7 +1312,7 @@
       "play_store_url": "market://details?id=com.creation.cueindusprowatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcueindus_pro",
       "description_en": "CUEINDUS Pro is the premium upgrade of CUEINDUS, offering advanced features and an elegant design.",
       "description_de": "CUEINDUS Pro ist das Premium-Upgrade von CUEINDUS mit erweiterten Funktionen und einem eleganten Design.",
-      "filters": [],
+      "filters": ["HOT"],
       "type": "digital",
       "is_free": false,
       "badge_text": "PRO",
