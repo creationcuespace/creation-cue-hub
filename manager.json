@@ -899,7 +899,7 @@
       "play_store_url": "market://details?id=com.creationcue.crc091watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc091",
       "description_en": "CRC091 is a sleek digital watch face with a modern look and a well-organized complication layout.",
       "description_de": "CRC091 ist ein schlankes digitales Zifferblatt mit modernem Look und übersichtlich angeordneten Komplikationen.",
-      "filters": [],
+      "filters": ["NEON"],
       "type": "digital",
       "is_free": false
     },
