@@ -553,9 +553,9 @@
       "play_store_url": "market://details?id=com.creation.cue132watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue132",
       "description_en": "CUE132 is a polished analog watch face with a minimalist style and essential health and time complications.",
       "description_de": "CUE132 ist ein poliertes analoges Zifferblatt im minimalistischen Stil mit wichtigen Gesundheits- und Zeitkomplikationen.",
-      "filters": [],
+      "filters": ["FREE"],
       "type": "analog",
-      "is_free": false
+      "is_free": true
     },
     {
       "id": "cue131",
