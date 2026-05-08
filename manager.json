@@ -554,6 +554,7 @@
       "description_en": "CUE132 is a polished analog watch face with a minimalist style and essential health and time complications.",
       "description_de": "CUE132 ist ein poliertes analoges Zifferblatt im minimalistischen Stil mit wichtigen Gesundheits- und Zeitkomplikationen.",
       "filters": ["FREE"],
+      "badge_text": "🎀 FREE",
       "type": "analog",
       "is_free": true
     },
@@ -1075,6 +1076,7 @@
       "description_en": "CRC046 is a fresh analog watch face featuring a stylish design with useful complications.",
       "description_de": "CRC046 ist ein frisches analoges Zifferblatt mit stilvollem Design und nützlichen Komplikationen.",
       "filters": [],
+      "badge_text": "🎀 FREE",
       "type": "analog",
       "is_free": true
     },
