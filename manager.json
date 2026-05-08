@@ -441,7 +441,7 @@
       "play_store_url": "market://details?id=com.creation.cue140watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue140",
       "description_en": "CUE140 is a polished hybrid watch face with a minimalist style and essential health and time complications.",
       "description_de": "CUE140 ist ein poliertes hybrides Zifferblatt im minimalistischen Stil mit wichtigen Gesundheits- und Zeitkomplikationen.",
-      "filters": [],
+      "filters": ["NEON"],
       "type": "hybrid",
       "is_free": false
     },
@@ -979,7 +979,7 @@
       "play_store_url": "market://details?id=com.creationcue.crc072watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc072",
       "description_en": "CRC072 is a modern hybrid watch face with a clean layout and customizable complications.",
       "description_de": "CRC072 ist ein modernes hybrides Zifferblatt mit klarem Layout und anpassbaren Komplikationen.",
-      "filters": [],
+      "filters": ["NEON"],
       "type": "hybrid",
       "is_free": false
     },
