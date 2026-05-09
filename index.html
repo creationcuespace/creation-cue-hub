@@ -463,6 +463,8 @@
         loadContent();
 
         // Parallax and Transition Logic
+        let hasTransitioned = false;
+
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const p1 = document.getElementById('parallax-bg-1');
@@ -473,14 +475,24 @@
             if (p1) p1.style.transform = transform;
             if (p2) p2.style.transform = transform;
 
-            // Smooth cross-fade transition over 400px of scrolling
-            // Fade in ccBanner2 as you scroll down
-            const fadeStart = 50;
-            const fadeEnd = 450;
-            let opacity = (scrolled - fadeStart) / (fadeEnd - fadeStart);
-            opacity = Math.max(0, Math.min(1, opacity));
+            // Start transition later (at 300px) and finish at 700px
+            const fadeStart = 300;
+            const fadeEnd = 700;
             
-            if (p2) p2.style.opacity = opacity;
+            if (!hasTransitioned) {
+                let opacity = (scrolled - fadeStart) / (fadeEnd - fadeStart);
+                opacity = Math.max(0, Math.min(1, opacity));
+                
+                if (p2) p2.style.opacity = opacity;
+                
+                // Once fully visible, make it permanent
+                if (opacity >= 1) {
+                    hasTransitioned = true;
+                }
+            } else {
+                // Keep the second banner visible even when scrolling back up
+                if (p2) p2.style.opacity = 1;
+            }
         });
     </script>
 </body>
