@@ -59,11 +59,22 @@
             left: 0;
             width: 100%;
             height: 120%;
-            background: url('images/ccBanner.webp') no-repeat center;
             background-size: cover;
+            background-position: center;
             z-index: 0;
-            will-change: transform;
+            will-change: transform, opacity;
             transition: transform 0.1s ease-out;
+        }
+
+        .bg-1 {
+            background-image: url('images/ccBanner1.webp');
+            z-index: 0;
+        }
+
+        .bg-2 {
+            background-image: url('images/ccBanner2.webp');
+            opacity: 0;
+            z-index: 0;
         }
 
         .hero-overlay {
@@ -334,7 +345,8 @@
 
 <body>
     <header class="hero-section">
-        <div class="parallax-bg" id="parallax-bg"></div>
+        <div class="parallax-bg bg-1" id="parallax-bg-1"></div>
+        <div class="parallax-bg bg-2" id="parallax-bg-2"></div>
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png"
@@ -450,14 +462,25 @@
         }
         loadContent();
 
-        // Parallax Effect Logic
+        // Parallax and Transition Logic
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
-            const parallax = document.getElementById('parallax-bg');
-            if (parallax) {
-                // Move background at 40% of scroll speed
-                parallax.style.transform = `translateY(${scrolled * 0.4}px)`;
-            }
+            const p1 = document.getElementById('parallax-bg-1');
+            const p2 = document.getElementById('parallax-bg-2');
+            
+            // Move backgrounds at 40% of scroll speed
+            const transform = `translateY(${scrolled * 0.4}px)`;
+            if (p1) p1.style.transform = transform;
+            if (p2) p2.style.transform = transform;
+
+            // Smooth cross-fade transition over 400px of scrolling
+            // Fade in ccBanner2 as you scroll down
+            const fadeStart = 50;
+            const fadeEnd = 450;
+            let opacity = (scrolled - fadeStart) / (fadeEnd - fadeStart);
+            opacity = Math.max(0, Math.min(1, opacity));
+            
+            if (p2) p2.style.opacity = opacity;
         });
     </script>
 </body>
