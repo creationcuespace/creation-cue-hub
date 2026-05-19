@@ -6,6 +6,19 @@
   },
   "watch_faces": [
     {
+      "id": "cue177",
+      "title": "CUE177",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue177.png",
+      "play_store_url": "market://details?id=com.creation.cue177watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue177",
+      "description_en": "Sporty, dark analog face with digital fitness stats.",
+      "description_de": "Sportliches, dunkles Analog-Zifferblatt mit digitalen Fitnessdaten.",
+      "filters": ["NEW" ],
+      "type": "analog",
+      "is_free":false,
+      "badge_text": "NEW"
+    },
+
+    {
       "id": "cue176",
       "title": "CUE176",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue176.png",
