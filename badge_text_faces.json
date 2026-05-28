@@ -24,6 +24,13 @@
       "play_store_url": "market://details?id=com.creation.cue136watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue136_free"
     },
 	     {
+      "id": "cue003",
+      "title": "CUE003 (AD)",
+      "badge_text": "NEW",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue003.png",
+      "play_store_url": "market://details?id=com.creation.cue003watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue003"
+    },
+	     {
       "id": "cue177",
       "title": "CUE177 (AD)",
       "badge_text": "NEW",
@@ -64,12 +71,6 @@
       "badge_text": "NEW",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue175.png",
       "play_store_url": "market://details?id=com.creation.cue175watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue175"
-    },
-       {
-      "id": "crc034",
-      "title": "CRC034 (AD)",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc034.png",
-      "play_store_url": "market://details?id=com.watchfacestudio.crc034&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc034"
     },
     {
       "id": "more",
