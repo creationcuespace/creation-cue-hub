@@ -6,6 +6,19 @@
   },
   "watch_faces": [
     {
+      "id": "cue003",
+      "title": "CUE003",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue003.png",
+      "play_store_url": "market://details?id=com.creation.cue003watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue003",
+      "description_en": "Bold Time, full with info",
+      "description_de": "Robustes Zifferblatt mit zahlreichen Funktionen und Infos.",
+      "filters": ["NEW" ],
+      "type": "digital",
+      "is_free":false,
+      "badge_text": "NEW"
+    },
+
+    {
       "id": "cue177",
       "title": "CUE177",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue177.png",
