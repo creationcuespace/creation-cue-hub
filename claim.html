@@ -55,6 +55,11 @@
       margin-bottom: 24px;
       text-decoration: none;
       color: inherit;
+      transition: opacity 0.2s ease;
+    }
+
+    .header-logo:hover {
+      opacity: 0.85;
     }
 
     .logo-mark {
@@ -344,13 +349,13 @@
 </head>
 
 <body>
-  <div class="header-logo">
+  <a href="https://creationcuespace.github.io/creation-cue-hub/index.html" class="header-logo" title="Go to CreationCue Hub">
     <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" alt="CreationCue Logo" style="height: 38px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));">
     <div class="logo-text" style="display: flex; flex-direction: column; line-height: 0.9; align-items: flex-start; margin-top: -2px;">
       <span style="font-size: 26px; font-weight: 700; color: #fff; letter-spacing: 1px;">Creation<span style="color: var(--yellow);">CUE</span></span>
       <span style="font-size: 11px; font-weight: 600; color: var(--yellow); letter-spacing: 2px; text-transform: uppercase; margin-top: 1px;">Promotions</span>
     </div>
-  </div>
+  </a>
 
   <div class="card" id="main-card">
     <!-- State: Loading -->
@@ -412,6 +417,9 @@
         <button class="btn ghost" id="btn-review" style="display: none; margin-top: 10px;">
           WRITE A REVIEW
         </button>
+        <a href="https://creationcuespace.github.io/creation-cue-hub/index.html" class="btn ghost" style="text-decoration: none; margin-top: 10px; display: flex;">
+          BROWSE MORE WATCH FACES
+        </a>
       </div>
     </div>
 
@@ -424,7 +432,22 @@
       </svg>
       <div style="font-size: 18px; font-weight: bold;">Promotion Not Found</div>
       <div class="status-msg" id="error-msg">This promotion link is invalid, expired, or has ended.</div>
+      <a href="https://creationcuespace.github.io/creation-cue-hub/index.html" class="btn ghost" style="text-decoration: none; margin-top: 10px; width: 100%; display: flex;">
+        BROWSE OTHER WATCH FACES
+      </a>
     </div>
+  </div>
+
+  <div style="margin-top: 24px; text-align: center;">
+    <a href="https://creationcuespace.github.io/creation-cue-hub/index.html" style="font-size: 13px; color: var(--muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 500; transition: color 0.15s;" onmouseover="this.style.color='var(--yellow)'" onmouseout="this.style.color='var(--muted)'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top: -1px;">
+        <rect x="3" y="3" width="7" height="7"></rect>
+        <rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect>
+        <rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      Browse Watch Face Manager
+    </a>
   </div>
 
   <div class="toast" id="toast">Code Copied!</div>
