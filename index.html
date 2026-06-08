@@ -1539,6 +1539,16 @@
             fill: currentColor;
             margin-bottom: 2px;
         }
+
+        /* Large Desktop Overrides */
+        @media (min-width: 1100px) {
+            .faces-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .loader {
+                grid-column: span 4;
+            }
+        }
     </style>
 </head>
 <body>
