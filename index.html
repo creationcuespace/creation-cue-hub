@@ -422,6 +422,7 @@
             justify-content: space-between;
             overflow: hidden;
             box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            aspect-ratio: 1/1;
         }
 
         .face-card:hover {
@@ -463,6 +464,8 @@
             aspect-ratio: 1/1;
             margin-bottom: 12px;
             position: relative;
+            flex-shrink: 1;
+            min-height: 0;
         }
 
         .face-card-img {
@@ -1220,7 +1223,23 @@
             text-overflow: ellipsis;
         }
 
-
+        /* Mobile Specific Overrides for 1:1 Aspect Ratio Cards */
+        @media (max-width: 768px) {
+            .face-card {
+                padding: 12px;
+            }
+            .card-cta-btn {
+                display: none; /* Hide details button on mobile to save vertical space inside square */
+            }
+            .face-card-title {
+                margin-bottom: 0;
+                font-size: 13px;
+            }
+            .face-image-container {
+                margin-bottom: 6px;
+                max-width: 110px; /* Limit image size on small screens so title fits inside square */
+            }
+        }
 
         /* Media Queries for Desktop layout */
         @media (min-width: 769px) {
