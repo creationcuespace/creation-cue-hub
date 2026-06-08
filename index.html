@@ -1826,13 +1826,19 @@
                         </div>
                     </div>
                     
-                    <!-- Samsung Developer Link -->
+                    <!-- Samsung Developer Link & Copy Link -->
                     <div style="border-top: 1px solid var(--border-color); padding-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-                        <span style="font-size: 11px; color: var(--text-muted);">For more detailed guidance, see the official Samsung Developer resources.</span>
-                        <a href="https://developer.samsung.com/sdp/blog/en-us/2022/11/15/install-watch-faces-for-galaxy-watch5-and-one-ui-watch-45#link-A" target="_blank" class="btn-primary" style="font-size: 12px; padding: 6px 12px; text-decoration: none; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
-                            Samsung Developer Guide
-                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                        </a>
+                        <span style="font-size: 11px; color: var(--text-muted);">Share this guide or view official resources.</span>
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="copyGuideLink()" class="btn-primary" style="background: rgba(255,255,255,0.05); color: var(--text-primary); border: 1px solid var(--border-color); font-size: 12px; padding: 6px 12px; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                                Copy Share Link
+                            </button>
+                            <a href="https://developer.samsung.com/sdp/blog/en-us/2022/11/15/install-watch-faces-for-galaxy-watch5-and-one-ui-watch-45#link-A" target="_blank" class="btn-primary" style="font-size: 12px; padding: 6px 12px; text-decoration: none; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
+                                Samsung Developer Guide
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2433,6 +2439,16 @@
             if (event.target.id === 'install-guide-modal') {
                 closeInstallGuideModal();
             }
+        }
+
+        // Copy guide link to clipboard
+        function copyGuideLink() {
+            const shareUrl = window.location.origin + window.location.pathname + '?install-guide=true';
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('Direct link to this guide copied to clipboard!');
+            }).catch(() => {
+                alert('Failed to copy. Link: ' + shareUrl);
+            });
         }
 
         // Toggle favorite in modal details
