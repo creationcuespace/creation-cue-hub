@@ -125,6 +125,12 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: opacity 0.2s ease;
+        }
+        .brand-logo-area:hover {
+            opacity: 0.85;
         }
 
         .brand-logo {
@@ -259,6 +265,23 @@
             flex-direction: column;
             gap: 16px;
             margin-bottom: 24px;
+            position: sticky;
+            top: 64px;
+            z-index: 90;
+            padding: 8px 0 16px 0;
+            background: transparent;
+            border-bottom: 1.5px solid transparent;
+            transition: var(--transition-smooth);
+        }
+
+        .search-filter-row.stuck {
+            background: var(--bg-color);
+            border-bottom-color: var(--border-color);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            padding: 16px 16px;
+            margin-left: -16px;
+            margin-right: -16px;
+            border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
         }
 
         .search-input-wrapper {
@@ -1292,6 +1315,13 @@
                 justify-content: space-between;
             }
 
+            .search-filter-row.stuck {
+                margin-left: -40px;
+                margin-right: -40px;
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+
             .search-input-wrapper {
                 max-width: 380px;
             }
@@ -1502,10 +1532,10 @@
     <div class="app-container">
         <!-- Persistent Header -->
         <header class="top-brand-header">
-            <div class="brand-logo-area">
+            <a href="index.html" class="brand-logo-area">
                 <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" class="brand-logo" alt="Logo">
-                <h1 class="brand-name">Creation<span>Cue</span></h1>
-            </div>
+                <h1 class="brand-name">Creation<span>Cue</span>™</h1>
+            </a>
         </header>
 
         <!-- Navigation bar -->
@@ -1654,7 +1684,7 @@
                             <svg viewBox="0 0 24 24" class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                             Support / Help Desk
                         </button>
-                        <a href="https://creationcuespace.github.io/creation-cue-hub/privacy_manager.html" target="_blank" class="about-btn">
+                        <a href="https://creationcuespace.github.io/creation-cue-hub/privacy.html" target="_blank" class="about-btn">
                             <svg viewBox="0 0 24 24" class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                             Privacy Policy
                         </a>
@@ -1820,6 +1850,17 @@
             } else {
                 // Keep the second banner visible even when scrolling back up
                 if (p2) p2.style.opacity = 1;
+            }
+
+            // Sticky search/filter row state styling
+            const searchRow = document.querySelector('.search-filter-row');
+            if (searchRow) {
+                const rect = searchRow.getBoundingClientRect();
+                if (rect.top <= 65) {
+                    searchRow.classList.add('stuck');
+                } else {
+                    searchRow.classList.remove('stuck');
+                }
             }
         });
 
