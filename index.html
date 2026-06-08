@@ -1,500 +1,2373 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wear OS Watch Faces by CreationCue™ | 111+ Premium Designs</title>
-    <meta name="description"
-        content="Discover 111+ premium Wear OS watch faces by CreationCue. Free &amp; paid designs for Google Pixel Watch, Samsung Galaxy Watch, and all Wear OS smartwatches. Download on Google Play.">
-    <meta property="og:title" content="CreationCue™ Wear OS Watch Faces">
-    <meta property="og:description"
-        content="111+ premium Wear OS watch faces. Free &amp; paid. Top-rated on Google Play with 300K+ downloads.">
+    <title>CreationCue™ | Wear OS Watch Face Manager</title>
+    <meta name="description" content="Manage and browse premium Wear OS watch faces by CreationCue. Explore catalog, customize filters, add to favorites, and contact support.">
+    
+    <!-- OG Meta -->
+    <meta property="og:title" content="CreationCue™ Watch Face Hub">
+    <meta property="og:description" content="Browse our catalog of premium Wear OS watch faces. Find your favorites, install on watch, and get instant support.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://creationcuespace.github.io/creation-cue-hub/">
+    
     <!-- Favicon -->
-    <link rel="icon" type="image/png"
-        href="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png">
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary: #f1b31c;
-            --bg: #050505;
-            --card-bg: #111;
-            --text-main: #ffffff;
-            --text-dim: #a0a0a0;
+            /* HSL tailored color palette */
+            --bg-color: hsl(240, 10%, 3%);
+            --surface-color: hsl(240, 10%, 7%);
+            --surface-hover: hsl(240, 10%, 12%);
+            --surface-variant: hsl(240, 5%, 15%);
+            
+            --primary: hsl(43, 89%, 53%);      /* Custom Gold #f1b31c */
+            --primary-glow: hsla(43, 89%, 53%, 0.15);
+            --primary-text: hsl(43, 89%, 60%);
+            
+            --text-primary: hsl(0, 0%, 100%);
+            --text-secondary: hsl(240, 5%, 70%);
+            --text-muted: hsl(240, 5%, 45%);
+            
+            --success: hsl(142, 72%, 40%);
+            --success-bg: hsla(142, 72%, 29%, 0.15);
+            --orange: hsl(27, 96%, 51%);
+            --orange-bg: hsla(27, 96%, 51%, 0.15);
+            --danger: hsl(350, 89%, 50%);
+            
+            --border-color: hsla(0, 0%, 100%, 0.08);
+            --border-glow: hsla(43, 89%, 53%, 0.3);
+            
+            --glass-bg: rgba(15, 15, 20, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-shadow: rgba(0, 0, 0, 0.5);
+            
+            --font-main: 'Inter', sans-serif;
+            --font-display: 'Outfit', sans-serif;
+            
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius-lg: 16px;
+            --border-radius-md: 12px;
+            --border-radius-sm: 8px;
+        }
+
+        /* Base Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            outline: none;
+            scrollbar-width: thin;
+            scrollbar-color: var(--surface-variant) var(--bg-color);
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
             overflow-x: hidden;
-        }
-
-        header {
-            position: relative;
-            padding: 0;
-            text-align: center;
-            background: var(--bg);
-            overflow: hidden;
-        }
-
-        .hero-section {
-            position: relative;
-            height: 85vh;
-            min-height: 600px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            padding: 60px 20px;
-        }
-
-        .parallax-bg {
-            position: absolute;
-            top: -10%;
-            left: 0;
-            width: 100%;
-            height: 120%;
-            background-size: cover;
-            background-position: center;
-            z-index: 0;
-            will-change: transform, opacity;
-            transition: transform 0.1s ease-out;
-        }
-
-        .bg-1 {
-            background-image: url('images/ccBanner1.webp');
-            z-index: 0;
-        }
-
-        .bg-2 {
-            background-image: url('images/ccBanner2.webp');
-            opacity: 0;
-            z-index: 0;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom,
-                    rgba(5, 5, 5, 0.4) 0%,
-                    rgba(5, 5, 5, 0) 40%,
-                    rgba(5, 5, 5, 0.8) 85%,
-                    rgba(5, 5, 5, 1) 100%);
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
-        }
-
-        .logo {
-            max-width: 100px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
-        }
-
-        h1 {
-            font-size: clamp(2rem, 8vw, 3.5rem);
-            font-weight: 800;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        h1 span {
-            color: var(--primary);
-        }
-
-        .tagline {
-            color: #eee;
-            font-size: 1.1rem;
-            margin-top: 15px;
-            font-weight: 400;
-            line-height: 1.6;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Updated Stats Grid for 6 Items */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px;
-            max-width: 1200px;
-            margin: -30px auto 40px;
-            padding: 0 20px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .stat-card {
-            background: #111;
-            border: 1px solid #222;
-            padding: 18px 10px;
-            border-radius: 12px;
-            text-align: center;
-            text-decoration: none;
-            color: white;
-            transition: all 0.3s ease;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            min-height: 100px;
         }
 
-        .stat-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-5px);
-            background: #181818;
+        /* Custom Scrollbar for Webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--surface-variant);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
         }
 
-        .stat-value {
-            display: block;
-            font-size: 1.4rem;
+        /* App Container Layout */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 80px; /* space for bottom nav on mobile */
+        }
+
+        /* Top Brand Header */
+        .top-brand-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .brand-name {
+            font-family: var(--font-display);
+            font-size: 20px;
             font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--text-primary);
+            text-transform: uppercase;
+        }
+
+        .brand-name span {
             color: var(--primary);
         }
 
-        .stat-label {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-dim);
-            margin-top: 5px;
+        /* Connection status badge */
+        .status-badge {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 11px;
             font-weight: 700;
-        }
-
-        /* Watch Face Container */
-        .content-width {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        #faces-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            padding-top: 8px;
-        }
-
-        .face-card {
-            background: var(--card-bg);
+            padding: 6px 14px;
             border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid #222;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge:hover {
+            border-color: var(--primary);
+            color: var(--text-primary);
+            background: var(--surface-hover);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-dot.checking { background-color: var(--text-muted); }
+        .status-dot.connected { background-color: var(--success); box-shadow: 0 0 8px var(--success); }
+        .status-dot.disconnected { background-color: var(--orange); box-shadow: 0 0 8px var(--orange); }
+
+        /* Main Content View Frame */
+        .main-content-area {
+            flex: 1;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Promo Banner - Glassmorphic */
+        .promo-banner {
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            background: linear-gradient(135deg, rgba(20, 20, 25, 0.4), rgba(10, 10, 12, 0.8));
+            display: flex;
+            flex-direction: column;
             position: relative;
-            transition: all 0.3s ease;
+            transition: var(--transition-smooth);
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+
+        .promo-banner:hover {
+            border-color: rgba(241, 179, 28, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .banner-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .banner-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+
+        .promo-banner:hover .banner-img {
+            transform: scale(1.03);
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent 30%, rgba(5, 5, 5, 0.9));
+        }
+
+        .banner-details {
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            z-index: 2;
+            margin-top: -30px;
+        }
+
+        .banner-desc {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .banner-btn {
+            background-color: var(--primary);
+            color: hsl(0, 0%, 0%);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
             text-decoration: none;
-            color: inherit;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(241, 179, 28, 0.3);
+        }
+
+        .banner-btn:hover {
+            background-color: hsl(43, 89%, 60%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(241, 179, 28, 0.5);
+        }
+
+        /* Tabs Panels */
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .tab-panel.active {
             display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Search & Filter bar styling */
+        .search-filter-row {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .search-input-wrapper svg {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+            pointer-events: none;
+            transition: var(--transition-smooth);
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 14px 16px 14px 48px;
+            border-radius: var(--border-radius-md);
+            font-size: 14px;
+            transition: var(--transition-smooth);
+            font-family: var(--font-main);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            background: var(--surface-hover);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .search-input:focus + svg {
+            color: var(--primary);
+        }
+
+        .search-clear {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 4px;
+        }
+
+        .search-clear:hover {
+            color: var(--text-primary);
+        }
+
+        /* Dynamic Filter Chips */
+        .filter-chips-container {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            scroll-behavior: smooth;
+        }
+
+        /* Hide Scrollbar for filter chips */
+        .filter-chips-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-chip {
+            background: var(--surface-color);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-chip:hover {
+            border-color: var(--text-muted);
+            color: var(--text-primary);
+            background: var(--surface-hover);
+        }
+
+        .filter-chip.active {
+            background: var(--primary-glow);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 10px rgba(241, 179, 28, 0.1);
+        }
+
+        .filter-chip svg {
+            width: 14px;
+            height: 14px;
+            display: none;
+        }
+
+        .filter-chip.active svg {
+            display: inline-block;
+        }
+
+        /* Faces Grid */
+        .faces-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        /* Watch Face Card */
+        .face-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
         }
 
         .face-card:hover {
+            transform: translateY(-4px);
             border-color: var(--primary);
-            background: #181818;
-            transform: translateY(-5px);
+            background: var(--surface-hover);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 15px rgba(241,179,28,0.08);
         }
 
-        .badge {
+        /* Card Badges */
+        .card-badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 12px;
+            right: 12px;
             background: var(--primary);
-            color: black;
-            font-weight: 900;
-            font-size: 0.65rem;
-            padding: 4px 10px;
+            color: hsl(0,0%,0%);
+            font-weight: 800;
+            font-size: 9px;
+            padding: 4px 8px;
             border-radius: 6px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
             z-index: 5;
         }
 
-        .face-card img {
-            width: 100%;
-            aspect-ratio: 1/1;
-            border-radius: 50%;
-            margin-bottom: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        .card-badge.free {
+            background-color: var(--success);
+            color: white;
         }
 
-        .btn-play {
-            display: inline-block;
+        .card-badge.hot {
+            background-color: var(--orange);
+            color: white;
+        }
+
+        .face-image-container {
+            width: 100%;
+            max-width: 160px;
+            aspect-ratio: 1/1;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .face-card-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+            transition: var(--transition-smooth);
+            background: hsl(240, 10%, 15%);
+        }
+
+        .face-card:hover .face-card-img {
+            transform: scale(1.04) rotate(3deg);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.6), 0 0 20px rgba(241,179,28,0.2);
+        }
+
+        .face-card-title {
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .card-cta-btn {
+            background: var(--surface-variant);
+            color: var(--text-secondary);
+            border: 1.5px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 8px 0;
+            width: 100%;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .face-card:hover .card-cta-btn {
             background: var(--primary);
             color: black;
-            padding: 10px 15px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 0.75rem;
-            margin-top: 10px;
-            width: 85%;
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(241, 179, 28, 0.2);
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .hero-section {
-                height: 70vh;
-                min-height: 450px;
-            }
-
-            .parallax-bg {
-                background-position: 70% center;
-            }
-
-            .tagline {
-                font-size: 0.9rem;
-                padding: 0 10px;
-            }
-
-            .stats-container {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
-            }
-
-            .stat-value {
-                font-size: 1.1rem;
-            }
-
-            .stat-label {
-                font-size: 0.55rem;
-            }
-
-            #faces-container {
-                display: flex;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                gap: 12px;
-                padding-bottom: 20px;
-                scrollbar-width: none;
-            }
-
-            #faces-container::-webkit-scrollbar {
-                display: none;
-            }
-
-            .face-card {
-                flex: 0 0 31%;
-                min-width: 110px;
-                padding: 10px;
-                scroll-snap-align: center;
-            }
-
-            .face-card h3 {
-                font-size: 0.7rem;
-            }
-
-            .btn-play {
-                font-size: 0.55rem;
-            }
-        }
-
-        footer {
+        /* Empty & Loader States */
+        .empty-state {
             text-align: center;
-            padding: 60px 20px;
-            color: #444;
-            font-size: 0.8rem;
-            border-top: 1px solid #111;
-        }
-
-        .footer-links {
-            margin-top: 15px;
+            padding: 48px 24px;
             display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .footer-link {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .cc-footer-social {
-            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 16px;
-            margin-top: 12px;
+            border-radius: var(--border-radius-lg);
+            background: var(--surface-color);
+            border: 1px dashed var(--border-color);
         }
 
-        .cc-footer-icon {
+        .empty-icon {
+            width: 64px;
+            height: 64px;
+            color: var(--text-muted);
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            max-width: 320px;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: black;
+            border: none;
+            padding: 12px 28px;
+            border-radius: var(--border-radius-md);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-primary:hover {
+            background-color: hsl(43, 89%, 60%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(241, 179, 28, 0.3);
+        }
+
+        .loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 60px;
+            width: 100%;
+            grid-column: span 2;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.05);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Support Tab styling */
+        .support-container {
+            max-width: 700px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .support-container h2 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .divider {
+            border: none;
+            height: 1px;
+            background: var(--border-color);
+            margin: 32px 0;
+        }
+
+        /* FAQ Accordion */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .faq-item.active {
+            border-color: rgba(255,255,255,0.15);
+            background: var(--surface-hover);
+        }
+
+        .faq-header {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            gap: 16px;
+        }
+
+        .faq-question {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .faq-arrow {
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+        }
+
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
             color: var(--primary);
+        }
+
+        .faq-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .faq-content {
+            padding: 0 20px 16px 20px;
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Support Form */
+        .support-form {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .support-form select,
+        .support-form textarea {
+            background: var(--surface-variant);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 14px 16px;
+            border-radius: var(--border-radius-md);
+            font-size: 14px;
+            transition: var(--transition-smooth);
+            font-family: var(--font-main);
+            width: 100%;
+        }
+
+        .support-form select:focus,
+        .support-form textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+            background: var(--surface-hover);
+        }
+
+        .support-form select {
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpolyline points='6 9 10 13 14 9'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 14px;
+            padding-right: 40px;
+        }
+
+        .support-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit {
+            background-color: var(--primary);
+            color: black;
+            border: none;
+            padding: 16px;
+            border-radius: var(--border-radius-md);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            margin-top: 8px;
+        }
+
+        .btn-submit:hover {
+            background-color: hsl(43, 89%, 60%);
+            box-shadow: 0 4px 16px rgba(241, 179, 28, 0.3);
+        }
+
+        /* About Tab styling */
+        .about-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 0;
+        }
+
+        .about-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 50%;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+        }
+
+        .about-container h2 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .about-version {
+            font-size: 12px;
+            color: var(--text-muted);
+            background: var(--surface-color);
+            padding: 4px 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .about-notice {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 13px;
+            padding: 16px;
+            border-radius: var(--border-radius-md);
+            line-height: 1.6;
+            margin: 16px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .about-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .about-btn {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 14px 20px;
+            border-radius: var(--border-radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            transition: opacity 0.2s ease;
+            gap: 12px;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+            width: 100%;
+            text-align: left;
         }
 
-        .cc-footer-icon:hover {
-            opacity: 0.7;
+        .about-btn:hover {
+            border-color: rgba(255,255,255,0.2);
+            background: var(--surface-hover);
+            transform: translateX(4px);
+        }
+
+        .btn-icon {
+            width: 18px;
+            height: 18px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        .about-btn:hover .btn-icon {
+            color: var(--primary);
+        }
+
+        /* Fixed Bottom Tab Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 12px 14px 12px;
+            z-index: 100;
+            box-shadow: 0 -4px 24px rgba(0,0,0,0.6);
+        }
+
+        .nav-item {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 6px 12px;
+            transition: var(--transition-smooth);
+            flex: 1;
+            max-width: 120px;
+        }
+
+        .nav-item:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            width: 22px;
+            height: 22px;
+            color: inherit;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-item.active .nav-icon {
+            transform: translateY(-2px);
+        }
+
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* Glassmorphic Modal Dialog (Watch details, watch connection) */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 16px;
+        }
+
+        .modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            background: var(--surface-color);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 16px 48px var(--glass-shadow);
+        }
+
+        .modal.open .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 18px;
+            line-height: 1;
+            transition: var(--transition-smooth);
+        }
+
+        .modal-close-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--primary);
+        }
+
+        /* Detail view elements */
+        .detail-hero {
+            position: relative;
+            height: 280px;
+            background: var(--surface-variant);
+        }
+
+        .detail-hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(5,5,5,0.3) 50%, var(--surface-color));
+        }
+
+        .detail-content {
+            padding: 24px;
+        }
+
+        .detail-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .detail-title {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        /* Favorite toggle icon button */
+        .btn-fav-toggle {
+            background: var(--surface-variant);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+        }
+
+        .btn-fav-toggle:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-fav-toggle svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-fav-toggle.active {
+            color: var(--primary);
+            background: var(--primary-glow);
+            border-color: var(--primary);
+        }
+
+        .btn-fav-toggle.active svg {
+            fill: var(--primary);
+        }
+
+        .detail-badge-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .detail-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+
+        .detail-badge.price {
+            background: var(--success-bg);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+        .detail-badge.price.paid {
+            background: var(--surface-variant);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .detail-badge.type {
+            background: rgba(255,255,255,0.06);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .detail-desc {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .detail-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .detail-btn-primary {
+            background: var(--primary);
+            color: black;
+            border: none;
+            padding: 16px;
+            border-radius: var(--border-radius-md);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(241, 179, 28, 0.3);
+        }
+
+        .detail-btn-primary:hover {
+            background: hsl(43, 89%, 60%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(241, 179, 28, 0.5);
+        }
+
+        .detail-btn-secondary {
+            background: transparent;
+            border: 1.5px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 14px;
+            border-radius: var(--border-radius-md);
+            font-weight: 600;
+            font-size: 13.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+        }
+
+        .detail-btn-secondary:hover {
+            background: var(--surface-variant);
+            border-color: var(--text-muted);
+        }
+
+        /* Action bar for sharing / rating / support */
+        .detail-shortcuts {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .detail-shortcut-btn {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
+        }
+
+        .detail-shortcut-btn:hover {
+            border-color: var(--primary);
+            color: var(--text-primary);
+            background: var(--surface-hover);
+        }
+
+        .detail-shortcut-btn svg {
+            width: 20px;
+            height: 20px;
+            color: var(--text-secondary);
+            transition: var(--transition-smooth);
+        }
+
+        .detail-shortcut-btn:hover svg {
+            color: var(--primary);
+        }
+
+        .btn-shortcut-full {
+            grid-column: span 2;
+        }
+
+        /* Related Watch Faces Slider */
+        .related-section-title {
+            font-family: var(--font-display);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .related-slider-container {
+            overflow-x: auto;
+            display: flex;
+            gap: 10px;
+            padding-bottom: 8px;
+        }
+
+        .related-slider-container::-webkit-scrollbar {
+            height: 4px;
+        }
+        .related-slider-container::-webkit-scrollbar-thumb {
+            background: var(--surface-variant);
+            border-radius: 2px;
+        }
+
+        .related-card {
+            background: var(--surface-variant);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 10px;
+            width: 110px;
+            flex-shrink: 0;
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition-smooth);
+        }
+
+        .related-card:hover {
+            border-color: var(--primary);
+            background: var(--surface-hover);
+        }
+
+        .related-card-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 8px auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            display: block;
+        }
+
+        .related-card-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Status selection popover modal */
+        .status-modal-content {
+            padding: 24px;
+        }
+
+        .status-modal-content h3 {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .status-modal-content p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .watch-option-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .watch-option {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 14px 16px;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .watch-option:hover {
+            border-color: rgba(255,255,255,0.2);
+            background: var(--surface-hover);
+        }
+
+        .watch-option.selected {
+            border-color: var(--primary);
+            background: var(--primary-glow);
+            color: var(--primary);
+        }
+
+        .watch-option svg {
+            width: 18px;
+            height: 18px;
+            color: var(--primary);
+            display: none;
+        }
+
+        .watch-option.selected svg {
+            display: block;
+        }
+
+        /* Media Queries for Desktop layout */
+        @media (min-width: 769px) {
+            .app-container {
+                padding-bottom: 0;
+                display: grid;
+                grid-template-columns: 240px 1fr;
+                grid-template-rows: auto 1fr;
+                height: 100vh;
+                max-width: 100%;
+            }
+
+            .top-brand-header {
+                grid-column: 1 / span 2;
+                grid-row: 1;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .bottom-nav {
+                grid-column: 1;
+                grid-row: 2;
+                position: static;
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: 24px 16px;
+                gap: 16px;
+                border-top: none;
+                border-right: 1px solid var(--border-color);
+                height: 100%;
+                box-shadow: none;
+                background: var(--surface-color);
+            }
+
+            .nav-item {
+                max-width: 100%;
+                flex-direction: row;
+                gap: 16px;
+                padding: 12px 16px;
+                border-radius: var(--border-radius-md);
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .nav-item.active {
+                background: var(--surface-hover);
+                color: var(--primary);
+            }
+
+            .nav-item.active .nav-icon {
+                transform: scale(1.05);
+            }
+
+            .nav-item span {
+                font-size: 14px;
+                font-weight: 600;
+            }
+
+            .main-content-area {
+                grid-column: 2;
+                grid-row: 2;
+                overflow-y: auto;
+                padding: 32px 40px;
+                max-height: calc(100vh - 65px);
+            }
+
+            .promo-banner {
+                flex-direction: row;
+                height: 160px;
+            }
+
+            .banner-img-wrapper {
+                width: 40%;
+                height: 100%;
+            }
+
+            .banner-overlay {
+                background: linear-gradient(to right, transparent 30%, rgba(5,5,5,0.9));
+            }
+
+            .banner-details {
+                width: 60%;
+                height: 100%;
+                margin-top: 0;
+                padding: 24px;
+            }
+
+            .search-filter-row {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .search-input-wrapper {
+                max-width: 380px;
+            }
+
+            .faces-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 24px;
+            }
+
+            .face-card-title {
+                font-size: 15px;
+            }
+
+            .loader {
+                grid-column: span 3;
+            }
+
+            .modal-container {
+                max-width: 520px;
+            }
+
+            .faq-question {
+                font-size: 15px;
+            }
+        }
+
+        @media (min-width: 1100px) {
+            .faces-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .loader {
+                grid-column: span 4;
+            }
         }
     </style>
 </head>
-
 <body>
-    <header class="hero-section">
-        <div class="parallax-bg bg-1" id="parallax-bg-1"></div>
-        <div class="parallax-bg bg-2" id="parallax-bg-2"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png"
-                alt="Creation Cue" class="logo">
-            <h1>CREATION<span>CUE™</span></h1>
-            <p class="tagline">Browse our collection of 111+ Wear OS watch faces for Pixel Watch, Samsung Galaxy Watch,
-                and all Wear OS devices.<br> Crafted by CreationCue™ a Huawei partner and top-rated developer on Google
-                Play with over 300,000 downloads.</p>
-        </div>
-    </header>
-    <section class="stats-container" id="stats-container"></section>
-    <script>
-        async function loadStats() {
-            const container = document.getElementById('stats-container');
-            try {
-                const res = await fetch('https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/stats.json');
-                const data = await res.json();
-                data.stats.forEach(stat => {
-                    const tag = stat.link ? 'a' : 'div';
-                    const el = document.createElement(tag);
-                    el.className = 'stat-card';
-                    if (stat.link) { el.href = stat.link; el.target = '_blank'; }
-                    const valueHtml = stat.svg ? stat.svg : `<span class="stat-value">${stat.value}</span>`;
-                    el.innerHTML = `${valueHtml}<span class="stat-label">${stat.label}</span>`;
-                    container.appendChild(el);
-                });
-            } catch (e) { console.error('Stats load error:', e); }
-        }
-        loadStats();
-    </script>
-    <div class="content-width">
-        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-            <h2 style="margin:0; font-size: 1.2rem;">Featured Wear OS Watch Faces</h2>
-        </div>
-        <div id="faces-container">
-            <!-- Loading designs... -->
+    <div class="app-container">
+        <!-- Persistent Header -->
+        <header class="top-brand-header">
+            <div class="brand-logo-area">
+                <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" class="brand-logo" alt="Logo">
+                <h1 class="brand-name">Creation<span>Cue</span></h1>
+            </div>
+            <button class="status-badge" id="status-badge" onclick="openStatusModal()">
+                <span class="status-dot checking" id="status-dot"></span>
+                <span id="status-text">Checking Watch...</span>
+            </button>
+        </header>
+
+        <!-- Navigation bar -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" id="nav-btn-catalog" onclick="switchTab('catalog')">
+                <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                <span>Catalog</span>
+            </button>
+            <button class="nav-item" id="nav-btn-my-faces" onclick="switchTab('my-faces')">
+                <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+                <span>My Faces</span>
+            </button>
+            <button class="nav-item" id="nav-btn-support" onclick="switchTab('support')">
+                <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <span>Support</span>
+            </button>
+            <button class="nav-item" id="nav-btn-about" onclick="switchTab('about')">
+                <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span>About</span>
+            </button>
+        </nav>
+
+        <!-- Main Content Frames -->
+        <main class="main-content-area">
+            <!-- Promo Banner -->
+            <section class="promo-banner" id="promo-banner">
+                <div class="banner-img-wrapper">
+                    <img id="banner-img" class="banner-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Crect width='100%25' height='100%25' fill='%23111'/%3E%3C/svg%3E" alt="Promotion Banner">
+                    <div class="banner-overlay"></div>
+                </div>
+                <div class="banner-details">
+                    <span id="banner-desc" class="banner-desc">Loading special offer...</span>
+                    <a id="banner-link" href="#" target="_blank" class="banner-btn">INSTALL</a>
+                </div>
+            </section>
+
+            <!-- Catalog Panel -->
+            <section id="tab-catalog" class="tab-panel active">
+                <div class="search-filter-row">
+                    <div class="search-input-wrapper">
+                        <input type="text" id="search-input" class="search-input" placeholder="Search watch faces..." oninput="onSearchInput(event)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <button id="search-clear-btn" class="search-clear" onclick="clearSearch()" style="display: none;">&times;</button>
+                    </div>
+                    <div class="filter-chips-container" id="filter-chips">
+                        <!-- Chips loaded dynamically -->
+                    </div>
+                </div>
+
+                <div class="faces-grid" id="catalog-grid">
+                    <div class="loader" id="catalog-loader">
+                        <div class="spinner"></div>
+                        <span>Loading Watch Faces...</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Faces Panel -->
+            <section id="tab-my-faces" class="tab-panel">
+                <div class="faces-grid" id="favorites-grid">
+                    <!-- Favorites loaded dynamically -->
+                </div>
+                <div class="empty-state" id="favorites-empty" style="display: none;">
+                    <svg viewBox="0 0 24 24" class="empty-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <p>You haven't favorited any watch faces yet.</p>
+                    <button class="btn-primary" onclick="switchTab('catalog')">Browse Catalog</button>
+                </div>
+            </section>
+
+            <!-- Support Panel -->
+            <section id="tab-support" class="tab-panel">
+                <div class="support-container">
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="faq-list" id="faq-list">
+                        <!-- FAQs loaded dynamically -->
+                    </div>
+
+                    <hr class="divider">
+
+                    <h2>Contact Support</h2>
+                    <form class="support-form" onsubmit="handleSupportSubmit(event)">
+                        <div class="form-group">
+                            <label for="support-face-select">Select Watch Face</label>
+                            <select id="support-face-select" required>
+                                <option value="General / Other">General / Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="support-issue-select">Issue Type</label>
+                            <select id="support-issue-select" required>
+                                <option value="Installation problem">Installation problem</option>
+                                <option value="Face not showing on watch">Face not showing on watch</option>
+                                <option value="Display issue">Display issue</option>
+                                <option value="Compatibility question">Compatibility question</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="support-description">Describe your issue here...</label>
+                            <textarea id="support-description" placeholder="Include details about your watch model, what you did, and what went wrong..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Send Support Request</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- About Panel -->
+            <section id="tab-about" class="tab-panel">
+                <div class="about-container">
+                    <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" class="about-logo" alt="Logo">
+                    <h2>CreationCue™</h2>
+                    <span class="about-version">Version 1.0.4 (Web Manager)</span>
+
+                    <p class="about-notice">You can safely uninstall individual watch face companion apps once this Web Manager is active, since everything is accessible here!</p>
+
+                    <div class="about-buttons">
+                        <a href="https://creationcue.space/how-to-install-your-watch-face/" target="_blank" class="about-btn">
+                            <svg viewBox="0 0 24 24" class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                            Installation Guide
+                        </a>
+                        <button class="about-btn" onclick="switchTab('support')">
+                            <svg viewBox="0 0 24 24" class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                            Support / Help Desk
+                        </button>
+                        <a href="https://creationcuespace.github.io/creation-cue-hub/privacy_manager.html" target="_blank" class="about-btn">
+                            <svg viewBox="0 0 24 24" class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            Privacy Policy
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100089647182787" target="_blank" class="about-btn">
+                            <svg viewBox="0 0 24 24" class="btn-icon" fill="currentColor"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.3c-4.6 0-5.7 3.4-5.7 5.5v1.4H5.4v3.7h3.1v10.8h4.5V11.2h4.3l.5-3.7z"/></svg>
+                            Facebook
+                        </a>
+                        <a href="https://www.instagram.com/creation.cue/" target="_blank" class="about-btn">
+                            <svg viewBox="0 0 24 24" class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                            Instagram
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Details Overlay Modal -->
+    <div class="modal" id="details-modal" onclick="closeDetailsOnOutsideClick(event)">
+        <div class="modal-container">
+            <button class="modal-close-btn" onclick="closeDetailsModal()">&times;</button>
+            <div class="detail-hero">
+                <img id="detail-img" class="detail-hero-img" src="" alt="Hero Image">
+                <div class="detail-hero-overlay"></div>
+            </div>
+            <div class="detail-content">
+                <div class="detail-header-row">
+                    <h2 id="detail-title" class="detail-title">Watch Face</h2>
+                    <button class="btn-fav-toggle" id="detail-fav-btn" onclick="toggleFavoriteFromDetail()" aria-label="Toggle Favorite">
+                        <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    </button>
+                </div>
+                
+                <div class="detail-badge-row">
+                    <span id="detail-badge-price" class="detail-badge price">PAID</span>
+                    <span id="detail-badge-type" class="detail-badge type">Digital</span>
+                </div>
+
+                <p id="detail-desc" class="detail-desc">Description of the watch face goes here.</p>
+
+                <div class="detail-actions">
+                    <a id="detail-install-btn" href="#" target="_blank" class="detail-btn-primary">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                        INSTALL ON WATCH
+                    </a>
+                    <a id="detail-play-btn" href="#" target="_blank" class="detail-btn-secondary">GO TO PLAY STORE</a>
+                </div>
+
+                <div class="detail-shortcuts">
+                    <button class="detail-shortcut-btn" onclick="shareWatchFace()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                        Share
+                    </button>
+                    <button class="detail-shortcut-btn" onclick="rateWatchFace()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        Rate Face
+                    </button>
+                    <button class="detail-shortcut-btn btn-shortcut-full" onclick="contactSupportForCurrentFace()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        Get Help / Report Issue
+                    </button>
+                </div>
+
+                <h3 class="related-section-title">Related Faces</h3>
+                <div class="related-slider-container" id="detail-related-slider">
+                    <!-- Related cards loaded dynamically -->
+                </div>
+            </div>
         </div>
     </div>
-    <footer>
-        <p>&copy; 2026 CreationCue™. Stats verified via Play Store &amp; AppBrain.</p>
-        <div class="footer-links">
-            <a href="privacy.html" class="footer-link">Privacy Policy</a>
+
+    <!-- Status Selection Modal -->
+    <div class="modal" id="status-modal" onclick="closeStatusOnOutsideClick(event)">
+        <div class="modal-container">
+            <button class="modal-close-btn" onclick="closeStatusModal()">&times;</button>
+            <div class="status-modal-content">
+                <h3>Connection Center</h3>
+                <p>Because web browsers do not run on Wear OS smartwatches directly, connection status is simulated here to help guide you on installation.</p>
+                <p>Select your active watch device model to tailor direct install prompts:</p>
+                
+                <div class="watch-option-list">
+                    <div class="watch-option selected" id="opt-pixel" onclick="selectWatchOption('Pixel Watch')">
+                        <span>Google Pixel Watch</span>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <div class="watch-option" id="opt-galaxy" onclick="selectWatchOption('Galaxy Watch')">
+                        <span>Samsung Galaxy Watch</span>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <div class="watch-option" id="opt-tic" onclick="selectWatchOption('TicWatch')">
+                        <span>TicWatch / Other</span>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <div class="watch-option" id="opt-browser" onclick="selectWatchOption('Browser Mode')">
+                        <span>Browser Catalog Mode</span>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="cc-footer-social">
-            <a class="cc-footer-icon" href="https://www.facebook.com/profile.php?id=100089647182787" target="_blank"
-                rel="noopener" aria-label="Facebook">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                </svg>
-            </a>
-            <a class="cc-footer-icon" href="https://www.instagram.com/creation.cue/" target="_blank" rel="noopener"
-                aria-label="Instagram">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-            </a>
-            <a class="cc-footer-icon" href="https://www.tiktok.com/@creationcue" target="_blank" rel="noopener"
-                aria-label="TikTok">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.78a4.85 4.85 0 0 1-1.01-.09z">
-                    </path>
-                </svg>
-            </a>
-            <a class="cc-footer-icon" href="mailto:creationcuespace@gmail.com" aria-label="Email">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-            </a>
-        </div>
-    </footer>
+    </div>
+
+    <!-- JS Core Logic -->
     <script>
-        async function loadContent() {
-            const container = document.getElementById('faces-container');
-            try {
-                const response = await fetch('badge_text_faces.json');
-                const data = await response.json();
-                // Dynamic Logic: Skip first 2 cards
-                const facesToShow = data.watch_faces.slice(2);
-                facesToShow.forEach((face, index) => {
-                    const card = document.createElement('a');
-                    card.className = 'face-card';
-                    card.target = '_blank';
-                    // Dynamic Link Conversion (Market to Web)
-                    let rawUrl = face.play_store_url;
-                    let webUrl = rawUrl.startsWith('market://details?id=')
-                        ? rawUrl.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=')
-                        : rawUrl.startsWith('market://dev?id=')
-                            ? rawUrl.replace('market://dev?id=', 'https://play.google.com/store/apps/dev?id=')
-                            : rawUrl;
-                    card.href = webUrl;
-                    // Dynamic Last Item Button Text
-                    const isLast = index === facesToShow.length - 1;
-                    const buttonText = isLast ? "CreationCue" : "GOOGLE PLAY";
-                    const badgeHtml = face.badge_text ? `<div class="badge">${face.badge_text}</div>` : '';
-                    card.innerHTML = `
-                                                                                ${badgeHtml}
-                                                                                                    <img src="${face.image_url}" alt="${face.title}" onerror="this.src='https://via.placeholder.com/300'">
-                                                                                                                        <h3 style="margin: 10px 0; font-size: 0.9rem;">${face.title}</h3>
-                                                                                                                                            <div class="btn-play">${buttonText}</div>
-                                                                                                                                                            `;
-                    container.appendChild(card);
-                });
-            } catch (e) {
-                console.error("JSON Error:", e);
-                container.innerHTML = `<p style="text-align:center; width:100%; color:#555;">Designs loading...</p>`;
+        // Global variables
+        let watchFaces = [];
+        let bannerData = null;
+        let currentFilter = 'All';
+        let searchQuery = '';
+        let favorites = JSON.parse(localStorage.getItem('cc_favorites')) || [];
+        let currentSelectedWatch = localStorage.getItem('cc_selected_watch') || 'Pixel Watch';
+        let selectedFace = null;
+
+        // Dynamic strings matching strings.xml
+        const faqs = [
+            {
+                q: "How do I install the watch face on my watch?",
+                a: "Click the \"INSTALL ON WATCH\" button in the details view. This links directly to the Play Store. Ensure you are signed in with the same Google Account used on your smartwatch, then select \"Install on more devices\" or pick your watch from the dropdown list."
+            },
+            {
+                q: "The face is not showing on my watch — what do I do?",
+                a: "Verify that Bluetooth is enabled on both your phone and watch, and ensure they are connected in your watch companion application (e.g. Pixel Watch App, Galaxy Wearable). Try restarting both devices if issues persist."
+            },
+            {
+                q: "Which watches are compatible?",
+                a: "All smartwatches running Wear OS by Google (including Samsung Galaxy Watch 4, 5, 6, 7, Ultra, Google Pixel Watch 1, 2, 3, TicWatch, Fossil Gen 6, etc.) are compatible."
+            },
+            {
+                q: "I purchased the face but can't find it — what do I do?",
+                a: "Please allow a few minutes for Google Play purchases to sync across devices. Alternatively, open the Play Store directly on your watch, scroll down to \"My Apps\" or search for the watch face name, and trigger the install from there."
+            },
+            {
+                q: "How do I change the watch face color or complications?",
+                a: "Long-press the active watch face screen on your smartwatch, then tap \"Customize\" or the edit icon. You can also customize most faces from the companion Wear OS app on your phone."
+            }
+        ];
+
+        // Lifecycle Entrypoint
+        window.addEventListener('DOMContentLoaded', () => {
+            initWatchStatus();
+            setupFaqAccordions();
+            fetchData();
+        });
+
+        // Initialize connection status
+        function initWatchStatus() {
+            const dot = document.getElementById('status-dot');
+            const text = document.getElementById('status-text');
+            
+            // Sync status display
+            dot.className = 'status-dot';
+            if (currentSelectedWatch === 'Browser Mode') {
+                dot.classList.add('disconnected');
+                text.textContent = 'Catalog Mode';
+            } else {
+                dot.classList.add('connected');
+                text.textContent = currentSelectedWatch;
+            }
+            
+            // Sync status selection list highlighting
+            document.querySelectorAll('.watch-option').forEach(opt => opt.classList.remove('selected'));
+            if (currentSelectedWatch === 'Pixel Watch') document.getElementById('opt-pixel').classList.add('selected');
+            else if (currentSelectedWatch === 'Galaxy Watch') document.getElementById('opt-galaxy').classList.add('selected');
+            else if (currentSelectedWatch === 'TicWatch') document.getElementById('opt-tic').classList.add('selected');
+            else if (currentSelectedWatch === 'Browser Mode') document.getElementById('opt-browser').classList.add('selected');
+        }
+
+        // Switch Active Tabs
+        function switchTab(tabId) {
+            // Panels
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+
+            // Navigation buttons
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            const tabBtn = document.getElementById(`nav-btn-${tabId}`);
+            if (tabBtn) tabBtn.classList.add('active');
+
+            // Additional tab routines
+            if (tabId === 'my-faces') {
+                renderFavorites();
+            } else if (tabId === 'catalog') {
+                renderCatalog();
+            }
+            
+            // Scroll to top of content area
+            if (window.innerWidth >= 769) {
+                document.querySelector('.main-content-area').scrollTop = 0;
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
-        loadContent();
 
-        // Parallax and Transition Logic
-        let hasTransitioned = false;
-
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const p1 = document.getElementById('parallax-bg-1');
-            const p2 = document.getElementById('parallax-bg-2');
-            
-            // Move backgrounds at 40% of scroll speed
-            const transform = `translateY(${scrolled * 0.4}px)`;
-            if (p1) p1.style.transform = transform;
-            if (p2) p2.style.transform = transform;
-
-            // Start transition later (at 300px) and finish at 700px
-            const fadeStart = 300;
-            const fadeEnd = 700;
-            
-            if (!hasTransitioned) {
-                let opacity = (scrolled - fadeStart) / (fadeEnd - fadeStart);
-                opacity = Math.max(0, Math.min(1, opacity));
+        // Fetch JSON Data from Repo
+        async function fetchData() {
+            const grid = document.getElementById('catalog-grid');
+            try {
+                const url = 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/manager.json?v=' + Date.now();
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Network response error');
                 
-                if (p2) p2.style.opacity = opacity;
+                const data = await response.json();
                 
-                // Once fully visible, make it permanent
-                if (opacity >= 1) {
-                    hasTransitioned = true;
+                watchFaces = data.watch_faces || data.faces || [];
+                bannerData = data.banner || null;
+                
+                setupBanner();
+                setupFilterChips();
+                setupSupportDropdown();
+                renderCatalog();
+                
+                // Deep link handling e.g. ?face=com.creation.cue174watchface
+                const urlParams = new URLSearchParams(window.location.search);
+                const deepLinkPkg = urlParams.get('face');
+                if (deepLinkPkg) {
+                    const faceMatch = watchFaces.find(f => f.package_name === deepLinkPkg || getPackageNameFromUrl(f.play_store_url) === deepLinkPkg);
+                    if (faceMatch) {
+                        openDetailsModal(faceMatch);
+                    }
                 }
-            } else {
-                // Keep the second banner visible even when scrolling back up
-                if (p2) p2.style.opacity = 1;
+
+            } catch (error) {
+                console.error('Data loading error:', error);
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" class="empty-icon" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <p>Unable to load catalog details. Please check your internet connection.</p>
+                        <button class="btn-primary" onclick="fetchData()">Retry</button>
+                    </div>`;
             }
-        });
+        }
+
+        // Helper to parse package name
+        function getPackageNameFromUrl(url) {
+            if (!url) return '';
+            if (url.includes('id=')) {
+                return url.split('id=')[1].split('&')[0];
+            }
+            return '';
+        }
+
+        // Setup Promo Banner
+        function setupBanner() {
+            const banner = document.getElementById('promo-banner');
+            const img = document.getElementById('banner-img');
+            const desc = document.getElementById('banner-desc');
+            const link = document.getElementById('banner-link');
+            
+            if (!bannerData || !bannerData.image_url) {
+                banner.style.display = 'none';
+                return;
+            }
+            
+            img.src = bannerData.image_url;
+            desc.textContent = bannerData.description || 'Check out our featured design!';
+            
+            // Format link URL
+            let playStoreUrl = bannerData.play_store_url || '';
+            if (playStoreUrl.startsWith('market://')) {
+                playStoreUrl = playStoreUrl.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=');
+            }
+            link.href = playStoreUrl;
+            banner.style.display = 'flex';
+        }
+
+        // Dynamic chips generation
+        function setupFilterChips() {
+            const container = document.getElementById('filter-chips');
+            container.innerHTML = '';
+            
+            // Collect unique filter strings
+            const uniqueFilters = new Set();
+            watchFaces.forEach(f => {
+                // Types
+                if (f.type) uniqueFilters.add(f.type.toUpperCase());
+                // Filters Array
+                if (f.filters && Array.isArray(f.filters)) {
+                    f.filters.forEach(tag => {
+                        if (tag && tag.trim() !== '') uniqueFilters.add(tag.trim().toUpperCase());
+                    });
+                }
+                // Check boolean flags
+                if (f.is_free || (f.badge_text && f.badge_text.toUpperCase().includes('FREE'))) uniqueFilters.add('FREE');
+                if (f.is_new || (f.badge_text && f.badge_text.toUpperCase().includes('NEW'))) uniqueFilters.add('NEW');
+                if (f.is_featured || (f.badge_text && (f.badge_text.toUpperCase().includes('HOT') || f.badge_text.toUpperCase().includes('PRO')))) uniqueFilters.add('HOT');
+            });
+            
+            // Remove 'ALL' if it exists in data tags
+            uniqueFilters.delete('ALL');
+            
+            // Create "All" Chip
+            const allChip = createChipElement('All', true);
+            container.appendChild(allChip);
+            
+            // Sort remaining filters
+            const sortedFilters = Array.from(uniqueFilters).sort();
+            sortedFilters.forEach(filter => {
+                const chip = createChipElement(filter, false);
+                container.appendChild(chip);
+            });
+        }
+
+        function createChipElement(text, isActive) {
+            const chip = document.createElement('button');
+            chip.className = `filter-chip ${isActive ? 'active' : ''}`;
+            chip.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>${text}</span>
+            `;
+            chip.onclick = () => selectFilter(chip, text);
+            return chip;
+        }
+
+        function selectFilter(chipElement, filterText) {
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            chipElement.classList.add('active');
+            currentFilter = filterText;
+            renderCatalog();
+        }
+
+        // Populate Support Face list dropdown
+        function setupSupportDropdown() {
+            const dropdown = document.getElementById('support-face-select');
+            // Reset to default
+            dropdown.innerHTML = '<option value="General / Other">General / Other</option>';
+            
+            watchFaces.forEach(f => {
+                const opt = document.createElement('option');
+                opt.value = f.title;
+                opt.textContent = f.title;
+                dropdown.appendChild(opt);
+            });
+        }
+
+        // Populate FAQ accordions
+        function setupFaqAccordions() {
+            const faqContainer = document.getElementById('faq-list');
+            faqContainer.innerHTML = '';
+            
+            faqs.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'faq-item';
+                div.innerHTML = `
+                    <div class="faq-header" onclick="toggleFaq(this)">
+                        <span class="faq-question">${item.q}</span>
+                        <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                    <div class="faq-body">
+                        <div class="faq-content">${item.a}</div>
+                    </div>
+                `;
+                faqContainer.appendChild(div);
+            });
+        }
+
+        function toggleFaq(headerEl) {
+            const item = headerEl.parentElement;
+            const body = item.querySelector('.faq-body');
+            const isActive = item.classList.contains('active');
+            
+            // Close other items
+            document.querySelectorAll('.faq-item').forEach(i => {
+                i.classList.remove('active');
+                i.querySelector('.faq-body').style.maxHeight = null;
+            });
+            
+            if (!isActive) {
+                item.classList.add('active');
+                body.style.maxHeight = body.scrollHeight + "px";
+            }
+        }
+
+        // Render Catalog Grid with sorting/filtering logic mirroring Android Java code
+        function renderCatalog() {
+            const grid = document.getElementById('catalog-grid');
+            grid.innerHTML = '';
+            
+            const filteredFaces = getFilteredWatchFaces();
+            
+            if (filteredFaces.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <svg viewBox="0 0 24 24" class="empty-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <p>No watch faces found matching the active search query or filter chip.</p>
+                    </div>`;
+                return;
+            }
+            
+            // Sort watch faces mirroring Android's sorting logic:
+            // Order: 1. NEW releases, 2. HOT/Featured faces, 3. Favorites, 4. Others
+            const sorted = [];
+            const news = [];
+            const hot = [];
+            const favs = [];
+            const others = [];
+            
+            filteredFaces.forEach(f => {
+                const pkg = f.package_name || getPackageNameFromUrl(f.play_store_url);
+                const isFree = f.is_free || (f.badge_text && f.badge_text.toUpperCase().includes('FREE'));
+                const isNew = f.is_new || (f.badge_text && f.badge_text.toUpperCase().includes('NEW'));
+                const isHot = f.is_featured || (f.badge_text && (f.badge_text.toUpperCase().includes('HOT') || f.badge_text.toUpperCase().includes('PRO')));
+                
+                if (isNew) news.push(f);
+                else if (isHot) hot.push(f);
+                else if (favorites.includes(pkg)) favs.push(f);
+                else others.push(f);
+            });
+            
+            sorted.push(...news, ...hot, ...favs, ...others);
+            
+            sorted.forEach(face => {
+                grid.appendChild(createWatchFaceCard(face));
+            });
+        }
+
+        // Render Favorites Grid
+        function renderFavorites() {
+            const grid = document.getElementById('favorites-grid');
+            const emptyState = document.getElementById('favorites-empty');
+            grid.innerHTML = '';
+            
+            const favoriteFaces = watchFaces.filter(f => {
+                const pkg = f.package_name || getPackageNameFromUrl(f.play_store_url);
+                return favorites.includes(pkg);
+            });
+            
+            if (favoriteFaces.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'flex';
+                return;
+            }
+            
+            grid.style.display = 'grid';
+            emptyState.style.display = 'none';
+            
+            favoriteFaces.forEach(face => {
+                grid.appendChild(createWatchFaceCard(face));
+            });
+        }
+
+        // Get list of faces matching filters + search
+        function getFilteredWatchFaces() {
+            const filterUpper = currentFilter.toUpperCase();
+            
+            return watchFaces.filter(f => {
+                // Search check
+                const title = (f.title || '').toLowerCase();
+                if (searchQuery !== '' && !title.includes(searchQuery)) return false;
+                
+                if (currentFilter.equalsIgnoreCase('All')) return true;
+                
+                const badge = (f.badge_text || '').toUpperCase();
+                const type = (f.type || '').toUpperCase();
+                const tags = f.filters ? f.filters.map(t => t.toUpperCase()) : [];
+                
+                const isFree = f.is_free || badge.includes('FREE');
+                const isNew = f.is_new || badge.includes('NEW');
+                const isHot = f.is_featured || (badge.includes('HOT') || badge.includes('PRO'));
+                
+                // Chip matches
+                if (badge.includes(filterUpper)) return true;
+                if (type === filterUpper) return true;
+                if (tags.includes(filterUpper)) return true;
+                
+                if (filterUpper === 'FREE' && isFree) return true;
+                if (filterUpper === 'NEW' && isNew) return true;
+                if (filterUpper === 'HOT' && isHot) return true;
+                
+                return false;
+            });
+        }
+
+        // Case-insensitive utility
+        String.prototype.equalsIgnoreCase = function (compareString) {
+            return this.toLowerCase() === compareString.toLowerCase();
+        };
+
+        // Create card HTML element
+        function createWatchFaceCard(face) {
+            const card = document.createElement('div');
+            card.className = 'face-card';
+            card.onclick = () => openDetailsModal(face);
+            
+            const badgeText = face.badge_text || '';
+            const isFree = face.is_free || badgeText.toUpperCase().includes('FREE');
+            const isNew = face.is_new || badgeText.toUpperCase().includes('NEW');
+            const isHot = face.is_featured || (badgeText.toUpperCase().includes('HOT') || badgeText.toUpperCase().includes('PRO'));
+            
+            let badgeHtml = '';
+            if (badgeText) {
+                let badgeClass = 'card-badge';
+                if (isFree) badgeClass += ' free';
+                else if (isHot) badgeClass += ' hot';
+                badgeHtml = `<span class="${badgeClass}">${badgeText}</span>`;
+            }
+            
+            card.innerHTML = `
+                ${badgeHtml}
+                <div class="face-image-container">
+                    <img class="face-card-img" src="${face.image_url}" alt="${face.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/300'">
+                </div>
+                <h3 class="face-card-title">${face.title}</h3>
+                <button class="card-cta-btn">Details</button>
+            `;
+            return card;
+        }
+
+        // Search Handlers
+        function onSearchInput(event) {
+            searchQuery = event.target.value.toLowerCase().trim();
+            document.getElementById('search-clear-btn').style.display = searchQuery ? 'block' : 'none';
+            renderCatalog();
+        }
+
+        function clearSearch() {
+            const input = document.getElementById('search-input');
+            input.value = '';
+            searchQuery = '';
+            document.getElementById('search-clear-btn').style.display = 'none';
+            renderCatalog();
+            input.focus();
+        }
+
+        // Favorites core logic
+        function isFavorite(pkgName) {
+            return favorites.includes(pkgName);
+        }
+
+        function toggleFavorite(pkgName) {
+            const idx = favorites.indexOf(pkgName);
+            if (idx > -1) {
+                favorites.splice(idx, 1);
+            } else {
+                favorites.push(pkgName);
+            }
+            localStorage.setItem('cc_favorites', JSON.stringify(favorites));
+        }
+
+        // Open details modal
+        function openDetailsModal(face) {
+            selectedFace = face;
+            
+            const modal = document.getElementById('details-modal');
+            const img = document.getElementById('detail-img');
+            const title = document.getElementById('detail-title');
+            const price = document.getElementById('detail-badge-price');
+            const type = document.getElementById('detail-badge-type');
+            const desc = document.getElementById('detail-desc');
+            const installBtn = document.getElementById('detail-install-btn');
+            const playBtn = document.getElementById('detail-play-btn');
+            const favBtn = document.getElementById('detail-fav-btn');
+            
+            const pkg = face.package_name || getPackageNameFromUrl(face.play_store_url);
+            
+            // Set basic details
+            img.src = face.image_url;
+            title.textContent = face.title;
+            type.textContent = face.type || 'Digital';
+            
+            // Localized Description check
+            const userLang = navigator.language || navigator.userLanguage;
+            if (userLang.startsWith('de') && face.description_de) {
+                desc.textContent = face.description_de;
+            } else {
+                desc.textContent = face.description_en || face.description || 'Beautiful watch face by CreationCue.';
+            }
+            
+            // Badges
+            const isFree = face.is_free || (face.badge_text && face.badge_text.toUpperCase().includes('FREE'));
+            if (isFree) {
+                price.textContent = 'FREE';
+                price.className = 'detail-badge price';
+            } else {
+                price.textContent = 'PAID';
+                price.className = 'detail-badge price paid';
+            }
+            
+            // Install links
+            let playStoreUrl = face.play_store_url || '';
+            if (playStoreUrl.startsWith('market://')) {
+                playStoreUrl = playStoreUrl.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=');
+            }
+            
+            installBtn.href = playStoreUrl;
+            playBtn.href = playStoreUrl;
+            
+            // Update Fav button
+            if (isFavorite(pkg)) {
+                favBtn.classList.add('active');
+            } else {
+                favBtn.classList.remove('active');
+            }
+            
+            // Load Related watch faces (matching type)
+            loadRelatedWatchFaces(face);
+            
+            // Open modal
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden'; // prevent background scrolling
+        }
+
+        function closeDetailsModal() {
+            document.getElementById('details-modal').classList.remove('open');
+            document.body.style.overflow = '';
+            selectedFace = null;
+        }
+
+        function closeDetailsOnOutsideClick(event) {
+            if (event.target.id === 'details-modal') {
+                closeDetailsModal();
+            }
+        }
+
+        // Toggle favorite in modal details
+        function toggleFavoriteFromDetail() {
+            if (!selectedFace) return;
+            const pkg = selectedFace.package_name || getPackageNameFromUrl(selectedFace.play_store_url);
+            toggleFavorite(pkg);
+            
+            const favBtn = document.getElementById('detail-fav-btn');
+            if (isFavorite(pkg)) {
+                favBtn.classList.add('active');
+            } else {
+                favBtn.classList.remove('active');
+            }
+            
+            // Sync background grids
+            renderCatalog();
+            renderFavorites();
+        }
+
+        // Related watch faces slider
+        function loadRelatedWatchFaces(currentFace) {
+            const container = document.getElementById('detail-related-slider');
+            container.innerHTML = '';
+            
+            const currentPkg = currentFace.package_name || getPackageNameFromUrl(currentFace.play_store_url);
+            
+            const related = watchFaces.filter(f => {
+                const pkg = f.package_name || getPackageNameFromUrl(f.play_store_url);
+                return f.type === currentFace.type && pkg !== currentPkg;
+            }).slice(0, 10); // cap at 10
+            
+            if (related.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-muted); font-size:12px; padding:10px 0;">No related watch faces found.</p>';
+                return;
+            }
+            
+            related.forEach(face => {
+                const card = document.createElement('div');
+                card.className = 'related-card';
+                card.onclick = () => {
+                    closeDetailsModal();
+                    setTimeout(() => openDetailsModal(face), 150);
+                };
+                card.innerHTML = `
+                    <img class="related-card-img" src="${face.image_url}" alt="${face.title}" loading="lazy">
+                    <div class="related-card-title">${face.title}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Share Face URL
+        function shareWatchFace() {
+            if (!selectedFace) return;
+            const playStoreUrl = selectedFace.play_store_url || '';
+            const webUrl = playStoreUrl.startsWith('market://') 
+                ? playStoreUrl.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=')
+                : playStoreUrl;
+            
+            const shareText = `Check out this watch face: ${selectedFace.title} - ${webUrl}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: selectedFace.title,
+                    text: `Check out the ${selectedFace.title} Wear OS watch face!`,
+                    url: webUrl
+                }).catch(err => console.log(err));
+            } else {
+                // Clipboard fallback
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('Play Store link copied to clipboard!');
+                }).catch(() => {
+                    alert('Copy failed. URL: ' + webUrl);
+                });
+            }
+        }
+
+        // Review Redirect
+        function rateWatchFace() {
+            if (!selectedFace) return;
+            let playStoreUrl = selectedFace.play_store_url || '';
+            if (playStoreUrl.startsWith('market://')) {
+                playStoreUrl = playStoreUrl.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=');
+            }
+            // Append review id trigger if not exists
+            const reviewUrl = playStoreUrl.includes('?') ? (playStoreUrl + '&reviewId=0') : (playStoreUrl + '?reviewId=0');
+            window.open(reviewUrl, '_blank');
+        }
+
+        // Support navigation from detail view
+        function contactSupportForCurrentFace() {
+            if (!selectedFace) return;
+            const faceTitle = selectedFace.title;
+            
+            // Close Details Dialog
+            closeDetailsModal();
+            
+            // Select face in support dropdown
+            const select = document.getElementById('support-face-select');
+            select.value = faceTitle;
+            
+            // Switch tabs
+            switchTab('support');
+            
+            // Focus on issue type dropdown
+            document.getElementById('support-issue-select').focus();
+        }
+
+        // Support Form Submission Email compiling
+        function handleSupportSubmit(event) {
+            event.preventDefault();
+            
+            const face = document.getElementById('support-face-select').value;
+            const issue = document.getElementById('support-issue-select').value;
+            const desc = document.getElementById('support-description').value.trim();
+            
+            if (!issue || !desc) {
+                alert('Please complete all form fields.');
+                return;
+            }
+            
+            const supportEmail = 'creationcuespace@gmail.com';
+            const subject = `Support Request - ${issue} (${face})`;
+            
+            // Assemble metadata parameters
+            const userAgent = navigator.userAgent;
+            const body = `Face: ${face}\n` +
+                         `Issue Type: ${issue}\n\n` +
+                         `Description:\n${desc}\n\n` +
+                         `--- Web App Environment Info ---\n` +
+                         `Platform: ${navigator.platform}\n` +
+                         `Browser: ${userAgent}\n` +
+                         `Connected Watch Config: ${currentSelectedWatch}\n` +
+                         `App Version: 1.0.4 (Web Manager)`;
+            
+            const mailtoUrl = `mailto:${supportEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoUrl;
+        }
+
+        // Status Modal triggers
+        function openStatusModal() {
+            document.getElementById('status-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeStatusModal() {
+            document.getElementById('status-modal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function closeStatusOnOutsideClick(event) {
+            if (event.target.id === 'status-modal') {
+                closeStatusModal();
+            }
+        }
+
+        function selectWatchOption(watchName) {
+            currentSelectedWatch = watchName;
+            localStorage.setItem('cc_selected_watch', watchName);
+            initWatchStatus();
+            closeStatusModal();
+        }
     </script>
 </body>
-
 </html>
