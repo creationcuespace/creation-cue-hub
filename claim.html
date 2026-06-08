@@ -385,7 +385,7 @@
       <div class="progress-section">
         <div class="progress-labels">
           <span id="promo-count-label">Coupons Remaining</span>
-          <span id="promo-count-val">-- / --</span>
+          <span id="promo-count-val">--</span>
         </div>
         <div class="progress-track">
           <div class="progress-bar" id="progress-bar"></div>
@@ -549,7 +549,7 @@
       var claimed = promoData.claimedCount || 0;
       var remaining = Math.max(0, total - claimed);
       
-      document.getElementById('promo-count-val').textContent = `${remaining} / ${total}`;
+      document.getElementById('promo-count-val').textContent = remaining;
       
       var pct = total > 0 ? (remaining / total) * 100 : 0;
       var pBar = document.getElementById('progress-bar');
