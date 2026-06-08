@@ -1545,17 +1545,7 @@
 
         <!-- Main Content Frames -->
         <main class="main-content-area">
-            <!-- Promo Banner -->
-            <section class="promo-banner" id="promo-banner">
-                <div class="banner-img-wrapper">
-                    <img id="banner-img" class="banner-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Crect width='100%25' height='100%25' fill='%23111'/%3E%3C/svg%3E" alt="Promotion Banner">
-                    <div class="banner-overlay"></div>
-                </div>
-                <div class="banner-details">
-                    <span id="banner-desc" class="banner-desc">Loading special offer...</span>
-                    <a id="banner-link" href="#" target="_blank" class="banner-btn">INSTALL</a>
-                </div>
-            </section>
+
 
             <!-- Catalog Panel -->
             <section id="tab-catalog" class="tab-panel active">
@@ -1742,7 +1732,6 @@
     <script>
         // Global variables
         let watchFaces = [];
-        let bannerData = null;
         let currentFilter = 'All';
         let searchQuery = '';
         let favorites = JSON.parse(localStorage.getItem('cc_favorites')) || [];
@@ -1876,9 +1865,6 @@
                 const data = await response.json();
                 
                 watchFaces = data.watch_faces || data.faces || [];
-                bannerData = data.banner || null;
-                
-                setupBanner();
                 setupFilterChips();
                 setupSupportDropdown();
                 renderCatalog();
@@ -1936,25 +1922,7 @@
             return rawUrl;
         }
 
-        // Setup Promo Banner
-        function setupBanner() {
-            const banner = document.getElementById('promo-banner');
-            const img = document.getElementById('banner-img');
-            const desc = document.getElementById('banner-desc');
-            const link = document.getElementById('banner-link');
-            
-            if (!bannerData || !bannerData.image_url) {
-                banner.style.display = 'none';
-                return;
-            }
-            
-            img.src = bannerData.image_url;
-            desc.textContent = bannerData.description || 'Check out our featured design!';
-            
-            // Format link URL dynamically based on device platform
-            link.href = getPlayStoreLink(bannerData.play_store_url || '');
-            banner.style.display = 'flex';
-        }
+
 
         // Dynamic chips generation
         function setupFilterChips() {
