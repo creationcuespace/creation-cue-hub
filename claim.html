@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#141414">
+  <title>Claim Your Watch Face Promo Code</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23141414'/><rect x='6' y='8' width='6' height='16' fill='%23e8281e'/><rect x='13' y='8' width='6' height='16' fill='%231a3a6b'/><rect x='20' y='8' width='6' height='16' fill='%23f5c518'/></svg>">
+  <style>
+    :root {
+      --red: #e8281e;
+      --blue: #1a3a6b;
+      --yellow: #f5c518;
+      --black: #141414;
+      --dark: #1e1e1e;
+      --mid: #2a2a2a;
+      --border: #3a3a3a;
+      --text: #f0f0f0;
+      --muted: #888;
+      --green: #4caf50;
+      --glass: rgba(30, 30, 30, 0.7);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .header-logo {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 24px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-mark {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+    }
+
+    .logo-mark span {
+      display: block;
+      width: 7px;
+      height: 22px;
+      border-radius: 1px;
+    }
+
+    .logo-mark .r { background: var(--red); }
+    .logo-mark .b { background: var(--blue); }
+    .logo-mark .y { background: var(--yellow); }
+
+    .logo-text {
+      font-family: 'Teko', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .logo-text span {
+      color: var(--yellow);
+    }
+
+    .card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 30px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform 0.3s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--red) 0%, var(--blue) 50%, var(--yellow) 100%);
+    }
+
+    .watchface-preview {
+      width: 120px;
+      height: 120px;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .watchface-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .watchface-preview svg {
+      width: 48px;
+      height: 48px;
+      color: var(--muted);
+      opacity: 0.5;
+    }
+
+    .title-area {
+      text-align: center;
+    }
+
+    .wf-name {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .wf-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .progress-section {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background: var(--black);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--red) 0%, var(--yellow) 100%);
+      border-radius: 3px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn {
+      width: 100%;
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+      border-radius: 4px;
+      font-family: 'Teko', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s, opacity 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn:hover:not(:disabled) {
+      background: #e5b615;
+      transform: translateY(-1px);
+    }
+
+    .btn:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    .btn:disabled {
+      background: var(--mid);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .btn.ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 16px;
+      padding: 10px 14px;
+    }
+
+    .btn.ghost:hover {
+      background: var(--mid);
+      color: var(--yellow);
+      border-color: var(--yellow);
+    }
+
+    .claimed-area {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .code-box {
+      background: var(--black);
+      border: 1px dashed var(--yellow);
+      border-radius: 4px;
+      padding: 16px;
+      font-family: monospace;
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--yellow);
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: all;
+    }
+
+    .code-box:hover {
+      background: rgba(245, 197, 24, 0.03);
+      border-color: var(--text);
+    }
+
+    .code-subtext {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: -8px;
+    }
+
+    .redeem-btn {
+      background: var(--green);
+      color: white;
+    }
+
+    .redeem-btn:hover {
+      background: #439e47;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(40px);
+      background: var(--yellow);
+      color: #000;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border-radius: 4px;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+      z-index: 100;
+      white-space: nowrap;
+      opacity: 0;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .loader {
+      border: 3px solid var(--border);
+      border-top: 3px solid var(--yellow);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .status-msg {
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header-logo">
+    <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" alt="CreationCue Logo" style="height: 38px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));">
+    <div class="logo-text" style="display: flex; flex-direction: column; line-height: 0.9; align-items: flex-start; margin-top: -2px;">
+      <span style="font-size: 26px; font-weight: 700; color: #fff; letter-spacing: 1px;">Creation<span style="color: var(--yellow);">CUE</span></span>
+      <span style="font-size: 11px; font-weight: 600; color: var(--yellow); letter-spacing: 2px; text-transform: uppercase; margin-top: 1px;">Promotions</span>
+    </div>
+  </div>
+
+  <div class="card" id="main-card">
+    <!-- State: Loading -->
+    <div id="state-loading" style="display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 40px 0;">
+      <div class="loader"></div>
+      <div class="status-msg" id="loading-msg">Connecting to promotional server...</div>
+    </div>
+
+    <!-- State: Active Promotion -->
+    <div id="state-active" style="display: none; flex-direction: column; gap: 20px;">
+      <div class="watchface-preview" id="wf-preview-container">
+        <!-- Loaded image or default icon -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+      </div>
+
+      <div class="title-area">
+        <h1 class="wf-name" id="wf-name">Loading Promotion...</h1>
+        <p class="wf-desc" id="wf-desc">Please wait while we fetch the watch face details.</p>
+        <div id="promo-countdown-area" style="display:none; margin-top:12px; font-weight:600; font-size:13px; color:var(--yellow); background:rgba(245,197,24,0.05); padding:8px 12px; border:1px dashed rgba(245,197,24,0.2); border-radius:4px; text-transform:uppercase; letter-spacing:1px; text-align:center;">
+          <!-- Timer text will be injected here -->
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-labels">
+          <span id="promo-count-label">Coupons Remaining</span>
+          <span id="promo-count-val">-- / --</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+      </div>
+
+      <!-- Claim Button Area -->
+      <div id="claim-btn-area">
+        <button class="btn" id="btn-claim" disabled>
+          CLAIM FREE COUPON
+        </button>
+      </div>
+
+      <!-- Claimed Area -->
+      <div class="claimed-area" id="claimed-area" style="display: none;">
+        <div style="font-weight: 600; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; color: var(--green);">
+          ★ Coupon Claimed Successfully ★
+        </div>
+        <div style="font-size: 12px; color: var(--muted); line-height: 1.4; padding: 0 10px; margin-top: -4px; margin-bottom: 2px;">
+          If you enjoy this watch face, leaving a review on the Play Store would mean a lot to us! Thank you for your support!
+        </div>
+        <div class="code-box" id="code-display" title="Click to copy">
+          --------
+        </div>
+        <div class="code-subtext">Tap code to copy to clipboard</div>
+        <button class="btn redeem-btn" id="btn-redeem">
+          REDEEM ON GOOGLE PLAY
+        </button>
+        <button class="btn ghost" id="btn-review" style="display: none; margin-top: 10px;">
+          WRITE A REVIEW
+        </button>
+      </div>
+    </div>
+
+    <!-- State: Error / Not Found -->
+    <div id="state-error" style="display: none; flex-direction: column; align-items: center; gap: 16px; padding: 20px 0; text-align: center;">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <div style="font-size: 18px; font-weight: bold;">Promotion Not Found</div>
+      <div class="status-msg" id="error-msg">This promotion link is invalid, expired, or has ended.</div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Code Copied!</div>
+
+  <script>
+    // Firebase Config (Identical to main app)
+    var firebaseConfig = {
+      apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+      authDomain: "creation-cue-manage.firebaseapp.com",
+      databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "creation-cue-manage",
+      storageBucket: "creation-cue-manage.firebasestorage.app",
+      messagingSenderId: "186324516022",
+      appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.database();
+    var auth = firebase.auth();
+    var currentUser = null;
+    var promoData = null;
+
+    // Get parameters
+    var urlParams = new URLSearchParams(window.location.search);
+    var promoId = urlParams.get('promo') || urlParams.get('p');
+
+    function showToast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function () { t.classList.remove('show'); }, 2200);
+    }
+
+    function showState(stateName) {
+      document.getElementById('state-loading').style.display = stateName === 'loading' ? 'flex' : 'none';
+      document.getElementById('state-active').style.display = stateName === 'active' ? 'flex' : 'none';
+      document.getElementById('state-error').style.display = stateName === 'error' ? 'flex' : 'none';
+    }
+
+    // Initialize Auth
+    auth.onAuthStateChanged(function(user) {
+      if (!user) {
+        document.getElementById('loading-msg').textContent = "Authenticating guest session...";
+        auth.signInAnonymously().catch(function(error) {
+          console.error("Anonymous auth failed", error);
+          showState('error');
+          document.getElementById('error-msg').textContent = "Failed to connect securely. Please reload.";
+        });
+      } else {
+        currentUser = user;
+        startApp();
+      }
+    });
+
+    var countdownInterval = null;
+    var hasUserClaimed = false;
+
+    function startApp() {
+      if (!promoId) {
+        showState('error');
+        document.getElementById('error-msg').textContent = "No promotion code provided in the URL.";
+        return;
+      }
+      
+      document.getElementById('loading-msg').textContent = "Loading promotion details...";
+      
+      // Listen to public details
+      db.ref('promotions/' + promoId + '/public').on('value', function(snapshot) {
+        promoData = snapshot.val();
+        if (!promoData || promoData.active === false) {
+          showState('error');
+          if (promoData && promoData.active === false) {
+            document.getElementById('error-msg').textContent = "This promotion is currently paused.";
+          } else {
+            document.getElementById('error-msg').textContent = "This promotion was not found.";
+          }
+          return;
+        }
+        
+        renderPromotion();
+        checkUserClaim();
+      }, function(err) {
+        console.error(err);
+        showState('error');
+        document.getElementById('error-msg').textContent = "Permission denied or connection lost.";
+      });
+    }
+
+    function renderPromotion() {
+      showState('active');
+      document.getElementById('wf-name').textContent = promoData.name;
+      document.getElementById('wf-desc').textContent = promoData.description || "Get a free Google Play Store promo code for this premium watch face!";
+      
+      if (promoData.imageUrl) {
+        document.getElementById('wf-preview-container').innerHTML = `<img src="${promoData.imageUrl}" alt="${promoData.name}">`;
+      }
+      
+      var total = promoData.totalCoupons || 0;
+      var claimed = promoData.claimedCount || 0;
+      var remaining = Math.max(0, total - claimed);
+      
+      document.getElementById('promo-count-val').textContent = `${remaining} / ${total}`;
+      
+      var pct = total > 0 ? (remaining / total) * 100 : 0;
+      var pBar = document.getElementById('progress-bar');
+      pBar.style.width = pct + '%';
+      
+      // Color coding progress bar
+      if (pct < 20) pBar.style.background = 'var(--red)';
+      else if (pct < 50) pBar.style.background = 'var(--yellow)';
+      else pBar.style.background = 'var(--green)';
+
+      startCountdownTimer();
+    }
+
+    function checkUserClaim() {
+      if (!currentUser) return;
+      
+      db.ref('promotion_claims/' + promoId + '/' + currentUser.uid).once('value').then(function(snapshot) {
+        var claim = snapshot.val();
+        if (claim && claim.code) {
+          hasUserClaimed = true;
+          showClaimedCoupon(claim.code);
+        } else if (claim && claim.index !== undefined) {
+          // If they successfully claimed it last time but the code wasn't saved yet, fetch it now!
+          db.ref('promotion_codes/' + promoId + '/' + claim.index).once('value').then(function(codeSnap) {
+            var code = codeSnap.val();
+            if (code) {
+              db.ref('promotion_claims/' + promoId + '/' + currentUser.uid + '/code').set(code);
+              hasUserClaimed = true;
+              showClaimedCoupon(code);
+            }
+          });
+        }
+      });
+    }
+
+    function showClaimedCoupon(code) {
+      hasUserClaimed = true;
+      if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+      }
+      document.getElementById('promo-countdown-area').style.display = 'none';
+
+      document.getElementById('claim-btn-area').style.display = 'none';
+      var claimedArea = document.getElementById('claimed-area');
+      claimedArea.style.display = 'flex';
+      
+      var display = document.getElementById('code-display');
+      display.textContent = code;
+      
+      // Set click to copy
+      display.onclick = function() {
+        navigator.clipboard.writeText(code).then(function() {
+          showToast("Code Copied!");
+        });
+      };
+      
+      // Set play store link
+      var playLink = "https://play.google.com/store?code=" + encodeURIComponent(code);
+      document.getElementById('btn-redeem').onclick = function() {
+        window.open(playLink, '_blank');
+      };
+      
+      // Set direct review link
+      var reviewBtn = document.getElementById('btn-review');
+      if (promoData && promoData.storeLink) {
+        reviewBtn.style.display = 'flex';
+        var reviewLink = promoData.storeLink;
+        if (reviewLink.indexOf('?') >= 0) {
+          reviewLink += '&showAllReviews=true';
+        } else {
+          reviewLink += '?showAllReviews=true';
+        }
+        reviewBtn.onclick = function() {
+          window.open(reviewLink, '_blank');
+        };
+      } else {
+        reviewBtn.style.display = 'none';
+      }
+    }
+
+    // Claim Action Logic (Includes secure race-condition atomic updates)
+    var isClaiming = false;
+    document.getElementById('btn-claim').addEventListener('click', function() {
+      if (isClaiming || !currentUser || !promoData) return;
+      
+      var claimBtn = document.getElementById('btn-claim');
+      isClaiming = true;
+      claimBtn.disabled = true;
+      claimBtn.innerHTML = '<span class="loader"></span> CLAIMING...';
+      
+      attemptClaim();
+    });
+
+    function attemptClaim() {
+      var now = Date.now();
+      if (promoData.startsAt && now < promoData.startsAt) {
+        showToast("Promotion has not started yet!");
+        isClaiming = false;
+        resetClaimButton();
+        return;
+      }
+      if (promoData.expiresAt && now > promoData.expiresAt) {
+        showToast("Promotion has expired!");
+        isClaiming = false;
+        resetClaimButton();
+        return;
+      }
+
+      // 1. Read current claimed count in database
+      db.ref('promotions/' + promoId + '/public/claimedCount').once('value').then(function(countSnap) {
+        var nextIndex = countSnap.val() || 0;
+        var total = promoData.totalCoupons || 0;
+        
+        if (nextIndex >= total) {
+          showToast("Sorry, all coupons were just claimed!");
+          renderPromotion(); // refresh UI
+          isClaiming = false;
+          return;
+        }
+        
+        // 2. Write the claim record and increment the count first (claiming the index)
+        var clientMeta = getClientMetadata();
+        var updates = {};
+        updates['promotions/' + promoId + '/public/claimedCount'] = nextIndex + 1;
+        updates['promotion_claims/' + promoId + '/' + currentUser.uid] = {
+          index: String(nextIndex),
+          timestamp: firebase.database.ServerValue.TIMESTAMP,
+          device: clientMeta.device,
+          os: clientMeta.os,
+          browser: clientMeta.browser,
+          timezone: clientMeta.timezone,
+          language: clientMeta.language,
+          referrer: clientMeta.referrer
+        };
+        
+        db.ref().update(updates).then(function() {
+          // 3. Update succeeded! We now have permission to read the code.
+          db.ref('promotion_codes/' + promoId + '/' + nextIndex).once('value').then(function(codeSnap) {
+            var couponCode = codeSnap.val();
+            if (couponCode) {
+              // Save the code to their claim record so they don't have to fetch it again next time
+              db.ref('promotion_claims/' + promoId + '/' + currentUser.uid + '/code').set(couponCode);
+              
+              hasUserClaimed = true;
+              showToast("Coupon Claimed!");
+              showClaimedCoupon(couponCode);
+              isClaiming = false;
+            } else {
+              showToast("Error retrieving code. Please contact admin.");
+              isClaiming = false;
+              resetClaimButton();
+            }
+          }).catch(function(err) {
+            console.error("Failed to read code index " + nextIndex, err);
+            showToast("Error reading code.");
+            isClaiming = false;
+            resetClaimButton();
+          });
+        }).catch(function(err) {
+          // Collision! Someone else claimed nextIndex first. Retry with the new count.
+          console.warn("Collision claiming code index " + nextIndex + ". Retrying...", err);
+          setTimeout(attemptClaim, 150);
+        });
+      }).catch(function(err) {
+        console.error("Failed to get current count", err);
+        showToast("Server error. Retrying claim...");
+        isClaiming = false;
+        resetClaimButton();
+      });
+    }
+
+    function resetClaimButton() {
+      var claimBtn = document.getElementById('btn-claim');
+      if (claimBtn) {
+        var total = promoData.totalCoupons || 0;
+        var claimed = promoData.claimedCount || 0;
+        var remaining = Math.max(0, total - claimed);
+        if (remaining === 0) {
+          claimBtn.disabled = true;
+          claimBtn.textContent = "OUT OF COUPONS";
+        } else {
+          claimBtn.disabled = false;
+          claimBtn.textContent = "CLAIM FREE COUPON";
+        }
+      }
+    }
+
+    // Countdown Helper Functions
+    function startCountdownTimer() {
+      if (countdownInterval) clearInterval(countdownInterval);
+      countdownInterval = setInterval(updateCountdowns, 1000);
+      updateCountdowns();
+    }
+
+    function updateCountdowns() {
+      if (!promoData) return;
+      
+      var now = Date.now();
+      var countdownArea = document.getElementById('promo-countdown-area');
+      var claimBtn = document.getElementById('btn-claim');
+      
+      if (hasUserClaimed) {
+        countdownArea.style.display = 'none';
+        return;
+      }
+      
+      var isScheduled = promoData.startsAt && now < promoData.startsAt;
+      var isExpired = promoData.expiresAt && now > promoData.expiresAt;
+      
+      if (isScheduled) {
+        countdownArea.style.display = 'block';
+        var diff = promoData.startsAt - now;
+        countdownArea.innerHTML = `★ Starts In: <span style="font-family: monospace; font-size: 15px;">${formatDuration(diff)}</span> ★`;
+        countdownArea.style.borderColor = 'rgba(245, 197, 24, 0.2)';
+        countdownArea.style.background = 'rgba(245, 197, 24, 0.05)';
+        countdownArea.style.color = 'var(--yellow)';
+        
+        claimBtn.disabled = true;
+        claimBtn.textContent = "PROMOTION SCHEDULED";
+      } else if (isExpired) {
+        countdownArea.style.display = 'block';
+        countdownArea.innerHTML = `★ PROMOTION EXPIRED ★`;
+        countdownArea.style.borderColor = 'rgba(232, 40, 30, 0.2)';
+        countdownArea.style.background = 'rgba(232, 40, 30, 0.05)';
+        countdownArea.style.color = 'var(--red)';
+        
+        claimBtn.disabled = true;
+        claimBtn.textContent = "PROMOTION EXPIRED";
+      } else {
+        if (promoData.expiresAt) {
+          countdownArea.style.display = 'block';
+          var diff = promoData.expiresAt - now;
+          countdownArea.innerHTML = `★ Ends In: <span style="font-family: monospace; font-size: 15px;">${formatDuration(diff)}</span> ★`;
+          countdownArea.style.borderColor = 'rgba(245, 197, 24, 0.2)';
+          countdownArea.style.background = 'rgba(245, 197, 24, 0.05)';
+          countdownArea.style.color = 'var(--yellow)';
+        } else {
+          countdownArea.style.display = 'none';
+        }
+        
+        var total = promoData.totalCoupons || 0;
+        var claimed = promoData.claimedCount || 0;
+        var remaining = Math.max(0, total - claimed);
+        
+        if (remaining === 0) {
+          claimBtn.disabled = true;
+          claimBtn.textContent = "OUT OF COUPONS";
+        } else if (!isClaiming) {
+          claimBtn.disabled = false;
+          claimBtn.textContent = "CLAIM FREE COUPON";
+        }
+      }
+    }
+
+    function formatDuration(ms) {
+      var seconds = Math.floor((ms / 1000) % 60);
+      var minutes = Math.floor((ms / (1000 * 60)) % 60);
+      var hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
+      var days = Math.floor(ms / (1000 * 60 * 60 * 24));
+      
+      var parts = [];
+      if (days > 0) parts.push(days + "d");
+      if (hours > 0 || days > 0) parts.push(hours + "h");
+      parts.push(minutes + "m");
+      parts.push(seconds + "s");
+      
+      return parts.join(" ");
+    }
+
+    function getClientMetadata() {
+      var userAgent = navigator.userAgent || "";
+      var os = "Unknown OS";
+      var device = "Desktop";
+      var browser = "Unknown Browser";
+      
+      // Basic OS detection
+      if (/android/i.test(userAgent)) {
+        os = "Android";
+        device = "Mobile";
+      } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        os = "iOS";
+        device = "Mobile";
+      } else if (/windows/i.test(userAgent)) {
+        os = "Windows";
+      } else if (/mac/i.test(userAgent)) {
+        os = "macOS";
+      } else if (/linux/i.test(userAgent)) {
+        os = "Linux";
+      }
+      
+      // Tablet check
+      if (device === "Mobile" && /ipad|tablet/i.test(userAgent)) {
+        device = "Tablet";
+      }
+      
+      // Basic Browser detection
+      if (/chrome|crios/i.test(userAgent) && !/edge|edg/i.test(userAgent) && !/opr/i.test(userAgent)) {
+        browser = "Chrome";
+      } else if (/safari/i.test(userAgent) && !/chrome|crios/i.test(userAgent)) {
+        browser = "Safari";
+      } else if (/firefox|fxios/i.test(userAgent)) {
+        browser = "Firefox";
+      } else if (/edge|edg/i.test(userAgent)) {
+        browser = "Edge";
+      } else if (/opr/i.test(userAgent)) {
+        browser = "Opera";
+      }
+      
+      // Referrer parsing
+      var ref = document.referrer || "";
+      if (ref) {
+        try {
+          var refUrl = new URL(ref);
+          ref = refUrl.hostname; // Just store domain name (e.g. facebook.com) to keep it clean
+        } catch(e) {}
+      } else {
+        ref = "Direct / Unknown";
+      }
+      
+      // Check for UTM parameters
+      var utmSource = urlParams.get('utm_source') || urlParams.get('ref') || '';
+      var utmMedium = urlParams.get('utm_medium') || '';
+      var marketingSource = ref;
+      if (utmSource) {
+        marketingSource = utmSource + (utmMedium ? " (" + utmMedium + ")" : "") + " [UTM]";
+      }
+      
+      return {
+        device: device,
+        os: os,
+        browser: browser,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "Unknown",
+        language: navigator.language || "Unknown",
+        referrer: marketingSource
+      };
+    }
+
+    window.addEventListener('unload', function() {
+      if (countdownInterval) {
+        clearInterval(countdownInterval);
+      }
+    });
+  </script>
+</body>
+
+</html>
