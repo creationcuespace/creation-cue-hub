@@ -420,13 +420,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
+            justify-content: flex-start;
+            gap: 12px;
             overflow: hidden;
             box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-            aspect-ratio: 1/1;
             width: 100%;
-            max-width: 150px;
+            max-width: 200px;
         }
 
         .face-card:hover {
@@ -464,12 +463,9 @@
 
         .face-image-container {
             width: 100%;
-            max-width: 120px;
             aspect-ratio: 1/1;
             margin-bottom: 0;
             position: relative;
-            flex-shrink: 1;
-            min-height: 0;
         }
 
         .face-card-img {
@@ -1241,7 +1237,6 @@
             }
             .face-image-container {
                 margin-bottom: 6px;
-                max-width: 110px; /* Limit image size on small screens so title fits inside square */
             }
         }
 
