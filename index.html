@@ -1982,6 +1982,11 @@
                     }
                 }
 
+                // Installation guide deep link e.g. ?install-guide=true
+                if (urlParams.get('install-guide') === 'true' || urlParams.get('action') === 'install-guide') {
+                    openInstallGuideModal();
+                }
+
             } catch (error) {
                 console.error('Data loading error:', error);
                 grid.innerHTML = `
