@@ -13,7 +13,11 @@
     <meta property="og:url" content="https://creationcuespace.github.io/creation-cue-hub/">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png">
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png">
+    
+    <!-- Performance: Early connection to image CDN -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     
     <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1524,7 +1528,7 @@
         <!-- Persistent Header -->
         <header class="top-brand-header">
             <a href="index.html" class="brand-logo-area">
-                <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" class="brand-logo" alt="Logo">
+                <img src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" class="brand-logo" alt="Logo">
                 <h1 class="brand-name">Creation<span>Cue</span>™</h1>
             </a>
         </header>
@@ -1576,7 +1580,7 @@
                     <div class="parallax-bg bg-2" id="parallax-bg-2"></div>
                     <div class="hero-overlay"></div>
                     <div class="hero-content">
-                        <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" alt="Creation Cue" class="logo">
+                        <img src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" alt="Creation Cue" class="logo">
                         <h1>CREATION<span>CUE™</span></h1>
                         <p class="tagline">Browse our collection of 111+ Wear OS watch faces for Pixel Watch, Samsung Galaxy Watch, and all Wear OS devices.<br> Crafted by CreationCue™ a Huawei partner and top-rated developer on Google Play with over 300,000 downloads.</p>
                     </div>
@@ -1679,7 +1683,7 @@
             <!-- About Panel -->
             <section id="tab-about" class="tab-panel">
                 <div class="about-container">
-                    <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" class="about-logo" alt="Logo">
+                    <img src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" class="about-logo" alt="Logo">
                     <h2>CreationCue™</h2>
                     <span class="about-version">Version 1.0.4 (Web Manager)</span>
 
@@ -2004,6 +2008,18 @@
             return '';
         }
 
+        // Convert raw github image URLs to jsDelivr CDN URLs for much faster load times
+        function getOptimizedImageUrl(url) {
+            if (!url) return 'https://via.placeholder.com/300';
+            if (url.includes('raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/')) {
+                return url.replace('raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/', 'cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/');
+            }
+            if (url.includes('raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/')) {
+                return url.replace('raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/', 'cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/');
+            }
+            return url;
+        }
+
         // Generates the best link format based on user device platform (Android native vs Web client)
         function getPlayStoreLink(rawUrl, forceMarket = false) {
             if (!rawUrl) return '#';
@@ -2174,8 +2190,8 @@
             
             sorted.push(...news, ...hot, ...favs, ...others);
             
-            sorted.forEach(face => {
-                grid.appendChild(createWatchFaceCard(face));
+            sorted.forEach((face, index) => {
+                grid.appendChild(createWatchFaceCard(face, index));
             });
         }
 
@@ -2199,8 +2215,8 @@
             grid.style.display = 'grid';
             emptyState.style.display = 'none';
             
-            favoriteFaces.forEach(face => {
-                grid.appendChild(createWatchFaceCard(face));
+            favoriteFaces.forEach((face, index) => {
+                grid.appendChild(createWatchFaceCard(face, index));
             });
         }
 
@@ -2242,7 +2258,7 @@
         };
 
         // Create card HTML element
-        function createWatchFaceCard(face) {
+        function createWatchFaceCard(face, index = 10) {
             const card = document.createElement('div');
             card.className = 'face-card';
             card.onclick = () => openDetailsModal(face);
@@ -2260,10 +2276,13 @@
                 badgeHtml = `<span class="${badgeClass}">${badgeText}</span>`;
             }
             
+            const isEager = index < 6;
+            const loadingAttr = isEager ? 'fetchpriority="high"' : 'loading="lazy"';
+            
             card.innerHTML = `
                 ${badgeHtml}
                 <div class="face-image-container">
-                    <img class="face-card-img" src="${face.image_url}" alt="${face.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/300'">
+                    <img class="face-card-img" src="${getOptimizedImageUrl(face.image_url)}" alt="${face.title}" ${loadingAttr} onerror="this.src='https://via.placeholder.com/300'">
                 </div>
                 <h3 class="face-card-title">${face.title}</h3>
                 <button class="card-cta-btn">Details</button>
@@ -2318,7 +2337,7 @@
             const pkg = face.package_name || getPackageNameFromUrl(face.play_store_url);
             
             // Set basic details
-            img.src = face.image_url;
+            img.src = getOptimizedImageUrl(face.image_url);
             title.textContent = face.title;
             type.textContent = face.type || 'Digital';
             
@@ -2484,7 +2503,7 @@
                     openDetailsModal(face);
                 };
                 card.innerHTML = `
-                    <img class="related-card-img" src="${face.image_url}" alt="${face.title}" loading="lazy">
+                    <img class="related-card-img" src="${getOptimizedImageUrl(face.image_url)}" alt="${face.title}" loading="lazy">
                     <div class="related-card-title">${face.title}</div>
                 `;
                 container.appendChild(card);
