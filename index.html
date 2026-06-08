@@ -147,40 +147,7 @@
             color: var(--primary);
         }
 
-        /* Connection status badge */
-        .status-badge {
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            font-size: 11px;
-            font-weight: 700;
-            padding: 6px 14px;
-            border-radius: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: var(--transition-smooth);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
 
-        .status-badge:hover {
-            border-color: var(--primary);
-            color: var(--text-primary);
-            background: var(--surface-hover);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        .status-dot.checking { background-color: var(--text-muted); }
-        .status-dot.connected { background-color: var(--success); box-shadow: 0 0 8px var(--success); }
-        .status-dot.disconnected { background-color: var(--orange); box-shadow: 0 0 8px var(--orange); }
 
         /* Main Content View Frame */
         .main-content-area {
@@ -1115,26 +1082,7 @@
             box-shadow: 0 6px 16px rgba(241, 179, 28, 0.5);
         }
 
-        .detail-btn-secondary {
-            background: transparent;
-            border: 1.5px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 14px;
-            border-radius: var(--border-radius-md);
-            font-weight: 600;
-            font-size: 13.5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition-smooth);
-            text-decoration: none;
-        }
 
-        .detail-btn-secondary:hover {
-            background: var(--surface-variant);
-            border-color: var(--text-muted);
-        }
 
         /* Action bar for sharing / rating / support */
         .detail-shortcuts {
@@ -1246,67 +1194,7 @@
             text-overflow: ellipsis;
         }
 
-        /* Status selection popover modal */
-        .status-modal-content {
-            padding: 24px;
-        }
 
-        .status-modal-content h3 {
-            font-family: var(--font-display);
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-primary);
-        }
-
-        .status-modal-content p {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .watch-option-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .watch-option {
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            padding: 14px 16px;
-            border-radius: var(--border-radius-md);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-            font-weight: 600;
-            transition: var(--transition-smooth);
-        }
-
-        .watch-option:hover {
-            border-color: rgba(255,255,255,0.2);
-            background: var(--surface-hover);
-        }
-
-        .watch-option.selected {
-            border-color: var(--primary);
-            background: var(--primary-glow);
-            color: var(--primary);
-        }
-
-        .watch-option svg {
-            width: 18px;
-            height: 18px;
-            color: var(--primary);
-            display: none;
-        }
-
-        .watch-option.selected svg {
-            display: block;
-        }
 
         /* Media Queries for Desktop layout */
         @media (min-width: 769px) {
@@ -1443,10 +1331,6 @@
                 <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" class="brand-logo" alt="Logo">
                 <h1 class="brand-name">Creation<span>Cue</span></h1>
             </div>
-            <button class="status-badge" id="status-badge" onclick="openStatusModal()">
-                <span class="status-dot checking" id="status-dot"></span>
-                <span id="status-text">Checking Watch...</span>
-            </button>
         </header>
 
         <!-- Navigation bar -->
@@ -1630,11 +1514,11 @@
                 <p id="detail-desc" class="detail-desc">Description of the watch face goes here.</p>
 
                 <div class="detail-actions">
-                    <a id="detail-install-btn" href="#" target="_blank" class="detail-btn-primary">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-                        INSTALL ON WATCH
+                    <a id="detail-store-btn" href="#" target="_blank" class="detail-btn-primary">
+                        <!-- Play Store Icon (SVG) -->
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M5 3.22v17.56c0 .42.23.8.6.99l9.46-9.46L5.6 2.23c-.37.19-.6.57-.6.99zm14.7 7.74l-3.32-1.9L6.92 18.5l9.46-9.46 3.32-1.9c.54-.31.54-1.08 0-1.39a.79.79 0 0 0-.7 0z"/></svg>
+                        GET IT ON GOOGLE PLAY
                     </a>
-                    <a id="detail-play-btn" href="#" target="_blank" class="detail-btn-secondary">GO TO PLAY STORE</a>
                 </div>
 
                 <div class="detail-shortcuts">
@@ -1660,36 +1544,7 @@
         </div>
     </div>
 
-    <!-- Status Selection Modal -->
-    <div class="modal" id="status-modal" onclick="closeStatusOnOutsideClick(event)">
-        <div class="modal-container">
-            <button class="modal-close-btn" onclick="closeStatusModal()">&times;</button>
-            <div class="status-modal-content">
-                <h3>Connection Center</h3>
-                <p>Because web browsers do not run on Wear OS smartwatches directly, connection status is simulated here to help guide you on installation.</p>
-                <p>Select your active watch device model to tailor direct install prompts:</p>
-                
-                <div class="watch-option-list">
-                    <div class="watch-option selected" id="opt-pixel" onclick="selectWatchOption('Pixel Watch')">
-                        <span>Google Pixel Watch</span>
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                    <div class="watch-option" id="opt-galaxy" onclick="selectWatchOption('Galaxy Watch')">
-                        <span>Samsung Galaxy Watch</span>
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                    <div class="watch-option" id="opt-tic" onclick="selectWatchOption('TicWatch')">
-                        <span>TicWatch / Other</span>
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                    <div class="watch-option" id="opt-browser" onclick="selectWatchOption('Browser Mode')">
-                        <span>Browser Catalog Mode</span>
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!-- JS Core Logic -->
     <script>
@@ -1699,7 +1554,6 @@
         let currentFilter = 'All';
         let searchQuery = '';
         let favorites = JSON.parse(localStorage.getItem('cc_favorites')) || [];
-        let currentSelectedWatch = localStorage.getItem('cc_selected_watch') || 'Pixel Watch';
         let selectedFace = null;
 
         // Dynamic strings matching strings.xml
@@ -1728,33 +1582,9 @@
 
         // Lifecycle Entrypoint
         window.addEventListener('DOMContentLoaded', () => {
-            initWatchStatus();
             setupFaqAccordions();
             fetchData();
         });
-
-        // Initialize connection status
-        function initWatchStatus() {
-            const dot = document.getElementById('status-dot');
-            const text = document.getElementById('status-text');
-            
-            // Sync status display
-            dot.className = 'status-dot';
-            if (currentSelectedWatch === 'Browser Mode') {
-                dot.classList.add('disconnected');
-                text.textContent = 'Catalog Mode';
-            } else {
-                dot.classList.add('connected');
-                text.textContent = currentSelectedWatch;
-            }
-            
-            // Sync status selection list highlighting
-            document.querySelectorAll('.watch-option').forEach(opt => opt.classList.remove('selected'));
-            if (currentSelectedWatch === 'Pixel Watch') document.getElementById('opt-pixel').classList.add('selected');
-            else if (currentSelectedWatch === 'Galaxy Watch') document.getElementById('opt-galaxy').classList.add('selected');
-            else if (currentSelectedWatch === 'TicWatch') document.getElementById('opt-tic').classList.add('selected');
-            else if (currentSelectedWatch === 'Browser Mode') document.getElementById('opt-browser').classList.add('selected');
-        }
 
         // Switch Active Tabs
         function switchTab(tabId) {
@@ -1835,6 +1665,29 @@
             return '';
         }
 
+        // Generates the best link format based on user device platform (Android native vs Web client)
+        function getPlayStoreLink(rawUrl, forceMarket = false) {
+            if (!rawUrl) return '#';
+            const isAndroid = /Android/i.test(navigator.userAgent);
+            
+            if (rawUrl.startsWith('market://')) {
+                if (isAndroid || forceMarket) {
+                    return rawUrl; // Use native market link on Android
+                } else {
+                    // Convert to standard Web URL on other platforms
+                    return rawUrl.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=');
+                }
+            } else if (rawUrl.startsWith('https://play.google.com/store/')) {
+                if (isAndroid && !forceMarket) {
+                    // Convert web URL to native market protocol on Android
+                    const pkg = getPackageNameFromUrl(rawUrl);
+                    if (pkg) return `market://details?id=${pkg}`;
+                }
+                return rawUrl;
+            }
+            return rawUrl;
+        }
+
         // Setup Promo Banner
         function setupBanner() {
             const banner = document.getElementById('promo-banner');
@@ -1850,12 +1703,8 @@
             img.src = bannerData.image_url;
             desc.textContent = bannerData.description || 'Check out our featured design!';
             
-            // Format link URL
-            let playStoreUrl = bannerData.play_store_url || '';
-            if (playStoreUrl.startsWith('market://')) {
-                playStoreUrl = playStoreUrl.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=');
-            }
-            link.href = playStoreUrl;
+            // Format link URL dynamically based on device platform
+            link.href = getPlayStoreLink(bannerData.play_store_url || '');
             banner.style.display = 'flex';
         }
 
@@ -2142,8 +1991,7 @@
             const price = document.getElementById('detail-badge-price');
             const type = document.getElementById('detail-badge-type');
             const desc = document.getElementById('detail-desc');
-            const installBtn = document.getElementById('detail-install-btn');
-            const playBtn = document.getElementById('detail-play-btn');
+            const storeBtn = document.getElementById('detail-store-btn');
             const favBtn = document.getElementById('detail-fav-btn');
             
             const pkg = face.package_name || getPackageNameFromUrl(face.play_store_url);
@@ -2171,14 +2019,9 @@
                 price.className = 'detail-badge price paid';
             }
             
-            // Install links
-            let playStoreUrl = face.play_store_url || '';
-            if (playStoreUrl.startsWith('market://')) {
-                playStoreUrl = playStoreUrl.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=');
-            }
-            
-            installBtn.href = playStoreUrl;
-            playBtn.href = playStoreUrl;
+            // Install link dynamically optimized for Android vs Web clients
+            const rawLink = face.play_store_url || '';
+            storeBtn.href = getPlayStoreLink(rawLink);
             
             // Update Fav button
             if (isFavorite(pkg)) {
@@ -2338,35 +2181,10 @@
                          `--- Web App Environment Info ---\n` +
                          `Platform: ${navigator.platform}\n` +
                          `Browser: ${userAgent}\n` +
-                         `Connected Watch Config: ${currentSelectedWatch}\n` +
                          `App Version: 1.0.4 (Web Manager)`;
             
             const mailtoUrl = `mailto:${supportEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             window.location.href = mailtoUrl;
-        }
-
-        // Status Modal triggers
-        function openStatusModal() {
-            document.getElementById('status-modal').classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeStatusModal() {
-            document.getElementById('status-modal').classList.remove('open');
-            document.body.style.overflow = '';
-        }
-
-        function closeStatusOnOutsideClick(event) {
-            if (event.target.id === 'status-modal') {
-                closeStatusModal();
-            }
-        }
-
-        function selectWatchOption(watchName) {
-            currentSelectedWatch = watchName;
-            localStorage.setItem('cc_selected_watch', watchName);
-            initWatchStatus();
-            closeStatusModal();
         }
     </script>
 </body>
