@@ -1201,41 +1201,46 @@
             .app-container {
                 padding-bottom: 0;
                 display: grid;
-                grid-template-columns: 240px 1fr;
-                grid-template-rows: auto 1fr;
-                height: 100vh;
+                grid-template-columns: 80px 1fr; /* Compact left menu width */
+                min-height: 100vh;
                 max-width: 100%;
             }
 
             .top-brand-header {
                 grid-column: 1 / span 2;
-                grid-row: 1;
                 border-bottom: 1px solid var(--border-color);
+                position: sticky;
+                top: 0;
+                z-index: 100;
             }
 
             .bottom-nav {
                 grid-column: 1;
-                grid-row: 2;
-                position: static;
+                position: sticky;
+                top: 64px; /* Sticks right below header */
+                height: calc(100vh - 64px);
                 flex-direction: column;
                 justify-content: flex-start;
-                padding: 24px 16px;
-                gap: 16px;
+                align-items: center;
+                padding: 24px 4px;
+                gap: 24px;
                 border-top: none;
                 border-right: 1px solid var(--border-color);
-                height: 100%;
                 box-shadow: none;
                 background: var(--surface-color);
+                z-index: 99;
             }
 
             .nav-item {
                 max-width: 100%;
-                flex-direction: row;
-                gap: 16px;
-                padding: 12px 16px;
+                flex-direction: column;
+                gap: 6px;
+                padding: 12px 4px;
                 border-radius: var(--border-radius-md);
                 width: 100%;
-                justify-content: flex-start;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
             }
 
             .nav-item.active {
@@ -1248,16 +1253,16 @@
             }
 
             .nav-item span {
-                font-size: 14px;
-                font-weight: 600;
+                font-size: 10px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
 
             .main-content-area {
                 grid-column: 2;
-                grid-row: 2;
-                overflow-y: auto;
                 padding: 32px 40px;
-                max-height: calc(100vh - 65px);
+                min-height: calc(100vh - 64px);
             }
 
             .promo-banner {
@@ -1320,6 +1325,176 @@
             .loader {
                 grid-column: span 4;
             }
+        }
+
+        /* Hero Section & Background Parallax from index_backup.html */
+        .hero-section {
+            position: relative;
+            height: 70vh;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 60px 20px;
+            margin: -24px -24px 24px -24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        @media (min-width: 769px) {
+            .hero-section {
+                margin: -32px -40px 24px -40px;
+                height: 80vh;
+            }
+        }
+
+        .parallax-bg {
+            position: absolute;
+            top: -10%;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            will-change: transform, opacity;
+            transition: transform 0.1s ease-out;
+        }
+
+        .bg-1 {
+            background-image: url('ccBanner1.webp');
+            z-index: 0;
+        }
+
+        .bg-2 {
+            background-image: url('ccBanner2.webp');
+            opacity: 0;
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom,
+                    rgba(5, 5, 5, 0.4) 0%,
+                    rgba(5, 5, 5, 0) 40%,
+                    rgba(5, 5, 5, 0.8) 85%,
+                    rgba(5, 5, 5, 1) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
+            text-align: center;
+        }
+
+        .logo {
+            max-width: 90px;
+            margin-bottom: 16px;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 800;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-family: var(--font-display);
+        }
+
+        .hero-content h1 span {
+            color: var(--primary);
+        }
+
+        .tagline {
+            color: #eee;
+            font-size: 1.05rem;
+            margin-top: 15px;
+            font-weight: 400;
+            line-height: 1.6;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Stats Container from index_backup.html */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-width: 1200px;
+            margin: -40px auto 32px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        @media (min-width: 480px) {
+            .stats-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 769px) {
+            .stats-container {
+                grid-template-columns: repeat(6, 1fr);
+                margin: -50px auto 40px;
+            }
+        }
+
+        .stat-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 16px 10px;
+            border-radius: var(--border-radius-md);
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            background: var(--surface-hover);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.5), 0 0 10px rgba(241,179,28,0.1);
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+            font-weight: 700;
+        }
+
+        .stat-card svg {
+            width: 28px;
+            height: 28px;
+            color: var(--primary);
+            fill: currentColor;
+            margin-bottom: 2px;
         }
     </style>
 </head>
@@ -1384,6 +1559,23 @@
 
             <!-- Catalog Panel -->
             <section id="tab-catalog" class="tab-panel active">
+                <!-- Parallax Hero Banner -->
+                <header class="hero-section">
+                    <div class="parallax-bg bg-1" id="parallax-bg-1"></div>
+                    <div class="parallax-bg bg-2" id="parallax-bg-2"></div>
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content">
+                        <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" alt="Creation Cue" class="logo">
+                        <h1>CREATION<span>CUE™</span></h1>
+                        <p class="tagline">Browse our collection of 111+ Wear OS watch faces for Pixel Watch, Samsung Galaxy Watch, and all Wear OS devices.<br> Crafted by CreationCue™ a Huawei partner and top-rated developer on Google Play with over 300,000 downloads.</p>
+                    </div>
+                </header>
+
+                <!-- Stats Container -->
+                <section class="stats-container" id="stats-container">
+                    <!-- Loaded dynamically via JavaScript -->
+                </section>
+
                 <div class="search-filter-row">
                     <div class="search-input-wrapper">
                         <input type="text" id="search-input" class="search-input" placeholder="Search watch faces..." oninput="onSearchInput(event)">
@@ -1584,6 +1776,62 @@
         window.addEventListener('DOMContentLoaded', () => {
             setupFaqAccordions();
             fetchData();
+            loadStats();
+        });
+
+        // Load stats from repo json
+        async function loadStats() {
+            const container = document.getElementById('stats-container');
+            if (!container) return;
+            try {
+                const res = await fetch('https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/stats.json');
+                const data = await res.json();
+                container.innerHTML = ''; // Clear loading
+                data.stats.forEach(stat => {
+                    const tag = stat.link ? 'a' : 'div';
+                    const el = document.createElement(tag);
+                    el.className = 'stat-card';
+                    if (stat.link) { el.href = stat.link; el.target = '_blank'; }
+                    const valueHtml = stat.svg ? stat.svg : `<span class="stat-value">${stat.value}</span>`;
+                    el.innerHTML = `${valueHtml}<span class="stat-label">${stat.label}</span>`;
+                    container.appendChild(el);
+                });
+            } catch (e) {
+                console.error('Stats load error:', e);
+            }
+        }
+
+        // Parallax and Transition Logic
+        let hasTransitioned = false;
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset || document.documentElement.scrollTop;
+            const p1 = document.getElementById('parallax-bg-1');
+            const p2 = document.getElementById('parallax-bg-2');
+            
+            // Move backgrounds at 40% of scroll speed
+            const transform = `translateY(${scrolled * 0.4}px)`;
+            if (p1) p1.style.transform = transform;
+            if (p2) p2.style.transform = transform;
+
+            // Start transition later (at 300px) and finish at 700px
+            const fadeStart = 300;
+            const fadeEnd = 700;
+            
+            if (!hasTransitioned) {
+                let opacity = (scrolled - fadeStart) / (fadeEnd - fadeStart);
+                opacity = Math.max(0, Math.min(1, opacity));
+                
+                if (p2) p2.style.opacity = opacity;
+                
+                // Once fully visible, make it permanent
+                if (opacity >= 1) {
+                    hasTransitioned = true;
+                }
+            } else {
+                // Keep the second banner visible even when scrolling back up
+                if (p2) p2.style.opacity = 1;
+            }
         });
 
         // Switch Active Tabs
