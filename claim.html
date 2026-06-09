@@ -511,6 +511,26 @@
       console.warn("Firebase App Check: RECAPTCHA_SITE_KEY is not configured. Bot protection is disabled.");
     }
 
+    // ntfy.sh Topic for completed promotion push alerts (leave empty to disable)
+    var NTFY_TOPIC = "creationcue-alerts-9872";
+
+    function triggerCompletedNotification(promoName, promoId, total) {
+      if (!NTFY_TOPIC) return;
+      fetch("https://ntfy.sh/" + NTFY_TOPIC, {
+        method: "POST",
+        body: 'All ' + total + ' coupons for watch face "' + promoName + '" (' + promoId + ') have been claimed!',
+        headers: {
+          "Title": "Promotion Completed! 🎉",
+          "Priority": "high",
+          "Tags": "tada,warning"
+        }
+      }).then(function() {
+        console.log("Push notification sent to ntfy.");
+      }).catch(function(err) {
+        console.error("Failed to send push notification:", err);
+      });
+    }
+
     var db = firebase.database();
     var auth = firebase.auth();
     var currentUser = null;
@@ -783,6 +803,13 @@
               showToast("Coupon Claimed!");
               showClaimedCoupon(couponCode, true);
               isClaiming = false;
+
+              // Send push alert if this was the last coupon
+              var total = promoData.totalCoupons || 0;
+              var remaining = Math.max(0, total - (nextIndex + 1));
+              if (remaining === 0) {
+                triggerCompletedNotification(promoData.name, promoId, total);
+              }
             } else {
               showToast("Error retrieving code. Please contact admin.");
               isClaiming = false;
