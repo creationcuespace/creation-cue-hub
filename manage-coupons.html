@@ -990,6 +990,8 @@ AAAA-BBBB-CCCC"></textarea>
           var activeStatusHtml = '';
           if (!promo.active) {
             activeStatusHtml = '<span style="color:var(--red); font-size:11px; font-weight:bold; background:rgba(232,40,30,0.1); padding:4px 8px; border-radius:3px;">● PAUSED</span>';
+          } else if (remaining === 0) {
+            activeStatusHtml = '<span style="color:var(--muted); font-size:11px; font-weight:bold; background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:3px; border:1px solid var(--border);">● COMPLETED</span>';
           } else if (isExpired) {
             activeStatusHtml = '<span style="color:var(--red); font-size:11px; font-weight:bold; background:rgba(232,40,30,0.1); padding:4px 8px; border-radius:3px;">● EXPIRED</span>';
           } else if (isScheduled) {
