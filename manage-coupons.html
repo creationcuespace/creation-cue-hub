@@ -1159,67 +1159,6 @@ AAAA-BBBB-CCCC"></textarea>
         }).join('');
       });
     }
-        var aiBtn = document.getElementById('btn-ai-' + promoId);
-
-        if (!claims) {
-          container.innerHTML = '<div class="empty-state" style="padding:10px; font-size:10px;">No claims recorded yet.</div>';
-          if (aiBtn) {
-            aiBtn.disabled = true;
-            aiBtn.style.opacity = '0.5';
-            aiBtn.style.cursor = 'not-allowed';
-          }
-          if (!window.claimsCache) window.claimsCache = {};
-          window.claimsCache[promoId] = [];
-          return;
-        }
-
-        if (aiBtn) {
-          aiBtn.disabled = false;
-          aiBtn.style.opacity = '1';
-          aiBtn.style.cursor = 'pointer';
-        }
-
-        // Sort claims by timestamp descending
-        var sortedClaims = Object.keys(claims).map(uid => {
-          var claim = claims[uid];
-          return {
-            uid: uid,
-            code: claim.code,
-            time: claim.timestamp ? formatDateTime(claim.timestamp, true) : 'Unknown',
-            device: claim.device || '',
-            os: claim.os || '',
-            browser: claim.browser || '',
-            timezone: claim.timezone || '',
-            language: claim.language || '',
-            referrer: claim.referrer || ''
-          };
-        }).reverse();
-
-        if (!window.claimsCache) window.claimsCache = {};
-        window.claimsCache[promoId] = sortedClaims;
-
-        container.innerHTML = sortedClaims.map(c => {
-          var metaHtml = '';
-          if (c.os || c.browser || c.referrer || c.timezone) {
-            var details = [];
-            if (c.os) details.push(`📱 ${c.os} (${c.browser})`);
-            if (c.timezone) details.push(`🌍 ${c.timezone}`);
-            if (c.referrer) details.push(`🔗 ${c.referrer}`);
-            metaHtml = `<div style="font-size: 9px; color: var(--muted); margin-top: 3px; display: flex; gap: 6px; flex-wrap: wrap; text-align: left;">${details.join(' | ')}</div>`;
-          }
-          
-          return `
-            <div class="claim-row" style="flex-direction: column; align-items: flex-start; padding: 6px 10px;">
-              <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
-                <span class="claim-time">${c.time}</span>
-                <span class="claim-code" title="User ID: ${c.uid}">${c.code}</span>
-              </div>
-              ${metaHtml}
-            </div>
-          `;
-        }).join('');
-      });
-    }
 
     window.copyLink = function(key) {
       var url = document.getElementById('link-' + key).textContent;
