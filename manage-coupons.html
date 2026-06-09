@@ -953,7 +953,16 @@ AAAA-BBBB-CCCC"></textarea>
         listEl.innerHTML = '';
         var claimBaseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/claim.html';
 
-        Object.keys(data).forEach(function(key) {
+        var promoKeys = Object.keys(data);
+        
+        // Sort by creation date descending (newest first)
+        promoKeys.sort(function(a, b) {
+          var tA = (data[a].public && data[a].public.createdAt) || 0;
+          var tB = (data[b].public && data[b].public.createdAt) || 0;
+          return tB - tA;
+        });
+
+        promoKeys.forEach(function(key) {
           var promo = data[key].public;
           if (!promo) return;
 
