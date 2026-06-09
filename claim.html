@@ -422,10 +422,12 @@
         
         <!-- COUNTDOWN STATE (Strategy 4) -->
         <div id="claim-countdown-block" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; gap: 14px; background: var(--mid); border-radius: 6px; border: 1px solid var(--border); width: 100%;">
-          <div class="loader" style="border-top-color: var(--yellow); width: 24px; height: 24px;"></div>
-          <div style="font-size: 15px; font-weight: 600; letter-spacing: 0.5px;">Revealing your code in <span id="claim-timer-num" style="color: var(--yellow); font-family: monospace; font-size: 18px; font-weight: 700;">3</span>s...</div>
-          <div style="font-size: 13px; color: var(--muted); font-style: italic; line-height: 1.4; max-width: 280px; margin-top: 4px; padding: 0 10px;">
-            "Remember: leaving a review helps me create more faces!"
+          <div style="font-size: 15px; color: var(--yellow); font-weight: 600; font-style: italic; line-height: 1.4; max-width: 320px; padding: 0 5px; text-align: center;">
+            ✨ "Remember: leaving a review helps me create more faces!"
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-top: 4px;">
+            <div class="loader" style="border-top-color: var(--yellow); width: 16px; height: 16px;"></div>
+            <div style="font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: 0.5px;">Your coupon is coming...</div>
           </div>
         </div>
 
@@ -716,20 +718,10 @@
         countdownBlock.style.display = 'flex';
         revealedBlock.style.display = 'none';
         
-        var secondsLeft = 3;
-        var timerNum = document.getElementById('claim-timer-num');
-        timerNum.textContent = secondsLeft;
-        
-        var interval = setInterval(function() {
-          secondsLeft--;
-          if (secondsLeft <= 0) {
-            clearInterval(interval);
-            countdownBlock.style.display = 'none';
-            revealedBlock.style.display = 'flex';
-          } else {
-            timerNum.textContent = secondsLeft;
-          }
-        }, 1000);
+        setTimeout(function() {
+          countdownBlock.style.display = 'none';
+          revealedBlock.style.display = 'flex';
+        }, 3000);
       } else {
         countdownBlock.style.display = 'none';
         revealedBlock.style.display = 'flex';
