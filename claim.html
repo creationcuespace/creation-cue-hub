@@ -613,7 +613,7 @@
     }
 
     function checkUserClaim() {
-      if (!currentUser) return;
+      if (!currentUser || isClaiming || hasUserClaimed) return;
       
       db.ref('promotion_claims/' + promoId + '/' + currentUser.uid).once('value').then(function(snapshot) {
         var claim = snapshot.val();
