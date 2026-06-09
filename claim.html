@@ -406,25 +406,38 @@
 
       <!-- Claimed Area -->
       <div class="claimed-area" id="claimed-area" style="display: none;">
-        <div style="font-weight: 600; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; color: var(--green);">
+        <div style="font-weight: 600; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; color: var(--green); margin-bottom: 4px;">
           ★ Coupon Claimed Successfully ★
         </div>
-        <div style="font-size: 12px; color: var(--muted); line-height: 1.4; padding: 0 10px; margin-top: -4px; margin-bottom: 2px;">
-          If you enjoy this watch face, leaving a review on the Play Store would mean a lot to us! Thank you for your support!
+        
+        <!-- COUNTDOWN STATE (Strategy 4) -->
+        <div id="claim-countdown-block" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; gap: 14px; background: var(--mid); border-radius: 6px; border: 1px solid var(--border); width: 100%;">
+          <div class="loader" style="border-top-color: var(--yellow); width: 24px; height: 24px;"></div>
+          <div style="font-size: 15px; font-weight: 600; letter-spacing: 0.5px;">Revealing your code in <span id="claim-timer-num" style="color: var(--yellow); font-family: monospace; font-size: 18px; font-weight: 700;">3</span>s...</div>
+          <div style="font-size: 13px; color: var(--muted); font-style: italic; line-height: 1.4; max-width: 280px; margin-top: 4px; padding: 0 10px;">
+            "Remember: leaving a review helps me create more faces!"
+          </div>
         </div>
-        <div class="code-box" id="code-display" title="Click to copy">
-          --------
+
+        <!-- REVEALED CONTENT (Hidden by default, shown after countdown) -->
+        <div id="claim-revealed-block" style="display: none; flex-direction: column; gap: 14px; width: 100%;">
+          <div style="font-size: 12px; color: var(--muted); line-height: 1.4; padding: 0 10px; margin-top: -4px; margin-bottom: 2px;">
+            If you enjoy this watch face, leaving a review on the Play Store would mean a lot to us! Thank you for your support!
+          </div>
+          <div class="code-box" id="code-display" title="Click to copy">
+            --------
+          </div>
+          <div class="code-subtext">Tap code to copy to clipboard</div>
+          <button class="btn redeem-btn" id="btn-redeem">
+            REDEEM ON GOOGLE PLAY
+          </button>
+          <button class="btn ghost" id="btn-review" style="display: none; margin-top: 10px;">
+            WRITE A REVIEW
+          </button>
+          <a href="https://creationcuespace.github.io/creation-cue-hub/index.html" class="btn ghost" style="text-decoration: none; margin-top: 10px; display: flex;">
+            BROWSE MORE WATCH FACES
+          </a>
         </div>
-        <div class="code-subtext">Tap code to copy to clipboard</div>
-        <button class="btn redeem-btn" id="btn-redeem">
-          REDEEM ON GOOGLE PLAY
-        </button>
-        <button class="btn ghost" id="btn-review" style="display: none; margin-top: 10px;">
-          WRITE A REVIEW
-        </button>
-        <a href="https://creationcuespace.github.io/creation-cue-hub/index.html" class="btn ghost" style="text-decoration: none; margin-top: 10px; display: flex;">
-          BROWSE MORE WATCH FACES
-        </a>
       </div>
     </div>
 
@@ -621,7 +634,7 @@
       });
     }
 
-    function showClaimedCoupon(code) {
+    function showClaimedCoupon(code, showCountdown) {
       hasUserClaimed = true;
       if (countdownInterval) {
         clearInterval(countdownInterval);
@@ -664,6 +677,32 @@
         };
       } else {
         reviewBtn.style.display = 'none';
+      }
+
+      var countdownBlock = document.getElementById('claim-countdown-block');
+      var revealedBlock = document.getElementById('claim-revealed-block');
+
+      if (showCountdown) {
+        countdownBlock.style.display = 'flex';
+        revealedBlock.style.display = 'none';
+        
+        var secondsLeft = 3;
+        var timerNum = document.getElementById('claim-timer-num');
+        timerNum.textContent = secondsLeft;
+        
+        var interval = setInterval(function() {
+          secondsLeft--;
+          if (secondsLeft <= 0) {
+            clearInterval(interval);
+            countdownBlock.style.display = 'none';
+            revealedBlock.style.display = 'flex';
+          } else {
+            timerNum.textContent = secondsLeft;
+          }
+        }, 1000);
+      } else {
+        countdownBlock.style.display = 'none';
+        revealedBlock.style.display = 'flex';
       }
     }
 
@@ -732,7 +771,7 @@
               
               hasUserClaimed = true;
               showToast("Coupon Claimed!");
-              showClaimedCoupon(couponCode);
+              showClaimedCoupon(couponCode, true);
               isClaiming = false;
             } else {
               showToast("Error retrieving code. Please contact admin.");
