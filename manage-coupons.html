@@ -1103,12 +1103,15 @@ AAAA-BBBB-CCCC"></textarea>
                 </button>
               </div>
 
-              <div style="display:flex; gap:10px; margin-top:6px;">
+              <div style="display:flex; gap:10px; margin-top:6px; flex-wrap:wrap;">
                 <button class="btn ghost small" style="flex:1;" onclick="event.stopPropagation(); toggleActive('${key}', ${promo.active})">
                   ${promo.active ? 'PAUSE' : 'RESUME'}
                 </button>
                 <button class="btn small" style="flex:1; background:var(--blue); color:white;" onclick="event.stopPropagation(); startEditPromotion('${key}')">
                   EDIT
+                </button>
+                <button class="btn small" style="flex:1; background:var(--green); color:white;" onclick="event.stopPropagation(); duplicatePromotion('${key}')">
+                  DUPLICATE
                 </button>
                 <button class="btn red small" style="flex:none;" onclick="event.stopPropagation(); deletePromotion('${key}')">
                   DELETE
@@ -1388,6 +1391,46 @@ Format this report with a professional tone in clean, beautiful Markdown with st
           window.expandedPromos[key] = false;
         }
       }
+    };
+
+    // Duplicate promotion details into creation form
+    window.duplicatePromotion = function(key) {
+      cancelEdit();
+      
+      db.ref('promotions/' + key + '/public').once('value').then(function(snapshot) {
+        var promo = snapshot.val();
+        if (!promo) return;
+        
+        document.getElementById('promo-id').value = key + '-copy';
+        document.getElementById('promo-name').value = (promo.name || '') + ' Copy';
+        document.getElementById('promo-desc').value = promo.description || '';
+        document.getElementById('promo-link').value = promo.storeLink || '';
+        document.getElementById('promo-img').value = promo.imageUrl || '';
+        
+        if (promo.startsAt) {
+          var localDate = new Date(promo.startsAt);
+          var offset = localDate.getTimezoneOffset() * 60000;
+          var localISOTime = (new Date(localDate.getTime() - offset)).toISOString().slice(0, 16);
+          document.getElementById('promo-starts').value = localISOTime;
+        } else {
+          document.getElementById('promo-starts').value = '';
+        }
+        
+        if (promo.expiresAt) {
+          var localDate = new Date(promo.expiresAt);
+          var offset = localDate.getTimezoneOffset() * 60000;
+          var localISOTime = (new Date(localDate.getTime() - offset)).toISOString().slice(0, 16);
+          document.getElementById('promo-expiry').value = localISOTime;
+        } else {
+          document.getElementById('promo-expiry').value = '';
+        }
+        
+        document.getElementById('promo-codes').value = '';
+        if (typeof toggleCreateForm === 'function') toggleCreateForm(true);
+        showToast("Details duplicated! Paste new codes.");
+        
+        document.querySelector('.col-left').scrollIntoView({ behavior: 'smooth' });
+      });
     };
 
     // Toggle collapsible Create Promotion form
