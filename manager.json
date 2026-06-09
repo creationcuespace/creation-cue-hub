@@ -1171,7 +1171,8 @@
       "description_de": "CRC036 ist ein poliertes digitales Zifferblatt im minimalistischen Stil mit wichtigen Gesundheits- und Zeitkomplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": true,
+      "badge_text": "🎀 FREE"
     },
     {
       "id": "crc035",
