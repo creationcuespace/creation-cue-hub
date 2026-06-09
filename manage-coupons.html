@@ -660,6 +660,25 @@ AAAA-BBBB-CCCC"></textarea>
 
   <div class="toast" id="toast">Link Copied!</div>
 
+  <!-- Promotion Details Modal -->
+  <div id="promo-modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease; padding: 15px;">
+    <div id="promo-modal-card" style="background: var(--dark); border: 1px solid var(--border); border-radius: 6px; width: 100%; max-width: 500px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.2s ease;">
+      <!-- Header -->
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border);">
+        <div id="promo-modal-title-area" style="display: flex; gap: 10px; align-items: center; min-width: 0;">
+          <!-- Thumbnail and Title -->
+        </div>
+        <button onclick="closePromoModal()" style="background: none; border: none; color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px; transition: color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <!-- Body -->
+      <div id="promo-modal-body" style="padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; font-size: 14px;">
+        <!-- Dynamic Content -->
+      </div>
+    </div>
+  </div>
+
   <!-- Google Sign In Overlay -->
   <div id="login-overlay" style="display: none;">
     <div class="logo-mark" style="transform:scale(2); margin-bottom:20px;"><span class="r"></span><span class="b"></span><span class="y"></span></div>
@@ -993,18 +1012,12 @@ AAAA-BBBB-CCCC"></textarea>
           var promo = data[key].public;
           if (!promo) return;
 
-          var claimUrl = claimBaseUrl + '?p=' + key;
           var total = promo.totalCoupons || 0;
           var claimed = promo.claimedCount || 0;
           var remaining = Math.max(0, total - claimed);
 
           if (!window.promoCache) window.promoCache = {};
-          window.promoCache[key] = {
-            name: promo.name,
-            total: total,
-            claimed: claimed,
-            remaining: remaining
-          };
+          window.promoCache[key] = promo; // Store full promo details in cache
 
           var block = document.createElement('div');
           block.className = 'promo-block';
@@ -1027,21 +1040,9 @@ AAAA-BBBB-CCCC"></textarea>
             activeStatusHtml = '<span style="color:var(--green); font-size:11px; font-weight:bold; background:rgba(76,175,80,0.1); padding:4px 8px; border-radius:3px;">● ACTIVE</span>';
           }
 
-          var startHtml = promo.startsAt 
-            ? `<div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Starts: <span style="color:var(--text);">${formatDateTime(promo.startsAt)}</span></div>` 
-            : '';
-
-          var expiryHtml = promo.expiresAt 
-            ? `<div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Expires: <span style="color:var(--text);">${formatDateTime(promo.expiresAt)}</span></div>` 
-            : '';
-
-          var containerId = 'claims-box-' + key;
-
-          var isExpanded = window.expandedPromos && window.expandedPromos[key];
-
           block.innerHTML = `
-            <!-- Clickable Header Bar -->
-            <div class="promo-toggle-header" onclick="togglePromoDetails('${key}')" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none;">
+            <!-- Clickable Header Bar (opens Modal) -->
+            <div class="promo-toggle-header" onclick="openPromoModal('${key}')" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none;">
               <div style="display: flex; gap: 12px; align-items: center; flex: 1; min-width: 0;">
                 ${promo.imageUrl ? `
                   <div style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); overflow: hidden; background: var(--mid); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
@@ -1055,7 +1056,7 @@ AAAA-BBBB-CCCC"></textarea>
                     </svg>
                   </div>
                 `}
-                <div class="promo-info" style="min-width: 0; display: flex; flex-direction: column; gap: 3px;">
+                <div class="promo-info" style="min-width: 0; display: flex; flex-direction: column; gap: 3px; text-align: left;">
                   <h3 style="margin: 0; line-height: 1.3; font-size: 15px; font-weight: 600; color: var(--text);">${promo.name}</h3>
                   <span class="promo-slug" style="width: fit-content; margin: 0;">${key}</span>
                   <span style="font-size: 11px; color: var(--yellow); font-weight: 600; display: block; margin: 0;">(left ${remaining} from ${total})</span>
@@ -1063,74 +1064,20 @@ AAAA-BBBB-CCCC"></textarea>
               </div>
               <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
                 ${activeStatusHtml}
-                <svg id="arrow-${key}" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s ease; ${isExpanded ? 'transform: rotate(180deg);' : ''}">
-                  <polyline points="6 9 12 15 18 9"></polyline>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
               </div>
-            </div>
-            
-            <!-- Collapsible Details Body -->
-            <div class="promo-details-body" id="details-${key}" style="display: ${isExpanded ? 'flex' : 'none'}; flex-direction: column; gap: 12px; margin-top: 12px; border-top: 1px dashed var(--border); padding-top: 12px;">
-              <div style="font-size: 11px; color: var(--muted); margin-bottom: -4px;">
-                ${promo.startsAt ? `<div>Starts: <span style="color:var(--text);">${formatDateTime(promo.startsAt)}</span></div>` : ''}
-                ${promo.expiresAt ? `<div style="margin-top: 2px;">Expires: <span style="color:var(--text);">${formatDateTime(promo.expiresAt)}</span></div>` : ''}
-              </div>
-
-              <div class="promo-stats" style="margin-top: 4px;">
-                <span>Total: <span>${total}</span></span>
-                <span>Claimed: <span>${claimed}</span></span>
-                <span>Remaining: <span>${remaining}</span></span>
-              </div>
-
-              <div class="form-group">
-                <span class="form-label">Public Claim Link</span>
-                <div class="link-copy-row">
-                  <a class="link-display" id="link-${key}" href="${claimUrl}" target="_blank">${claimUrl}</a>
-                  <button class="btn small" onclick="copyLink('${key}')">Copy Link</button>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <span class="claims-list-title">Claim History</span>
-                <div class="claims-container" id="${containerId}">
-                  <div class="empty-state" style="padding:10px;">Loading claims history...</div>
-                </div>
-                <button class="btn-ai" id="btn-ai-${key}" disabled style="opacity: 0.5; cursor: not-allowed;" onclick="copyAiPrompt('${key}')">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z"/>
-                  </svg>
-                  Analyze Claims with Gemini AI
-                </button>
-              </div>
-
-              <div style="display:flex; gap:10px; margin-top:6px; flex-wrap:wrap;">
-                <button class="btn ghost small" style="flex:1;" onclick="event.stopPropagation(); toggleActive('${key}', ${promo.active})">
-                  ${promo.active ? 'PAUSE' : 'RESUME'}
-                </button>
-                <button class="btn small" style="flex:1; background:var(--blue); color:white;" onclick="event.stopPropagation(); startEditPromotion('${key}')">
-                  EDIT
-                </button>
-                <button class="btn small" style="flex:1; background:var(--green); color:white;" onclick="event.stopPropagation(); duplicatePromotion('${key}')">
-                  DUPLICATE
-                </button>
-                <button class="btn red small" style="flex:none;" onclick="event.stopPropagation(); deletePromotion('${key}')">
-                  DELETE
-                </button>
-              </div>
-              ${promo.storeLink ? `
-              <div style="margin-top: 6px;">
-                <button class="btn ghost small" style="width:100%; font-size:11px; padding:6px; font-weight:bold; border-color:rgba(245,197,24,0.3); color:var(--yellow);" onclick="event.stopPropagation(); loadPromoIntoGenerator('${encodeURIComponent(promo.storeLink)}')">
-                  ★ GENERATE REVIEW LINKS & QR CODE
-                </button>
-              </div>` : ''}
             </div>
           `;
 
           listEl.appendChild(block);
-
-          // Fetch claim logs
-          fetchClaimHistory(key, containerId);
         });
+
+        // Live update modal if it's currently open
+        if (window.activeModalPromoId) {
+          window.updatePromoModalLive(window.activeModalPromoId);
+        }
       }, function(err) {
         console.error("Database read error details:", err);
         var listEl = document.getElementById('promotions-list');
@@ -1143,11 +1090,75 @@ AAAA-BBBB-CCCC"></textarea>
     }
 
     function fetchClaimHistory(promoId, containerId) {
+      // Detach any previous listener on this reference to avoid duplicates
+      db.ref('promotion_claims/' + promoId).off('value');
+      
       db.ref('promotion_claims/' + promoId).on('value', function(snapshot) {
         var container = document.getElementById(containerId);
         if (!container) return;
 
         var claims = snapshot.val();
+        var aiBtn = document.getElementById('btn-ai-' + promoId);
+
+        if (!claims) {
+          container.innerHTML = '<div class="empty-state" style="padding:10px; font-size:10px;">No claims recorded yet.</div>';
+          if (aiBtn) {
+            aiBtn.disabled = true;
+            aiBtn.style.opacity = '0.5';
+            aiBtn.style.cursor = 'not-allowed';
+          }
+          if (!window.claimsCache) window.claimsCache = {};
+          window.claimsCache[promoId] = [];
+          return;
+        }
+
+        if (aiBtn) {
+          aiBtn.disabled = false;
+          aiBtn.style.opacity = '1';
+          aiBtn.style.cursor = 'pointer';
+        }
+
+        // Sort claims by timestamp descending
+        var sortedClaims = Object.keys(claims).map(uid => {
+          var claim = claims[uid];
+          return {
+            uid: uid,
+            code: claim.code,
+            time: claim.timestamp ? formatDateTime(claim.timestamp, true) : 'Unknown',
+            device: claim.device || '',
+            os: claim.os || '',
+            browser: claim.browser || '',
+            timezone: claim.timezone || '',
+            language: claim.language || '',
+            referrer: claim.referrer || ''
+          };
+        }).reverse();
+
+        if (!window.claimsCache) window.claimsCache = {};
+        window.claimsCache[promoId] = sortedClaims;
+
+        container.innerHTML = sortedClaims.map(c => {
+          var metaHtml = '';
+          if (c.os || c.browser || c.referrer || c.timezone) {
+            var details = [];
+            if (c.os) details.push(`📱 ${c.os} (${c.browser})`);
+            if (c.timezone) details.push(`🌍 ${c.timezone}`);
+            if (c.referrer) details.push(`🔗 ${c.referrer}`);
+            metaHtml = `<div style="font-size: 9px; color: var(--muted); margin-top: 3px; display: flex; gap: 6px; flex-wrap: wrap; text-align: left;">${details.join(' | ')}</div>`;
+          }
+          
+          return `
+            <div class="claim-row" style="flex-direction: column; align-items: flex-start; padding: 6px 10px;">
+              <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                <span class="claim-time">${c.time}</span>
+                <span class="claim-code" title="User ID: ${c.uid}">${c.code}</span>
+              </div>
+              ${metaHtml}
+            </div>
+          `;
+        }).join('');
+      });
+    }
         var aiBtn = document.getElementById('btn-ai-' + promoId);
 
         if (!claims) {
@@ -1377,23 +1388,209 @@ Format this report with a professional tone in clean, beautiful Markdown with st
 
     // Toggle collapsible details for active promotions
     window.expandedPromos = window.expandedPromos || {};
-    window.togglePromoDetails = function(key) {
-      var details = document.getElementById('details-' + key);
-      var arrow = document.getElementById('arrow-' + key);
-      if (details && arrow) {
-        if (details.style.display === 'none') {
-          details.style.display = 'flex';
-          arrow.style.transform = 'rotate(180deg)';
-          window.expandedPromos[key] = true;
-        } else {
-          details.style.display = 'none';
-          arrow.style.transform = 'rotate(0deg)';
-          window.expandedPromos[key] = false;
-        }
+    // Promotion Details Modal Operations
+    window.activeModalPromoId = null;
+    
+    // Add event listener to close modal on background click
+    document.addEventListener('DOMContentLoaded', function() {
+      var modal = document.getElementById('promo-modal');
+      if (modal) {
+        modal.addEventListener('click', function(e) {
+          if (e.target === this) {
+            closePromoModal();
+          }
+        });
+      }
+    });
+
+    window.openPromoModal = function(key) {
+      window.activeModalPromoId = key;
+      
+      // Push history state for back button navigation
+      window.history.pushState({ modalPromoId: key }, '');
+      
+      // Render content
+      renderPromoModalContent(key);
+      
+      // Show overlay
+      var modal = document.getElementById('promo-modal');
+      var card = document.getElementById('promo-modal-card');
+      if (modal && card) {
+        modal.style.display = 'flex';
+        // Force reflow
+        modal.offsetWidth;
+        modal.style.opacity = '1';
+        card.style.transform = 'scale(1)';
+      }
+      
+      // Fetch claims history for this modal
+      fetchClaimHistory(key, 'modal-claims-box-' + key);
+    };
+
+    window.closePromoModal = function(isPopState) {
+      var modal = document.getElementById('promo-modal');
+      var card = document.getElementById('promo-modal-card');
+      if (modal && card) {
+        modal.style.opacity = '0';
+        card.style.transform = 'scale(0.95)';
+        setTimeout(function() {
+          modal.style.display = 'none';
+        }, 200);
+      }
+      
+      // Detach claim listener if active
+      if (window.activeModalPromoId) {
+        db.ref('promotion_claims/' + window.activeModalPromoId).off('value');
+      }
+      window.activeModalPromoId = null;
+      
+      if (!isPopState && window.history.state && window.history.state.modalPromoId) {
+        window.history.back();
       }
     };
 
-    // Duplicate promotion details into creation form
+    window.renderPromoModalContent = function(key) {
+      var promo = window.promoCache && window.promoCache[key];
+      if (!promo) return;
+      
+      var claimBaseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/claim.html';
+      var claimUrl = claimBaseUrl + '?p=' + key;
+      var total = promo.totalCoupons || 0;
+      var claimed = promo.claimedCount || 0;
+      var remaining = Math.max(0, total - claimed);
+      
+      var titleArea = document.getElementById('promo-modal-title-area');
+      if (titleArea) {
+        titleArea.innerHTML = `
+          ${promo.imageUrl ? `
+            <div style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); overflow: hidden; background: var(--mid); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+              <img src="${promo.imageUrl}" alt="${promo.name}" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+          ` : `
+            <div style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); overflow: hidden; background: var(--mid); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--muted); opacity: 0.5;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+          `}
+          <div style="min-width: 0; display: flex; flex-direction: column; gap: 3px; text-align: left;">
+            <h3 style="margin: 0; line-height: 1.3; font-size: 15px; font-weight: 600; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${promo.name}</h3>
+            <span class="promo-slug" style="width: fit-content; margin: 0;">${key}</span>
+          </div>
+        `;
+      }
+
+      var body = document.getElementById('promo-modal-body');
+      if (body) {
+        body.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="form-label" style="margin: 0;">Status</span>
+            <span id="modal-status-badge"></span>
+          </div>
+
+          <div style="font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 12px; display: flex; flex-direction: column; gap: 4px; text-align: left;">
+            ${promo.startsAt ? `<div>Starts: <span style="color:var(--text); font-weight: 500;">${formatDateTime(promo.startsAt)}</span></div>` : ''}
+            ${promo.expiresAt ? `<div>Expires: <span style="color:var(--text); font-weight: 500;">${formatDateTime(promo.expiresAt)}</span></div>` : ''}
+          </div>
+
+          <div class="promo-stats" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 10px 0;">
+            <span>Total: <span id="modal-stat-total">${total}</span></span>
+            <span>Claimed: <span id="modal-stat-claimed">${claimed}</span></span>
+            <span>Remaining: <span id="modal-stat-remaining">${remaining}</span></span>
+          </div>
+
+          <div class="form-group" style="text-align: left;">
+            <span class="form-label">Public Claim Link</span>
+            <div class="link-copy-row">
+              <a class="link-display" id="link-${key}" href="${claimUrl}" target="_blank">${claimUrl}</a>
+              <button class="btn small" onclick="copyLink('${key}')">Copy Link</button>
+            </div>
+          </div>
+
+          <div class="form-group" style="text-align: left;">
+            <span class="claims-list-title">Claim History</span>
+            <div class="claims-container" id="modal-claims-box-${key}">
+              <div class="empty-state" style="padding:10px;">Loading claims history...</div>
+            </div>
+            <button class="btn-ai" id="btn-ai-${key}" disabled style="opacity: 0.5; cursor: not-allowed;" onclick="copyAiPrompt('${key}')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z"/>
+              </svg>
+              Analyze Claims with Gemini AI
+            </button>
+          </div>
+
+          <div style="display:flex; gap:10px; margin-top:6px; flex-wrap:wrap;">
+            <button class="btn ghost small" id="modal-btn-pause" style="flex:1;" onclick="event.stopPropagation(); toggleActive('${key}', ${promo.active})">
+              ${promo.active ? 'PAUSE' : 'RESUME'}
+            </button>
+            <button class="btn small" style="flex:1; background:var(--blue); color:white;" onclick="event.stopPropagation(); closePromoModal(); startEditPromotion('${key}')">
+              EDIT
+            </button>
+            <button class="btn small" style="flex:1; background:var(--green); color:white;" onclick="event.stopPropagation(); closePromoModal(); duplicatePromotion('${key}')">
+              DUPLICATE
+            </button>
+            <button class="btn red small" style="flex:none;" onclick="event.stopPropagation(); deletePromotion('${key}')">
+              DELETE
+            </button>
+          </div>
+          ${promo.storeLink ? `
+          <div style="margin-top: 6px;">
+            <button class="btn ghost small" style="width:100%; font-size:11px; padding:6px; font-weight:bold; border-color:rgba(245,197,24,0.3); color:var(--yellow);" onclick="event.stopPropagation(); closePromoModal(); loadPromoIntoGenerator('${encodeURIComponent(promo.storeLink)}')">
+              ★ GENERATE REVIEW LINKS & QR CODE
+            </button>
+          </div>` : ''}
+        `;
+      }
+      
+      updatePromoModalLive(key);
+    };
+
+    window.updatePromoModalLive = function(key) {
+      var promo = window.promoCache && window.promoCache[key];
+      if (!promo) return;
+      
+      var total = promo.totalCoupons || 0;
+      var claimed = promo.claimedCount || 0;
+      var remaining = Math.max(0, total - claimed);
+      
+      var now = Date.now();
+      var isExpired = promo.expiresAt && now > promo.expiresAt;
+      var isScheduled = promo.startsAt && now < promo.startsAt;
+
+      // Update status badge
+      var statusEl = document.getElementById('modal-status-badge');
+      if (statusEl) {
+        if (!promo.active) {
+          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--red); font-size:11px; font-weight:bold; background:rgba(232,40,30,0.1); padding:4px 8px; border-radius:3px;">● PAUSED</span>';
+        } else if (remaining === 0) {
+          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--muted); font-size:11px; font-weight:bold; background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:3px; border:1px solid var(--border);">● COMPLETED</span>';
+        } else if (isExpired) {
+          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--red); font-size:11px; font-weight:bold; background:rgba(232,40,30,0.1); padding:4px 8px; border-radius:3px;">● EXPIRED</span>';
+        } else if (isScheduled) {
+          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--yellow); font-size:11px; font-weight:bold; background:rgba(245,197,24,0.1); padding:4px 8px; border-radius:3px;">● SCHEDULED</span>';
+        } else {
+          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--green); font-size:11px; font-weight:bold; background:rgba(76,175,80,0.1); padding:4px 8px; border-radius:3px;">● ACTIVE</span>';
+        }
+      }
+
+      // Update stats
+      var totalEl = document.getElementById('modal-stat-total');
+      if (totalEl) totalEl.textContent = total;
+      var claimedEl = document.getElementById('modal-stat-claimed');
+      if (claimedEl) claimedEl.textContent = claimed;
+      var remainingEl = document.getElementById('modal-stat-remaining');
+      if (remainingEl) remainingEl.textContent = remaining;
+
+      // Update Pause/Resume button
+      var pauseBtn = document.getElementById('modal-btn-pause');
+      if (pauseBtn) {
+        pauseBtn.textContent = promo.active ? 'PAUSE' : 'RESUME';
+        pauseBtn.setAttribute('onclick', `event.stopPropagation(); toggleActive('${key}', ${promo.active})`);
+      }
+    };
+
     window.duplicatePromotion = function(key) {
       cancelEdit();
       
@@ -1432,6 +1629,13 @@ Format this report with a professional tone in clean, beautiful Markdown with st
         document.querySelector('.col-left').scrollIntoView({ behavior: 'smooth' });
       });
     };
+
+    window.addEventListener('popstate', function(event) {
+      var modal = document.getElementById('promo-modal');
+      if (modal && modal.style.display !== 'none') {
+        closePromoModal(true);
+      }
+    });
 
     // Toggle collapsible Create Promotion form
     window.toggleCreateForm = function(forceState) {
