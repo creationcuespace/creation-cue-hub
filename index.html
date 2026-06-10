@@ -1577,6 +1577,182 @@
             outline: 2px solid var(--primary);
             outline-offset: 2px;
         }
+
+        /* Newsletter Card Styles */
+        .newsletter-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            margin-top: 24px;
+            width: 100%;
+            text-align: left;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .newsletter-card h3 {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .newsletter-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .form-input-group {
+            margin-bottom: 16px;
+        }
+
+        .newsletter-card input[type="email"] {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: var(--border-radius-sm);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: var(--font-main);
+            transition: var(--transition-smooth);
+        }
+
+        .newsletter-card input[type="email"]:focus {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 10px rgba(241, 179, 28, 0.15);
+        }
+
+        .form-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            margin-top: 16px;
+        }
+
+        .watch-chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .watch-chip {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: var(--font-main);
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            user-select: none;
+        }
+
+        .watch-chip:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .watch-chip.selected {
+            background: rgba(241, 179, 28, 0.1);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 10px rgba(241, 179, 28, 0.15);
+        }
+
+        .preferences-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .pref-checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .pref-checkbox-label input[type="checkbox"] {
+            accent-color: var(--primary);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .newsletter-submit-btn {
+            width: 100%;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--border-radius-sm);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            min-height: 44px;
+        }
+
+        .newsletter-submit-btn:hover:not(:disabled) {
+            background: hsl(43, 89%, 60%);
+            box-shadow: 0 4px 15px rgba(241, 179, 28, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .newsletter-submit-btn:disabled {
+            opacity: 0.8;
+            cursor: not-allowed;
+        }
+
+        /* Spinner Small */
+        .spinner-small {
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid rgba(0, 0, 0, 0.15);
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+
+        .newsletter-success-msg {
+            color: var(--success);
+            background: var(--success-bg);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            padding: 12px 16px;
+            border-radius: var(--border-radius-sm);
+            font-size: 13px;
+            text-align: center;
+            line-height: 1.4;
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            animation: fadeIn 0.4s ease forwards;
+        }
     </style>
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -1787,6 +1963,48 @@
                             Instagram
                         </a>
                     </div>
+
+                    <!-- Newsletter Signup Card -->
+                    <div class="newsletter-card">
+                        <h3>Stay Connected</h3>
+                        <p>Subscribe to get new watch face release updates and exclusive discount promo codes!</p>
+                        
+                        <form id="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+                            <div class="form-input-group">
+                                <input type="email" id="newsletter-email" placeholder="Enter your email address" required>
+                            </div>
+                            
+                            <div class="form-section-title">Select your smartwatch model(s)</div>
+                            <div class="watch-chips-container" id="watch-chips">
+                                <button type="button" class="watch-chip" onclick="toggleWatchChip(this, 'Pixel Watch')">Pixel Watch</button>
+                                <button type="button" class="watch-chip" onclick="toggleWatchChip(this, 'Galaxy Watch')">Galaxy Watch</button>
+                                <button type="button" class="watch-chip" onclick="toggleWatchChip(this, 'Galaxy Watch Ultra')">Galaxy Watch Ultra</button>
+                                <button type="button" class="watch-chip" onclick="toggleWatchChip(this, 'OnePlus Watch')">OnePlus Watch</button>
+                                <button type="button" class="watch-chip" onclick="toggleWatchChip(this, 'Fossil / TicWatch')">Fossil / TicWatch</button>
+                                <button type="button" class="watch-chip" onclick="toggleWatchChip(this, 'Other Wear OS')">Other</button>
+                            </div>
+                            
+                            <div class="form-section-title">Email Preferences</div>
+                            <div class="preferences-container">
+                                <label class="pref-checkbox-label">
+                                    <input type="checkbox" id="pref-releases" checked>
+                                    <span>New Face Releases</span>
+                                </label>
+                                <label class="pref-checkbox-label">
+                                    <input type="checkbox" id="pref-deals" checked>
+                                    <span>Coupons & Discount Codes</span>
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="newsletter-submit-btn" id="newsletter-submit">
+                                <span class="btn-text">Subscribe to Newsletter</span>
+                                <span class="btn-loader" style="display: none;"><span class="spinner-small"></span></span>
+                                <span class="btn-success" style="display: none;">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </span>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </section>
         </main>
@@ -1918,8 +2136,29 @@
 
 
 
+    <!-- Firebase SDK Compat -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
     <!-- JS Core Logic -->
     <script>
+        // Firebase Config (derived from coupon database credentials)
+        const firebaseConfig = {
+            apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+            authDomain: "creation-cue-manage.firebaseapp.com",
+            databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "creation-cue-manage",
+            storageBucket: "creation-cue-manage.firebasestorage.app",
+            messagingSenderId: "186324516022",
+            appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
+        };
+        
+        // Initialize Firebase database compat instance
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.database();
+
         // Global variables
         let watchFaces = [];
         let currentFilter = 'All';
@@ -1927,6 +2166,83 @@
         let favorites = JSON.parse(localStorage.getItem('cc_favorites')) || [];
         let selectedFace = null;
         let hasHandledDeepLinks = false;
+
+        let selectedWatches = [];
+        
+        function toggleWatchChip(chipEl, watchName) {
+            chipEl.classList.toggle('selected');
+            const idx = selectedWatches.indexOf(watchName);
+            if (idx > -1) {
+                selectedWatches.splice(idx, 1);
+            } else {
+                selectedWatches.push(watchName);
+            }
+        }
+
+        async function handleNewsletterSubmit(event) {
+            event.preventDefault();
+            
+            const emailInput = document.getElementById('newsletter-email');
+            const submitBtn = document.getElementById('newsletter-submit');
+            const email = emailInput.value.trim().toLowerCase();
+            
+            if (!email) return;
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.querySelector('.btn-text').style.display = 'none';
+            submitBtn.querySelector('.btn-loader').style.display = 'block';
+            
+            const preferences = {
+                newReleases: document.getElementById('pref-releases').checked,
+                deals: document.getElementById('pref-deals').checked
+            };
+            
+            // Clean email for key (Firebase keys can't contain '.', '$', '#', '[', ']', '/')
+            const sanitizedEmailKey = email.replace(/[.\$#\[\]\/]/g, '_');
+            
+            try {
+                // Save to Firebase Realtime Database
+                await db.ref('newsletter_subscribers/' + sanitizedEmailKey).set({
+                    email: email,
+                    watches: selectedWatches,
+                    preferences: preferences,
+                    subscribedAt: firebase.database.ServerValue.TIMESTAMP
+                });
+                
+                // Show success state
+                submitBtn.querySelector('.btn-loader').style.display = 'none';
+                submitBtn.querySelector('.btn-success').style.display = 'block';
+                submitBtn.style.background = 'var(--success)';
+                submitBtn.style.color = '#fff';
+                
+                // Show a success message element
+                const form = document.getElementById('newsletter-form');
+                const oldMsg = form.querySelector('.newsletter-success-msg');
+                if (oldMsg) oldMsg.remove();
+
+                const successMsg = document.createElement('div');
+                successMsg.className = 'newsletter-success-msg';
+                successMsg.innerHTML = `
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Thank you for subscribing! Your preferences have been saved.</span>
+                `;
+                form.appendChild(successMsg);
+                
+                // Reset email input and chips selection
+                emailInput.value = '';
+                document.querySelectorAll('.watch-chip').forEach(chip => chip.classList.remove('selected'));
+                selectedWatches = [];
+                
+            } catch (error) {
+                console.error('Newsletter subscription error:', error);
+                alert('An error occurred during subscription. Please try again later.');
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.querySelector('.btn-loader').style.display = 'none';
+                submitBtn.querySelector('.btn-text').style.display = 'block';
+            }
+        }
 
         // Dynamic strings matching strings.xml
         const faqs = [
