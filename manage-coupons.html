@@ -788,11 +788,13 @@ AAAA-BBBB-CCCC"></textarea>
         var subBtn = document.getElementById('btn-subscribers-header');
         if (subBtn) subBtn.style.display = 'flex';
         loadPromotions();
+        startSubscribersListener();
       } else {
         currentUser = null;
         document.getElementById('login-overlay').style.display = 'flex';
         var subBtn = document.getElementById('btn-subscribers-header');
         if (subBtn) subBtn.style.display = 'none';
+        db.ref('newsletter_subscribers').off('value');
       }
     });
 
@@ -1668,17 +1670,33 @@ Format this report with a professional tone in clean, beautiful Markdown with st
       });
     }
 
-    function loadSubscribersList() {
-      var body = document.getElementById('subscribers-modal-body');
-      body.innerHTML = '<div style="text-align:center; padding:30px; color:var(--muted);">Loading subscribers...</div>';
-      
-      db.ref('newsletter_subscribers').once('value').then(function(snapshot) {
+    function startSubscribersListener() {
+      db.ref('newsletter_subscribers').on('value', function(snapshot) {
         window.allSubscribers = snapshot.val() || {};
-        renderSubscribersList(window.allSubscribers);
-      }).catch(function(err) {
-        console.error("Error fetching subscribers:", err);
-        body.innerHTML = '<div style="text-align:center; padding:30px; color:var(--red); font-size:12px;">Error loading subscribers. Make sure you published the database rules!</div>';
+        var count = Object.keys(window.allSubscribers).length;
+        
+        // Update header button count badge
+        var subBtn = document.getElementById('btn-subscribers-header');
+        if (subBtn) {
+          subBtn.innerHTML = `SUBSCRIBERS <span style="margin-left: 6px; background: rgba(76, 175, 80, 0.15); border: 1px solid rgba(76, 175, 80, 0.3); padding: 2px 6px; border-radius: 10px; font-size: 11px; font-weight: bold; color: var(--green); font-family: 'Inter', sans-serif;">${count}</span>`;
+        }
+        
+        // If modal is currently open, refresh the view
+        var modal = document.getElementById('subscribers-modal');
+        if (modal && modal.style.display !== 'none') {
+          renderSubscribersList(window.allSubscribers);
+        }
+      }, function(err) {
+        console.warn("Could not listen to subscribers:", err);
+        var subBtn = document.getElementById('btn-subscribers-header');
+        if (subBtn) {
+          subBtn.textContent = 'SUBSCRIBERS';
+        }
       });
+    }
+
+    function loadSubscribersList() {
+      renderSubscribersList(window.allSubscribers);
     }
 
     function renderSubscribersList(subscribers) {
