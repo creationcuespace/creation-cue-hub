@@ -2139,6 +2139,7 @@
     <!-- Firebase SDK Compat -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
     <!-- JS Core Logic -->
     <script>
@@ -2202,6 +2203,15 @@
             const sanitizedEmailKey = email.replace(/[.\$#\[\]\/]/g, '_');
             
             try {
+                // Try to sign in anonymously if enabled, but don't block write if disabled
+                try {
+                    if (firebase.auth && !firebase.auth().currentUser) {
+                        await firebase.auth().signInAnonymously();
+                    }
+                } catch (authError) {
+                    console.warn('Anonymous auth not enabled/failed, attempting write directly:', authError);
+                }
+                
                 // Save to Firebase Realtime Database
                 await db.ref('newsletter_subscribers/' + sanitizedEmailKey).set({
                     email: email,
