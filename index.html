@@ -2350,11 +2350,26 @@
             const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown';
             const locale = navigator.language || 'en';
 
+            let referrer = 'Direct / Bookmark';
+            if (document.referrer) {
+                try {
+                    const refUrl = new URL(document.referrer);
+                    if (refUrl.hostname && refUrl.hostname !== window.location.hostname) {
+                        referrer = refUrl.hostname;
+                    } else {
+                        referrer = 'Direct / Navigation';
+                    }
+                } catch (e) {
+                    referrer = document.referrer.substring(0, 50);
+                }
+            }
+
             const visitorData = {
                 device: device,
                 browser: browser,
                 timezone: tz,
                 locale: locale,
+                referrer: referrer,
                 currentTab: currentFilter || 'catalog',
                 viewingFace: selectedFace ? selectedFace.title : null,
                 lastActive: firebase.database.ServerValue.TIMESTAMP
@@ -2661,6 +2676,7 @@
                                 ${deviceIcon} <span>${vis.browser || 'Browser'} (${vis.locale || 'en'})</span>
                             </div>
                             <span style="font-size:11px; color:var(--text-muted);">${vis.timezone || 'Unknown timezone'}</span>
+                            <span style="font-size:10px; color:var(--primary); font-weight:500;">Source: ${vis.referrer || 'Direct / Bookmark'}</span>
                         </div>
                         
                         <div style="flex: 1.5; font-size:12px; color:#ddd; text-align:left;">
