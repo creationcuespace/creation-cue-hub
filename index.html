@@ -264,6 +264,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes blink {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+
         /* Search & Filter bar styling */
         .search-filter-row {
             display: flex;
@@ -1800,6 +1806,7 @@
             <a href="https://cue-earnings.sotsor.workers.dev/analytics" target="_blank" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">Analytics</a>
             <a href="https://creationcuespace.github.io/creation-cue-hub/manage-coupons.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">Coupons</a>
             <span id="btn-subscribers-admin-bar" onclick="openSubscribersModal()" style="color: var(--primary); font-weight: 600; cursor: pointer; display: flex; align-items: center; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Subscribers <span id="admin-subscribers-count" style="margin-left: 6px; background: rgba(241, 179, 28, 0.15); border: 1px solid rgba(241, 179, 28, 0.3); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: var(--primary); font-family: 'Inter', sans-serif;">0</span></span>
+            <span id="btn-live-visitors" onclick="openLiveVisitorsModal()" style="color: #4caf50; font-weight: 600; cursor: pointer; display: flex; align-items: center; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Live <span style="display:inline-block; width:6px; height:6px; background:#4caf50; border-radius:50%; margin:0 4px; animation: blink 1.2s infinite;"></span> <span id="admin-live-count" style="background: rgba(76, 175, 80, 0.15); border: 1px solid rgba(76, 175, 80, 0.3); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #4caf50; font-family: 'Inter', sans-serif;">0</span></span>
         </div>
         <div style="display: flex; align-items: center; gap: 12px;">
             <span id="admin-user-email" style="color: var(--text-muted); font-size: 11px;"></span>
@@ -2187,7 +2194,62 @@
         </div>
     </div>
 
+    <!-- Subscribers List Modal -->
+    <div id="subscribers-modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 1001; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease; padding: 15px;">
+        <div id="subscribers-modal-card" style="background: #111; border: 1px solid var(--border-color); border-radius: 6px; width: 100%; max-width: 800px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.2s ease; font-family: 'Inter', sans-serif;">
+            <!-- Header -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border-color);">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span style="font-family: var(--font-display); font-size: 20px; font-weight: 700; letter-spacing: 0.5px; color: #fff; text-transform: uppercase;">Newsletter Subscribers</span>
+                    <span id="subscribers-count-badge" style="font-size: 11px; background: rgba(241, 179, 28, 0.15); color: var(--primary); padding: 2px 8px; border-radius: 10px; font-weight: bold; border: 1px solid rgba(241, 179, 28, 0.2);">0</span>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <button onclick="exportSubscribersCSV()" class="btn-primary" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: #fff; font-size: 11px; padding: 4px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family:'Inter', sans-serif; text-transform:none;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Export CSV
+                    </button>
+                    <button onclick="closeSubscribersModal()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px; transition: color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-muted)'">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Search Bar -->
+            <div style="padding: 12px 20px; border-bottom: 1px solid var(--border-color); display: flex; gap: 10px;">
+                <input class="search-input" id="subscribers-search" type="text" placeholder="Search by email, watch model, or preferences..." oninput="filterSubscribers()" style="flex: 1; padding: 8px 12px; font-size: 13px; background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 4px; color: #fff;">
+            </div>
+            <!-- Body -->
+            <div id="subscribers-modal-body" style="padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;">
+                <!-- Dynamic List -->
+            </div>
+        </div>
+    </div>
 
+    <!-- Live Visitors Modal -->
+    <div id="live-visitors-modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 1001; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease; padding: 15px;">
+        <div id="live-visitors-modal-card" style="background: #111; border: 1px solid var(--border-color); border-radius: 6px; width: 100%; max-width: 800px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.2s ease; font-family: 'Inter', sans-serif;">
+            <!-- Header -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border-color);">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <span style="display:inline-block; width:8px; height:8px; background:#4caf50; border-radius:50%; animation: blink 1.2s infinite;"></span>
+                    <span style="font-family: var(--font-display); font-size: 20px; font-weight: 700; letter-spacing: 0.5px; color: #fff; text-transform: uppercase;">Active Visitors</span>
+                    <span id="live-visitors-count-badge" style="font-size: 11px; background: rgba(76, 175, 80, 0.15); color: #4caf50; padding: 2px 8px; border-radius: 10px; font-weight: bold; border: 1px solid rgba(76, 175, 80, 0.2);">0</span>
+                </div>
+                <button onclick="closeLiveVisitorsModal()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px; transition: color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-muted)'">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <!-- Body -->
+            <div id="live-visitors-modal-body" style="padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;">
+                <!-- Dynamic List -->
+            </div>
+        </div>
+    </div>
 
     <!-- Firebase SDK Compat -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -2225,12 +2287,25 @@
                 if (adminBar) adminBar.style.display = 'flex';
                 if (adminEmailDisplay) adminEmailDisplay.textContent = user.email || 'Admin';
                 if (loginLink) loginLink.style.display = 'none';
+                
+                // Admin specific routines
                 startSubscribersListener();
+                startActiveVisitorsListener();
+                
+                // Remove admin's own presence tracking
+                const visitorId = sessionStorage.getItem('cc_visitor_id');
+                if (visitorId) {
+                    db.ref('active_visitors/' + visitorId).remove();
+                }
             } else {
                 document.body.classList.remove('admin-mode');
                 if (adminBar) adminBar.style.display = 'none';
                 if (loginLink) loginLink.style.display = 'block';
                 db.ref('newsletter_subscribers').off('value');
+                db.ref('active_visitors').off('value');
+                
+                // Track standard client presence
+                initVisitorPresence();
             }
         });
 
@@ -2249,6 +2324,61 @@
                 await auth.signOut();
             }
         };
+
+        // Live Visitor Tracking (Presence) for Clients
+        function initVisitorPresence() {
+            let visitorId = sessionStorage.getItem('cc_visitor_id');
+            if (!visitorId) {
+                visitorId = 'v_' + Math.random().toString(36).substr(2, 9);
+                sessionStorage.setItem('cc_visitor_id', visitorId);
+            }
+
+            const visitorRef = db.ref('active_visitors/' + visitorId);
+            
+            const ua = navigator.userAgent;
+            let device = 'Desktop';
+            if (/Mobi|Android|iPhone|iPad/i.test(ua)) {
+                device = /iPad|Tablet/i.test(ua) ? 'Tablet' : 'Mobile';
+            }
+            
+            let browser = 'Browser';
+            if (ua.includes('Chrome')) browser = 'Chrome';
+            else if (ua.includes('Safari') && !ua.includes('Chrome')) browser = 'Safari';
+            else if (ua.includes('Firefox')) browser = 'Firefox';
+            else if (ua.includes('Edge')) browser = 'Edge';
+
+            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown';
+            const locale = navigator.language || 'en';
+
+            const visitorData = {
+                device: device,
+                browser: browser,
+                timezone: tz,
+                locale: locale,
+                currentTab: currentFilter || 'catalog',
+                viewingFace: selectedFace ? selectedFace.title : null,
+                lastActive: firebase.database.ServerValue.TIMESTAMP
+            };
+
+            db.ref('.info/connected').on('value', function(snapshot) {
+                if (snapshot.val() === true) {
+                    visitorRef.onDisconnect().remove();
+                    visitorRef.set(visitorData);
+                }
+            });
+
+            window.updateVisitorPresence = function(tabId, faceTitle) {
+                visitorData.currentTab = tabId || visitorData.currentTab;
+                visitorData.viewingFace = faceTitle || null;
+                visitorData.lastActive = firebase.database.ServerValue.TIMESTAMP;
+                
+                visitorRef.update({
+                    currentTab: visitorData.currentTab,
+                    viewingFace: visitorData.viewingFace,
+                    lastActive: visitorData.lastActive
+                }).catch(err => console.warn("Presence update failed:", err));
+            };
+        }
 
         // Subscribers Modal Operations
         window.allSubscribers = {};
@@ -2300,11 +2430,65 @@
             }
         };
 
+        // Live Visitors Monitor
+        window.activeVisitors = {};
+
+        function startActiveVisitorsListener() {
+            db.ref('active_visitors').on('value', function(snapshot) {
+                window.activeVisitors = snapshot.val() || {};
+                const count = Object.keys(window.activeVisitors).length;
+                
+                // Update Admin Bar count
+                const countDisplay = document.getElementById('admin-live-count');
+                if (countDisplay) countDisplay.textContent = count;
+                
+                // If modal is open, refresh the view
+                const modal = document.getElementById('live-visitors-modal');
+                if (modal && modal.style.display !== 'none') {
+                    renderLiveVisitorsList(window.activeVisitors);
+                }
+            }, function(err) {
+                console.warn("Could not listen to active visitors:", err);
+            });
+        }
+
+        window.openLiveVisitorsModal = function() {
+            const modal = document.getElementById('live-visitors-modal');
+            const card = document.getElementById('live-visitors-modal-card');
+            if (modal && card) {
+                modal.style.display = 'flex';
+                modal.offsetWidth;
+                modal.style.opacity = '1';
+                card.style.transform = 'scale(1)';
+            }
+            window.history.pushState({ modalLive: true }, '');
+            renderLiveVisitorsList(window.activeVisitors);
+        };
+
+        window.closeLiveVisitorsModal = function(isPopState) {
+            const modal = document.getElementById('live-visitors-modal');
+            const card = document.getElementById('live-visitors-modal-card');
+            if (modal && card) {
+                modal.style.opacity = '0';
+                card.style.transform = 'scale(0.95)';
+                setTimeout(function() {
+                    modal.style.display = 'none';
+                }, 200);
+            }
+            if (!isPopState && window.history.state && window.history.state.modalLive) {
+                window.history.back();
+            }
+        };
+
         // Close on background click
         window.addEventListener('click', function(e) {
             const modal = document.getElementById('subscribers-modal');
             if (e.target === modal) {
                 closeSubscribersModal();
+            }
+            const liveModal = document.getElementById('live-visitors-modal');
+            if (e.target === liveModal) {
+                closeLiveVisitorsModal();
             }
         });
 
@@ -2313,6 +2497,10 @@
             const modal = document.getElementById('subscribers-modal');
             if (modal && modal.style.display !== 'none') {
                 closeSubscribersModal(true);
+            }
+            const liveModal = document.getElementById('live-visitors-modal');
+            if (liveModal && liveModal.style.display !== 'none') {
+                closeLiveVisitorsModal(true);
             }
         });
 
@@ -2411,6 +2599,76 @@
                             <button onclick="deleteSubscriber('${sub.key}')" style="background:none; border:none; color:var(--text-muted); cursor:pointer; padding:6px; border-radius:4px; transition:color 0.15s, background 0.15s;" onmouseover="this.style.color='#f44336'; this.style.background='rgba(244,67,54,0.1)'" onmouseout="this.style.color='var(--text-muted)'; this.style.background='none'">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                             </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            body.innerHTML = html;
+        }
+
+        function renderLiveVisitorsList(visitors) {
+            const body = document.getElementById('live-visitors-modal-body');
+            const countBadge = document.getElementById('live-visitors-count-badge');
+            const keys = Object.keys(visitors);
+            
+            if (countBadge) countBadge.textContent = keys.length;
+            
+            if (keys.length === 0) {
+                body.innerHTML = '<div style="text-align:center; padding:30px; color:var(--text-muted);">No active visitors on the site.</div>';
+                return;
+            }
+            
+            const sortedVisitors = keys.map(key => {
+                const vis = visitors[key];
+                vis.key = key;
+                return vis;
+            }).sort((a, b) => (b.lastActive || 0) - (a.lastActive || 0));
+            
+            let html = '';
+            sortedVisitors.forEach(vis => {
+                const now = Date.now();
+                const diffMs = now - (vis.lastActive || now);
+                let statusText = 'Just now';
+                let isIdle = false;
+                if (diffMs > 60000) {
+                    isIdle = true;
+                    const mins = Math.floor(diffMs / 60000);
+                    statusText = `Idle ${mins}m ago`;
+                }
+
+                const deviceIcon = vis.device === 'Mobile' 
+                    ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>`
+                    : vis.device === 'Tablet'
+                        ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>`
+                        : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>`;
+
+                let activityText = '';
+                if (vis.viewingFace) {
+                    activityText = `Viewing Face: <strong style="color: var(--primary);">${vis.viewingFace}</strong>`;
+                } else {
+                    const tabCapitalized = vis.currentTab ? vis.currentTab.charAt(0).toUpperCase() + vis.currentTab.slice(1) : 'Catalog';
+                    activityText = `Browsing Tab: <strong>${tabCapitalized}</strong>`;
+                }
+
+                const dotColor = isIdle ? '#ffc107' : '#4caf50';
+                const statusDot = `<span style="display:inline-block; width:6px; height:6px; background:${dotColor}; border-radius:50%; margin-right:6px; ${isIdle ? '' : 'animation: blink 1.2s infinite;'}"></span>`;
+
+                html += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:4px; padding:12px 16px; gap:12px; font-family:'Inter', sans-serif;">
+                        <div style="flex: 1; display:flex; flex-direction:column; gap:4px; text-align:left;">
+                            <div style="display:flex; align-items:center; gap:6px; font-size:13px; color:#fff;">
+                                ${deviceIcon} <span>${vis.browser || 'Browser'} (${vis.locale || 'en'})</span>
+                            </div>
+                            <span style="font-size:11px; color:var(--text-muted);">${vis.timezone || 'Unknown timezone'}</span>
+                        </div>
+                        
+                        <div style="flex: 1.5; font-size:12px; color:#ddd; text-align:left;">
+                            ${activityText}
+                        </div>
+                        
+                        <div style="display:flex; align-items:center; font-size:11px; color:var(--text-muted);">
+                            ${statusDot} ${statusText}
                         </div>
                     </div>
                 `;
@@ -2652,6 +2910,11 @@
                 panel.classList.remove('active');
             });
             document.getElementById(`tab-${tabId}`).classList.add('active');
+
+            // Presence tracking update
+            if (window.updateVisitorPresence) {
+                window.updateVisitorPresence(tabId, null);
+            }
 
             // Navigation buttons
             document.querySelectorAll('.nav-item').forEach(btn => {
@@ -3162,6 +3425,11 @@
             } else {
                 history.pushState({ modalOpen: 'details' }, "");
             }
+
+            // Presence tracking update
+            if (window.updateVisitorPresence) {
+                window.updateVisitorPresence(null, face.title);
+            }
         }
 
         function closeDetailsModalVisuals() {
@@ -3170,6 +3438,11 @@
                 modal.classList.remove('open');
                 document.body.style.overflow = '';
                 selectedFace = null;
+            }
+
+            // Presence tracking update
+            if (window.updateVisitorPresence) {
+                window.updateVisitorPresence(null, null);
             }
         }
 
