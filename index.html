@@ -1888,6 +1888,10 @@
 
         // Lifecycle Entrypoint
         window.addEventListener('DOMContentLoaded', () => {
+            // Clear any restored history state on fresh load to prevent back button exiting the app
+            if (history.state && history.state.modalOpen) {
+                history.replaceState(null, "");
+            }
             setupFaqAccordions();
             fetchData();
         });
@@ -2445,11 +2449,12 @@
             const modal = document.getElementById('install-guide-modal');
             if (!modal) return;
             
+            const wasOpen = modal.classList.contains('open');
             modal.classList.add('open');
             document.body.style.overflow = 'hidden'; // prevent background scrolling
             
             // Push history state if not already pushed
-            if (!history.state || history.state.modalOpen !== 'install') {
+            if (!wasOpen) {
                 history.pushState({ modalOpen: 'install' }, "");
             }
         }
