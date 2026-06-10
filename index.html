@@ -1799,6 +1799,7 @@
             <a href="https://cue-earnings.sotsor.workers.dev/" target="_blank" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">Earnings</a>
             <a href="https://cue-earnings.sotsor.workers.dev/analytics" target="_blank" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">Analytics</a>
             <a href="https://creationcuespace.github.io/creation-cue-hub/manage-coupons.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">Coupons</a>
+            <span id="btn-subscribers-admin-bar" onclick="openSubscribersModal()" style="color: var(--primary); font-weight: 600; cursor: pointer; display: flex; align-items: center; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Subscribers <span id="admin-subscribers-count" style="margin-left: 6px; background: rgba(241, 179, 28, 0.15); border: 1px solid rgba(241, 179, 28, 0.3); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: var(--primary); font-family: 'Inter', sans-serif;">0</span></span>
         </div>
         <div style="display: flex; align-items: center; gap: 12px;">
             <span id="admin-user-email" style="color: var(--text-muted); font-size: 11px;"></span>
@@ -2224,10 +2225,12 @@
                 if (adminBar) adminBar.style.display = 'flex';
                 if (adminEmailDisplay) adminEmailDisplay.textContent = user.email || 'Admin';
                 if (loginLink) loginLink.style.display = 'none';
+                startSubscribersListener();
             } else {
                 document.body.classList.remove('admin-mode');
                 if (adminBar) adminBar.style.display = 'none';
                 if (loginLink) loginLink.style.display = 'block';
+                db.ref('newsletter_subscribers').off('value');
             }
         });
 
@@ -2245,6 +2248,227 @@
             if (confirm("Log out of Admin Panel?")) {
                 await auth.signOut();
             }
+        };
+
+        // Subscribers Modal Operations
+        window.allSubscribers = {};
+
+        function startSubscribersListener() {
+            db.ref('newsletter_subscribers').on('value', function(snapshot) {
+                window.allSubscribers = snapshot.val() || {};
+                const count = Object.keys(window.allSubscribers).length;
+                
+                // Update Admin Bar count
+                const countDisplay = document.getElementById('admin-subscribers-count');
+                if (countDisplay) countDisplay.textContent = count;
+                
+                // If modal is currently open, refresh the view
+                const modal = document.getElementById('subscribers-modal');
+                if (modal && modal.style.display !== 'none') {
+                    renderSubscribersList(window.allSubscribers);
+                }
+            }, function(err) {
+                console.warn("Could not listen to subscribers:", err);
+            });
+        }
+
+        window.openSubscribersModal = function() {
+            const modal = document.getElementById('subscribers-modal');
+            const card = document.getElementById('subscribers-modal-card');
+            if (modal && card) {
+                modal.style.display = 'flex';
+                modal.offsetWidth;
+                modal.style.opacity = '1';
+                card.style.transform = 'scale(1)';
+            }
+            window.history.pushState({ modalSubscribers: true }, '');
+            renderSubscribersList(window.allSubscribers);
+        };
+
+        window.closeSubscribersModal = function(isPopState) {
+            const modal = document.getElementById('subscribers-modal');
+            const card = document.getElementById('subscribers-modal-card');
+            if (modal && card) {
+                modal.style.opacity = '0';
+                card.style.transform = 'scale(0.95)';
+                setTimeout(function() {
+                    modal.style.display = 'none';
+                }, 200);
+            }
+            if (!isPopState && window.history.state && window.history.state.modalSubscribers) {
+                window.history.back();
+            }
+        };
+
+        // Close on background click
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('subscribers-modal');
+            if (e.target === modal) {
+                closeSubscribersModal();
+            }
+        });
+
+        // Close on back button
+        window.addEventListener('popstate', function(event) {
+            const modal = document.getElementById('subscribers-modal');
+            if (modal && modal.style.display !== 'none') {
+                closeSubscribersModal(true);
+            }
+        });
+
+        function formatAdminDate(ts) {
+            if (!ts) return '';
+            const d = new Date(ts);
+            const day = String(d.getDate()).padStart(2, '0');
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const year = d.getFullYear();
+            const hours = String(d.getHours()).padStart(2, '0');
+            const minutes = String(d.getMinutes()).padStart(2, '0');
+            return `${day}/${month}/${year} ${hours}:${minutes}`;
+        }
+
+        function renderSubscribersList(subscribers) {
+            const body = document.getElementById('subscribers-modal-body');
+            const countBadge = document.getElementById('subscribers-count-badge');
+            const keys = Object.keys(subscribers);
+            
+            if (countBadge) countBadge.textContent = keys.length;
+            
+            if (keys.length === 0) {
+                body.innerHTML = '<div style="text-align:center; padding:30px; color:var(--text-muted);">No subscribers found.</div>';
+                return;
+            }
+            
+            let sortedSubscribers = keys.map(key => {
+                const sub = subscribers[key];
+                sub.key = key;
+                return sub;
+            }).sort((a, b) => (b.subscribedAt || 0) - (a.subscribedAt || 0));
+            
+            const searchInput = document.getElementById('subscribers-search').value.toLowerCase().trim();
+            if (searchInput) {
+                sortedSubscribers = sortedSubscribers.filter(sub => {
+                    const emailMatch = sub.email && sub.email.toLowerCase().includes(searchInput);
+                    const watchMatch = sub.watches && sub.watches.some(w => w.toLowerCase().includes(searchInput));
+                    let prefMatch = false;
+                    if (sub.preferences) {
+                        if (sub.preferences.newReleases && "releases".includes(searchInput)) prefMatch = true;
+                        if (sub.preferences.deals && "deals".includes(searchInput)) prefMatch = true;
+                    }
+                    return emailMatch || watchMatch || prefMatch;
+                });
+            }
+            
+            if (sortedSubscribers.length === 0) {
+                body.innerHTML = '<div style="text-align:center; padding:30px; color:var(--text-muted);">No subscribers match search criteria.</div>';
+                return;
+            }
+            
+            let html = '';
+            sortedSubscribers.forEach(sub => {
+                const dateStr = formatAdminDate(sub.subscribedAt);
+                
+                // Watch chips
+                let watchHtml = '';
+                if (sub.watches && sub.watches.length > 0) {
+                    sub.watches.forEach(w => {
+                        watchHtml += `<span style="font-size:10px; background:rgba(255,255,255,0.05); border:1px solid var(--border-color); border-radius:3px; padding:2px 6px; color:var(--text-primary);">${w}</span>`;
+                    });
+                } else {
+                    watchHtml = '<span style="font-size:10px; color:var(--text-muted); font-style:italic;">None selected</span>';
+                }
+                
+                // Preferences badges
+                let prefHtml = '';
+                if (sub.preferences) {
+                    if (sub.preferences.newReleases) {
+                        prefHtml += `<span style="font-size:10px; background:rgba(76,175,80,0.1); border:1px solid rgba(76,175,80,0.2); border-radius:3px; padding:2px 6px; color:#4caf50;">Releases</span> `;
+                    }
+                    if (sub.preferences.deals) {
+                        prefHtml += `<span style="font-size:10px; background:rgba(33,150,243,0.1); border:1px solid rgba(33,150,243,0.2); border-radius:3px; padding:2px 6px; color:#2196f3;">Deals</span>`;
+                    }
+                }
+                if (!prefHtml) {
+                    prefHtml = '<span style="font-size:10px; color:var(--text-muted); font-style:italic;">None</span>';
+                }
+                
+                html += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:4px; padding:12px 16px; gap:12px; font-family:'Inter', sans-serif;">
+                        <div style="flex: 1.5; min-width: 0; display:flex; flex-direction:column; gap:4px; text-align:left;">
+                            <span style="font-weight:600; color:#fff; word-break:break-all; font-size:14px;">${sub.email || ''}</span>
+                            <span style="font-size:10px; color:var(--text-muted);">Subscribed: ${dateStr}</span>
+                        </div>
+                        
+                        <div style="flex: 1.2; display:flex; flex-wrap:wrap; gap:4px; align-items:center;">
+                            ${watchHtml}
+                        </div>
+                        
+                        <div style="flex: 0.8; display:flex; flex-wrap:wrap; gap:4px; align-items:center;">
+                            ${prefHtml}
+                        </div>
+                        
+                        <div>
+                            <button onclick="deleteSubscriber('${sub.key}')" style="background:none; border:none; color:var(--text-muted); cursor:pointer; padding:6px; border-radius:4px; transition:color 0.15s, background 0.15s;" onmouseover="this.style.color='#f44336'; this.style.background='rgba(244,67,54,0.1)'" onmouseout="this.style.color='var(--text-muted)'; this.style.background='none'">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            body.innerHTML = html;
+        }
+
+        window.filterSubscribers = function() {
+            renderSubscribersList(window.allSubscribers);
+        };
+
+        window.deleteSubscriber = function(key) {
+            if (confirm("Are you sure you want to remove this subscriber?")) {
+                db.ref('newsletter_subscribers/' + key).remove().then(function() {
+                    delete window.allSubscribers[key];
+                    renderSubscribersList(window.allSubscribers);
+                }).catch(function(err) {
+                    console.error("Error removing subscriber:", err);
+                    alert("Failed to remove subscriber. Check permissions.");
+                });
+            }
+        };
+
+        window.exportSubscribersCSV = function() {
+            const keys = Object.keys(window.allSubscribers);
+            if (keys.length === 0) {
+                alert("No subscribers to export.");
+                return;
+            }
+            
+            const csvRows = [["Email", "Watch Models", "New Releases", "Deals", "Subscribed At"]];
+            
+            keys.forEach(key => {
+                const sub = window.allSubscribers[key];
+                const watches = (sub.watches || []).join("; ");
+                const rel = sub.preferences && sub.preferences.newReleases ? "TRUE" : "FALSE";
+                const deals = sub.preferences && sub.preferences.deals ? "TRUE" : "FALSE";
+                const date = sub.subscribedAt ? new Date(sub.subscribedAt).toISOString() : "";
+                csvRows.push([
+                    sub.email || "",
+                    watches,
+                    rel,
+                    deals,
+                    date
+                ]);
+            });
+            
+            const csvContent = csvRows.map(e => e.map(val => `"${val.replace(/"/g, '""')}"`).join(",")).join("\n");
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", "creationcue_subscribers.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         };
 
         // Global variables
@@ -3153,5 +3377,41 @@
             window.location.href = mailtoUrl;
         }
     </script>
+
+    <!-- Subscribers List Modal -->
+    <div id="subscribers-modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 1001; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease; padding: 15px;">
+        <div id="subscribers-modal-card" style="background: #111; border: 1px solid var(--border-color); border-radius: 6px; width: 100%; max-width: 800px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.2s ease; font-family: 'Inter', sans-serif;">
+            <!-- Header -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border-color);">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span style="font-family: var(--font-display); font-size: 20px; font-weight: 700; letter-spacing: 0.5px; color: #fff; text-transform: uppercase;">Newsletter Subscribers</span>
+                    <span id="subscribers-count-badge" style="font-size: 11px; background: rgba(241, 179, 28, 0.15); color: var(--primary); padding: 2px 8px; border-radius: 10px; font-weight: bold; border: 1px solid rgba(241, 179, 28, 0.2);">0</span>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <button onclick="exportSubscribersCSV()" class="btn-primary" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: #fff; font-size: 11px; padding: 4px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family:'Inter', sans-serif; text-transform:none;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Export CSV
+                    </button>
+                    <button onclick="closeSubscribersModal()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px; transition: color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-muted)'">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Search Bar -->
+            <div style="padding: 12px 20px; border-bottom: 1px solid var(--border-color); display: flex; gap: 10px;">
+                <input class="search-input" id="subscribers-search" type="text" placeholder="Search by email, watch model, or preferences..." oninput="filterSubscribers()" style="flex: 1; padding: 8px 12px; font-size: 13px; background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 4px; color: #fff;">
+            </div>
+            <!-- Body -->
+            <div id="subscribers-modal-body" style="padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;">
+                <!-- Dynamic List -->
+            </div>
+        </div>
+    </div>
 </body>
 </html>
