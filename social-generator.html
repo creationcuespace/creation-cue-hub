@@ -1064,7 +1064,13 @@
 
                 <div class="form-group">
                     <label for="watch-link">Play Store Link</label>
-                    <input class="input-text" id="watch-link" type="text" placeholder="https://play.google.com/store/apps/details?id=...">
+                    <div style="display: flex; gap: 8px;">
+                        <input class="input-text" id="watch-link" type="text" placeholder="https://play.google.com/store/apps/details?id=..." style="flex: 1;">
+                        <button class="header-btn" id="btn-fetch-link" onclick="fetchPlayStoreData()" style="flex: none; white-space: nowrap; height: 43px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Fetch Info
+                        </button>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -1606,6 +1612,92 @@ Return ONLY the raw JSON object. Do not include any markdown backticks like \`\`
             if (!text) return 'Caption goes here...';
             // Convert hashtags to highlighted span tags
             return text.replace(/(#[a-zA-Z0-9_]+)/g, '<span style="color:#3897f0; font-weight:600;">$1</span>');
+        }
+
+        // Fetch Play Store Info automatically
+        async function fetchPlayStoreData() {
+            const linkInput = document.getElementById('watch-link');
+            const fetchBtn = document.getElementById('btn-fetch-link');
+            const nameInput = document.getElementById('watch-name');
+            const descArea = document.getElementById('play-store-desc');
+            
+            const url = linkInput.value.trim();
+            if (!url) {
+                alert("Please paste a Google Play Store link first.");
+                return;
+            }
+            
+            // Basic URL check
+            if (!url.includes("play.google.com/store/apps/details") && !url.includes("details?id=")) {
+                alert("Please enter a valid Google Play Store app link (containing play.google.com/store/apps/details).");
+                return;
+            }
+            
+            // Set loading state
+            fetchBtn.disabled = true;
+            const originalHtml = fetchBtn.innerHTML;
+            fetchBtn.innerHTML = '<div class="spinner" style="width:12px; height:12px;"></div> Fetching...';
+            
+            try {
+                // Use AllOrigins CORS Proxy
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+                const response = await fetch(proxyUrl);
+                if (!response.ok) {
+                    throw new Error(`CORS Proxy responded with status ${response.status}`);
+                }
+                
+                const json = await response.json();
+                if (!json || !json.contents) {
+                    throw new Error("Empty proxy response contents.");
+                }
+                
+                const html = json.contents;
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // 1. Extract Title
+                let title = '';
+                const ogTitle = doc.querySelector('meta[property="og:title"]')?.getAttribute('content');
+                if (ogTitle) {
+                    title = ogTitle.replace(/\s-\sApps\son\sGoogle\sPlay$/, '').trim();
+                } else {
+                    title = doc.title.replace(/\s-\sApps\son\sGoogle\sPlay$/, '').trim();
+                }
+                
+                // 2. Extract Description (data-g-id="description" div)
+                let desc = '';
+                const descDiv = doc.querySelector('[data-g-id="description"]');
+                if (descDiv) {
+                    // Replace <br> tags with newlines to keep formatting
+                    let htmlContent = descDiv.innerHTML;
+                    htmlContent = htmlContent.replace(/<br\s*\/?>/gi, '\n');
+                    
+                    // Strip other tags (e.g. bold, paragraphs) cleanly
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = htmlContent;
+                    desc = tempDiv.textContent || tempDiv.innerText || '';
+                } else {
+                    // Fallback to meta description tag (short version)
+                    const metaDesc = doc.querySelector('meta[name="description"]')?.getAttribute('content');
+                    desc = metaDesc || '';
+                }
+                
+                if (title) {
+                    nameInput.value = title;
+                }
+                if (desc) {
+                    descArea.value = desc.trim();
+                }
+                
+                showToast("Play Store info loaded!");
+                
+            } catch (err) {
+                console.error(err);
+                alert("Failed to fetch Play Store info: " + err.message + "\n\nYou can still paste the details manually.");
+            } finally {
+                fetchBtn.disabled = false;
+                fetchBtn.innerHTML = originalHtml;
+            }
         }
 
         // Core Generation Logic
