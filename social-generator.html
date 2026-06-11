@@ -671,9 +671,74 @@
         .insta-media-post {
             width: 100%;
             height: 280px;
-            background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3');
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0b0b0b;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .insta-media-post img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            z-index: 2;
+        }
+
+        .insta-media-post::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: var(--post-bg, none);
             background-size: cover;
             background-position: center;
+            filter: blur(20px) brightness(0.4);
+            z-index: 1;
+        }
+
+        /* Mockup Bezel Styles */
+        .mockup-media-container {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .mockup-watch-bezel {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: #111;
+            border: 6px solid #282828;
+            box-shadow: 0 16px 36px rgba(0,0,0,0.85), inset 0 0 10px rgba(0,0,0,0.8);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .mockup-watch-bezel::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 50%;
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.8);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .mockup-watch-face {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
         }
 
         .insta-actions-row {
@@ -1332,6 +1397,11 @@
                             <div class="mockup-label">TikTok Preview</div>
                             <div class="phone-mockup tiktok-mockup">
                                 <div class="phone-notch"></div>
+                                <div class="mockup-media-container">
+                                    <div class="mockup-watch-bezel">
+                                        <img class="mockup-watch-face" id="mock-watch-face-tiktok" src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" alt="Watch Face">
+                                    </div>
+                                </div>
                                 <div class="tiktok-actions">
                                     <img class="tiktok-profile-pic" src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" alt="Profile">
                                     <div class="tiktok-action">
@@ -1403,7 +1473,9 @@
                                     <img class="insta-avatar" src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" alt="Avatar">
                                     <div class="insta-username">creationcue</div>
                                 </div>
-                                <div class="insta-media-post"></div>
+                                <div class="insta-media-post">
+                                    <img id="mock-media-instagram" src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" alt="Post media">
+                                </div>
                                 <div class="insta-actions-row">
                                     <div class="insta-actions-left">
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -1473,6 +1545,11 @@
                             <div class="mockup-label">YouTube Shorts Preview</div>
                             <div class="phone-mockup shorts-mockup">
                                 <div class="phone-notch"></div>
+                                <div class="mockup-media-container">
+                                    <div class="mockup-watch-bezel">
+                                        <img class="mockup-watch-face" id="mock-watch-face-shorts" src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" alt="Watch Face">
+                                    </div>
+                                </div>
                                 <div class="shorts-actions">
                                     <div class="shorts-action">
                                         <div class="shorts-action-icon">
@@ -1543,6 +1620,11 @@
                             <div class="mockup-label">Facebook Reels Preview</div>
                             <div class="phone-mockup reels-mockup">
                                 <div class="phone-notch"></div>
+                                <div class="mockup-media-container">
+                                    <div class="mockup-watch-bezel">
+                                        <img class="mockup-watch-face" id="mock-watch-face-reels" src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" alt="Watch Face">
+                                    </div>
+                                </div>
                                 <div class="reels-header">
                                     <span>Reels</span>
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -1690,6 +1772,77 @@
         }
 
         let catalogFaces = [];
+        let scrapedOgImage = '';
+
+        function getPackageNameFromUrl(url) {
+            if (!url) return '';
+            let id = '';
+            if (url.includes('id=')) {
+                id = url.split('id=')[1].split('&')[0];
+            } else {
+                id = url;
+            }
+            return id.trim();
+        }
+
+        function resolveMockupImage(url) {
+            const pkg = getPackageNameFromUrl(url);
+            if (!pkg) return;
+            const match = catalogFaces.find(f => {
+                const fPkg = getPackageNameFromUrl(f.play_store_url);
+                return fPkg === pkg;
+            });
+            if (match && match.image_url) {
+                updateMockupImages(match.image_url);
+            } else {
+                if (scrapedOgImage) {
+                    updateMockupImages(scrapedOgImage);
+                } else {
+                    updateMockupImages('https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png');
+                }
+            }
+        }
+
+        function updateMockupImages(imgUrl) {
+            const currentWatchFaceImage = imgUrl || 'https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png';
+            
+            // 1. TikTok Background and Bezel
+            const tiktokMockup = document.querySelector('.tiktok-mockup');
+            const tiktokWatchFace = document.getElementById('mock-watch-face-tiktok');
+            if (tiktokMockup) {
+                tiktokMockup.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.85)), url('${currentWatchFaceImage}')`;
+            }
+            if (tiktokWatchFace) {
+                tiktokWatchFace.src = currentWatchFaceImage;
+            }
+            
+            // 2. Instagram Image
+            const instaMediaPost = document.getElementById('mock-media-instagram');
+            if (instaMediaPost) {
+                instaMediaPost.src = currentWatchFaceImage;
+                instaMediaPost.style.setProperty('--post-bg', `url('${currentWatchFaceImage}')`);
+            }
+            
+            // 3. YouTube Shorts Background and Bezel
+            const shortsMockup = document.querySelector('.shorts-mockup');
+            const shortsWatchFace = document.getElementById('mock-watch-face-shorts');
+            if (shortsMockup) {
+                shortsMockup.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.85)), url('${currentWatchFaceImage}')`;
+            }
+            if (shortsWatchFace) {
+                shortsWatchFace.src = currentWatchFaceImage;
+            }
+            
+            // 4. Facebook Reels Background and Bezel
+            const reelsMockup = document.querySelector('.reels-mockup');
+            const reelsWatchFace = document.getElementById('mock-watch-face-reels');
+            if (reelsMockup) {
+                reelsMockup.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.85)), url('${currentWatchFaceImage}')`;
+            }
+            if (reelsWatchFace) {
+                reelsWatchFace.src = currentWatchFaceImage;
+            }
+        }
 
         async function loadCatalog() {
             try {
@@ -1762,6 +1915,9 @@
                     // Trigger dynamic comments update
                     updateCommentsUI();
                     
+                    // Update mockup images immediately
+                    updateMockupImages(f.image_url);
+                    
                     // Automatically trigger the scrape and generate process!
                     fetchPlayStoreData();
                 });
@@ -1826,8 +1982,9 @@
                 });
             }
             
-            // Initialize empty comments UI
+            // Initialize empty comments and mockup UI
             updateCommentsUI();
+            updateMockupImages('');
         });
 
         function toggleSettingsPanel() {
@@ -2053,6 +2210,9 @@ Return ONLY the raw JSON object. Do not include any markdown backticks like \`\`
             const apiKeyInput = document.getElementById('api-key');
             const apiKey = apiKeyInput ? apiKeyInput.value.trim() : '';
             
+            // Pre-resolve watch face image if available in catalog
+            resolveMockupImage(url);
+            
             if (apiKey) {
                 // Fetch using Gemini Google Search Grounding!
                 try {
@@ -2161,6 +2321,15 @@ Format the output EXACTLY like this:
                 
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
+                
+                // Extract og:image if available
+                const ogImage = doc.querySelector('meta[property="og:image"]')?.getAttribute('content');
+                if (ogImage) {
+                    scrapedOgImage = ogImage;
+                }
+                
+                // Resolve image using scraped metadata or catalog
+                resolveMockupImage(url);
                 
                 // 1. Extract Title
                 let title = '';
