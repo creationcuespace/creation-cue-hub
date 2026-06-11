@@ -1076,8 +1076,8 @@
                 <div class="form-group">
                     <label>Tone Preset</label>
                     <div class="preset-group">
-                        <button class="preset-btn active" id="preset-hype" onclick="setPreset('hype')">🔥 Hype</button>
-                        <button class="preset-btn" id="preset-sleek" onclick="setPreset('sleek')">✨ Sleek</button>
+                        <button class="preset-btn active" id="preset-simple" onclick="setPreset('simple')">✨ Simple</button>
+                        <button class="preset-btn" id="preset-sleek" onclick="setPreset('sleek')">💼 Serious</button>
                         <button class="preset-btn" id="preset-features" onclick="setPreset('features')">📊 Features</button>
                     </div>
                 </div>
@@ -1450,7 +1450,7 @@
         }
 
         // Global Page State
-        let currentPreset = 'hype';
+        let currentPreset = 'simple';
         let currentSocialTab = 'tiktok';
         let generatedData = {
             tiktok: '',
@@ -1485,7 +1485,7 @@
         }
 
         function setPreset(preset) {
-            document.getElementById('preset-hype').classList.remove('active');
+            document.getElementById('preset-simple').classList.remove('active');
             document.getElementById('preset-sleek').classList.remove('active');
             document.getElementById('preset-features').classList.remove('active');
             
@@ -1568,6 +1568,15 @@
 
         // Compile prompt template for fallback copy
         function compilePromptTemplate(name, link, preset, desc) {
+            let toneInstruction = "";
+            if (preset === 'simple') {
+                toneInstruction = "TONE: Simple, serious, direct, and premium. Use very few words, absolutely NO hype, exaggeration, or exclamation marks. Describe it cleanly, seriously, and professionally.";
+            } else if (preset === 'sleek') {
+                toneInstruction = "TONE: Serious, elegant, and modern. Focus on design details, aesthetics, and professional presentation. Keep it clean and polished with no exaggerated statements.";
+            } else {
+                toneInstruction = "TONE: Feature-focused. Highlight specific features, details, compatibility, and specifications clearly and informatively.";
+            }
+
             return `You are an expert social media copywriter specializing in Wear OS watch faces.
 I will provide a Google Play Store description of my watch face, its name, and store link.
 Generate highly engaging social media video descriptions/captions for:
@@ -1582,6 +1591,9 @@ Rules for each platform:
 - **YouTube Shorts**: Keep it short, focused on the hook. Max 100 characters for the title (which you must output separately). In the description, you can include the Play Store Link: ${link}. Use hashtags like #shorts, #wearos, #watchface.
 - **Facebook Reels**: Energetic and punchy. You can include the Play Store Link: ${link}. Use relevant hashtags.
 
+Tone Style:
+${toneInstruction}
+
 Format the output strictly as a JSON object with the following structure:
 {
   "tiktok": "TikTok caption here",
@@ -1593,7 +1605,6 @@ Format the output strictly as a JSON object with the following structure:
 
 Watch Face Name: ${name}
 Watch Face Play Store Link: ${link}
-Tone Preset: ${preset}
 Play Store Description:
 ${desc}
 
@@ -1694,13 +1705,19 @@ Format the output EXACTLY like this:
                     }
                     
                     showToast("Loaded via Gemini Search!");
+                    fetchBtn.disabled = false;
+                    fetchBtn.innerHTML = originalHtml;
+                    generateSocialDescriptions();
+                    return;
                 } catch (err) {
                     console.error("Gemini Search Fetch failed:", err);
                     alert("Gemini Search Fetch failed: " + err.message + "\n\nAttempting fallback CORS proxies...");
                     await fetchPlayStoreDataCorsFallback(url, nameInput, descArea);
                 } finally {
-                    fetchBtn.disabled = false;
-                    fetchBtn.innerHTML = originalHtml;
+                    if (fetchBtn.disabled) {
+                        fetchBtn.disabled = false;
+                        fetchBtn.innerHTML = originalHtml;
+                    }
                 }
             } else {
                 // No API key, warn user and attempt CORS proxy fallback
@@ -1775,6 +1792,7 @@ Format the output EXACTLY like this:
                 }
                 
                 showToast("Play Store info loaded (via CORS Proxy fallback)!");
+                generateSocialDescriptions();
                 
             } catch (err) {
                 console.error(err);
