@@ -1918,8 +1918,8 @@
                     // Update mockup images immediately
                     updateMockupImages(f.image_url);
                     
-                    // Automatically trigger the scrape and generate process!
-                    fetchPlayStoreData();
+                    // No longer automatically trigger play store fetch on click to prevent hanging.
+                    // The user can edit the populated catalog text and then click "Generate Entries".
                 });
                 
                 dropdown.appendChild(item);
