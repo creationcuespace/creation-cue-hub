@@ -211,6 +211,7 @@
         white-space: nowrap;
         scrollbar-width: none;
         -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch;
       }
       .header-btns::-webkit-scrollbar {
         display: none;
@@ -218,6 +219,7 @@
       .header-btn {
         font-size: 12px;
         padding: 6px 8px;
+        flex-shrink: 0;
       }
     }
 
@@ -539,7 +541,8 @@
       </div>
     </a>
     <div class="header-btns">
-      <a href="https://creationcuespace.github.io/creation-cue-hub/index.html" class="header-btn"><span class="hide-mobile">CREATIONCUE </span>HOME</a>
+      <a href="index.html" class="header-btn"><span class="hide-mobile">CREATIONCUE </span>HOME</a>
+      <a href="social-generator.html" class="header-btn">SOCIALS</a>
       <button class="header-btn subscribers-btn" id="btn-subscribers-header" onclick="openSubscribersModal()" style="display: none;">SUBSCRIBERS</button>
       <a href="https://cue-earnings.sotsor.workers.dev/" class="header-btn back-btn">EARNINGS</a>
     </div>

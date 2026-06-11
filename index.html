@@ -923,11 +923,17 @@
                 white-space: nowrap;
                 scrollbar-width: none;
                 -ms-overflow-style: none;
+                -webkit-overflow-scrolling: touch;
                 flex: 1;
                 margin: 0 10px;
                 padding: 4px 0;
                 display: flex;
                 align-items: center;
+                min-width: 0;
+            }
+            .admin-bar-links a,
+            .admin-bar-links span {
+                flex-shrink: 0;
             }
             .admin-bar-links::-webkit-scrollbar {
                 display: none;
@@ -1914,7 +1920,8 @@
         <div class="admin-bar-links" style="display: flex; gap: 20px; align-items: center;">
             <a href="https://cue-earnings.sotsor.workers.dev/" target="_blank" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">Earnings</a>
             <a href="https://cue-earnings.sotsor.workers.dev/analytics" target="_blank" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">Analytics</a>
-            <a href="https://creationcuespace.github.io/creation-cue-hub/manage-coupons.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">Coupons</a>
+            <a href="manage-coupons.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">Coupons</a>
+            <a href="social-generator.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">Socials</a>
             <span id="btn-subscribers-admin-bar" onclick="openSubscribersModal()" style="color: var(--primary); font-weight: 600; cursor: pointer; display: flex; align-items: center; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Subscribers <span id="admin-subscribers-count" style="margin-left: 6px; background: rgba(241, 179, 28, 0.15); border: 1px solid rgba(241, 179, 28, 0.3); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: var(--primary); font-family: 'Inter', sans-serif;">0</span></span>
             <span id="btn-live-visitors" onclick="openLiveVisitorsModal()" style="color: #4caf50; font-weight: 600; cursor: pointer; display: flex; align-items: center; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Live <span style="display:inline-block; width:6px; height:6px; background:#4caf50; border-radius:50%; margin:0 4px; animation: blink 1.2s infinite;"></span> <span id="admin-live-count" style="background: rgba(76, 175, 80, 0.15); border: 1px solid rgba(76, 175, 80, 0.3); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #4caf50; font-family: 'Inter', sans-serif;">0</span></span>
         </div>
@@ -2109,7 +2116,7 @@
                             <svg viewBox="0 0 24 24" class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                             Support / Help Desk
                         </button>
-                        <a href="https://creationcuespace.github.io/creation-cue-hub/privacy.html" target="_blank" class="about-btn">
+                        <a href="privacy.html" target="_blank" class="about-btn">
                             <svg viewBox="0 0 24 24" class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                             Privacy Policy
                         </a>
