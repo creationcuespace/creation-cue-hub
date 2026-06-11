@@ -339,6 +339,19 @@
             transform: none;
         }
 
+        .btn-generate.btn-generate-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-generate.btn-generate-secondary:hover {
+            background: var(--surface-hover);
+            border-color: var(--text-muted);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+            transform: translateY(-1px);
+        }
+
         /* Settings Toggle */
         .settings-toggle {
             font-size: 11px;
@@ -1356,10 +1369,16 @@
                     </div>
                 </div>
 
-                <button class="btn-generate" id="btn-generate" onclick="generateSocialDescriptions()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 2 15 22 11 13 2 9 22 2"></polyline><line x1="22" y1="2" x2="11" y2="13"></line></svg>
-                    Generate Entries
-                </button>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <button class="btn-generate" id="btn-generate" onclick="generateSocialDescriptions()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 2 15 22 11 13 2 9 22 2"></polyline><line x1="22" y1="2" x2="11" y2="13"></line></svg>
+                        AI Generate Entries
+                    </button>
+                    <button class="btn-generate btn-generate-secondary" id="btn-generate-fast" onclick="generateFastSocialDescriptions()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        Fast Generate (No AI)
+                    </button>
+                </div>
             </aside>
 
             <!-- Content Workspace: Previews & Outputs -->
@@ -2453,6 +2472,79 @@ Format the output EXACTLY like this:
                 console.error(err);
                 alert("CORS Proxy fetching failed: " + err.message + "\n\nPlease configure a free Gemini API Key in the settings panel below to search and fetch directly, or manually paste the description.");
             }
+        }
+
+        // Fast Template-based Generation (No AI)
+        function generateFastSocialDescriptions() {
+            const name = document.getElementById('watch-name').value.trim();
+            const link = document.getElementById('watch-link').value.trim() || 'https://play.google.com/store/apps/details?id=...';
+            const desc = document.getElementById('play-store-desc').value.trim();
+
+            if (!name) {
+                alert("Please enter a Watch Face Name first.");
+                return;
+            }
+
+            // Extract a neat hook from description (e.g. the first two sentences or first 120 chars)
+            let hook = "";
+            if (desc) {
+                // Get the first paragraph or first 2 sentences
+                const sentences = desc.split(/[.!?]\s+/);
+                if (sentences.length > 0) {
+                    hook = sentences[0].trim();
+                    if (sentences[1]) {
+                        hook += ". " + sentences[1].trim() + ".";
+                    } else if (!hook.endsWith('.')) {
+                        hook += ".";
+                    }
+                }
+            }
+            if (!hook) {
+                hook = `Experience the stylish ${name} watch face on your smartwatch!`;
+            }
+
+            // Build standard posts based on the tone preset
+            let toneIntro = "";
+            if (currentPreset === 'sleek') {
+                toneIntro = "Modern design, serious style. Check out";
+            } else if (currentPreset === 'features') {
+                toneIntro = "Feature-packed and highly functional. Meet";
+            } else {
+                toneIntro = "Direct, neat, and elegant. Discover";
+            }
+
+            // TikTok Caption
+            const tiktokText = `✨ ${toneIntro} ${name} for Wear OS! ⌚\n\n${hook}\n\n🔗 Get it via the link in our bio! 👇\n\n#wearos #watchface #smartwatch #samsunggalaxywatch #pixelwatch #watchfacestudio #androidwear #creativestyle`;
+
+            // Instagram Caption
+            const instagramText = `📸 ${toneIntro} ${name} for Wear OS! ⌚✨\n\n${hook}\n\nUpgrade your wrist style today. \n\n🔗 Find the Google Play Store link in our bio!\n\n#wearos #watchface #smartwatch #samsunggalaxywatch #pixelwatch #instastyle #googlepixelwatch #galaxywatch`;
+
+            // Shorts Title
+            const shortsTitleText = `Get ${name} on Wear OS! ⌚`;
+
+            // Shorts Description
+            const shortsText = `Check out the ${name} watch face for Wear OS smartwatches!\n\n${hook}\n\n📥 Download on the Google Play Store:\n🔗 ${link}\n\n#shorts #wearos #watchface #smartwatch #googleplay`;
+
+            // Reels Caption
+            const reelsText = `🎥 ${toneIntro} ${name} for Wear OS! ⌚\n\n${hook}\n\n📥 Get it on the Google Play Store:\n🔗 ${link}\n\n#reels #wearos #watchface #smartwatch #galaxywatch #pixelwatch`;
+
+            // Update state
+            generatedData = {
+                tiktok: tiktokText,
+                instagram: instagramText,
+                shorts_title: shortsTitleText,
+                shorts: shortsText,
+                reels: reelsText
+            };
+
+            // Show Results UI
+            document.getElementById('empty-state').style.display = 'none';
+            document.getElementById('fallback-container').style.display = 'none'; // hide fallback since we generated posts successfully
+            document.getElementById('results-panel').style.display = 'flex';
+
+            updateResultsUI();
+            syncMockups();
+            showToast("Posts generated instantly (No AI)!");
         }
 
         // Core Generation Logic
