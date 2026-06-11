@@ -1070,6 +1070,96 @@
             color: var(--text-primary);
             font-weight: 700;
         }
+
+        /* Search Select Dropdown */
+        .search-select-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .catalog-dropdown {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 26, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-md);
+            max-height: 240px;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
+            display: none;
+            flex-direction: column;
+        }
+
+        .catalog-dropdown::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .catalog-dropdown::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .catalog-dropdown::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .catalog-dropdown::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .catalog-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .catalog-item:last-child {
+            border-bottom: none;
+        }
+
+        .catalog-item:hover {
+            background: var(--surface-hover);
+        }
+
+        .catalog-item img {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            object-fit: cover;
+            border: 1px solid var(--glass-border);
+        }
+
+        .catalog-item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .catalog-item-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .catalog-item-desc {
+            font-size: 10px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -1111,6 +1201,14 @@
             <!-- Sidebar: Inputs -->
             <aside class="input-panel">
                 <h2 class="panel-title">Social Generator</h2>
+
+                <div class="form-group" style="position: relative;">
+                    <label>Quick Select Watch Face (from Catalog)</label>
+                    <div class="search-select-container">
+                        <input class="input-text" id="catalog-search" type="text" placeholder="🔍 Search face name (e.g. CUE177)..." autocomplete="off" style="width: 100%;">
+                        <div class="catalog-dropdown" id="catalog-dropdown" style="display: none;"></div>
+                    </div>
+                </div>
                 
                 <div class="form-group">
                     <label for="watch-name">Watch Face Name</label>
@@ -1556,6 +1654,8 @@
                 currentUser = user;
                 loginOverlay.style.display = 'none';
                 adminContainer.style.display = 'flex';
+                // Load catalog
+                loadCatalog();
             } else {
                 currentUser = null;
                 loginOverlay.style.display = 'flex';
@@ -1589,6 +1689,101 @@
             }
         }
 
+        let catalogFaces = [];
+
+        async function loadCatalog() {
+            try {
+                // Try from local storage cache first
+                const cached = localStorage.getItem('cc_catalog_cache');
+                if (cached) {
+                    const parsed = JSON.parse(cached);
+                    catalogFaces = parsed.watch_faces || parsed.faces || [];
+                    renderDropdownItems(catalogFaces);
+                }
+                
+                // Fetch fresh from GitHub
+                const url = 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/manager.json?v=' + Date.now();
+                const response = await fetch(url);
+                if (response.ok) {
+                    const parsed = await response.json();
+                    localStorage.setItem('cc_catalog_cache', JSON.stringify(parsed));
+                    catalogFaces = parsed.watch_faces || parsed.faces || [];
+                    renderDropdownItems(catalogFaces);
+                }
+            } catch (err) {
+                console.warn("Failed loading catalog in generator:", err);
+            }
+        }
+
+        function getWebUrl(playStoreUrl) {
+            if (!playStoreUrl) return '';
+            let id = '';
+            if (playStoreUrl.includes('id=')) {
+                id = playStoreUrl.split('id=')[1].split('&')[0];
+            } else {
+                id = playStoreUrl;
+            }
+            return `https://play.google.com/store/apps/details?id=${id}`;
+        }
+
+        function renderDropdownItems(faces) {
+            const dropdown = document.getElementById('catalog-dropdown');
+            if (!dropdown) return;
+            dropdown.innerHTML = '';
+            
+            if (faces.length === 0) {
+                dropdown.innerHTML = '<div style="padding: 12px 16px; font-size:11px; color:var(--text-muted); text-align:center;">No faces found</div>';
+                return;
+            }
+            
+            faces.forEach(f => {
+                const item = document.createElement('div');
+                item.className = 'catalog-item';
+                
+                const webUrl = getWebUrl(f.play_store_url);
+                
+                item.innerHTML = `
+                    <img src="${f.image_url}" alt="${f.title}" onerror="this.src='https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png'">
+                    <div class="catalog-item-info">
+                        <div class="catalog-item-title">${f.title}</div>
+                        <div class="catalog-item-desc">${f.description_en || ''}</div>
+                    </div>
+                `;
+                
+                item.addEventListener('click', () => {
+                    document.getElementById('watch-link').value = webUrl;
+                    document.getElementById('watch-name').value = f.title;
+                    document.getElementById('play-store-desc').value = f.description_en || '';
+                    
+                    // Hide dropdown and set search input value to face title
+                    document.getElementById('catalog-search').value = f.title;
+                    dropdown.style.display = 'none';
+                    
+                    // Trigger dynamic comments update
+                    updateCommentsUI();
+                    
+                    // Automatically trigger the scrape and generate process!
+                    fetchPlayStoreData();
+                });
+                
+                dropdown.appendChild(item);
+            });
+        }
+
+        function filterCatalog() {
+            const searchInput = document.getElementById('catalog-search');
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            if (!query) {
+                renderDropdownItems(catalogFaces);
+                return;
+            }
+            const filtered = catalogFaces.filter(f => 
+                (f.title && f.title.toLowerCase().includes(query)) ||
+                (f.description_en && f.description_en.toLowerCase().includes(query))
+            );
+            renderDropdownItems(filtered);
+        }
+
         // Global Page State
         let currentPreset = 'simple';
         let currentSocialTab = 'tiktok';
@@ -1610,6 +1805,26 @@
             // Listeners for auto-updating comments
             document.getElementById('watch-name').addEventListener('input', updateCommentsUI);
             document.getElementById('watch-link').addEventListener('input', updateCommentsUI);
+            
+            // Listeners for catalog search selector
+            const searchInput = document.getElementById('catalog-search');
+            const dropdown = document.getElementById('catalog-dropdown');
+            if (searchInput && dropdown) {
+                searchInput.addEventListener('focus', () => {
+                    dropdown.style.display = 'flex';
+                    filterCatalog();
+                });
+                
+                searchInput.addEventListener('input', () => {
+                    filterCatalog();
+                });
+                
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.search-select-container')) {
+                        dropdown.style.display = 'none';
+                    }
+                });
+            }
             
             // Initialize empty comments UI
             updateCommentsUI();
