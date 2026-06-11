@@ -1638,6 +1638,81 @@ Return ONLY the raw JSON object. Do not include any markdown backticks like \`\`
             const originalHtml = fetchBtn.innerHTML;
             fetchBtn.innerHTML = '<div class="spinner" style="width:12px; height:12px;"></div> Fetching...';
             
+            const apiKeyInput = document.getElementById('api-key');
+            const apiKey = apiKeyInput ? apiKeyInput.value.trim() : '';
+            
+            if (apiKey) {
+                // Fetch using Gemini Google Search Grounding!
+                try {
+                    const fetchPrompt = `Please search for the Google Play Store app at this URL: ${url}
+Extract the watch face's name and its full description.
+Format the output EXACTLY like this:
+---NAME_START---
+[Extract the watch face name/title here]
+---NAME_END---
+---DESC_START---
+[Extract the full description here, keeping paragraph breaks]
+---DESC_END---`;
+
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            contents: [{
+                                parts: [{
+                                    text: fetchPrompt
+                                }]
+                            }],
+                            tools: [{
+                                google_search: {}
+                            }]
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const errText = await response.text();
+                        throw new Error(`API error (HTTP ${response.status}): ${errText}`);
+                    }
+
+                    const resJson = await response.json();
+                    const text = resJson.candidates[0].content.parts[0].text;
+                    
+                    const extractedName = text.split('---NAME_START---')[1]?.split('---NAME_END---')[0]?.trim() || '';
+                    const extractedDesc = text.split('---DESC_START---')[1]?.split('---DESC_END---')[0]?.trim() || '';
+                    
+                    if (!extractedName && !extractedDesc) {
+                        throw new Error("Could not parse name or description from Gemini search response.");
+                    }
+                    
+                    if (extractedName) {
+                        nameInput.value = extractedName;
+                    }
+                    if (extractedDesc) {
+                        descArea.value = extractedDesc;
+                    }
+                    
+                    showToast("Loaded via Gemini Search!");
+                } catch (err) {
+                    console.error("Gemini Search Fetch failed:", err);
+                    alert("Gemini Search Fetch failed: " + err.message + "\n\nAttempting fallback CORS proxies...");
+                    await fetchPlayStoreDataCorsFallback(url, nameInput, descArea);
+                } finally {
+                    fetchBtn.disabled = false;
+                    fetchBtn.innerHTML = originalHtml;
+                }
+            } else {
+                // No API key, warn user and attempt CORS proxy fallback
+                alert("CORS proxies are heavily blocked by Google Play.\n\nTo fetch info automatically and reliably, please enter your Gemini API Key in the settings panel below (it is free). Attempting CORS proxy fallback now...");
+                await fetchPlayStoreDataCorsFallback(url, nameInput, descArea);
+                fetchBtn.disabled = false;
+                fetchBtn.innerHTML = originalHtml;
+            }
+        }
+
+        // Fallback CORS Proxy fetching method
+        async function fetchPlayStoreDataCorsFallback(url, nameInput, descArea) {
             try {
                 let html = '';
                 
@@ -1646,7 +1721,6 @@ Return ONLY the raw JSON object. Do not include any markdown backticks like \`\`
                     const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`);
                     if (response.ok) {
                         html = await response.text();
-                        // Verify that we actually got HTML, not an error message
                         if (!html.includes("<!DOCTYPE") && !html.includes("<html")) {
                             throw new Error("Invalid HTML content returned");
                         }
@@ -1683,16 +1757,12 @@ Return ONLY the raw JSON object. Do not include any markdown backticks like \`\`
                 let desc = '';
                 const descDiv = doc.querySelector('[data-g-id="description"]');
                 if (descDiv) {
-                    // Replace <br> tags with newlines to keep formatting
                     let htmlContent = descDiv.innerHTML;
                     htmlContent = htmlContent.replace(/<br\s*\/?>/gi, '\n');
-                    
-                    // Strip other tags (e.g. bold, paragraphs) cleanly
                     const tempDiv = document.createElement('div');
                     tempDiv.innerHTML = htmlContent;
                     desc = tempDiv.textContent || tempDiv.innerText || '';
                 } else {
-                    // Fallback to meta description tag (short version)
                     const metaDesc = doc.querySelector('meta[name="description"]')?.getAttribute('content');
                     desc = metaDesc || '';
                 }
@@ -1704,24 +1774,93 @@ Return ONLY the raw JSON object. Do not include any markdown backticks like \`\`
                     descArea.value = desc.trim();
                 }
                 
-                showToast("Play Store info loaded!");
+                showToast("Play Store info loaded (via CORS Proxy fallback)!");
                 
             } catch (err) {
                 console.error(err);
-                alert("Failed to fetch Play Store info: " + err.message + "\n\nYou can still paste the details manually.");
-            } finally {
-                fetchBtn.disabled = false;
-                fetchBtn.innerHTML = originalHtml;
+                alert("CORS Proxy fetching failed: " + err.message + "\n\nPlease configure a free Gemini API Key in the settings panel below to search and fetch directly, or manually paste the description.");
             }
         }
 
         // Core Generation Logic
         async function generateSocialDescriptions() {
-            const name = document.getElementById('watch-name').value.trim();
+            let name = document.getElementById('watch-name').value.trim();
             const link = document.getElementById('watch-link').value.trim();
-            const desc = document.getElementById('play-store-desc').value.trim();
+            let desc = document.getElementById('play-store-desc').value.trim();
             const apiKey = document.getElementById('api-key').value.trim();
             const genBtn = document.getElementById('btn-generate');
+
+            // If name or description is empty, but we have a link, try to auto-fetch first
+            if ((!name || !desc) && link) {
+                if (!apiKey) {
+                    alert("To automatically search and fetch Play Store details using the link, please enter your Gemini API Key in the settings panel below (it is free). Otherwise, you must paste the Name and Description manually.");
+                    return;
+                }
+                
+                // Set loading state for auto-fetching
+                genBtn.disabled = true;
+                genBtn.innerHTML = '<div class="spinner" style="width:16px; height:16px;"></div> Searching Play Store...';
+                
+                try {
+                    const fetchPrompt = `Please search for the Google Play Store app at this URL: ${link}
+Extract the watch face's name and its full description.
+Format the output EXACTLY like this:
+---NAME_START---
+[Extract the watch face name/title here]
+---NAME_END---
+---DESC_START---
+[Extract the full description here, keeping paragraph breaks]
+---DESC_END---`;
+
+                    const fetchResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            contents: [{
+                                parts: [{
+                                    text: fetchPrompt
+                                }]
+                            }],
+                            tools: [{
+                                google_search: {}
+                            }]
+                        })
+                    });
+
+                    if (!fetchResponse.ok) {
+                        const errText = await fetchResponse.text();
+                        throw new Error(`Auto-fetch API error (HTTP ${fetchResponse.status}): ${errText}`);
+                    }
+
+                    const resJson = await fetchResponse.json();
+                    const text = resJson.candidates[0].content.parts[0].text;
+                    
+                    const extractedName = text.split('---NAME_START---')[1]?.split('---NAME_END---')[0]?.trim() || '';
+                    const extractedDesc = text.split('---DESC_START---')[1]?.split('---DESC_END---')[0]?.trim() || '';
+                    
+                    if (extractedName) {
+                        document.getElementById('watch-name').value = extractedName;
+                        name = extractedName;
+                    }
+                    if (extractedDesc) {
+                        document.getElementById('play-store-desc').value = extractedDesc;
+                        desc = extractedDesc;
+                    }
+                    
+                    showToast("Details fetched via Gemini Search!");
+                } catch (err) {
+                    console.error("Auto-fetch during generation failed:", err);
+                    alert("Auto-fetch failed: " + err.message + "\n\nPlease fill in the Name and Description manually.");
+                    genBtn.disabled = false;
+                    genBtn.innerHTML = `
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 2 15 22 11 13 2 9 22 2"></polyline><line x1="22" y1="2" x2="11" y2="13"></line></svg>
+                        Generate Entries
+                    `;
+                    return;
+                }
+            }
 
             if (!name) {
                 alert("Please enter a Watch Face Name.");
@@ -1762,7 +1901,7 @@ Return ONLY the raw JSON object. Do not include any markdown backticks like \`\`
             genBtn.innerHTML = '<div class="spinner" style="width:16px; height:16px;"></div> Generating...';
 
             try {
-                // Call Gemini 2.0 Flash API
+                // Call Gemini 2.0 Flash API (without tools to avoid MIME type compatibility issues)
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: {
