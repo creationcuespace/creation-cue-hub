@@ -1216,6 +1216,17 @@
                                 </div>
                                 <button class="header-btn primary-btn" onclick="copyResultText('tiktok')">Copy Caption</button>
                             </div>
+                            
+                            <!-- Comment Result Box -->
+                            <div style="margin-top: 20px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
+                                <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
+                                <div class="result-box-wrapper">
+                                    <div class="result-box" id="res-comment-tiktok" style="min-height: 48px; padding: 12px 16px;"></div>
+                                </div>
+                                <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
+                                    <button class="header-btn" onclick="copyCommentText('tiktok')">Copy Comment</button>
+                                </div>
+                            </div>
                         </div>
                         
                         <!-- TikTok Mockup -->
@@ -1271,6 +1282,17 @@
                                     <span id="char-count-instagram">0 / 2200</span>
                                 </div>
                                 <button class="header-btn primary-btn" onclick="copyResultText('instagram')">Copy Caption</button>
+                            </div>
+                            
+                            <!-- Comment Result Box -->
+                            <div style="margin-top: 20px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
+                                <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
+                                <div class="result-box-wrapper">
+                                    <div class="result-box" id="res-comment-instagram" style="min-height: 48px; padding: 12px 16px;"></div>
+                                </div>
+                                <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
+                                    <button class="header-btn" onclick="copyCommentText('instagram')">Copy Comment</button>
+                                </div>
                             </div>
                         </div>
                         
@@ -1334,6 +1356,17 @@
                                     </div>
                                     <button class="header-btn primary-btn" onclick="copyResultText('shorts')">Copy Description</button>
                                 </div>
+                                
+                                <!-- Comment Result Box -->
+                                <div style="margin-top: 20px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
+                                    <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
+                                    <div class="result-box-wrapper">
+                                        <div class="result-box" id="res-comment-shorts" style="min-height: 48px; padding: 12px 16px;"></div>
+                                    </div>
+                                    <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
+                                        <button class="header-btn" onclick="copyCommentText('shorts')">Copy Comment</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
@@ -1393,6 +1426,17 @@
                                     <span id="char-count-reels">0 / 2000</span>
                                 </div>
                                 <button class="header-btn primary-btn" onclick="copyResultText('reels')">Copy Caption</button>
+                            </div>
+                            
+                            <!-- Comment Result Box -->
+                            <div style="margin-top: 20px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
+                                <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
+                                <div class="result-box-wrapper">
+                                    <div class="result-box" id="res-comment-reels" style="min-height: 48px; padding: 12px 16px;"></div>
+                                </div>
+                                <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
+                                    <button class="header-btn" onclick="copyCommentText('reels')">Copy Comment</button>
+                                </div>
                             </div>
                         </div>
                         
@@ -1562,6 +1606,13 @@
             if (savedKey) {
                 document.getElementById('api-key').value = savedKey;
             }
+            
+            // Listeners for auto-updating comments
+            document.getElementById('watch-name').addEventListener('input', updateCommentsUI);
+            document.getElementById('watch-link').addEventListener('input', updateCommentsUI);
+            
+            // Initialize empty comments UI
+            updateCommentsUI();
         });
 
         function toggleSettingsPanel() {
@@ -1622,6 +1673,40 @@
             }).catch(() => {
                 alert("Failed to copy. Please manually select and copy text.");
             });
+        }
+
+        function copyCommentText(platform) {
+            const commentBox = document.getElementById('res-comment-' + platform);
+            if (!commentBox) return;
+            const text = commentBox.textContent;
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Comment copied!");
+            }).catch(() => {
+                alert("Failed to copy. Please manually select and copy text.");
+            });
+        }
+
+        function updateCommentsUI() {
+            const nameInput = document.getElementById('watch-name');
+            const linkInput = document.getElementById('watch-link');
+            if (!nameInput || !linkInput) return;
+            
+            const name = nameInput.value.trim() || 'CUE Watch Face';
+            const link = linkInput.value.trim() || 'https://play.google.com/store/apps/details?id=...';
+            
+            const bioComment = `🔗 Get ${name} on the Google Play Store via the link in my bio!`;
+            const linkComment = `🔗 Get ${name} on the Google Play Store via the link: ${link}`;
+            
+            const commentTiktok = document.getElementById('res-comment-tiktok');
+            const commentInstagram = document.getElementById('res-comment-instagram');
+            const commentShorts = document.getElementById('res-comment-shorts');
+            const commentReels = document.getElementById('res-comment-reels');
+            
+            if (commentTiktok) commentTiktok.textContent = bioComment;
+            if (commentInstagram) commentInstagram.textContent = bioComment;
+            if (commentShorts) commentShorts.textContent = linkComment;
+            if (commentReels) commentReels.textContent = linkComment;
         }
 
         function copyShortsTitle() {
@@ -2119,6 +2204,9 @@ Format the output EXACTLY like this:
             updateCharCounter('instagram', generatedData.instagram, 2200);
             updateCharCounter('shorts', generatedData.shorts, 5000);
             updateCharCounter('reels', generatedData.reels, 2000);
+
+            // Update comments
+            updateCommentsUI();
         }
     </script>
 </body>
