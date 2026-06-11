@@ -1459,6 +1459,11 @@
             const savedKey = localStorage.getItem('cc_gemini_api_key');
             if (savedKey) {
                 document.getElementById('api-key').value = savedKey;
+            } else {
+                // Pre-populate with default key
+                const defaultKey = 'AIzaSyD1Zph-QXQbqCyxROQQVKBYcatPjbCEZgM';
+                document.getElementById('api-key').value = defaultKey;
+                localStorage.setItem('cc_gemini_api_key', defaultKey);
             }
         });
 
