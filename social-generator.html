@@ -566,12 +566,21 @@
 
         /* TikTok Mockup Specifics */
         .tiktok-mockup {
-            background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3');
-            background-size: cover;
-            background-position: center;
             justify-content: flex-end;
             padding: 16px 12px 24px 12px;
             color: white;
+            position: relative;
+        }
+
+        .tiktok-mockup::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.85)), var(--tiktok-bg, url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3'));
+            background-size: cover;
+            background-position: center;
+            filter: blur(20px) brightness(0.65);
+            z-index: 1;
         }
 
         .tiktok-actions {
@@ -582,6 +591,7 @@
             flex-direction: column;
             align-items: center;
             gap: 16px;
+            z-index: 2;
         }
 
         .tiktok-action {
@@ -621,6 +631,7 @@
             flex-direction: column;
             gap: 4px;
             text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+            z-index: 2;
         }
 
         .tiktok-author {
@@ -782,11 +793,20 @@
 
         /* YouTube Shorts Mockup Specifics */
         .shorts-mockup {
-            background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3');
-            background-size: cover;
-            background-position: center;
             justify-content: flex-end;
             padding: 16px 12px 24px 12px;
+            position: relative;
+        }
+
+        .shorts-mockup::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.85)), var(--shorts-bg, url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3'));
+            background-size: cover;
+            background-position: center;
+            filter: blur(20px) brightness(0.65);
+            z-index: 1;
         }
 
         .shorts-actions {
@@ -797,6 +817,7 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
+            z-index: 2;
         }
 
         .shorts-action {
@@ -826,6 +847,7 @@
             flex-direction: column;
             gap: 8px;
             text-align: left;
+            z-index: 2;
         }
 
         .shorts-channel {
@@ -867,11 +889,20 @@
 
         /* Facebook Reels Mockup Specifics */
         .reels-mockup {
-            background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3');
-            background-size: cover;
-            background-position: center;
             justify-content: flex-end;
             padding: 16px 12px 24px 12px;
+            position: relative;
+        }
+
+        .reels-mockup::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.85)), var(--reels-bg, url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3'));
+            background-size: cover;
+            background-position: center;
+            filter: blur(20px) brightness(0.65);
+            z-index: 1;
         }
 
         .reels-header {
@@ -887,6 +918,7 @@
             font-size: 14px;
             font-weight: 700;
             text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+            z-index: 2;
         }
 
         .reels-actions {
@@ -897,6 +929,7 @@
             flex-direction: column;
             align-items: center;
             gap: 16px;
+            z-index: 2;
         }
 
         .reels-action {
@@ -926,6 +959,7 @@
             gap: 6px;
             text-align: left;
             text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+            z-index: 2;
         }
 
         .reels-author-row {
@@ -1810,7 +1844,7 @@
             const tiktokMockup = document.querySelector('.tiktok-mockup');
             const tiktokWatchFace = document.getElementById('mock-watch-face-tiktok');
             if (tiktokMockup) {
-                tiktokMockup.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.85)), url('${currentWatchFaceImage}')`;
+                tiktokMockup.style.setProperty('--tiktok-bg', `url('${currentWatchFaceImage}')`);
             }
             if (tiktokWatchFace) {
                 tiktokWatchFace.src = currentWatchFaceImage;
@@ -1827,7 +1861,7 @@
             const shortsMockup = document.querySelector('.shorts-mockup');
             const shortsWatchFace = document.getElementById('mock-watch-face-shorts');
             if (shortsMockup) {
-                shortsMockup.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.85)), url('${currentWatchFaceImage}')`;
+                shortsMockup.style.setProperty('--shorts-bg', `url('${currentWatchFaceImage}')`);
             }
             if (shortsWatchFace) {
                 shortsWatchFace.src = currentWatchFaceImage;
@@ -1837,7 +1871,7 @@
             const reelsMockup = document.querySelector('.reels-mockup');
             const reelsWatchFace = document.getElementById('mock-watch-face-reels');
             if (reelsMockup) {
-                reelsMockup.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.85)), url('${currentWatchFaceImage}')`;
+                reelsMockup.style.setProperty('--reels-bg', `url('${currentWatchFaceImage}')`);
             }
             if (reelsWatchFace) {
                 reelsWatchFace.src = currentWatchFaceImage;
