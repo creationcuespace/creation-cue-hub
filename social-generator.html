@@ -1595,11 +1595,11 @@
         function compilePromptTemplate(name, link, preset, desc) {
             let toneInstruction = "";
             if (preset === 'simple') {
-                toneInstruction = "TONE: Simple, serious, direct, and premium. Use very few words, absolutely NO hype, exaggeration, or exclamation marks. Describe it cleanly, seriously, and professionally.";
+                toneInstruction = "TONE: Simple, serious, direct, and neat. Use very few words, absolutely NO hype, exaggeration, or exclamation marks. Describe it cleanly, seriously, and professionally.";
             } else if (preset === 'sleek') {
                 toneInstruction = "TONE: Serious, elegant, and modern. Focus on design details, aesthetics, and professional presentation. Keep it clean and polished with no exaggerated statements.";
             } else {
-                toneInstruction = "TONE: Feature-focused. Highlight specific features, details, compatibility, and specifications clearly and informatively.";
+                toneInstruction = "TONE: Feature-focused. Highlight specific features clearly and informatively.";
             }
 
             return `You are an expert social media copywriter specializing in Wear OS watch faces.
@@ -1612,9 +1612,14 @@ Generate highly engaging social media video descriptions/captions for:
 
 Rules for each platform:
 - **TikTok**: Keep it engaging and punchy. Use relevant emojis. End with "Link in Bio" (do NOT include clickable links in the caption). Max 15-20 hashtags (e.g. #wearos, #watchface, #smartwatch, #samsunggalaxywatch, #pixelwatch, #tiktok).
-- **Instagram**: Rich visual description, highly engaging. Include emojis. End with "Link in Bio" (do NOT include clickable links). Include popular watch face and style hashtags.
+- **Instagram**: Rich visual description, highly engaging. Include emojis. End with "Link in Bio" (do NOT include links). Include watch face and style hashtags.
 - **YouTube Shorts**: Keep it short, focused on the hook. Max 100 characters for the title (which you must output separately). In the description, you can include the Play Store Link: ${link}. Use hashtags like #shorts, #wearos, #watchface.
 - **Facebook Reels**: Energetic and punchy. You can include the Play Store Link: ${link}. Use relevant hashtags.
+
+CRITICAL CONTENT RESTRICTIONS:
+1. Do NOT include compatibility or technical requirements like "Compatible with API Level 33+" or Wear OS version constraints in the social descriptions/captions.
+2. Do NOT use the word "Premium" (or synonyms like "luxury", "exclusive") anywhere in the title or captions.
+3. Stick strictly to the style, theme, and details described in the Play Store description. Do NOT call the watch face "minimalist", "minimal", "retro", "classic", etc., unless the play store description explicitly lists those exact keywords. Do not assume or hallucinate style descriptions that are not in the input.
 
 Tone Style:
 ${toneInstruction}
