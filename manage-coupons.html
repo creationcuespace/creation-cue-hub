@@ -590,21 +590,47 @@
             <div class="form-group">
               <span class="form-label">Visibility</span>
               <select class="input-text" id="promo-visibility" style="cursor: pointer; background: var(--mid);">
-                <option value="public">Public (Anyone with public link can claim)</option>
                 <option value="private">Private (Only claimable via unique One-Time Links)</option>
+                <option value="public">Public (Anyone with public link can claim)</option>
               </select>
             </div>
 
             <div style="display:flex; gap:10px;">
               <div class="form-group" style="flex:1;">
                 <span class="form-label">Start Date/Time (Optional)</span>
-                <input class="input-text" id="promo-starts" type="datetime-local">
-                <span style="font-size:10px; color:var(--muted); margin-top:2px;">Promotion starts at this date/time.</span>
+                <div style="display:flex; gap:6px;">
+                  <input class="input-text" id="promo-starts-text" type="text" placeholder="e.g. 8 Jun 2027" oninput="parseStartsText()" style="flex:1;">
+                  <div style="position:relative; width:44px; height:38px; flex:none;">
+                    <div class="input-text" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:var(--mid); pointer-events:none; border:1px solid var(--border); border-radius:4px;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                      </svg>
+                    </div>
+                    <input id="promo-starts" type="datetime-local" oninput="syncStartsText()" style="position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%;">
+                  </div>
+                </div>
+                <span style="font-size:10px; color:var(--muted); margin-top:2px;">Type/paste date or select with calendar icon.</span>
               </div>
               <div class="form-group" style="flex:1;">
                 <span class="form-label">Expiration Date (Optional)</span>
-                <input class="input-text" id="promo-expiry" type="datetime-local">
-                <span style="font-size:10px; color:var(--muted); margin-top:2px;">Promotion ends at this date/time.</span>
+                <div style="display:flex; gap:6px;">
+                  <input class="input-text" id="promo-expiry-text" type="text" placeholder="e.g. 8 Jun 2027" oninput="parseExpiryText()" style="flex:1;">
+                  <div style="position:relative; width:44px; height:38px; flex:none;">
+                    <div class="input-text" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:var(--mid); pointer-events:none; border:1px solid var(--border); border-radius:4px;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                      </svg>
+                    </div>
+                    <input id="promo-expiry" type="datetime-local" oninput="syncExpiryText()" style="position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%;">
+                  </div>
+                </div>
+                <span style="font-size:10px; color:var(--muted); margin-top:2px;">Type/paste date or select with calendar icon.</span>
               </div>
             </div>
 
@@ -815,6 +841,71 @@ AAAA-BBBB-CCCC"></textarea>
       return str;
     }
 
+    window.parseStartsText = function() {
+      var textVal = document.getElementById('promo-starts-text').value.trim();
+      var picker = document.getElementById('promo-starts');
+      if (!textVal) {
+        picker.value = '';
+        return;
+      }
+      var d = new Date(textVal);
+      if (!isNaN(d.getTime())) {
+        var offset = d.getTimezoneOffset() * 60000;
+        var localISOTime = (new Date(d.getTime() - offset)).toISOString().slice(0, 16);
+        picker.value = localISOTime;
+      }
+    };
+
+    window.syncStartsText = function() {
+      var pickerVal = document.getElementById('promo-starts').value;
+      var textInput = document.getElementById('promo-starts-text');
+      if (!pickerVal) {
+        textInput.value = '';
+        return;
+      }
+      var d = new Date(pickerVal);
+      textInput.value = formatHumanDate(d);
+    };
+
+    window.parseExpiryText = function() {
+      var textVal = document.getElementById('promo-expiry-text').value.trim();
+      var picker = document.getElementById('promo-expiry');
+      if (!textVal) {
+        picker.value = '';
+        return;
+      }
+      var d = new Date(textVal);
+      if (!isNaN(d.getTime())) {
+        var offset = d.getTimezoneOffset() * 60000;
+        var localISOTime = (new Date(d.getTime() - offset)).toISOString().slice(0, 16);
+        picker.value = localISOTime;
+      }
+    };
+
+    window.syncExpiryText = function() {
+      var pickerVal = document.getElementById('promo-expiry').value;
+      var textInput = document.getElementById('promo-expiry-text');
+      if (!pickerVal) {
+        textInput.value = '';
+        return;
+      }
+      var d = new Date(pickerVal);
+      textInput.value = formatHumanDate(d);
+    };
+
+    function formatHumanDate(d) {
+      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      var day = d.getDate();
+      var month = months[d.getMonth()];
+      var year = d.getFullYear();
+      var hours = String(d.getHours()).padStart(2, '0');
+      var minutes = String(d.getMinutes()).padStart(2, '0');
+      if (hours === '00' && minutes === '00') {
+        return day + ' ' + month + ' ' + year;
+      }
+      return day + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes;
+    }
+
     // Auth monitor
     auth.onAuthStateChanged(function (user) {
       if (user) {
@@ -926,7 +1017,9 @@ AAAA-BBBB-CCCC"></textarea>
           document.getElementById('promo-img').value = '';
           document.getElementById('promo-codes').value = '';
           document.getElementById('promo-starts').value = '';
+          document.getElementById('promo-starts-text').value = '';
           document.getElementById('promo-expiry').value = '';
+          document.getElementById('promo-expiry-text').value = '';
           // Collapse the form after creation
           if (typeof toggleCreateForm === 'function') toggleCreateForm(false);
         }).catch(function(err) {
@@ -966,8 +1059,10 @@ AAAA-BBBB-CCCC"></textarea>
           var offset = localDate.getTimezoneOffset() * 60000;
           var localISOTime = (new Date(localDate.getTime() - offset)).toISOString().slice(0, 16);
           document.getElementById('promo-starts').value = localISOTime;
+          document.getElementById('promo-starts-text').value = formatHumanDate(localDate);
         } else {
           document.getElementById('promo-starts').value = '';
+          document.getElementById('promo-starts-text').value = '';
         }
         
         if (promo.expiresAt) {
@@ -975,8 +1070,10 @@ AAAA-BBBB-CCCC"></textarea>
           var offset = localDate.getTimezoneOffset() * 60000;
           var localISOTime = (new Date(localDate.getTime() - offset)).toISOString().slice(0, 16);
           document.getElementById('promo-expiry').value = localISOTime;
+          document.getElementById('promo-expiry-text').value = formatHumanDate(localDate);
         } else {
           document.getElementById('promo-expiry').value = '';
+          document.getElementById('promo-expiry-text').value = '';
         }
         
         var claimedCount = promo.claimedCount || 0;
@@ -1017,10 +1114,12 @@ AAAA-BBBB-CCCC"></textarea>
       document.getElementById('promo-desc').value = '';
       document.getElementById('promo-link').value = '';
       document.getElementById('promo-img').value = '';
-      document.getElementById('promo-visibility').value = 'public';
+      document.getElementById('promo-visibility').value = 'private';
       document.getElementById('promo-codes').value = '';
       document.getElementById('promo-starts').value = '';
+      document.getElementById('promo-starts-text').value = '';
       document.getElementById('promo-expiry').value = '';
+      document.getElementById('promo-expiry-text').value = '';
     }
 
     function savePromotionChanges(name, desc, link, imgUrl, visibility, codesList, startsAt, expiresAt) {
@@ -1801,8 +1900,10 @@ Format this report with a professional tone in clean, beautiful Markdown with st
           var offset = localDate.getTimezoneOffset() * 60000;
           var localISOTime = (new Date(localDate.getTime() - offset)).toISOString().slice(0, 16);
           document.getElementById('promo-starts').value = localISOTime;
+          document.getElementById('promo-starts-text').value = formatHumanDate(localDate);
         } else {
           document.getElementById('promo-starts').value = '';
+          document.getElementById('promo-starts-text').value = '';
         }
         
         if (promo.expiresAt) {
@@ -1810,8 +1911,10 @@ Format this report with a professional tone in clean, beautiful Markdown with st
           var offset = localDate.getTimezoneOffset() * 60000;
           var localISOTime = (new Date(localDate.getTime() - offset)).toISOString().slice(0, 16);
           document.getElementById('promo-expiry').value = localISOTime;
+          document.getElementById('promo-expiry-text').value = formatHumanDate(localDate);
         } else {
           document.getElementById('promo-expiry').value = '';
+          document.getElementById('promo-expiry-text').value = '';
         }
         
         document.getElementById('promo-codes').value = '';
