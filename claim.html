@@ -541,6 +541,9 @@
     // Get parameters
     var urlParams = new URLSearchParams(window.location.search);
     var promoId = urlParams.get('promo') || urlParams.get('p');
+    var tokenId = urlParams.get('token') || urlParams.get('t');
+    var isTokenClaim = !!tokenId;
+    var tokenData = null;
 
     function showToast(msg) {
       var t = document.getElementById('toast');
@@ -574,34 +577,91 @@
     var hasUserClaimed = false;
 
     function startApp() {
-      if (!promoId) {
+      if (!promoId && !tokenId) {
         showState('error');
-        document.getElementById('error-msg').textContent = "No promotion code provided in the URL.";
+        document.getElementById('error-msg').textContent = "No promotion code or claim token provided in the URL.";
         return;
       }
       
-      document.getElementById('loading-msg').textContent = "Loading promotion details...";
+      document.getElementById('loading-msg').textContent = "Loading claim details...";
       
-      // Listen to public details
-      db.ref('promotions/' + promoId + '/public').on('value', function(snapshot) {
-        promoData = snapshot.val();
-        if (!promoData || promoData.active === false) {
-          showState('error');
-          if (promoData && promoData.active === false) {
-            document.getElementById('error-msg').textContent = "This promotion is currently paused.";
-          } else {
-            document.getElementById('error-msg').textContent = "This promotion was not found.";
+      if (isTokenClaim) {
+        // One-time token redemption flow
+        db.ref('one_time_tokens/' + tokenId).on('value', function(tokenSnapshot) {
+          tokenData = tokenSnapshot.val();
+          if (!tokenData) {
+            showState('error');
+            document.getElementById('error-msg').textContent = "This claim link is invalid or expired.";
+            return;
           }
-          return;
-        }
-        
-        renderPromotion();
-        checkUserClaim();
-      }, function(err) {
-        console.error(err);
-        showState('error');
-        document.getElementById('error-msg').textContent = "Permission denied or connection lost.";
-      });
+          
+          promoId = tokenData.promoId;
+          
+          if (tokenData.claimed) {
+            if (currentUser && tokenData.claimedBy === currentUser.uid) {
+              // User already claimed this token, show it to them!
+              db.ref('promotions/' + promoId + '/public').once('value').then(function(snapshot) {
+                promoData = snapshot.val();
+                if (promoData) {
+                  renderPromotion();
+                  showClaimedCoupon(tokenData.code || '--------', false);
+                } else {
+                  showState('error');
+                  document.getElementById('error-msg').textContent = "The associated promotion was not found.";
+                }
+              });
+            } else {
+              showState('error');
+              document.getElementById('error-msg').textContent = "This one-time claim link has already been used.";
+            }
+            return;
+          }
+          
+          // Load public details of the promotion
+          db.ref('promotions/' + promoId + '/public').on('value', function(snapshot) {
+            promoData = snapshot.val();
+            if (!promoData || promoData.active === false) {
+              showState('error');
+              if (promoData && promoData.active === false) {
+                document.getElementById('error-msg').textContent = "This promotion is currently paused.";
+              } else {
+                document.getElementById('error-msg').textContent = "This promotion was not found.";
+              }
+              return;
+            }
+            
+            renderPromotion();
+            checkUserClaim();
+          });
+        });
+      } else {
+        // Public claim flow
+        db.ref('promotions/' + promoId + '/public').on('value', function(snapshot) {
+          promoData = snapshot.val();
+          if (!promoData || promoData.active === false) {
+            showState('error');
+            if (promoData && promoData.active === false) {
+              document.getElementById('error-msg').textContent = "This promotion is currently paused.";
+            } else {
+              document.getElementById('error-msg').textContent = "This promotion was not found.";
+            }
+            return;
+          }
+          
+          if (promoData.visibility === 'private') {
+            showState('error');
+            document.getElementById('error-msg').textContent = "This promotion is private and can only be claimed using a one-time link.";
+            return;
+          }
+          
+          renderPromotion();
+          checkUserClaim();
+        }, function(err) {
+          console.error(err);
+          showState('error');
+          document.getElementById('error-msg').textContent = "Permission denied or connection lost.";
+        });
+      }
     }
 
     function renderPromotion() {
@@ -783,6 +843,12 @@
           referrer: clientMeta.referrer
         };
         
+        if (isTokenClaim) {
+          updates['one_time_tokens/' + tokenId + '/claimed'] = true;
+          updates['one_time_tokens/' + tokenId + '/claimedBy'] = currentUser.uid;
+          updates['one_time_tokens/' + tokenId + '/claimedAt'] = firebase.database.ServerValue.TIMESTAMP;
+        }
+        
         db.ref().update(updates).then(function() {
           // 3. Update succeeded! We now have permission to read the code.
           db.ref('promotion_codes/' + promoId + '/' + nextIndex).once('value').then(function(codeSnap) {
@@ -790,6 +856,10 @@
             if (couponCode) {
               // Save the code to their claim record so they don't have to fetch it again next time
               db.ref('promotion_claims/' + promoId + '/' + currentUser.uid + '/code').set(couponCode);
+              
+              if (isTokenClaim) {
+                db.ref('one_time_tokens/' + tokenId + '/code').set(couponCode);
+              }
               
               hasUserClaimed = true;
               showToast("Coupon Claimed!");
