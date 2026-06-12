@@ -357,6 +357,81 @@
       color: var(--muted);
     }
 
+    /* Support & Review Callout Styles */
+    .review-callout {
+      background: linear-gradient(135deg, rgba(245, 197, 24, 0.08) 0%, rgba(245, 197, 24, 0.02) 100%);
+      border: 2px solid var(--yellow);
+      border-radius: 8px;
+      padding: 22px 18px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 18px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      position: relative;
+      animation: gold-glow-pulse 3s infinite ease-in-out;
+      overflow: hidden;
+    }
+
+    .review-callout::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--red) 0%, var(--blue) 50%, var(--yellow) 100%);
+      opacity: 0.8;
+    }
+
+    @keyframes gold-glow-pulse {
+      0% {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 0px rgba(245, 197, 24, 0);
+        border-color: rgba(245, 197, 24, 0.5);
+      }
+      50% {
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5), 0 0 12px rgba(245, 197, 24, 0.4);
+        border-color: rgba(245, 197, 24, 1);
+      }
+      100% {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 0px rgba(245, 197, 24, 0);
+        border-color: rgba(245, 197, 24, 0.5);
+      }
+    }
+
+    .review-btn-accent {
+      background: var(--yellow);
+      color: var(--black);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      padding: 12px 16px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(245, 197, 24, 0.3);
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+      font-family: 'Teko', sans-serif;
+      text-transform: uppercase;
+      width: 100%;
+    }
+
+    .review-btn-accent:hover {
+      background: #fff;
+      color: var(--black);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .review-btn-accent:active {
+      transform: translateY(1px);
+    }
+
     @media (max-width: 480px) {
       .code-box {
         font-size: 16px;
@@ -421,8 +496,8 @@
         </div>
         
         <!-- COUNTDOWN STATE (Strategy 4) -->
-        <div id="claim-countdown-block" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; gap: 14px; background: var(--mid); border-radius: 6px; border: 1px solid var(--border); width: 100%;">
-          <div style="font-size: 15px; color: var(--yellow); font-weight: 600; font-style: italic; line-height: 1.4; max-width: 320px; padding: 0 5px; text-align: center;">
+        <div id="claim-countdown-block" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; gap: 14px; background: linear-gradient(135deg, rgba(245, 197, 24, 0.05) 0%, rgba(30, 30, 30, 0.9) 100%); border: 1.5px dashed rgba(245, 197, 24, 0.3); border-radius: 8px; width: 100%; box-shadow: inset 0 0 10px rgba(245, 197, 24, 0.05);">
+          <div style="font-size: 15px; color: var(--yellow); font-weight: 600; font-style: italic; line-height: 1.4; max-width: 320px; padding: 0 5px; text-align: center; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">
             ✨ "Remember: leaving a review helps me create more faces!"
           </div>
           <div style="display: flex; align-items: center; gap: 10px; margin-top: 4px;">
@@ -433,19 +508,29 @@
 
         <!-- REVEALED CONTENT (Hidden by default, shown after countdown) -->
         <div id="claim-revealed-block" style="display: none; flex-direction: column; gap: 14px; width: 100%;">
-          <div style="font-size: 13px; color: var(--muted); font-style: italic; line-height: 1.4; padding: 0 10px; margin-top: -4px; margin-bottom: 2px; text-align: center;">
-            "Remember: leaving a review helps me create more faces!"
-          </div>
           <div class="code-box" id="code-display" title="Click to copy">
             --------
           </div>
           <div class="code-subtext">Tap code to copy to clipboard</div>
+          
           <button class="btn redeem-btn" id="btn-redeem">
             REDEEM ON GOOGLE PLAY
           </button>
-          <button class="btn ghost" id="btn-review" style="display: none; margin-top: 10px;">
-            WRITE A REVIEW
-          </button>
+
+          <!-- Support & Review Callout -->
+          <div id="review-callout-box" class="review-callout" style="display: none;">
+            <div style="font-family: 'Teko', sans-serif; font-size: 24px; font-weight: 600; letter-spacing: 1.5px; color: var(--yellow); margin-bottom: -4px; text-transform: uppercase;">
+              Enjoying this Watch Face?
+            </div>
+            <div style="font-size: 20px; color: var(--yellow); filter: drop-shadow(0 0 5px rgba(245,197,24,0.6)); margin-bottom: 2px; letter-spacing: 2px;">★★★★★</div>
+            <div style="font-size: 14px; font-weight: 500; line-height: 1.5; color: var(--text); padding: 0 10px;">
+              Your rating makes a huge difference! Please support my work with a quick 5-star review on the Play Store.
+            </div>
+            <button class="review-btn-accent" id="btn-review">
+              ⭐ LEAVE A 5-STAR REVIEW
+            </button>
+          </div>
+
           <a href="index.html" class="btn ghost" style="text-decoration: none; margin-top: 10px; display: flex;">
             BROWSE MORE WATCH FACES
           </a>
@@ -756,19 +841,24 @@
       
       // Set direct review link
       var reviewBtn = document.getElementById('btn-review');
+      var reviewCallout = document.getElementById('review-callout-box');
       if (promoData && promoData.storeLink) {
-        reviewBtn.style.display = 'flex';
+        if (reviewCallout) reviewCallout.style.display = 'flex';
+        if (reviewBtn) reviewBtn.style.display = 'flex';
         var reviewLink = promoData.storeLink;
         if (reviewLink.indexOf('?') >= 0) {
           reviewLink += '&showAllReviews=true';
         } else {
           reviewLink += '?showAllReviews=true';
         }
-        reviewBtn.onclick = function() {
-          window.open(reviewLink, '_blank');
-        };
+        if (reviewBtn) {
+          reviewBtn.onclick = function() {
+            window.open(reviewLink, '_blank');
+          };
+        }
       } else {
-        reviewBtn.style.display = 'none';
+        if (reviewCallout) reviewCallout.style.display = 'none';
+        if (reviewBtn) reviewBtn.style.display = 'none';
       }
 
       var countdownBlock = document.getElementById('claim-countdown-block');
