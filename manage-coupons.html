@@ -528,6 +528,20 @@
       box-shadow: none;
       opacity: 0.5;
     }
+
+    .modal-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .modal-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+    }
   </style>
 </head>
 
@@ -732,7 +746,7 @@ AAAA-BBBB-CCCC"></textarea>
 
   <!-- Promotion Details Modal -->
   <div id="promo-modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease; padding: 15px;">
-    <div id="promo-modal-card" style="background: var(--dark); border: 1px solid var(--border); border-radius: 6px; width: 100%; max-width: 500px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.2s ease;">
+    <div id="promo-modal-card" style="background: var(--dark); border: 1px solid var(--border); border-radius: 6px; width: 100%; max-width: 800px; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.2s ease;">
       <!-- Header -->
       <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border);">
         <div id="promo-modal-title-area" style="display: flex; gap: 10px; align-items: center; min-width: 0;">
@@ -1760,77 +1774,85 @@ Format this report with a professional tone in clean, beautiful Markdown with st
       var body = document.getElementById('promo-modal-body');
       if (body) {
         body.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span class="form-label" style="margin: 0;">Status</span>
-            <span id="modal-status-badge"></span>
-          </div>
+          <div class="modal-grid">
+            <!-- Left Column: Details & Actions -->
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="form-label" style="margin: 0;">Status</span>
+                <span id="modal-status-badge"></span>
+              </div>
 
-          <div style="font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 12px; display: flex; flex-direction: column; gap: 4px; text-align: left;">
-            ${promo.startsAt ? `<div>Starts: <span style="color:var(--text); font-weight: 500;">${formatDateTime(promo.startsAt)}</span></div>` : ''}
-            ${promo.expiresAt ? `<div>Expires: <span style="color:var(--text); font-weight: 500;">${formatDateTime(promo.expiresAt)}</span></div>` : ''}
-          </div>
+              <div style="font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 12px; display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                ${promo.startsAt ? `<div>Starts: <span style="color:var(--text); font-weight: 500;">${formatDateTime(promo.startsAt)}</span></div>` : ''}
+                ${promo.expiresAt ? `<div>Expires: <span style="color:var(--text); font-weight: 500;">${formatDateTime(promo.expiresAt)}</span></div>` : ''}
+              </div>
 
-          <div class="promo-stats" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 10px 0;">
-            <span>Total: <span id="modal-stat-total">${total}</span></span>
-            <span>Claimed: <span id="modal-stat-claimed">${claimed}</span></span>
-            <span>Remaining: <span id="modal-stat-remaining">${remaining}</span></span>
-          </div>
+              <div class="promo-stats" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 10px 0;">
+                <span>Total: <span id="modal-stat-total">${total}</span></span>
+                <span>Claimed: <span id="modal-stat-claimed">${claimed}</span></span>
+                <span>Remaining: <span id="modal-stat-remaining">${remaining}</span></span>
+              </div>
 
-          <div class="form-group" style="text-align: left;">
-            <span class="form-label">Public Claim Link</span>
-            ${promo.visibility === 'private' ? `
-              <div style="font-size:11px; color:var(--red); font-weight:bold; margin-bottom:4px;">[PRIVATE PROMOTION] Direct public claims are blocked.</div>
-            ` : ''}
-            <div class="link-copy-row">
-              <a class="link-display" id="link-${key}" href="${claimUrl}" target="_blank">${claimUrl}</a>
-              <button class="btn small" onclick="copyLink('${key}')">Copy Link</button>
+              <div class="form-group" style="text-align: left;">
+                <span class="form-label">Public Claim Link</span>
+                ${promo.visibility === 'private' ? `
+                  <div style="font-size:11px; color:var(--red); font-weight:bold; margin-bottom:4px;">[PRIVATE PROMOTION] Direct public claims are blocked.</div>
+                ` : ''}
+                <div class="link-copy-row">
+                  <a class="link-display" id="link-${key}" href="${claimUrl}" target="_blank">${claimUrl}</a>
+                  <button class="btn small" onclick="copyLink('${key}')">Copy Link</button>
+                </div>
+              </div>
+
+              <div style="display:flex; gap:8px; margin-top:6px; flex-wrap:wrap;">
+                <button class="btn ghost small" id="modal-btn-pause" style="flex:1;" onclick="event.stopPropagation(); toggleActive('${key}', ${promo.active})">
+                  ${promo.active ? 'PAUSE' : 'RESUME'}
+                </button>
+                <button class="btn small" style="flex:1; background:var(--blue); color:white;" onclick="event.stopPropagation(); closePromoModal(); startEditPromotion('${key}')">
+                  EDIT
+                </button>
+                <button class="btn small" style="flex:1; background:var(--green); color:white;" onclick="event.stopPropagation(); closePromoModal(); duplicatePromotion('${key}')">
+                  DUPLICATE
+                </button>
+                <button class="btn red small" style="flex:none;" onclick="event.stopPropagation(); deletePromotion('${key}')">
+                  DELETE
+                </button>
+              </div>
+              ${promo.storeLink ? `
+              <div style="margin-top: 6px;">
+                <button class="btn ghost small" style="width:100%; font-size:11px; padding:6px; font-weight:bold; border-color:rgba(245,197,24,0.3); color:var(--yellow);" onclick="event.stopPropagation(); closePromoModal(); loadPromoIntoGenerator('${encodeURIComponent(promo.storeLink)}')">
+                  ★ GENERATE REVIEW LINKS & QR CODE
+                </button>
+              </div>` : ''}
+            </div>
+
+            <!-- Right Column: Lists -->
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div class="form-group" style="text-align: left;">
+                <span class="form-label">One-Time Claim Links</span>
+                <div style="display:flex; gap:8px; margin-bottom:8px;">
+                  <button class="btn small" style="flex:1; font-size:12px; padding:6px 12px; background:var(--yellow); color:var(--black);" onclick="generateOneTimeToken('${key}')">Generate One-Time Link</button>
+                  <button class="btn ghost small" style="flex:none; font-size:12px; padding:6px 12px;" onclick="generateBulkTokens('${key}')">Bulk Generate (5)</button>
+                </div>
+                <div id="modal-one-time-links-container" style="max-height: 180px; overflow-y: auto; background: var(--black); border: 1px solid var(--border); border-radius: 3px; font-size: 11px;">
+                  <div class="empty-state" style="padding:10px; font-size:10px;">Loading one-time links...</div>
+                </div>
+              </div>
+
+              <div class="form-group" style="text-align: left; border-top: 1px solid var(--border); padding-top: 12px;">
+                <span class="claims-list-title">Claim History</span>
+                <div class="claims-container" id="modal-claims-box-${key}" style="max-height: 180px;">
+                  <div class="empty-state" style="padding:10px;">Loading claims history...</div>
+                </div>
+                <button class="btn-ai" id="btn-ai-${key}" disabled style="opacity: 0.5; cursor: not-allowed; padding: 6px 12px; font-size: 13px;" onclick="copyAiPrompt('${key}')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z"/>
+                  </svg>
+                  Analyze Claims with Gemini AI
+                </button>
+              </div>
             </div>
           </div>
-
-          <div class="form-group" style="text-align: left; border-top: 1px solid var(--border); padding-top: 12px;">
-            <span class="form-label">One-Time Claim Links</span>
-            <div style="display:flex; gap:8px; margin-bottom:8px;">
-              <button class="btn small" style="flex:1; font-size:12px; padding:6px 12px; background:var(--yellow); color:var(--black);" onclick="generateOneTimeToken('${key}')">Generate One-Time Link</button>
-              <button class="btn ghost small" style="flex:none; font-size:12px; padding:6px 12px;" onclick="generateBulkTokens('${key}')">Bulk Generate (5)</button>
-            </div>
-            <div id="modal-one-time-links-container" style="max-height: 150px; overflow-y: auto; background: var(--black); border: 1px solid var(--border); border-radius: 3px; font-size: 11px;">
-              <div class="empty-state" style="padding:10px; font-size:10px;">Loading one-time links...</div>
-            </div>
-          </div>
-
-          <div class="form-group" style="text-align: left;">
-            <span class="claims-list-title">Claim History</span>
-            <div class="claims-container" id="modal-claims-box-${key}">
-              <div class="empty-state" style="padding:10px;">Loading claims history...</div>
-            </div>
-            <button class="btn-ai" id="btn-ai-${key}" disabled style="opacity: 0.5; cursor: not-allowed;" onclick="copyAiPrompt('${key}')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z"/>
-              </svg>
-              Analyze Claims with Gemini AI
-            </button>
-          </div>
-
-          <div style="display:flex; gap:10px; margin-top:6px; flex-wrap:wrap;">
-            <button class="btn ghost small" id="modal-btn-pause" style="flex:1;" onclick="event.stopPropagation(); toggleActive('${key}', ${promo.active})">
-              ${promo.active ? 'PAUSE' : 'RESUME'}
-            </button>
-            <button class="btn small" style="flex:1; background:var(--blue); color:white;" onclick="event.stopPropagation(); closePromoModal(); startEditPromotion('${key}')">
-              EDIT
-            </button>
-            <button class="btn small" style="flex:1; background:var(--green); color:white;" onclick="event.stopPropagation(); closePromoModal(); duplicatePromotion('${key}')">
-              DUPLICATE
-            </button>
-            <button class="btn red small" style="flex:none;" onclick="event.stopPropagation(); deletePromotion('${key}')">
-              DELETE
-            </button>
-          </div>
-          ${promo.storeLink ? `
-          <div style="margin-top: 6px;">
-            <button class="btn ghost small" style="width:100%; font-size:11px; padding:6px; font-weight:bold; border-color:rgba(245,197,24,0.3); color:var(--yellow);" onclick="event.stopPropagation(); closePromoModal(); loadPromoIntoGenerator('${encodeURIComponent(promo.storeLink)}')">
-              ★ GENERATE REVIEW LINKS & QR CODE
-            </button>
-          </div>` : ''}
         `;
       }
       
