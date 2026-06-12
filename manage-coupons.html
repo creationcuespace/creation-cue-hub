@@ -1429,7 +1429,7 @@ AAAA-BBBB-CCCC"></textarea>
           html += `
             <div class="claim-row" style="flex-direction: column; align-items: flex-start; padding: 8px 10px; border-bottom: 1px solid var(--border);">
               <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; gap: 8px;">
-                <span class="claim-time" style="font-size:12px; text-align: left; word-break: break-all; min-width: 0; flex: 1;">Token: <span style="font-family:monospace; color:var(--text);">${tokenId}</span></span>
+                <span class="claim-time" style="font-size:12px; text-align: left; min-width: 0; flex: 1;">Link: <span style="font-family:monospace; color:var(--text);" title="Full Token ID: ${tokenId}">${tokenId.substring(0, 8)}...</span></span>
                 <span style="flex-shrink: 0;">${statusHtml}</span>
               </div>
               <div style="display: flex; gap: 8px; width: 100%; margin-top: 4px; align-items: center;">
@@ -1777,7 +1777,7 @@ Format this report with a professional tone in clean, beautiful Markdown with st
         body.innerHTML = `
           <div class="modal-grid">
             <!-- Left Column: Details & Actions -->
-            <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; flex-direction: column; gap: 16px; min-width: 0;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
                 <span class="form-label" style="margin: 0; font-size: 14px;">Status</span>
                 <span id="modal-status-badge"></span>
@@ -1828,7 +1828,7 @@ Format this report with a professional tone in clean, beautiful Markdown with st
             </div>
 
             <!-- Right Column: Lists -->
-            <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; flex-direction: column; gap: 16px; min-width: 0;">
               <div class="form-group" style="text-align: left;">
                 <span class="form-label">One-Time Claim Links</span>
                 <div style="display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap;">
