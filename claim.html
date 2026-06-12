@@ -763,6 +763,15 @@
       var remaining = Math.max(0, total - claimed);
       
       document.getElementById('promo-count-val').textContent = remaining;
+
+      var statusPill = document.querySelector('.promo-status-pill');
+      if (statusPill) {
+        if (remaining <= 9) {
+          statusPill.style.display = 'inline-flex';
+        } else {
+          statusPill.style.display = 'none';
+        }
+      }
       
       var pct = total > 0 ? (remaining / total) * 100 : 0;
       var indicator = document.getElementById('status-indicator-dot');
@@ -1044,16 +1053,7 @@
         claimBtn.disabled = true;
         claimBtn.textContent = "PROMOTION EXPIRED";
       } else {
-        if (promoData.expiresAt) {
-          countdownArea.style.display = 'block';
-          var diff = promoData.expiresAt - now;
-          countdownArea.innerHTML = `★ Ends In: <span style="font-family: monospace; font-size: 15px;">${formatDuration(diff)}</span> ★`;
-          countdownArea.style.borderColor = 'rgba(245, 197, 24, 0.2)';
-          countdownArea.style.background = 'rgba(245, 197, 24, 0.05)';
-          countdownArea.style.color = 'var(--yellow)';
-        } else {
-          countdownArea.style.display = 'none';
-        }
+        countdownArea.style.display = 'none';
         
         var total = promoData.totalCoupons || 0;
         var claimed = promoData.claimedCount || 0;
