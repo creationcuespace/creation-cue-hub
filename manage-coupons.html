@@ -417,7 +417,7 @@
       background: var(--black);
       border: 1px solid var(--border);
       border-radius: 3px;
-      font-size: 11px;
+      font-size: 13px;
       color: var(--muted);
       padding: 6px 10px;
       font-family: monospace;
@@ -436,7 +436,7 @@
     }
 
     .claims-list-title {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: bold;
       color: var(--muted);
       text-transform: uppercase;
@@ -449,7 +449,7 @@
       background: var(--black);
       border: 1px solid var(--border);
       border-radius: 3px;
-      font-size: 11px;
+      font-size: 13px;
     }
 
     .claim-row {
@@ -757,7 +757,7 @@ AAAA-BBBB-CCCC"></textarea>
         </button>
       </div>
       <!-- Body -->
-      <div id="promo-modal-body" style="padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; font-size: 14px;">
+      <div id="promo-modal-body" style="padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; font-size: 16px;">
         <!-- Dynamic Content -->
       </div>
     </div>
@@ -1375,7 +1375,7 @@ AAAA-BBBB-CCCC"></textarea>
             if (c.os) details.push(`📱 ${c.os} (${c.browser})`);
             if (c.timezone) details.push(`🌍 ${c.timezone}`);
             if (c.referrer) details.push(`🔗 ${c.referrer}`);
-            metaHtml = `<div style="font-size: 9px; color: var(--muted); margin-top: 3px; display: flex; gap: 6px; flex-wrap: wrap; text-align: left;">${details.join(' | ')}</div>`;
+            metaHtml = `<div style="font-size: 11px; color: var(--muted); margin-top: 3px; display: flex; gap: 6px; flex-wrap: wrap; text-align: left;">${details.join(' | ')}</div>`;
           }
           
           return `
@@ -1428,16 +1428,16 @@ AAAA-BBBB-CCCC"></textarea>
           html += `
             <div class="claim-row" style="flex-direction: column; align-items: flex-start; padding: 8px 10px; border-bottom: 1px solid var(--border);">
               <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
-                <span class="claim-time" style="font-size:10px;">Token: <span style="font-family:monospace; color:var(--text);">${tokenId}</span></span>
+                <span class="claim-time" style="font-size:12px;">Token: <span style="font-family:monospace; color:var(--text);">${tokenId}</span></span>
                 ${statusHtml}
               </div>
               <div style="display: flex; gap: 8px; width: 100%; margin-top: 4px; align-items: center;">
-                <input class="input-text" type="text" readonly value="${claimUrl}" style="padding: 4px 8px; font-size: 10px; font-family: monospace; height: auto; flex: 1;">
-                <button class="btn small" style="padding: 4px 8px; font-size: 10px; flex: none; height: auto;" onclick="copyTokenUrl('${claimUrl}')">Copy</button>
-                <button class="btn red small" style="padding: 4px 8px; font-size: 10px; flex: none; height: auto;" onclick="revokeToken('${tokenId}')">Delete</button>
+                <input class="input-text" type="text" readonly value="${claimUrl}" style="padding: 4px 8px; font-size: 12px; font-family: monospace; height: auto; flex: 1;">
+                <button class="btn small" style="padding: 4px 8px; font-size: 12px; flex: none; height: auto;" onclick="copyTokenUrl('${claimUrl}')">Copy</button>
+                <button class="btn red small" style="padding: 4px 8px; font-size: 12px; flex: none; height: auto;" onclick="revokeToken('${tokenId}')">Delete</button>
               </div>
               ${token.claimed && token.code ? `
-                <div style="font-size: 10px; color: var(--muted); margin-top: 4px;">
+                <div style="font-size: 12px; color: var(--muted); margin-top: 4px;">
                   Code: <strong style="color: var(--yellow); font-family: monospace;">${token.code}</strong> | User: <span style="font-family: monospace;">${token.claimedBy || 'Unknown'}</span>
                 </div>
               ` : ''}
@@ -1778,11 +1778,11 @@ Format this report with a professional tone in clean, beautiful Markdown with st
             <!-- Left Column: Details & Actions -->
             <div style="display: flex; flex-direction: column; gap: 16px;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span class="form-label" style="margin: 0;">Status</span>
+                <span class="form-label" style="margin: 0; font-size: 14px;">Status</span>
                 <span id="modal-status-badge"></span>
               </div>
 
-              <div style="font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 12px; display: flex; flex-direction: column; gap: 4px; text-align: left;">
+              <div style="font-size: 14px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 12px; display: flex; flex-direction: column; gap: 4px; text-align: left;">
                 ${promo.startsAt ? `<div>Starts: <span style="color:var(--text); font-weight: 500;">${formatDateTime(promo.startsAt)}</span></div>` : ''}
                 ${promo.expiresAt ? `<div>Expires: <span style="color:var(--text); font-weight: 500;">${formatDateTime(promo.expiresAt)}</span></div>` : ''}
               </div>
@@ -1794,9 +1794,9 @@ Format this report with a professional tone in clean, beautiful Markdown with st
               </div>
 
               <div class="form-group" style="text-align: left;">
-                <span class="form-label">Public Claim Link</span>
+                <span class="form-label" style="font-size: 14px;">Public Claim Link</span>
                 ${promo.visibility === 'private' ? `
-                  <div style="font-size:11px; color:var(--red); font-weight:bold; margin-bottom:4px;">[PRIVATE PROMOTION] Direct public claims are blocked.</div>
+                  <div style="font-size:13px; color:var(--red); font-weight:bold; margin-bottom:4px;">[PRIVATE PROMOTION] Direct public claims are blocked.</div>
                 ` : ''}
                 <div class="link-copy-row">
                   <a class="link-display" id="link-${key}" href="${claimUrl}" target="_blank">${claimUrl}</a>
@@ -1875,15 +1875,15 @@ Format this report with a professional tone in clean, beautiful Markdown with st
       var statusEl = document.getElementById('modal-status-badge');
       if (statusEl) {
         if (!promo.active) {
-          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--red); font-size:11px; font-weight:bold; background:rgba(232,40,30,0.1); padding:4px 8px; border-radius:3px;">● PAUSED</span>';
+          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--red); font-size:13px; font-weight:bold; background:rgba(232,40,30,0.1); padding:4px 8px; border-radius:3px;">● PAUSED</span>';
         } else if (remaining === 0) {
-          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--muted); font-size:11px; font-weight:bold; background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:3px; border:1px solid var(--border);">● COMPLETED</span>';
+          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--muted); font-size:13px; font-weight:bold; background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:3px; border:1px solid var(--border);">● COMPLETED</span>';
         } else if (isExpired) {
-          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--red); font-size:11px; font-weight:bold; background:rgba(232,40,30,0.1); padding:4px 8px; border-radius:3px;">● EXPIRED</span>';
+          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--red); font-size:13px; font-weight:bold; background:rgba(232,40,30,0.1); padding:4px 8px; border-radius:3px;">● EXPIRED</span>';
         } else if (isScheduled) {
-          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--yellow); font-size:11px; font-weight:bold; background:rgba(245,197,24,0.1); padding:4px 8px; border-radius:3px;">● SCHEDULED</span>';
+          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--yellow); font-size:13px; font-weight:bold; background:rgba(245,197,24,0.1); padding:4px 8px; border-radius:3px;">● SCHEDULED</span>';
         } else {
-          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--green); font-size:11px; font-weight:bold; background:rgba(76,175,80,0.1); padding:4px 8px; border-radius:3px;">● ACTIVE</span>';
+          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--green); font-size:13px; font-weight:bold; background:rgba(76,175,80,0.1); padding:4px 8px; border-radius:3px;">● ACTIVE</span>';
         }
       }
 
