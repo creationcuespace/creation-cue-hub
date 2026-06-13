@@ -174,16 +174,6 @@
             min-height: calc(100vh - 65px);
         }
 
-        @media (max-width: 1024px) {
-            .app-container {
-                grid-template-columns: 1fr;
-            }
-            .input-panel {
-                position: relative;
-                top: 0;
-            }
-        }
-
         @media (max-width: 600px) {
             .top-header {
                 padding: 10px 12px;
@@ -1277,6 +1267,16 @@
             text-overflow: ellipsis;
             width: 100%;
         }
+
+        @media (max-width: 1024px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+            .input-panel {
+                position: relative;
+                top: 0;
+            }
+        }
     </style>
 </head>
 
@@ -1305,7 +1305,7 @@
             <a href="index.html" class="brand-logo-area">
                 <img src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" class="brand-logo" alt="Logo">
                 <span class="brand-name">Creation<span>Cue</span>™</span>
-                <span style="font-size: 9px; font-weight: 700; color: var(--text-muted); background: var(--surface-color); border: 1px solid var(--border-color); padding: 2px 8px; border-radius: 12px; letter-spacing: 0.5px; margin-left: 4px; display: inline-flex; align-items: center; justify-content: center; height: 18px; vertical-align: middle;">v1.3.1</span>
+                <span style="font-size: 9px; font-weight: 700; color: var(--text-muted); background: var(--surface-color); border: 1px solid var(--border-color); padding: 2px 8px; border-radius: 12px; letter-spacing: 0.5px; margin-left: 4px; display: inline-flex; align-items: center; justify-content: center; height: 18px; vertical-align: middle;">v1.3.2</span>
             </a>
             <div class="header-btns">
                 <a href="index.html" class="header-btn">Home</a>
