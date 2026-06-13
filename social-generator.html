@@ -2238,7 +2238,10 @@
                 } else {
                     ringWrapper.classList.remove('danger');
                 }
-            // Compile prompt template for fallback copy
+            }
+        }
+
+        // Compile prompt template for fallback copy
         function compilePromptTemplate(name, link, preset, desc) {
             let toneInstruction = "";
             if (preset === 'simple') {
