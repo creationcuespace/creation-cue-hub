@@ -1372,6 +1372,12 @@
                             </label>
                             <input class="input-text" id="api-key" type="password" placeholder="Enter Gemini API Key..." oninput="saveApiKey(this.value)">
                         </div>
+                        <div class="form-group" style="margin-top: 4px;">
+                            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:500; font-size:13px; text-transform:none; user-select:none;">
+                                <input type="checkbox" id="use-grounding" style="accent-color:var(--primary); cursor:pointer;" onchange="saveGroundingSetting(this.checked)">
+                                Use Google Search Grounding (slower)
+                            </label>
+                        </div>
                     </div>
                 </div>
 
@@ -2016,12 +2022,15 @@
             reels: ''
         };
 
-        // Load API Key from localStorage on load
+        // Load API Key and Grounding settings from localStorage on load
         document.addEventListener('DOMContentLoaded', () => {
             const savedKey = localStorage.getItem('cc_gemini_api_key');
             if (savedKey) {
                 document.getElementById('api-key').value = savedKey;
             }
+            
+            const savedGrounding = localStorage.getItem('cc_use_grounding');
+            document.getElementById('use-grounding').checked = (savedGrounding === 'true');
             
             // Listeners for auto-updating comments
             document.getElementById('watch-name').addEventListener('input', updateCommentsUI);
@@ -2066,6 +2075,10 @@
 
         function saveApiKey(val) {
             localStorage.setItem('cc_gemini_api_key', val.trim());
+        }
+
+        function saveGroundingSetting(checked) {
+            localStorage.setItem('cc_use_grounding', checked ? 'true' : 'false');
         }
 
         function setPreset(preset) {
@@ -2225,10 +2238,7 @@
                 } else {
                     ringWrapper.classList.remove('danger');
                 }
-            }
-        }
-
-        // Compile prompt template for fallback copy
+            // Compile prompt template for fallback copy
         function compilePromptTemplate(name, link, preset, desc) {
             let toneInstruction = "";
             if (preset === 'simple') {
@@ -2262,21 +2272,29 @@ CRITICAL CONTENT RESTRICTIONS:
 Tone Style:
 ${toneInstruction}
 
-Format the output strictly as a JSON object with the following structure:
-{
-  "tiktok": "TikTok caption here",
-  "instagram": "Instagram caption here",
-  "shorts_title": "YouTube Shorts Title here",
-  "shorts": "YouTube Shorts description here",
-  "reels": "Facebook Reels caption here"
-}
+Format the output strictly by placing each section between its exact delimiter tags, like this:
+
+---TIKTOK---
+[TikTok caption here]
+
+---INSTAGRAM---
+[Instagram caption here]
+
+---SHORTS_TITLE---
+[YouTube Shorts Title here]
+
+---SHORTS---
+[YouTube Shorts description here]
+
+---REELS---
+[Facebook Reels caption here]
 
 Watch Face Name: ${name}
 Watch Face Play Store Link: ${link}
 Play Store Description:
 ${desc}
 
-Return ONLY the raw JSON object. Do not include any markdown backticks like \`\`\`json ... \`\`\`.`;
+Do not wrap the output in any markdown backticks. Return only the sections with their tags.`;
         }
 
         // Live Mockup content synchronization
@@ -2319,11 +2337,12 @@ Return ONLY the raw JSON object. Do not include any markdown backticks like \`\`
             
             const apiKeyInput = document.getElementById('api-key');
             const apiKey = apiKeyInput ? apiKeyInput.value.trim() : '';
+            const useGrounding = document.getElementById('use-grounding').checked;
             
             // Pre-resolve watch face image if available in catalog
             resolveMockupImage(url);
             
-            if (apiKey) {
+            if (apiKey && useGrounding) {
                 // Fetch using Gemini Google Search Grounding!
                 try {
                     const fetchPrompt = `Please search for the Google Play Store app at this URL: ${url}
@@ -2391,8 +2410,10 @@ Format the output EXACTLY like this:
                     }
                 }
             } else {
-                // No API key, warn user and attempt CORS proxy fallback
-                alert("CORS proxies are heavily blocked by Google Play.\n\nTo fetch info automatically and reliably, please enter your Gemini API Key in the settings panel below (it is free). Attempting CORS proxy fallback now...");
+                // If api key is present but grounding is disabled, skip warning and try CORS proxy. Otherwise explain grounding/key setting.
+                if (!apiKey) {
+                    alert("To automatically search and fetch Play Store details using Google Search Grounding, please enter your Gemini API Key in the settings panel (it is free). Attempting CORS proxy fallback now...");
+                }
                 await fetchPlayStoreDataCorsFallback(url, nameInput, descArea);
                 fetchBtn.disabled = false;
                 fetchBtn.innerHTML = originalHtml;
@@ -2563,17 +2584,15 @@ Format the output EXACTLY like this:
 
             // If name or description is empty, but we have a link, try to auto-fetch first
             if ((!name || !desc) && link) {
-                if (!apiKey) {
-                    alert("To automatically search and fetch Play Store details using the link, please enter your Gemini API Key in the settings panel below (it is free). Otherwise, you must paste the Name and Description manually.");
-                    return;
-                }
-                
-                // Set loading state for auto-fetching
-                genBtn.disabled = true;
-                genBtn.innerHTML = '<div class="spinner" style="width:16px; height:16px;"></div> Searching Play Store...';
-                
-                try {
-                    const fetchPrompt = `Please search for the Google Play Store app at this URL: ${link}
+                const useGrounding = document.getElementById('use-grounding').checked;
+
+                if (apiKey && useGrounding) {
+                    // Set loading state for auto-fetching
+                    genBtn.disabled = true;
+                    genBtn.innerHTML = '<div class="spinner" style="width:16px; height:16px;"></div> Searching Play Store...';
+                    
+                    try {
+                        const fetchPrompt = `Please search for the Google Play Store app at this URL: ${link}
 Extract the watch face's name and its full description.
 Format the output EXACTLY like this:
 ---NAME_START---
@@ -2583,53 +2602,77 @@ Format the output EXACTLY like this:
 [Extract the full description here, keeping paragraph breaks]
 ---DESC_END---`;
 
-                    const fetchResponse = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            contents: [{
-                                parts: [{
-                                    text: fetchPrompt
+                        const fetchResponse = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                contents: [{
+                                    parts: [{
+                                        text: fetchPrompt
+                                    }]
+                                }],
+                                tools: [{
+                                    google_search: {}
                                 }]
-                            }],
-                            tools: [{
-                                google_search: {}
-                            }]
-                        })
-                    });
+                            })
+                        });
 
-                    if (!fetchResponse.ok) {
-                        const errText = await fetchResponse.text();
-                        throw new Error(`Auto-fetch API error (HTTP ${fetchResponse.status}): ${errText}`);
-                    }
+                        if (!fetchResponse.ok) {
+                            const errText = await fetchResponse.text();
+                            throw new Error(`Auto-fetch API error (HTTP ${fetchResponse.status}): ${errText}`);
+                        }
 
-                    const resJson = await fetchResponse.json();
-                    const text = resJson.candidates[0].content.parts[0].text;
-                    
-                    const extractedName = text.split('---NAME_START---')[1]?.split('---NAME_END---')[0]?.trim() || '';
-                    const extractedDesc = text.split('---DESC_START---')[1]?.split('---DESC_END---')[0]?.trim() || '';
-                    
-                    if (extractedName) {
-                        document.getElementById('watch-name').value = extractedName;
-                        name = extractedName;
+                        const resJson = await fetchResponse.json();
+                        const text = resJson.candidates[0].content.parts[0].text;
+                        
+                        const extractedName = text.split('---NAME_START---')[1]?.split('---NAME_END---')[0]?.trim() || '';
+                        const extractedDesc = text.split('---DESC_START---')[1]?.split('---DESC_END---')[0]?.trim() || '';
+                        
+                        if (extractedName) {
+                            document.getElementById('watch-name').value = extractedName;
+                            name = extractedName;
+                        }
+                        if (extractedDesc) {
+                            document.getElementById('play-store-desc').value = extractedDesc;
+                            desc = extractedDesc;
+                        }
+                        
+                        showToast("Details fetched via Gemini Search!");
+                    } catch (err) {
+                        console.error("Auto-fetch during generation failed:", err);
+                        alert("Auto-fetch failed: " + err.message + "\n\nPlease fill in the Name and Description manually.");
+                        genBtn.disabled = false;
+                        genBtn.innerHTML = `
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 2 15 22 11 13 2 9 22 2"></polyline><line x1="22" y1="2" x2="11" y2="13"></line></svg>
+                            AI Generate Entries
+                        `;
+                        return;
                     }
-                    if (extractedDesc) {
-                        document.getElementById('play-store-desc').value = extractedDesc;
-                        desc = extractedDesc;
+                } else {
+                    // Try CORS proxy fallback first
+                    genBtn.disabled = true;
+                    genBtn.innerHTML = '<div class="spinner" style="width:16px; height:16px;"></div> Loading Play Store...';
+                    try {
+                        const nameInput = document.getElementById('watch-name');
+                        const descArea = document.getElementById('play-store-desc');
+                        await fetchPlayStoreDataCorsFallback(link, nameInput, descArea);
+                        name = nameInput.value.trim();
+                        desc = descArea.value.trim();
+                    } catch (err) {
+                        console.error("Auto-fetch CORS fallback failed:", err);
                     }
                     
-                    showToast("Details fetched via Gemini Search!");
-                } catch (err) {
-                    console.error("Auto-fetch during generation failed:", err);
-                    alert("Auto-fetch failed: " + err.message + "\n\nPlease fill in the Name and Description manually.");
-                    genBtn.disabled = false;
-                    genBtn.innerHTML = `
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 2 15 22 11 13 2 9 22 2"></polyline><line x1="22" y1="2" x2="11" y2="13"></line></svg>
-                        Generate Entries
-                    `;
-                    return;
+                    if (!name || !desc) {
+                        alert("To automatically search and fetch Play Store details, please fill in the Name and Description manually, or enable 'Google Search Grounding' in the settings.");
+                        genBtn.disabled = false;
+                        genBtn.innerHTML = `
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 2 15 22 11 13 2 9 22 2"></polyline><line x1="22" y1="2" x2="11" y2="13"></line></svg>
+                            AI Generate Entries
+                        `;
+                        return;
+                    }
                 }
             }
 
@@ -2672,7 +2715,7 @@ Format the output EXACTLY like this:
             genBtn.innerHTML = '<div class="spinner" style="width:16px; height:16px;"></div> Generating...';
 
             try {
-                // Call Gemini 3.5 Flash API (without tools to avoid MIME type compatibility issues)
+                // Call Gemini 3.5 Flash API (without strict JSON schema constraints for absolute max speed)
                 const response = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: {
@@ -2683,21 +2726,7 @@ Format the output EXACTLY like this:
                             parts: [{
                                 text: promptText
                             }]
-                        }],
-                        generationConfig: {
-                            responseMimeType: "application/json",
-                            responseSchema: {
-                                type: "OBJECT",
-                                properties: {
-                                    tiktok: { type: "STRING" },
-                                    instagram: { type: "STRING" },
-                                    shorts_title: { type: "STRING" },
-                                    shorts: { type: "STRING" },
-                                    reels: { type: "STRING" }
-                                },
-                                required: ["tiktok", "instagram", "shorts_title", "shorts", "reels"]
-                            }
-                        }
+                        }]
                     })
                 });
 
@@ -2707,22 +2736,29 @@ Format the output EXACTLY like this:
                 }
 
                 const resJson = await response.json();
-                let outputText = resJson.candidates[0].content.parts[0].text.trim();
+                const outputText = resJson.candidates[0].content.parts[0].text;
 
-                // Sanitize potential markdown JSON wrapping
-                if (outputText.startsWith('```')) {
-                    outputText = outputText.replace(/^```json/, '').replace(/^```/, '').replace(/```$/, '').trim();
-                }
+                // Helper to extract content between custom delimiters
+                const extractSection = (text, tag) => {
+                    const regex = new RegExp(`---${tag}---([\\s\\S]*?)(?=---[A-Z_]+---|$)`, 'i');
+                    const match = text.match(regex);
+                    return match ? match[1].trim() : '';
+                };
 
                 // Parse generated content
-                const data = JSON.parse(outputText);
                 generatedData = {
-                    tiktok: data.tiktok || '',
-                    instagram: data.instagram || '',
-                    shorts_title: data.shorts_title || '',
-                    shorts: data.shorts || '',
-                    reels: data.reels || ''
+                    tiktok: extractSection(outputText, 'TIKTOK'),
+                    instagram: extractSection(outputText, 'INSTAGRAM'),
+                    shorts_title: extractSection(outputText, 'SHORTS_TITLE'),
+                    shorts: extractSection(outputText, 'SHORTS'),
+                    reels: extractSection(outputText, 'REELS')
                 };
+
+                // Validate parsing succeeded
+                if (!generatedData.tiktok && !generatedData.instagram && !generatedData.shorts) {
+                    console.warn("Regex parsing failed. Full output was: ", outputText);
+                    throw new Error("Could not parse the generated captions. The response might have been formatted incorrectly by the model.");
+                }
 
                 // Show Results UI
                 document.getElementById('empty-state').style.display = 'none';
@@ -2754,7 +2790,7 @@ Format the output EXACTLY like this:
                 genBtn.disabled = false;
                 genBtn.innerHTML = `
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 2 15 22 11 13 2 9 22 2"></polyline><line x1="22" y1="2" x2="11" y2="13"></line></svg>
-                    Generate Entries
+                    AI Generate Entries
                 `;
             }
         }
