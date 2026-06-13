@@ -1918,12 +1918,30 @@
             <span class="admin-bar-title-text">Admin Panel</span>
         </div>
         <div class="admin-bar-links" style="display: flex; gap: 20px; align-items: center;">
-            <a href="https://cue-earnings.sotsor.workers.dev/" target="_blank" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">Earnings</a>
-            <a href="https://cue-earnings.sotsor.workers.dev/analytics" target="_blank" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">Analytics</a>
-            <a href="manage-coupons.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">Coupons</a>
-            <a href="social-generator.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">Socials</a>
-            <span id="btn-subscribers-admin-bar" onclick="openSubscribersModal()" style="color: var(--primary); font-weight: 600; cursor: pointer; display: flex; align-items: center; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Subscribers <span id="admin-subscribers-count" style="margin-left: 6px; background: rgba(241, 179, 28, 0.15); border: 1px solid rgba(241, 179, 28, 0.3); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: var(--primary); font-family: 'Inter', sans-serif;">0</span></span>
-            <span id="btn-live-visitors" onclick="openLiveVisitorsModal()" style="color: #4caf50; font-weight: 600; cursor: pointer; display: flex; align-items: center; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Live <span style="display:inline-block; width:6px; height:6px; background:#4caf50; border-radius:50%; margin:0 4px; animation: blink 1.2s infinite;"></span> <span id="admin-live-count" style="background: rgba(76, 175, 80, 0.15); border: 1px solid rgba(76, 175, 80, 0.3); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #4caf50; font-family: 'Inter', sans-serif;">0</span></span>
+            <a href="https://cue-earnings.sotsor.workers.dev/" target="_blank" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s; display: inline-flex; align-items: center; gap: 4px;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                Earnings
+            </a>
+            <a href="https://cue-earnings.sotsor.workers.dev/analytics" target="_blank" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s; display: inline-flex; align-items: center; gap: 4px;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                Analytics
+            </a>
+            <a href="manage-coupons.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s; display: inline-flex; align-items: center; gap: 4px;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                Coupons
+            </a>
+            <a href="social-generator.html" style="color: #fff; text-decoration: none; font-weight: 600; transition: color 0.2s; display: inline-flex; align-items: center; gap: 4px;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='#fff'">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line></svg>
+                Socials
+            </a>
+            <span id="btn-subscribers-admin-bar" onclick="openSubscribersModal()" style="color: var(--primary); font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                Subscribers 
+                <span id="admin-subscribers-count" style="background: rgba(241, 179, 28, 0.15); border: 1px solid rgba(241, 179, 28, 0.3); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: var(--primary); font-family: 'Inter', sans-serif; margin-left: 2px;">0</span>
+            </span>
+            <span id="btn-live-visitors" onclick="openLiveVisitorsModal()" style="color: #4caf50; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                Live <span style="display:inline-block; width:6px; height:6px; background:#4caf50; border-radius:50%; margin:0 4px; animation: blink 1.2s infinite;"></span> <span id="admin-live-count" style="background: rgba(76, 175, 80, 0.15); border: 1px solid rgba(76, 175, 80, 0.3); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #4caf50; font-family: 'Inter', sans-serif;">0</span>
+            </span>
         </div>
         <div class="admin-bar-user" style="display: flex; align-items: center; gap: 12px;">
             <span id="admin-user-email" style="color: var(--text-muted); font-size: 11px;"></span>
