@@ -2172,17 +2172,8 @@
                                 <button type="button" class="watch-chip" onclick="toggleWatchChip(this, 'Fossil / TicWatch')">Fossil / TicWatch</button>
                                 <button type="button" class="watch-chip" onclick="toggleWatchChip(this, 'Other Wear OS')">Other</button>
                             </div>
-                            
-                            <div class="form-section-title">Email Preferences</div>
-                            <div class="preferences-container">
-                                <label class="pref-checkbox-label">
-                                    <input type="checkbox" id="pref-releases" checked>
-                                    <span>New Face Releases</span>
-                                </label>
-                                <label class="pref-checkbox-label">
-                                    <input type="checkbox" id="pref-deals" checked>
-                                    <span>Coupons & Discount Codes</span>
-                                </label>
+                            <div style="font-size: 12px; color: var(--text-secondary); margin: 20px 0 15px 0; line-height: 1.6; text-align: left; opacity: 0.9; font-family: 'Inter', sans-serif;">
+                                <strong style="color: var(--primary);">Join the CreationCue VIP Club.</strong> We only send the good stuff: new designs and discount codes. No spam, ever.
                             </div>
                             
                             <button type="submit" class="newsletter-submit-btn" id="newsletter-submit">
@@ -2915,8 +2906,8 @@
             submitBtn.querySelector('.btn-loader').style.display = 'block';
             
             const preferences = {
-                newReleases: document.getElementById('pref-releases').checked,
-                deals: document.getElementById('pref-deals').checked
+                newReleases: true,
+                deals: true
             };
             
             // Clean email for key (Firebase keys can't contain '.', '$', '#', '[', ']', '/')
