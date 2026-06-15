@@ -3056,6 +3056,11 @@
             });
             document.getElementById(`tab-${tabId}`).classList.add('active');
 
+            // Sync URL hash dynamically
+            if (window.history && window.history.replaceState) {
+                window.history.replaceState(null, null, `#${tabId}`);
+            }
+
             // Presence tracking update
             if (window.updateVisitorPresence) {
                 window.updateVisitorPresence(tabId, null);
@@ -3165,6 +3170,15 @@
             // Installation guide deep link e.g. ?install-guide=true
             if (urlParams.get('install-guide') === 'true' || urlParams.get('action') === 'install-guide') {
                 openInstallGuideModal();
+                hasHandledDeepLinks = true;
+            }
+
+            // Tab deep link e.g. ?tab=subscribe or #subscribe
+            const tabParam = urlParams.get('tab') || urlParams.get('action');
+            const hash = window.location.hash.substring(1);
+            const targetTab = tabParam || hash;
+            if (targetTab && ['catalog', 'my-faces', 'support', 'subscribe', 'about'].includes(targetTab)) {
+                switchTab(targetTab);
                 hasHandledDeepLinks = true;
             }
         }
