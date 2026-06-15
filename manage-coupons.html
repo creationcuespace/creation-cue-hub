@@ -624,7 +624,7 @@
                         <line x1="3" y1="10" x2="21" y2="10"></line>
                       </svg>
                     </div>
-                    <input id="promo-starts" type="datetime-local" oninput="syncStartsText()" style="position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%;">
+                    <input id="promo-starts" type="datetime-local" oninput="syncStartsText()" onclick="try { this.showPicker(); } catch(e) {}" style="position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%;">
                   </div>
                 </div>
                 <span style="font-size:10px; color:var(--muted); margin-top:2px;">Type/paste date or select with calendar icon.</span>
@@ -642,7 +642,7 @@
                         <line x1="3" y1="10" x2="21" y2="10"></line>
                       </svg>
                     </div>
-                    <input id="promo-expiry" type="datetime-local" oninput="syncExpiryText()" style="position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%;">
+                    <input id="promo-expiry" type="datetime-local" oninput="syncExpiryText()" onclick="try { this.showPicker(); } catch(e) {}" style="position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%;">
                   </div>
                 </div>
                 <span style="font-size:10px; color:var(--muted); margin-top:2px;">Type/paste date or select with calendar icon.</span>
