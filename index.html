@@ -2094,12 +2094,6 @@
                     <h2>Contact Support</h2>
                     <form class="support-form" onsubmit="handleSupportSubmit(event)">
                         <div class="form-group">
-                            <label for="support-face-select">Select Watch Face</label>
-                            <select id="support-face-select" required>
-                                <option value="General / Other">General / Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="support-issue-select">Issue Type</label>
                             <select id="support-issue-select" required>
                                 <option value="Installation problem">Installation problem</option>
@@ -2891,6 +2885,7 @@
         let searchQuery = '';
         let favorites = JSON.parse(localStorage.getItem('cc_favorites')) || [];
         let selectedFace = null;
+        let supportFace = 'General / Other';
         let hasHandledDeepLinks = false;
 
         let selectedWatches = [];
@@ -3060,7 +3055,10 @@
         });
 
         // Switch Active Tabs
-        function switchTab(tabId) {
+        function switchTab(tabId, preserveSupportFace = false) {
+            if (!preserveSupportFace) {
+                supportFace = 'General / Other';
+            }
             // Panels
             document.querySelectorAll('.tab-panel').forEach(panel => {
                 panel.classList.remove('active');
@@ -3118,7 +3116,6 @@
                     const data = JSON.parse(cachedData);
                     watchFaces = data.watch_faces || data.faces || [];
                     setupFilterChips();
-                    setupSupportDropdown();
                     renderCatalog();
                     
                     // Handle deep links from cache first
@@ -3142,7 +3139,6 @@
                 
                 watchFaces = data.watch_faces || data.faces || [];
                 setupFilterChips();
-                setupSupportDropdown();
                 renderCatalog();
                 
                 if (!hasHandledDeepLinks) {
@@ -3296,20 +3292,6 @@
             chipElement.classList.add('active');
             currentFilter = filterText;
             renderCatalog();
-        }
-
-        // Populate Support Face list dropdown
-        function setupSupportDropdown() {
-            const dropdown = document.getElementById('support-face-select');
-            // Reset to default
-            dropdown.innerHTML = '<option value="General / Other">General / Other</option>';
-            
-            watchFaces.forEach(f => {
-                const opt = document.createElement('option');
-                opt.value = f.title;
-                opt.textContent = f.title;
-                dropdown.appendChild(opt);
-            });
         }
 
         // Populate FAQ accordions
@@ -3762,15 +3744,14 @@
             if (!selectedFace) return;
             const faceTitle = selectedFace.title;
             
+            // Set the support face context globally
+            supportFace = faceTitle;
+            
             // Close Details Dialog
             closeDetailsModal();
             
-            // Select face in support dropdown
-            const select = document.getElementById('support-face-select');
-            select.value = faceTitle;
-            
-            // Switch tabs
-            switchTab('support');
+            // Switch tabs, preserving the face context
+            switchTab('support', true);
             
             // Focus on issue type dropdown
             document.getElementById('support-issue-select').focus();
@@ -3780,7 +3761,7 @@
         function handleSupportSubmit(event) {
             event.preventDefault();
             
-            const face = document.getElementById('support-face-select').value;
+            const face = supportFace;
             const issue = document.getElementById('support-issue-select').value;
             const desc = document.getElementById('support-description').value.trim();
             
