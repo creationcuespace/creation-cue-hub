@@ -1358,37 +1358,10 @@
                     <textarea class="input-area" id="play-store-desc" placeholder="Paste the full Google Play description here..."></textarea>
                 </div>
 
-                <!-- Settings Section -->
-                <div class="form-group">
-                    <div class="settings-toggle" onclick="toggleSettingsPanel()" id="settings-toggle">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                        Gemini API Config
-                    </div>
-                    <div class="settings-panel" id="settings-panel">
-                        <div class="form-group">
-                            <label for="api-key" style="display:flex; justify-content:space-between; align-items:center;">
-                                Gemini API Key 
-                                <a href="https://aistudio.google.com/" target="_blank" style="color:var(--primary); text-transform:none; font-weight:600; text-decoration:none;">Get Free Key</a>
-                            </label>
-                            <input class="input-text" id="api-key" type="password" placeholder="Enter Gemini API Key..." oninput="saveApiKey(this.value)">
-                        </div>
-                        <div class="form-group" style="margin-top: 4px;">
-                            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:500; font-size:13px; text-transform:none; user-select:none;">
-                                <input type="checkbox" id="use-grounding" style="accent-color:var(--primary); cursor:pointer;" onchange="saveGroundingSetting(this.checked)">
-                                Use Google Search Grounding (slower)
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
                 <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <button class="btn-generate" id="btn-generate" onclick="generateSocialDescriptions()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 2 15 22 11 13 2 9 22 2"></polyline><line x1="22" y1="2" x2="11" y2="13"></line></svg>
-                        AI Generate Entries
-                    </button>
-                    <button class="btn-generate btn-generate-secondary" id="btn-generate-fast" onclick="generateFastSocialDescriptions()">
+                    <button class="btn-generate" id="btn-generate-fast" onclick="generateFastSocialDescriptions()">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                        Fast Generate (No AI)
+                        Fast Generate
                     </button>
                 </div>
             </aside>
@@ -1402,7 +1375,7 @@
                     </svg>
                     <div>
                         <h3 style="font-family: var(--font-display); font-size:18px; margin-bottom: 6px; color: var(--text-primary);">No Captions Generated</h3>
-                        <p style="font-size:13px; color:var(--text-muted); max-width: 300px; margin: 0 auto; line-height: 1.5;">Enter watch face details and click "Generate" to create platform-optimized posts.</p>
+                        <p style="font-size:13px; color:var(--text-muted); max-width: 300px; margin: 0 auto; line-height: 1.5;">Enter watch face details and click "Fast Generate" to create platform-optimized posts.</p>
                     </div>
                 </div>
 
@@ -1431,8 +1404,8 @@
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                                 <span><strong>Ideal Times (Local):</strong> Mon, Wed, Fri | 7-9 AM, 12-1 PM, 7-11 PM</span>
                             </div>
-                            <div class="result-box-wrapper">
-                                <div class="result-box" id="res-text-tiktok"></div>
+                            <div class="result-box-wrapper" style="padding: 0;">
+                                <textarea class="result-box" id="res-text-tiktok" style="width: 100%; height: 100%; min-height: 200px; background: transparent; border: none; color: inherit; font-family: inherit; font-size: inherit; line-height: inherit; resize: vertical; padding: 16px; outline: none;"></textarea>
                             </div>
                             <div class="result-actions">
                                 <div class="char-counter-wrapper">
@@ -1448,8 +1421,8 @@
                             <!-- Comment Result Box -->
                             <div style="margin-top: 20px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
                                 <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
-                                <div class="result-box-wrapper">
-                                    <div class="result-box" id="res-comment-tiktok" style="min-height: 48px; padding: 12px 16px;"></div>
+                                <div class="result-box-wrapper" style="padding: 0;">
+                                    <textarea class="result-box" id="res-comment-tiktok" style="width: 100%; min-height: 48px; background: transparent; border: none; color: inherit; font-family: inherit; font-size: inherit; line-height: inherit; resize: vertical; padding: 12px 16px; outline: none;"></textarea>
                                 </div>
                                 <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
                                     <button class="header-btn" onclick="copyCommentText('tiktok')">Copy Comment</button>
@@ -1503,8 +1476,8 @@
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                                 <span><strong>Ideal Times (Local):</strong> Tue, Wed, Thu | 11 AM - 1 PM, 6-9 PM</span>
                             </div>
-                            <div class="result-box-wrapper">
-                                <div class="result-box" id="res-text-instagram"></div>
+                            <div class="result-box-wrapper" style="padding: 0;">
+                                <textarea class="result-box" id="res-text-instagram" style="width: 100%; height: 100%; min-height: 200px; background: transparent; border: none; color: inherit; font-family: inherit; font-size: inherit; line-height: inherit; resize: vertical; padding: 16px; outline: none;"></textarea>
                             </div>
                             <div class="result-actions">
                                 <div class="char-counter-wrapper">
@@ -1520,8 +1493,8 @@
                             <!-- Comment Result Box -->
                             <div style="margin-top: 20px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
                                 <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
-                                <div class="result-box-wrapper">
-                                    <div class="result-box" id="res-comment-instagram" style="min-height: 48px; padding: 12px 16px;"></div>
+                                <div class="result-box-wrapper" style="padding: 0;">
+                                    <textarea class="result-box" id="res-comment-instagram" style="width: 100%; min-height: 48px; background: transparent; border: none; color: inherit; font-family: inherit; font-size: inherit; line-height: inherit; resize: vertical; padding: 12px 16px; outline: none;"></textarea>
                                 </div>
                                 <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
                                     <button class="header-btn" onclick="copyCommentText('instagram')">Copy Comment</button>
@@ -1570,7 +1543,7 @@
                             <div class="form-group">
                                 <label style="font-weight: 700; color: var(--primary);">Video Title (Max 100 chars)</label>
                                 <div style="display:flex; gap:10px;">
-                                    <input class="input-text" id="res-title-shorts" readonly style="font-family: var(--font-display); font-weight:700;">
+                                    <input class="input-text" id="res-title-shorts" style="font-family: var(--font-display); font-weight:700;">
                                     <button class="header-btn" onclick="copyShortsTitle()">Copy Title</button>
                                 </div>
                             </div>
@@ -1578,8 +1551,8 @@
                             <!-- Shorts Description Box -->
                             <div class="result-container">
                                 <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">Shorts Description</label>
-                                <div class="result-box-wrapper">
-                                    <div class="result-box" id="res-text-shorts"></div>
+                                <div class="result-box-wrapper" style="padding: 0;">
+                                    <textarea class="result-box" id="res-text-shorts" style="width: 100%; height: 100%; min-height: 200px; background: transparent; border: none; color: inherit; font-family: inherit; font-size: inherit; line-height: inherit; resize: vertical; padding: 16px; outline: none;"></textarea>
                                 </div>
                                 <div class="result-actions">
                                     <div class="char-counter-wrapper">
@@ -1595,8 +1568,8 @@
                                 <!-- Comment Result Box -->
                                 <div style="margin-top: 20px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
                                     <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
-                                    <div class="result-box-wrapper">
-                                        <div class="result-box" id="res-comment-shorts" style="min-height: 48px; padding: 12px 16px;"></div>
+                                    <div class="result-box-wrapper" style="padding: 0;">
+                                        <textarea class="result-box" id="res-comment-shorts" style="width: 100%; min-height: 48px; background: transparent; border: none; color: inherit; font-family: inherit; font-size: inherit; line-height: inherit; resize: vertical; padding: 12px 16px; outline: none;"></textarea>
                                     </div>
                                     <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
                                         <button class="header-btn" onclick="copyCommentText('shorts')">Copy Comment</button>
@@ -1654,8 +1627,8 @@
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                                 <span><strong>Ideal Times (Local):</strong> Mon, Wed, Thu | 9-11 AM, 12-2 PM</span>
                             </div>
-                            <div class="result-box-wrapper">
-                                <div class="result-box" id="res-text-reels"></div>
+                            <div class="result-box-wrapper" style="padding: 0;">
+                                <textarea class="result-box" id="res-text-reels" style="width: 100%; height: 100%; min-height: 200px; background: transparent; border: none; color: inherit; font-family: inherit; font-size: inherit; line-height: inherit; resize: vertical; padding: 16px; outline: none;"></textarea>
                             </div>
                             <div class="result-actions">
                                 <div class="char-counter-wrapper">
@@ -1671,8 +1644,8 @@
                             <!-- Comment Result Box -->
                             <div style="margin-top: 20px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
                                 <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
-                                <div class="result-box-wrapper">
-                                    <div class="result-box" id="res-comment-reels" style="min-height: 48px; padding: 12px 16px;"></div>
+                                <div class="result-box-wrapper" style="padding: 0;">
+                                    <textarea class="result-box" id="res-comment-reels" style="width: 100%; min-height: 48px; background: transparent; border: none; color: inherit; font-family: inherit; font-size: inherit; line-height: inherit; resize: vertical; padding: 12px 16px; outline: none;"></textarea>
                                 </div>
                                 <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
                                     <button class="header-btn" onclick="copyCommentText('reels')">Copy Comment</button>
@@ -1726,24 +1699,7 @@
                         </div>
                     </div>
 
-                    <!-- Fallback Prompt Box (Always available if Gemini Key isn't used/configured) -->
-                    <div class="fallback-container" id="fallback-container">
-                        <div class="fallback-header">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                            Copy AI Prompt Fallback
-                        </div>
-                        <div class="fallback-instructions">
-                            No Gemini API Key is configured or the API request failed. Copy this pre-formatted prompt block and paste it directly into Gemini Web to generate your social captions.
-                        </div>
-                        <textarea class="fallback-textarea" id="fallback-prompt-text" readonly onclick="this.select()"></textarea>
-                        <button class="header-btn" style="align-self: flex-start;" onclick="copyFallbackPrompt()">Copy Prompt & Open Gemini</button>
 
-                        <div style="margin-top: 16px; border-top: 1px dashed var(--border-color); padding-top: 16px; display: flex; flex-direction: column; gap: 8px;">
-                            <label for="fallback-response-input" style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Paste Gemini Response JSON</label>
-                            <textarea class="fallback-textarea" id="fallback-response-input" placeholder="Paste the JSON output from Gemini here..." style="min-height: 100px; resize: vertical;"></textarea>
-                            <button class="header-btn primary-btn" style="align-self: flex-start;" onclick="parseFallbackResponse()">Parse Response & Create Posts</button>
-                        </div>
-                    </div>
                 </div>
             </main>
         </div>
@@ -2022,16 +1978,8 @@
             reels: ''
         };
 
-        // Load API Key and Grounding settings from localStorage on load
+        // Load settings and listeners on load
         document.addEventListener('DOMContentLoaded', () => {
-            const savedKey = localStorage.getItem('cc_gemini_api_key');
-            if (savedKey) {
-                document.getElementById('api-key').value = savedKey;
-            }
-            
-            const savedGrounding = localStorage.getItem('cc_use_grounding');
-            document.getElementById('use-grounding').checked = (savedGrounding === 'true');
-            
             // Listeners for auto-updating comments
             document.getElementById('watch-name').addEventListener('input', updateCommentsUI);
             document.getElementById('watch-link').addEventListener('input', updateCommentsUI);
@@ -2053,6 +2001,30 @@
                     if (!e.target.closest('.search-select-container')) {
                         dropdown.style.display = 'none';
                     }
+                });
+            }
+            
+            // Listeners for manual editing updates to keep character counters and mockups in sync
+            ['tiktok', 'instagram', 'shorts', 'reels'].forEach(platform => {
+                const textarea = document.getElementById('res-text-' + platform);
+                if (textarea) {
+                    textarea.addEventListener('input', () => {
+                        const limit = platform === 'tiktok' ? 2200 : platform === 'instagram' ? 2200 : platform === 'shorts' ? 5000 : 2000;
+                        updateCharCounter(platform, textarea.value, limit);
+                        syncMockups();
+                    });
+                }
+                const commentArea = document.getElementById('res-comment-' + platform);
+                if (commentArea) {
+                    commentArea.addEventListener('input', () => {
+                        // User manual comment edit - sync does not require mockup change but is now supported
+                    });
+                }
+            });
+            const shortsTitleInput = document.getElementById('res-title-shorts');
+            if (shortsTitleInput) {
+                shortsTitleInput.addEventListener('input', () => {
+                    syncMockups();
                 });
             }
             
@@ -2116,7 +2088,8 @@
         }
 
         function copyResultText(platform) {
-            const text = generatedData[platform];
+            const el = document.getElementById('res-text-' + platform);
+            const text = el ? el.value : '';
             if (!text) return;
             navigator.clipboard.writeText(text).then(() => {
                 showToast("Caption copied!");
@@ -2128,7 +2101,7 @@
         function copyCommentText(platform) {
             const commentBox = document.getElementById('res-comment-' + platform);
             if (!commentBox) return;
-            const text = commentBox.textContent;
+            const text = commentBox.value;
             if (!text) return;
             navigator.clipboard.writeText(text).then(() => {
                 showToast("Comment copied!");
@@ -2153,70 +2126,19 @@
             const commentShorts = document.getElementById('res-comment-shorts');
             const commentReels = document.getElementById('res-comment-reels');
             
-            if (commentTiktok) commentTiktok.textContent = bioComment;
-            if (commentInstagram) commentInstagram.textContent = bioComment;
-            if (commentShorts) commentShorts.textContent = linkComment;
-            if (commentReels) commentReels.textContent = linkComment;
+            if (commentTiktok) commentTiktok.value = bioComment;
+            if (commentInstagram) commentInstagram.value = bioComment;
+            if (commentShorts) commentShorts.value = linkComment;
+            if (commentReels) commentReels.value = linkComment;
         }
 
         function copyShortsTitle() {
-            const text = generatedData.shorts_title;
+            const el = document.getElementById('res-title-shorts');
+            const text = el ? el.value : '';
             if (!text) return;
             navigator.clipboard.writeText(text).then(() => {
                 showToast("Shorts Title copied!");
             });
-        }
-
-        function copyFallbackPrompt() {
-            const text = document.getElementById('fallback-prompt-text').value;
-            if (!text) return;
-            navigator.clipboard.writeText(text).then(() => {
-                showToast("AI Prompt copied!");
-                window.open('https://gemini.google.com/app', '_blank');
-            });
-        }
-
-        function parseFallbackResponse() {
-            const responseText = document.getElementById('fallback-response-input').value.trim();
-            if (!responseText) {
-                alert("Please paste the response from Gemini first.");
-                return;
-            }
-
-            try {
-                // Sanitize potential markdown JSON wrapping
-                let sanitizedText = responseText;
-                if (sanitizedText.startsWith('```')) {
-                    sanitizedText = sanitizedText.replace(/^```json/, '').replace(/^```/, '').replace(/```$/, '').trim();
-                }
-
-                const data = JSON.parse(sanitizedText);
-                
-                // Validate required fields
-                if (!data.tiktok && !data.instagram && !data.shorts && !data.reels) {
-                    throw new Error("Pasted content does not appear to contain valid social captions. Make sure to paste the full JSON object.");
-                }
-
-                generatedData = {
-                    tiktok: data.tiktok || '',
-                    instagram: data.instagram || '',
-                    shorts_title: data.shorts_title || '',
-                    shorts: data.shorts || '',
-                    reels: data.reels || ''
-                };
-
-                // Show Results UI
-                document.getElementById('empty-state').style.display = 'none';
-                document.getElementById('results-panel').style.display = 'flex';
-
-                updateResultsUI();
-                syncMockups();
-                showToast("Posts created successfully from pasted response!");
-
-            } catch (err) {
-                console.error("Failed to parse fallback response:", err);
-                alert("Failed to parse Gemini response: " + err.message + "\n\nMake sure you copied the entire raw JSON block generated by Gemini.");
-            }
         }
 
         // Character limit progress rings update
@@ -2241,71 +2163,12 @@
             }
         }
 
-        // Compile prompt template for fallback copy
-        function compilePromptTemplate(name, link, preset, desc) {
-            let toneInstruction = "";
-            if (preset === 'simple') {
-                toneInstruction = "TONE: Simple, serious, direct, and neat. Use very few words, absolutely NO hype, exaggeration, or exclamation marks. Describe it cleanly, seriously, and professionally.";
-            } else if (preset === 'sleek') {
-                toneInstruction = "TONE: Serious, elegant, and modern. Focus on design details, aesthetics, and professional presentation. Keep it clean and polished with no exaggerated statements.";
-            } else {
-                toneInstruction = "TONE: Feature-focused. Highlight specific features clearly and informatively.";
-            }
-
-            return `You are an expert social media copywriter specializing in Wear OS watch faces.
-I will provide a Google Play Store description of my watch face, its name, and store link.
-Generate highly engaging social media video descriptions/captions for:
-1. TikTok
-2. Instagram
-3. YouTube Shorts
-4. Facebook Reels
-
-Rules for each platform:
-- **TikTok**: Keep it engaging and punchy. Use relevant emojis. End with "Link in Bio" (do NOT include clickable links in the caption). Max 15-20 hashtags (e.g. #wearos, #watchface, #smartwatch, #samsunggalaxywatch, #pixelwatch, #tiktok).
-- **Instagram**: Rich visual description, highly engaging. Include emojis. End with "Link in Bio" (do NOT include links). Include watch face and style hashtags.
-- **YouTube Shorts**: Keep it short, focused on the hook. Max 100 characters for the title (which you must output separately). In the description, you can include the Play Store Link: ${link}. Use hashtags like #shorts, #wearos, #watchface.
-- **Facebook Reels**: Energetic and punchy. You can include the Play Store Link: ${link}. Use relevant hashtags.
-
-CRITICAL CONTENT RESTRICTIONS:
-1. Do NOT include compatibility or technical requirements like "Compatible with API Level 33+" or Wear OS version constraints in the social descriptions/captions.
-2. Do NOT use the word "Premium" (or synonyms like "luxury", "exclusive") anywhere in the title or captions.
-3. Stick strictly to the style, theme, and details described in the Play Store description. Do NOT call the watch face "minimalist", "minimal", "retro", "classic", etc., unless the play store description explicitly lists those exact keywords. Do not assume or hallucinate style descriptions that are not in the input.
-4. Every platform description/caption (TikTok, Instagram, YouTube Shorts description, and Facebook Reels) MUST explicitly mention that the watch face is "for Wear OS" or a "Wear OS watch face" (use "Wear OS" or "WEAR OS").
-
-Tone Style:
-${toneInstruction}
-
-Format the output strictly by placing each section between its exact delimiter tags, like this:
-
----TIKTOK---
-[TikTok caption here]
-
----INSTAGRAM---
-[Instagram caption here]
-
----SHORTS_TITLE---
-[YouTube Shorts Title here]
-
----SHORTS---
-[YouTube Shorts description here]
-
----REELS---
-[Facebook Reels caption here]
-
-Watch Face Name: ${name}
-Watch Face Play Store Link: ${link}
-Play Store Description:
-${desc}
-
-Do not wrap the output in any markdown backticks. Return only the sections with their tags.`;
-        }
-
         // Live Mockup content synchronization
         function syncMockups() {
-            document.getElementById('mock-caption-tiktok').innerHTML = formatMockupText(generatedData.tiktok);
-            document.getElementById('mock-caption-instagram').innerHTML = formatMockupText(generatedData.instagram);
-            document.getElementById('mock-caption-shorts').innerHTML = `<strong>${generatedData.shorts_title}</strong><br>${formatMockupText(generatedData.shorts)}`;
-            document.getElementById('mock-caption-reels').innerHTML = formatMockupText(generatedData.reels);
+            document.getElementById('mock-caption-tiktok').innerHTML = formatMockupText(document.getElementById('res-text-tiktok').value);
+            document.getElementById('mock-caption-instagram').innerHTML = formatMockupText(document.getElementById('res-text-instagram').value);
+            document.getElementById('mock-caption-shorts').innerHTML = `<strong>${document.getElementById('res-title-shorts').value}</strong><br>${formatMockupText(document.getElementById('res-text-shorts').value)}`;
+            document.getElementById('mock-caption-reels').innerHTML = formatMockupText(document.getElementById('res-text-reels').value);
         }
 
         function formatMockupText(text) {
@@ -2338,89 +2201,12 @@ Do not wrap the output in any markdown backticks. Return only the sections with 
             const originalHtml = fetchBtn.innerHTML;
             fetchBtn.innerHTML = '<div class="spinner" style="width:12px; height:12px;"></div> Fetching...';
             
-            const apiKeyInput = document.getElementById('api-key');
-            const apiKey = apiKeyInput ? apiKeyInput.value.trim() : '';
-            const useGrounding = document.getElementById('use-grounding').checked;
-            
             // Pre-resolve watch face image if available in catalog
             resolveMockupImage(url);
             
-            if (apiKey && useGrounding) {
-                // Fetch using Gemini Google Search Grounding!
-                try {
-                    const fetchPrompt = `Please search for the Google Play Store app at this URL: ${url}
-Extract the watch face's name and its full description.
-Format the output EXACTLY like this:
----NAME_START---
-[Extract the watch face name/title here]
----NAME_END---
----DESC_START---
-[Extract the full description here, keeping paragraph breaks]
----DESC_END---`;
-
-                    const response = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            contents: [{
-                                parts: [{
-                                    text: fetchPrompt
-                                }]
-                            }],
-                            tools: [{
-                                google_search: {}
-                            }]
-                        })
-                    });
-
-                    if (!response.ok) {
-                        const errText = await response.text();
-                        throw new Error(`API error (HTTP ${response.status}): ${errText}`);
-                    }
-
-                    const resJson = await response.json();
-                    const text = resJson.candidates[0].content.parts[0].text;
-                    
-                    const extractedName = text.split('---NAME_START---')[1]?.split('---NAME_END---')[0]?.trim() || '';
-                    const extractedDesc = text.split('---DESC_START---')[1]?.split('---DESC_END---')[0]?.trim() || '';
-                    
-                    if (!extractedName && !extractedDesc) {
-                        throw new Error("Could not parse name or description from Gemini search response.");
-                    }
-                    
-                    if (extractedName) {
-                        nameInput.value = extractedName;
-                    }
-                    if (extractedDesc) {
-                        descArea.value = extractedDesc;
-                    }
-                    
-                    showToast("Loaded via Gemini Search!");
-                    fetchBtn.disabled = false;
-                    fetchBtn.innerHTML = originalHtml;
-                    generateSocialDescriptions();
-                    return;
-                } catch (err) {
-                    console.error("Gemini Search Fetch failed:", err);
-                    alert("Gemini Search Fetch failed: " + err.message + "\n\nAttempting fallback CORS proxies...");
-                    await fetchPlayStoreDataCorsFallback(url, nameInput, descArea);
-                } finally {
-                    if (fetchBtn.disabled) {
-                        fetchBtn.disabled = false;
-                        fetchBtn.innerHTML = originalHtml;
-                    }
-                }
-            } else {
-                // If api key is present but grounding is disabled, skip warning and try CORS proxy. Otherwise explain grounding/key setting.
-                if (!apiKey) {
-                    alert("To automatically search and fetch Play Store details using Google Search Grounding, please enter your Gemini API Key in the settings panel (it is free). Attempting CORS proxy fallback now...");
-                }
-                await fetchPlayStoreDataCorsFallback(url, nameInput, descArea);
-                fetchBtn.disabled = false;
-                fetchBtn.innerHTML = originalHtml;
-            }
+            await fetchPlayStoreDataCorsFallback(url, nameInput, descArea);
+            fetchBtn.disabled = false;
+            fetchBtn.innerHTML = originalHtml;
         }
 
         // Fallback CORS Proxy fetching method
@@ -2495,16 +2281,16 @@ Format the output EXACTLY like this:
                     descArea.value = desc.trim();
                 }
                 
-                showToast("Play Store info loaded (via CORS Proxy fallback)!");
-                generateSocialDescriptions();
+                showToast("Play Store info loaded!");
+                generateFastSocialDescriptions();
                 
             } catch (err) {
                 console.error(err);
-                alert("CORS Proxy fetching failed: " + err.message + "\n\nPlease configure a free Gemini API Key in the settings panel below to search and fetch directly, or manually paste the description.");
+                alert("CORS Proxy fetching failed: " + err.message + "\n\nPlease manually paste the description.");
             }
         }
 
-        // Fast Template-based Generation (No AI)
+        // Fast Template-based Generation
         function generateFastSocialDescriptions() {
             const name = document.getElementById('watch-name').value.trim();
             const link = document.getElementById('watch-link').value.trim() || 'https://play.google.com/store/apps/details?id=...';
@@ -2569,241 +2355,19 @@ Format the output EXACTLY like this:
 
             // Show Results UI
             document.getElementById('empty-state').style.display = 'none';
-            document.getElementById('fallback-container').style.display = 'none'; // hide fallback since we generated posts successfully
             document.getElementById('results-panel').style.display = 'flex';
 
             updateResultsUI();
             syncMockups();
-            showToast("Posts generated instantly (No AI)!");
-        }
-
-        // Core Generation Logic
-        async function generateSocialDescriptions() {
-            let name = document.getElementById('watch-name').value.trim();
-            const link = document.getElementById('watch-link').value.trim();
-            let desc = document.getElementById('play-store-desc').value.trim();
-            const apiKey = document.getElementById('api-key').value.trim();
-            const genBtn = document.getElementById('btn-generate');
-
-            // If name or description is empty, but we have a link, try to auto-fetch first
-            if ((!name || !desc) && link) {
-                const useGrounding = document.getElementById('use-grounding').checked;
-
-                if (apiKey && useGrounding) {
-                    // Set loading state for auto-fetching
-                    genBtn.disabled = true;
-                    genBtn.innerHTML = '<div class="spinner" style="width:16px; height:16px;"></div> Searching Play Store...';
-                    
-                    try {
-                        const fetchPrompt = `Please search for the Google Play Store app at this URL: ${link}
-Extract the watch face's name and its full description.
-Format the output EXACTLY like this:
----NAME_START---
-[Extract the watch face name/title here]
----NAME_END---
----DESC_START---
-[Extract the full description here, keeping paragraph breaks]
----DESC_END---`;
-
-                        const fetchResponse = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                contents: [{
-                                    parts: [{
-                                        text: fetchPrompt
-                                    }]
-                                }],
-                                tools: [{
-                                    google_search: {}
-                                }]
-                            })
-                        });
-
-                        if (!fetchResponse.ok) {
-                            const errText = await fetchResponse.text();
-                            throw new Error(`Auto-fetch API error (HTTP ${fetchResponse.status}): ${errText}`);
-                        }
-
-                        const resJson = await fetchResponse.json();
-                        const text = resJson.candidates[0].content.parts[0].text;
-                        
-                        const extractedName = text.split('---NAME_START---')[1]?.split('---NAME_END---')[0]?.trim() || '';
-                        const extractedDesc = text.split('---DESC_START---')[1]?.split('---DESC_END---')[0]?.trim() || '';
-                        
-                        if (extractedName) {
-                            document.getElementById('watch-name').value = extractedName;
-                            name = extractedName;
-                        }
-                        if (extractedDesc) {
-                            document.getElementById('play-store-desc').value = extractedDesc;
-                            desc = extractedDesc;
-                        }
-                        
-                        showToast("Details fetched via Gemini Search!");
-                    } catch (err) {
-                        console.error("Auto-fetch during generation failed:", err);
-                        alert("Auto-fetch failed: " + err.message + "\n\nPlease fill in the Name and Description manually.");
-                        genBtn.disabled = false;
-                        genBtn.innerHTML = `
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 2 15 22 11 13 2 9 22 2"></polyline><line x1="22" y1="2" x2="11" y2="13"></line></svg>
-                            AI Generate Entries
-                        `;
-                        return;
-                    }
-                } else {
-                    // Try CORS proxy fallback first
-                    genBtn.disabled = true;
-                    genBtn.innerHTML = '<div class="spinner" style="width:16px; height:16px;"></div> Loading Play Store...';
-                    try {
-                        const nameInput = document.getElementById('watch-name');
-                        const descArea = document.getElementById('play-store-desc');
-                        await fetchPlayStoreDataCorsFallback(link, nameInput, descArea);
-                        name = nameInput.value.trim();
-                        desc = descArea.value.trim();
-                    } catch (err) {
-                        console.error("Auto-fetch CORS fallback failed:", err);
-                    }
-                    
-                    if (!name || !desc) {
-                        alert("To automatically search and fetch Play Store details, please fill in the Name and Description manually, or enable 'Google Search Grounding' in the settings.");
-                        genBtn.disabled = false;
-                        genBtn.innerHTML = `
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 2 15 22 11 13 2 9 22 2"></polyline><line x1="22" y1="2" x2="11" y2="13"></line></svg>
-                            AI Generate Entries
-                        `;
-                        return;
-                    }
-                }
-            }
-
-            if (!name) {
-                alert("Please enter a Watch Face Name.");
-                return;
-            }
-            if (!desc) {
-                alert("Please paste the Play Store description.");
-                return;
-            }
-
-            // Always compile the fallback prompt
-            const promptText = compilePromptTemplate(name, link || 'https://play.google.com/store/apps/details?id=...', currentPreset, desc);
-            document.getElementById('fallback-prompt-text').value = promptText;
-
-            // If no API key is entered, display fallback prompt box and notify user
-            if (!apiKey) {
-                document.getElementById('empty-state').style.display = 'none';
-                document.getElementById('results-panel').style.display = 'flex';
-                document.getElementById('fallback-container').style.display = 'flex';
-                
-                // Clear any past text
-                generatedData = {
-                    tiktok: 'No API key configured. Copy prompt below to generate.',
-                    instagram: 'No API key configured. Copy prompt below to generate.',
-                    shorts_title: 'No API key',
-                    shorts: 'No API key configured. Copy prompt below to generate.',
-                    reels: 'No API key configured. Copy prompt below to generate.'
-                };
-                
-                updateResultsUI();
-                syncMockups();
-                showToast("AI Prompt Prepared! Copy below.");
-                return;
-            }
-
-            // Lock generation UI
-            genBtn.disabled = true;
-            genBtn.innerHTML = '<div class="spinner" style="width:16px; height:16px;"></div> Generating...';
-
-            try {
-                // Call Gemini 3.5 Flash API (without strict JSON schema constraints for absolute max speed)
-                const response = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: promptText
-                            }]
-                        }]
-                    })
-                });
-
-                if (!response.ok) {
-                    const errDetails = await response.text();
-                    throw new Error(`Gemini API Error (HTTP ${response.status}): ${errDetails}`);
-                }
-
-                const resJson = await response.json();
-                const outputText = resJson.candidates[0].content.parts[0].text;
-
-                // Helper to extract content between custom delimiters
-                const extractSection = (text, tag) => {
-                    const regex = new RegExp(`---${tag}---([\\s\\S]*?)(?=---[A-Z_]+---|$)`, 'i');
-                    const match = text.match(regex);
-                    return match ? match[1].trim() : '';
-                };
-
-                // Parse generated content
-                generatedData = {
-                    tiktok: extractSection(outputText, 'TIKTOK'),
-                    instagram: extractSection(outputText, 'INSTAGRAM'),
-                    shorts_title: extractSection(outputText, 'SHORTS_TITLE'),
-                    shorts: extractSection(outputText, 'SHORTS'),
-                    reels: extractSection(outputText, 'REELS')
-                };
-
-                // Validate parsing succeeded
-                if (!generatedData.tiktok && !generatedData.instagram && !generatedData.shorts) {
-                    console.warn("Regex parsing failed. Full output was: ", outputText);
-                    throw new Error("Could not parse the generated captions. The response might have been formatted incorrectly by the model.");
-                }
-
-                // Show Results UI
-                document.getElementById('empty-state').style.display = 'none';
-                document.getElementById('fallback-container').style.display = 'none'; // hide fallback since we successfully ran API
-                document.getElementById('results-panel').style.display = 'flex';
-
-                updateResultsUI();
-                syncMockups();
-                showToast("Captions generated successfully!");
-
-            } catch (err) {
-                console.error(err);
-                alert("Generation failed: " + err.message + "\n\nShowing copy-paste prompt fallback instead.");
-                // Show fallback prompt box
-                document.getElementById('empty-state').style.display = 'none';
-                document.getElementById('results-panel').style.display = 'flex';
-                document.getElementById('fallback-container').style.display = 'flex';
-                
-                generatedData = {
-                    tiktok: 'API request failed. Use fallback prompt below.',
-                    instagram: 'API request failed. Use fallback prompt below.',
-                    shorts_title: 'Request Failed',
-                    shorts: 'API request failed. Use fallback prompt below.',
-                    reels: 'API request failed. Use fallback prompt below.'
-                };
-                updateResultsUI();
-                syncMockups();
-            } finally {
-                genBtn.disabled = false;
-                genBtn.innerHTML = `
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 2 15 22 11 13 2 9 22 2"></polyline><line x1="22" y1="2" x2="11" y2="13"></line></svg>
-                    AI Generate Entries
-                `;
-            }
+            showToast("Posts generated instantly!");
         }
 
         function updateResultsUI() {
-            document.getElementById('res-text-tiktok').textContent = generatedData.tiktok;
-            document.getElementById('res-text-instagram').textContent = generatedData.instagram;
+            document.getElementById('res-text-tiktok').value = generatedData.tiktok;
+            document.getElementById('res-text-instagram').value = generatedData.instagram;
             document.getElementById('res-title-shorts').value = generatedData.shorts_title;
-            document.getElementById('res-text-shorts').textContent = generatedData.shorts;
-            document.getElementById('res-text-reels').textContent = generatedData.reels;
+            document.getElementById('res-text-shorts').value = generatedData.shorts;
+            document.getElementById('res-text-reels').value = generatedData.reels;
 
             // Update counters
             updateCharCounter('tiktok', generatedData.tiktok, 2200);
