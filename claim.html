@@ -954,10 +954,14 @@
             var couponCode = codeSnap.val();
             if (couponCode) {
               // Save the code to their claim record so they don't have to fetch it again next time
-              db.ref('promotion_claims/' + promoId + '/' + currentUser.uid + '/code').set(couponCode);
+              db.ref('promotion_claims/' + promoId + '/' + currentUser.uid + '/code').set(couponCode).catch(function(err) {
+                console.warn("Could not save claimed code back to metadata (expected under strict security rules):", err);
+              });
               
               if (isTokenClaim) {
-                db.ref('one_time_tokens/' + tokenId + '/code').set(couponCode);
+                db.ref('one_time_tokens/' + tokenId + '/code').set(couponCode).catch(function(err) {
+                  console.warn("Could not save token code back (expected under strict security rules):", err);
+                });
               }
               
               hasUserClaimed = true;

@@ -661,7 +661,6 @@ AAAA-BBBB-CCCC"></textarea>
 
             <div style="display:flex; gap:10px;">
               <button class="btn" id="btn-create" style="flex:1;">CREATE PROMOTION</button>
-              <button class="btn ghost" id="btn-cancel-edit" style="display:none; flex:1;">CANCEL</button>
             </div>
           </div>
         </div>
@@ -745,24 +744,7 @@ AAAA-BBBB-CCCC"></textarea>
 
   <div class="toast" id="toast">Link Copied!</div>
 
-  <!-- Promotion Details Modal -->
-  <div id="promo-modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease; padding: 15px;">
-    <div id="promo-modal-card" style="background: var(--dark); border: 1px solid var(--border); border-radius: 6px; width: 100%; max-width: 800px; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.2s ease;">
-      <!-- Header -->
-      <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border);">
-        <div id="promo-modal-title-area" style="display: flex; gap: 10px; align-items: center; min-width: 0;">
-          <!-- Thumbnail and Title -->
-        </div>
-        <button onclick="closePromoModal()" style="background: none; border: none; color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px; transition: color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-      </div>
-      <!-- Body -->
-      <div id="promo-modal-body" style="padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; font-size: 16px;">
-        <!-- Dynamic Content -->
-      </div>
-    </div>
-  </div>
+
 
   <!-- Subscribers List Modal -->
   <div id="subscribers-modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease; padding: 15px;">
@@ -921,7 +903,6 @@ AAAA-BBBB-CCCC"></textarea>
       return day + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes;
     }
 
-    // Auth monitor
     auth.onAuthStateChanged(function (user) {
       if (user) {
         currentUser = user;
@@ -932,6 +913,44 @@ AAAA-BBBB-CCCC"></textarea>
         if (subBtn) subBtn.style.display = 'flex';
         loadPromotions();
         startSubscribersListener();
+        
+        // Handle duplication load from promo-details.html
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('duplicate') === 'true') {
+          var cacheStr = localStorage.getItem('cc_promo_duplicate_cache');
+          if (cacheStr) {
+            try {
+              var promo = JSON.parse(cacheStr);
+              localStorage.removeItem('cc_promo_duplicate_cache');
+              
+              var baseId = promo.name.toLowerCase().replace(/[^a-z0-9\-]/g, '').replace(/-copy$/, '');
+              document.getElementById('promo-id').value = baseId + '-copy';
+              document.getElementById('promo-name').value = promo.name || '';
+              document.getElementById('promo-desc').value = promo.description || '';
+              document.getElementById('promo-link').value = promo.storeLink || '';
+              document.getElementById('promo-img').value = promo.imageUrl || '';
+              document.getElementById('promo-visibility').value = promo.visibility || 'public';
+              
+              if (promo.startsAt) {
+                var localDate = new Date(promo.startsAt);
+                var offset = localDate.getTimezoneOffset() * 60000;
+                document.getElementById('promo-starts').value = (new Date(localDate.getTime() - offset)).toISOString().slice(0, 16);
+                document.getElementById('promo-starts-text').value = formatHumanDate(localDate);
+              }
+              if (promo.expiresAt) {
+                var localDate = new Date(promo.expiresAt);
+                var offset = localDate.getTimezoneOffset() * 60000;
+                document.getElementById('promo-expiry').value = (new Date(localDate.getTime() - offset)).toISOString().slice(0, 16);
+                document.getElementById('promo-expiry-text').value = formatHumanDate(localDate);
+              }
+              
+              if (typeof toggleCreateForm === 'function') toggleCreateForm(true);
+              showToast("Details duplicated! Paste codes.");
+            } catch(e) {
+              console.error(e);
+            }
+          }
+        }
       } else {
         currentUser = null;
         document.getElementById('login-overlay').style.display = 'flex';
@@ -952,13 +971,7 @@ AAAA-BBBB-CCCC"></textarea>
       });
     }
 
-    // Edit mode state variables
-    var isEditing = false;
-    var editingPromoId = null;
-
-    document.getElementById('btn-cancel-edit').addEventListener('click', cancelEdit);
-
-    // Create or Save Promotion Logic
+    // Create Promotion Logic
     document.getElementById('btn-create').addEventListener('click', function() {
       if (!currentUser) return;
       
@@ -976,15 +989,10 @@ AAAA-BBBB-CCCC"></textarea>
       var expiryVal = document.getElementById('promo-expiry').value;
       var expiresAt = expiryVal ? new Date(expiryVal).getTime() : null;
 
-      if (!isEditing && !promoId) { alert("Please enter a valid unique Promotion ID (Slug)"); return; }
+      if (!promoId) { alert("Please enter a valid unique Promotion ID (Slug)"); return; }
       if (!name) { alert("Please enter a Watch Face Name"); return; }
 
       var codesList = rawCodes.split('\n').map(c => c.trim()).filter(c => c.length > 0);
-
-      if (isEditing) {
-        savePromotionChanges(name, desc, link, imgUrl, visibility, codesList, startsAt, expiresAt);
-        return;
-      }
 
       if (!rawCodes) { alert("Please paste coupon codes"); return; }
       if (codesList.length === 0) { alert("No valid coupon codes found."); return; }
@@ -1043,147 +1051,6 @@ AAAA-BBBB-CCCC"></textarea>
         });
       });
     });
-
-    window.startEditPromotion = function(key) {
-      isEditing = true;
-      editingPromoId = key;
-      
-      document.getElementById('form-title').textContent = "Edit Promotion";
-      document.getElementById('btn-create').textContent = "SAVE CHANGES";
-      document.getElementById('btn-cancel-edit').style.display = 'block';
-      
-      // Expand form to edit
-      if (typeof toggleCreateForm === 'function') toggleCreateForm(true);
-
-      var idInput = document.getElementById('promo-id');
-      idInput.value = key;
-      idInput.disabled = true;
-      
-      db.ref('promotions/' + key + '/public').once('value').then(function(snapshot) {
-        var promo = snapshot.val();
-        if (!promo) return;
-        
-        document.getElementById('promo-name').value = promo.name || '';
-        document.getElementById('promo-desc').value = promo.description || '';
-        document.getElementById('promo-link').value = promo.storeLink || '';
-        document.getElementById('promo-img').value = promo.imageUrl || '';
-        document.getElementById('promo-visibility').value = promo.visibility || 'public';
-        
-        if (promo.startsAt) {
-          var localDate = new Date(promo.startsAt);
-          var offset = localDate.getTimezoneOffset() * 60000;
-          var localISOTime = (new Date(localDate.getTime() - offset)).toISOString().slice(0, 16);
-          document.getElementById('promo-starts').value = localISOTime;
-          document.getElementById('promo-starts-text').value = formatHumanDate(localDate);
-        } else {
-          document.getElementById('promo-starts').value = '';
-          document.getElementById('promo-starts-text').value = '';
-        }
-        
-        if (promo.expiresAt) {
-          var localDate = new Date(promo.expiresAt);
-          var offset = localDate.getTimezoneOffset() * 60000;
-          var localISOTime = (new Date(localDate.getTime() - offset)).toISOString().slice(0, 16);
-          document.getElementById('promo-expiry').value = localISOTime;
-          document.getElementById('promo-expiry-text').value = formatHumanDate(localDate);
-        } else {
-          document.getElementById('promo-expiry').value = '';
-          document.getElementById('promo-expiry-text').value = '';
-        }
-        
-        var claimedCount = promo.claimedCount || 0;
-        var totalCoupons = promo.totalCoupons || 0;
-        
-        db.ref('promotion_codes/' + key).once('value').then(function(codesSnap) {
-          var allCodes = codesSnap.val() || {};
-          var unclaimedCodes = [];
-          
-          for (var i = claimedCount; i < totalCoupons; i++) {
-            if (allCodes[i]) unclaimedCodes.push(allCodes[i]);
-          }
-          
-          document.getElementById('promo-codes').value = unclaimedCodes.join('\n');
-          showToast("Edit mode started!");
-          // Scroll back to the top of the form on mobile
-          document.querySelector('.col-left').scrollIntoView({ behavior: 'smooth' });
-        });
-      });
-    };
-
-    function cancelEdit() {
-      isEditing = false;
-      editingPromoId = null;
-      
-      document.getElementById('form-title').textContent = "Create Promotion";
-      document.getElementById('btn-create').textContent = "CREATE PROMOTION";
-      document.getElementById('btn-cancel-edit').style.display = 'none';
-      
-      // Collapse form after cancel
-      if (typeof toggleCreateForm === 'function') toggleCreateForm(false);
-
-      var idInput = document.getElementById('promo-id');
-      idInput.value = '';
-      idInput.disabled = false;
-      
-      document.getElementById('promo-name').value = '';
-      document.getElementById('promo-desc').value = '';
-      document.getElementById('promo-link').value = '';
-      document.getElementById('promo-img').value = '';
-      document.getElementById('promo-visibility').value = 'private';
-      document.getElementById('promo-codes').value = '';
-      document.getElementById('promo-starts').value = '';
-      document.getElementById('promo-starts-text').value = '';
-      document.getElementById('promo-expiry').value = '';
-      document.getElementById('promo-expiry-text').value = '';
-    }
-
-    function savePromotionChanges(name, desc, link, imgUrl, visibility, codesList, startsAt, expiresAt) {
-      var key = editingPromoId;
-      
-      db.ref('promotions/' + key + '/public/claimedCount').once('value').then(function(countSnap) {
-        var claimedCount = countSnap.val() || 0;
-        
-        if (!confirm("Save changes for '" + name + "'? This will update details and merge remaining codes.")) {
-          return;
-        }
-        
-        db.ref('promotions/' + key + '/public/totalCoupons').once('value').then(function(totalSnap) {
-          var oldTotal = totalSnap.val() || 0;
-          var updates = {};
-          
-          updates['promotions/' + key + '/public/name'] = name;
-          updates['promotions/' + key + '/public/description'] = desc;
-          updates['promotions/' + key + '/public/storeLink'] = link;
-          updates['promotions/' + key + '/public/imageUrl'] = imgUrl;
-          updates['promotions/' + key + '/public/visibility'] = visibility;
-          updates['promotions/' + key + '/public/startsAt'] = startsAt;
-          updates['promotions/' + key + '/public/expiresAt'] = expiresAt;
-          
-          var newTotal = claimedCount + codesList.length;
-          updates['promotions/' + key + '/public/totalCoupons'] = newTotal;
-          
-          // Write new codes starting at index claimedCount
-          codesList.forEach((code, index) => {
-            updates['promotion_codes/' + key + '/' + (claimedCount + index)] = code;
-          });
-          
-          // Delete any trailing indices if the new list of unclaimed codes is shorter than before
-          if (oldTotal > newTotal) {
-            for (var i = newTotal; i < oldTotal; i++) {
-              updates['promotion_codes/' + key + '/' + i] = null;
-            }
-          }
-          
-          db.ref().update(updates).then(function() {
-            showToast("Changes saved successfully!");
-            cancelEdit();
-          }).catch(function(err) {
-            console.error(err);
-            alert("Error saving changes: " + err.message);
-          });
-        });
-      });
-    }
 
 
     window.rawPromotionsData = null;
@@ -1278,8 +1145,8 @@ AAAA-BBBB-CCCC"></textarea>
         }
 
         block.innerHTML = `
-          <!-- Clickable Header Bar (opens Modal) -->
-          <div class="promo-toggle-header" onclick="openPromoModal('${key}')" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none;">
+          <!-- Clickable Header Bar (opens details page) -->
+          <div class="promo-toggle-header" onclick="window.location.href = 'promo-details.html?p=${key}'" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none;">
             <div style="display: flex; gap: 12px; align-items: center; flex: 1; min-width: 0;">
               ${promo.imageUrl ? `
                 <div style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); overflow: hidden; background: var(--mid); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
@@ -1310,293 +1177,15 @@ AAAA-BBBB-CCCC"></textarea>
 
         listEl.appendChild(block);
       });
-
-      // Live update modal if it's currently open
-      if (window.activeModalPromoId) {
-        window.updatePromoModalLive(window.activeModalPromoId);
-      }
     }
 
     window.filterPromotions = function() {
       renderPromotions();
-    };
-
-    function fetchClaimHistory(promoId, containerId) {
-      // Detach any previous listener on this reference to avoid duplicates
-      db.ref('promotion_claims/' + promoId).off('value');
-      
-      db.ref('promotion_claims/' + promoId).on('value', function(snapshot) {
-        var container = document.getElementById(containerId);
-        if (!container) return;
-
-        var claims = snapshot.val();
-        var aiBtn = document.getElementById('btn-ai-' + promoId);
-
-        if (!claims) {
-          container.innerHTML = '<div class="empty-state" style="padding:10px; font-size:10px;">No claims recorded yet.</div>';
-          if (aiBtn) {
-            aiBtn.disabled = true;
-            aiBtn.style.opacity = '0.5';
-            aiBtn.style.cursor = 'not-allowed';
-          }
-          if (!window.claimsCache) window.claimsCache = {};
-          window.claimsCache[promoId] = [];
-          return;
+      window.addEventListener('popstate', function(event) {
+        var subModal = document.getElementById('subscribers-modal');
+        if (subModal && subModal.style.display !== 'none') {
+          closeSubscribersModal(true);
         }
-
-        if (aiBtn) {
-          aiBtn.disabled = false;
-          aiBtn.style.opacity = '1';
-          aiBtn.style.cursor = 'pointer';
-        }
-
-        // Sort claims by timestamp descending
-        var sortedClaims = Object.keys(claims).map(uid => {
-          var claim = claims[uid];
-          return {
-            uid: uid,
-            code: claim.code,
-            time: claim.timestamp ? formatDateTime(claim.timestamp, true) : 'Unknown',
-            device: claim.device || '',
-            os: claim.os || '',
-            browser: claim.browser || '',
-            timezone: claim.timezone || '',
-            language: claim.language || '',
-            referrer: claim.referrer || ''
-          };
-        }).reverse();
-
-        if (!window.claimsCache) window.claimsCache = {};
-        window.claimsCache[promoId] = sortedClaims;
-
-        container.innerHTML = sortedClaims.map(c => {
-          var metaHtml = '';
-          if (c.os || c.browser || c.referrer || c.timezone) {
-            var details = [];
-            if (c.os) details.push(`📱 ${c.os} (${c.browser})`);
-            if (c.timezone) details.push(`🌍 ${c.timezone}`);
-            if (c.referrer) details.push(`🔗 ${c.referrer}`);
-            metaHtml = `<div style="font-size: 11px; color: var(--muted); margin-top: 3px; display: flex; gap: 6px; flex-wrap: wrap; text-align: left; word-break: break-all;">${details.join(' | ')}</div>`;
-          }
-          
-          return `
-            <div class="claim-row" style="flex-direction: column; align-items: flex-start; padding: 6px 10px;">
-              <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
-                <span class="claim-time">${c.time}</span>
-                <span class="claim-code" title="User ID: ${c.uid}">${c.code}</span>
-              </div>
-              ${metaHtml}
-            </div>
-          `;
-        }).join('');
-      });
-    }
-
-    function fetchOneTimeTokens(promoId, containerId) {
-      db.ref('one_time_tokens').orderByChild('promoId').equalTo(promoId).off('value');
-      
-      db.ref('one_time_tokens').orderByChild('promoId').equalTo(promoId).on('value', function(snapshot) {
-        var container = document.getElementById(containerId);
-        if (!container) return;
-
-        var tokens = snapshot.val();
-        if (!tokens) {
-          container.innerHTML = '<div class="empty-state" style="padding:10px; font-size:10px;">No one-time links generated yet.</div>';
-          return;
-        }
-
-        var claimBaseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/claim.html';
-
-        // Sort tokens by creation date descending
-        var tokenKeys = Object.keys(tokens);
-        tokenKeys.sort(function(a, b) {
-          return (tokens[b].createdAt || 0) - (tokens[a].createdAt || 0);
-        });
-
-        var html = '';
-        tokenKeys.forEach(function(tokenId) {
-          var token = tokens[tokenId];
-          var claimUrl = claimBaseUrl + '?t=' + tokenId;
-          
-          var statusHtml = '';
-          if (token.claimed) {
-            var dateStr = token.claimedAt ? formatDateTime(token.claimedAt, true) : 'Unknown';
-            statusHtml = `<span style="color:var(--green); font-weight:bold;">Claimed (${dateStr})</span>`;
-          } else {
-            statusHtml = `<span style="color:var(--yellow); font-weight:bold;">Unused</span>`;
-          }
-          
-          html += `
-            <div class="claim-row" style="flex-direction: column; align-items: flex-start; padding: 8px 10px; border-bottom: 1px solid var(--border);">
-              <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; gap: 8px;">
-                <span class="claim-time" style="font-size:12px; text-align: left; min-width: 0; flex: 1;">Link: <span style="font-family:monospace; color:var(--text);" title="Full Token ID: ${tokenId}">${tokenId.substring(0, 8)}...</span></span>
-                <span style="flex-shrink: 0;">${statusHtml}</span>
-              </div>
-              <div style="display: flex; gap: 8px; width: 100%; margin-top: 4px; align-items: center;">
-                <input class="input-text" type="text" readonly value="${claimUrl}" style="padding: 4px 8px; font-size: 12px; font-family: monospace; height: auto; flex: 1; min-width: 0;">
-                <button class="btn small" style="padding: 4px 8px; font-size: 12px; flex: none; height: auto;" onclick="copyTokenUrl('${claimUrl}')">Copy</button>
-                <button class="btn red small" style="padding: 4px 8px; font-size: 12px; flex: none; height: auto;" onclick="revokeToken('${tokenId}')">Delete</button>
-              </div>
-              ${token.claimed && token.code ? `
-                <div style="font-size: 12px; color: var(--muted); margin-top: 4px; text-align: left; word-break: break-all; width: 100%;">
-                  Code: <strong style="color: var(--yellow); font-family: monospace;">${token.code}</strong> | User: <span style="font-family: monospace;">${token.claimedBy || 'Unknown'}</span>
-                </div>
-              ` : ''}
-            </div>
-          `;
-        });
-
-        container.innerHTML = html;
-      });
-    }
-
-    window.copyTokenUrl = function(url) {
-      navigator.clipboard.writeText(url).then(function() {
-        showToast("One-time link copied!");
-      });
-    };
-
-    window.revokeToken = function(tokenId) {
-      if (!confirm("Are you sure you want to delete this one-time claim link? It will be permanently disabled.")) {
-        return;
-      }
-      db.ref('one_time_tokens/' + tokenId).remove().then(function() {
-        showToast("One-time link deleted.");
-      }).catch(function(err) {
-        alert("Error deleting token: " + err.message);
-      });
-    };
-
-    window.generateOneTimeToken = function(promoId) {
-      var tokenId = generateSecureToken();
-      var tokenObj = {
-        promoId: promoId,
-        claimed: false,
-        createdAt: firebase.database.ServerValue.TIMESTAMP
-      };
-      db.ref('one_time_tokens/' + tokenId).set(tokenObj).then(function() {
-        showToast("One-time link generated!");
-      }).catch(function(err) {
-        alert("Error generating token: " + err.message);
-      });
-    };
-
-    window.generateBulkTokens = function(promoId) {
-      var updates = {};
-      for (var i = 0; i < 5; i++) {
-        var tokenId = generateSecureToken();
-        updates['one_time_tokens/' + tokenId] = {
-          promoId: promoId,
-          claimed: false,
-          createdAt: firebase.database.ServerValue.TIMESTAMP
-        };
-      }
-      db.ref().update(updates).then(function() {
-        showToast("5 one-time links generated!");
-      }).catch(function(err) {
-        alert("Error generating bulk tokens: " + err.message);
-      });
-    };
-
-    function generateSecureToken() {
-      var array = new Uint8Array(16);
-      window.crypto.getRandomValues(array);
-      var token = '';
-      for (var i = 0; i < array.length; i++) {
-        token += array[i].toString(16).padStart(2, '0');
-      }
-      return token;
-    }
-
-    window.copyLink = function(key) {
-      var url = document.getElementById('link-' + key).textContent;
-      navigator.clipboard.writeText(url).then(function() {
-        showToast("Claim link copied!");
-      });
-    };
-
-    window.copyAiPrompt = function(key) {
-      var promo = window.promoCache && window.promoCache[key];
-      var promoName = promo ? promo.name : 'Unknown';
-      var total = promo ? promo.total : 0;
-      var claimed = promo ? promo.claimed : 0;
-      var remaining = promo ? promo.remaining : 0;
-
-      var claims = window.claimsCache && window.claimsCache[key];
-      if (!claims || claims.length === 0) {
-        alert("No claims recorded to analyze yet.");
-        return;
-      }
-
-      // Clean metadata and format claims logs
-      var cleanClaimsList = claims.map(function(c, idx) {
-        return {
-          claimIndex: idx + 1,
-          time: c.time,
-          code: c.code,
-          os: c.os,
-          browser: c.browser,
-          timezone: c.timezone,
-          language: c.language,
-          referrer: c.referrer
-        };
-      });
-
-      var promptText = `I need a professional coupon claims analysis report for my promotion:
-- Promotion Name: ${promoName}
-- Promotion ID/Slug: ${key}
-- Total Coupons Loaded: ${total}
-- Claimed Coupons: ${claimed}
-- Remaining Coupons: ${remaining}
-- Claims Logged: ${cleanClaimsList.length}
-
-Here is the raw JSON list of all claim events:
-${JSON.stringify(cleanClaimsList, null, 2)}
-
-Please act as a Senior Data & Marketing Analyst. Analyze the claims and produce a comprehensive Coupon Claims Report. Please include:
-1. Executive Summary: Key findings and overall campaign performance.
-2. Claim Rate & Momentum: Analyze the speed of claims and conversion rate.
-3. Demographic & Environment Analysis: Break down claims by Operating System, Browser, and Timezone/Language to show where the audience is located.
-4. Referral Effectiveness: Identify which traffic sources (referrers) drove the most claims.
-5. Abuse & Fraud Detection: Check for suspicious patterns, such as multiple claims from the same IP/OS/Browser combo within a short timeframe, or potential bot patterns.
-6. Recommendations: Actionable steps for optimizing future promotions or improving security.
-
-Format this report with a professional tone in clean, beautiful Markdown with structured headings, tables, and bullet points.`;
-
-      navigator.clipboard.writeText(promptText).then(function() {
-        showToast("AI Prompt & Logs copied! Opening Gemini...");
-        setTimeout(function() {
-          window.open("https://gemini.google.com/", "_blank");
-        }, 1200);
-      }).catch(function(err) {
-        console.error("Failed to copy AI prompt:", err);
-        alert("Could not copy prompt automatically. Please check clipboard permissions. Error: " + err.message);
-      });
-    };
-
-    window.toggleActive = function(key, currentStatus) {
-      db.ref('promotions/' + key + '/public/active').set(!currentStatus).then(function() {
-        showToast(currentStatus ? "Promotion paused" : "Promotion active");
-      });
-    };
-
-    window.deletePromotion = function(key) {
-      if (!confirm("ARE YOU SURE YOU WANT TO DELETE PROMOTION '" + key + "'?\nThis will permanently delete metadata, codes, and claims logs.")) {
-        return;
-      }
-      if (!confirm("CONFIRM ONCE MORE: Permanent deletion of '" + key + "'. Proceed?")) {
-        return;
-      }
-
-      var updates = {};
-      updates['promotions/' + key] = null;
-      updates['promotion_codes/' + key] = null;
-      updates['promotion_claims/' + key] = null;
-
-      db.ref().update(updates).then(function() {
-        showToast("Promotion deleted.");
-      }).catch(function(err) {
-        alert("Error deleting promotion: " + err.message);
       });
     };
 
@@ -1673,286 +1262,7 @@ Format this report with a professional tone in clean, beautiful Markdown with st
       });
     };
 
-    // Toggle collapsible details for active promotions
-    window.expandedPromos = window.expandedPromos || {};
-    // Promotion Details Modal Operations
-    window.activeModalPromoId = null;
-    
-    // Add event listener to close modal on background click
-    document.addEventListener('DOMContentLoaded', function() {
-      var modal = document.getElementById('promo-modal');
-      if (modal) {
-        modal.addEventListener('click', function(e) {
-          if (e.target === this) {
-            closePromoModal();
-          }
-        });
-      }
-    });
-
-    window.openPromoModal = function(key) {
-      window.activeModalPromoId = key;
-      
-      // Push history state for back button navigation
-      window.history.pushState({ modalPromoId: key }, '');
-      
-      // Render content
-      renderPromoModalContent(key);
-      
-      // Show overlay
-      var modal = document.getElementById('promo-modal');
-      var card = document.getElementById('promo-modal-card');
-      if (modal && card) {
-        modal.style.display = 'flex';
-        // Force reflow
-        modal.offsetWidth;
-        modal.style.opacity = '1';
-        card.style.transform = 'scale(1)';
-      }
-      
-      // Fetch claims history for this modal
-      fetchClaimHistory(key, 'modal-claims-box-' + key);
-      
-      // Fetch one-time tokens for this modal
-      fetchOneTimeTokens(key, 'modal-one-time-links-container');
-    };
-
-    window.closePromoModal = function(isPopState) {
-      var modal = document.getElementById('promo-modal');
-      var card = document.getElementById('promo-modal-card');
-      if (modal && card) {
-        modal.style.opacity = '0';
-        card.style.transform = 'scale(0.95)';
-        setTimeout(function() {
-          modal.style.display = 'none';
-        }, 200);
-      }
-      
-      // Detach claim listener if active
-      if (window.activeModalPromoId) {
-        db.ref('promotion_claims/' + window.activeModalPromoId).off('value');
-        db.ref('one_time_tokens').orderByChild('promoId').equalTo(window.activeModalPromoId).off('value');
-      }
-      window.activeModalPromoId = null;
-      
-      if (!isPopState && window.history.state && window.history.state.modalPromoId) {
-        window.history.back();
-      }
-    };
-
-    window.renderPromoModalContent = function(key) {
-      var promo = window.promoCache && window.promoCache[key];
-      if (!promo) return;
-      
-      var claimBaseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/claim.html';
-      var claimUrl = claimBaseUrl + '?p=' + key;
-      var total = promo.totalCoupons || 0;
-      var claimed = promo.claimedCount || 0;
-      var remaining = Math.max(0, total - claimed);
-      
-      var titleArea = document.getElementById('promo-modal-title-area');
-      if (titleArea) {
-        titleArea.innerHTML = `
-          ${promo.imageUrl ? `
-            <div style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); overflow: hidden; background: var(--mid); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-              <img src="${promo.imageUrl}" alt="${promo.name}" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
-          ` : `
-            <div style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); overflow: hidden; background: var(--mid); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--muted); opacity: 0.5;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-            </div>
-          `}
-          <div style="min-width: 0; display: flex; flex-direction: column; gap: 3px; text-align: left;">
-            <h3 style="margin: 0; line-height: 1.3; font-size: 15px; font-weight: 600; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${promo.name}</h3>
-            <span class="promo-slug" style="width: fit-content; margin: 0;">${key}</span>
-          </div>
-        `;
-      }
-
-      var body = document.getElementById('promo-modal-body');
-      if (body) {
-        body.innerHTML = `
-          <div class="modal-grid">
-            <!-- Left Column: Details & Actions -->
-            <div style="display: flex; flex-direction: column; gap: 16px; min-width: 0;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span class="form-label" style="margin: 0; font-size: 14px;">Status</span>
-                <span id="modal-status-badge"></span>
-              </div>
-
-              <div style="font-size: 14px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 12px; display: flex; flex-direction: column; gap: 4px; text-align: left;">
-                ${promo.startsAt ? `<div>Starts: <span style="color:var(--text); font-weight: 500;">${formatDateTime(promo.startsAt)}</span></div>` : ''}
-                ${promo.expiresAt ? `<div>Expires: <span style="color:var(--text); font-weight: 500;">${formatDateTime(promo.expiresAt)}</span></div>` : ''}
-              </div>
-
-              <div class="promo-stats" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 10px 0;">
-                <span>Total: <span id="modal-stat-total">${total}</span></span>
-                <span>Claimed: <span id="modal-stat-claimed">${claimed}</span></span>
-                <span>Remaining: <span id="modal-stat-remaining">${remaining}</span></span>
-              </div>
-
-              <div class="form-group" style="text-align: left;">
-                <span class="form-label" style="font-size: 14px;">Public Claim Link</span>
-                ${promo.visibility === 'private' ? `
-                  <div style="font-size:13px; color:var(--red); font-weight:bold; margin-bottom:4px;">[PRIVATE PROMOTION] Direct public claims are blocked.</div>
-                ` : ''}
-                <div class="link-copy-row">
-                  <a class="link-display" id="link-${key}" href="${claimUrl}" target="_blank">${claimUrl}</a>
-                  <button class="btn small" onclick="copyLink('${key}')">Copy Link</button>
-                </div>
-              </div>
-
-              <div style="display:flex; gap:8px; margin-top:6px; flex-wrap:wrap;">
-                <button class="btn ghost small" id="modal-btn-pause" style="flex:1;" onclick="event.stopPropagation(); toggleActive('${key}', ${promo.active})">
-                  ${promo.active ? 'PAUSE' : 'RESUME'}
-                </button>
-                <button class="btn small" style="flex:1; background:var(--blue); color:white;" onclick="event.stopPropagation(); closePromoModal(); startEditPromotion('${key}')">
-                  EDIT
-                </button>
-                <button class="btn small" style="flex:1; background:var(--green); color:white;" onclick="event.stopPropagation(); closePromoModal(); duplicatePromotion('${key}')">
-                  DUPLICATE
-                </button>
-                <button class="btn red small" style="flex:none;" onclick="event.stopPropagation(); deletePromotion('${key}')">
-                  DELETE
-                </button>
-              </div>
-              ${promo.storeLink ? `
-              <div style="margin-top: 6px;">
-                <button class="btn ghost small" style="width:100%; font-size:11px; padding:6px; font-weight:bold; border-color:rgba(245,197,24,0.3); color:var(--yellow);" onclick="event.stopPropagation(); closePromoModal(); loadPromoIntoGenerator('${encodeURIComponent(promo.storeLink)}')">
-                  ★ GENERATE REVIEW LINKS & QR CODE
-                </button>
-              </div>` : ''}
-            </div>
-
-            <!-- Right Column: Lists -->
-            <div style="display: flex; flex-direction: column; gap: 16px; min-width: 0;">
-              <div class="form-group" style="text-align: left;">
-                <span class="form-label">One-Time Claim Links</span>
-                <div style="display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap;">
-                  <button class="btn small" style="flex:1; min-width:120px; font-size:12px; padding:6px 12px; background:var(--yellow); color:var(--black);" onclick="generateOneTimeToken('${key}')">Generate Link</button>
-                  <button class="btn ghost small" style="flex:1; min-width:120px; font-size:12px; padding:6px 12px;" onclick="generateBulkTokens('${key}')">Bulk Generate (5)</button>
-                </div>
-                <div id="modal-one-time-links-container" style="max-height: 180px; overflow-y: auto; background: var(--black); border: 1px solid var(--border); border-radius: 3px; font-size: 11px;">
-                  <div class="empty-state" style="padding:10px; font-size:10px;">Loading one-time links...</div>
-                </div>
-              </div>
-
-              <div class="form-group" style="text-align: left; border-top: 1px solid var(--border); padding-top: 12px;">
-                <span class="claims-list-title">Claim History</span>
-                <div class="claims-container" id="modal-claims-box-${key}" style="max-height: 180px;">
-                  <div class="empty-state" style="padding:10px;">Loading claims history...</div>
-                </div>
-                <button class="btn-ai" id="btn-ai-${key}" disabled style="opacity: 0.5; cursor: not-allowed; padding: 6px 12px; font-size: 13px;" onclick="copyAiPrompt('${key}')">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z"/>
-                  </svg>
-                  Analyze Claims with Gemini AI
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-      
-      updatePromoModalLive(key);
-    };
-
-    window.updatePromoModalLive = function(key) {
-      var promo = window.promoCache && window.promoCache[key];
-      if (!promo) return;
-      
-      var total = promo.totalCoupons || 0;
-      var claimed = promo.claimedCount || 0;
-      var remaining = Math.max(0, total - claimed);
-      
-      var now = Date.now();
-      var isExpired = promo.expiresAt && now > promo.expiresAt;
-      var isScheduled = promo.startsAt && now < promo.startsAt;
-
-      // Update status badge
-      var statusEl = document.getElementById('modal-status-badge');
-      if (statusEl) {
-        if (!promo.active) {
-          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--red); font-size:13px; font-weight:bold; background:rgba(232,40,30,0.1); padding:4px 8px; border-radius:3px;">● PAUSED</span>';
-        } else if (remaining === 0) {
-          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--muted); font-size:13px; font-weight:bold; background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:3px; border:1px solid var(--border);">● COMPLETED</span>';
-        } else if (isExpired) {
-          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--red); font-size:13px; font-weight:bold; background:rgba(232,40,30,0.1); padding:4px 8px; border-radius:3px;">● EXPIRED</span>';
-        } else if (isScheduled) {
-          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--yellow); font-size:13px; font-weight:bold; background:rgba(245,197,24,0.1); padding:4px 8px; border-radius:3px;">● SCHEDULED</span>';
-        } else {
-          statusEl.outerHTML = '<span id="modal-status-badge" style="color:var(--green); font-size:13px; font-weight:bold; background:rgba(76,175,80,0.1); padding:4px 8px; border-radius:3px;">● ACTIVE</span>';
-        }
-      }
-
-      // Update stats
-      var totalEl = document.getElementById('modal-stat-total');
-      if (totalEl) totalEl.textContent = total;
-      var claimedEl = document.getElementById('modal-stat-claimed');
-      if (claimedEl) claimedEl.textContent = claimed;
-      var remainingEl = document.getElementById('modal-stat-remaining');
-      if (remainingEl) remainingEl.textContent = remaining;
-
-      // Update Pause/Resume button
-      var pauseBtn = document.getElementById('modal-btn-pause');
-      if (pauseBtn) {
-        pauseBtn.textContent = promo.active ? 'PAUSE' : 'RESUME';
-        pauseBtn.setAttribute('onclick', `event.stopPropagation(); toggleActive('${key}', ${promo.active})`);
-      }
-    };
-
-    window.duplicatePromotion = function(key) {
-      cancelEdit();
-      
-      db.ref('promotions/' + key + '/public').once('value').then(function(snapshot) {
-        var promo = snapshot.val();
-        if (!promo) return;
-        
-        document.getElementById('promo-id').value = key + '-copy';
-        document.getElementById('promo-name').value = (promo.name || '') + ' Copy';
-        document.getElementById('promo-desc').value = promo.description || '';
-        document.getElementById('promo-link').value = promo.storeLink || '';
-        document.getElementById('promo-img').value = promo.imageUrl || '';
-        document.getElementById('promo-visibility').value = promo.visibility || 'public';
-        
-        if (promo.startsAt) {
-          var localDate = new Date(promo.startsAt);
-          var offset = localDate.getTimezoneOffset() * 60000;
-          var localISOTime = (new Date(localDate.getTime() - offset)).toISOString().slice(0, 16);
-          document.getElementById('promo-starts').value = localISOTime;
-          document.getElementById('promo-starts-text').value = formatHumanDate(localDate);
-        } else {
-          document.getElementById('promo-starts').value = '';
-          document.getElementById('promo-starts-text').value = '';
-        }
-        
-        if (promo.expiresAt) {
-          var localDate = new Date(promo.expiresAt);
-          var offset = localDate.getTimezoneOffset() * 60000;
-          var localISOTime = (new Date(localDate.getTime() - offset)).toISOString().slice(0, 16);
-          document.getElementById('promo-expiry').value = localISOTime;
-          document.getElementById('promo-expiry-text').value = formatHumanDate(localDate);
-        } else {
-          document.getElementById('promo-expiry').value = '';
-          document.getElementById('promo-expiry-text').value = '';
-        }
-        
-        document.getElementById('promo-codes').value = '';
-        if (typeof toggleCreateForm === 'function') toggleCreateForm(true);
-        showToast("Details duplicated! Paste new codes.");
-        
-        document.querySelector('.col-left').scrollIntoView({ behavior: 'smooth' });
-      });
-    };
-
     window.addEventListener('popstate', function(event) {
-      var modal = document.getElementById('promo-modal');
-      if (modal && modal.style.display !== 'none') {
-        closePromoModal(true);
-      }
       var subModal = document.getElementById('subscribers-modal');
       if (subModal && subModal.style.display !== 'none') {
         closeSubscribersModal(true);

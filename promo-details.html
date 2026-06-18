@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#141414">
+  <title>CreationCue | Promotion Details Dashboard</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Firebase SDK Compat -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  
+  <!-- Icon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2310B981'/%3E%3Cstop offset='100%25' stop-color='%23059669'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='6' fill='url(%23grad)'/%3E%3Cpath d='M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9C19 9.55228 18.5523 10 18 10C17.4477 10 17 10.4477 17 11V13C17 13.5523 17.4477 14 18 14C18.5523 14 19 14.4477 19 15C19 15.5523 18.5523 16 18 16H6C5.44772 16 5 15.5523 5 15C5 14.4477 5.44772 14 6 14C6.55228 14 7 13.5523 7 13V11C7 10.4477 6.55228 10 6 10C5.44772 10 5 9.55228 5 9Z' fill='white'/%3E%3Cpath d='M10 11C10 11.5523 9.55228 12 9 12C8.44772 12 8 11.5523 8 11C8 10.4477 8.44772 10 9 10C9.55228 10 10 10.4477 10 11ZM16 13C16 13.5523 15.5523 14 15 14C14.4477 14 14 13.5523 14 13C14 12.4477 14.4477 12 15 12C15.5523 12 16 12.4477 16 13ZM15 10L9 14' stroke='%23059669' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E">
+
+  <style>
+    :root {
+      --red: #e8281e;
+      --blue: #1a3a6b;
+      --yellow: #f5c518;
+      --black: #141414;
+      --dark: #1e1e1e;
+      --mid: #2a2a2a;
+      --border: #3a3a3a;
+      --text: #f0f0f0;
+      --muted: #888;
+      --green: #4caf50;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 50px;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background-color: var(--yellow); }
+
+    .header {
+      width: 100%;
+      background: var(--dark);
+      border-bottom: 2px solid var(--yellow);
+      padding: 14px 20px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .header-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .header-title span { color: var(--yellow); }
+
+    .header-btns {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .header-btn {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Teko', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      line-height: 1;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-btn:hover {
+      background: var(--border);
+      color: var(--text);
+      border-color: var(--muted);
+      transform: translateY(-1px);
+    }
+
+    .header-btn.back-btn {
+      border: 1px solid var(--yellow);
+      color: var(--yellow);
+      background: rgba(255, 184, 0, 0.04);
+    }
+
+    .main {
+      width: 100%;
+      max-width: 1280px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      .header { padding: 14px 40px 12px; }
+      .main { padding: 30px 40px; }
+      .dashboard-grid {
+        grid-template-columns: 380px 1fr;
+        align-items: flex-start;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .dashboard-grid {
+        grid-template-columns: 380px 1fr 1fr;
+      }
+    }
+
+    .card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--yellow);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .input-text, .input-area {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+
+    .input-text:focus, .input-area:focus {
+      border-color: var(--yellow);
+    }
+
+    .input-area {
+      min-height: 100px;
+      resize: vertical;
+      font-family: monospace;
+      font-size: 13px;
+    }
+
+    .btn {
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+      border-radius: 4px;
+      font-family: 'Teko', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn:hover:not(:disabled) { background: #e5b615; }
+    .btn:active:not(:disabled) { transform: scale(0.98); }
+
+    .btn:disabled {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .btn.ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .btn.ghost:hover {
+      background: var(--mid);
+      color: var(--text);
+    }
+
+    .btn.red {
+      background: var(--red);
+      color: white;
+    }
+
+    .btn.red:hover { background: #c61e16; }
+
+    .btn.small {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(40px);
+      background: var(--yellow);
+      color: #000;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border-radius: 4px;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+      z-index: 200;
+      white-space: nowrap;
+      opacity: 0;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .promo-stats {
+      font-family: 'Teko', sans-serif;
+      font-size: 22px;
+      display: flex;
+      gap: 14px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 6px 0;
+    }
+
+    .promo-stats span span { color: var(--yellow); }
+
+    .link-copy-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .link-display {
+      flex: 1;
+      min-width: 0;
+      background: var(--black);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      font-size: 13px;
+      color: var(--muted);
+      padding: 6px 10px;
+      font-family: monospace;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .link-display:hover {
+      color: var(--yellow);
+      border-color: var(--yellow);
+      background: rgba(245, 197, 24, 0.02);
+    }
+
+    .claims-container {
+      max-height: 400px;
+      overflow-y: auto;
+      background: var(--black);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      font-size: 13px;
+    }
+
+    .claim-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .claim-row:last-child { border-bottom: none; }
+
+    .claim-time { color: var(--muted); }
+    .claim-code { font-family: monospace; color: var(--yellow); font-weight: bold; }
+
+    .empty-state {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 24px 0;
+    }
+
+    .loader {
+      border: 3px solid var(--border);
+      border-top: 3px solid var(--yellow);
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #login-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .logo-mark {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+    }
+
+    .logo-mark span {
+      display: block;
+      width: 7px;
+      height: 22px;
+      border-radius: 1px;
+    }
+
+    .logo-mark .r { background: var(--red); }
+    .logo-mark .b { background: var(--blue); }
+    .logo-mark .y { background: var(--yellow); }
+
+    .btn-ai {
+      background: linear-gradient(135deg, #3a86f0, #9f5afd);
+      color: white;
+      font-family: 'Teko', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      width: 100%;
+      margin-top: 10px;
+      box-shadow: 0 4px 10px rgba(159, 90, 253, 0.2);
+    }
+
+    .btn-ai:hover:not(:disabled) {
+      background: linear-gradient(135deg, #2a76e0, #8f4aed);
+      transform: translateY(-1px);
+    }
+
+    .btn-ai:disabled {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      cursor: not-allowed;
+      box-shadow: none;
+      opacity: 0.5;
+    }
+
+    /* Watch Preview Image */
+    .watch-thumb-wrapper {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--black);
+      overflow: hidden;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .watch-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .status-badge {
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 3px;
+      text-align: center;
+      width: fit-content;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Google Sign In Overlay -->
+  <div id="login-overlay" style="display: none;">
+    <div class="logo-mark" style="transform:scale(2); margin-bottom:20px;">
+      <span class="r"></span><span class="b"></span><span class="y"></span>
+    </div>
+    <div style="font-size:32px; font-weight:600; letter-spacing:4px; text-transform:uppercase;">
+      CUE <span style="color:var(--yellow)">Promotions</span>
+    </div>
+    <div style="font-size:16px; color:var(--muted); font-family:'Inter', sans-serif; letter-spacing:0.5px; margin-bottom:10px;">
+      Sign in with Google to view promotion details
+    </div>
+    <button id="btn-google-login" style="display:flex; align-items:center; gap:12px; background:white; color:#333; border:none; border-radius:4px; padding:10px 24px; font-family:'Teko', sans-serif; font-size:20px; font-weight:500; letter-spacing:1px; cursor:pointer;">
+      <svg width="20" height="20" viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+      </svg>
+      SIGN IN WITH GOOGLE
+    </button>
+  </div>
+
+  <div class="header">
+    <a href="index.html" class="header-left">
+      <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" alt="CreationCue Logo" style="height: 32px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));">
+      <div class="header-title" style="display: flex; flex-direction: column; line-height: 0.9; align-items: flex-start; margin-top: -2px;">
+        <span style="font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 1px;">Creation<span>CUE</span></span>
+        <span style="font-size: 9px; font-weight: 600; color: var(--yellow); letter-spacing: 2.2px; text-transform: uppercase; margin-top: 1px;">Promotions</span>
+      </div>
+    </a>
+    <div class="header-btns">
+      <a href="manage-coupons.html" class="header-btn back-btn">← Promotions List</a>
+      <a href="social-generator.html" class="header-btn">Socials</a>
+      <a href="https://cue-earnings.sotsor.workers.dev/" class="header-btn">Earnings</a>
+    </div>
+  </div>
+
+  <div class="main">
+    <div id="loading-state" class="card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; gap: 16px;">
+      <div class="loader"></div>
+      <div style="color:var(--muted); font-size:14px;" id="loading-msg">Connecting to promotional database...</div>
+    </div>
+
+    <div id="dashboard-content" style="display: none;">
+      <!-- Details View Panel -->
+      <div class="dashboard-grid">
+        
+        <!-- Column 1: Details & Settings Form -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          
+          <!-- Promo Info Card -->
+          <div class="card">
+            <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
+              <span>Promotion Info</span>
+              <span id="promo-status-badge" class="status-badge">● Loading</span>
+            </div>
+            
+            <div class="watch-thumb-wrapper" id="wf-thumb-container">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" style="opacity:0.4;">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            
+            <div style="font-size: 14px; text-align: center; font-weight: 600; color: var(--text);" id="lbl-promo-id">
+              --
+            </div>
+
+            <div class="promo-stats" style="justify-content: space-around;">
+              <span>Total: <span id="lbl-stat-total">--</span></span>
+              <span>Claimed: <span id="lbl-stat-claimed">--</span></span>
+              <span>Left: <span id="lbl-stat-remaining">--</span></span>
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Watch Face Name</span>
+              <input class="input-text" id="promo-name" type="text" placeholder="Watch face title...">
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Description (Optional)</span>
+              <input class="input-text" id="promo-desc" type="text" placeholder="Short description...">
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Play Store Link</span>
+              <input class="input-text" id="promo-link" type="text" placeholder="https://play.google.com/store/apps/details?id=...">
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Preview Image URL (Optional)</span>
+              <input class="input-text" id="promo-img" type="text" placeholder="https://...">
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Visibility</span>
+              <select class="input-text" id="promo-visibility" style="cursor: pointer; background: var(--mid);">
+                <option value="private">Private (One-Time Links only)</option>
+                <option value="public">Public (Open claim page)</option>
+              </select>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+              <div class="form-group" style="flex:1;">
+                <span class="form-label">Starts (Optional)</span>
+                <input class="input-text" id="promo-starts-text" type="text" placeholder="e.g. 8 Jun 2027" oninput="parseStartsText()" style="font-size:12px; padding:8px 10px;">
+                <input id="promo-starts" type="datetime-local" oninput="syncStartsText()" style="background:var(--mid); border:1px solid var(--border); color:var(--text); padding:4px; font-size:12px; border-radius:4px; margin-top:4px; cursor:pointer;">
+              </div>
+              <div class="form-group" style="flex:1;">
+                <span class="form-label">Expires (Optional)</span>
+                <input class="input-text" id="promo-expiry-text" type="text" placeholder="e.g. 8 Jun 2027" oninput="parseExpiryText()" style="font-size:12px; padding:8px 10px;">
+                <input id="promo-expiry" type="datetime-local" oninput="syncExpiryText()" style="background:var(--mid); border:1px solid var(--border); color:var(--text); padding:4px; font-size:12px; border-radius:4px; margin-top:4px; cursor:pointer;">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Manage Remaining Codes</span>
+              <textarea class="input-area" id="promo-codes" placeholder="Unclaimed coupon codes (one per line)..."></textarea>
+            </div>
+
+            <button class="btn" id="btn-save-settings">Save Config Changes</button>
+          </div>
+
+          <!-- Danger & Actions Card -->
+          <div class="card" style="border-color: rgba(232, 40, 30, 0.3);">
+            <div class="card-title" style="color:var(--red);">Danger Zone</div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <button class="btn ghost" id="btn-pause-promo" style="width:100%;">PAUSE PROMOTION</button>
+              <button class="btn" id="btn-duplicate-promo" style="width:100%; background:var(--blue); color:white;">DUPLICATE PROMOTION</button>
+              <button class="btn red" id="btn-delete-promo" style="width:100%;">DELETE PROMOTION PERMANENTLY</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: One-Time Links Generator -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div class="card">
+            <div class="card-title">One-Time Claim Links</div>
+            
+            <div style="font-size: 12px; color: var(--muted); line-height: 1.4;">
+              These links can be clicked exactly once. After claim, the code is revealed and the link is deactivated. Perfect for newsletter prizes.
+            </div>
+
+            <div style="display:flex; gap:10px;">
+              <button class="btn" id="btn-gen-token" style="flex:1;">Generate Link</button>
+              <button class="btn ghost" id="btn-gen-bulk" style="flex:1;">Bulk Generate (5)</button>
+            </div>
+
+            <div id="one-time-links-container" style="max-height: 520px; overflow-y: auto; background: var(--black); border: 1px solid var(--border); border-radius: 4px;">
+              <div class="empty-state">Loading claim links...</div>
+            </div>
+          </div>
+          
+          <!-- Direct Review Link QR Card -->
+          <div class="card" id="review-link-generator-card" style="display:none;">
+            <div class="card-title">Direct Review QR Code</div>
+            <div style="font-size:12px; color:var(--muted); line-height:1.4;">
+              Custom QR code generated for this watch face to invite reviews directly on mobile devices.
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; padding:12px; background:var(--mid); border:1px solid var(--border); border-radius:4px;">
+              <div id="review-qrcode-container" style="background:white; padding:8px; border-radius:4px; display:flex; align-items:center; justify-content:center; width:166px; height:166px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+                <!-- Image tag will load QR code -->
+              </div>
+              <div style="font-size:10px; color:var(--muted); text-align:center;">Copy or save this QR code to include in social posts or emails.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3: Claims History -->
+        <div class="card" style="min-width: 0;">
+          <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Claims Log</span>
+            <span id="lbl-claims-count" style="font-size: 11px; background: rgba(245, 197, 24, 0.15); color: var(--yellow); padding: 2px 8px; border-radius: 10px; font-weight: bold; border: 1px solid rgba(245, 197, 24, 0.2);">0 Claims</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="form-group">
+              <span class="form-label" style="display:flex; justify-content:space-between; align-items:center;">
+                Public Claim URL
+                <span id="lbl-public-badge" style="font-size:9px; font-weight:bold;"></span>
+              </span>
+              <div class="link-copy-row">
+                <a class="link-display" id="lbl-public-url" target="_blank">Loading...</a>
+                <button class="btn small" id="btn-copy-public-link">Copy</button>
+              </div>
+            </div>
+
+            <div class="claims-container" id="claims-history-box" style="max-height: 480px;">
+              <div class="empty-state">Loading claims log...</div>
+            </div>
+
+            <button class="btn-ai" id="btn-ai-analyze" disabled style="opacity:0.5; cursor:not-allowed;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z"/>
+              </svg>
+              Analyze Claims with Gemini AI
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copied to Clipboard!</div>
+
+  <script>
+    // Firebase Config (Derived from main app credentials)
+    var firebaseConfig = {
+      apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+      authDomain: "creation-cue-manage.firebaseapp.com",
+      databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "creation-cue-manage",
+      storageBucket: "creation-cue-manage.firebasestorage.app",
+      messagingSenderId: "186324516022",
+      appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.database();
+    var auth = firebase.auth();
+    
+    var promoId = new URLSearchParams(window.location.search).get('p') || new URLSearchParams(window.location.search).get('promo');
+    var promoData = null;
+    var claimsCache = [];
+
+    // Helper functions for alerts and copy notifications
+    function showToast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function () { t.classList.remove('show'); }, 2200);
+    }
+
+    function formatDateTime(ts, includeSeconds) {
+      if (!ts) return '';
+      var d = new Date(ts);
+      var day = String(d.getDate()).padStart(2, '0');
+      var month = String(d.getMonth() + 1).padStart(2, '0');
+      var year = d.getFullYear();
+      var hours = String(d.getHours()).padStart(2, '0');
+      var minutes = String(d.getMinutes()).padStart(2, '0');
+      var str = day + '/' + month + '/' + year + ' ' + hours + ':' + minutes;
+      if (includeSeconds) {
+        var seconds = String(d.getSeconds()).padStart(2, '0');
+        str += ':' + seconds;
+      }
+      return str;
+    }
+
+    function formatHumanDate(d) {
+      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      var day = d.getDate();
+      var month = months[d.getMonth()];
+      var year = d.getFullYear();
+      var hours = String(d.getHours()).padStart(2, '0');
+      var minutes = String(d.getMinutes()).padStart(2, '0');
+      if (hours === '00' && minutes === '00') {
+        return day + ' ' + month + ' ' + year;
+      }
+      return day + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes;
+    }
+
+    window.parseStartsText = function() {
+      var textVal = document.getElementById('promo-starts-text').value.trim();
+      var picker = document.getElementById('promo-starts');
+      if (!textVal) { picker.value = ''; return; }
+      var d = new Date(textVal);
+      if (!isNaN(d.getTime())) {
+        var offset = d.getTimezoneOffset() * 60000;
+        picker.value = (new Date(d.getTime() - offset)).toISOString().slice(0, 16);
+      }
+    };
+
+    window.syncStartsText = function() {
+      var pickerVal = document.getElementById('promo-starts').value;
+      var textInput = document.getElementById('promo-starts-text');
+      if (!pickerVal) { textInput.value = ''; return; }
+      textInput.value = formatHumanDate(new Date(pickerVal));
+    };
+
+    window.parseExpiryText = function() {
+      var textVal = document.getElementById('promo-expiry-text').value.trim();
+      var picker = document.getElementById('promo-expiry');
+      if (!textVal) { picker.value = ''; return; }
+      var d = new Date(textVal);
+      if (!isNaN(d.getTime())) {
+        var offset = d.getTimezoneOffset() * 60000;
+        picker.value = (new Date(d.getTime() - offset)).toISOString().slice(0, 16);
+      }
+    };
+
+    window.syncExpiryText = function() {
+      var pickerVal = document.getElementById('promo-expiry').value;
+      var textInput = document.getElementById('promo-expiry-text');
+      if (!pickerVal) { textInput.value = ''; return; }
+      textInput.value = formatHumanDate(new Date(pickerVal));
+    };
+
+    // Google Sign-In Gate
+    auth.onAuthStateChanged(function (user) {
+      if (user && (user.email === 'sotsor@gmail.com' || user.uid === 'D5ghoWWOojW4JcAlhZKtcj02E6U2')) {
+        document.getElementById('login-overlay').style.display = 'none';
+        initDetails();
+      } else {
+        document.getElementById('login-overlay').style.display = 'flex';
+        document.getElementById('loading-state').style.display = 'none';
+        if (user) {
+          alert("Unauthorized account. Only the administrator can access promotion details.");
+          auth.signOut();
+        }
+      }
+    });
+
+    document.getElementById('btn-google-login').addEventListener('click', () => {
+      auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(err => {
+        alert("Authentication failed: " + err.message);
+      });
+    });
+
+    window.promoCodesCache = {};
+    window.rawClaimsCache = null;
+
+    function initDetails() {
+      if (!promoId) {
+        document.getElementById('loading-msg').outerHTML = '<div style="color:var(--red); font-weight:bold;">No promotion ID provided in URL parameters.</div>';
+        return;
+      }
+
+      // Load promo metadata listener
+      db.ref('promotions/' + promoId + '/public').on('value', function(snapshot) {
+        promoData = snapshot.val();
+        if (!promoData) {
+          document.getElementById('loading-state').style.display = 'flex';
+          document.getElementById('loading-msg').innerHTML = `<span style="color:var(--red); font-weight:bold;">Promotion "${promoId}" not found. It may have been deleted.</span>`;
+          document.getElementById('dashboard-content').style.display = 'none';
+          return;
+        }
+        
+        // Hide loading, show content
+        document.getElementById('loading-state').style.display = 'none';
+        document.getElementById('dashboard-content').style.display = 'block';
+
+        renderPromoDetails();
+      }, function(err) {
+        console.error(err);
+        document.getElementById('loading-msg').textContent = "Database read error: " + err.message;
+      });
+
+      // Load promo codes listener
+      db.ref('promotion_codes/' + promoId).on('value', function(codesSnap) {
+        window.promoCodesCache = codesSnap.val() || {};
+        
+        // Update unclaimed codes textarea if the form is not being edited
+        var total = (promoData && promoData.totalCoupons) || 0;
+        var claimed = (promoData && promoData.claimedCount) || 0;
+        var unclaimed = [];
+        for (var i = claimed; i < total; i++) {
+          if (window.promoCodesCache[i]) unclaimed.push(window.promoCodesCache[i]);
+        }
+        var codesTextarea = document.getElementById('promo-codes');
+        if (codesTextarea && document.activeElement !== codesTextarea) {
+          codesTextarea.value = unclaimed.join('\n');
+        }
+
+        renderClaimsHistory();
+      });
+
+      // Load one-time links
+      loadOneTimeLinks();
+      
+      // Load claims history
+      loadClaimsHistory();
+    }
+
+    function renderPromoDetails() {
+      document.getElementById('lbl-promo-id').textContent = `Slug: ${promoId}`;
+      document.getElementById('promo-name').value = promoData.name || '';
+      document.getElementById('promo-desc').value = promoData.description || '';
+      document.getElementById('promo-link').value = promoData.storeLink || '';
+      document.getElementById('promo-img').value = promoData.imageUrl || '';
+      document.getElementById('promo-visibility').value = promoData.visibility || 'private';
+
+      // Thumbnail Image
+      var thumbContainer = document.getElementById('wf-thumb-container');
+      if (promoData.imageUrl) {
+        thumbContainer.innerHTML = `<img src="${promoData.imageUrl}" class="watch-thumb" alt="${promoData.name}">`;
+      } else {
+        thumbContainer.innerHTML = `
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" style="opacity:0.4;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        `;
+      }
+
+      // Play Store QR helper
+      var qriContainer = document.getElementById('review-qrcode-container');
+      var qrCard = document.getElementById('review-link-generator-card');
+      if (promoData.storeLink) {
+        var appLink = promoData.storeLink;
+        var pkg = appLink;
+        if (appLink.includes("id=")) {
+          pkg = appLink.split("id=")[1].split("&")[0];
+        }
+        var reviewWebLink = "https://play.google.com/store/apps/details?id=" + pkg + "&showAllReviews=true";
+        var qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(reviewWebLink);
+        qriContainer.innerHTML = `<img src="${qrUrl}" alt="Review QR Code" style="width:150px; height:150px; display:block;">`;
+        qrCard.style.display = 'flex';
+      } else {
+        qrCard.style.display = 'none';
+      }
+
+      var total = promoData.totalCoupons || 0;
+      var claimed = promoData.claimedCount || 0;
+      var remaining = Math.max(0, total - claimed);
+
+      document.getElementById('lbl-stat-total').textContent = total;
+      document.getElementById('lbl-stat-claimed').textContent = claimed;
+      document.getElementById('lbl-stat-remaining').textContent = remaining;
+
+      // Status Badge
+      var now = Date.now();
+      var isExpired = promoData.expiresAt && now > promoData.expiresAt;
+      var isScheduled = promoData.startsAt && now < promoData.startsAt;
+      var badge = document.getElementById('promo-status-badge');
+      
+      if (!promoData.active) {
+        badge.textContent = "Paused";
+        badge.style.color = "var(--red)";
+        badge.style.background = "rgba(232, 40, 30, 0.1)";
+      } else if (remaining === 0) {
+        badge.textContent = "Completed";
+        badge.style.color = "var(--muted)";
+        badge.style.background = "rgba(255, 255, 255, 0.05)";
+      } else if (isExpired) {
+        badge.textContent = "Expired";
+        badge.style.color = "var(--red)";
+        badge.style.background = "rgba(232, 40, 30, 0.1)";
+      } else if (isScheduled) {
+        badge.textContent = "Scheduled";
+        badge.style.color = "var(--yellow)";
+        badge.style.background = "rgba(245, 197, 24, 0.1)";
+      } else {
+        badge.textContent = "Active";
+        badge.style.color = "var(--green)";
+        badge.style.background = "rgba(76, 175, 80, 0.1)";
+      }
+
+      // Sync Dates UI
+      if (promoData.startsAt) {
+        var d = new Date(promoData.startsAt);
+        var offset = d.getTimezoneOffset() * 60000;
+        document.getElementById('promo-starts').value = (new Date(d.getTime() - offset)).toISOString().slice(0, 16);
+        document.getElementById('promo-starts-text').value = formatHumanDate(d);
+      } else {
+        document.getElementById('promo-starts').value = '';
+        document.getElementById('promo-starts-text').value = '';
+      }
+
+      if (promoData.expiresAt) {
+        var d = new Date(promoData.expiresAt);
+        var offset = d.getTimezoneOffset() * 60000;
+        document.getElementById('promo-expiry').value = (new Date(d.getTime() - offset)).toISOString().slice(0, 16);
+        document.getElementById('promo-expiry-text').value = formatHumanDate(d);
+      } else {
+        document.getElementById('promo-expiry').value = '';
+        document.getElementById('promo-expiry-text').value = '';
+      }
+
+      // Pause/Resume button update
+      var pauseBtn = document.getElementById('btn-pause-promo');
+      pauseBtn.textContent = promoData.active ? "PAUSE PROMOTION" : "RESUME PROMOTION";
+
+      // Render Public Claim URLs
+      var claimBaseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/claim.html';
+      var claimUrl = claimBaseUrl + '?p=' + promoId;
+      var urlLabel = document.getElementById('lbl-public-url');
+      urlLabel.textContent = claimUrl;
+      urlLabel.href = claimUrl;
+
+      var publicBadge = document.getElementById('lbl-public-badge');
+      if (promoData.visibility === 'private') {
+        publicBadge.textContent = "PRIVATE LINK BLOCKED";
+        publicBadge.style.color = "var(--red)";
+      } else {
+        publicBadge.textContent = "PUBLIC CLAIM OPEN";
+        publicBadge.style.color = "var(--green)";
+      }
+
+      // Load unclaimed codes list in textbox from cache
+      var allCodes = window.promoCodesCache || {};
+      var unclaimed = [];
+      for (var i = claimed; i < total; i++) {
+        if (allCodes[i]) unclaimed.push(allCodes[i]);
+      }
+      var codesTextarea = document.getElementById('promo-codes');
+      if (codesTextarea && document.activeElement !== codesTextarea) {
+        codesTextarea.value = unclaimed.join('\n');
+      }
+    }
+
+    // Save Changes action
+    document.getElementById('btn-save-settings').addEventListener('click', function() {
+      var name = document.getElementById('promo-name').value.trim();
+      var desc = document.getElementById('promo-desc').value.trim();
+      var link = document.getElementById('promo-link').value.trim();
+      var imgUrl = document.getElementById('promo-img').value.trim();
+      var visibility = document.getElementById('promo-visibility').value;
+      var rawCodes = document.getElementById('promo-codes').value.trim();
+      
+      var startsVal = document.getElementById('promo-starts').value;
+      var startsAt = startsVal ? new Date(startsVal).getTime() : null;
+      var expiryVal = document.getElementById('promo-expiry').value;
+      var expiresAt = expiryVal ? new Date(expiryVal).getTime() : null;
+
+      if (!name) { alert("Please enter a watch face name."); return; }
+
+      var codesList = rawCodes.split('\n').map(c => c.trim()).filter(c => c.length > 0);
+      var claimedCount = promoData.claimedCount || 0;
+
+      if (!confirm("Save settings? Existing claimed coupons (" + claimedCount + ") will be preserved, and codes will be updated.")) {
+        return;
+      }
+
+      db.ref('promotions/' + promoId + '/public/totalCoupons').once('value').then(function(totalSnap) {
+        var oldTotal = totalSnap.val() || 0;
+        var updates = {};
+        
+        updates['promotions/' + promoId + '/public/name'] = name;
+        updates['promotions/' + promoId + '/public/description'] = desc;
+        updates['promotions/' + promoId + '/public/storeLink'] = link;
+        updates['promotions/' + promoId + '/public/imageUrl'] = imgUrl;
+        updates['promotions/' + promoId + '/public/visibility'] = visibility;
+        updates['promotions/' + promoId + '/public/startsAt'] = startsAt;
+        updates['promotions/' + promoId + '/public/expiresAt'] = expiresAt;
+
+        var newTotal = claimedCount + codesList.length;
+        updates['promotions/' + promoId + '/public/totalCoupons'] = newTotal;
+
+        // Write new codes starting from claimed count index
+        codesList.forEach((code, index) => {
+          updates['promotion_codes/' + promoId + '/' + (claimedCount + index)] = code;
+        });
+
+        // Clean up indices if code list is shorter than it was before
+        if (oldTotal > newTotal) {
+          for (var i = newTotal; i < oldTotal; i++) {
+            updates['promotion_codes/' + promoId + '/' + i] = null;
+          }
+        }
+
+        db.ref().update(updates).then(function() {
+          showToast("Configuration saved!");
+        }).catch(function(err) {
+          alert("Save failed: " + err.message);
+        });
+      });
+    });
+
+    // Copy public link
+    document.getElementById('btn-copy-public-link').addEventListener('click', function() {
+      var text = document.getElementById('lbl-public-url').textContent;
+      navigator.clipboard.writeText(text).then(function() {
+        showToast("Public claim link copied!");
+      });
+    });
+
+    // Pause/Resume Promotion Action
+    document.getElementById('btn-pause-promo').addEventListener('click', function() {
+      var currentStatus = promoData.active;
+      db.ref('promotions/' + promoId + '/public/active').set(!currentStatus).then(function() {
+        showToast(currentStatus ? "Promotion paused!" : "Promotion activated!");
+      });
+    });
+
+    // Duplicate Promotion Action
+    document.getElementById('btn-duplicate-promo').addEventListener('click', function() {
+      if (!confirm("Duplicate this promotion? You will be redirected back to the promotions page with details prefilled.")) {
+        return;
+      }
+      
+      // Store duplicate cache in localStorage so manage-coupons.html can load it
+      var dupObj = {
+        name: (promoData.name || '') + ' Copy',
+        description: promoData.description || '',
+        storeLink: promoData.storeLink || '',
+        imageUrl: promoData.imageUrl || '',
+        visibility: promoData.visibility || 'private',
+        startsAt: promoData.startsAt || null,
+        expiresAt: promoData.expiresAt || null
+      };
+      
+      localStorage.setItem('cc_promo_duplicate_cache', JSON.stringify(dupObj));
+      window.location.href = 'manage-coupons.html?duplicate=true';
+    });
+
+    // Delete Promotion Action
+    document.getElementById('btn-delete-promo').addEventListener('click', function() {
+      if (!confirm("CRITICAL WARNING: This will permanently delete the promotion metadata, coupon codes, one-time link keys, and claims logs history. Are you absolutely sure?")) {
+        return;
+      }
+      if (!confirm("FINAL CONFIRMATION: Are you really sure you want to permanently delete '" + promoId + "'? This action is irreversible.")) {
+        return;
+      }
+
+      var updates = {};
+      updates['promotions/' + promoId] = null;
+      updates['promotion_codes/' + promoId] = null;
+      updates['promotion_claims/' + promoId] = null;
+      
+      // Delete any associated one-time tokens in database (fetch first)
+      db.ref('one_time_tokens').orderByChild('promoId').equalTo(promoId).once('value').then(function(snap) {
+        var tokens = snap.val() || {};
+        Object.keys(tokens).forEach(t => {
+          updates['one_time_tokens/' + t] = null;
+        });
+
+        db.ref().update(updates).then(function() {
+          alert("Promotion deleted successfully.");
+          window.location.href = 'manage-coupons.html';
+        }).catch(function(err) {
+          alert("Deletion failed: " + err.message);
+        });
+      });
+    });
+
+    // One-Time Tokens management
+    function loadOneTimeLinks() {
+      db.ref('one_time_tokens').orderByChild('promoId').equalTo(promoId).on('value', function(snapshot) {
+        var container = document.getElementById('one-time-links-container');
+        var tokens = snapshot.val();
+        
+        if (!tokens) {
+          container.innerHTML = '<div class="empty-state">No one-time links created yet.</div>';
+          return;
+        }
+
+        var claimBaseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/claim.html';
+        var tokenKeys = Object.keys(tokens);
+        
+        // Sort tokens by creation date descending
+        tokenKeys.sort(function(a, b) {
+          return (tokens[b].createdAt || 0) - (tokens[a].createdAt || 0);
+        });
+
+        var html = '';
+        tokenKeys.forEach(function(tokenId) {
+          var token = tokens[tokenId];
+          var claimUrl = claimBaseUrl + '?t=' + tokenId;
+          
+          var statusHtml = '';
+          if (token.claimed) {
+            statusHtml = `<span style="color:var(--green); font-weight:bold;">Claimed (${formatDateTime(token.claimedAt, true)})</span>`;
+          } else {
+            statusHtml = `<span style="color:var(--yellow); font-weight:bold;">Unused Link</span>`;
+          }
+
+          html += `
+            <div class="claim-row" style="padding:10px; border-bottom:1px solid var(--border);">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+                <span class="claim-time" style="font-size:12px;">Token: <span style="font-family:monospace; color:var(--text); font-weight:600;">${tokenId.substring(0, 8)}...</span></span>
+                <span style="font-size:11px;">${statusHtml}</span>
+              </div>
+              <div style="display:flex; gap:6px; margin-top:6px; align-items:center;">
+                <input class="input-text" type="text" readonly value="${claimUrl}" style="padding:4px 8px; font-size:12px; font-family:monospace; height:auto; flex:1; min-width:0; background:var(--black);">
+                <button class="btn small" style="padding:4px 8px; font-size:11px; flex:none; height:auto;" onclick="copyTokenUrl('${claimUrl}')">Copy</button>
+                <button class="btn red small" style="padding:4px 8px; font-size:11px; flex:none; height:auto;" onclick="deleteToken('${tokenId}')">Delete</button>
+              </div>
+              ${token.claimed && token.code ? `
+                <div style="font-size:11px; color:var(--muted); margin-top:4px; text-align:left; word-break:break-all;">
+                  Claimed Code: <span style="color:var(--yellow); font-family:monospace; font-weight:bold;">${token.code}</span> | Guest ID: <span style="font-family:monospace;">${token.claimedBy}</span>
+                </div>
+              ` : ''}
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+      });
+    }
+
+    window.copyTokenUrl = function(url) {
+      navigator.clipboard.writeText(url).then(function() {
+        showToast("One-time claim link copied!");
+      });
+    };
+
+    window.deleteToken = function(tokenId) {
+      if (!confirm("Permanently delete this one-time link? It will be disabled immediately.")) {
+        return;
+      }
+      db.ref('one_time_tokens/' + tokenId).remove().then(function() {
+        showToast("Link deleted.");
+      });
+    };
+
+    function generateSecureToken() {
+      var array = new Uint8Array(16);
+      window.crypto.getRandomValues(array);
+      var token = '';
+      for (var i = 0; i < array.length; i++) {
+        token += array[i].toString(16).padStart(2, '0');
+      }
+      return token;
+    }
+
+    document.getElementById('btn-gen-token').addEventListener('click', function() {
+      var tokenId = generateSecureToken();
+      db.ref('one_time_tokens/' + tokenId).set({
+        promoId: promoId,
+        claimed: false,
+        createdAt: firebase.database.ServerValue.TIMESTAMP
+      }).then(function() {
+        showToast("One-time link generated!");
+      });
+    });
+
+    document.getElementById('btn-gen-bulk').addEventListener('click', function() {
+      var updates = {};
+      for (var i = 0; i < 5; i++) {
+        var tokenId = generateSecureToken();
+        updates['one_time_tokens/' + tokenId] = {
+          promoId: promoId,
+          claimed: false,
+          createdAt: firebase.database.ServerValue.TIMESTAMP
+        };
+      }
+      db.ref().update(updates).then(function() {
+        showToast("5 Bulk one-time links created!");
+      });
+    });
+
+    // Claims Logs History loader
+    function loadClaimsHistory() {
+      db.ref('promotion_claims/' + promoId).on('value', function(snapshot) {
+        window.rawClaimsCache = snapshot.val();
+        renderClaimsHistory();
+      });
+    }
+
+    function renderClaimsHistory() {
+      var claims = window.rawClaimsCache;
+      var container = document.getElementById('claims-history-box');
+      var aiBtn = document.getElementById('btn-ai-analyze');
+
+      if (!claims) {
+        container.innerHTML = '<div class="empty-state">No claims recorded for this promotion.</div>';
+        document.getElementById('lbl-claims-count').textContent = "0 Claims";
+        aiBtn.disabled = true;
+        aiBtn.style.opacity = '0.5';
+        aiBtn.style.cursor = 'not-allowed';
+        claimsCache = [];
+        return;
+      }
+
+      aiBtn.disabled = false;
+      aiBtn.style.opacity = '1';
+      aiBtn.style.cursor = 'pointer';
+
+      var keys = Object.keys(claims);
+      document.getElementById('lbl-claims-count').textContent = `${keys.length} Claims`;
+
+      // Map and sort claims (newest first)
+      claimsCache = keys.map(uid => {
+        var c = claims[uid];
+        var resolvedCode = c.code;
+        if ((!resolvedCode || resolvedCode === 'undefined') && c.index !== undefined && window.promoCodesCache) {
+          resolvedCode = window.promoCodesCache[c.index] || 'undefined';
+        }
+        return {
+          uid: uid,
+          code: resolvedCode || 'undefined',
+          time: c.timestamp ? formatDateTime(c.timestamp, true) : 'Unknown',
+          device: c.device || '',
+          os: c.os || '',
+          browser: c.browser || '',
+          timezone: c.timezone || '',
+          language: c.language || '',
+          referrer: c.referrer || ''
+        };
+      }).reverse();
+
+      container.innerHTML = claimsCache.map(c => {
+        var details = [];
+        if (c.os) details.push(`📱 ${c.os} (${c.browser})`);
+        if (c.timezone) details.push(`🌍 ${c.timezone}`);
+        if (c.referrer) details.push(`🔗 ${c.referrer}`);
+        var metaHtml = details.length > 0 ? 
+          `<div style="font-size:11px; color:var(--muted); margin-top:2px; display:flex; gap:6px; flex-wrap:wrap; text-align:left; word-break:break-all;">${details.join(' | ')}</div>` : '';
+
+        return `
+          <div class="claim-row">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="claim-time" style="font-size:12px;">${c.time}</span>
+              <span class="claim-code" style="font-size:12.5px;" title="Guest UID: ${c.uid}">${c.code}</span>
+            </div>
+            ${metaHtml}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Copy AI claims analysis logs prompt to clipboard
+    document.getElementById('btn-ai-analyze').addEventListener('click', function() {
+      if (claimsCache.length === 0) return;
+      
+      var name = document.getElementById('promo-name').value.trim() || 'Unknown Watch Face';
+      var total = document.getElementById('lbl-stat-total').textContent;
+      var claimed = document.getElementById('lbl-stat-claimed').textContent;
+      var remaining = document.getElementById('lbl-stat-remaining').textContent;
+
+      var cleanList = claimsCache.map((c, idx) => {
+        return {
+          claimIndex: idx + 1,
+          time: c.time,
+          code: c.code,
+          os: c.os,
+          browser: c.browser,
+          timezone: c.timezone,
+          language: c.language,
+          referrer: c.referrer
+        };
+      });
+
+      var promptText = `I need a professional coupon claims analysis report for my promotion:
+- Promotion Name: ${name}
+- Promotion ID/Slug: ${promoId}
+- Total Coupons Loaded: ${total}
+- Claimed Coupons: ${claimed}
+- Remaining Coupons: ${remaining}
+- Claims Logged: ${cleanList.length}
+
+Here is the raw JSON list of all claim events:
+${JSON.stringify(cleanList, null, 2)}
+
+Please act as a Senior Data & Marketing Analyst. Analyze the claims and produce a comprehensive Coupon Claims Report. Please include:
+1. Executive Summary: Key findings and overall campaign performance.
+2. Claim Rate & Momentum: Analyze the speed of claims and conversion rate.
+3. Demographic & Environment Analysis: Break down claims by Operating System, Browser, and Timezone/Language to show where the audience is located.
+4. Referral Effectiveness: Identify which traffic sources (referrers) drove the most claims.
+5. Abuse & Fraud Detection: Check for suspicious patterns, such as multiple claims from the same IP/OS/Browser combo within a short timeframe, or potential bot patterns.
+6. Recommendations: Actionable steps for optimizing future promotions or improving security.
+
+Format this report with a professional tone in clean, beautiful Markdown with structured headings, tables, and bullet points.`;
+
+      navigator.clipboard.writeText(promptText).then(function() {
+        showToast("Logs Copied! Opening Gemini...");
+        setTimeout(function() {
+          window.open("https://gemini.google.com/", "_blank");
+        }, 1200);
+      }).catch(function(err) {
+        alert("Failed to copy prompt: " + err.message);
+      });
+    });
+  </script>
+</body>
+</html>
