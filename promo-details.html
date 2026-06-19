@@ -1334,6 +1334,7 @@
         return {
           uid: uid,
           code: resolvedCode || 'undefined',
+          timestamp: c.timestamp || 0,
           time: c.timestamp ? formatDateTime(c.timestamp, true) : 'Unknown',
           device: c.device || '',
           os: c.os || '',
@@ -1342,7 +1343,12 @@
           language: c.language || '',
           referrer: c.referrer || ''
         };
-      }).reverse();
+      });
+
+      // Sort by timestamp descending (newest first)
+      claimsCache.sort(function(a, b) {
+        return b.timestamp - a.timestamp;
+      });
 
       container.innerHTML = claimsCache.map(c => {
         var details = [];
