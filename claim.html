@@ -439,6 +439,55 @@
         letter-spacing: 0.5px;
       }
     }
+
+    /* Watch Installation Guide Styles */
+    .install-guide-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--mid);
+      padding: 12px;
+      text-align: left;
+      margin-top: 4px;
+      transition: border-color 0.2s;
+    }
+
+    .install-guide-card summary {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--yellow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .install-guide-card summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .install-guide-card summary .arrow {
+      font-size: 10px;
+      color: var(--muted);
+      transition: transform 0.2s ease;
+      display: inline-block;
+    }
+
+    .install-guide-card[open] summary .arrow {
+      transform: rotate(180deg);
+    }
+    
+    .install-step {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    
+    .install-step strong {
+      color: var(--yellow);
+    }
   </style>
 </head>
 
@@ -516,6 +565,29 @@
           <button class="btn redeem-btn" id="btn-redeem">
             REDEEM ON GOOGLE PLAY
           </button>
+
+          <!-- Watch Installation Guide -->
+          <details class="install-guide-card">
+            <summary>
+              <span>⌚ HOW TO INSTALL ON YOUR WATCH</span>
+              <span class="arrow">▼</span>
+            </summary>
+            <div class="install-step" style="display: flex; flex-direction: column; gap: 8px;">
+              <div>
+                <strong>Step 1:</strong> Tap <em>Redeem on Google Play</em> to add the watch face to your Google account.
+              </div>
+              <div>
+                <strong>Step 2:</strong> Install the companion app on your phone.
+              </div>
+              <div>
+                <strong>Step 3:</strong> Open the Play Store <strong>directly on your watch</strong>, scroll to the bottom, tap <strong>"Apps on your phone"</strong> (or "Library"), and tap <strong>Install</strong> next to this watch face.
+              </div>
+              <div style="border-top: 1px solid var(--border); padding-top: 8px; margin-top: 4px;">
+                <span style="color: var(--yellow); font-weight: 600;">⚠️ Watch showing a price?</span>
+                <p style="color: var(--muted); margin-top: 3px;">Don't worry, you won't be charged again! Google Play syncs slowly. You can also force installation by opening a browser on your phone/PC, visiting <a href="https://play.google.com" target="_blank" style="color: var(--yellow); text-decoration: underline;">play.google.com</a>, searching for the watch face, and selecting "Install on watch".</p>
+              </div>
+            </div>
+          </details>
 
           <!-- Support & Review Callout -->
           <div id="review-callout-box" class="review-callout" style="display: none;">
@@ -843,7 +915,7 @@
       };
       
       // Set play store link
-      var playLink = "https://play.google.com/store?code=" + encodeURIComponent(code);
+      var playLink = "https://play.google.com/redeem?code=" + encodeURIComponent(code);
       document.getElementById('btn-redeem').onclick = function() {
         window.open(playLink, '_blank');
       };
