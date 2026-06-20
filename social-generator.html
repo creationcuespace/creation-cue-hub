@@ -2137,8 +2137,9 @@
             let linkComment = `🔗 Get ${name} on the Google Play Store via the link: ${link}`;
             
             if (couponsActive) {
-                bioComment = `🎫 Free coupons link in bio! Grab yours now! 👇`;
-                linkComment = `🎫 Grab your free coupon here: ${couponsLink || 'https://...'}`;
+                const cLink = couponsLink || 'https://...';
+                bioComment = `🎫 Free coupons link: ${cLink} Grab yours now! 👇`;
+                linkComment = `🎫 Grab your free coupon here: ${cLink}`;
             }
             
             const commentTiktok = document.getElementById('res-comment-tiktok');
