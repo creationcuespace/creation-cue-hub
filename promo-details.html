@@ -1258,7 +1258,7 @@
               </div>
               <div style="display:flex; gap:6px; margin-top:6px; align-items:center;">
                 <input class="input-text" id="token-input-${tokenId}" type="text" readonly value="${claimUrl}" style="padding:4px 8px; font-size:12px; font-family:monospace; height:auto; flex:1; min-width:0; background:var(--black);">
-                <button class="btn small" style="padding:4px 8px; font-size:11px; flex:none; height:auto;" onclick="copyTokenUrl('${claimUrl}')">Copy</button>
+                <button class="btn small" style="padding:4px 8px; font-size:11px; flex:none; height:auto;" onclick="copyTokenUrl('${tokenId}')">Copy</button>
                 <button class="btn small" style="padding:4px 8px; font-size:11px; flex:none; height:auto; background:var(--blue); color:white;" onclick="shortenTokenUrl('${tokenId}', '${claimUrl}', this)">Shorten</button>
                 <button class="btn red small" style="padding:4px 8px; font-size:11px; flex:none; height:auto;" onclick="deleteToken('${tokenId}')">Delete</button>
               </div>
@@ -1275,8 +1275,10 @@
       });
     }
 
-    window.copyTokenUrl = function(url) {
-      navigator.clipboard.writeText(url).then(function() {
+    window.copyTokenUrl = function(tokenId) {
+      var input = document.getElementById('token-input-' + tokenId);
+      var text = input ? input.value : '';
+      navigator.clipboard.writeText(text).then(function() {
         showToast("One-time claim link copied!");
       });
     };
