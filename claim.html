@@ -834,33 +834,43 @@
       var claimed = promoData.claimedCount || 0;
       var remaining = Math.max(0, total - claimed);
       
-      document.getElementById('promo-count-val').textContent = remaining;
-
       var statusPill = document.querySelector('.promo-status-pill');
+      var labelEl = document.getElementById('promo-count-label');
+      var valEl = document.getElementById('promo-count-val');
+      var indicator = document.getElementById('status-indicator-dot');
+      
       if (statusPill) {
-        if (remaining <= 9) {
-          statusPill.style.display = 'inline-flex';
-        } else {
-          statusPill.style.display = 'none';
-        }
+        statusPill.style.display = 'inline-flex';
       }
       
-      var pct = total > 0 ? (remaining / total) * 100 : 0;
-      var indicator = document.getElementById('status-indicator-dot');
-      if (indicator) {
-        if (remaining === 0) {
+      if (remaining === 0) {
+        if (labelEl) labelEl.textContent = "Out of Coupons";
+        if (valEl) valEl.textContent = "";
+        if (indicator) {
           indicator.style.background = 'var(--red)';
           indicator.style.boxShadow = '0 0 8px var(--red)';
           indicator.style.animation = 'none';
-        } else if (pct < 20) {
+        }
+      } else if (remaining <= 9) {
+        if (labelEl) labelEl.textContent = "Only";
+        if (valEl) valEl.textContent = remaining + " Left!";
+        if (indicator) {
           indicator.style.background = 'var(--red)';
           indicator.style.boxShadow = '0 0 8px var(--red)';
           indicator.style.animation = 'pulse-red 1.5s infinite';
-        } else if (pct < 50) {
+        }
+      } else if (remaining <= 20) {
+        if (labelEl) labelEl.textContent = "Limited Quantities";
+        if (valEl) valEl.textContent = "";
+        if (indicator) {
           indicator.style.background = 'var(--yellow)';
           indicator.style.boxShadow = '0 0 8px var(--yellow)';
           indicator.style.animation = 'pulse-yellow 1.5s infinite';
-        } else {
+        }
+      } else {
+        if (labelEl) labelEl.textContent = "Active Promotion";
+        if (valEl) valEl.textContent = "";
+        if (indicator) {
           indicator.style.background = 'var(--green)';
           indicator.style.boxShadow = '0 0 8px var(--green)';
           indicator.style.animation = 'pulse-green 2s infinite';
