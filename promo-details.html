@@ -1277,9 +1277,11 @@
 
     window.copyTokenUrl = function(tokenId) {
       var input = document.getElementById('token-input-' + tokenId);
-      var text = input ? input.value : '';
-      navigator.clipboard.writeText(text).then(function() {
-        showToast("One-time claim link copied!");
+      var link = input ? input.value : '';
+      var wfName = document.getElementById('promo-name').value.trim() || (promoData ? promoData.name : '') || 'the watch face';
+      var textToCopy = "Hi,\nHere is your coupon for " + wfName + ". A review is appreciated.\n" + link;
+      navigator.clipboard.writeText(textToCopy).then(function() {
+        showToast("Claim message copied!");
       });
     };
 
@@ -1499,8 +1501,10 @@ Format this report with a professional tone in clean, beautiful Markdown with st
         if (input) {
           input.value = shortUrl;
         }
-        navigator.clipboard.writeText(shortUrl).then(function() {
-          showToast("Short link copied!");
+        var wfName = document.getElementById('promo-name').value.trim() || (promoData ? promoData.name : '') || 'the watch face';
+        var textToCopy = "Hi,\nHere is your coupon for " + wfName + ". A review is appreciated.\n" + shortUrl;
+        navigator.clipboard.writeText(textToCopy).then(function() {
+          showToast("Claim message copied!");
         });
         if (btnEl) {
           btnEl.disabled = false;
