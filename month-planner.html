@@ -1,0 +1,2235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#141414">
+  <title>CreationCue™ | Month Work Planner</title>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Firebase SDK Compat -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png">
+
+  <style>
+    :root {
+      /* HSL tailored color palette matching the brand */
+      --bg-color: hsl(240, 10%, 3%);
+      --surface-color: hsl(240, 10%, 7%);
+      --surface-hover: hsl(240, 10%, 12%);
+      --surface-variant: hsl(240, 5%, 15%);
+      
+      --primary: hsl(43, 89%, 53%);      /* Custom Gold #f1b31c */
+      --primary-glow: hsla(43, 89%, 53%, 0.15);
+      --primary-text: hsl(43, 89%, 60%);
+      
+      --text-primary: hsl(0, 0%, 100%);
+      --text-secondary: hsl(240, 5%, 70%);
+      --text-muted: hsl(240, 5%, 45%);
+      
+      --success: hsl(142, 72%, 40%);
+      --success-bg: hsla(142, 72%, 29%, 0.15);
+      --orange: hsl(27, 96%, 51%);
+      --orange-bg: hsla(27, 96%, 51%, 0.15);
+      --danger: hsl(350, 89%, 50%);
+      --blue: hsl(210, 89%, 50%);
+      
+      --border-color: hsla(0, 0%, 100%, 0.08);
+      --border-glow: hsla(43, 89%, 53%, 0.3);
+      
+      --glass-bg: rgba(15, 15, 20, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.06);
+      --glass-shadow: rgba(0, 0, 0, 0.5);
+      
+      --font-main: 'Inter', sans-serif;
+      --font-display: 'Outfit', sans-serif;
+      --font-title: 'Teko', sans-serif;
+      
+      --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --border-radius-lg: 16px;
+      --border-radius-md: 12px;
+      --border-radius-sm: 8px;
+    }
+
+    /* Base Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      outline: none;
+      scrollbar-width: thin;
+      scrollbar-color: var(--surface-variant) var(--bg-color);
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      font-family: var(--font-main);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Custom Scrollbar for Webkit */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-color);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--surface-variant);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
+    /* Header Styling */
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 24px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--glass-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .brand-logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--text-primary);
+      text-transform: uppercase;
+    }
+
+    .brand-name span {
+      color: var(--primary);
+    }
+
+    .header-btns {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .header-btn {
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-family: var(--font-title);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+      text-transform: uppercase;
+      line-height: 1.1;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .header-btn:hover {
+      background: var(--surface-hover);
+      color: var(--text-primary);
+      border-color: var(--text-muted);
+      transform: translateY(-1px);
+    }
+
+    .header-btn.active {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-glow);
+    }
+
+    /* Main Dashboard Layout */
+    .dashboard-container {
+      width: 100%;
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      padding: 24px;
+      box-shadow: 0 8px 32px var(--glass-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      height: fit-content;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-subtitle {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Form Fields */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .input-text, .select-input {
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 12px 14px;
+      border-radius: var(--border-radius-md);
+      font-size: 13.5px;
+      transition: var(--transition-smooth);
+      font-family: var(--font-main);
+      width: 100%;
+    }
+
+    .input-text:focus, .select-input:focus {
+      border-color: var(--primary);
+      background: var(--surface-hover);
+      box-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: black;
+      border: none;
+      padding: 12px 20px;
+      border-radius: var(--border-radius-md);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      background: hsl(43, 89%, 60%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px hsla(43, 89%, 53%, 0.25);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      background: var(--surface-color);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 10px 16px;
+      border-radius: var(--border-radius-md);
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-hover);
+      border-color: var(--text-muted);
+    }
+
+    /* Backlog List */
+    .backlog-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 250px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .backlog-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      padding: 10px 12px;
+      gap: 8px;
+      transition: var(--transition-smooth);
+    }
+
+    .backlog-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .backlog-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .backlog-item-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .backlog-item-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+
+    .priority-badge {
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .priority-high {
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid hsla(27, 96%, 51%, 0.3);
+    }
+
+    .priority-medium {
+      background: rgba(33, 150, 243, 0.15);
+      color: var(--blue);
+      border: 1px solid rgba(33, 150, 243, 0.3);
+    }
+
+    .priority-low {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-delete {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-delete:hover {
+      color: var(--danger);
+      background: rgba(232, 40, 30, 0.1);
+    }
+
+    /* Calendar Grid area */
+    .calendar-area {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .calendar-control-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      padding: 16px 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .calendar-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .calendar-title span {
+      color: var(--primary);
+    }
+
+    .nav-btn {
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .nav-btn:hover {
+      background: var(--surface-hover);
+      border-color: var(--text-muted);
+    }
+
+    /* Stats Row */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      width: 100%;
+    }
+
+    @media (max-width: 640px) {
+      .stats-bar {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.01);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-val {
+      font-size: 18px;
+      font-weight: 800;
+      font-family: var(--font-display);
+      color: #fff;
+    }
+
+    .stat-val span {
+      color: var(--primary);
+    }
+
+    .stat-lbl {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 4px;
+      background: var(--surface-variant);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--success);
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* Calendar Grid Layout */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+
+    .weekday-header {
+      text-align: center;
+      font-weight: 700;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 8px 0;
+    }
+
+    .day-cell {
+      min-height: 110px;
+      background: rgba(15, 15, 20, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      overflow: hidden;
+    }
+
+    .day-cell:hover {
+      background: var(--surface-hover);
+      border-color: rgba(241, 179, 28, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .day-cell.today {
+      border-color: var(--primary);
+      box-shadow: inset 0 0 12px var(--primary-glow);
+    }
+
+    .day-cell.other-month {
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .day-cell.off-day {
+      background: repeating-linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.01),
+        rgba(255, 255, 255, 0.01) 10px,
+        rgba(0, 0, 0, 0.2) 10px,
+        rgba(0, 0, 0, 0.2) 20px
+      );
+      border-color: rgba(255, 255, 255, 0.03);
+    }
+
+    .day-cell-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+
+    .day-num {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      font-family: var(--font-display);
+    }
+
+    .day-cell.today .day-num {
+      color: var(--primary);
+    }
+
+    .day-status-badge {
+      font-size: 8px;
+      font-weight: 800;
+      padding: 1px 4px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .day-status-weekend {
+      background: rgba(255,255,255,0.04);
+      color: var(--text-muted);
+    }
+
+    .day-status-holiday {
+      background: rgba(232, 40, 30, 0.12);
+      color: var(--danger);
+      border: 1px solid rgba(232, 40, 30, 0.25);
+    }
+
+    /* Day Chips rendering inside calendar */
+    .day-tasks-container {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex: 1;
+      justify-content: flex-start;
+      overflow: hidden;
+    }
+
+    .day-task-chip {
+      font-size: 9.5px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 100%;
+      border-left: 2.5px solid var(--text-muted);
+      background: rgba(255,255,255,0.02);
+      color: var(--text-secondary);
+    }
+
+    .day-task-chip.priority-high {
+      border-left-color: var(--orange);
+      background: rgba(27, 96, 51, 0.05);
+      color: #fff;
+    }
+
+    .day-task-chip.priority-medium {
+      border-left-color: var(--blue);
+    }
+
+    .day-task-chip.priority-low {
+      border-left-color: var(--text-muted);
+    }
+
+    .day-task-chip.fallback {
+      border-left-color: var(--primary);
+      background: rgba(241, 179, 28, 0.03);
+      color: var(--text-secondary);
+    }
+
+    .day-task-chip.completed {
+      text-decoration: line-through;
+      opacity: 0.45;
+      background: none;
+      border-left-color: var(--success);
+    }
+
+    .day-cell-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+      font-size: 9px;
+      color: var(--text-muted);
+    }
+
+    .day-cell-progress {
+      width: 30px;
+      height: 3px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 1.5px;
+      overflow: hidden;
+    }
+
+    .day-cell-progress-bar {
+      height: 100%;
+      background: var(--success);
+      width: 0%;
+    }
+
+    /* Modal Drawer / Sidebar Panel */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: flex-end;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .drawer {
+      width: 440px;
+      max-width: 100%;
+      background: var(--surface-color);
+      border-left: 1px solid var(--border-color);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -12px 0 32px rgba(0,0,0,0.6);
+      animation: slideIn 0.3s cubic-bezier(0.1, 0.8, 0.2, 1);
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    .drawer-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .drawer-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .drawer-close {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 20px;
+      padding: 6px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-smooth);
+    }
+
+    .drawer-close:hover {
+      background: var(--surface-hover);
+      color: var(--text-primary);
+    }
+
+    .drawer-content {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Day Slots list */
+    .day-slots-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .slot-item {
+      display: grid;
+      grid-template-columns: 24px 32px 1fr 32px;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.01);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      padding: 10px 14px;
+      transition: var(--transition-smooth);
+    }
+
+    .slot-item.completed {
+      border-color: rgba(76, 175, 80, 0.2);
+      background: rgba(76, 175, 80, 0.01);
+    }
+
+    .slot-item.rolled-over {
+      border-color: var(--border-color);
+      background: rgba(255, 255, 255, 0.005);
+      opacity: 0.5;
+    }
+
+    .slot-item.holiday-slot {
+      opacity: 0.35;
+      background: none;
+      border-style: dashed;
+    }
+
+    .slot-num-badge {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .slot-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--success);
+      cursor: pointer;
+    }
+
+    .slot-content-wrapper {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .slot-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .slot-item.completed .slot-text {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .slot-meta-label {
+      font-size: 9.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .slot-meta-label span {
+      border-radius: 3px;
+      padding: 1px 4px;
+      font-size: 8px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .slot-meta-label span.c-lbl {
+      background: rgba(255,255,255,0.04);
+      color: var(--text-secondary);
+    }
+
+    .slot-meta-label span.f-lbl {
+      background: var(--primary-glow);
+      color: var(--primary-text);
+    }
+
+    .btn-slot-action {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-slot-action:hover {
+      color: var(--primary);
+      background: var(--primary-glow);
+    }
+
+    /* Dialog/Input Modal for inline swap */
+    .dialog-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .dialog-card {
+      width: 400px;
+      max-width: 90%;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      padding: 24px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(40px);
+      background: var(--primary);
+      color: #000;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border-radius: 20px;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+      z-index: 3000;
+      white-space: nowrap;
+      opacity: 0;
+      box-shadow: 0 8px 24px rgba(241, 179, 28, 0.4);
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Private Login Overlay */
+    #login-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-color);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .logo-mark {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .logo-mark span {
+      display: block;
+      width: 12px;
+      height: 36px;
+      border-radius: 2px;
+    }
+
+    .logo-mark .r { background: #e8281e; }
+    .logo-mark .b { background: #1a3a6b; }
+    .logo-mark .y { background: var(--primary); }
+
+    .login-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: white;
+      color: #333;
+      border: none;
+      border-radius: 24px;
+      padding: 12px 28px;
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: var(--transition-smooth);
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid rgba(255,255,255,0.05);
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="top-header">
+    <a href="index.html" class="brand-logo-area">
+      <img src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" class="brand-logo" alt="Logo">
+      <span class="brand-name">Creation<span>Cue</span>™</span>
+    </a>
+    <div class="header-btns">
+      <a href="index.html" class="header-btn">Home</a>
+      <a href="manage-coupons.html" class="header-btn">Coupons</a>
+      <a href="social-generator.html" class="header-btn">Socials</a>
+      <a href="month-planner.html" class="header-btn active">Planner</a>
+      <button onclick="handleLogout()" class="header-btn">Logout</button>
+    </div>
+  </header>
+
+  <!-- Dashboard Container -->
+  <div class="dashboard-container">
+    <!-- Left Sidebar: Controls & Backlog -->
+    <aside style="display: flex; flex-direction: column; gap: 24px;">
+      <!-- Task Creation Card -->
+      <div class="card">
+        <h2 class="card-title">Add Custom Task</h2>
+        
+        <div class="form-group">
+          <label for="task-title">Task Title</label>
+          <input type="text" id="task-title" class="input-text" placeholder="e.g. Design CUE178 Watch Face">
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label for="task-priority">Importance</label>
+            <select id="task-priority" class="select-input">
+              <option value="high">🔥 High</option>
+              <option value="medium" selected>💼 Medium</option>
+              <option value="low">⚙️ Low</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="task-duration">Days Needed</label>
+            <input type="number" id="task-duration" class="input-text" step="0.25" min="0.25" value="1.0">
+          </div>
+        </div>
+        
+        <button onclick="addCustomTask()" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          Add Task
+        </button>
+      </div>
+
+      <!-- Task Backlog Card -->
+      <div class="card">
+        <h2 class="card-title">
+          <span>Task Backlog</span>
+          <span style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 10px; color: var(--text-secondary);" id="backlog-count">0</span>
+        </h2>
+        <div class="backlog-list" id="backlog-list">
+          <!-- Backlog items populated via JS -->
+        </div>
+      </div>
+
+      <!-- Planner Actions Card -->
+      <div class="card">
+        <h2 class="card-title">Planner Actions</h2>
+        
+        <button onclick="triggerRollover()" class="btn-primary" style="background: var(--blue); color: white; box-shadow: 0 4px 12px rgba(33,150,243,0.2);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+          Rollover Incomplete
+        </button>
+        
+        <button onclick="regenerateCalendarSchedule()" class="btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+          Regenerate Schedule
+        </button>
+        
+        <div style="border-top: 1px solid var(--border-color); padding-top: 16px; display: flex; gap: 8px;">
+          <button onclick="exportBackup()" class="btn-secondary" style="flex: 1; padding: 8px 12px; font-size: 11px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>
+            Export
+          </button>
+          
+          <label class="btn-secondary" style="flex: 1; padding: 8px 12px; font-size: 11px; text-align: center; display: inline-flex; justify-content: center; cursor: pointer; margin: 0;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
+            Import
+            <input type="file" id="import-file" style="display: none;" onchange="importBackup(event)">
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Area: Interactive Calendar Grid -->
+    <main class="calendar-area">
+      <!-- Calendar Control / Navigation Bar -->
+      <div class="calendar-control-row">
+        <button onclick="navigateMonth(-1)" class="nav-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        
+        <h1 class="calendar-title" id="calendar-month-title">MONTH <span>2026</span></h1>
+        
+        <button onclick="navigateMonth(1)" class="nav-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+      <!-- Stats Summary Row -->
+      <div class="stats-bar">
+        <div class="stat-card">
+          <span class="stat-val" id="stat-work-days">0</span>
+          <span class="stat-lbl">Working Days</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-val" id="stat-total-hours">0h</span>
+          <span class="stat-lbl">Total Hours</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-val" id="stat-progress-percent">0%</span>
+          <span class="stat-lbl">Completed Blocks</span>
+          <div class="progress-track"><div class="progress-fill" id="stat-progress-fill"></div></div>
+        </div>
+        <div class="stat-card" style="border-color: var(--primary-glow); background: rgba(241, 179, 28, 0.01);">
+          <span class="stat-val" style="color: var(--primary);" id="stat-holidays-count">0</span>
+          <span class="stat-lbl">Greek/Custom Holidays</span>
+        </div>
+      </div>
+
+      <!-- Weekday Header + Grid -->
+      <div class="weekday-header-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center;">
+        <div class="weekday-header">Mon</div>
+        <div class="weekday-header">Tue</div>
+        <div class="weekday-header">Wed</div>
+        <div class="weekday-header">Thu</div>
+        <div class="weekday-header">Fri</div>
+        <div class="weekday-header" style="color: var(--danger);">Sat</div>
+        <div class="weekday-header" style="color: var(--danger);">Sun</div>
+      </div>
+      
+      <div class="calendar-grid" id="calendar-days-grid">
+        <!-- Rendered days in JS -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Day Details Sidebar Drawer -->
+  <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer(event)">
+    <div class="drawer" id="day-drawer">
+      <div class="drawer-header">
+        <h3 class="drawer-title" id="drawer-date-title">Thursday, June 25, 2026</h3>
+        <button onclick="hideDrawer()" class="drawer-close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      
+      <div class="drawer-content">
+        <div class="card" style="padding: 16px; background: rgba(255,255,255,0.01);">
+          <div class="form-group" style="flex-direction: row; align-items: center; justify-content: space-between; cursor: pointer; user-select: none;">
+            <label for="day-holiday-checkbox" style="margin:0; font-size:12px; color: var(--text-primary); cursor:pointer;">Mark as Greek/Custom Holiday</label>
+            <input type="checkbox" id="day-holiday-checkbox" style="width: 18px; height: 18px; accent-color: var(--danger); cursor: pointer;" onchange="toggleDayHoliday()">
+          </div>
+        </div>
+        
+        <h4 class="card-subtitle" style="margin-top: 8px;">8-Hour Abstract Work Blocks</h4>
+        <div class="day-slots-list" id="drawer-slots-list">
+          <!-- 8 slots list rendered via JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inline Override Dialog -->
+  <div class="dialog-overlay" id="override-dialog">
+    <div class="dialog-card">
+      <h3 class="drawer-title" style="border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">Override Slot Task</h3>
+      <div class="form-group">
+        <label for="dialog-task-input">Task Description</label>
+        <input type="text" id="dialog-task-input" class="input-text">
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button onclick="closeOverrideDialog()" class="btn-secondary" style="padding: 8px 14px;">Cancel</button>
+        <button onclick="saveOverrideDialog()" class="btn-primary" style="padding: 8px 14px;">Save Override</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Overlay (Private Protection) -->
+  <div id="login-overlay">
+    <div class="logo-mark">
+      <span class="r"></span>
+      <span class="b"></span>
+      <span class="y"></span>
+    </div>
+    <div style="text-align: center;">
+      <h1 style="font-family: 'Teko', sans-serif; font-size: 40px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; line-height:1;">Creation<span style="color:var(--primary);">Cue</span></h1>
+      <p style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-top: 4px;">Month Planner Dashboard</p>
+    </div>
+    
+    <button id="btn-google-login" class="login-btn">
+      <svg width="20" height="20" viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+      </svg>
+      SIGN IN WITH GOOGLE
+    </button>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast" id="toast">Task Added</div>
+
+  <script>
+    // -------------------------------------------------------------
+    // Firebase Config (Matches existing pages)
+    // -------------------------------------------------------------
+    var firebaseConfig = {
+      apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+      authDomain: "creation-cue-manage.firebaseapp.com",
+      databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "creation-cue-manage",
+      storageBucket: "creation-cue-manage.firebasestorage.app",
+      messagingSenderId: "186324516022",
+      appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    var auth = firebase.auth();
+    var currentUser = null;
+
+    // Google Login Events
+    document.getElementById('btn-google-login').addEventListener('click', () => {
+      auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(err => {
+        alert("Authentication failed: " + err.message);
+      });
+    });
+
+    function handleLogout() {
+      if (confirm("Are you sure you want to log out?")) {
+        auth.signOut();
+      }
+    }
+
+    auth.onAuthStateChanged(function (user) {
+      if (user) {
+        currentUser = user;
+        document.getElementById('login-overlay').style.display = 'none';
+        initApp();
+      } else {
+        currentUser = null;
+        document.getElementById('login-overlay').style.display = 'flex';
+      }
+    });
+
+    // -------------------------------------------------------------
+    // Application State & Storage
+    // -------------------------------------------------------------
+    var appState = {
+      currentDate: new Date(), // Interactive current calendar month/year
+      customTasks: [],         // Backlog custom tasks
+      customHolidays: [],      // Array of date strings "YYYY-MM-DD"
+      dayStates: {},           // dateString -> array of 8 slot states
+      watchFacesCatalog: []    // Loaded from manager.json or hardcoded fallback
+    };
+
+    // Default public Greek holidays in December
+    var GREEK_DECEMBER_HOLIDAYS = ["12-25", "12-26"];
+    // Static general public Greek holidays (MM-DD)
+    var GREEK_STATIC_HOLIDAYS = [
+      "01-01", // New Year
+      "01-06", // Epiphany
+      "03-25", // Independence
+      "05-01", // Labor Day
+      "08-15", // Dormition
+      "10-28", // Ohi Day
+      "12-25", // Christmas
+      "12-26"  // Synaxis
+    ];
+
+    // Fallback watch faces if manager.json is unavailable
+    var catalogFallback = [
+      { id: "cue003", title: "CUE003", description_en: "A digital watch face featuring 6 custom slots and 3D digits.", description_de: "Robustes Zifferblatt mit vielen Funktionen." },
+      { id: "cue177", title: "CUE177", description_en: "An analog watch face packed with gauges and 5 custom slots.", description_de: "Analoges Zifferblatt mit Komplikationen." },
+      { id: "cue176", title: "CUE176", description_en: "A stylized hybrid watch face featuring a neon glow.", description_de: "Ein neonfarbig gestaltetes Zifferblatt." },
+      { id: "cue175", title: "CUE175", description_en: "A rugged watch face combining bold 3D depth.", description_de: "Informationslayout mit 3D Look." },
+      { id: "cue174", title: "CUE174", description_en: "Unique digital watch face with rotating hour indicators.", description_de: "Einzigartiges Wear OS Zifferblatt." }
+    ];
+
+    function showToast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function () { t.classList.remove('show'); }, 2200);
+    }
+
+    // Load from LocalStorage
+    function loadState() {
+      try {
+        var tasks = localStorage.getItem('cc_planner_custom_tasks');
+        if (tasks) appState.customTasks = JSON.parse(tasks);
+        
+        var holidays = localStorage.getItem('cc_planner_custom_holidays');
+        if (holidays) appState.customHolidays = JSON.parse(holidays);
+
+        var days = localStorage.getItem('cc_planner_day_states');
+        if (days) appState.dayStates = JSON.parse(days);
+      } catch (err) {
+        console.error("Error loading state from localStorage:", err);
+      }
+    }
+
+    // Save to LocalStorage
+    function saveState() {
+      try {
+        localStorage.setItem('cc_planner_custom_tasks', JSON.stringify(appState.customTasks));
+        localStorage.setItem('cc_planner_custom_holidays', JSON.stringify(appState.customHolidays));
+        localStorage.setItem('cc_planner_day_states', JSON.stringify(appState.dayStates));
+      } catch (err) {
+        console.error("Error saving state to localStorage:", err);
+      }
+    }
+
+    // -------------------------------------------------------------
+    // App Initialization
+    // -------------------------------------------------------------
+    async function initApp() {
+      loadState();
+      await fetchCatalog();
+      renderBacklog();
+      renderCalendar();
+    }
+
+    async function fetchCatalog() {
+      try {
+        var response = await fetch('manager.json');
+        if (response.ok) {
+          var data = await response.json();
+          if (data && data.watch_faces) {
+            appState.watchFacesCatalog = data.watch_faces;
+            console.log("Loaded watch faces from manager.json: " + appState.watchFacesCatalog.length);
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("Failed to fetch manager.json, using static fallback catalog:", err);
+      }
+      appState.watchFacesCatalog = catalogFallback;
+    }
+
+    // -------------------------------------------------------------
+    // Custom Tasks Backlog Logic
+    // -------------------------------------------------------------
+    function addCustomTask() {
+      var titleInput = document.getElementById('task-title');
+      var priorityInput = document.getElementById('task-priority');
+      var durationInput = document.getElementById('task-duration');
+
+      var title = titleInput.value.trim();
+      var priority = priorityInput.value;
+      var duration = parseFloat(durationInput.value);
+
+      if (!title) {
+        alert("Please enter a task title.");
+        return;
+      }
+      if (isNaN(duration) || duration <= 0) {
+        alert("Please enter a valid duration (e.g. 0.5, 1, 3 days).");
+        return;
+      }
+
+      var newTask = {
+        id: 'task_' + Date.now(),
+        title: title,
+        priority: priority,
+        duration: duration,
+        createdAt: Date.now()
+      };
+
+      appState.customTasks.push(newTask);
+      saveState();
+      
+      titleInput.value = '';
+      durationInput.value = '1.0';
+      
+      showToast("Task Added!");
+      renderBacklog();
+      
+      // Auto reschedule future days to place the new task
+      scheduleFutureTasks();
+      renderCalendar();
+    }
+
+    function deleteCustomTask(id) {
+      if (confirm("Are you sure you want to delete this custom task from the backlog? (This will remove its future allocations)")) {
+        appState.customTasks = appState.customTasks.filter(t => t.id !== id);
+        saveState();
+        renderBacklog();
+        scheduleFutureTasks();
+        renderCalendar();
+        showToast("Task Removed");
+      }
+    }
+
+    function renderBacklog() {
+      var listEl = document.getElementById('backlog-list');
+      var countEl = document.getElementById('backlog-count');
+      
+      listEl.innerHTML = '';
+      countEl.textContent = appState.customTasks.length;
+
+      if (appState.customTasks.length === 0) {
+        listEl.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:12px;">Backlog is empty. Add a task above.</div>';
+        return;
+      }
+
+      // Sort by priority (high -> medium -> low)
+      var sorted = [...appState.customTasks].sort((a, b) => {
+        var priorityWeight = { high: 3, medium: 2, low: 1 };
+        return priorityWeight[b.priority] - priorityWeight[a.priority];
+      });
+
+      sorted.forEach(task => {
+        var item = document.createElement('div');
+        item.className = 'backlog-item';
+        
+        var badgeClass = 'priority-' + task.priority;
+        var formattedDuration = task.duration === 1 ? '1 day' : task.duration + ' days';
+        
+        item.innerHTML = `
+          <div class="backlog-item-info">
+            <div class="backlog-item-title" title="${task.title}">${task.title}</div>
+            <div class="backlog-item-meta">
+              <span class="priority-badge ${badgeClass}">${task.priority}</span>
+              <span>⌛ ${formattedDuration}</span>
+            </div>
+          </div>
+          <button onclick="deleteCustomTask('${task.id}')" class="btn-delete" title="Delete Task">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </button>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    // -------------------------------------------------------------
+    // Helper Date Methods
+    // -------------------------------------------------------------
+    function formatDateString(year, month, day) {
+      var m = String(month + 1).padStart(2, '0');
+      var d = String(day).padStart(2, '0');
+      return `${year}-${m}-${d}`;
+    }
+
+    function getTodayDateString() {
+      var d = new Date();
+      var y = d.getFullYear();
+      var m = String(d.getMonth() + 1).padStart(2, '0');
+      var day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function isHolidayOrWeekend(dateStr) {
+      var d = new Date(dateStr);
+      var dayOfWeek = d.getDay(); // 0 = Sunday, 6 = Saturday
+      if (dayOfWeek === 0 || dayOfWeek === 6) {
+        return { type: 'weekend', label: 'Weekend' };
+      }
+
+      // Check static Greek holidays (MM-DD)
+      var mmdd = dateStr.substring(5);
+      if (GREEK_STATIC_HOLIDAYS.includes(mmdd)) {
+        return { type: 'holiday', label: 'Greek Holiday' };
+      }
+
+      // Check custom holidays
+      if (appState.customHolidays.includes(dateStr)) {
+        return { type: 'holiday', label: 'Holiday' };
+      }
+
+      return null;
+    }
+
+    // -------------------------------------------------------------
+    // Core Scheduling Algorithm
+    // -------------------------------------------------------------
+    function scheduleFutureTasks() {
+      // Find today's date string
+      var todayStr = getTodayDateString();
+
+      // Lock past days. Clear only future uncompleted day states.
+      // We will re-generate the schedule for all uncompleted slots starting from today.
+      
+      // Step 1: Analyze what custom tasks have already been completed in history.
+      // We count how many slots are checked off for each custom task ID.
+      var completedCustomBlocks = {}; // taskID -> count of completed blocks
+      
+      Object.keys(appState.dayStates).forEach(dateStr => {
+        var daySlots = appState.dayStates[dateStr];
+        daySlots.forEach(slot => {
+          if (slot.taskId && slot.completed) {
+            completedCustomBlocks[slot.taskId] = (completedCustomBlocks[slot.taskId] || 0) + 1;
+          }
+        });
+      });
+
+      // Step 2: Calculate the REMAINING blocks to schedule for each backlog custom task.
+      var pendingTimelineSlots = []; // Array of slot items { taskId, title, priority, isFallback: false }
+      
+      // Sort tasks by priority: high -> medium -> low
+      var sortedTasks = [...appState.customTasks].sort((a, b) => {
+        var priorityWeight = { high: 3, medium: 2, low: 1 };
+        return priorityWeight[b.priority] - priorityWeight[a.priority];
+      });
+
+      sortedTasks.forEach(task => {
+        var totalBlocksNeeded = Math.round(task.duration * 8);
+        var completedBlocks = completedCustomBlocks[task.id] || 0;
+        var remainingBlocks = Math.max(0, totalBlocksNeeded - completedBlocks);
+
+        for (var i = 0; i < remainingBlocks; i++) {
+          pendingTimelineSlots.push({
+            taskId: task.id,
+            title: task.title,
+            priority: task.priority,
+            isFallback: false
+          });
+        }
+      });
+
+      // Step 3: Generate rotating fallback tasks from catalog
+      var fallbackTaskPool = [];
+      if (appState.watchFacesCatalog && appState.watchFacesCatalog.length > 0) {
+        // We pre-generate a sequence of fallback tasks to draw from
+        for (var i = 0; i < 200; i++) {
+          var face = appState.watchFacesCatalog[i % appState.watchFacesCatalog.length];
+          var taskType = Math.floor(i / appState.watchFacesCatalog.length) % 4;
+          var text = "";
+          var typeLabel = "";
+          
+          switch(taskType) {
+            case 0:
+              text = `SEO: Optimize Play Store descriptions for ${face.title}`;
+              typeLabel = "seo";
+              break;
+            case 1:
+              text = `Policy Check: Review screenshots and store graphics of ${face.title}`;
+              typeLabel = "policy";
+              break;
+            case 2:
+              text = `Compat: Update and test ${face.title} on Wear OS / Huawei SDKs`;
+              typeLabel = "compat";
+              break;
+            case 3:
+              text = `Translate: Check German translations for ${face.title}`;
+              typeLabel = "locales";
+              break;
+          }
+
+          fallbackTaskPool.push({
+            taskId: null,
+            title: text,
+            priority: 'low',
+            isFallback: true,
+            typeLabel: typeLabel,
+            faceId: face.id
+          });
+        }
+      } else {
+        // Ultimate fallback if no catalog at all
+        for (var i = 0; i < 200; i++) {
+          fallbackTaskPool.push({
+            taskId: null,
+            title: `Optimize Watch Face Assets (#${i + 1})`,
+            priority: 'low',
+            isFallback: true,
+            typeLabel: 'maint'
+          });
+        }
+      }
+
+      // Step 4: Schedule these slots into future uncompleted blocks
+      // We will loop from today's date forward for 60 working days, filling any slot that is not marked completed
+      var timelineIndex = 0;
+      var fallbackIndex = 0;
+
+      var tempDate = new Date();
+      // Start scheduling from today
+      for (var dayOffset = 0; dayOffset < 90; dayOffset++) {
+        var dateStr = formatDateString(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
+        
+        // Skip weekends/holidays
+        var offState = isHolidayOrWeekend(dateStr);
+        if (offState) {
+          // If a day is marked as holiday, but it has existing custom blocks, let's keep it locked or make it empty.
+          // Clean/initialize holiday slots if they didn't exist, to show off-day details in slots
+          if (!appState.dayStates[dateStr]) {
+            appState.dayStates[dateStr] = Array.from({ length: 8 }, () => ({
+              title: "Holiday / Non-working Day",
+              completed: false,
+              isHoliday: true
+            }));
+          }
+          tempDate.setDate(tempDate.getDate() + 1);
+          continue;
+        }
+
+        // Initialize day state if empty
+        if (!appState.dayStates[dateStr]) {
+          appState.dayStates[dateStr] = Array.from({ length: 8 }, () => null);
+        }
+
+        var daySlots = appState.dayStates[dateStr];
+
+        // Fill empty/uncompleted slots
+        for (var s = 0; s < 8; s++) {
+          var currentSlot = daySlots[s];
+          
+          // Skip if slot is already completed or locked (we preserve past day decisions)
+          // Lock slots in the past or slots checked off
+          var isPast = dateStr < todayStr;
+          if (currentSlot && (currentSlot.completed || isPast || currentSlot.isOverridden)) {
+            // Keep current slot untouched
+            continue;
+          }
+
+          // Otherwise, fill with next task from timeline
+          if (timelineIndex < pendingTimelineSlots.length) {
+            var task = pendingTimelineSlots[timelineIndex++];
+            daySlots[s] = {
+              taskId: task.taskId,
+              title: task.title,
+              priority: task.priority,
+              isFallback: false,
+              completed: false
+            };
+          } else {
+            // Fill with fallback task
+            var task = fallbackTaskPool[fallbackIndex++];
+            daySlots[s] = {
+              taskId: null,
+              title: task.title,
+              priority: 'low',
+              isFallback: true,
+              typeLabel: task.typeLabel,
+              faceId: task.faceId,
+              completed: false
+            };
+          }
+        }
+
+        appState.dayStates[dateStr] = daySlots;
+        tempDate.setDate(tempDate.getDate() + 1);
+      }
+
+      saveState();
+    }
+
+    // Force recalculate everything for future
+    function regenerateCalendarSchedule() {
+      if (confirm("Are you sure you want to regenerate all future allocations? This keeps your completed checks intact, but resets future uncompleted task distributions.")) {
+        scheduleFutureTasks();
+        renderCalendar();
+        showToast("Calendar Schedule Regenerated!");
+      }
+    }
+
+    // -------------------------------------------------------------
+    // Rollover Engine
+    // -------------------------------------------------------------
+    function triggerRollover() {
+      var todayStr = getTodayDateString();
+      var rolloverTasks = []; // List of uncompleted tasks gathered from past days
+
+      // Step 1: Collect unchecked tasks from past working days
+      var pastKeys = Object.keys(appState.dayStates).filter(k => k < todayStr).sort();
+      
+      pastKeys.forEach(dateStr => {
+        // Skip if it was a holiday/weekend unless tasks exist in slots
+        var offState = isHolidayOrWeekend(dateStr);
+        var slots = appState.dayStates[dateStr];
+        
+        if (slots && slots.length === 8) {
+          var dayHasChanges = false;
+          for (var s = 0; s < 8; s++) {
+            var slot = slots[s];
+            if (slot && !slot.completed && !slot.isHoliday && slot.title !== "Holiday / Non-working Day") {
+              // Copy the task info
+              rolloverTasks.push({
+                taskId: slot.taskId,
+                title: slot.title,
+                priority: slot.priority || 'low',
+                isFallback: slot.isFallback || false,
+                isOverridden: slot.isOverridden || false,
+                typeLabel: slot.typeLabel || null,
+                faceId: slot.faceId || null
+              });
+              
+              // Mark the past slot as "Rolled Over" so it's not pending anymore
+              slots[s] = {
+                title: `Rolled Over: ${slot.title}`,
+                completed: false,
+                isRolledOver: true,
+                rolledToDate: todayStr
+              };
+              dayHasChanges = true;
+            }
+          }
+          if (dayHasChanges) {
+            appState.dayStates[dateStr] = slots;
+          }
+        }
+      });
+
+      if (rolloverTasks.length === 0) {
+        showToast("No uncompleted past tasks to rollover.");
+        return;
+      }
+
+      // Step 2: Insert rolloverTasks at the beginning of today (and subsequent future days), pushing everything else forward
+      // We do this by creating a list of future uncompleted slots, inserting our rollover tasks at the beginning,
+      // and shifting all other future scheduled tasks down.
+      
+      // Let's gather all future uncompleted slots in sequence
+      var futureDaysOrdered = []; // List of { dateStr, slotIndex, currentSlot }
+      var tempDate = new Date(); // Start from today
+      
+      for (var dayOffset = 0; dayOffset < 60; dayOffset++) {
+        var dateStr = formatDateString(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
+        var offState = isHolidayOrWeekend(dateStr);
+        
+        if (!offState) {
+          if (!appState.dayStates[dateStr]) {
+            appState.dayStates[dateStr] = Array.from({ length: 8 }, () => null);
+          }
+          var slots = appState.dayStates[dateStr];
+          for (var s = 0; s < 8; s++) {
+            var slot = slots[s];
+            // Only shift slots that are NOT completed and NOT manually overridden
+            if (!slot || (!slot.completed && !slot.isOverridden)) {
+              futureDaysOrdered.push({
+                dateStr: dateStr,
+                slotIndex: s,
+                currentSlot: slot
+              });
+            }
+          }
+        }
+        tempDate.setDate(tempDate.getDate() + 1);
+      }
+
+      // Step 3: Shift the tasks.
+      // We make a queue of the tasks that should sit in these uncompleted slots.
+      // The queue starts with the rollover tasks, followed by the original scheduled tasks.
+      var taskQueue = [];
+      
+      // Add rollover tasks first
+      rolloverTasks.forEach(task => {
+        taskQueue.push({
+          taskId: task.taskId,
+          title: task.title,
+          priority: task.priority,
+          isFallback: task.isFallback,
+          isOverridden: task.isOverridden,
+          typeLabel: task.typeLabel,
+          faceId: task.faceId,
+          completed: false
+        });
+      });
+
+      // Add original future tasks
+      futureDaysOrdered.forEach(item => {
+        if (item.currentSlot) {
+          taskQueue.push({
+            taskId: item.currentSlot.taskId,
+            title: item.currentSlot.title,
+            priority: item.currentSlot.priority,
+            isFallback: item.currentSlot.isFallback,
+            isOverridden: item.currentSlot.isOverridden,
+            typeLabel: item.currentSlot.typeLabel,
+            faceId: item.currentSlot.faceId,
+            completed: false
+          });
+        }
+      });
+
+      // Step 4: Write back the shifted task queue into the future slots
+      var queueIndex = 0;
+      futureDaysOrdered.forEach(item => {
+        var daySlots = appState.dayStates[item.dateStr];
+        if (queueIndex < taskQueue.length) {
+          daySlots[item.slotIndex] = taskQueue[queueIndex++];
+        } else {
+          daySlots[item.slotIndex] = null; // Clear out extras if any
+        }
+        appState.dayStates[item.dateStr] = daySlots;
+      });
+
+      saveState();
+      renderCalendar();
+      showToast(`Rolled over ${rolloverTasks.length} tasks!`);
+    }
+
+    // -------------------------------------------------------------
+    // Calendar Rendering
+    // -------------------------------------------------------------
+    function renderCalendar() {
+      var gridEl = document.getElementById('calendar-days-grid');
+      var titleEl = document.getElementById('calendar-month-title');
+      
+      gridEl.innerHTML = '';
+      
+      var year = appState.currentDate.getFullYear();
+      var month = appState.currentDate.getMonth();
+      
+      var monthsList = [
+        "January", "February", "March", "April", "May", "June", 
+        "July", "August", "September", "October", "November", "December"
+      ];
+      titleEl.innerHTML = `${monthsList[month]} <span>${year}</span>`;
+
+      // Get first day of the month
+      var firstDay = new Date(year, month, 1);
+      // Day of week (0=Sun, 1=Mon... 6=Sat) -> Convert to 0=Mon, 6=Sun
+      var startDayIndex = firstDay.getDay() - 1;
+      if (startDayIndex < 0) startDayIndex = 6; // Sunday is 6
+
+      // Get total days in month
+      var totalDays = new Date(year, month + 1, 0).getDate();
+      
+      // Get total days in previous month
+      var prevMonthTotalDays = new Date(year, month, 0).getDate();
+
+      // Render days from previous month to fill the first row
+      for (var i = startDayIndex - 1; i >= 0; i--) {
+        var dayNum = prevMonthTotalDays - i;
+        var cell = document.createElement('div');
+        cell.className = 'day-cell other-month';
+        cell.innerHTML = `<div class="day-num">${dayNum}</div>`;
+        gridEl.appendChild(cell);
+      }
+
+      var workingDaysCount = 0;
+      var totalMonthlySlots = 0;
+      var completedMonthlySlots = 0;
+      var totalHolidaysCount = 0;
+
+      // Render current month days
+      var todayStr = getTodayDateString();
+
+      for (var d = 1; d <= totalDays; d++) {
+        var dateStr = formatDateString(year, month, d);
+        var isToday = (dateStr === todayStr);
+        
+        var cell = document.createElement('div');
+        cell.className = 'day-cell';
+        if (isToday) cell.classList.add('today');
+
+        // Check if it is a holiday/weekend
+        var offState = isHolidayOrWeekend(dateStr);
+        
+        // Build inner HTML structure
+        var topHtml = `<div class="day-num">${d}</div>`;
+        var tasksHtml = `<div class="day-tasks-container">`;
+        var footerHtml = `<div class="day-cell-footer">`;
+
+        // If day state doesn't exist, trigger scheduling logic (runs on-demand)
+        if (!appState.dayStates[dateStr]) {
+          // Temporarily initialize to run scheduler next
+          appState.dayStates[dateStr] = Array.from({ length: 8 }, () => null);
+        }
+
+        var daySlots = appState.dayStates[dateStr];
+
+        if (offState) {
+          cell.classList.add('off-day');
+          var badgeClass = offState.type === 'weekend' ? 'day-status-weekend' : 'day-status-holiday';
+          topHtml = `<div class="day-status-badge ${badgeClass}">${offState.label}</div>` + topHtml;
+          tasksHtml += `<div style="text-align:center; padding:15px 0; color:var(--text-muted); font-size:10px; font-weight:700; letter-spacing:0.5px;">OFF-DAY</div>`;
+          
+          if (offState.type === 'holiday') {
+            totalHolidaysCount++;
+          }
+        } else {
+          workingDaysCount++;
+          
+          // Group tasks inside cell to display cleanly (e.g. don't show 8 identical chips)
+          var groupedTasks = []; // Array of { title, count, completedCount, priority, isFallback }
+          
+          for (var s = 0; s < 8; s++) {
+            var slot = daySlots[s];
+            if (slot) {
+              totalMonthlySlots++;
+              if (slot.completed) {
+                completedMonthlySlots++;
+              }
+
+              var found = groupedTasks.find(g => g.title === slot.title && g.completed === slot.completed);
+              if (found) {
+                found.count++;
+              } else {
+                groupedTasks.push({
+                  title: slot.title,
+                  count: 1,
+                  priority: slot.priority || 'low',
+                  isFallback: slot.isFallback || false,
+                  completed: slot.completed || false
+                });
+              }
+            }
+          }
+
+          // Render grouped chips
+          if (groupedTasks.length === 0) {
+            tasksHtml += `<div style="text-align:center; padding:15px 0; color:var(--text-muted); font-size:10px;">No jobs assigned</div>`;
+          } else {
+            groupedTasks.forEach(g => {
+              var hoursLabel = g.count === 1 ? '1h' : g.count + 'h';
+              var classNames = 'day-task-chip';
+              if (g.completed) classNames += ' completed';
+              if (g.isFallback) {
+                classNames += ' fallback';
+              } else {
+                classNames += ' priority-' + g.priority;
+              }
+
+              tasksHtml += `<div class="${classNames}" title="${g.title} (${hoursLabel})"><strong>${hoursLabel}</strong> ${g.title}</div>`;
+            });
+          }
+
+          // Footer info
+          var doneCount = daySlots.filter(s => s && s.completed).length;
+          var donePercent = Math.round((doneCount / 8) * 100);
+          
+          footerHtml += `<span>${doneCount}/8 Done</span>`;
+          footerHtml += `<div class="day-cell-progress"><div class="day-cell-progress-bar" style="width: ${donePercent}%"></div></div>`;
+        }
+
+        tasksHtml += `</div>`;
+        footerHtml += `</div>`;
+        
+        cell.innerHTML = `<div class="day-cell-top">${topHtml}</div>${tasksHtml}${footerHtml}`;
+        
+        // Add click listener
+        (function(date) {
+          cell.addEventListener('click', function() {
+            showDayDetails(date);
+          });
+        })(dateStr);
+
+        gridEl.appendChild(cell);
+      }
+
+      // Fill remaining slots in the calendar grid to keep grid balanced
+      var remainingCells = 42 - (startDayIndex + totalDays);
+      if (remainingCells > 0 && remainingCells < 7) {
+        for (var i = 1; i <= remainingCells; i++) {
+          var cell = document.createElement('div');
+          cell.className = 'day-cell other-month';
+          cell.innerHTML = `<div class="day-num">${i}</div>`;
+          gridEl.appendChild(cell);
+        }
+      }
+
+      // Update stat cards
+      document.getElementById('stat-work-days').textContent = workingDaysCount;
+      document.getElementById('stat-total-hours').textContent = (workingDaysCount * 8) + 'h';
+      document.getElementById('stat-holidays-count').textContent = totalHolidaysCount;
+
+      var overallPercent = totalMonthlySlots > 0 ? Math.round((completedMonthlySlots / totalMonthlySlots) * 100) : 0;
+      document.getElementById('stat-progress-percent').textContent = overallPercent + '%';
+      document.getElementById('stat-progress-fill').style.width = overallPercent + '%';
+    }
+
+    function navigateMonth(direction) {
+      appState.currentDate.setMonth(appState.currentDate.getMonth() + direction);
+      
+      // Auto-schedule future days for the new month if they don't exist
+      scheduleFutureTasks();
+      renderCalendar();
+    }
+
+    // -------------------------------------------------------------
+    // Day Details Drawer & Actions
+    // -------------------------------------------------------------
+    var activeDrawerDate = null;
+
+    function showDayDetails(dateStr) {
+      activeDrawerDate = dateStr;
+      
+      var d = new Date(dateStr);
+      var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('drawer-date-title').textContent = d.toLocaleDateString('en-US', options);
+
+      // Check Holiday state
+      var isHolidayChecked = appState.customHolidays.includes(dateStr);
+      document.getElementById('day-holiday-checkbox').checked = isHolidayChecked;
+
+      renderDrawerSlots();
+      
+      document.getElementById('drawer-overlay').style.display = 'flex';
+    }
+
+    function hideDrawer() {
+      document.getElementById('drawer-overlay').style.display = 'none';
+      activeDrawerDate = null;
+    }
+
+    function closeDrawer(e) {
+      if (e.target === document.getElementById('drawer-overlay')) {
+        hideDrawer();
+      }
+    }
+
+    function toggleDayHoliday() {
+      if (!activeDrawerDate) return;
+      
+      var checkbox = document.getElementById('day-holiday-checkbox');
+      if (checkbox.checked) {
+        if (!appState.customHolidays.includes(activeDrawerDate)) {
+          appState.customHolidays.push(activeDrawerDate);
+        }
+        
+        // Mark all 8 slots as holiday blocks
+        appState.dayStates[activeDrawerDate] = Array.from({ length: 8 }, () => ({
+          title: "Holiday / Non-working Day",
+          completed: false,
+          isHoliday: true
+        }));
+      } else {
+        appState.customHolidays = appState.customHolidays.filter(h => h !== activeDrawerDate);
+        // Clear slots state so they will be rescheduled
+        delete appState.dayStates[activeDrawerDate];
+      }
+
+      saveState();
+      
+      // Re-run scheduler starting from today or active date to push/pull tasks
+      scheduleFutureTasks();
+      renderCalendar();
+      renderDrawerSlots();
+      showToast(checkbox.checked ? "Marked as Holiday" : "Holiday Removed");
+    }
+
+    function toggleSlotComplete(slotIndex) {
+      if (!activeDrawerDate) return;
+
+      var daySlots = appState.dayStates[activeDrawerDate];
+      if (daySlots && daySlots[slotIndex]) {
+        daySlots[slotIndex].completed = !daySlots[slotIndex].completed;
+        saveState();
+        renderCalendar();
+        renderDrawerSlots();
+        showToast(daySlots[slotIndex].completed ? "Block Completed" : "Block Restored");
+      }
+    }
+
+    function renderDrawerSlots() {
+      var listEl = document.getElementById('drawer-slots-list');
+      listEl.innerHTML = '';
+      
+      if (!activeDrawerDate) return;
+
+      var daySlots = appState.dayStates[activeDrawerDate];
+      var offState = isHolidayOrWeekend(activeDrawerDate);
+
+      for (var s = 0; s < 8; s++) {
+        var slot = daySlots ? daySlots[s] : null;
+        var item = document.createElement('div');
+        item.className = 'slot-item';
+
+        var slotNumLabel = `H${s + 1}`; // Hour block index
+        
+        if (offState && (!slot || slot.isHoliday)) {
+          item.classList.add('holiday-slot');
+          item.innerHTML = `
+            <div class="slot-num-badge">${slotNumLabel}</div>
+            <div></div>
+            <div class="slot-content-wrapper">
+              <div class="slot-text" style="color:var(--text-muted); font-style:italic;">Off Day: No Tasks Scheduled</div>
+            </div>
+            <div></div>
+          `;
+          listEl.appendChild(item);
+          continue;
+        }
+
+        // Default layout for normal working slot
+        if (!slot) {
+          slot = { title: "Unassigned Maintenance", completed: false, isFallback: true };
+        }
+
+        if (slot.completed) item.classList.add('completed');
+        if (slot.isRolledOver) item.classList.add('rolled-over');
+
+        var checkedAttr = slot.completed ? 'checked' : '';
+        var metaLabel = "";
+        
+        if (slot.isRolledOver) {
+          metaLabel = `<span class="priority-badge priority-low">Rolled Over</span>`;
+        } else if (slot.isFallback) {
+          metaLabel = `<span class="f-lbl">Maintenance</span>`;
+          if (slot.typeLabel) {
+            metaLabel += ` <span style="font-size:8px; opacity:0.6; text-transform:uppercase;">[${slot.typeLabel}]</span>`;
+          }
+        } else {
+          var pClass = slot.priority ? 'priority-' + slot.priority : 'priority-medium';
+          metaLabel = `<span class="c-lbl">Custom</span> <span class="priority-badge ${pClass}">${slot.priority || 'medium'}</span>`;
+        }
+
+        var actionBtn = `
+          <button onclick="openOverrideDialog(${s})" class="btn-slot-action" title="Override task text">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          </button>
+        `;
+        
+        if (slot.isRolledOver) {
+          actionBtn = ''; // No action on rolled over placeholders
+        }
+
+        var checkboxDisabled = slot.isRolledOver ? 'disabled' : '';
+
+        item.innerHTML = `
+          <div class="slot-num-badge">${slotNumLabel}</div>
+          <input type="checkbox" class="slot-checkbox" ${checkedAttr} ${checkboxDisabled} onchange="toggleSlotComplete(${s})">
+          <div class="slot-content-wrapper">
+            <div class="slot-text" title="${slot.title}">${slot.title}</div>
+            <div class="slot-meta-label">${metaLabel}</div>
+          </div>
+          <div>${actionBtn}</div>
+        `;
+        
+        listEl.appendChild(item);
+      }
+    }
+
+    // -------------------------------------------------------------
+    // Inline Slot Text Override Dialog
+    // -------------------------------------------------------------
+    var activeOverrideSlotIndex = null;
+
+    function openOverrideDialog(slotIndex) {
+      if (!activeDrawerDate) return;
+      activeOverrideSlotIndex = slotIndex;
+
+      var daySlots = appState.dayStates[activeDrawerDate];
+      var slot = daySlots ? daySlots[slotIndex] : null;
+      var currentText = slot ? slot.title : "";
+
+      document.getElementById('dialog-task-input').value = currentText;
+      document.getElementById('override-dialog').style.display = 'flex';
+      document.getElementById('dialog-task-input').focus();
+    }
+
+    function closeOverrideDialog() {
+      document.getElementById('override-dialog').style.display = 'none';
+      activeOverrideSlotIndex = null;
+    }
+
+    function saveOverrideDialog() {
+      if (!activeDrawerDate || activeOverrideSlotIndex === null) return;
+
+      var inputVal = document.getElementById('dialog-task-input').value.trim();
+      if (!inputVal) {
+        alert("Please enter a task description.");
+        return;
+      }
+
+      var daySlots = appState.dayStates[activeDrawerDate];
+      if (!daySlots) {
+        daySlots = Array.from({ length: 8 }, () => null);
+      }
+      
+      var slot = daySlots[activeOverrideSlotIndex];
+      if (!slot) {
+        slot = { completed: false, isFallback: true };
+      }
+
+      slot.title = inputVal;
+      slot.isOverridden = true; // Mark as overridden so reschedule doesn't clear it
+      daySlots[activeOverrideSlotIndex] = slot;
+      appState.dayStates[activeDrawerDate] = daySlots;
+
+      saveState();
+      closeOverrideDialog();
+      renderCalendar();
+      renderDrawerSlots();
+      showToast("Slot text updated!");
+    }
+
+    // -------------------------------------------------------------
+    // Backup & Restore (JSON Export / Import)
+    // -------------------------------------------------------------
+    function exportBackup() {
+      var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
+      var downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      
+      var d = new Date();
+      var dateStamp = `${d.getFullYear()}_${String(d.getMonth()+1).padStart(2,'0')}_${String(d.getDate()).padStart(2,'0')}`;
+      downloadAnchor.setAttribute("download", `creationcue_planner_backup_${dateStamp}.json`);
+      
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast("Backup exported!");
+    }
+
+    function importBackup(event) {
+      var file = event.target.files[0];
+      if (!file) return;
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          var parsed = JSON.parse(e.target.result);
+          if (parsed && (parsed.customTasks || parsed.customHolidays || parsed.dayStates)) {
+            if (parsed.customTasks) appState.customTasks = parsed.customTasks;
+            if (parsed.customHolidays) appState.customHolidays = parsed.customHolidays;
+            if (parsed.dayStates) appState.dayStates = parsed.dayStates;
+            
+            saveState();
+            renderBacklog();
+            renderCalendar();
+            showToast("Backup imported successfully!");
+          } else {
+            alert("Invalid backup file structure.");
+          }
+        } catch (err) {
+          alert("Error parsing backup JSON file: " + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+  </script>
+</body>
+
+</html>
