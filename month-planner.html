@@ -2281,9 +2281,22 @@
       var downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
       
+      // Get the currently planned month/year
+      var planYear = appState.currentDate.getFullYear();
+      var planMonth = appState.currentDate.getMonth();
+      var monthsList = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+      ];
+      var planMonthName = monthsList[planMonth];
+      
+      // Get current date and time stamp
       var d = new Date();
-      var dateStamp = `${d.getFullYear()}_${String(d.getMonth()+1).padStart(2,'0')}_${String(d.getDate()).padStart(2,'0')}`;
-      downloadAnchor.setAttribute("download", `creationcue_planner_backup_${dateStamp}.json`);
+      var dateStamp = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+      var timeStamp = `${String(d.getHours()).padStart(2,'0')}-${String(d.getMinutes()).padStart(2,'0')}`;
+      
+      var fileName = `creationcue_planner_${planMonthName}_${planYear}_backup_${dateStamp}_${timeStamp}.json`;
+      downloadAnchor.setAttribute("download", fileName);
       
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
