@@ -1022,17 +1022,11 @@
     }
     
     .audit-task-fields {
-      display: grid;
-      grid-template-columns: 1fr 120px 80px;
+      display: flex;
+      flex-wrap: wrap;
       gap: 10px;
       align-items: center;
       width: 100%;
-    }
-    
-    @media (max-width: 580px) {
-      .audit-task-fields {
-        grid-template-columns: 1fr;
-      }
     }
 
     /* View Switch tabs */
@@ -1185,6 +1179,11 @@
             <label for="task-duration">Days Needed</label>
             <input type="number" id="task-duration" class="input-text" step="0.25" min="0.25" value="1.0">
           </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 12px;">
+          <label for="task-start-date">Start Date</label>
+          <input type="date" id="task-start-date" class="input-text">
         </div>
         
         <button onclick="addCustomTask()" class="btn-primary">
@@ -1596,6 +1595,12 @@
       var toggle = document.getElementById('toggle-autofill');
       if (toggle) toggle.checked = appState.autofillFallback;
 
+      // Set default start date input to today
+      var dateInput = document.getElementById('task-start-date');
+      if (dateInput) {
+        dateInput.value = getTodayDateString();
+      }
+
       renderBacklog();
       scheduleFutureTasks();
       
@@ -1630,10 +1635,12 @@
       var titleInput = document.getElementById('task-title');
       var priorityInput = document.getElementById('task-priority');
       var durationInput = document.getElementById('task-duration');
+      var startDateInput = document.getElementById('task-start-date');
 
       var title = titleInput.value.trim();
       var priority = priorityInput.value;
       var duration = parseFloat(durationInput.value);
+      var startDateVal = startDateInput ? startDateInput.value : '';
 
       if (!title) {
         alert("Please enter a task title.");
@@ -1649,6 +1656,7 @@
         title: title,
         priority: priority,
         duration: duration,
+        startDate: startDateVal || getTodayDateString(),
         createdAt: Date.now()
       };
 
@@ -1657,6 +1665,9 @@
       
       titleInput.value = '';
       durationInput.value = '1.0';
+      if (startDateInput) {
+        startDateInput.value = appState.activeDayStr || getTodayDateString();
+      }
       
       showToast("Task Added!");
       renderBacklog();
@@ -1701,6 +1712,7 @@
         
         var badgeClass = 'priority-' + task.priority;
         var formattedDuration = task.duration === 1 ? '1 day' : task.duration + ' days';
+        var formattedStart = task.startDate ? task.startDate : 'Today';
         
         item.innerHTML = `
           <div class="backlog-item-info">
@@ -1708,6 +1720,7 @@
             <div class="backlog-item-meta">
               <span class="priority-badge ${badgeClass}">${task.priority}</span>
               <span>⌛ ${formattedDuration}</span>
+              <span style="font-size: 9px; opacity: 0.75; background: rgba(255,255,255,0.04); padding: 1px 4px; border-radius: 3px;">📅 Start: ${formattedStart}</span>
             </div>
           </div>
           <button onclick="deleteCustomTask('${task.id}')" class="btn-delete" title="Delete Task">
@@ -1794,13 +1807,15 @@
         var totalBlocksNeeded = Math.round(task.duration * 8);
         var completedBlocks = completedCustomBlocks[task.id] || 0;
         var remainingBlocks = Math.max(0, totalBlocksNeeded - completedBlocks);
-
+        
         for (var i = 0; i < remainingBlocks; i++) {
           pendingTimelineSlots.push({
             taskId: task.id,
             title: task.title,
             priority: task.priority,
-            isFallback: false
+            startDate: task.startDate || todayStr,
+            isFallback: false,
+            allocated: false
           });
         }
       });
@@ -1857,13 +1872,17 @@
       }
 
       // Step 4: Schedule these slots into future uncompleted blocks
-      // We will loop from today's date forward for 60 working days, filling any slot that is not marked completed
-      var timelineIndex = 0;
+      // We will loop from today's date forward for 90 working days, filling any slot that is not marked completed
       var fallbackIndex = 0;
 
       var tempDate = new Date();
+      var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
+      var visibleMonthEnd = new Date(appState.currentDate.getFullYear(), appState.currentDate.getMonth() + 1, 0);
+      var diffDays = Math.ceil((visibleMonthEnd.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+      var scheduleDays = Math.max(90, diffDays + 15);
+
       // Start scheduling from today
-      for (var dayOffset = 0; dayOffset < 90; dayOffset++) {
+      for (var dayOffset = 0; dayOffset < scheduleDays; dayOffset++) {
         var dateStr = formatDateString(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
         
         // Skip weekends/holidays
@@ -1901,9 +1920,22 @@
             continue;
           }
 
-          // Otherwise, fill with next task from timeline
-          if (timelineIndex < pendingTimelineSlots.length) {
-            var task = pendingTimelineSlots[timelineIndex++];
+          // Otherwise, find the first unallocated custom task block allowed to start on or before dateStr
+          var foundIndex = -1;
+          for (var i = 0; i < pendingTimelineSlots.length; i++) {
+            var slotItem = pendingTimelineSlots[i];
+            if (!slotItem.allocated) {
+              var taskStart = slotItem.startDate || todayStr;
+              if (dateStr >= taskStart) {
+                foundIndex = i;
+                break;
+              }
+            }
+          }
+
+          if (foundIndex !== -1) {
+            var task = pendingTimelineSlots[foundIndex];
+            task.allocated = true;
             daySlots[s] = {
               taskId: task.taskId,
               title: task.title,
@@ -2481,6 +2513,12 @@
       var newDateStr = formatDateString(current.getFullYear(), current.getMonth(), current.getDate());
       appState.activeDayStr = newDateStr;
       
+      // Update custom task start date picker to match the navigated day
+      var dateInput = document.getElementById('task-start-date');
+      if (dateInput) {
+        dateInput.value = newDateStr;
+      }
+      
       // Update interactive month/year of general calendar to match
       appState.currentDate = new Date(current.getFullYear(), current.getMonth(), 1);
       
@@ -2552,6 +2590,13 @@
 
     function showDayDetails(dateStr) {
       appState.activeDayStr = dateStr;
+      
+      // Update custom task start date picker to match the clicked day
+      var dateInput = document.getElementById('task-start-date');
+      if (dateInput) {
+        dateInput.value = dateStr;
+      }
+      
       switchViewMode('day');
     }
 
@@ -2924,6 +2969,7 @@
             title: taskTitle,
             priority: priority,
             duration: duration,
+            startDate: appState.activeDayStr || getTodayDateString(),
             category: currentCategory,
             selected: true
           });
@@ -2950,7 +2996,7 @@
             <div style="font-size: 10px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px;">${task.category}</div>
             
             <div class="audit-task-fields">
-              <input type="text" class="input-text" style="padding: 6px 10px; font-size: 13px;" value="${task.title}" oninput="updateAuditTaskTitle('${task.id}', this.value)">
+              <input type="text" class="input-text" style="padding: 6px 10px; font-size: 13px; flex: 1; min-width: 200px;" value="${task.title}" oninput="updateAuditTaskTitle('${task.id}', this.value)">
               
               <div style="display:flex; align-items:center; gap:6px;">
                 <span style="font-size:10px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Priority:</span>
@@ -2964,6 +3010,11 @@
               <div style="display:flex; align-items:center; gap:6px;">
                 <span style="font-size:10px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Days:</span>
                 <input type="number" class="input-text" style="padding: 4px 6px; font-size:12px; width:56px; border-radius:4px; text-align:center;" step="0.25" min="0.25" value="${task.duration}" oninput="updateAuditTaskDuration('${task.id}', this.value)">
+              </div>
+
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span style="font-size:10px; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Start:</span>
+                <input type="date" class="input-text" style="padding: 4px 6px; font-size:12px; width:125px; border-radius:4px; color-scheme: dark;" value="${task.startDate || getTodayDateString()}" onchange="updateAuditTaskStartDate('${task.id}', this.value)">
               </div>
             </div>
           </div>
@@ -3006,6 +3057,11 @@
       }
     }
 
+    function updateAuditTaskStartDate(id, newVal) {
+      var task = parsedAuditTasks.find(t => t.id === id);
+      if (task) task.startDate = newVal;
+    }
+
     function updateSelectedAuditCount() {
       var count = parsedAuditTasks.filter(t => t.selected).length;
       document.getElementById('audit-selected-count').textContent = count;
@@ -3024,6 +3080,7 @@
           title: task.title,
           priority: task.priority,
           duration: task.duration,
+          startDate: task.startDate || getTodayDateString(),
           createdAt: Date.now()
         };
         appState.customTasks.push(newTask);
@@ -3049,6 +3106,11 @@
         
         var toggle = document.getElementById('toggle-autofill');
         if (toggle) toggle.checked = false;
+        
+        var dateInput = document.getElementById('task-start-date');
+        if (dateInput) {
+          dateInput.value = getTodayDateString();
+        }
         
         saveState();
         renderBacklog();
