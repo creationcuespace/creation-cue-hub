@@ -1721,7 +1721,8 @@
             };
           } else {
             // Fill with fallback task
-            var task = fallbackTaskPool[fallbackIndex++];
+            var task = fallbackTaskPool[fallbackIndex % fallbackTaskPool.length];
+            fallbackIndex++;
             daySlots[s] = {
               taskId: null,
               title: task.title,
