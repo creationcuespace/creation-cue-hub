@@ -1410,6 +1410,7 @@
       loadState();
       await fetchCatalog();
       renderBacklog();
+      scheduleFutureTasks();
       renderCalendar();
     }
 
@@ -1579,11 +1580,13 @@
       
       Object.keys(appState.dayStates).forEach(dateStr => {
         var daySlots = appState.dayStates[dateStr];
-        daySlots.forEach(slot => {
-          if (slot.taskId && slot.completed) {
-            completedCustomBlocks[slot.taskId] = (completedCustomBlocks[slot.taskId] || 0) + 1;
-          }
-        });
+        if (daySlots && Array.isArray(daySlots)) {
+          daySlots.forEach(slot => {
+            if (slot && slot.taskId && slot.completed) {
+              completedCustomBlocks[slot.taskId] = (completedCustomBlocks[slot.taskId] || 0) + 1;
+            }
+          });
+        }
       });
 
       // Step 2: Calculate the REMAINING blocks to schedule for each backlog custom task.
