@@ -1034,6 +1034,111 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* View Switch tabs */
+    .view-switch-tabs {
+      display: inline-flex;
+      gap: 6px;
+      margin-bottom: 20px;
+      background: rgba(255,255,255,0.02);
+      padding: 4px;
+      border-radius: var(--border-radius-md);
+      border: 1px solid var(--border-color);
+    }
+    
+    .btn-tab {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 8px 16px;
+      border-radius: var(--border-radius-sm);
+      transition: var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .btn-tab:hover {
+      color: var(--text-primary);
+      background: var(--surface-hover);
+    }
+    
+    .btn-tab.active {
+      color: #000;
+      background: var(--primary);
+      box-shadow: 0 4px 12px rgba(241, 179, 28, 0.25);
+    }
+
+    /* Day View Styling */
+    .day-view-slot-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      padding: 16px 24px;
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .day-view-slot-card:hover {
+      border-color: var(--text-muted);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    }
+    
+    .day-view-slot-card.completed {
+      border-color: rgba(76, 175, 80, 0.25);
+      background: rgba(76, 175, 80, 0.015);
+    }
+    
+    .day-view-slot-card.completed .day-view-slot-title {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+    
+    .day-view-slot-card.rolled-over {
+      opacity: 0.5;
+      background: rgba(255,255,255,0.005);
+    }
+    
+    .day-view-slot-card.holiday {
+      opacity: 0.4;
+      background: none;
+      border-style: dashed;
+    }
+    
+    .day-view-slot-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: transparent;
+    }
+    
+    .day-view-slot-card.priority-high::before {
+      background: var(--danger);
+    }
+    
+    .day-view-slot-card.priority-medium::before {
+      background: var(--blue);
+    }
+    
+    .day-view-slot-card.priority-low::before {
+      background: var(--text-muted);
+    }
+    
+    .day-view-slot-card.priority-fallback::before {
+      background: var(--primary);
+    }
   </style>
 </head>
 
@@ -1133,55 +1238,111 @@
       </div>
     </aside>
 
-    <!-- Right Area: Interactive Calendar Grid -->
+    <!-- Right Area: Interactive Calendar Grid / Day View -->
     <main class="calendar-area">
-      <!-- Calendar Control / Navigation Bar -->
-      <div class="calendar-control-row">
-        <button onclick="navigateMonth(-1)" class="nav-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      <!-- View Switch Tabs -->
+      <div class="view-switch-tabs">
+        <button onclick="switchViewMode('month')" id="btn-view-month" class="btn-tab active">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></rect></svg>
+          Month View
         </button>
-        
-        <h1 class="calendar-title" id="calendar-month-title">MONTH <span>2026</span></h1>
-        
-        <button onclick="navigateMonth(1)" class="nav-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <button onclick="switchViewMode('day')" id="btn-view-day" class="btn-tab">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"></path></rect></svg>
+          Day View
         </button>
       </div>
 
-      <!-- Stats Summary Row -->
-      <div class="stats-bar">
-        <div class="stat-card">
-          <span class="stat-val" id="stat-work-days">0</span>
-          <span class="stat-lbl">Working Days</span>
+      <!-- Month View Container -->
+      <div id="month-view-container">
+        <!-- Calendar Control / Navigation Bar -->
+        <div class="calendar-control-row">
+          <button onclick="navigateMonth(-1)" class="nav-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          
+          <h1 class="calendar-title" id="calendar-month-title">MONTH <span>2026</span></h1>
+          
+          <button onclick="navigateMonth(1)" class="nav-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
         </div>
-        <div class="stat-card">
-          <span class="stat-val" id="stat-total-hours">0h</span>
-          <span class="stat-lbl">Total Hours</span>
+
+        <!-- Stats Summary Row -->
+        <div class="stats-bar">
+          <div class="stat-card">
+            <span class="stat-val" id="stat-work-days">0</span>
+            <span class="stat-lbl">Working Days</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-val" id="stat-total-hours">0h</span>
+            <span class="stat-lbl">Total Hours</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-val" id="stat-progress-percent">0%</span>
+            <span class="stat-lbl">Completed Blocks</span>
+            <div class="progress-track"><div class="progress-fill" id="stat-progress-fill"></div></div>
+          </div>
+          <div class="stat-card" style="border-color: var(--primary-glow); background: rgba(241, 179, 28, 0.01);">
+            <span class="stat-val" style="color: var(--primary);" id="stat-holidays-count">0</span>
+            <span class="stat-lbl">Greek/Custom Holidays</span>
+          </div>
         </div>
-        <div class="stat-card">
-          <span class="stat-val" id="stat-progress-percent">0%</span>
-          <span class="stat-lbl">Completed Blocks</span>
-          <div class="progress-track"><div class="progress-fill" id="stat-progress-fill"></div></div>
+
+        <!-- Weekday Header + Grid -->
+        <div class="weekday-header-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center;">
+          <div class="weekday-header">Mon</div>
+          <div class="weekday-header">Tue</div>
+          <div class="weekday-header">Wed</div>
+          <div class="weekday-header">Thu</div>
+          <div class="weekday-header">Fri</div>
+          <div class="weekday-header" style="color: var(--danger);">Sat</div>
+          <div class="weekday-header" style="color: var(--danger);">Sun</div>
         </div>
-        <div class="stat-card" style="border-color: var(--primary-glow); background: rgba(241, 179, 28, 0.01);">
-          <span class="stat-val" style="color: var(--primary);" id="stat-holidays-count">0</span>
-          <span class="stat-lbl">Greek/Custom Holidays</span>
+        
+        <div class="calendar-grid" id="calendar-days-grid">
+          <!-- Rendered days in JS -->
         </div>
       </div>
 
-      <!-- Weekday Header + Grid -->
-      <div class="weekday-header-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center;">
-        <div class="weekday-header">Mon</div>
-        <div class="weekday-header">Tue</div>
-        <div class="weekday-header">Wed</div>
-        <div class="weekday-header">Thu</div>
-        <div class="weekday-header">Fri</div>
-        <div class="weekday-header" style="color: var(--danger);">Sat</div>
-        <div class="weekday-header" style="color: var(--danger);">Sun</div>
-      </div>
-      
-      <div class="calendar-grid" id="calendar-days-grid">
-        <!-- Rendered days in JS -->
+      <!-- Day View Container -->
+      <div id="day-view-container" style="display: none; flex-direction: column; gap: 20px;">
+        <!-- Day View Navigation Header -->
+        <div class="day-view-nav" style="display: flex; align-items: center; justify-content: space-between; background: var(--surface-color); border: 1px solid var(--border-color); padding: 16px 20px; border-radius: var(--border-radius-lg);">
+          <button onclick="navigateDay(-1)" class="nav-btn" style="padding: 8px 12px; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Prev Day
+          </button>
+          
+          <div style="text-align: center;">
+            <h2 id="day-view-date-title" style="font-family: var(--font-display); font-size: 22px; font-weight: 700; margin: 0; color: var(--text-primary);">Thursday, June 25, 2026</h2>
+            <span id="day-view-holiday-badge" style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; margin-top: 4px; display: inline-block;"></span>
+          </div>
+          
+          <button onclick="navigateDay(1)" class="nav-btn" style="padding: 8px 12px; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+            Next Day
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+
+        <!-- Day View Controls Card -->
+        <div class="card" style="padding: 16px 24px; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none;">
+            <input type="checkbox" id="day-view-holiday-checkbox" style="width: 20px; height: 20px; accent-color: var(--danger); cursor: pointer;" onchange="toggleDayViewHoliday()">
+            <label for="day-view-holiday-checkbox" style="margin:0; font-size: 13px; font-weight: 600; color: var(--text-primary); cursor:pointer;">Mark as Holiday / Non-working Day</label>
+          </div>
+          
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 12px; font-weight: 700; color: var(--text-muted);" id="day-view-completed-stat">0/8 Completed</span>
+            <div style="width: 120px; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; display: block;">
+              <div id="day-view-progress-fill" style="width: 0%; height: 100%; background: var(--success); transition: width 0.3s ease;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day View Slots Grid / List -->
+        <div id="day-view-slots-list" style="display: flex; flex-direction: column; gap: 16px;">
+          <!-- Large day tasks slots will render here -->
+        </div>
       </div>
     </main>
   </div>
@@ -1340,6 +1501,7 @@
     // -------------------------------------------------------------
     var appState = {
       currentDate: new Date(), // Interactive current calendar month/year
+      activeDayStr: null,      // Date string "YYYY-MM-DD" active in Day View
       customTasks: [],         // Backlog custom tasks
       customHolidays: [],      // Array of date strings "YYYY-MM-DD"
       dayStates: {},           // dateString -> array of 8 slot states
@@ -1411,7 +1573,12 @@
       await fetchCatalog();
       renderBacklog();
       scheduleFutureTasks();
+      
+      // Initialize active day
+      appState.activeDayStr = getTodayDateString();
+      
       renderCalendar();
+      renderDayView();
     }
 
     async function fetchCatalog() {
@@ -2067,24 +2234,236 @@
     }
 
     // -------------------------------------------------------------
+    // View Switch & Dedicated Day View Engine
+    // -------------------------------------------------------------
+    function switchViewMode(mode) {
+      var monthContainer = document.getElementById('month-view-container');
+      var dayContainer = document.getElementById('day-view-container');
+      var btnMonth = document.getElementById('btn-view-month');
+      var btnDay = document.getElementById('btn-view-day');
+      
+      if (mode === 'month') {
+        monthContainer.style.display = 'block';
+        dayContainer.style.display = 'none';
+        btnMonth.classList.add('active');
+        btnDay.classList.remove('active');
+        renderCalendar();
+      } else {
+        monthContainer.style.display = 'none';
+        dayContainer.style.display = 'flex';
+        btnMonth.classList.remove('active');
+        btnDay.classList.add('active');
+        renderDayView();
+      }
+    }
+
+    function renderDayView() {
+      if (!appState.activeDayStr) {
+        appState.activeDayStr = getTodayDateString();
+      }
+      
+      var dateStr = appState.activeDayStr;
+      var d = new Date(dateStr);
+      var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('day-view-date-title').textContent = d.toLocaleDateString('en-US', options);
+
+      var offState = isHolidayOrWeekend(dateStr);
+      var badgeEl = document.getElementById('day-view-holiday-badge');
+      var holidayCheckbox = document.getElementById('day-view-holiday-checkbox');
+      
+      holidayCheckbox.checked = appState.customHolidays.includes(dateStr);
+      
+      if (offState) {
+        badgeEl.textContent = offState.label;
+        badgeEl.style.display = 'inline-block';
+        if (offState.type === 'weekend') {
+          badgeEl.style.background = 'var(--danger-glow)';
+          badgeEl.style.color = 'var(--danger)';
+        } else {
+          badgeEl.style.background = 'var(--primary-glow)';
+          badgeEl.style.color = 'var(--primary)';
+        }
+      } else {
+        badgeEl.style.display = 'none';
+      }
+
+      // Ensure day state is initialized if it's a working day
+      if (!appState.dayStates[dateStr]) {
+        appState.dayStates[dateStr] = Array.from({ length: 8 }, () => null);
+      }
+      
+      var daySlots = appState.dayStates[dateStr];
+      var listEl = document.getElementById('day-view-slots-list');
+      listEl.innerHTML = '';
+
+      var completedCount = 0;
+      var totalCount = 8;
+
+      for (var s = 0; s < 8; s++) {
+        var slot = daySlots[s];
+        
+        // Handle off-day styling
+        if (offState && (!slot || slot.isHoliday)) {
+          var item = document.createElement('div');
+          item.className = 'day-view-slot-card holiday';
+          item.innerHTML = `
+            <div style="font-family: var(--font-display); font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; width: 70px; border-right: 1px solid var(--border-color); padding-right: 12px;">
+              Block ${s + 1}
+            </div>
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-size: 14px; font-weight: 500; color: var(--text-muted); font-style: italic;">
+                Off-Day: No tasks scheduled
+              </div>
+            </div>
+          `;
+          listEl.appendChild(item);
+          continue;
+        }
+
+        if (!slot) {
+          slot = { title: "Unassigned Maintenance", completed: false, isFallback: true };
+        }
+
+        if (slot.completed) {
+          completedCount++;
+        }
+
+        var item = document.createElement('div');
+        item.className = 'day-view-slot-card';
+        if (slot.completed) item.classList.add('completed');
+        if (slot.isRolledOver) item.classList.add('rolled-over');
+        
+        // Priority strip border class
+        if (slot.isRolledOver) {
+          item.classList.add('priority-low');
+        } else if (slot.isFallback) {
+          item.classList.add('priority-fallback');
+        } else {
+          item.classList.add('priority-' + (slot.priority || 'medium'));
+        }
+
+        var checkedAttr = slot.completed ? 'checked' : '';
+        var disabledAttr = slot.isRolledOver ? 'disabled' : '';
+        
+        // Meta tags
+        var metaHtml = "";
+        if (slot.isRolledOver) {
+          metaHtml = `<span class="slot-meta-label"><span class="c-lbl">Rolled Over</span></span>`;
+        } else if (slot.isFallback) {
+          metaHtml = `<span class="slot-meta-label"><span class="f-lbl">Maintenance</span></span>`;
+          if (slot.typeLabel) {
+            metaHtml += ` <span style="font-size: 8px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">[${slot.typeLabel}]</span>`;
+          }
+        } else {
+          var pClass = slot.priority ? 'priority-' + slot.priority : 'priority-medium';
+          metaHtml = `<span class="slot-meta-label"><span class="c-lbl">Custom</span> <span class="priority-badge ${pClass}">${slot.priority || 'medium'}</span></span>`;
+        }
+
+        var actionHtml = slot.isRolledOver ? '' : `
+          <button onclick="openOverrideDialogInDayView(${s})" class="btn-slot-action" style="padding: 8px;" title="Override text">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          </button>
+        `;
+
+        item.innerHTML = `
+          <div style="font-family: var(--font-display); font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; width: 70px; border-right: 1px solid var(--border-color); padding-right: 12px;">
+            Block ${s + 1}
+          </div>
+          <div style="display: flex; align-items: center;">
+            <input type="checkbox" class="slot-checkbox" style="width: 22px; height: 22px;" ${checkedAttr} ${disabledAttr} onchange="toggleSlotCompleteInDayView(${s})">
+          </div>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding-left: 8px;">
+            <div class="day-view-slot-title" style="font-size: 15px; font-weight: 600; color: var(--text-primary); line-height: 1.4;">
+              ${slot.title}
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              ${metaHtml}
+            </div>
+          </div>
+          <div>
+            ${actionHtml}
+          </div>
+        `;
+        listEl.appendChild(item);
+      }
+
+      // Update completion stats
+      var pct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+      document.getElementById('day-view-completed-stat').textContent = `${completedCount}/${totalCount} Completed`;
+      document.getElementById('day-view-progress-fill').style.width = pct + '%';
+    }
+
+    function navigateDay(direction) {
+      if (!appState.activeDayStr) {
+        appState.activeDayStr = getTodayDateString();
+      }
+      var current = new Date(appState.activeDayStr);
+      current.setDate(current.getDate() + direction);
+      
+      var newDateStr = formatDateString(current.getFullYear(), current.getMonth(), current.getDate());
+      appState.activeDayStr = newDateStr;
+      
+      // Update interactive month/year of general calendar to match
+      appState.currentDate = new Date(current.getFullYear(), current.getMonth(), 1);
+      
+      // Schedule tasks if entering a new month/period
+      scheduleFutureTasks();
+      renderDayView();
+    }
+
+    function toggleDayViewHoliday() {
+      if (!appState.activeDayStr) return;
+      var dateStr = appState.activeDayStr;
+      var checkbox = document.getElementById('day-view-holiday-checkbox');
+      
+      if (checkbox.checked) {
+        if (!appState.customHolidays.includes(dateStr)) {
+          appState.customHolidays.push(dateStr);
+        }
+        appState.dayStates[dateStr] = Array.from({ length: 8 }, () => ({
+          title: "Holiday / Non-working Day",
+          completed: false,
+          isHoliday: true
+        }));
+      } else {
+        appState.customHolidays = appState.customHolidays.filter(h => h !== dateStr);
+        delete appState.dayStates[dateStr];
+      }
+      
+      saveState();
+      scheduleFutureTasks();
+      renderCalendar();
+      renderDayView();
+      showToast(checkbox.checked ? "Marked as Holiday" : "Holiday Removed");
+    }
+
+    function toggleSlotCompleteInDayView(slotIndex) {
+      if (!appState.activeDayStr) return;
+      var dateStr = appState.activeDayStr;
+      var daySlots = appState.dayStates[dateStr];
+      
+      if (daySlots && daySlots[slotIndex]) {
+        daySlots[slotIndex].completed = !daySlots[slotIndex].completed;
+        saveState();
+        renderCalendar();
+        renderDayView();
+        showToast(daySlots[slotIndex].completed ? "Block Completed" : "Block Restored");
+      }
+    }
+
+    function openOverrideDialogInDayView(slotIndex) {
+      activeDrawerDate = appState.activeDayStr;
+      openOverrideDialog(slotIndex);
+    }
+
+    // -------------------------------------------------------------
     // Day Details Drawer & Actions
     // -------------------------------------------------------------
     var activeDrawerDate = null;
 
     function showDayDetails(dateStr) {
-      activeDrawerDate = dateStr;
-      
-      var d = new Date(dateStr);
-      var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('drawer-date-title').textContent = d.toLocaleDateString('en-US', options);
-
-      // Check Holiday state
-      var isHolidayChecked = appState.customHolidays.includes(dateStr);
-      document.getElementById('day-holiday-checkbox').checked = isHolidayChecked;
-
-      renderDrawerSlots();
-      
-      document.getElementById('drawer-overlay').style.display = 'flex';
+      appState.activeDayStr = dateStr;
+      switchViewMode('day');
     }
 
     function hideDrawer() {
@@ -2271,6 +2650,9 @@
       closeOverrideDialog();
       renderCalendar();
       renderDrawerSlots();
+      if (document.getElementById('day-view-container').style.display !== 'none') {
+        renderDayView();
+      }
       showToast("Slot text updated!");
     }
 
