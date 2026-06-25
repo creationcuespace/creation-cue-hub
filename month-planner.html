@@ -1222,6 +1222,121 @@
     .day-view-slot-card.priority-fallback::before {
       background: var(--primary);
     }
+
+    /* Day View Card Layout Columns */
+    .slot-time-col {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      width: 90px;
+      border-right: 1px solid var(--border-color);
+      padding-right: 12px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+    
+    .slot-duration-label {
+      font-size: 9px;
+      opacity: 0.6;
+      margin-top: 2px;
+    }
+    
+    .slot-check-col {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    
+    .slot-info-col {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-left: 8px;
+    }
+    
+    .day-view-slot-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+      word-break: break-word;
+    }
+    
+    .slot-action-col {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 600px) {
+      .day-view-slot-card {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        grid-template-rows: auto auto;
+        gap: 8px 12px;
+        padding: 12px 14px;
+      }
+      
+      .slot-time-col {
+        grid-column: 1 / span 3;
+        grid-row: 1;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding-right: 0;
+        padding-bottom: 6px;
+        margin-bottom: 2px;
+        flex-direction: row;
+        gap: 8px;
+        align-items: center;
+        font-size: 11px;
+      }
+      
+      .slot-duration-label {
+        margin-top: 0;
+      }
+      
+      .slot-check-col {
+        grid-column: 1;
+        grid-row: 2;
+        align-self: flex-start;
+        margin-top: 2px;
+      }
+      
+      .slot-info-col {
+        grid-column: 2;
+        grid-row: 2;
+        padding-left: 0;
+      }
+      
+      .day-view-slot-title {
+        font-size: 13px;
+      }
+      
+      .slot-action-col {
+        grid-column: 3;
+        grid-row: 2;
+        align-self: flex-start;
+      }
+
+      /* Drawer item styling optimizations on mobile */
+      .slot-item {
+        grid-template-columns: 20px 24px 1fr 24px !important;
+        gap: 8px !important;
+        padding: 8px 10px !important;
+      }
+      .slot-num-badge {
+        font-size: 9px !important;
+      }
+      .slot-text {
+        font-size: 12px !important;
+      }
+    }
   </style>
 </head>
 
@@ -2786,10 +2901,10 @@
             var item = document.createElement('div');
             item.className = 'day-view-slot-card holiday';
             item.innerHTML = `
-              <div style="font-family: var(--font-display); font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; width: 90px; border-right: 1px solid var(--border-color); padding-right: 12px;">
+              <div class="slot-time-col">
                 Off-Day
               </div>
-              <div style="flex: 1; min-width: 0;">
+              <div class="slot-info-col">
                 <div style="font-size: 14px; font-weight: 500; color: var(--text-muted); font-style: italic;">
                   Off-Day: No tasks scheduled
                 </div>
@@ -2845,22 +2960,22 @@
             : `Block ${group.slotIndices[0] + 1}-${group.slotIndices[group.slotIndices.length - 1] + 1}`;
 
           item.innerHTML = `
-            <div style="font-family: var(--font-display); font-size: 13px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; width: 90px; border-right: 1px solid var(--border-color); padding-right: 12px; display: flex; flex-direction: column;">
+            <div class="slot-time-col">
               <span>${blockRangeLabel}</span>
-              <span style="font-size: 9px; opacity: 0.6; margin-top: 2px;">(${durationLabel})</span>
+              <span class="slot-duration-label">(${durationLabel})</span>
             </div>
-            <div style="display: flex; align-items: center;">
+            <div class="slot-check-col">
               <input type="checkbox" class="slot-checkbox" style="width: 22px; height: 22px;" ${checkedAttr} ${disabledAttr} onchange="toggleGroupComplete('${dateStr}', [${group.slotIndices.join(',')}])">
             </div>
-            <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding-left: 8px;">
-              <div class="day-view-slot-title" style="font-size: 15px; font-weight: 600; color: var(--text-primary); line-height: 1.4;">
+            <div class="slot-info-col">
+              <div class="day-view-slot-title">
                 ${group.title}
               </div>
-              <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 ${metaHtml}
               </div>
             </div>
-            <div>
+            <div class="slot-action-col">
               ${actionHtml}
             </div>
           `;
