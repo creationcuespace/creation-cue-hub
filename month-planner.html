@@ -1249,6 +1249,42 @@
           </label>
         </div>
       </div>
+
+      <!-- Dropbox Cloud Sync Card -->
+      <div class="card">
+        <h2 class="card-title">Dropbox Cloud Sync</h2>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div id="sync-status-container" style="font-size: 11px; padding: 8px 12px; border-radius: 4px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
+            <span style="color: var(--text-muted);">Status:</span>
+            <span id="sync-status" style="font-weight: 700; color: var(--danger);">Not Connected</span>
+          </div>
+          
+          <button id="btn-connect-sync" onclick="connectSyncFile()" class="btn-secondary" style="background: rgba(0, 110, 255, 0.05); border-color: rgba(0, 110, 255, 0.2); color: #3b90ff; justify-content: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+            Connect Sync File
+          </button>
+
+          <button id="btn-resume-sync" onclick="resumeSync()" class="btn-secondary" style="display: none; background: rgba(241, 179, 28, 0.05); border-color: rgba(241, 179, 28, 0.2); color: var(--primary-text); justify-content: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+            Resume Sync
+          </button>
+          
+          <div id="sync-active-actions" style="display: none; gap: 8px;">
+            <button onclick="readStateFromFile()" class="btn-secondary" style="flex: 1; padding: 8px; font-size: 11px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+              Sync Load
+            </button>
+            <button onclick="writeStateToFile()" class="btn-secondary" style="flex: 1; padding: 8px; font-size: 11px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+              Sync Save
+            </button>
+          </div>
+          
+          <button id="btn-disconnect-sync" onclick="disconnectSync()" class="btn-secondary" style="display: none; border-color: rgba(232, 40, 30, 0.2); color: var(--danger); background: rgba(232, 40, 30, 0.02); justify-content: center;">
+            Disconnect Sync
+          </button>
+        </div>
+      </div>
       
       <!-- Diagnostics Card -->
       <details class="card" style="padding: 12px; background: rgba(0, 0, 0, 0.35); border-color: rgba(255, 255, 255, 0.05); margin-top: 10px;">
@@ -1601,8 +1637,253 @@
         localStorage.setItem('cc_planner_custom_holidays', JSON.stringify(appState.customHolidays));
         localStorage.setItem('cc_planner_day_states', JSON.stringify(appState.dayStates));
         localStorage.setItem('cc_planner_autofill_fallback', JSON.stringify(appState.autofillFallback));
+        
+        // Auto-save to connected Dropbox file
+        if (syncFileHandle) {
+          writeStateToFile();
+        }
       } catch (err) {
         console.error("Error saving state to localStorage:", err);
+      }
+    }
+
+    // -------------------------------------------------------------
+    // Dropbox Cloud Sync Operations (IndexedDB & File System Access API)
+    // -------------------------------------------------------------
+    var syncFileHandle = null;
+    const DB_NAME = 'cc_planner_sync_db';
+    const STORE_NAME = 'sync_store';
+    const KEY_NAME = 'file_handle';
+
+    function getDB() {
+      return new Promise((resolve, reject) => {
+        var request = indexedDB.open(DB_NAME, 1);
+        request.onupgradeneeded = function(e) {
+          var db = e.target.result;
+          db.createObjectStore(STORE_NAME);
+        };
+        request.onsuccess = function(e) {
+          resolve(e.target.result);
+        };
+        request.onerror = function(e) {
+          reject(e.target.error);
+        };
+      });
+    }
+
+    async function storeFileHandle(handle) {
+      var db = await getDB();
+      return new Promise((resolve, reject) => {
+        var transaction = db.transaction(STORE_NAME, 'readwrite');
+        var store = transaction.objectStore(STORE_NAME);
+        var request = store.put(handle, KEY_NAME);
+        request.onsuccess = function() { resolve(); };
+        request.onerror = function(e) { reject(e.target.error); };
+      });
+    }
+
+    async function loadFileHandle() {
+      var db = await getDB();
+      return new Promise((resolve, reject) => {
+        var transaction = db.transaction(STORE_NAME, 'readonly');
+        var store = transaction.objectStore(STORE_NAME);
+        var request = store.get(KEY_NAME);
+        request.onsuccess = function(e) { resolve(e.target.result); };
+        request.onerror = function(e) { reject(e.target.error); };
+      });
+    }
+
+    async function clearFileHandle() {
+      var db = await getDB();
+      return new Promise((resolve, reject) => {
+        var transaction = db.transaction(STORE_NAME, 'readwrite');
+        var store = transaction.objectStore(STORE_NAME);
+        var request = store.delete(KEY_NAME);
+        request.onsuccess = function() { resolve(); };
+        request.onerror = function(e) { reject(e.target.error); };
+      });
+    }
+
+    async function verifyPermission(fileHandle, readWrite) {
+      var options = {};
+      if (readWrite) {
+        options.mode = 'readwrite';
+      }
+      if ((await fileHandle.queryPermission(options)) === 'granted') {
+        return true;
+      }
+      if ((await fileHandle.requestPermission(options)) === 'granted') {
+        return true;
+      }
+      return false;
+    }
+
+    async function checkSavedSync() {
+      try {
+        var handle = await loadFileHandle();
+        if (handle) {
+          syncFileHandle = handle;
+          if (await handle.queryPermission({ mode: 'readwrite' }) === 'granted') {
+            await readStateFromFile();
+            console.log("Dropbox Sync loaded automatically.");
+          } else {
+            console.log("Dropbox Sync paused (needs permission).");
+          }
+          updateSyncUI();
+        }
+      } catch (err) {
+        console.error("Error loading saved sync file handle:", err);
+      }
+    }
+
+    async function connectSyncFile() {
+      try {
+        var options = {
+          types: [{
+            description: 'JSON Files',
+            accept: {
+              'application/json': ['.json']
+            }
+          }],
+          excludeAcceptAllOption: true,
+          multiple: false
+        };
+        
+        var handle;
+        if (confirm("Would you like to SELECT an existing sync file from Dropbox? Click 'Cancel' to CREATE a new file.")) {
+          var handles = await window.showOpenFilePicker(options);
+          handle = handles[0];
+        } else {
+          handle = await window.showSaveFilePicker({
+            suggestedName: 'planner_state.json',
+            types: options.types
+          });
+        }
+
+        if (handle) {
+          syncFileHandle = handle;
+          await storeFileHandle(handle);
+          
+          var perm = await verifyPermission(handle, true);
+          if (perm) {
+            if (confirm("Would you like to LOAD data from this file? (Click 'Cancel' to OVERWRITE the file with your current local browser data instead)")) {
+              await readStateFromFile();
+              showToast("Dropbox Sync Connected and Loaded!");
+            } else {
+              await writeStateToFile();
+              showToast("Dropbox Sync Connected and Saved!");
+            }
+            updateSyncUI();
+          }
+        }
+      } catch (err) {
+        console.error("Dropbox connection failed or cancelled:", err);
+      }
+    }
+
+    async function resumeSync() {
+      if (!syncFileHandle) return;
+      try {
+        var perm = await verifyPermission(syncFileHandle, true);
+        if (perm) {
+          await readStateFromFile();
+          showToast("Dropbox Sync Resumed!");
+          updateSyncUI();
+        }
+      } catch (err) {
+        console.error("Failed to resume sync:", err);
+      }
+    }
+
+    async function readStateFromFile() {
+      if (!syncFileHandle) return;
+      try {
+        var file = await syncFileHandle.getFile();
+        var contents = await file.text();
+        if (!contents.trim()) return;
+        var parsed = JSON.parse(contents);
+        if (parsed) {
+          if (parsed.customTasks) appState.customTasks = parsed.customTasks;
+          if (parsed.customHolidays) appState.customHolidays = parsed.customHolidays;
+          if (parsed.dayStates) appState.dayStates = parsed.dayStates;
+          if (parsed.autofillFallback !== undefined) appState.autofillFallback = parsed.autofillFallback;
+          
+          localStorage.setItem('cc_planner_custom_tasks', JSON.stringify(appState.customTasks));
+          localStorage.setItem('cc_planner_custom_holidays', JSON.stringify(appState.customHolidays));
+          localStorage.setItem('cc_planner_day_states', JSON.stringify(appState.dayStates));
+          localStorage.setItem('cc_planner_autofill_fallback', JSON.stringify(appState.autofillFallback));
+
+          renderBacklog();
+          renderCalendar();
+          if (document.getElementById('day-view-container').style.display !== 'none') {
+            renderDayView();
+          }
+        }
+      } catch (err) {
+        console.error("Error reading sync file:", err);
+        showToast("Error reading sync file.");
+      }
+    }
+
+    async function writeStateToFile() {
+      if (!syncFileHandle) return;
+      try {
+        var writable = await syncFileHandle.createWritable();
+        await writable.write(JSON.stringify({
+          customTasks: appState.customTasks,
+          customHolidays: appState.customHolidays,
+          dayStates: appState.dayStates,
+          autofillFallback: appState.autofillFallback
+        }, null, 2));
+        await writable.close();
+        console.log("State synced to Dropbox file.");
+      } catch (err) {
+        console.error("Error writing sync file:", err);
+      }
+    }
+
+    async function disconnectSync() {
+      if (confirm("Are you sure you want to disconnect Dropbox sync? This will stop saving updates to the file, but your data will remain in your browser's local storage.")) {
+        syncFileHandle = null;
+        await clearFileHandle();
+        updateSyncUI();
+        showToast("Dropbox Sync Disconnected.");
+      }
+    }
+
+    async function updateSyncUI() {
+      var statusEl = document.getElementById('sync-status');
+      var btnConnect = document.getElementById('btn-connect-sync');
+      var btnResume = document.getElementById('btn-resume-sync');
+      var activeActions = document.getElementById('sync-active-actions');
+      var btnDisconnect = document.getElementById('btn-disconnect-sync');
+      
+      if (!statusEl) return;
+
+      if (syncFileHandle) {
+        var hasPerm = await syncFileHandle.queryPermission({ mode: 'readwrite' }) === 'granted';
+        if (hasPerm) {
+          statusEl.textContent = "Connected";
+          statusEl.style.color = "#3b90ff";
+          btnConnect.style.display = "none";
+          btnResume.style.display = "none";
+          activeActions.style.display = "flex";
+          btnDisconnect.style.display = "block";
+        } else {
+          statusEl.textContent = "Sync Paused";
+          statusEl.style.color = "var(--warning)";
+          btnConnect.style.display = "none";
+          btnResume.style.display = "block";
+          activeActions.style.display = "none";
+          btnDisconnect.style.display = "block";
+        }
+      } else {
+        statusEl.textContent = "Not Connected";
+        statusEl.style.color = "var(--danger)";
+        btnConnect.style.display = "block";
+        btnResume.style.display = "none";
+        activeActions.style.display = "none";
+        btnDisconnect.style.display = "none";
       }
     }
 
@@ -1624,6 +1905,10 @@
       }
 
       renderBacklog();
+      
+      // Check if there is a saved Dropbox sync file
+      await checkSavedSync();
+
       scheduleFutureTasks();
       
       // Initialize active day
