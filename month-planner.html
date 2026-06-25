@@ -1223,6 +1223,11 @@
           Import Gemini Audit
         </button>
 
+        <div style="display: flex; align-items: center; gap: 8px; margin: 12px 0 6px 0; cursor: pointer; user-select: none;">
+          <input type="checkbox" id="toggle-autofill" style="width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer;" onchange="toggleAutofillFallback(this.checked)">
+          <label for="toggle-autofill" style="margin: 0; font-size: 11.5px; color: var(--text-secondary); cursor: pointer; font-weight: 600;">Auto-fill with fallback tasks</label>
+        </div>
+
         <button onclick="clearAllTasks()" class="btn-secondary" style="border-color: rgba(232, 40, 30, 0.2); color: var(--danger); background: rgba(232, 40, 30, 0.02); justify-content: center; gap: 8px;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
           Clean All Tasks
@@ -1510,7 +1515,8 @@
       customTasks: [],         // Backlog custom tasks
       customHolidays: [],      // Array of date strings "YYYY-MM-DD"
       dayStates: {},           // dateString -> array of 8 slot states
-      watchFacesCatalog: []    // Loaded from manager.json or hardcoded fallback
+      watchFacesCatalog: [],   // Loaded from manager.json or hardcoded fallback
+      autofillFallback: true   // Whether to auto-fill empty slots with fallback tasks
     };
 
     // Default public Greek holidays in December
@@ -1554,6 +1560,9 @@
 
         var days = localStorage.getItem('cc_planner_day_states');
         if (days) appState.dayStates = JSON.parse(days);
+
+        var autofill = localStorage.getItem('cc_planner_autofill_fallback');
+        appState.autofillFallback = autofill === null ? true : JSON.parse(autofill);
       } catch (err) {
         console.error("Error loading state from localStorage:", err);
       }
@@ -1565,6 +1574,7 @@
         localStorage.setItem('cc_planner_custom_tasks', JSON.stringify(appState.customTasks));
         localStorage.setItem('cc_planner_custom_holidays', JSON.stringify(appState.customHolidays));
         localStorage.setItem('cc_planner_day_states', JSON.stringify(appState.dayStates));
+        localStorage.setItem('cc_planner_autofill_fallback', JSON.stringify(appState.autofillFallback));
       } catch (err) {
         console.error("Error saving state to localStorage:", err);
       }
@@ -1576,6 +1586,11 @@
     async function initApp() {
       loadState();
       await fetchCatalog();
+      
+      // Update toggle checkbox state
+      var toggle = document.getElementById('toggle-autofill');
+      if (toggle) toggle.checked = appState.autofillFallback;
+
       renderBacklog();
       scheduleFutureTasks();
       
@@ -1892,18 +1907,22 @@
               completed: false
             };
           } else {
-            // Fill with fallback task
-            var task = fallbackTaskPool[fallbackIndex % fallbackTaskPool.length];
-            fallbackIndex++;
-            daySlots[s] = {
-              taskId: null,
-              title: task.title,
-              priority: 'low',
-              isFallback: true,
-              typeLabel: task.typeLabel,
-              faceId: task.faceId,
-              completed: false
-            };
+            // Fill with fallback task if enabled, otherwise leave slot empty
+            if (appState.autofillFallback !== false) {
+              var task = fallbackTaskPool[fallbackIndex % fallbackTaskPool.length];
+              fallbackIndex++;
+              daySlots[s] = {
+                taskId: null,
+                title: task.title,
+                priority: 'low',
+                isFallback: true,
+                typeLabel: task.typeLabel,
+                faceId: task.faceId,
+                completed: false
+              };
+            } else {
+              daySlots[s] = null;
+            }
           }
         }
 
@@ -2953,6 +2972,10 @@
         appState.customTasks = [];
         appState.dayStates = {};
         appState.customHolidays = [];
+        appState.autofillFallback = false; // Disable autofill to make calendar blank
+        
+        var toggle = document.getElementById('toggle-autofill');
+        if (toggle) toggle.checked = false;
         
         saveState();
         renderBacklog();
@@ -2963,6 +2986,17 @@
         }
         showToast("All tasks cleaned!");
       }
+    }
+
+    function toggleAutofillFallback(checked) {
+      appState.autofillFallback = checked;
+      saveState();
+      scheduleFutureTasks();
+      renderCalendar();
+      if (document.getElementById('day-view-container').style.display !== 'none') {
+        renderDayView();
+      }
+      showToast(checked ? "Auto-fill Fallbacks Enabled" : "Auto-fill Fallbacks Disabled");
     }
   </script>
 </body>
