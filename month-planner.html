@@ -1182,8 +1182,8 @@
         </div>
 
         <div class="form-group" style="margin-top: 12px;">
-          <label for="task-start-date">Start Date</label>
-          <input type="date" id="task-start-date" class="input-text">
+          <label for="task-start-date">Start Date (DD/MM/YYYY)</label>
+          <input type="text" id="task-start-date" class="input-text" placeholder="e.g. 26/06/2026">
         </div>
         
         <button onclick="addCustomTask()" class="btn-primary">
@@ -1597,7 +1597,7 @@
       // Set default start date input to today
       var dateInput = document.getElementById('task-start-date');
       if (dateInput) {
-        dateInput.value = getTodayDateString();
+        dateInput.value = formatStandardDateToDisplay(getTodayDateString());
       }
 
       renderBacklog();
@@ -1642,7 +1642,7 @@
       var title = titleInput.value.trim();
       var priority = priorityInput.value;
       var duration = parseFloat(durationInput.value);
-      var startDateVal = startDateInput ? startDateInput.value : '';
+      var startDateVal = startDateInput ? parseDateToStandardString(startDateInput.value) : '';
 
       if (!title) {
         alert("Please enter a task title.");
@@ -1668,7 +1668,7 @@
       titleInput.value = '';
       durationInput.value = '1.0';
       if (startDateInput) {
-        startDateInput.value = appState.activeDayStr || getTodayDateString();
+        startDateInput.value = formatStandardDateToDisplay(appState.activeDayStr || getTodayDateString());
       }
       
       showToast("Task Added!");
@@ -1714,11 +1714,12 @@
         
         var badgeClass = 'priority-' + task.priority;
         var formattedDuration = task.duration === 1 ? '1 day' : task.duration + ' days';
-        var formattedStart = task.startDate ? task.startDate : 'Today';
+        var formattedStart = task.startDate ? formatStandardDateToDisplay(task.startDate) : 'Today';
+        var escapedTitle = escapeHtmlAttribute(task.title);
         
         item.innerHTML = `
           <div class="backlog-item-info">
-            <div class="backlog-item-title" title="${task.title}">${task.title}</div>
+            <div class="backlog-item-title" title="${escapedTitle}">${task.title}</div>
             <div class="backlog-item-meta">
               <span class="priority-badge ${badgeClass}">${task.priority}</span>
               <span>⌛ ${formattedDuration}</span>
@@ -1731,6 +1732,73 @@
         `;
         listEl.appendChild(item);
       });
+    }
+
+    function escapeHtmlAttribute(str) {
+      if (!str) return "";
+      return str
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    function formatStandardDateToDisplay(dateStr) {
+      if (!dateStr) return "";
+      var parts = dateStr.split('-');
+      if (parts.length === 3) {
+        return `${parts[2]}/${parts[1]}/${parts[0]}`;
+      }
+      return dateStr;
+    }
+
+    function parseDateToStandardString(dateStr) {
+      if (!dateStr) return getTodayDateString();
+      dateStr = dateStr.trim();
+      
+      var matchYmd = dateStr.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+      if (matchYmd) {
+        var y = matchYmd[1];
+        var m = matchYmd[2].padStart(2, '0');
+        var d = matchYmd[3].padStart(2, '0');
+        return `${y}-${m}-${d}`;
+      }
+
+      var matchSlashes = dateStr.match(/^(\d{1,2})[\/\.-](\d{1,2})[\/\.-](\d{4})$/);
+      if (matchSlashes) {
+        var part1 = parseInt(matchSlashes[1], 10);
+        var part2 = parseInt(matchSlashes[2], 10);
+        var y = matchSlashes[3];
+        
+        var d = part1;
+        var m = part2;
+        
+        if (part1 > 12) {
+          d = part1;
+          m = part2;
+        } else if (part2 > 12) {
+          d = part2;
+          m = part1;
+        } else {
+          d = part1;
+          m = part2;
+        }
+        
+        return `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      }
+      
+      try {
+        var parsed = new Date(dateStr);
+        if (!isNaN(parsed.getTime())) {
+          var y = parsed.getFullYear();
+          var m = String(parsed.getMonth() + 1).padStart(2, '0');
+          var d = String(parsed.getDate()).padStart(2, '0');
+          return `${y}-${m}-${d}`;
+        }
+      } catch(e) {}
+      
+      return getTodayDateString();
     }
 
     // -------------------------------------------------------------
@@ -2244,7 +2312,7 @@
                 classNames += ' priority-' + g.priority;
               }
 
-              tasksHtml += `<div class="${classNames}" title="${g.title} (${hoursLabel})"><strong>${hoursLabel}</strong> ${g.title}</div>`;
+              tasksHtml += `<div class="${classNames}" title="${escapeHtmlAttribute(g.title)} (${hoursLabel})"><strong>${hoursLabel}</strong> ${g.title}</div>`;
             });
           }
 
@@ -2522,7 +2590,7 @@
       // Update custom task start date picker to match the navigated day
       var dateInput = document.getElementById('task-start-date');
       if (dateInput) {
-        dateInput.value = newDateStr;
+        dateInput.value = formatStandardDateToDisplay(newDateStr);
       }
       
       // Update interactive month/year of general calendar to match
@@ -2600,7 +2668,7 @@
       // Update custom task start date picker to match the clicked day
       var dateInput = document.getElementById('task-start-date');
       if (dateInput) {
-        dateInput.value = dateStr;
+        dateInput.value = formatStandardDateToDisplay(dateStr);
       }
       
       switchViewMode('day');
@@ -2729,7 +2797,7 @@
           <div class="slot-num-badge">${slotNumLabel}</div>
           <input type="checkbox" class="slot-checkbox" ${checkedAttr} ${checkboxDisabled} onchange="toggleSlotComplete(${s})">
           <div class="slot-content-wrapper">
-            <div class="slot-text" title="${slot.title}">${slot.title}</div>
+            <div class="slot-text" title="${escapeHtmlAttribute(slot.title)}">${slot.title}</div>
             <div class="slot-meta-label">${metaLabel}</div>
           </div>
           <div>${actionBtn}</div>
@@ -3065,7 +3133,7 @@
 
     function updateAuditTaskStartDate(id, newVal) {
       var task = parsedAuditTasks.find(t => t.id === id);
-      if (task) task.startDate = newVal;
+      if (task) task.startDate = parseDateToStandardString(newVal);
     }
 
     function updateSelectedAuditCount() {
@@ -3115,7 +3183,7 @@
         
         var dateInput = document.getElementById('task-start-date');
         if (dateInput) {
-          dateInput.value = getTodayDateString();
+          dateInput.value = formatStandardDateToDisplay(getTodayDateString());
         }
         
         saveState();
