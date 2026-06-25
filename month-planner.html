@@ -1661,6 +1661,29 @@
         <p style="font-size: 11.5px; color: var(--text-secondary);">
           Review, customize, and select the extracted tasks before adding them to your backlog.
         </p>
+
+        <!-- Bulk Selection and Priority Controls -->
+        <div style="display: flex; flex-direction: column; gap: 8px; background: rgba(255,255,255,0.02); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; width: 100%;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <input type="checkbox" id="audit-select-all-checkbox" style="width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer;" checked onchange="toggleSelectAllAuditTasks(this.checked)">
+              <label for="audit-select-all-checkbox" style="font-size: 12px; font-weight: 600; margin: 0; color: var(--text-primary); cursor: pointer;">Select All</label>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Set Importance For All:</span>
+              <select id="audit-bulk-priority" class="select-input" style="padding: 4px 8px; font-size: 12px; width: auto; border-radius: 4px;" onchange="setPriorityForAllAuditTasks(this.value)">
+                <option value="" disabled selected>Choose...</option>
+                <option value="high">🔥 High</option>
+                <option value="medium">💼 Medium</option>
+                <option value="low">⚙️ Low</option>
+              </select>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 6px; margin-top: 2px;">
+            <input type="checkbox" id="audit-distribute-checkbox" style="width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer;">
+            <label for="audit-distribute-checkbox" style="font-size: 11.5px; font-weight: 600; margin: 0; color: var(--text-secondary); cursor: pointer;">Distribute start dates (2 tasks per working day starting today)</label>
+          </div>
+        </div>
         
         <div id="audit-extracted-container" style="flex: 1; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; gap: 10px; min-height: 200px;">
           <!-- Extracted items with controls populate here -->
@@ -3380,6 +3403,14 @@
 
     function openAuditModal() {
       document.getElementById('audit-text-input').value = '';
+      
+      var selectAll = document.getElementById('audit-select-all-checkbox');
+      if (selectAll) selectAll.checked = true;
+      var bulkPriority = document.getElementById('audit-bulk-priority');
+      if (bulkPriority) bulkPriority.value = '';
+      var distribute = document.getElementById('audit-distribute-checkbox');
+      if (distribute) distribute.checked = false;
+
       document.getElementById('audit-step-1').style.display = 'flex';
       document.getElementById('audit-step-2').style.display = 'none';
       document.getElementById('audit-modal').style.display = 'flex';
@@ -3584,6 +3615,51 @@
       document.getElementById('audit-selected-count').textContent = count;
     }
 
+    function toggleSelectAllAuditTasks(checked) {
+      parsedAuditTasks.forEach(task => {
+        task.selected = checked;
+        var card = document.getElementById('audit-card-' + task.id);
+        if (card) {
+          var chk = card.querySelector('input[type="checkbox"]');
+          if (chk) chk.checked = checked;
+          if (checked) {
+            card.classList.add('checked');
+          } else {
+            card.classList.remove('checked');
+          }
+        }
+      });
+      updateSelectedAuditCount();
+    }
+
+    function setPriorityForAllAuditTasks(priority) {
+      if (!priority) return;
+      parsedAuditTasks.forEach(task => {
+        task.priority = priority;
+        var card = document.getElementById('audit-card-' + task.id);
+        if (card) {
+          var sel = card.querySelector('select');
+          if (sel) sel.value = priority;
+        }
+      });
+    }
+
+    function getWorkingDateWithOffset(startDateStr, offset) {
+      var parts = startDateStr.split('-');
+      var current = new Date(parts[0], parts[1] - 1, parts[2]);
+      var workingDaysFound = 0;
+      
+      while (workingDaysFound < offset) {
+        current.setDate(current.getDate() + 1);
+        var checkStr = formatDateString(current.getFullYear(), current.getMonth(), current.getDate());
+        var offState = isHolidayOrWeekend(checkStr);
+        if (!offState) {
+          workingDaysFound++;
+        }
+      }
+      return formatDateString(current.getFullYear(), current.getMonth(), current.getDate());
+    }
+
     function importSelectedAuditTasks() {
       var selectedTasks = parsedAuditTasks.filter(t => t.selected);
       if (selectedTasks.length === 0) {
@@ -3591,13 +3667,26 @@
         return;
       }
 
+      var distribute = document.getElementById('audit-distribute-checkbox') ? document.getElementById('audit-distribute-checkbox').checked : false;
+      
+      var todayStr = getTodayDateString();
+      var taskIndex = 0;
+
       selectedTasks.forEach(task => {
+        var targetStartDate = task.startDate || todayStr;
+        
+        if (distribute) {
+          var workingDaysOffset = Math.floor(taskIndex / 2);
+          targetStartDate = getWorkingDateWithOffset(todayStr, workingDaysOffset);
+          taskIndex++;
+        }
+
         var newTask = {
           id: 'task_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
           title: task.title,
           priority: task.priority,
           duration: task.duration,
-          startDate: task.startDate || getTodayDateString(),
+          startDate: targetStartDate,
           createdAt: Date.now()
         };
         appState.customTasks.push(newTask);
@@ -3611,7 +3700,7 @@
       scheduleFutureTasks();
       renderCalendar();
       
-      showToast(`Imported ${selectedTasks.length} tasks from Gemini Audit!`);
+      showToast(`Imported ${selectedTasks.length} tasks!`);
     }
 
     function clearAllTasks() {
