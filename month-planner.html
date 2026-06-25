@@ -1223,9 +1223,14 @@
           Import Gemini Audit
         </button>
 
-        <div style="display: flex; align-items: center; gap: 8px; margin: 12px 0 6px 0; cursor: pointer; user-select: none;">
-          <input type="checkbox" id="toggle-autofill" style="width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer;" onchange="toggleAutofillFallback(this.checked)">
-          <label for="toggle-autofill" style="margin: 0; font-size: 11.5px; color: var(--text-secondary); cursor: pointer; font-weight: 600;">Auto-fill with fallback tasks</label>
+        <div style="margin: 12px 0 12px 0;">
+          <div style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+            <input type="checkbox" id="toggle-autofill" style="width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer;" onchange="toggleAutofillFallback(this.checked)">
+            <label for="toggle-autofill" style="margin: 0; font-size: 11.5px; color: var(--text-secondary); cursor: pointer; font-weight: 600;">Auto-fill with fallback tasks</label>
+          </div>
+          <p style="margin: 6px 0 0 24px; font-size: 10px; color: var(--text-muted); line-height: 1.4;">
+            When enabled, unallocated work hours are filled with rotating maintenance jobs (SEO, policy, compatibility) generated from your watch face catalog. When disabled, empty slots remain completely blank.
+          </p>
         </div>
 
         <button onclick="clearAllTasks()" class="btn-secondary" style="border-color: rgba(232, 40, 30, 0.2); color: var(--danger); background: rgba(232, 40, 30, 0.02); justify-content: center; gap: 8px;">
