@@ -1310,7 +1310,7 @@
           <div class="weekday-header">Wed</div>
           <div class="weekday-header">Thu</div>
           <div class="weekday-header">Fri</div>
-          <div class="weekday-header" style="color: var(--danger);">Sat</div>
+          <div class="weekday-header">Sat</div>
           <div class="weekday-header" style="color: var(--danger);">Sun</div>
         </div>
         
@@ -1738,7 +1738,7 @@
     function isHolidayOrWeekend(dateStr) {
       var d = new Date(dateStr);
       var dayOfWeek = d.getDay(); // 0 = Sunday, 6 = Saturday
-      if (dayOfWeek === 0 || dayOfWeek === 6) {
+      if (dayOfWeek === 0) {
         return { type: 'weekend', label: 'Weekend' };
       }
 
