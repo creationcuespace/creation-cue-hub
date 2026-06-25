@@ -2281,6 +2281,54 @@
       }
     }
 
+    function getGroupedDaySlots(daySlots) {
+      if (!daySlots || !Array.isArray(daySlots)) return [];
+      
+      var groups = [];
+      var currentGroup = null;
+      
+      for (var s = 0; s < 8; s++) {
+        var slot = daySlots[s] || { title: "Unassigned Maintenance", completed: false, isFallback: true, taskId: null };
+        
+        // Group slots if same holiday status, taskId, title, completed state, and fallback status
+        var isMatch = currentGroup && (
+          (slot.isHoliday && currentGroup.isHoliday) ||
+          (!slot.isHoliday && !currentGroup.isHoliday && 
+           slot.taskId === currentGroup.taskId && 
+           slot.title === currentGroup.title && 
+           slot.completed === currentGroup.completed && 
+           slot.isFallback === currentGroup.isFallback)
+        );
+        
+        if (isMatch) {
+          currentGroup.slotIndices.push(s);
+          currentGroup.hours++;
+        } else {
+          if (currentGroup) {
+            groups.push(currentGroup);
+          }
+          currentGroup = {
+            taskId: slot.taskId,
+            title: slot.title,
+            priority: slot.priority || 'low',
+            isFallback: slot.isFallback || false,
+            completed: slot.completed || false,
+            isHoliday: slot.isHoliday || false,
+            isRolledOver: slot.isRolledOver || false,
+            isOverridden: slot.isOverridden || false,
+            typeLabel: slot.typeLabel || null,
+            faceId: slot.faceId || null,
+            slotIndices: [s],
+            hours: 1
+          };
+        }
+      }
+      if (currentGroup) {
+        groups.push(currentGroup);
+      }
+      return groups;
+    }
+
     function renderDayView() {
       if (!appState.activeDayStr) {
         appState.activeDayStr = getTodayDateString();
@@ -2320,19 +2368,19 @@
       var listEl = document.getElementById('day-view-slots-list');
       listEl.innerHTML = '';
 
-      var completedCount = 0;
-      var totalCount = 8;
+      var completedCount = daySlots ? daySlots.filter(s => s && s.completed).length : 0;
+      var totalCount = daySlots ? daySlots.filter(s => s && !s.isHoliday).length : 8;
 
-      for (var s = 0; s < 8; s++) {
-        var slot = daySlots[s];
-        
+      var grouped = getGroupedDaySlots(daySlots);
+
+      grouped.forEach((group, index) => {
         // Handle off-day styling
-        if (offState && (!slot || slot.isHoliday)) {
+        if (offState && (group.isHoliday || group.title === "Holiday / Non-working Day")) {
           var item = document.createElement('div');
           item.className = 'day-view-slot-card holiday';
           item.innerHTML = `
-            <div style="font-family: var(--font-display); font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; width: 70px; border-right: 1px solid var(--border-color); padding-right: 12px;">
-              Block ${s + 1}
+            <div style="font-family: var(--font-display); font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; width: 90px; border-right: 1px solid var(--border-color); padding-right: 12px;">
+              Off-Day
             </div>
             <div style="flex: 1; min-width: 0;">
               <div style="font-size: 14px; font-weight: 500; color: var(--text-muted); font-style: italic;">
@@ -2341,64 +2389,65 @@
             </div>
           `;
           listEl.appendChild(item);
-          continue;
-        }
-
-        if (!slot) {
-          slot = { title: "Unassigned Maintenance", completed: false, isFallback: true };
-        }
-
-        if (slot.completed) {
-          completedCount++;
+          return;
         }
 
         var item = document.createElement('div');
         item.className = 'day-view-slot-card';
-        if (slot.completed) item.classList.add('completed');
-        if (slot.isRolledOver) item.classList.add('rolled-over');
+        if (group.completed) item.classList.add('completed');
+        if (group.isRolledOver) item.classList.add('rolled-over');
         
         // Priority strip border class
-        if (slot.isRolledOver) {
+        if (group.isRolledOver) {
           item.classList.add('priority-low');
-        } else if (slot.isFallback) {
+        } else if (group.isFallback) {
           item.classList.add('priority-fallback');
         } else {
-          item.classList.add('priority-' + (slot.priority || 'medium'));
+          item.classList.add('priority-' + (group.priority || 'medium'));
         }
 
-        var checkedAttr = slot.completed ? 'checked' : '';
-        var disabledAttr = slot.isRolledOver ? 'disabled' : '';
+        var checkedAttr = group.completed ? 'checked' : '';
+        var disabledAttr = group.isRolledOver ? 'disabled' : '';
         
         // Meta tags
         var metaHtml = "";
-        if (slot.isRolledOver) {
+        if (group.isRolledOver) {
           metaHtml = `<span class="slot-meta-label"><span class="c-lbl">Rolled Over</span></span>`;
-        } else if (slot.isFallback) {
+        } else if (group.isFallback) {
           metaHtml = `<span class="slot-meta-label"><span class="f-lbl">Maintenance</span></span>`;
-          if (slot.typeLabel) {
-            metaHtml += ` <span style="font-size: 8px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">[${slot.typeLabel}]</span>`;
+          if (group.typeLabel) {
+            metaHtml += ` <span style="font-size: 8px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">[${group.typeLabel}]</span>`;
           }
         } else {
-          var pClass = slot.priority ? 'priority-' + slot.priority : 'priority-medium';
-          metaHtml = `<span class="slot-meta-label"><span class="c-lbl">Custom</span> <span class="priority-badge ${pClass}">${slot.priority || 'medium'}</span></span>`;
+          var pClass = group.priority ? 'priority-' + group.priority : 'priority-medium';
+          metaHtml = `<span class="slot-meta-label"><span class="c-lbl">Custom</span> <span class="priority-badge ${pClass}">${group.priority || 'medium'}</span></span>`;
         }
 
-        var actionHtml = slot.isRolledOver ? '' : `
-          <button onclick="openOverrideDialogInDayView(${s})" class="btn-slot-action" style="padding: 8px;" title="Override text">
+        var actionHtml = group.isRolledOver ? '' : `
+          <button onclick="openOverrideDialogForGroup('${dateStr}', [${group.slotIndices.join(',')}])" class="btn-slot-action" style="padding: 8px;" title="Override text">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
           </button>
         `;
 
+        // Hours label
+        var durationLabel = group.hours === 8 ? "All Day" : group.hours + "h";
+        
+        // Block range label
+        var blockRangeLabel = group.slotIndices.length === 1 
+          ? `Block ${group.slotIndices[0] + 1}` 
+          : `Block ${group.slotIndices[0] + 1}-${group.slotIndices[group.slotIndices.length - 1] + 1}`;
+
         item.innerHTML = `
-          <div style="font-family: var(--font-display); font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; width: 70px; border-right: 1px solid var(--border-color); padding-right: 12px;">
-            Block ${s + 1}
+          <div style="font-family: var(--font-display); font-size: 13px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; width: 90px; border-right: 1px solid var(--border-color); padding-right: 12px; display: flex; flex-direction: column;">
+            <span>${blockRangeLabel}</span>
+            <span style="font-size: 9px; opacity: 0.6; margin-top: 2px;">(${durationLabel})</span>
           </div>
           <div style="display: flex; align-items: center;">
-            <input type="checkbox" class="slot-checkbox" style="width: 22px; height: 22px;" ${checkedAttr} ${disabledAttr} onchange="toggleSlotCompleteInDayView(${s})">
+            <input type="checkbox" class="slot-checkbox" style="width: 22px; height: 22px;" ${checkedAttr} ${disabledAttr} onchange="toggleGroupComplete('${dateStr}', [${group.slotIndices.join(',')}])">
           </div>
           <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding-left: 8px;">
             <div class="day-view-slot-title" style="font-size: 15px; font-weight: 600; color: var(--text-primary); line-height: 1.4;">
-              ${slot.title}
+              ${group.title}
             </div>
             <div style="display: flex; align-items: center; gap: 8px;">
               ${metaHtml}
@@ -2409,7 +2458,7 @@
           </div>
         `;
         listEl.appendChild(item);
-      }
+      });
 
       // Update completion stats
       var pct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
@@ -2461,23 +2510,34 @@
       showToast(checkbox.checked ? "Marked as Holiday" : "Holiday Removed");
     }
 
-    function toggleSlotCompleteInDayView(slotIndex) {
-      if (!appState.activeDayStr) return;
-      var dateStr = appState.activeDayStr;
+    function toggleGroupComplete(dateStr, slotIndices) {
       var daySlots = appState.dayStates[dateStr];
-      
-      if (daySlots && daySlots[slotIndex]) {
-        daySlots[slotIndex].completed = !daySlots[slotIndex].completed;
+      if (daySlots) {
+        var targetState = !daySlots[slotIndices[0]].completed;
+        slotIndices.forEach(idx => {
+          if (daySlots[idx]) {
+            daySlots[idx].completed = targetState;
+          }
+        });
         saveState();
         renderCalendar();
         renderDayView();
-        showToast(daySlots[slotIndex].completed ? "Block Completed" : "Block Restored");
+        showToast(targetState ? "Block Completed" : "Block Restored");
       }
     }
 
-    function openOverrideDialogInDayView(slotIndex) {
-      activeDrawerDate = appState.activeDayStr;
-      openOverrideDialog(slotIndex);
+    function openOverrideDialogForGroup(dateStr, slotIndices) {
+      activeDrawerDate = dateStr;
+      activeOverrideGroupSlots = slotIndices;
+      activeOverrideSlotIndex = null;
+
+      var daySlots = appState.dayStates[dateStr];
+      var slot = daySlots ? daySlots[slotIndices[0]] : null;
+      var currentText = slot ? slot.title : "";
+
+      document.getElementById('dialog-task-input').value = currentText;
+      document.getElementById('override-dialog').style.display = 'flex';
+      document.getElementById('dialog-task-input').focus();
     }
 
     // -------------------------------------------------------------
@@ -2627,10 +2687,12 @@
     // Inline Slot Text Override Dialog
     // -------------------------------------------------------------
     var activeOverrideSlotIndex = null;
+    var activeOverrideGroupSlots = null;
 
     function openOverrideDialog(slotIndex) {
       if (!activeDrawerDate) return;
       activeOverrideSlotIndex = slotIndex;
+      activeOverrideGroupSlots = null;
 
       var daySlots = appState.dayStates[activeDrawerDate];
       var slot = daySlots ? daySlots[slotIndex] : null;
@@ -2644,10 +2706,12 @@
     function closeOverrideDialog() {
       document.getElementById('override-dialog').style.display = 'none';
       activeOverrideSlotIndex = null;
+      activeOverrideGroupSlots = null;
     }
 
     function saveOverrideDialog() {
-      if (!activeDrawerDate || activeOverrideSlotIndex === null) return;
+      if (!activeDrawerDate) return;
+      if (activeOverrideSlotIndex === null && activeOverrideGroupSlots === null) return;
 
       var inputVal = document.getElementById('dialog-task-input').value.trim();
       if (!inputVal) {
@@ -2660,14 +2724,18 @@
         daySlots = Array.from({ length: 8 }, () => null);
       }
       
-      var slot = daySlots[activeOverrideSlotIndex];
-      if (!slot) {
-        slot = { completed: false, isFallback: true };
-      }
+      var indicesToModify = activeOverrideGroupSlots || [activeOverrideSlotIndex];
+      
+      indicesToModify.forEach(slotIndex => {
+        var slot = daySlots[slotIndex];
+        if (!slot) {
+          slot = { completed: false, isFallback: true };
+        }
+        slot.title = inputVal;
+        slot.isOverridden = true; // Mark as overridden so reschedule doesn't clear it
+        daySlots[slotIndex] = slot;
+      });
 
-      slot.title = inputVal;
-      slot.isOverridden = true; // Mark as overridden so reschedule doesn't clear it
-      daySlots[activeOverrideSlotIndex] = slot;
       appState.dayStates[activeDrawerDate] = daySlots;
 
       saveState();
