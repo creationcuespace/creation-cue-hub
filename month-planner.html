@@ -1584,25 +1584,57 @@
       setTimeout(function () { t.classList.remove('show'); }, 2200);
     }
 
+    // Helper to robustly convert potentially dictionary-like representation from Firebase back to JS Array
+    function ensureArray(val) {
+      if (!val) return [];
+      if (Array.isArray(val)) return val;
+      
+      // It's an object with numeric keys, e.g. { "0": {...}, "1": {...} }
+      var arr = [];
+      var maxKey = -1;
+      Object.keys(val).forEach(k => {
+        var idx = parseInt(k, 10);
+        if (!isNaN(idx) && idx > maxKey) {
+          maxKey = idx;
+        }
+      });
+      for (var i = 0; i <= maxKey; i++) {
+        arr[i] = val[i] !== undefined ? val[i] : null;
+      }
+      return arr;
+    }
+
+    // Helper to ensure it's a dense array without null/undefined holes
+    function ensureArrayDense(val) {
+      return ensureArray(val).filter(item => item !== null && item !== undefined);
+    }
+
+    // Sanitizer for application state to protect against object representation of arrays from Firebase Realtime Database
+    function sanitizeState(state) {
+      if (!state) return;
+      
+      state.customTasks = ensureArrayDense(state.customTasks);
+      state.customHolidays = ensureArrayDense(state.customHolidays);
+      
+      if (state.dayStates && typeof state.dayStates === 'object' && !Array.isArray(state.dayStates)) {
+        var cleanDayStates = {};
+        Object.keys(state.dayStates).forEach(dateStr => {
+          var slots = state.dayStates[dateStr];
+          if (slots) {
+            cleanDayStates[dateStr] = ensureArray(slots);
+          }
+        });
+        state.dayStates = cleanDayStates;
+      } else {
+        state.dayStates = {};
+      }
+    }
+
     // Load from LocalStorage
     function loadState() {
       try {
         var tasks = localStorage.getItem('cc_planner_custom_tasks');
-        if (tasks) {
-          appState.customTasks = JSON.parse(tasks);
-          
-          // Migrate and repair any invalid or corrupt start dates from previous versions
-          var migrated = false;
-          appState.customTasks.forEach(task => {
-            if (!task.startDate || !/^\d{4}-\d{2}-\d{2}$/.test(task.startDate)) {
-              task.startDate = parseDateToStandardString(task.startDate);
-              migrated = true;
-            }
-          });
-          if (migrated) {
-            setTimeout(() => saveState(), 0);
-          }
-        }
+        if (tasks) appState.customTasks = JSON.parse(tasks);
         
         var holidays = localStorage.getItem('cc_planner_custom_holidays');
         if (holidays) appState.customHolidays = JSON.parse(holidays);
@@ -1612,6 +1644,21 @@
 
         var autofill = localStorage.getItem('cc_planner_autofill_fallback');
         appState.autofillFallback = autofill === null ? true : JSON.parse(autofill);
+
+        // Sanitize loaded state
+        sanitizeState(appState);
+
+        // Migrate and repair any invalid or corrupt start dates from previous versions
+        var migrated = false;
+        appState.customTasks.forEach(task => {
+          if (!task.startDate || !/^\d{4}-\d{2}-\d{2}$/.test(task.startDate)) {
+            task.startDate = parseDateToStandardString(task.startDate);
+            migrated = true;
+          }
+        });
+        if (migrated) {
+          setTimeout(() => saveState(), 0);
+        }
       } catch (err) {
         console.error("Error loading state from localStorage:", err);
       }
@@ -1642,11 +1689,31 @@
       try {
         var snapshot = await firebase.database().ref('work_planner/' + currentUser.uid).once('value');
         var data = snapshot.val();
-        if (data) {
-          if (data.customTasks) appState.customTasks = data.customTasks;
-          if (data.customHolidays) appState.customHolidays = data.customHolidays;
-          if (data.dayStates) appState.dayStates = data.dayStates;
-          if (data.autofillFallback !== undefined) appState.autofillFallback = data.autofillFallback;
+        
+        var localHasData = (appState.customTasks && appState.customTasks.length > 0) || Object.keys(appState.dayStates).length > 0;
+        var cloudHasData = data && ((data.customTasks && (Array.isArray(data.customTasks) ? data.customTasks.length > 0 : Object.keys(data.customTasks).length > 0)) || (data.dayStates && Object.keys(data.dayStates).length > 0));
+
+        if (localHasData && !cloudHasData) {
+          // Local has data but cloud is empty: upload local data to cloud
+          await writeStateToFirebase();
+          console.log("Firebase sync: Uploaded local data because cloud was empty.");
+          showToast("Local data uploaded to Cloud!");
+        } else if (data) {
+          // Cloud has data: load it
+          var tempState = {
+            customTasks: data.customTasks,
+            customHolidays: data.customHolidays,
+            dayStates: data.dayStates,
+            autofillFallback: data.autofillFallback
+          };
+          sanitizeState(tempState);
+          
+          appState.customTasks = tempState.customTasks;
+          appState.customHolidays = tempState.customHolidays;
+          appState.dayStates = tempState.dayStates;
+          if (tempState.autofillFallback !== undefined) {
+            appState.autofillFallback = tempState.autofillFallback;
+          }
           
           // Save locally to keep it in sync
           localStorage.setItem('cc_planner_custom_tasks', JSON.stringify(appState.customTasks));
@@ -1661,9 +1728,8 @@
           }
           console.log("Firebase sync: Loaded data.");
         } else {
-          // Initialize Firebase with current local state if database is empty
-          await writeStateToFirebase();
-          console.log("Firebase sync: Initialized database with local browser data.");
+          // Neither has data
+          console.log("Firebase sync: No data found on local or cloud.");
         }
         updateSyncUI();
       } catch (err) {
@@ -1694,6 +1760,9 @@
       }
       showToast("Syncing with Firebase...");
       await readStateFromFirebase();
+      scheduleFutureTasks(); // Re-distribute newly fetched custom tasks on the calendar
+      renderCalendar();
+      renderDayView();
       showToast("Firebase Sync Complete!");
     }
 
@@ -3057,12 +3126,17 @@
         try {
           var parsed = JSON.parse(e.target.result);
           if (parsed && (parsed.customTasks || parsed.customHolidays || parsed.dayStates)) {
+            // Sanitize the parsed object representation of arrays
+            sanitizeState(parsed);
+            
             if (parsed.customTasks) appState.customTasks = parsed.customTasks;
             if (parsed.customHolidays) appState.customHolidays = parsed.customHolidays;
             if (parsed.dayStates) appState.dayStates = parsed.dayStates;
+            if (parsed.autofillFallback !== undefined) appState.autofillFallback = parsed.autofillFallback;
             
             saveState();
             renderBacklog();
+            scheduleFutureTasks();
             renderCalendar();
             showToast("Backup imported successfully!");
           } else {
