@@ -1556,7 +1556,21 @@
     function loadState() {
       try {
         var tasks = localStorage.getItem('cc_planner_custom_tasks');
-        if (tasks) appState.customTasks = JSON.parse(tasks);
+        if (tasks) {
+          appState.customTasks = JSON.parse(tasks);
+          
+          // Migrate and repair any invalid or corrupt start dates from previous versions
+          var migrated = false;
+          appState.customTasks.forEach(task => {
+            if (!task.startDate || !/^\d{4}-\d{2}-\d{2}$/.test(task.startDate)) {
+              task.startDate = parseDateToStandardString(task.startDate);
+              migrated = true;
+            }
+          });
+          if (migrated) {
+            setTimeout(() => saveState(), 0);
+          }
+        }
         
         var holidays = localStorage.getItem('cc_planner_custom_holidays');
         if (holidays) appState.customHolidays = JSON.parse(holidays);
