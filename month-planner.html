@@ -177,6 +177,41 @@
       background: var(--primary-glow);
     }
 
+    @media (max-width: 600px) {
+      .top-header {
+        padding: 10px;
+        gap: 8px;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .brand-name {
+        font-size: 16px;
+        letter-spacing: 1px;
+      }
+      .brand-logo {
+        width: 24px;
+        height: 24px;
+      }
+      .header-btns {
+        gap: 6px;
+        flex-shrink: 1;
+        min-width: 0;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      .header-btns::-webkit-scrollbar {
+        display: none;
+      }
+      .header-btn {
+        font-size: 12px;
+        padding: 6px 8px;
+        flex-shrink: 0;
+      }
+    }
+
     /* Main Dashboard Layout */
     .dashboard-container {
       width: 100%;
@@ -192,7 +227,52 @@
     @media (max-width: 1024px) {
       .dashboard-container {
         grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 12px;
       }
+      .calendar-area {
+        order: 1; /* Calendar at the top on mobile */
+      }
+      aside {
+        order: 2; /* Sidebar at the bottom on mobile */
+      }
+    }
+
+    /* Collapsible Cards (details/summary) */
+    .collapsible-card summary {
+      list-style: none; /* Hide default arrow */
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    
+    .collapsible-card summary::-webkit-details-marker {
+      display: none; /* Hide default arrow in Safari */
+    }
+    
+    /* Chevron Arrow indicator on the right */
+    .collapsible-card summary::after {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid var(--text-muted);
+      border-bottom: 2px solid var(--text-muted);
+      transform: rotate(45deg);
+      transition: var(--transition-smooth);
+      margin-left: 12px;
+      margin-right: 4px;
+      flex-shrink: 0;
+    }
+    
+    .collapsible-card[open] summary::after {
+      transform: rotate(-135deg);
     }
 
     /* Cards */
@@ -213,12 +293,20 @@
       font-size: 18px;
       font-weight: 700;
       color: var(--text-primary);
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 12px;
-      margin-bottom: 4px;
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      width: 100%;
+    }
+
+    .collapsible-card[open] .card-title,
+    .card:not(details) .card-title {
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+      margin-bottom: 4px;
     }
 
     .card-subtitle {
@@ -1158,103 +1246,106 @@
     <!-- Left Sidebar: Controls & Backlog -->
     <aside style="display: flex; flex-direction: column; gap: 24px;">
       <!-- Task Creation Card -->
-      <div class="card">
-        <h2 class="card-title">Add Custom Task</h2>
-        
-        <div class="form-group">
-          <label for="task-title">Task Title</label>
-          <input type="text" id="task-title" class="input-text" placeholder="e.g. Design CUE178 Watch Face">
-        </div>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <details class="card collapsible-card" open>
+        <summary class="card-title">Add Custom Task</summary>
+        <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 16px;">
           <div class="form-group">
-            <label for="task-priority">Importance</label>
-            <select id="task-priority" class="select-input">
-              <option value="high">🔥 High</option>
-              <option value="medium" selected>💼 Medium</option>
-              <option value="low">⚙️ Low</option>
-            </select>
+            <label for="task-title">Task Title</label>
+            <input type="text" id="task-title" class="input-text" placeholder="e.g. Design CUE178 Watch Face">
           </div>
           
-          <div class="form-group">
-            <label for="task-duration">Days Needed</label>
-            <input type="number" id="task-duration" class="input-text" step="0.25" min="0.25" value="1.0">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label for="task-priority">Importance</label>
+              <select id="task-priority" class="select-input">
+                <option value="high">🔥 High</option>
+                <option value="medium" selected>💼 Medium</option>
+                <option value="low">⚙️ Low</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="task-duration">Days Needed</label>
+              <input type="number" id="task-duration" class="input-text" step="0.25" min="0.25" value="1.0">
+            </div>
           </div>
-        </div>
 
-        <div class="form-group" style="margin-top: 12px;">
-          <label for="task-start-date">Start Date (DD/MM/YYYY)</label>
-          <input type="text" id="task-start-date" class="input-text" placeholder="e.g. 26/06/2026">
+          <div class="form-group">
+            <label for="task-start-date">Start Date (DD/MM/YYYY)</label>
+            <input type="text" id="task-start-date" class="input-text" placeholder="e.g. 26/06/2026">
+          </div>
+          
+          <button onclick="addCustomTask()" class="btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Add Task
+          </button>
         </div>
-        
-        <button onclick="addCustomTask()" class="btn-primary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          Add Task
-        </button>
-      </div>
+      </details>
 
       <!-- Task Backlog Card -->
-      <div class="card">
-        <h2 class="card-title">
+      <details class="card collapsible-card" open>
+        <summary class="card-title">
           <span>Task Backlog</span>
           <span style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 10px; color: var(--text-secondary);" id="backlog-count">0</span>
-        </h2>
-        <div class="backlog-list" id="backlog-list">
-          <!-- Backlog items populated via JS -->
+        </summary>
+        <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 16px;">
+          <div class="backlog-list" id="backlog-list">
+            <!-- Backlog items populated via JS -->
+          </div>
         </div>
-      </div>
+      </details>
 
       <!-- Planner Actions Card -->
-      <div class="card">
-        <h2 class="card-title">Planner Actions</h2>
-        
+      <details class="card collapsible-card" open>
+        <summary class="card-title">Planner Actions</summary>
+        <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 16px;">
+          <button onclick="regenerateCalendarSchedule()" class="btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+            Regenerate Schedule
+          </button>
 
-        <button onclick="regenerateCalendarSchedule()" class="btn-secondary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
-          Regenerate Schedule
-        </button>
-
-        <button onclick="openAuditModal()" class="btn-secondary" style="background: rgba(241, 179, 28, 0.05); border-color: rgba(241, 179, 28, 0.2); color: var(--primary-text); justify-content: center; gap: 8px;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-          Import Tasks from Text
-        </button>
-        <p style="margin: -10px 0 10px 0; font-size: 10px; color: var(--text-muted); line-height: 1.4;">
-          Paste a Gemini audit report or type your own bulleted list (e.g. <code>- update assets for CUE180</code>) to bulk-extract, edit, and schedule tasks.
-        </p>
-
-        <div style="margin: 12px 0 12px 0;">
-          <div style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
-            <input type="checkbox" id="toggle-autofill" style="width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer;" onchange="toggleAutofillFallback(this.checked)">
-            <label for="toggle-autofill" style="margin: 0; font-size: 11.5px; color: var(--text-secondary); cursor: pointer; font-weight: 600;">Auto-fill with fallback tasks</label>
-          </div>
-          <p style="margin: 6px 0 0 24px; font-size: 10px; color: var(--text-muted); line-height: 1.4;">
-            When enabled, unallocated work hours are filled with rotating maintenance jobs (SEO, policy, compatibility) generated from your watch face catalog. When disabled, empty slots remain completely blank.
+          <button onclick="openAuditModal()" class="btn-secondary" style="background: rgba(241, 179, 28, 0.05); border-color: rgba(241, 179, 28, 0.2); color: var(--primary-text); justify-content: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            Import Tasks from Text
+          </button>
+          <p style="margin: -10px 0 10px 0; font-size: 10px; color: var(--text-muted); line-height: 1.4;">
+            Paste a Gemini audit report or type your own bulleted list (e.g. <code>- update assets for CUE180</code>) to bulk-extract, edit, and schedule tasks.
           </p>
-        </div>
 
-        <button onclick="clearAllTasks()" class="btn-secondary" style="border-color: rgba(232, 40, 30, 0.2); color: var(--danger); background: rgba(232, 40, 30, 0.02); justify-content: center; gap: 8px;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-          Clean All Tasks
-        </button>
-        
-        <div style="border-top: 1px solid var(--border-color); padding-top: 16px; display: flex; gap: 8px;">
-          <button onclick="exportBackup()" class="btn-secondary" style="flex: 1; padding: 8px 12px; font-size: 11px;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>
-            Export
+          <div style="margin: 12px 0 12px 0;">
+            <div style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+              <input type="checkbox" id="toggle-autofill" style="width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer;" onchange="toggleAutofillFallback(this.checked)">
+              <label for="toggle-autofill" style="margin: 0; font-size: 11.5px; color: var(--text-secondary); cursor: pointer; font-weight: 600;">Auto-fill with fallback tasks</label>
+            </div>
+            <p style="margin: 6px 0 0 24px; font-size: 10px; color: var(--text-muted); line-height: 1.4;">
+              When enabled, unallocated work hours are filled with rotating maintenance jobs (SEO, policy, compatibility) generated from your watch face catalog. When disabled, empty slots remain completely blank.
+            </p>
+          </div>
+
+          <button onclick="clearAllTasks()" class="btn-secondary" style="border-color: rgba(232, 40, 30, 0.2); color: var(--danger); background: rgba(232, 40, 30, 0.02); justify-content: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            Clean All Tasks
           </button>
           
-          <label class="btn-secondary" style="flex: 1; padding: 8px 12px; font-size: 11px; text-align: center; display: inline-flex; justify-content: center; cursor: pointer; margin: 0;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
-            Import
-            <input type="file" id="import-file" style="display: none;" onchange="importBackup(event)">
-          </label>
+          <div style="border-top: 1px solid var(--border-color); padding-top: 16px; display: flex; gap: 8px;">
+            <button onclick="exportBackup()" class="btn-secondary" style="flex: 1; padding: 8px 12px; font-size: 11px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>
+              Export
+            </button>
+            
+            <label class="btn-secondary" style="flex: 1; padding: 8px 12px; font-size: 11px; text-align: center; display: inline-flex; justify-content: center; cursor: pointer; margin: 0;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
+              Import
+              <input type="file" id="import-file" style="display: none;" onchange="importBackup(event)">
+            </label>
+          </div>
         </div>
-      </div>
+      </details>
 
       <!-- Firebase Cloud Sync Card -->
-      <div class="card">
-        <h2 class="card-title">Firebase Cloud Sync</h2>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
+      <details class="card collapsible-card" open>
+        <summary class="card-title">Firebase Cloud Sync</summary>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
           <div id="sync-status-container" style="font-size: 11px; padding: 8px 12px; border-radius: 4px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 4px;">
             <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
               <span style="color: var(--text-muted);">Status:</span>
@@ -1268,7 +1359,7 @@
             Sync Now
           </button>
         </div>
-      </div>
+      </details>
       
       <!-- Diagnostics Card -->
       <details class="card" style="padding: 12px; background: rgba(0, 0, 0, 0.35); border-color: rgba(255, 255, 255, 0.05); margin-top: 10px;">
@@ -1820,6 +1911,13 @@
       
       renderCalendar();
       renderDayView();
+
+      // Collapse settings cards on mobile devices (width <= 1024px)
+      if (window.innerWidth <= 1024) {
+        document.querySelectorAll('.collapsible-card').forEach(function(el) {
+          el.removeAttribute('open');
+        });
+      }
     }
 
     async function fetchCatalog() {
