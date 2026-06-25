@@ -1607,6 +1607,9 @@
       // Initialize active day
       appState.activeDayStr = getTodayDateString();
       
+      // Run automatic rollover silently on initialization
+      triggerRollover(true);
+      
       renderCalendar();
       renderDayView();
     }
@@ -1982,7 +1985,7 @@
     // -------------------------------------------------------------
     // Rollover Engine
     // -------------------------------------------------------------
-    function triggerRollover() {
+    function triggerRollover(silent) {
       var todayStr = getTodayDateString();
       var rolloverTasks = []; // List of uncompleted tasks gathered from past days
 
@@ -1998,7 +2001,7 @@
           var dayHasChanges = false;
           for (var s = 0; s < 8; s++) {
             var slot = slots[s];
-            if (slot && !slot.completed && !slot.isHoliday && slot.title !== "Holiday / Non-working Day") {
+            if (slot && !slot.completed && !slot.isHoliday && slot.title !== "Holiday / Non-working Day" && !slot.isRolledOver) {
               // Copy the task info
               rolloverTasks.push({
                 taskId: slot.taskId,
@@ -2027,7 +2030,9 @@
       });
 
       if (rolloverTasks.length === 0) {
-        showToast("No uncompleted past tasks to rollover.");
+        if (!silent) {
+          showToast("No uncompleted past tasks to rollover.");
+        }
         return;
       }
 
@@ -2112,7 +2117,9 @@
 
       saveState();
       renderCalendar();
-      showToast(`Rolled over ${rolloverTasks.length} tasks!`);
+      if (!silent) {
+        showToast(`Rolled over ${rolloverTasks.length} tasks!`);
+      }
     }
 
     // -------------------------------------------------------------
