@@ -1271,27 +1271,6 @@
       background: var(--primary);
     }
 
-    /* Day View Card Layout Columns */
-    .slot-time-col {
-      font-family: var(--font-display);
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      width: 90px;
-      border-right: 1px solid var(--border-color);
-      padding-right: 12px;
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-    }
-    
-    .slot-duration-label {
-      font-size: 9px;
-      opacity: 0.6;
-      margin-top: 2px;
-    }
-    
     .slot-check-col {
       display: flex;
       align-items: center;
@@ -1304,7 +1283,6 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
-      padding-left: 8px;
     }
     
     .day-view-slot-title {
@@ -1323,53 +1301,12 @@
 
     @media (max-width: 600px) {
       .day-view-slot-card {
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        grid-template-rows: auto auto;
-        gap: 8px 12px;
         padding: 12px 14px;
-      }
-      
-      .slot-time-col {
-        grid-column: 1 / span 3;
-        grid-row: 1;
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
-        padding-right: 0;
-        padding-bottom: 6px;
-        margin-bottom: 2px;
-        flex-direction: row;
-        gap: 8px;
-        align-items: center;
-        font-size: 11px;
-      }
-      
-      .slot-duration-label {
-        margin-top: 0;
-      }
-      
-      .slot-check-col {
-        grid-column: 1;
-        grid-row: 2;
-        align-self: flex-start;
-        margin-top: 2px;
-      }
-      
-      .slot-info-col {
-        grid-column: 2;
-        grid-row: 2;
-        padding-left: 0;
+        gap: 12px;
       }
       
       .day-view-slot-title {
-        font-size: 13px;
-      }
-      
-      .slot-action-col {
-        grid-column: 3;
-        grid-row: 2;
-        align-self: flex-start;
+        font-size: 13.5px;
       }
 
       /* Drawer item styling optimizations on mobile */
@@ -2980,14 +2917,10 @@
           if (offState && (group.isHoliday || group.title === "Holiday / Non-working Day")) {
             var item = document.createElement('div');
             item.className = 'day-view-slot-card holiday';
+            item.style.justifyContent = "center";
             item.innerHTML = `
-              <div class="slot-time-col">
-                Off-Day
-              </div>
-              <div class="slot-info-col">
-                <div style="font-size: 14px; font-weight: 500; color: var(--text-muted); font-style: italic;">
-                  Off-Day: No tasks scheduled
-                </div>
+              <div style="font-size: 14px; font-weight: 600; color: var(--text-muted); font-style: italic; text-align: center; padding: 8px 0;">
+                🌴 Off-Day: No tasks scheduled
               </div>
             `;
             listEl.appendChild(item);
@@ -3031,19 +2964,16 @@
             </button>
           `;
 
-          // Hours label
-          var durationLabel = group.hours + "h";
-          
-          // Block range label
-          var blockRangeLabel = group.slotIndices.length === 1 
-            ? `Block ${group.slotIndices[0] + 1}` 
-            : `Block ${group.slotIndices[0] + 1}-${group.slotIndices[group.slotIndices.length - 1] + 1}`;
+          // Format duration nicely (e.g. 8h -> 1 day, 16h -> 2 days, etc.)
+          var durationText = "";
+          if (group.hours % 8 === 0) {
+            var days = group.hours / 8;
+            durationText = days === 1 ? "1 day" : days + " days";
+          } else {
+            durationText = group.hours + "h";
+          }
 
           item.innerHTML = `
-            <div class="slot-time-col">
-              <span>${blockRangeLabel}</span>
-              <span class="slot-duration-label">(${durationLabel})</span>
-            </div>
             <div class="slot-check-col">
               <input type="checkbox" class="slot-checkbox" style="width: 22px; height: 22px;" ${checkedAttr} ${disabledAttr} onchange="toggleGroupComplete('${dateStr}', [${group.slotIndices.join(',')}])">
             </div>
@@ -3052,6 +2982,7 @@
                 ${group.title}
               </div>
               <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <span style="font-size: 9.5px; font-weight: 700; color: var(--primary-text); background: var(--primary-glow); border: 1px solid var(--border-glow); padding: 1px 6px; border-radius: 4px; text-transform: uppercase;">⌛ ${durationText}</span>
                 ${metaHtml}
               </div>
             </div>
