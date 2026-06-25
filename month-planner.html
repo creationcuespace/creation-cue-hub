@@ -210,33 +210,81 @@
         padding: 6px 8px;
         flex-shrink: 0;
       }
+      #header-sync-text {
+        display: none !important;
+      }
+      #header-sync-badge {
+        padding: 4px !important;
+        margin-right: 6px !important;
+      }
     }
 
     /* Main Dashboard Layout */
     .dashboard-container {
       width: 100%;
-      max-width: 1380px;
+      max-width: 1600px;
       margin: 0 auto;
       padding: 24px;
       display: grid;
-      grid-template-columns: 360px 1fr;
+      grid-template-columns: 280px 1fr;
+      align-items: start;
       gap: 24px;
       flex: 1;
+    }
+    
+    .calendar-area {
+      width: 100%;
+    }
+    
+    aside {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
     }
 
     @media (max-width: 1024px) {
       .dashboard-container {
-        grid-template-columns: 1fr;
         display: flex;
         flex-direction: column;
-        gap: 20px;
         padding: 12px;
+        gap: 16px;
       }
       .calendar-area {
-        order: 1; /* Calendar at the top on mobile */
+        order: 1;
       }
       aside {
-        order: 2; /* Sidebar at the bottom on mobile */
+        order: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+
+    @media (min-width: 1025px) {
+      /* Make settings cards smaller and more compact in sidebar on PC */
+      aside .card {
+        padding: 14px 16px;
+        gap: 12px;
+      }
+      aside .card-title {
+        font-size: 14px;
+      }
+      aside .collapsible-card[open] .card-title,
+      aside .card:not(details) .card-title {
+        padding-bottom: 8px;
+        margin-bottom: 2px;
+      }
+      aside .form-group {
+        gap: 6px;
+      }
+      aside .input-text, aside .select-input {
+        padding: 8px 10px;
+        font-size: 12px;
+      }
+      aside .btn-primary, aside .btn-secondary {
+        padding: 8px 12px;
+        font-size: 12px;
       }
     }
 
@@ -1348,6 +1396,11 @@
       <span class="brand-name">Creation<span>Cue</span>™</span>
     </a>
     <div class="header-btns">
+      <!-- Firebase connection indicator dot & text -->
+      <div id="header-sync-badge" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; flex-shrink: 0;">
+        <span id="header-sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
+        <span id="header-sync-text" style="color: var(--text-muted);">Offline</span>
+      </div>
       <a href="index.html" class="header-btn">Home</a>
       <a href="manage-coupons.html" class="header-btn">Coupons</a>
       <a href="social-generator.html" class="header-btn">Socials</a>
@@ -1359,9 +1412,9 @@
   <!-- Dashboard Container -->
   <div class="dashboard-container">
     <!-- Left Sidebar: Controls & Backlog -->
-    <aside style="display: flex; flex-direction: column; gap: 24px;">
+    <aside>
       <!-- Task Creation Card -->
-      <details class="card collapsible-card" open>
+      <details class="card collapsible-card">
         <summary class="card-title">Add Custom Task</summary>
         <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 16px;">
           <div class="form-group">
@@ -1398,7 +1451,7 @@
       </details>
 
       <!-- Task Backlog Card -->
-      <details class="card collapsible-card" open>
+      <details class="card collapsible-card">
         <summary class="card-title">
           <span>Task Backlog</span>
           <span style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 10px; color: var(--text-secondary);" id="backlog-count">0</span>
@@ -1411,7 +1464,7 @@
       </details>
 
       <!-- Planner Actions Card -->
-      <details class="card collapsible-card" open>
+      <details class="card collapsible-card">
         <summary class="card-title">Planner Actions</summary>
         <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 16px;">
           <button onclick="regenerateCalendarSchedule()" class="btn-secondary">
@@ -1458,8 +1511,16 @@
       </details>
 
       <!-- Firebase Cloud Sync Card -->
-      <details class="card collapsible-card" open>
-        <summary class="card-title">Firebase Cloud Sync</summary>
+      <details class="card collapsible-card">
+        <summary class="card-title">
+          <span style="display: flex; align-items: center; gap: 8px;">
+            <span>Firebase Cloud Sync</span>
+            <span id="card-sync-indicator" style="display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 2px 6px; border-radius: 12px;">
+              <span id="card-sync-dot" style="width: 6px; height: 6px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
+              <span id="card-sync-text" style="color: var(--text-muted); font-size: 10px; font-weight: 700;">Offline</span>
+            </span>
+          </span>
+        </summary>
         <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
           <div id="sync-status-container" style="font-size: 11px; padding: 8px 12px; border-radius: 4px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 4px;">
             <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
@@ -1477,7 +1538,7 @@
       </details>
       
       <!-- Diagnostics Card -->
-      <details class="card" style="padding: 12px; background: rgba(0, 0, 0, 0.35); border-color: rgba(255, 255, 255, 0.05); margin-top: 10px;">
+      <details class="card diagnostics-card" style="padding: 12px; background: rgba(0, 0, 0, 0.35); border-color: rgba(255, 255, 255, 0.05); margin-top: 10px;">
         <summary style="font-size: 11px; font-weight: 700; color: var(--text-muted); cursor: pointer; user-select: none; outline: none; text-transform: uppercase; letter-spacing: 0.5px;">System Diagnostics</summary>
         <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
           <button onclick="runDiagnostics()" class="btn-secondary" style="padding: 6px; font-size: 10px;">Run Diagnostics</button>
@@ -1976,6 +2037,12 @@
       var statusEl = document.getElementById('sync-status');
       var emailEl = document.getElementById('sync-email');
       
+      var headerDot = document.getElementById('header-sync-dot');
+      var headerText = document.getElementById('header-sync-text');
+      
+      var cardDot = document.getElementById('card-sync-dot');
+      var cardText = document.getElementById('card-sync-text');
+      
       if (!statusEl) return;
 
       if (currentUser) {
@@ -1985,11 +2052,31 @@
           emailEl.textContent = currentUser.email || "Active User";
           emailEl.style.display = "block";
         }
+        if (headerDot) headerDot.style.background = "var(--success)";
+        if (headerText) {
+          headerText.textContent = "Connected";
+          headerText.style.color = "var(--success)";
+        }
+        if (cardDot) cardDot.style.background = "var(--success)";
+        if (cardText) {
+          cardText.textContent = "Connected";
+          cardText.style.color = "var(--success)";
+        }
       } else {
         statusEl.textContent = "Not Connected";
         statusEl.style.color = "var(--danger)";
         if (emailEl) {
           emailEl.style.display = "none";
+        }
+        if (headerDot) headerDot.style.background = "var(--danger)";
+        if (headerText) {
+          headerText.textContent = "Offline";
+          headerText.style.color = "var(--danger)";
+        }
+        if (cardDot) cardDot.style.background = "var(--danger)";
+        if (cardText) {
+          cardText.textContent = "Offline";
+          cardText.style.color = "var(--danger)";
         }
       }
     }
@@ -2026,13 +2113,6 @@
       
       renderCalendar();
       renderDayView();
-
-      // Collapse settings cards on mobile devices (width <= 1024px)
-      if (window.innerWidth <= 1024) {
-        document.querySelectorAll('.collapsible-card').forEach(function(el) {
-          el.removeAttribute('open');
-        });
-      }
     }
 
     async function fetchCatalog() {
