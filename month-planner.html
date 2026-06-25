@@ -1716,14 +1716,42 @@
         var formattedDuration = task.duration === 1 ? '1 day' : task.duration + ' days';
         var formattedStart = task.startDate ? formatStandardDateToDisplay(task.startDate) : 'Today';
         var escapedTitle = escapeHtmlAttribute(task.title);
+
+        // Find scheduled dates in appState.dayStates
+        var scheduledDaysList = [];
+        Object.keys(appState.dayStates).forEach(dateStr => {
+          var slots = appState.dayStates[dateStr];
+          if (slots && Array.isArray(slots)) {
+            var count = slots.filter(s => s && s.taskId === task.id).length;
+            if (count > 0) {
+              scheduledDaysList.push({ dateStr: dateStr, slotsCount: count });
+            }
+          }
+        });
+
+        // Sort scheduled days chronologically
+        scheduledDaysList.sort((a, b) => a.dateStr.localeCompare(b.dateStr));
+
+        var scheduleBadge = "";
+        if (scheduledDaysList.length > 0) {
+          var formattedDays = scheduledDaysList.map(item => {
+            var displayDate = formatStandardDateToDisplay(item.dateStr).substring(0, 5); // DD/MM
+            var hours = item.slotsCount === 8 ? "Full" : `${item.slotsCount}h`;
+            return `${displayDate} (${hours})`;
+          }).join(', ');
+          scheduleBadge = `<span style="font-size: 9px; color: var(--primary-text); font-weight: 600; background: rgba(241,179,28,0.08); padding: 1px 4px; border-radius: 3px; border: 1px solid var(--primary-glow);">📅 ${formattedDays}</span>`;
+        } else {
+          scheduleBadge = `<span style="font-size: 9px; color: var(--danger); font-weight: 600; background: rgba(232,40,30,0.08); padding: 1px 4px; border-radius: 3px; border: 1px solid rgba(232,40,30,0.15);">📅 Not Scheduled</span>`;
+        }
         
         item.innerHTML = `
           <div class="backlog-item-info">
             <div class="backlog-item-title" title="${escapedTitle}">${task.title}</div>
-            <div class="backlog-item-meta">
+            <div class="backlog-item-meta" style="flex-wrap: wrap; gap: 4px;">
               <span class="priority-badge ${badgeClass}">${task.priority}</span>
               <span>⌛ ${formattedDuration}</span>
               <span style="font-size: 9px; opacity: 0.75; background: rgba(255,255,255,0.04); padding: 1px 4px; border-radius: 3px;">📅 Start: ${formattedStart}</span>
+              ${scheduleBadge}
             </div>
           </div>
           <button onclick="deleteCustomTask('${task.id}')" class="btn-delete" title="Delete Task">
@@ -1819,7 +1847,8 @@
     }
 
     function isHolidayOrWeekend(dateStr) {
-      var d = new Date(dateStr);
+      var parts = dateStr.split('-');
+      var d = new Date(parts[0], parts[1] - 1, parts[2]);
       var dayOfWeek = d.getDay(); // 0 = Sunday, 6 = Saturday
       if (dayOfWeek === 0) {
         return { type: 'weekend', label: 'Weekend' };
@@ -2446,7 +2475,8 @@
       }
       
       var dateStr = appState.activeDayStr;
-      var d = new Date(dateStr);
+      var parts = dateStr.split('-');
+      var d = new Date(parts[0], parts[1] - 1, parts[2]);
       var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       document.getElementById('day-view-date-title').textContent = d.toLocaleDateString('en-US', options);
 
@@ -2581,7 +2611,8 @@
       if (!appState.activeDayStr) {
         appState.activeDayStr = getTodayDateString();
       }
-      var current = new Date(appState.activeDayStr);
+      var parts = appState.activeDayStr.split('-');
+      var current = new Date(parts[0], parts[1] - 1, parts[2]);
       current.setDate(current.getDate() + direction);
       
       var newDateStr = formatDateString(current.getFullYear(), current.getMonth(), current.getDate());
