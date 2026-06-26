@@ -253,9 +253,9 @@
         gap: 8px !important;
       }
       #overall-progress-card {
-        height: 32px !important;
-        min-width: 180px !important;
-        padding: 6px 10px !important;
+        height: auto !important;
+        min-width: 140px !important;
+        padding: 0 !important;
         gap: 8px !important;
       }
     }
@@ -1634,9 +1634,9 @@
         </div>
 
         <!-- Overall Month Completed Bar -->
-        <div id="overall-progress-card" class="card" style="padding: 10px 16px; margin: 0; display: flex; flex-direction: row; align-items: center; gap: 12px; height: 42px; width: fit-content; min-width: 250px;">
-          <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;" id="overall-progress-text">0/0 Completed</span>
-          <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; min-width: 100px; display: block;">
+        <div id="overall-progress-card" style="padding: 0; margin: 0; display: flex; flex-direction: row; align-items: center; gap: 8px; height: auto; width: fit-content; min-width: 180px; background: transparent; border: none; box-shadow: none;">
+          <span style="font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;" id="overall-progress-text">0/0 Completed</span>
+          <div style="flex: 1; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; min-width: 80px; display: block;">
             <div id="overall-progress-fill" style="width: 0%; height: 100%; background: var(--success); transition: width 0.3s ease;"></div>
           </div>
         </div>
