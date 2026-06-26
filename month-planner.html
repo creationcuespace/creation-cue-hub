@@ -2078,13 +2078,13 @@
       // Sync with Firebase Realtime Database
       await readStateFromFirebase();
 
-      scheduleFutureTasks();
-      
       // Initialize active day
       appState.activeDayStr = getTodayDateString();
       
-      // Run automatic rollover silently on initialization
-      triggerRollover(true);
+      // Run automatic rollover silently in-memory on initialization
+      triggerRollover(true, true);
+
+      scheduleFutureTasks();
       
       renderCalendar();
       renderDayView();
@@ -2558,7 +2558,7 @@
     // -------------------------------------------------------------
     // Rollover Engine
     // -------------------------------------------------------------
-    function triggerRollover(silent) {
+    function triggerRollover(silent, skipSave) {
       var todayStr = getTodayDateString();
       var rolloverTasks = []; // List of uncompleted tasks gathered from past days
 
@@ -2626,6 +2626,10 @@
       });
       
       appState.dayStates[todayStr] = todaySlots;
+
+      if (skipSave) {
+        return;
+      }
 
       saveState();
       scheduleFutureTasks(); // reschedule to update future fill/fallbacks
@@ -3886,19 +3890,42 @@
       if (!logEl) return;
       
       var report = [];
+      var todayStr = getTodayDateString();
+      var d = new Date();
+      d.setDate(d.getDate() - 1);
+      var yesterdayStr = formatDateString(d.getFullYear(), d.getMonth(), d.getDate());
+
       report.push(`Browser Date: ${new Date().toString()}`);
-      report.push(`Today string: ${getTodayDateString()}`);
+      report.push(`Today string: ${todayStr}`);
+      report.push(`Yesterday string: ${yesterdayStr}`);
       report.push(`Active day: ${appState.activeDayStr}`);
       report.push(`Custom tasks count: ${appState.customTasks.length}`);
       
+      report.push(`\n--- Custom Tasks in Backlog ---`);
       appState.customTasks.forEach((t, i) => {
-        report.push(`Task [${i}]: "${t.title.substring(0, 35)}..."`);
-        report.push(`  - id: ${t.id}`);
-        report.push(`  - priority: ${t.priority}`);
-        report.push(`  - duration: ${t.duration}`);
-        report.push(`  - startDate: "${t.startDate}"`);
+        report.push(`[${i}]: "${t.title}" (id: ${t.id}, duration: ${t.duration}, start: ${t.startDate})`);
       });
       
+      report.push(`\n--- Slots on Yesterday (${yesterdayStr}) ---`);
+      var yesterdaySlots = appState.dayStates[yesterdayStr];
+      if (yesterdaySlots) {
+        yesterdaySlots.forEach((s, i) => {
+          report.push(`Slot [${i}]: title: "${s.title}", completed: ${s.completed}, isRolledOver: ${s.isRolledOver || false}, isOverridden: ${s.isOverridden || false}, taskId: ${s.taskId || null}`);
+        });
+      } else {
+        report.push("No slots found for yesterday.");
+      }
+
+      report.push(`\n--- Slots on Today (${todayStr}) ---`);
+      var todaySlots = appState.dayStates[todayStr];
+      if (todaySlots) {
+        todaySlots.forEach((s, i) => {
+          report.push(`Slot [${i}]: title: "${s.title}", completed: ${s.completed}, isRolledOver: ${s.isRolledOver || false}, isOverridden: ${s.isOverridden || false}, taskId: ${s.taskId || null}`);
+        });
+      } else {
+        report.push("No slots found for today.");
+      }
+
       logEl.textContent = report.join('\n');
     }
   </script>
