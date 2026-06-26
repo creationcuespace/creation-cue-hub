@@ -573,8 +573,20 @@
       gap: 12px;
     }
 
-    .calendar-title span {
-      color: var(--primary);
+    .calendar-title select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      border-radius: var(--border-radius-sm);
+      padding: 4px 8px;
+      transition: background-color 0.2s, color 0.2s;
+      border: none;
+      background: transparent;
+      outline: none;
+      text-align: center;
+    }
+    .calendar-title select:hover {
+      background: rgba(255, 255, 255, 0.06);
     }
 
     .nav-btn {
@@ -1350,6 +1362,15 @@
   <div class="dashboard-container">
     <!-- Left Sidebar: Controls & Backlog -->
     <aside>
+      <!-- Sidebar Accordion Toggle Controls -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 4px 6px 0 6px;">
+        <span style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Settings & Backlog</span>
+        <div style="display: flex; gap: 8px;">
+          <button onclick="toggleAllDetails(false)" class="btn-secondary" style="padding: 4px 8px; font-size: 9px; line-height: 1; border-radius: 4px; background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.05); font-weight: 600;">Collapse All</button>
+          <button onclick="toggleAllDetails(true)" class="btn-secondary" style="padding: 4px 8px; font-size: 9px; line-height: 1; border-radius: 4px; background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.05); font-weight: 600;">Expand All</button>
+        </div>
+      </div>
+
       <!-- Task Creation Card -->
       <details class="card collapsible-card">
         <summary class="card-title">Add Custom Task</summary>
@@ -1506,7 +1527,36 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </button>
           
-          <h1 class="calendar-title" id="calendar-month-title">MONTH <span>2026</span></h1>
+          <div class="calendar-title">
+            <select id="select-calendar-month" onchange="jumpToSelectedDate()" style="color: #fff; font-family: var(--font-display); font-size: 22px; font-weight: 800; text-transform: uppercase; cursor: pointer; padding-right: 4px; border: none; background: transparent; outline: none; font-family: 'Outfit', sans-serif;">
+              <option value="0" style="background: var(--surface-color); color: #fff;">January</option>
+              <option value="1" style="background: var(--surface-color); color: #fff;">February</option>
+              <option value="2" style="background: var(--surface-color); color: #fff;">March</option>
+              <option value="3" style="background: var(--surface-color); color: #fff;">April</option>
+              <option value="4" style="background: var(--surface-color); color: #fff;">May</option>
+              <option value="5" style="background: var(--surface-color); color: #fff;">June</option>
+              <option value="6" style="background: var(--surface-color); color: #fff;">July</option>
+              <option value="7" style="background: var(--surface-color); color: #fff;">August</option>
+              <option value="8" style="background: var(--surface-color); color: #fff;">September</option>
+              <option value="9" style="background: var(--surface-color); color: #fff;">October</option>
+              <option value="10" style="background: var(--surface-color); color: #fff;">November</option>
+              <option value="11" style="background: var(--surface-color); color: #fff;">December</option>
+            </select>
+            <select id="select-calendar-year" onchange="jumpToSelectedDate()" style="color: var(--primary); font-family: var(--font-display); font-size: 22px; font-weight: 800; cursor: pointer; border: none; background: transparent; outline: none; font-family: 'Outfit', sans-serif;">
+              <option value="2024" style="background: var(--surface-color); color: #fff;">2024</option>
+              <option value="2025" style="background: var(--surface-color); color: #fff;">2025</option>
+              <option value="2026" style="background: var(--surface-color); color: #fff;">2026</option>
+              <option value="2027" style="background: var(--surface-color); color: #fff;">2027</option>
+              <option value="2028" style="background: var(--surface-color); color: #fff;">2028</option>
+              <option value="2029" style="background: var(--surface-color); color: #fff;">2029</option>
+              <option value="2030" style="background: var(--surface-color); color: #fff;">2030</option>
+              <option value="2031" style="background: var(--surface-color); color: #fff;">2031</option>
+              <option value="2032" style="background: var(--surface-color); color: #fff;">2032</option>
+              <option value="2033" style="background: var(--surface-color); color: #fff;">2033</option>
+              <option value="2034" style="background: var(--surface-color); color: #fff;">2034</option>
+              <option value="2035" style="background: var(--surface-color); color: #fff;">2035</option>
+            </select>
+          </div>
           
           <button onclick="navigateMonth(1)" class="nav-btn">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -1824,6 +1874,17 @@
       t.textContent = msg;
       t.classList.add('show');
       setTimeout(function () { t.classList.remove('show'); }, 2200);
+    }
+
+    function toggleAllDetails(open) {
+      var detailsElements = document.querySelectorAll('aside details');
+      detailsElements.forEach(function(el) {
+        if (open) {
+          el.setAttribute('open', '');
+        } else {
+          el.removeAttribute('open');
+        }
+      });
     }
 
     // Helper to robustly convert potentially dictionary-like representation from Firebase back to JS Array
@@ -2647,18 +2708,18 @@
     // -------------------------------------------------------------
     function renderCalendar() {
       var gridEl = document.getElementById('calendar-days-grid');
-      var titleEl = document.getElementById('calendar-month-title');
+      var selectMonth = document.getElementById('select-calendar-month');
+      var selectYear = document.getElementById('select-calendar-year');
       
       gridEl.innerHTML = '';
       
       var year = appState.currentDate.getFullYear();
       var month = appState.currentDate.getMonth();
       
-      var monthsList = [
-        "January", "February", "March", "April", "May", "June", 
-        "July", "August", "September", "October", "November", "December"
-      ];
-      titleEl.innerHTML = `${monthsList[month]} <span>${year}</span>`;
+      if (selectMonth && selectYear) {
+        selectMonth.value = month;
+        selectYear.value = year;
+      }
 
       // Get first day of the month
       var firstDay = new Date(year, month, 1);
@@ -2820,6 +2881,28 @@
       // Auto-schedule future days for the new month if they don't exist
       scheduleFutureTasks();
       renderCalendar();
+    }
+
+    function jumpToSelectedDate() {
+      var month = parseInt(document.getElementById('select-calendar-month').value, 10);
+      var year = parseInt(document.getElementById('select-calendar-year').value, 10);
+      appState.currentDate = new Date(year, month, 1);
+      
+      // Auto-schedule future days for the new month if they don't exist
+      scheduleFutureTasks();
+      renderCalendar();
+      
+      // Update activeDayStr to selected month's 1st day (or today if it falls in the selected month)
+      var today = new Date();
+      if (today.getFullYear() === year && today.getMonth() === month) {
+        appState.activeDayStr = getTodayDateString();
+      } else {
+        appState.activeDayStr = formatDateString(year, month, 1);
+      }
+      
+      if (document.getElementById('day-view-container').style.display !== 'none') {
+        renderDayView();
+      }
     }
 
     // -------------------------------------------------------------
