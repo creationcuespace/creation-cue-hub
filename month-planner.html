@@ -1672,24 +1672,21 @@
             Prev Day
           </button>
           
-          <div style="text-align: center;">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;">
             <h2 id="day-view-date-title" style="font-family: var(--font-display); font-size: 22px; font-weight: 700; margin: 0; color: var(--text-primary);">Thursday, June 25, 2026</h2>
             <span id="day-view-holiday-badge" style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; margin-top: 4px; display: inline-block;"></span>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);" id="day-view-completed-stat">0/8 Completed</span>
+              <div style="width: 100px; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; display: block;">
+                <div id="day-view-progress-fill" style="width: 0%; height: 100%; background: var(--success); transition: width 0.3s ease;"></div>
+              </div>
+            </div>
           </div>
           
           <button onclick="navigateDay(1)" class="nav-btn" style="padding: 8px 12px; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
             Next Day
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
-        </div>
-
-        <div class="card" style="padding: 12px 24px; display: flex; flex-direction: row; justify-content: flex-end; align-items: center; gap: 20px; flex-wrap: wrap;">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <span style="font-size: 12px; font-weight: 700; color: var(--text-muted);" id="day-view-completed-stat">0/8 Completed</span>
-            <div style="width: 120px; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; display: block;">
-              <div id="day-view-progress-fill" style="width: 0%; height: 100%; background: var(--success); transition: width 0.3s ease;"></div>
-            </div>
-          </div>
         </div>
 
         <!-- Day View Faces Carousel -->
