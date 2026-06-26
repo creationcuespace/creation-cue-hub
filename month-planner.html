@@ -1334,6 +1334,50 @@
         font-size: 12px !important;
       }
     }
+
+    /* Faces Carousel Styling */
+    .faces-carousel-track::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .carousel-face-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 76px;
+      flex-shrink: 0;
+      cursor: pointer;
+      text-align: center;
+      transition: var(--transition-smooth);
+    }
+    
+    .carousel-face-item:hover .face-img-wrapper {
+      transform: translateY(-4px) scale(1.05);
+      border-color: var(--primary);
+      box-shadow: 0 0 12px var(--primary-glow);
+    }
+    
+    .carousel-face-item:hover span {
+      color: var(--primary);
+    }
+    
+    .face-img-wrapper {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--border-color);
+      transition: var(--transition-smooth);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      background: var(--surface-color);
+    }
+    
+    .face-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   </style>
 </head>
 
@@ -1536,18 +1580,18 @@
     <main class="calendar-area">
       <!-- View Switch Tabs -->
       <div class="view-switch-tabs">
-        <button onclick="switchViewMode('month')" id="btn-view-month" class="btn-tab active">
+        <button onclick="switchViewMode('month')" id="btn-view-month" class="btn-tab">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></rect></svg>
           Month View
         </button>
-        <button onclick="switchViewMode('day')" id="btn-view-day" class="btn-tab">
+        <button onclick="switchViewMode('day')" id="btn-view-day" class="btn-tab active">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"></path></rect></svg>
           Day View
         </button>
       </div>
 
       <!-- Month View Container -->
-      <div id="month-view-container">
+      <div id="month-view-container" style="display: none;">
         <!-- Calendar Control / Navigation Bar -->
         <div class="calendar-control-row">
           <button onclick="navigateMonth(-1)" class="nav-btn">
@@ -1591,23 +1635,11 @@
         </div>
 
         <!-- Stats Summary Row -->
-        <div class="stats-bar">
-          <div class="stat-card">
-            <span class="stat-val" id="stat-work-days">0</span>
-            <span class="stat-lbl">Working Days</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-val" id="stat-total-hours">0h</span>
-            <span class="stat-lbl">Total Hours</span>
-          </div>
+        <div class="stats-bar" style="grid-template-columns: 1fr;">
           <div class="stat-card">
             <span class="stat-val" id="stat-progress-percent">0%</span>
             <span class="stat-lbl">Completed Blocks</span>
             <div class="progress-track"><div class="progress-fill" id="stat-progress-fill"></div></div>
-          </div>
-          <div class="stat-card" style="border-color: var(--primary-glow); background: rgba(241, 179, 28, 0.01);">
-            <span class="stat-val" style="color: var(--primary);" id="stat-holidays-count">0</span>
-            <span class="stat-lbl">Greek/Custom Holidays</span>
           </div>
         </div>
 
@@ -1628,7 +1660,7 @@
       </div>
 
       <!-- Day View Container -->
-      <div id="day-view-container" style="display: none; flex-direction: column; gap: 20px;">
+      <div id="day-view-container" style="display: flex; flex-direction: column; gap: 20px;">
         <!-- Day View Navigation Header -->
         <div class="day-view-nav" style="display: flex; align-items: center; justify-content: space-between; background: var(--surface-color); border: 1px solid var(--border-color); padding: 16px 20px; border-radius: var(--border-radius-lg);">
           <button onclick="navigateDay(-1)" class="nav-btn" style="padding: 8px 12px; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
@@ -1648,9 +1680,9 @@
         </div>
 
         <div class="card" style="padding: 12px 24px; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
-          <button onclick="toggleDayViewHoliday()" class="btn-secondary" id="btn-day-view-holiday" style="padding: 8px 14px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; background: rgba(255,255,255,0.03); color: var(--text-primary); font-family: 'Outfit', sans-serif;">
+          <button onclick="toggleDayViewHoliday()" class="btn-secondary" id="btn-day-view-holiday" style="padding: 8px 14px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; background: rgba(255, 255, 255, 0.03); color: var(--text-primary); font-family: 'Outfit', sans-serif;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            Mark as Holiday
+            Non-Working Day
           </button>
           
           <div style="display: flex; align-items: center; gap: 12px;">
@@ -1658,6 +1690,14 @@
             <div style="width: 120px; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; display: block;">
               <div id="day-view-progress-fill" style="width: 0%; height: 100%; background: var(--success); transition: width 0.3s ease;"></div>
             </div>
+          </div>
+        </div>
+
+        <!-- Day View Faces Carousel -->
+        <div id="day-view-faces-carousel" class="card" style="display: none; padding: 12px 16px; flex-direction: column; gap: 8px;">
+          <h4 class="card-subtitle" style="margin: 0;">Mentioned Watch Faces</h4>
+          <div class="faces-carousel-track" id="day-view-faces-track" style="display: flex; gap: 16px; overflow-x: auto; padding: 4px 2px;">
+            <!-- Rendered watch faces will go here -->
           </div>
         </div>
 
@@ -1682,7 +1722,7 @@
       <div class="drawer-content">
         <div class="card" style="padding: 16px; background: rgba(255,255,255,0.01);">
           <div class="form-group" style="flex-direction: row; align-items: center; justify-content: space-between; cursor: pointer; user-select: none;">
-            <label for="day-holiday-checkbox" style="margin:0; font-size:12px; color: var(--text-primary); cursor:pointer;">Mark as Greek/Custom Holiday</label>
+            <label for="day-holiday-checkbox" style="margin:0; font-size:12px; color: var(--text-primary); cursor:pointer;">Mark as Holiday</label>
             <input type="checkbox" id="day-holiday-checkbox" style="width: 18px; height: 18px; accent-color: var(--danger); cursor: pointer;" onchange="toggleDayHoliday()">
           </div>
         </div>
@@ -1871,20 +1911,6 @@
       watchFacesCatalog: [],   // Loaded from manager.json or hardcoded fallback
       autofillFallback: true   // Whether to auto-fill empty slots with fallback tasks
     };
-
-    // Default public Greek holidays in December
-    var GREEK_DECEMBER_HOLIDAYS = ["12-25", "12-26"];
-    // Static general public Greek holidays (MM-DD)
-    var GREEK_STATIC_HOLIDAYS = [
-      "01-01", // New Year
-      "01-06", // Epiphany
-      "03-25", // Independence
-      "05-01", // Labor Day
-      "08-15", // Dormition
-      "10-28", // Ohi Day
-      "12-25", // Christmas
-      "12-26"  // Synaxis
-    ];
 
     // Fallback watch faces if manager.json is unavailable
     var catalogFallback = [
@@ -2174,7 +2200,7 @@
       scheduleFutureTasks();
       
       renderCalendar();
-      renderDayView();
+      switchViewMode('day');
     }
 
     async function fetchCatalog() {
@@ -2512,12 +2538,6 @@
       var dayOfWeek = d.getDay(); // 0 = Sunday, 6 = Saturday
       if (dayOfWeek === 0) {
         return { type: 'weekend', label: 'Weekend' };
-      }
-
-      // Check static Greek holidays (MM-DD)
-      var mmdd = dateStr.substring(5);
-      if (GREEK_STATIC_HOLIDAYS.includes(mmdd)) {
-        return { type: 'holiday', label: 'Greek Holiday' };
       }
 
       // Check custom holidays
@@ -2988,10 +3008,6 @@
       }
 
       // Update stat cards
-      document.getElementById('stat-work-days').textContent = workingDaysCount;
-      document.getElementById('stat-total-hours').textContent = (workingDaysCount * 8) + 'h';
-      document.getElementById('stat-holidays-count').textContent = totalHolidaysCount;
-
       var overallPercent = totalMonthlySlots > 0 ? Math.round((completedMonthlySlots / totalMonthlySlots) * 100) : 0;
       document.getElementById('stat-progress-percent').textContent = overallPercent + '%';
       document.getElementById('stat-progress-fill').style.width = overallPercent + '%';
@@ -3265,6 +3281,73 @@
           `;
           listEl.appendChild(item);
         });
+      }
+
+      // Render watch faces carousel
+      var trackEl = document.getElementById('day-view-faces-track');
+      var carouselContainer = document.getElementById('day-view-faces-carousel');
+      
+      if (trackEl && carouselContainer) {
+        trackEl.innerHTML = '';
+        var matchedFaces = [];
+        var seenIds = new Set();
+        
+        if (daySlots && Array.isArray(daySlots)) {
+          daySlots.forEach(function(slot) {
+            if (!slot || slot.isHoliday) return;
+            var slotTitle = (slot.title || "").toLowerCase();
+            
+            appState.watchFacesCatalog.forEach(function(face) {
+              if (seenIds.has(face.id)) return;
+              
+              var id = (face.id || "").toLowerCase();
+              var title = (face.title || "").toLowerCase();
+              var isMatch = slotTitle.includes(id) || slotTitle.includes(title);
+              
+              if (isMatch) {
+                matchedFaces.push(face);
+                seenIds.add(face.id);
+              }
+            });
+          });
+        }
+        
+        if (matchedFaces.length > 0) {
+          carouselContainer.style.display = 'flex';
+          matchedFaces.forEach(function(face) {
+            var item = document.createElement('div');
+            item.className = 'carousel-face-item';
+            
+            var playStoreUrl = face.play_store_url || '';
+            var webUrl = 'https://play.google.com/store/apps/developer?id=CreationCue';
+            if (playStoreUrl) {
+              var pkg = '';
+              if (playStoreUrl.includes('id=')) {
+                pkg = playStoreUrl.split('id=')[1].split('&')[0];
+              } else {
+                pkg = playStoreUrl;
+              }
+              if (pkg) {
+                webUrl = 'https://play.google.com/store/apps/details?id=' + pkg;
+              }
+            }
+            
+            item.innerHTML = `
+              <div class="face-img-wrapper" title="Open ${escapeHtmlAttribute(face.title)} in Play Store">
+                <img src="${face.image_url}" alt="${face.title}" onerror="this.src='https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png'">
+              </div>
+              <span style="font-size: 11px; font-weight: 700; color: var(--text-primary); text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%;">${face.title}</span>
+            `;
+            
+            item.addEventListener('click', function() {
+              window.open(webUrl, '_blank');
+            });
+            
+            trackEl.appendChild(item);
+          });
+        } else {
+          carouselContainer.style.display = 'none';
+        }
       }
 
       // Update completion stats
