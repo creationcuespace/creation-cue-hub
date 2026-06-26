@@ -1400,6 +1400,33 @@
             <label for="task-start-date">Start Date (DD/MM/YYYY)</label>
             <input type="text" id="task-start-date" class="input-text" placeholder="e.g. 26/06/2026">
           </div>
+
+          <div class="form-group" style="margin-top: -8px;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; font-size: 12px; font-weight: 600;">
+              <input type="checkbox" id="task-repeat-enable" onchange="toggleRepeatSection()" style="width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer;">
+              <span>Repeat / Recurring Task</span>
+            </label>
+          </div>
+
+          <div id="repeat-settings-section" style="display: none; flex-direction: column; gap: 12px; margin-top: -6px; padding: 12px; background: rgba(0, 0, 0, 0.25); border: 1px dashed rgba(255, 255, 255, 0.08); border-radius: 6px;">
+            <div class="form-group">
+              <label style="font-size: 10px; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Select Days of the Week</label>
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 6px;">
+                <label style="font-size: 11px; display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--text-primary);"><input type="checkbox" class="repeat-day-chk" value="1" style="cursor: pointer;"> Mon</label>
+                <label style="font-size: 11px; display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--text-primary);"><input type="checkbox" class="repeat-day-chk" value="2" style="cursor: pointer;"> Tue</label>
+                <label style="font-size: 11px; display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--text-primary);"><input type="checkbox" class="repeat-day-chk" value="3" style="cursor: pointer;"> Wed</label>
+                <label style="font-size: 11px; display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--text-primary);"><input type="checkbox" class="repeat-day-chk" value="4" style="cursor: pointer;"> Thu</label>
+                <label style="font-size: 11px; display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--text-primary);"><input type="checkbox" class="repeat-day-chk" value="5" style="cursor: pointer;"> Fri</label>
+                <label style="font-size: 11px; display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--text-primary);"><input type="checkbox" class="repeat-day-chk" value="6" style="cursor: pointer;"> Sat</label>
+                <label style="font-size: 11px; display: flex; align-items: center; gap: 4px; cursor: pointer; color: var(--text-primary);"><input type="checkbox" class="repeat-day-chk" value="0" style="cursor: pointer;"> Sun</label>
+                <button type="button" onclick="autoSelectStartDayOfWeek()" class="btn-secondary" style="font-size: 9px; padding: 2px 4px; border-radius: 3px; font-weight: 700; height: 20px; line-height: 14px; text-transform: uppercase;">Use Start</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="task-repeat-count">Repeat Count (times)</label>
+              <input type="number" id="task-repeat-count" class="input-text" min="1" max="100" value="5" style="padding: 4px 8px; font-size: 12px; height: 28px;">
+            </div>
+          </div>
           
           <button onclick="addCustomTask()" class="btn-primary">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -2190,16 +2217,68 @@
         return;
       }
 
-      var newTask = {
-        id: 'task_' + Date.now(),
-        title: title,
-        priority: priority,
-        duration: duration,
-        startDate: startDateVal || getTodayDateString(),
-        createdAt: Date.now()
-      };
+      var repeatEnable = document.getElementById('task-repeat-enable') ? document.getElementById('task-repeat-enable').checked : false;
+      var tasksAddedCount = 0;
 
-      appState.customTasks.push(newTask);
+      if (repeatEnable) {
+        var repeatCountInput = document.getElementById('task-repeat-count');
+        var repeatCount = parseInt(repeatCountInput.value, 10);
+        if (isNaN(repeatCount) || repeatCount <= 0) {
+          alert("Please enter a valid repeat count.");
+          return;
+        }
+
+        // Get checked days
+        var checkedDayElements = document.querySelectorAll('.repeat-day-chk:checked');
+        var selectedDays = Array.from(checkedDayElements).map(el => parseInt(el.value, 10));
+        if (selectedDays.length === 0) {
+          alert("Please select at least one day of the week for recurrence.");
+          return;
+        }
+
+        var startStr = startDateVal || getTodayDateString();
+        var parts = startStr.split('-');
+        var curr = new Date(parts[0], parts[1] - 1, parts[2]);
+
+        var occurrenceDates = [];
+        var safety = 0;
+        
+        while (occurrenceDates.length < repeatCount && safety < 5000) {
+          safety++;
+          var dayOfWeek = curr.getDay(); // 0 = Sunday, 1 = Monday, etc.
+          if (selectedDays.includes(dayOfWeek)) {
+            occurrenceDates.push(formatDateString(curr.getFullYear(), curr.getMonth(), curr.getDate()));
+          }
+          curr.setDate(curr.getDate() + 1);
+        }
+
+        // Create tasks
+        occurrenceDates.forEach((targetDate, index) => {
+          var occurrenceTitle = `${title} (${index + 1}/${occurrenceDates.length})`;
+          var newTask = {
+            id: 'task_' + Date.now() + '_' + index + '_' + Math.random().toString(36).substr(2, 5),
+            title: occurrenceTitle,
+            priority: priority,
+            duration: duration,
+            startDate: targetDate,
+            createdAt: Date.now()
+          };
+          appState.customTasks.push(newTask);
+        });
+        tasksAddedCount = occurrenceDates.length;
+      } else {
+        var newTask = {
+          id: 'task_' + Date.now(),
+          title: title,
+          priority: priority,
+          duration: duration,
+          startDate: startDateVal || getTodayDateString(),
+          createdAt: Date.now()
+        };
+        appState.customTasks.push(newTask);
+        tasksAddedCount = 1;
+      }
+
       saveState();
       
       titleInput.value = '';
@@ -2208,7 +2287,14 @@
         startDateInput.value = formatStandardDateToDisplay(appState.activeDayStr || getTodayDateString());
       }
       
-      showToast("Task Added!");
+      // Uncheck repeat settings on successful add
+      var repeatChk = document.getElementById('task-repeat-enable');
+      if (repeatChk) {
+        repeatChk.checked = false;
+        toggleRepeatSection();
+      }
+      
+      showToast(tasksAddedCount > 1 ? `Added ${tasksAddedCount} recurring tasks!` : "Task Added!");
       renderBacklog();
       
       // Auto reschedule future days to place the new task
@@ -2216,6 +2302,37 @@
       renderCalendar();
       if (document.getElementById('day-view-container').style.display !== 'none') {
         renderDayView();
+      }
+    }
+
+    function toggleRepeatSection() {
+      var chk = document.getElementById('task-repeat-enable');
+      var section = document.getElementById('repeat-settings-section');
+      if (chk && section) {
+        section.style.display = chk.checked ? 'flex' : 'none';
+        if (chk.checked) {
+          autoSelectStartDayOfWeek();
+        }
+      }
+    }
+
+    function autoSelectStartDayOfWeek() {
+      var startDateInput = document.getElementById('task-start-date');
+      if (!startDateInput) return;
+      var val = startDateInput.value.trim();
+      var stdDate = parseDateToStandardString(val);
+      if (!stdDate) return;
+      
+      var parts = stdDate.split('-');
+      var d = new Date(parts[0], parts[1] - 1, parts[2]);
+      var dayOfWeek = d.getDay(); // 0 = Sun, 1 = Mon, etc.
+
+      var checkboxes = document.querySelectorAll('.repeat-day-chk');
+      checkboxes.forEach(chk => chk.checked = false);
+
+      var targetChk = Array.from(checkboxes).find(chk => parseInt(chk.value, 10) === dayOfWeek);
+      if (targetChk) {
+        targetChk.checked = true;
       }
     }
 
