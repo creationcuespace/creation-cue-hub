@@ -217,6 +217,47 @@
         padding: 4px !important;
         margin-right: 6px !important;
       }
+      
+      /* Compact mobile Day View headers */
+      #day-view-container {
+        gap: 12px !important;
+      }
+      .day-view-nav {
+        padding: 8px 12px !important;
+      }
+      #day-view-date-title {
+        font-size: 16px !important;
+      }
+      .day-view-nav .nav-btn {
+        padding: 5px 8px !important;
+        font-size: 11px !important;
+        gap: 4px !important;
+      }
+      .day-view-nav .nav-btn svg {
+        width: 12px !important;
+        height: 12px !important;
+      }
+      #day-progress-row {
+        gap: 6px !important;
+        margin-top: 0 !important;
+      }
+      #day-progress-row span {
+        font-size: 10px !important;
+      }
+      #day-progress-row > div {
+        width: 70px !important;
+        height: 4px !important;
+      }
+      #tabs-progress-row {
+        margin-bottom: 12px !important;
+        gap: 8px !important;
+      }
+      #overall-progress-card {
+        height: 32px !important;
+        min-width: 180px !important;
+        padding: 6px 10px !important;
+        gap: 8px !important;
+      }
     }
 
     /* Main Dashboard Layout */
@@ -1579,7 +1620,7 @@
     <!-- Right Area: Interactive Calendar Grid / Day View -->
     <main class="calendar-area">
       <!-- View Switch Tabs & Overall Progress Bar Row -->
-      <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; width: 100%;">
+      <div id="tabs-progress-row" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; width: 100%;">
         <!-- View Switch Tabs -->
         <div class="view-switch-tabs" style="margin-bottom: 0;">
           <button onclick="switchViewMode('month')" id="btn-view-month" class="btn-tab">
@@ -1593,7 +1634,7 @@
         </div>
 
         <!-- Overall Month Completed Bar -->
-        <div class="card" style="padding: 10px 16px; margin: 0; display: flex; flex-direction: row; align-items: center; gap: 12px; height: 42px; width: fit-content; min-width: 250px;">
+        <div id="overall-progress-card" class="card" style="padding: 10px 16px; margin: 0; display: flex; flex-direction: row; align-items: center; gap: 12px; height: 42px; width: fit-content; min-width: 250px;">
           <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;" id="overall-progress-text">0/0 Completed</span>
           <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; min-width: 100px; display: block;">
             <div id="overall-progress-fill" style="width: 0%; height: 100%; background: var(--success); transition: width 0.3s ease;"></div>
@@ -1675,7 +1716,7 @@
           <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;">
             <h2 id="day-view-date-title" style="font-family: var(--font-display); font-size: 22px; font-weight: 700; margin: 0; color: var(--text-primary);">Thursday, June 25, 2026</h2>
             <span id="day-view-holiday-badge" style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; margin-top: 4px; display: inline-block;"></span>
-            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+            <div id="day-progress-row" style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
               <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);" id="day-view-completed-stat">0/8 Completed</span>
               <div style="width: 100px; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; display: block;">
                 <div id="day-view-progress-fill" style="width: 0%; height: 100%; background: var(--success); transition: width 0.3s ease;"></div>
