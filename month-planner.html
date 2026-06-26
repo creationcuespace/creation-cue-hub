@@ -1578,16 +1578,27 @@
 
     <!-- Right Area: Interactive Calendar Grid / Day View -->
     <main class="calendar-area">
-      <!-- View Switch Tabs -->
-      <div class="view-switch-tabs">
-        <button onclick="switchViewMode('month')" id="btn-view-month" class="btn-tab">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></rect></svg>
-          Month View
-        </button>
-        <button onclick="switchViewMode('day')" id="btn-view-day" class="btn-tab active">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"></path></rect></svg>
-          Day View
-        </button>
+      <!-- View Switch Tabs & Overall Progress Bar Row -->
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; width: 100%;">
+        <!-- View Switch Tabs -->
+        <div class="view-switch-tabs" style="margin-bottom: 0;">
+          <button onclick="switchViewMode('month')" id="btn-view-month" class="btn-tab">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></rect></svg>
+            Month View
+          </button>
+          <button onclick="switchViewMode('day')" id="btn-view-day" class="btn-tab active">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"></path></rect></svg>
+            Day View
+          </button>
+        </div>
+
+        <!-- Overall Month Completed Bar -->
+        <div class="card" style="padding: 10px 16px; margin: 0; display: flex; flex-direction: row; align-items: center; gap: 12px; height: 42px; width: fit-content; min-width: 250px;">
+          <span style="font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;" id="overall-progress-text">0/0 Completed</span>
+          <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; min-width: 100px; display: block;">
+            <div id="overall-progress-fill" style="width: 0%; height: 100%; background: var(--success); transition: width 0.3s ease;"></div>
+          </div>
+        </div>
       </div>
 
       <!-- Month View Container -->
@@ -1634,14 +1645,7 @@
           </button>
         </div>
 
-        <!-- Stats Summary Row -->
-        <div class="stats-bar" style="grid-template-columns: 1fr;">
-          <div class="stat-card">
-            <span class="stat-val" id="stat-progress-percent">0%</span>
-            <span class="stat-lbl">Completed Blocks</span>
-            <div class="progress-track"><div class="progress-fill" id="stat-progress-fill"></div></div>
-          </div>
-        </div>
+
 
         <!-- Weekday Header + Grid -->
         <div class="weekday-header-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center;">
@@ -1679,12 +1683,7 @@
           </button>
         </div>
 
-        <div class="card" style="padding: 12px 24px; display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
-          <button onclick="toggleDayViewHoliday()" class="btn-secondary" id="btn-day-view-holiday" style="padding: 8px 14px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; background: rgba(255, 255, 255, 0.03); color: var(--text-primary); font-family: 'Outfit', sans-serif;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            Non-Working Day
-          </button>
-          
+        <div class="card" style="padding: 12px 24px; display: flex; flex-direction: row; justify-content: flex-end; align-items: center; gap: 20px; flex-wrap: wrap;">
           <div style="display: flex; align-items: center; gap: 12px;">
             <span style="font-size: 12px; font-weight: 700; color: var(--text-muted);" id="day-view-completed-stat">0/8 Completed</span>
             <div style="width: 120px; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; display: block;">
@@ -1709,31 +1708,7 @@
     </main>
   </div>
 
-  <!-- Day Details Sidebar Drawer -->
-  <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer(event)">
-    <div class="drawer" id="day-drawer">
-      <div class="drawer-header">
-        <h3 class="drawer-title" id="drawer-date-title">Thursday, June 25, 2026</h3>
-        <button onclick="hideDrawer()" class="drawer-close">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-      </div>
-      
-      <div class="drawer-content">
-        <div class="card" style="padding: 16px; background: rgba(255,255,255,0.01);">
-          <div class="form-group" style="flex-direction: row; align-items: center; justify-content: space-between; cursor: pointer; user-select: none;">
-            <label for="day-holiday-checkbox" style="margin:0; font-size:12px; color: var(--text-primary); cursor:pointer;">Mark as Holiday</label>
-            <input type="checkbox" id="day-holiday-checkbox" style="width: 18px; height: 18px; accent-color: var(--danger); cursor: pointer;" onchange="toggleDayHoliday()">
-          </div>
-        </div>
-        
-        <h4 class="card-subtitle" style="margin-top: 8px;">8-Hour Abstract Work Blocks</h4>
-        <div class="day-slots-list" id="drawer-slots-list">
-          <!-- 8 slots list rendered via JS -->
-        </div>
-      </div>
-    </div>
-  </div>
+
 
   <!-- Inline Override Dialog -->
   <div class="dialog-overlay" id="override-dialog">
@@ -3009,8 +2984,12 @@
 
       // Update stat cards
       var overallPercent = totalMonthlySlots > 0 ? Math.round((completedMonthlySlots / totalMonthlySlots) * 100) : 0;
-      document.getElementById('stat-progress-percent').textContent = overallPercent + '%';
-      document.getElementById('stat-progress-fill').style.width = overallPercent + '%';
+      var progressTextEl = document.getElementById('overall-progress-text');
+      var progressFillEl = document.getElementById('overall-progress-fill');
+      if (progressTextEl && progressFillEl) {
+        progressTextEl.textContent = `${completedMonthlySlots}/${totalMonthlySlots} Completed`;
+        progressFillEl.style.width = overallPercent + '%';
+      }
     }
 
     function navigateMonth(direction) {
@@ -3131,27 +3110,7 @@
 
       var offState = isHolidayOrWeekend(dateStr);
       var badgeEl = document.getElementById('day-view-holiday-badge');
-      var isHoliday = appState.customHolidays.includes(dateStr);
-      var holidayBtn = document.getElementById('btn-day-view-holiday');
-      if (holidayBtn) {
-        if (isHoliday) {
-          holidayBtn.innerHTML = `
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"></path></svg>
-            Holiday / Non-working
-          `;
-          holidayBtn.style.background = 'var(--danger-glow)';
-          holidayBtn.style.borderColor = 'var(--danger)';
-          holidayBtn.style.color = 'var(--danger)';
-        } else {
-          holidayBtn.innerHTML = `
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            Mark as Holiday
-          `;
-          holidayBtn.style.background = 'rgba(255, 255, 255, 0.03)';
-          holidayBtn.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-          holidayBtn.style.color = 'var(--text-primary)';
-        }
-      }
+
       
       if (offState) {
         badgeEl.textContent = offState.label;
@@ -3381,32 +3340,7 @@
       renderDayView();
     }
 
-    function toggleDayViewHoliday() {
-      if (!appState.activeDayStr) return;
-      var dateStr = appState.activeDayStr;
-      
-      var isAlreadyHoliday = appState.customHolidays.includes(dateStr);
-      
-      if (!isAlreadyHoliday) {
-        if (!appState.customHolidays.includes(dateStr)) {
-          appState.customHolidays.push(dateStr);
-        }
-        appState.dayStates[dateStr] = Array.from({ length: 8 }, () => ({
-          title: "Holiday / Non-working Day",
-          completed: false,
-          isHoliday: true
-        }));
-      } else {
-        appState.customHolidays = appState.customHolidays.filter(h => h !== dateStr);
-        delete appState.dayStates[dateStr];
-      }
-      
-      saveState();
-      scheduleFutureTasks();
-      renderCalendar();
-      renderDayView();
-      showToast(!isAlreadyHoliday ? "Marked as Holiday" : "Holiday Removed");
-    }
+
 
     function toggleGroupComplete(dateStr, slotIndices) {
       var daySlots = appState.dayStates[dateStr];
@@ -3573,172 +3507,13 @@
       switchViewMode('day');
     }
 
-    function hideDrawer() {
-      document.getElementById('drawer-overlay').style.display = 'none';
-      activeDrawerDate = null;
-    }
 
-    function closeDrawer(e) {
-      if (e.target === document.getElementById('drawer-overlay')) {
-        hideDrawer();
-      }
-    }
-
-    function toggleDayHoliday() {
-      if (!activeDrawerDate) return;
-      
-      var checkbox = document.getElementById('day-holiday-checkbox');
-      if (checkbox.checked) {
-        if (!appState.customHolidays.includes(activeDrawerDate)) {
-          appState.customHolidays.push(activeDrawerDate);
-        }
-        
-        // Mark all 8 slots as holiday blocks
-        appState.dayStates[activeDrawerDate] = Array.from({ length: 8 }, () => ({
-          title: "Holiday / Non-working Day",
-          completed: false,
-          isHoliday: true
-        }));
-      } else {
-        appState.customHolidays = appState.customHolidays.filter(h => h !== activeDrawerDate);
-        // Clear slots state so they will be rescheduled
-        delete appState.dayStates[activeDrawerDate];
-      }
-
-      saveState();
-      
-      // Re-run scheduler starting from today or active date to push/pull tasks
-      scheduleFutureTasks();
-      renderCalendar();
-      renderDrawerSlots();
-      showToast(checkbox.checked ? "Marked as Holiday" : "Holiday Removed");
-    }
-
-    function toggleSlotComplete(slotIndex) {
-      if (!activeDrawerDate) return;
-
-      var daySlots = appState.dayStates[activeDrawerDate];
-      if (daySlots && daySlots[slotIndex]) {
-        daySlots[slotIndex].completed = !daySlots[slotIndex].completed;
-        saveState();
-        renderCalendar();
-        renderDrawerSlots();
-        showToast(daySlots[slotIndex].completed ? "Block Completed" : "Block Restored");
-      }
-    }
-
-    function renderDrawerSlots() {
-      var listEl = document.getElementById('drawer-slots-list');
-      listEl.innerHTML = '';
-      
-      if (!activeDrawerDate) return;
-
-      var daySlots = appState.dayStates[activeDrawerDate] || [];
-      var offState = isHolidayOrWeekend(activeDrawerDate);
-
-      if (!offState && daySlots.length === 0) {
-        var item = document.createElement('div');
-        item.style.padding = "20px";
-        item.style.textAlign = "center";
-        item.style.color = "var(--text-muted)";
-        item.style.fontSize = "13px";
-        item.style.fontStyle = "italic";
-        item.textContent = "No tasks assigned to this day.";
-        listEl.appendChild(item);
-        return;
-      }
-
-      var maxSlots = offState ? 8 : daySlots.length;
-
-      for (var s = 0; s < maxSlots; s++) {
-        var slot = daySlots[s];
-        var item = document.createElement('div');
-        item.className = 'slot-item';
-
-        var slotNumLabel = `H${s + 1}`; // Hour block index
-        
-        if (offState && (!slot || slot.isHoliday)) {
-          item.classList.add('holiday-slot');
-          item.innerHTML = `
-            <div class="slot-num-badge">${slotNumLabel}</div>
-            <div></div>
-            <div class="slot-content-wrapper">
-              <div class="slot-text" style="color:var(--text-muted); font-style:italic;">Off Day: No Tasks Scheduled</div>
-            </div>
-            <div></div>
-          `;
-          listEl.appendChild(item);
-          continue;
-        }
-
-        // Default layout for normal working slot
-        if (!slot) {
-          slot = { title: "Unassigned Maintenance", completed: false, isFallback: true };
-        }
-
-        if (slot.completed) item.classList.add('completed');
-        if (slot.isRolledOver) item.classList.add('rolled-over');
-
-        var checkedAttr = slot.completed ? 'checked' : '';
-        var metaLabel = "";
-        
-        if (slot.isRolledOver) {
-          metaLabel = `<span class="priority-badge priority-low">Rolled Over</span>`;
-        } else if (slot.isFallback) {
-          metaLabel = `<span class="f-lbl">Maintenance</span>`;
-          if (slot.typeLabel) {
-            metaLabel += ` <span style="font-size:8px; opacity:0.6; text-transform:uppercase;">[${slot.typeLabel}]</span>`;
-          }
-        } else {
-          var pClass = slot.priority ? 'priority-' + slot.priority : 'priority-medium';
-          metaLabel = `<span class="c-lbl">Custom</span> <span class="priority-badge ${pClass}">${slot.priority || 'medium'}</span>`;
-        }
-
-        var actionBtn = `
-          <button onclick="openOverrideDialog(${s})" class="btn-slot-action" title="Override task text">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-          </button>
-        `;
-        
-        if (slot.isRolledOver) {
-          actionBtn = ''; // No action on rolled over placeholders
-        }
-
-        var checkboxDisabled = slot.isRolledOver ? 'disabled' : '';
-
-        item.innerHTML = `
-          <div class="slot-num-badge">${slotNumLabel}</div>
-          <input type="checkbox" class="slot-checkbox" ${checkedAttr} ${checkboxDisabled} onchange="toggleSlotComplete(${s})">
-          <div class="slot-content-wrapper">
-            <div class="slot-text" title="${escapeHtmlAttribute(slot.title)}">${slot.title}</div>
-            <div class="slot-meta-label">${metaLabel}</div>
-          </div>
-          <div>${actionBtn}</div>
-        `;
-        
-        listEl.appendChild(item);
-      }
-    }
 
     // -------------------------------------------------------------
     // Inline Slot Text Override Dialog
     // -------------------------------------------------------------
     var activeOverrideSlotIndex = null;
     var activeOverrideGroupSlots = null;
-
-    function openOverrideDialog(slotIndex) {
-      if (!activeDrawerDate) return;
-      activeOverrideSlotIndex = slotIndex;
-      activeOverrideGroupSlots = null;
-
-      var daySlots = appState.dayStates[activeDrawerDate];
-      var slot = daySlots ? daySlots[slotIndex] : null;
-      var currentText = slot ? slot.title : "";
-
-      document.getElementById('dialog-task-input').value = currentText;
-      document.getElementById('override-dialog').style.display = 'flex';
-      document.getElementById('dialog-task-input').focus();
-    }
 
     function closeOverrideDialog() {
       document.getElementById('override-dialog').style.display = 'none';
@@ -3778,7 +3553,6 @@
       saveState();
       closeOverrideDialog();
       renderCalendar();
-      renderDrawerSlots();
       if (document.getElementById('day-view-container').style.display !== 'none') {
         renderDayView();
       }
