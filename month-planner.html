@@ -1620,7 +1620,15 @@
     <!-- Right Area: Interactive Calendar Grid / Day View -->
     <main class="calendar-area">
       <!-- View Switch Tabs & Overall Progress Bar Row -->
-      <div id="tabs-progress-row" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; width: 100%;">
+      <div id="tabs-progress-row" style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 20px; width: 100%;">
+        <!-- Overall Month Completed Bar -->
+        <div id="overall-progress-card" style="padding: 0; margin: 0; display: flex; flex-direction: row; align-items: center; gap: 8px; height: auto; width: fit-content; min-width: 180px; background: transparent; border: none; box-shadow: none;">
+          <span style="font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;" id="overall-progress-text">0/0</span>
+          <div style="flex: 1; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; min-width: 80px; display: block;">
+            <div id="overall-progress-fill" style="width: 0%; height: 100%; background: var(--success); transition: width 0.3s ease;"></div>
+          </div>
+        </div>
+
         <!-- View Switch Tabs -->
         <div class="view-switch-tabs" style="margin-bottom: 0;">
           <button onclick="switchViewMode('month')" id="btn-view-month" class="btn-tab">
@@ -1631,14 +1639,6 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"></path></rect></svg>
             Day View
           </button>
-        </div>
-
-        <!-- Overall Month Completed Bar -->
-        <div id="overall-progress-card" style="padding: 0; margin: 0; display: flex; flex-direction: row; align-items: center; gap: 8px; height: auto; width: fit-content; min-width: 180px; background: transparent; border: none; box-shadow: none;">
-          <span style="font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;" id="overall-progress-text">0/0 Completed</span>
-          <div style="flex: 1; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; min-width: 80px; display: block;">
-            <div id="overall-progress-fill" style="width: 0%; height: 100%; background: var(--success); transition: width 0.3s ease;"></div>
-          </div>
         </div>
       </div>
 
@@ -3024,7 +3024,7 @@
       var progressTextEl = document.getElementById('overall-progress-text');
       var progressFillEl = document.getElementById('overall-progress-fill');
       if (progressTextEl && progressFillEl) {
-        progressTextEl.textContent = `${completedMonthlySlots}/${totalMonthlySlots} Completed`;
+        progressTextEl.textContent = `${completedMonthlySlots}/${totalMonthlySlots}`;
         progressFillEl.style.width = overallPercent + '%';
       }
     }
