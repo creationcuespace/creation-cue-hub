@@ -2214,6 +2214,9 @@
       // Auto reschedule future days to place the new task
       scheduleFutureTasks();
       renderCalendar();
+      if (document.getElementById('day-view-container').style.display !== 'none') {
+        renderDayView();
+      }
     }
 
     function deleteCustomTask(id) {
@@ -2223,6 +2226,9 @@
         renderBacklog();
         scheduleFutureTasks();
         renderCalendar();
+        if (document.getElementById('day-view-container').style.display !== 'none') {
+          renderDayView();
+        }
         showToast("Task Removed");
       }
     }
@@ -3631,6 +3637,9 @@
             renderBacklog();
             scheduleFutureTasks();
             renderCalendar();
+            if (document.getElementById('day-view-container').style.display !== 'none') {
+              renderDayView();
+            }
             showToast("Backup imported successfully!");
           } else {
             alert("Invalid backup file structure.");
@@ -3945,6 +3954,9 @@
       // Auto reschedule future days to place the new tasks
       scheduleFutureTasks();
       renderCalendar();
+      if (document.getElementById('day-view-container').style.display !== 'none') {
+        renderDayView();
+      }
       
       showToast(`Imported ${selectedTasks.length} tasks!`);
     }
