@@ -1634,6 +1634,21 @@
     </div>
   </div>
 
+  <!-- Move Task Dialog -->
+  <div class="dialog-overlay" id="move-task-dialog">
+    <div class="dialog-card">
+      <h3 class="drawer-title" style="border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">Move Task to Date</h3>
+      <div class="form-group">
+        <label for="dialog-move-date-input">Target Date (DD/MM/YYYY)</label>
+        <input type="text" id="dialog-move-date-input" class="input-text" placeholder="e.g. 28/06/2026">
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button onclick="closeMoveTaskDialog()" class="btn-secondary" style="padding: 8px 14px;">Cancel</button>
+        <button onclick="saveMoveTaskDialog()" class="btn-primary" style="padding: 8px 14px;">Move Task</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Audit Import Modal -->
   <div class="dialog-overlay" id="audit-modal" style="z-index: 2500;">
     <div class="dialog-card" style="width: 600px; max-width: 95%; max-height: 90vh; display: flex; flex-direction: column; gap: 16px;">
@@ -2982,9 +2997,17 @@
           }
 
           var actionHtml = group.isRolledOver ? '' : `
-            <button onclick="openOverrideDialogForGroup('${dateStr}', [${group.slotIndices.join(',')}])" class="btn-slot-action" style="padding: 8px;" title="Override text">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-            </button>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <button onclick="openOverrideDialogForGroup('${dateStr}', [${group.slotIndices.join(',')}])" class="btn-slot-action" style="padding: 8px;" title="Override text">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              </button>
+              <button onclick="openMoveTaskDialog('${dateStr}', [${group.slotIndices.join(',')}])" class="btn-slot-action" style="padding: 8px;" title="Move to date">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M12 14l3 3-3 3M9 17h6"></path></svg>
+              </button>
+              <button onclick="deleteDayViewTask('${dateStr}', [${group.slotIndices.join(',')}])" class="btn-slot-action btn-delete" style="padding: 8px;" title="Delete task">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              </button>
+            </div>
           `;
 
           // Format duration nicely (e.g. 8h -> 1 day, 16h -> 2 days, etc.)
@@ -3102,6 +3125,124 @@
       document.getElementById('dialog-task-input').value = currentText;
       document.getElementById('override-dialog').style.display = 'flex';
       document.getElementById('dialog-task-input').focus();
+    }
+
+    function deleteDayViewTask(dateStr, slotIndices) {
+      var daySlots = appState.dayStates[dateStr];
+      if (!daySlots) return;
+      var firstSlot = daySlots[slotIndices[0]];
+      if (!firstSlot) return;
+
+      var title = firstSlot.title;
+
+      if (firstSlot.taskId && appState.customTasks.some(t => t.id === firstSlot.taskId)) {
+        var task = appState.customTasks.find(t => t.id === firstSlot.taskId);
+        if (confirm(`Do you want to delete the custom task "${task.title}" entirely from the planner?`)) {
+          appState.customTasks = appState.customTasks.filter(t => t.id !== firstSlot.taskId);
+          saveState();
+          scheduleFutureTasks();
+          renderCalendar();
+          if (document.getElementById('day-view-container').style.display !== 'none') {
+            renderDayView();
+          }
+          showToast("Task deleted entirely");
+        }
+      } else {
+        if (confirm(`Remove "${title}" from this day?`)) {
+          appState.dayStates[dateStr] = daySlots.filter((_, idx) => !slotIndices.includes(idx));
+          saveState();
+          scheduleFutureTasks();
+          renderCalendar();
+          if (document.getElementById('day-view-container').style.display !== 'none') {
+            renderDayView();
+          }
+          showToast("Task removed from day");
+        }
+      }
+    }
+
+    var activeMoveSourceDate = null;
+    var activeMoveSlotIndices = null;
+
+    function openMoveTaskDialog(dateStr, slotIndices) {
+      activeMoveSourceDate = dateStr;
+      activeMoveSlotIndices = slotIndices;
+
+      var dateInput = document.getElementById('dialog-move-date-input');
+      if (dateInput) {
+        dateInput.value = formatStandardDateToDisplay(dateStr);
+      }
+
+      document.getElementById('move-task-dialog').style.display = 'flex';
+      if (dateInput) dateInput.focus();
+    }
+
+    function closeMoveTaskDialog() {
+      document.getElementById('move-task-dialog').style.display = 'none';
+      activeMoveSourceDate = null;
+      activeMoveSlotIndices = null;
+    }
+
+    function saveMoveTaskDialog() {
+      if (!activeMoveSourceDate || !activeMoveSlotIndices) return;
+
+      var inputVal = document.getElementById('dialog-move-date-input').value.trim();
+      if (!inputVal) {
+        alert("Please enter a target date.");
+        return;
+      }
+
+      var targetDateStr = parseDateToStandardString(inputVal);
+      if (!targetDateStr) {
+        alert("Invalid date format. Please use DD/MM/YYYY.");
+        return;
+      }
+
+      var daySlots = appState.dayStates[activeMoveSourceDate];
+      if (!daySlots) return;
+
+      var slotsToMove = daySlots.filter((_, idx) => activeMoveSlotIndices.includes(idx));
+      var firstSlot = slotsToMove[0];
+      if (!firstSlot) return;
+
+      // Check if it's a custom backlog task
+      var backlogTask = firstSlot.taskId ? appState.customTasks.find(t => t.id === firstSlot.taskId) : null;
+
+      if (backlogTask) {
+        // Move by changing backlog task's start date
+        backlogTask.startDate = targetDateStr;
+        showToast(`Moved task start date to ${formatStandardDateToDisplay(targetDateStr)}`);
+      } else {
+        // Move local override / rollover / fallback task manually
+        // 1. Remove from source date
+        appState.dayStates[activeMoveSourceDate] = daySlots.filter((_, idx) => !activeMoveSlotIndices.includes(idx));
+
+        // 2. Append to target date
+        if (!appState.dayStates[targetDateStr]) {
+          appState.dayStates[targetDateStr] = [];
+        }
+        slotsToMove.forEach(slot => {
+          appState.dayStates[targetDateStr].push({
+            taskId: slot.taskId,
+            title: slot.title,
+            priority: slot.priority || 'medium',
+            isFallback: slot.isFallback || false,
+            isOverridden: true, // Lock it on target day
+            typeLabel: slot.typeLabel || null,
+            faceId: slot.faceId || null,
+            completed: false
+          });
+        });
+        showToast(`Moved task to ${formatStandardDateToDisplay(targetDateStr)}`);
+      }
+
+      saveState();
+      closeMoveTaskDialog();
+      scheduleFutureTasks();
+      renderCalendar();
+      if (document.getElementById('day-view-container').style.display !== 'none') {
+        renderDayView();
+      }
     }
 
     // -------------------------------------------------------------
