@@ -199,6 +199,46 @@
       border-color: var(--primary) !important;
     }
 
+    @keyframes pull-text-pulse {
+      0% {
+        color: var(--primary);
+        text-shadow: 0 0 0 rgba(241, 179, 28, 0);
+      }
+      50% {
+        color: #fff;
+        text-shadow: 0 0 10px var(--primary);
+      }
+      100% {
+        color: var(--primary);
+        text-shadow: 0 0 0 rgba(241, 179, 28, 0);
+      }
+    }
+
+    @keyframes pull-card-pulse {
+      0% {
+        opacity: 0.65;
+        border-color: rgba(255, 255, 255, 0.15) !important;
+        box-shadow: 0 0 0 rgba(241, 179, 28, 0);
+      }
+      50% {
+        opacity: 1.0;
+        border-color: var(--primary) !important;
+        box-shadow: 0 0 12px rgba(241, 179, 28, 0.25);
+      }
+      100% {
+        opacity: 0.65;
+        border-color: rgba(255, 255, 255, 0.15) !important;
+        box-shadow: 0 0 0 rgba(241, 179, 28, 0);
+      }
+    }
+
+    .pulse-highlight span {
+      animation: pull-text-pulse 1.5s ease-in-out;
+    }
+    .pulse-highlight .pull-ahead-card {
+      animation: pull-card-pulse 1.5s ease-in-out;
+    }
+
     @media (max-width: 600px) {
       .top-header {
         padding: 10px;
@@ -1779,7 +1819,7 @@
 
   <!-- Footer -->
   <footer style="text-align: center; padding: 24px; font-size: 10px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: auto; font-family: var(--font-body); letter-spacing: 0.5px; opacity: 0.6;">
-    CreationCue™ Planner &bull; v1.3.0
+    CreationCue™ Planner &bull; v1.3.1
   </footer>
 
   <!-- Inline Override Dialog -->
@@ -3583,15 +3623,49 @@
       var daySlots = appState.dayStates[dateStr];
       if (daySlots) {
         var targetState = !daySlots[slotIndices[0]].completed;
+        
+        var todayStr = getTodayDateString();
+        var wasCompleteBefore = false;
+        var totalCount = 0;
+        if (dateStr === todayStr) {
+          totalCount = daySlots.filter(s => s && !s.isHoliday).length;
+          var completedBefore = daySlots.filter(s => s && s.completed).length;
+          wasCompleteBefore = (completedBefore === totalCount);
+        }
+
         slotIndices.forEach(idx => {
           if (daySlots[idx]) {
             daySlots[idx].completed = targetState;
           }
         });
+
         saveState();
         renderCalendar();
         renderDayView();
-        showToast(targetState ? "Block Completed" : "Block Restored");
+
+        var showPulledToast = false;
+        if (dateStr === todayStr && !wasCompleteBefore && targetState) {
+          var completedAfter = daySlots.filter(s => s && s.completed).length;
+          if (completedAfter === totalCount) {
+            showPulledToast = true;
+            setTimeout(function() {
+              var pullAheadContainer = document.getElementById('pull-ahead-container');
+              if (pullAheadContainer && pullAheadContainer.style.display !== 'none') {
+                pullAheadContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                pullAheadContainer.classList.add('pulse-highlight');
+                setTimeout(function() {
+                  pullAheadContainer.classList.remove('pulse-highlight');
+                }, 1600);
+              }
+            }, 300);
+          }
+        }
+
+        if (showPulledToast) {
+          showToast("🎉 Today's plan completed! Pull tasks ahead below.");
+        } else {
+          showToast(targetState ? "Block Completed" : "Block Restored");
+        }
       }
     }
 
