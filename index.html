@@ -1411,7 +1411,7 @@
             }
 
             .faces-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(4, 1fr);
                 gap: 24px;
             }
 
@@ -1420,7 +1420,7 @@
             }
 
             .loader {
-                grid-column: span 3;
+                grid-column: span 4;
             }
 
             .modal-container {
@@ -2073,6 +2073,8 @@
                 </div>
 
                 <div class="faces-grid" id="catalog-grid">
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
                     <div class="skeleton-card"></div>
                     <div class="skeleton-card"></div>
                     <div class="skeleton-card"></div>
@@ -3123,6 +3125,8 @@
                     <div class="skeleton-card"></div>
                     <div class="skeleton-card"></div>
                     <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
                 `;
             }
 
@@ -3482,7 +3486,7 @@
                 badgeHtml = `<span class="${badgeClass}">${badgeText}</span>`;
             }
             
-            const isEager = index < 6;
+            const isEager = index < 8;
             const loadingAttr = isEager ? 'fetchpriority="high"' : 'loading="lazy"';
             
             card.innerHTML = `
