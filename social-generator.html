@@ -2380,9 +2380,17 @@
             }
 
             // Build standard posts based on the tone preset
+            let displayName = name;
             let toneIntro = "";
             if (currentPreset === 'sleek') {
-                toneIntro = "Modern design, serious style. Check out";
+                const match = name.match(/^(CUE|CRC)/i);
+                if (match) {
+                    const prefix = match[0].toUpperCase();
+                    toneIntro = `This is ${prefix}.......`;
+                    displayName = name.substring(match[0].length).trim().replace(/^[-_\s]+/, "");
+                } else {
+                    toneIntro = "This is CUE.......";
+                }
             } else if (currentPreset === 'features') {
                 toneIntro = "Feature-packed and highly functional. Meet";
             } else {
@@ -2398,34 +2406,34 @@
             if (couponsActive) {
                 const cLink = couponsLink || 'https://...';
                 // TikTok Caption
-                tiktokText = `🎫 FREE coupons available for a limited time! 🎟️\n\n✨ Get the modern ${name} watch face for Wear OS completely free! Grab yours now before they are all claimed! 👇\n\n💬 Get your free coupon link in the pinned comment! 👇\n\n#wearos #freecoupons #watchface #smartwatch #freebie #samsunggalaxywatch #pixelwatch #androidwear #creativestyle`;
+                tiktokText = `🎫 FREE coupons available for a limited time! 🎟️\n\n✨ Get the modern ${name} watch face for Wear OS completely free! Grab yours now before they are all claimed! 👇\n\n💬 Get your free coupon link in the pinned comment! 👇\n\n#wearos #freecoupons #watchface #smartwatch #freebie #galaxywatch #pixelwatch #watchtok #techtok`;
 
                 // Instagram Caption
-                instagramText = `🎫 FREE coupons available for a limited time! 🎟️✨\n\nUpgrade your smartwatch style today for FREE! Grab your free coupon for the sleek ${name} watch face on Wear OS now.\n\n💬 Click the link in the pinned comment to claim yours! 👇\n\n#wearos #freecoupons #watchface #smartwatch #samsunggalaxywatch #pixelwatch #instastyle #googlepixelwatch #galaxywatch`;
+                instagramText = `🎫 FREE coupons available for a limited time! 🎟️✨\n\nUpgrade your smartwatch style today for FREE! Grab your free coupon for the sleek ${name} watch face on Wear OS now.\n\n💬 Click the link in the pinned comment to claim yours! 👇\n\n#wearos #freecoupons #watchface #watchfaces #smartwatch #galaxywatch #pixelwatch #freebie #watchfam #smartwatchstyle #customwatchface`;
 
                 // Shorts Title
                 shortsTitleText = `🎫 FREE coupons for ${name} on Wear OS! 🎟️`;
 
                 // Shorts Description
-                shortsText = `🎫 FREE coupons available for a limited time! 🎟️\n\nGrab a free coupon code for the ${name} watch face on Wear OS smartwatches!\n\nClaim your free coupon here:\n🔗 ${cLink}\n\nPlay Store:\n🔗 ${link}\n\n🔍Explore more watch faces here:\nhttps://is.gd/NxAEME\n\n#shorts #freecoupons #wearos #watchface #smartwatch #googleplay`;
+                shortsText = `🎫 FREE coupons available for a limited time! 🎟️\n\nGrab a free coupon code for the ${name} watch face on Wear OS smartwatches!\n\nClaim your free coupon here:\n🔗 ${cLink}\n\nPlay Store:\n🔗 ${link}\n\n🔍Explore more watch faces here:\nhttps://is.gd/NxAEME\n\n#shorts #freecoupons #wearos #watchface #smartwatch #galaxywatch #pixelwatch #freebie`;
 
                 // Reels Caption
-                reelsText = `🎥 🎫 FREE coupons available for a limited time! 🎟️\n\nGet the sleek ${name} watch face for Wear OS for free!\n\nClaim your free coupon here:\n🔗 ${cLink}\n\n🔍Explore more watch faces here:\nhttps://is.gd/NxAEME\n\n#reels #freecoupons #wearos #watchface #smartwatch #galaxywatch #pixelwatch`;
+                reelsText = `🎥 🎫 FREE coupons available for a limited time! 🎟️\n\nGet the sleek ${name} watch face for Wear OS for free!\n\nClaim your free coupon here:\n🔗 ${cLink}\n\n🔍Explore more watch faces here:\nhttps://is.gd/NxAEME\n\n#reels #freecoupons #wearos #watchface #smartwatch #galaxywatch #pixelwatch #freebie #customwatchface`;
             } else {
                 // TikTok Caption
-                tiktokText = `✨ ${toneIntro} ${name} for Wear OS! ⌚\n\n${hook}\n\n🔗 Get it via the link in our bio! 👇\n\n#wearos #watchface #smartwatch #samsunggalaxywatch #pixelwatch #watchfacestudio #androidwear #creativestyle`;
+                tiktokText = `✨ ${toneIntro} ${displayName} for Wear OS! ⌚\n\n${hook}\n\n🔗 Get it via the link in our bio! 👇\n\n#wearos #watchface #smartwatch #galaxywatch #pixelwatch #watchtok #techtok`;
 
                 // Instagram Caption
-                instagramText = `📸 ${toneIntro} ${name} for Wear OS! ⌚✨\n\n${hook}\n\nUpgrade your wrist style today. \n\n🔗 Find the Google Play Store link in our bio!\n\n#wearos #watchface #smartwatch #samsunggalaxywatch #pixelwatch #instastyle #googlepixelwatch #galaxywatch`;
+                instagramText = `📸 ${toneIntro} ${displayName} for Wear OS! ⌚✨\n\n${hook}\n\nUpgrade your wrist style today. \n\n🔗 Find the Google Play Store link in our bio!\n\n#wearos #watchface #watchfaces #smartwatch #galaxywatch #pixelwatch #watchfam #smartwatchstyle #customwatchface`;
 
                 // Shorts Title
                 shortsTitleText = `Get ${name} on Wear OS! ⌚`;
 
                 // Shorts Description
-                shortsText = `Check out the ${name} watch face for Wear OS smartwatches!\n\n${hook}\n\n📥 Download on the Google Play Store:\n🔗 ${link}\n\n🔍Explore more watch faces here:\nhttps://is.gd/NxAEME\n\n#shorts #wearos #watchface #smartwatch #googleplay`;
+                shortsText = `Check out the ${name} watch face for Wear OS smartwatches!\n\n${hook}\n\n📥 Download on the Google Play Store:\n🔗 ${link}\n\n🔍Explore more watch faces here:\nhttps://is.gd/NxAEME\n\n#shorts #wearos #watchface #smartwatch #galaxywatch #pixelwatch #googleplay`;
 
                 // Reels Caption
-                reelsText = `🎥 ${toneIntro} ${name} for Wear OS! ⌚\n\n${hook}\n\n📥 Get it on the Google Play Store:\n🔗 ${link}\n\n🔍Explore more watch faces here:\nhttps://is.gd/NxAEME\n\n#reels #wearos #watchface #smartwatch #galaxywatch #pixelwatch`;
+                reelsText = `🎥 ${toneIntro} ${displayName} for Wear OS! ⌚\n\n${hook}\n\n📥 Get it on the Google Play Store:\n🔗 ${link}\n\n🔍Explore more watch faces here:\nhttps://is.gd/NxAEME\n\n#reels #wearos #watchface #watchfaces #smartwatch #galaxywatch #pixelwatch #smartwatchstyle #customwatchface`;
             }
 
             // Update state
