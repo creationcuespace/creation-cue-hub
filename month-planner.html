@@ -1701,6 +1701,10 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"></path></rect></svg>
             Day View
           </button>
+          <button onclick="goToToday()" id="btn-view-today" class="btn-tab">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Today
+          </button>
         </div>
       </div>
 
@@ -1819,7 +1823,7 @@
 
   <!-- Footer -->
   <footer style="text-align: center; padding: 24px; font-size: 10px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: auto; font-family: var(--font-body); letter-spacing: 0.5px; opacity: 0.6;">
-    CreationCue™ Planner &bull; v1.3.2
+    CreationCue™ Planner &bull; v1.3.3
   </footer>
 
   <!-- Inline Override Dialog -->
@@ -3224,6 +3228,14 @@
         btnDay.classList.add('active');
         renderDayView();
       }
+    }
+
+    function goToToday() {
+      appState.activeDayStr = getTodayDateString();
+      var today = new Date();
+      appState.currentDate = new Date(today.getFullYear(), today.getMonth(), 1);
+      switchViewMode('day');
+      showToast("Navigated to Today");
     }
 
     function getGroupedDaySlots(daySlots) {
