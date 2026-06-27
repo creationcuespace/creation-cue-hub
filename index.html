@@ -471,12 +471,12 @@
 
         .card-badge.free {
             background-color: var(--success);
-            color: white;
+            color: var(--bg-color);
         }
 
         .card-badge.hot {
             background-color: var(--orange);
-            color: white;
+            color: var(--bg-color);
         }
 
         .face-image-container {
@@ -2174,7 +2174,7 @@
                 <div class="about-container">
                     <!-- Newsletter Signup Card -->
                     <div class="newsletter-card" style="text-align: left; width: 100%;">
-                        <h3>Stay Connected</h3>
+                        <h2>Stay Connected</h2>
                         <p>Subscribe to get new watch face release updates and exclusive discount promo codes!</p>
                         
                         <form id="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
@@ -3488,7 +3488,7 @@
                 <div class="face-image-container">
                     <img class="face-card-img" src="${getOptimizedImageUrl(face.image_url)}" alt="${face.title}" ${loadingAttr} onerror="this.src='https://via.placeholder.com/300'">
                 </div>
-                <h3 class="face-card-title">${face.title}</h3>
+                <h2 class="face-card-title">${face.title}</h2>
                 <button class="card-cta-btn">Details</button>
             `;
             return card;
