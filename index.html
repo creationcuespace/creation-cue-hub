@@ -1464,7 +1464,6 @@
             background-position: center;
             z-index: 0;
             will-change: transform, opacity;
-            transition: transform 0.1s ease-out;
         }
 
         .bg-1 {
@@ -3026,45 +3025,53 @@
 
         // Parallax and Transition Logic
         let hasTransitioned = false;
+        let scrollTicking = false;
 
         window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset || document.documentElement.scrollTop;
-            const p1 = document.getElementById('parallax-bg-1');
-            const p2 = document.getElementById('parallax-bg-2');
-            
-            // Move backgrounds at 40% of scroll speed
-            const transform = `translateY(${scrolled * 0.4}px)`;
-            if (p1) p1.style.transform = transform;
-            if (p2) p2.style.transform = transform;
+            if (!scrollTicking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.pageYOffset || document.documentElement.scrollTop;
+                    const p1 = document.getElementById('parallax-bg-1');
+                    const p2 = document.getElementById('parallax-bg-2');
+                    
+                    // Move backgrounds at 40% of scroll speed using GPU-accelerated translate3d
+                    const transform = `translate3d(0, ${scrolled * 0.4}px, 0)`;
+                    if (p1) p1.style.transform = transform;
+                    if (p2) p2.style.transform = transform;
 
-            // Start transition later (at 300px) and finish at 700px
-            const fadeStart = 300;
-            const fadeEnd = 700;
-            
-            if (!hasTransitioned) {
-                let opacity = (scrolled - fadeStart) / (fadeEnd - fadeStart);
-                opacity = Math.max(0, Math.min(1, opacity));
-                
-                if (p2) p2.style.opacity = opacity;
-                
-                // Once fully visible, make it permanent
-                if (opacity >= 1) {
-                    hasTransitioned = true;
-                }
-            } else {
-                // Keep the second banner visible even when scrolling back up
-                if (p2) p2.style.opacity = 1;
-            }
+                    // Start transition later (at 300px) and finish at 700px
+                    const fadeStart = 300;
+                    const fadeEnd = 700;
+                    
+                    if (!hasTransitioned) {
+                        let opacity = (scrolled - fadeStart) / (fadeEnd - fadeStart);
+                        opacity = Math.max(0, Math.min(1, opacity));
+                        
+                        if (p2) p2.style.opacity = opacity;
+                        
+                        // Once fully visible, make it permanent
+                        if (opacity >= 1) {
+                            hasTransitioned = true;
+                        }
+                    } else {
+                        // Keep the second banner visible even when scrolling back up
+                        if (p2) p2.style.opacity = 1;
+                    }
 
-            // Sticky search/filter row state styling
-            const searchRow = document.querySelector('.search-filter-row');
-            if (searchRow) {
-                const rect = searchRow.getBoundingClientRect();
-                if (rect.top <= 65) {
-                    searchRow.classList.add('stuck');
-                } else {
-                    searchRow.classList.remove('stuck');
-                }
+                    // Sticky search/filter row state styling
+                    const searchRow = document.querySelector('.search-filter-row');
+                    if (searchRow) {
+                        const rect = searchRow.getBoundingClientRect();
+                        if (rect.top <= 65) {
+                            searchRow.classList.add('stuck');
+                        } else {
+                            searchRow.classList.remove('stuck');
+                        }
+                    }
+                    
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
             }
         });
 
