@@ -24,14 +24,16 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png">
     
-    <!-- Performance: Early connection to image CDN -->
+    <!-- Performance: Early connection to image CDN & Preloads -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preload" href="images/ccBanner1.webp" as="image" fetchpriority="high">
     
     <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
     
     <style>
         :root {
@@ -1863,7 +1865,7 @@
             font-size: 12px;
             font-weight: 700;
             cursor: pointer;
-            transition: var(--transition-smooth);
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
             border: none;
         }
 
@@ -1966,7 +1968,7 @@
         <!-- Persistent Header -->
         <header class="top-brand-header">
             <a href="index.html" class="brand-logo-area">
-                <img src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" class="brand-logo" alt="Logo">
+                <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" width="32" height="32" class="brand-logo" alt="Logo">
                 <span class="brand-name">Creation<span>Cue</span>™</span>
             </a>
         </header>
@@ -2025,7 +2027,7 @@
                     <div class="parallax-bg bg-2" id="parallax-bg-2"></div>
                     <div class="hero-overlay"></div>
                     <div class="hero-content">
-                        <img src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" alt="Creation Cue" class="logo">
+                        <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=180&output=webp" width="90" height="90" alt="Creation Cue" class="logo">
                         <h1>CREATION<span>CUE™</span></h1>
                         <p class="tagline">Browse our collection of 111+ Wear OS watch faces for Pixel Watch, Samsung Galaxy Watch, and all Wear OS devices.<br> Crafted by CreationCue™ a Huawei partner and top-rated developer on Google Play with over 300,000 downloads.</p>
                     </div>
@@ -2128,7 +2130,7 @@
             <!-- About Panel -->
             <section id="tab-about" class="tab-panel">
                 <div class="about-container">
-                    <img src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" class="about-logo" alt="Logo">
+                    <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=160&output=webp" width="80" height="80" class="about-logo" alt="Logo">
                     <h2>CreationCue™</h2>
                     <span class="about-version">Version 1.0.4 (Web Manager)</span>
 
@@ -2293,7 +2295,7 @@
                                 <p>◉ On your mobile device (e.g. Galaxy Watch), open the <strong>Galaxy Wearable</strong> app (or Pixel Watch app) > go to <strong>Watch Faces</strong> > scroll down to <strong>Downloaded</strong> > tap to select and activate the face.</p>
                             </div>
                             <div style="text-align: center; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; background: rgba(255,255,255,0.02);">
-                                <img src="https://creationcue.space/wp-content/uploads/2024/09/instal.jpg" alt="Select Watch Dropdown" style="max-width: 100%; max-height: 240px; object-fit: contain; border-radius: 4px;">
+                                <img src="https://wsrv.nl/?url=https://creationcue.space/wp-content/uploads/2024/09/instal.jpg&w=400&output=webp" width="400" height="430" alt="Select Watch Dropdown" style="max-width: 100%; max-height: 240px; object-fit: contain; border-radius: 4px;">
                                 <div style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">Important: Make sure to select your smartwatch in the Google Play dropdown!</div>
                             </div>
                         </div>
