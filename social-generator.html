@@ -2381,21 +2381,18 @@
             }
 
             // Build standard posts based on the tone preset
-            let displayName = name;
             let toneIntro = "";
-            if (currentPreset === 'sleek') {
-                const match = name.match(/^(CUE|CRC)/i);
-                if (match) {
-                    const prefix = match[0].toUpperCase();
-                    toneIntro = `This is ${prefix}.......`;
-                    displayName = name.substring(match[0].length).trim().replace(/^[-_\s]+/, "");
-                } else {
-                    toneIntro = "This is CUE.......";
-                }
-            } else if (currentPreset === 'features') {
+            if (currentPreset === 'features') {
                 toneIntro = "Feature-packed and highly functional. Meet";
             } else {
                 toneIntro = "Direct, neat, and elegant. Discover";
+            }
+
+            let captionIntro = "";
+            if (currentPreset === 'sleek') {
+                captionIntro = `This is ${name}.......`;
+            } else {
+                captionIntro = `${toneIntro} ${name}`;
             }
 
             let tiktokText = "";
@@ -2422,10 +2419,10 @@
                 reelsText = `🎥 🎫 FREE coupons available for a limited time! 🎟️\n\nGet the sleek ${name} watch face for Wear OS for free!\n\nClaim your free coupon here:\n🔗 ${cLink}\n\n🔍Explore more watch faces here:\nhttps://is.gd/NxAEME\n\n#reels #freecoupons #wearos #watchface #smartwatch #galaxywatch #pixelwatch #freebie #customwatchface`;
             } else {
                 // TikTok Caption
-                tiktokText = `✨ ${toneIntro} ${displayName} for Wear OS! ⌚\n\n${hook}\n\n🔗 Get it via the link in our bio! 👇\n\n#wearos #watchface #smartwatch #galaxywatch #pixelwatch #watchtok #techtok`;
+                tiktokText = `✨ ${captionIntro} for Wear OS! ⌚\n\n${hook}\n\n🔗 Get it via the link in our bio! 👇\n\n#wearos #watchface #smartwatch #galaxywatch #pixelwatch #watchtok #techtok`;
 
                 // Instagram Caption
-                instagramText = `📸 ${toneIntro} ${displayName} for Wear OS! ⌚✨\n\n${hook}\n\nUpgrade your wrist style today. \n\n🔗 Find the Google Play Store link in our bio!\n\n#wearos #watchface #watchfaces #smartwatch #galaxywatch #pixelwatch #watchfam #smartwatchstyle #customwatchface`;
+                instagramText = `📸 ${captionIntro} for Wear OS! ⌚✨\n\n${hook}\n\nUpgrade your wrist style today. \n\n🔗 Find the Google Play Store link in our bio!\n\n#wearos #watchface #watchfaces #smartwatch #galaxywatch #pixelwatch #watchfam #smartwatchstyle #customwatchface`;
 
                 // Shorts Title
                 shortsTitleText = `Get ${name} on Wear OS! ⌚`;
@@ -2434,7 +2431,7 @@
                 shortsText = `Check out the ${name} watch face for Wear OS smartwatches!\n\n${hook}\n\n📥 Download on the Google Play Store:\n🔗 ${link}\n\n🔍Explore more watch faces here:\nhttps://is.gd/NxAEME\n\n#shorts #wearos #watchface #smartwatch #galaxywatch #pixelwatch #googleplay`;
 
                 // Reels Caption
-                reelsText = `🎥 ${toneIntro} ${displayName} for Wear OS! ⌚\n\n${hook}\n\n📥 Get it on the Google Play Store:\n🔗 ${link}\n\n🔍Explore more watch faces here:\nhttps://is.gd/NxAEME\n\n#reels #wearos #watchface #watchfaces #smartwatch #galaxywatch #pixelwatch #smartwatchstyle #customwatchface`;
+                reelsText = `🎥 ${captionIntro} for Wear OS! ⌚\n\n${hook}\n\n📥 Get it on the Google Play Store:\n🔗 ${link}\n\n🔍Explore more watch faces here:\nhttps://is.gd/NxAEME\n\n#reels #wearos #watchface #watchfaces #smartwatch #galaxywatch #pixelwatch #smartwatchstyle #customwatchface`;
             }
 
             // Update state
