@@ -187,6 +187,17 @@
       opacity: 0.8;
     }
 
+    .pull-ahead-card {
+      opacity: 0.65;
+      border: 1px dashed rgba(255, 255, 255, 0.15) !important;
+      background: rgba(255, 255, 255, 0.02) !important;
+      transition: opacity 0.2s, border-color 0.2s;
+    }
+    .pull-ahead-card:hover {
+      opacity: 0.95;
+      border-color: var(--primary) !important;
+    }
+
     @media (max-width: 600px) {
       .top-header {
         padding: 10px;
@@ -1751,6 +1762,16 @@
         <div id="day-view-slots-list" style="display: flex; flex-direction: column; gap: 16px;">
           <!-- Large day tasks slots will render here -->
         </div>
+
+        <!-- Pull Ahead Container -->
+        <div id="pull-ahead-container" style="display: none; flex-direction: column; gap: 16px; margin-top: 24px; border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 20px;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 6px;">
+            <span>⚡ Finished early? Pull tasks from tomorrow's plan</span>
+          </div>
+          <div id="pull-ahead-list" style="display: flex; flex-direction: column; gap: 12px;">
+            <!-- Tomorrow's plan items will render here -->
+          </div>
+        </div>
       </div>
     </main>
   </div>
@@ -2517,6 +2538,25 @@
         return `${parts[2]}/${parts[1]}/${parts[0]}`;
       }
       return dateStr;
+    }
+
+    function getNextWorkingDay(dateStr) {
+      if (!dateStr) return null;
+      var parts = dateStr.split('-');
+      if (parts.length !== 3) return null;
+      var y = parseInt(parts[0], 10);
+      var m = parseInt(parts[1], 10) - 1;
+      var d = parseInt(parts[2], 10);
+      
+      var current = new Date(y, m, d);
+      for (var i = 1; i <= 14; i++) {
+        var nextDate = new Date(current.getTime() + i * 24 * 60 * 60 * 1000);
+        var nextStr = formatDateString(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate());
+        if (!isHolidayOrWeekend(nextStr)) {
+          return nextStr;
+        }
+      }
+      return null;
     }
 
     function parseDateToStandardString(dateStr) {
@@ -3386,10 +3426,126 @@
         }
       }
 
+      // Pull Ahead UI logic
+      var pullAheadContainer = document.getElementById('pull-ahead-container');
+      var pullAheadList = document.getElementById('pull-ahead-list');
+      if (pullAheadContainer && pullAheadList) {
+        var todayStr = getTodayDateString();
+        var currentHour = new Date().getHours();
+        
+        if (dateStr === todayStr && completedCount === totalCount && currentHour < 16) {
+          var nextWorkDayStr = getNextWorkingDay(todayStr);
+          var nextDaySlots = nextWorkDayStr ? (appState.dayStates[nextWorkDayStr] || []) : [];
+          var groupedNext = getGroupedDaySlots(nextDaySlots);
+          var pullableGroups = groupedNext.filter(function(g) {
+            return g && !g.completed && !g.isHoliday;
+          });
+          
+          if (pullableGroups.length > 0) {
+            pullAheadList.innerHTML = '';
+            pullableGroups.forEach(function(group) {
+              var card = document.createElement('div');
+              card.className = 'day-view-slot-card pull-ahead-card';
+              
+              if (group.isFallback) {
+                card.classList.add('priority-fallback');
+              } else {
+                card.classList.add('priority-' + (group.priority || 'medium'));
+              }
+              
+              var durationText = "";
+              if (group.hours % 8 === 0) {
+                var days = group.hours / 8;
+                durationText = days === 1 ? "1 day" : days + " days";
+              } else {
+                durationText = group.hours + "h";
+              }
+              
+              var metaHtml = "";
+              if (group.isFallback) {
+                metaHtml = `<span class="slot-meta-label"><span class="f-lbl">Maintenance</span></span>`;
+                if (group.typeLabel) {
+                  metaHtml += ` <span style="font-size: 8px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">[${group.typeLabel}]</span>`;
+                }
+              } else {
+                var pClass = group.priority ? 'priority-' + group.priority : 'priority-medium';
+                metaHtml = `<span class="slot-meta-label"><span class="c-lbl">Custom</span> <span class="priority-badge ${pClass}">${group.priority || 'medium'}</span></span>`;
+              }
+              
+              card.innerHTML = `
+                <div class="slot-check-col" style="display: flex; align-items: center; justify-content: center; opacity: 0.5;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+                </div>
+                <div class="slot-info-col" style="flex: 1;">
+                  <div class="day-view-slot-title">
+                    ${linkify(group.title)}
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                    <span style="font-size: 9.5px; font-weight: 700; color: var(--primary-text); background: var(--primary-glow); border: 1px solid var(--border-glow); padding: 1px 6px; border-radius: 4px; text-transform: uppercase;">⌛ ${durationText}</span>
+                    ${metaHtml}
+                  </div>
+                </div>
+                <div class="slot-action-col">
+                  <button onclick="pullTaskAhead('${nextWorkDayStr}', [${group.slotIndices.join(',')}])" class="btn-primary" style="font-size: 10px; padding: 6px 12px; font-weight: 700; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+                    Pull to Today
+                  </button>
+                </div>
+              `;
+              pullAheadList.appendChild(card);
+            });
+            pullAheadContainer.style.display = 'flex';
+          } else {
+            pullAheadContainer.style.display = 'none';
+          }
+        } else {
+          pullAheadContainer.style.display = 'none';
+        }
+      }
+
       // Update completion stats
       var pct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
       document.getElementById('day-view-completed-stat').textContent = `${completedCount}/${totalCount} Completed`;
       document.getElementById('day-view-progress-fill').style.width = pct + '%';
+    }
+
+    function pullTaskAhead(fromDateStr, slotIndices) {
+      var daySlots = appState.dayStates[fromDateStr];
+      if (!daySlots) return;
+      
+      var slotsToPull = slotIndices.map(function(idx) { return daySlots[idx]; }).filter(Boolean);
+      if (slotsToPull.length === 0) return;
+      
+      var firstSlot = slotsToPull[0];
+      if (confirm(`Pull "${firstSlot.title}" from tomorrow's plan to today?`)) {
+        // Remove from tomorrow
+        appState.dayStates[fromDateStr] = daySlots.filter(function(_, idx) {
+          return !slotIndices.includes(idx);
+        });
+        
+        // Append to today
+        var todayStr = getTodayDateString();
+        if (!appState.dayStates[todayStr]) {
+          appState.dayStates[todayStr] = [];
+        }
+        
+        slotsToPull.forEach(function(slot) {
+          appState.dayStates[todayStr].push({
+            taskId: slot.taskId || null,
+            title: slot.title,
+            priority: slot.priority || 'medium',
+            isFallback: slot.isFallback || false,
+            isOverridden: true, // Lock on today
+            completed: false    // Pull as uncompleted
+          });
+        });
+        
+        saveState();
+        scheduleFutureTasks();
+        renderCalendar();
+        renderDayView();
+        showToast("Task pulled to today");
+      }
     }
 
     function navigateDay(direction) {
