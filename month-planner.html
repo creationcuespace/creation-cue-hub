@@ -199,6 +199,14 @@
       border-color: var(--primary) !important;
     }
 
+    .backlog-item.dragging {
+      opacity: 0.4;
+      border: 1px dashed var(--primary) !important;
+    }
+    .backlog-item.drag-over {
+      border-top: 2px solid var(--primary) !important;
+    }
+
     @keyframes pull-text-pulse {
       0% {
         color: var(--primary);
@@ -1492,6 +1500,11 @@
       <span class="brand-name">Creation<span>Cue</span>™</span>
     </a>
     <div class="header-btns">
+      <!-- Streak Badge -->
+      <div id="streak-badge" style="display: none; align-items: center; gap: 4px; margin-right: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(241,179,28,0.06); border: 1px solid var(--border-glow); padding: 4px 10px; border-radius: 20px; color: var(--primary-text); flex-shrink: 0;" title="Consecutive days with all tasks completed">
+        <span id="streak-count">🔥 0 Days</span>
+      </div>
+
       <!-- Firebase connection indicator dot & text -->
       <div id="header-sync-badge" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; flex-shrink: 0;">
         <span id="header-sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
@@ -1622,6 +1635,16 @@
             </p>
           </div>
 
+          <div style="margin: 12px 0 12px 0;">
+            <div style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+              <input type="checkbox" id="toggle-batching" style="width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer;" onchange="toggleBatchingByFace(this.checked)">
+              <label for="toggle-batching" style="margin: 0; font-size: 11.5px; color: var(--text-secondary); cursor: pointer; font-weight: 600;">Optimize task batching</label>
+            </div>
+            <p style="margin: 6px 0 0 24px; font-size: 10px; color: var(--text-muted); line-height: 1.4;">
+              When enabled, custom tasks are grouped chronologically by their watch face ID to reduce context-switching during development.
+            </p>
+          </div>
+
           <button onclick="clearAllTasks()" class="btn-secondary" style="border-color: rgba(232, 40, 30, 0.2); color: var(--danger); background: rgba(232, 40, 30, 0.02); justify-content: center; gap: 8px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
             Clean All Tasks
@@ -1666,6 +1689,41 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
             Sync Now
           </button>
+        </div>
+      </details>
+
+      <!-- Workload Analytics Card -->
+      <details class="card collapsible-card" id="analytics-card">
+        <summary class="card-title">Workload Analytics</summary>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px;">
+          <!-- Custom vs Fallback Ratio -->
+          <div style="font-size: 11px; display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; justify-content: space-between; font-weight: 600; color: var(--text-secondary);">
+              <span>Task Breakdown</span>
+              <span id="analytics-ratio-text">0% Custom / 0% Fallback</span>
+            </div>
+            <div style="height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; display: flex; width: 100%;">
+              <div id="analytics-custom-bar" style="width: 0%; height: 100%; background: var(--primary); transition: width 0.3s ease;"></div>
+              <div id="analytics-fallback-bar" style="width: 0%; height: 100%; background: var(--success); transition: width 0.3s ease;"></div>
+            </div>
+          </div>
+          
+          <!-- Priorities stats -->
+          <div style="border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; flex-direction: column; gap: 6px;">
+            <span style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Custom Tasks Priorities</span>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: var(--danger); font-weight: 600;">🔴 High</span>
+              <span id="analytics-high-count">0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: var(--primary); font-weight: 600;">🔵 Medium</span>
+              <span id="analytics-medium-count">0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: var(--text-muted); font-weight: 600;">⚪ Low</span>
+              <span id="analytics-low-count">0</span>
+            </div>
+          </div>
         </div>
       </details>
       
@@ -1823,7 +1881,7 @@
 
   <!-- Footer -->
   <footer style="text-align: center; padding: 24px; font-size: 10px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: auto; font-family: var(--font-body); letter-spacing: 0.5px; opacity: 0.6;">
-    CreationCue™ Planner &bull; v1.3.3
+    CreationCue™ Planner &bull; v1.4.0
   </footer>
 
   <!-- Inline Override Dialog -->
@@ -2000,7 +2058,8 @@
       customHolidays: [],      // Array of date strings "YYYY-MM-DD"
       dayStates: {},           // dateString -> array of 8 slot states
       watchFacesCatalog: [],   // Loaded from manager.json or hardcoded fallback
-      autofillFallback: true   // Whether to auto-fill empty slots with fallback tasks
+      autofillFallback: true,  // Whether to auto-fill empty slots with fallback tasks
+      batchTasksByFace: false   // Group custom tasks by watch face key
     };
 
     // Fallback watch faces if manager.json is unavailable
@@ -2091,6 +2150,9 @@
         var autofill = localStorage.getItem('cc_planner_autofill_fallback');
         appState.autofillFallback = autofill === null ? true : JSON.parse(autofill);
 
+        var batch = localStorage.getItem('cc_planner_batch_tasks');
+        appState.batchTasksByFace = batch === null ? false : JSON.parse(batch);
+
         // Sanitize loaded state
         sanitizeState(appState);
 
@@ -2117,6 +2179,7 @@
         localStorage.setItem('cc_planner_custom_holidays', JSON.stringify(appState.customHolidays));
         localStorage.setItem('cc_planner_day_states', JSON.stringify(appState.dayStates));
         localStorage.setItem('cc_planner_autofill_fallback', JSON.stringify(appState.autofillFallback));
+        localStorage.setItem('cc_planner_batch_tasks', JSON.stringify(appState.batchTasksByFace));
         
         // Auto-save to Firebase Realtime Database
         if (currentUser) {
@@ -2150,7 +2213,8 @@
             customTasks: data.customTasks,
             customHolidays: data.customHolidays,
             dayStates: data.dayStates,
-            autofillFallback: data.autofillFallback
+            autofillFallback: data.autofillFallback,
+            batchTasksByFace: data.batchTasksByFace
           };
           sanitizeState(tempState);
           
@@ -2160,12 +2224,16 @@
           if (tempState.autofillFallback !== undefined) {
             appState.autofillFallback = tempState.autofillFallback;
           }
+          if (tempState.batchTasksByFace !== undefined) {
+            appState.batchTasksByFace = tempState.batchTasksByFace;
+          }
           
           // Save locally to keep it in sync
           localStorage.setItem('cc_planner_custom_tasks', JSON.stringify(appState.customTasks));
           localStorage.setItem('cc_planner_custom_holidays', JSON.stringify(appState.customHolidays));
           localStorage.setItem('cc_planner_day_states', JSON.stringify(appState.dayStates));
           localStorage.setItem('cc_planner_autofill_fallback', JSON.stringify(appState.autofillFallback));
+          localStorage.setItem('cc_planner_batch_tasks', JSON.stringify(appState.batchTasksByFace));
 
           renderBacklog();
           renderCalendar();
@@ -2191,7 +2259,8 @@
           customTasks: appState.customTasks,
           customHolidays: appState.customHolidays,
           dayStates: appState.dayStates,
-          autofillFallback: appState.autofillFallback
+          autofillFallback: appState.autofillFallback,
+          batchTasksByFace: appState.batchTasksByFace
         });
         console.log("Firebase sync: Saved data.");
       } catch (err) {
@@ -2271,6 +2340,9 @@
       var toggle = document.getElementById('toggle-autofill');
       if (toggle) toggle.checked = appState.autofillFallback;
 
+      var batchToggle = document.getElementById('toggle-batching');
+      if (batchToggle) batchToggle.checked = appState.batchTasksByFace;
+
       // Set default start date input to today
       var dateInput = document.getElementById('task-start-date');
       if (dateInput) {
@@ -2286,9 +2358,15 @@
       appState.activeDayStr = getTodayDateString();
       
       // Run automatic rollover silently in-memory on initialization
-      triggerRollover(true, true);
+      var rolledCount = triggerRollover(true, true);
+      if (rolledCount > 0) {
+        setTimeout(function() {
+          showToast(`👋 Welcome back! ${rolledCount} task${rolledCount > 1 ? 's' : ''} rolled over from yesterday.`);
+        }, 1000);
+      }
 
       scheduleFutureTasks();
+      calculateProductivityStreak();
       
       renderCalendar();
       switchViewMode('day');
@@ -2467,6 +2545,67 @@
       }
     }
 
+    var dragSrcEl = null;
+
+    function handleDragStart(e) {
+      this.style.opacity = '0.4';
+      dragSrcEl = this;
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', this.getAttribute('data-id'));
+      this.classList.add('dragging');
+    }
+
+    function handleDragOver(e) {
+      if (e.preventDefault) {
+        e.preventDefault();
+      }
+      e.dataTransfer.dropEffect = 'move';
+      this.classList.add('drag-over');
+      return false;
+    }
+
+    function handleDragLeave(e) {
+      this.classList.remove('drag-over');
+    }
+
+    function handleDragEnd(e) {
+      this.style.opacity = '1';
+      var items = document.querySelectorAll('.backlog-item');
+      items.forEach(function (item) {
+        item.classList.remove('drag-over');
+        item.classList.remove('dragging');
+      });
+    }
+
+    function handleDrop(e) {
+      if (e.stopPropagation) {
+        e.stopPropagation();
+      }
+      
+      if (dragSrcEl !== this) {
+        var draggedId = e.dataTransfer.getData('text/plain');
+        var targetId = this.getAttribute('data-id');
+        
+        var draggedIdx = appState.customTasks.findIndex(function(t) { return t.id === draggedId; });
+        var targetIdx = appState.customTasks.findIndex(function(t) { return t.id === targetId; });
+        
+        if (draggedIdx !== -1 && targetIdx !== -1) {
+          var draggedTask = appState.customTasks.splice(draggedIdx, 1)[0];
+          appState.customTasks.splice(targetIdx, 0, draggedTask);
+          
+          saveState();
+          scheduleFutureTasks();
+          renderBacklog();
+          renderCalendar();
+          if (document.getElementById('day-view-container').style.display !== 'none') {
+            renderDayView();
+          }
+          showToast("Backlog reordered");
+        }
+      }
+      return false;
+    }
+
     function renderBacklog() {
       var listEl = document.getElementById('backlog-list');
       var countEl = document.getElementById('backlog-count');
@@ -2479,15 +2618,17 @@
         return;
       }
 
-      // Sort by priority (high -> medium -> low)
-      var sorted = [...appState.customTasks].sort((a, b) => {
-        var priorityWeight = { high: 3, medium: 2, low: 1 };
-        return priorityWeight[b.priority] - priorityWeight[a.priority];
-      });
-
-      sorted.forEach(task => {
+      appState.customTasks.forEach(task => {
         var item = document.createElement('div');
         item.className = 'backlog-item';
+        item.setAttribute('draggable', 'true');
+        item.setAttribute('data-id', task.id);
+        
+        item.addEventListener('dragstart', handleDragStart);
+        item.addEventListener('dragover', handleDragOver);
+        item.addEventListener('dragleave', handleDragLeave);
+        item.addEventListener('dragend', handleDragEnd);
+        item.addEventListener('drop', handleDrop);
         
         var badgeClass = 'priority-' + task.priority;
         var formattedDuration = task.duration === 1 ? '1 day' : task.duration + ' days';
@@ -2752,11 +2893,20 @@
         }
       });
 
-      // Sort tasks by priority: high -> medium -> low
-      var sortedTasks = [...appState.customTasks].sort((a, b) => {
-        var priorityWeight = { high: 3, medium: 2, low: 1 };
-        return priorityWeight[b.priority] - priorityWeight[a.priority];
-      });
+      // Process tasks in backlog order (or optimized by watch face if enabled)
+      var sortedTasks = [...appState.customTasks];
+      if (appState.batchTasksByFace) {
+        sortedTasks.sort(function(a, b) {
+          var keyA = getTaskWatchFaceKey(a.title);
+          var keyB = getTaskWatchFaceKey(b.title);
+          if (keyA !== keyB) {
+            if (keyA === "none") return 1;
+            if (keyB === "none") return -1;
+            return keyA.localeCompare(keyB);
+          }
+          return appState.customTasks.indexOf(a) - appState.customTasks.indexOf(b);
+        });
+      }
 
       // Calculate how many future days we want to schedule
       var tempDate = new Date();
@@ -2965,7 +3115,7 @@
         if (!silent) {
           showToast("No uncompleted past tasks to rollover.");
         }
-        return;
+        return 0;
       }
 
       // Step 2: Append rolloverTasks to today's slots (without shifting anything else!)
@@ -2990,7 +3140,7 @@
       appState.dayStates[todayStr] = todaySlots;
 
       if (skipSave) {
-        return;
+        return rolloverTasks.length;
       }
 
       saveState();
@@ -3002,6 +3152,7 @@
       if (!silent) {
         showToast(`Rolled over ${rolloverTasks.length} tasks to today!`);
       }
+      return rolloverTasks.length;
     }
 
     // -------------------------------------------------------------
@@ -3174,6 +3325,7 @@
         progressTextEl.textContent = `${completedMonthlySlots}/${totalMonthlySlots}`;
         progressFillEl.style.width = overallPercent + '%';
       }
+      updateWorkloadAnalytics();
     }
 
     function navigateMonth(direction) {
@@ -3587,6 +3739,9 @@
       var pct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
       document.getElementById('day-view-completed-stat').textContent = `${completedCount}/${totalCount} Completed`;
       document.getElementById('day-view-progress-fill').style.width = pct + '%';
+
+      calculateProductivityStreak();
+      updateWorkloadAnalytics();
     }
 
     function pullTaskAhead(fromDateStr, slotIndices) {
@@ -4317,6 +4472,133 @@
         renderDayView();
       }
       showToast(checked ? "Auto-fill Fallbacks Enabled" : "Auto-fill Fallbacks Disabled");
+    }
+
+    function toggleBatchingByFace(checked) {
+      appState.batchTasksByFace = checked;
+      saveState();
+      scheduleFutureTasks();
+      renderCalendar();
+      if (document.getElementById('day-view-container').style.display !== 'none') {
+        renderDayView();
+      }
+      showToast(checked ? "Batching Optimization Enabled" : "Batching Optimization Disabled");
+    }
+
+    function getTaskWatchFaceKey(title) {
+      var t = (title || "").toLowerCase();
+      var catalog = appState.watchFacesCatalog || [];
+      for (var i = 0; i < catalog.length; i++) {
+        var face = catalog[i];
+        if (!face) continue;
+        var fid = (face.id || "").toLowerCase();
+        var ftitle = (face.title || "").toLowerCase();
+        if (t.includes(fid) || t.includes(ftitle)) {
+          return face.id;
+        }
+      }
+      return "none";
+    }
+
+    function calculateProductivityStreak() {
+      var streak = 0;
+      var todayStr = getTodayDateString();
+      
+      var todaySlots = appState.dayStates[todayStr] || [];
+      var todayActiveCount = todaySlots.filter(s => s && !s.isHoliday && s.title !== "Holiday / Non-working Day").length;
+      var todayCompletedCount = todaySlots.filter(s => s && s.completed).length;
+      var todayIsDone = todayActiveCount > 0 && todayCompletedCount === todayActiveCount;
+      
+      var startOffset = todayIsDone ? 0 : 1;
+      
+      var currentCheck = new Date();
+      if (startOffset === 1) {
+        currentCheck.setDate(currentCheck.getDate() - 1);
+      }
+      
+      var broken = false;
+      for (var i = 0; i < 90; i++) {
+        var dateStr = formatDateString(currentCheck.getFullYear(), currentCheck.getMonth(), currentCheck.getDate());
+        var offState = isHolidayOrWeekend(dateStr);
+        
+        if (offState) {
+          currentCheck.setDate(currentCheck.getDate() - 1);
+          continue;
+        }
+        
+        var slots = appState.dayStates[dateStr] || [];
+        var activeCount = slots.filter(s => s && !s.isHoliday && s.title !== "Holiday / Non-working Day").length;
+        var completedCount = slots.filter(s => s && s.completed).length;
+        
+        if (activeCount > 0) {
+          if (completedCount === activeCount) {
+            streak++;
+          } else {
+            broken = true;
+            break;
+          }
+        }
+        currentCheck.setDate(currentCheck.getDate() - 1);
+      }
+      
+      var streakBadge = document.getElementById('streak-badge');
+      var streakCount = document.getElementById('streak-count');
+      if (streakBadge && streakCount) {
+        if (streak > 0) {
+          streakBadge.style.display = 'flex';
+          streakCount.textContent = `🔥 ${streak} Day${streak > 1 ? 's' : ''}`;
+        } else {
+          streakBadge.style.display = 'none';
+        }
+      }
+    }
+
+    function updateWorkloadAnalytics() {
+      if (!appState.currentDate) return;
+      var year = appState.currentDate.getFullYear();
+      var month = appState.currentDate.getMonth();
+      
+      var customCount = 0;
+      var fallbackCount = 0;
+      var priorities = { high: 0, medium: 0, low: 0 };
+      
+      var totalDays = new Date(year, month + 1, 0).getDate();
+      for (var d = 1; d <= totalDays; d++) {
+        var dateStr = formatDateString(year, month, d);
+        var slots = appState.dayStates[dateStr] || [];
+        slots.forEach(function(slot) {
+          if (!slot || slot.isHoliday || slot.title === "Holiday / Non-working Day") return;
+          if (slot.isFallback) {
+            fallbackCount++;
+          } else {
+            customCount++;
+            var p = (slot.priority || 'medium').toLowerCase();
+            if (priorities[p] !== undefined) {
+              priorities[p]++;
+            }
+          }
+        });
+      }
+      
+      var totalSlots = customCount + fallbackCount;
+      var customPct = totalSlots > 0 ? Math.round((customCount / totalSlots) * 100) : 0;
+      var fallbackPct = totalSlots > 0 ? Math.round((fallbackCount / totalSlots) * 100) : 0;
+      
+      var ratioText = document.getElementById('analytics-ratio-text');
+      var customBar = document.getElementById('analytics-custom-bar');
+      var fallbackBar = document.getElementById('analytics-fallback-bar');
+      
+      var highText = document.getElementById('analytics-high-count');
+      var mediumText = document.getElementById('analytics-medium-count');
+      var lowText = document.getElementById('analytics-low-count');
+      
+      if (ratioText) ratioText.textContent = `${customPct}% Custom / ${fallbackPct}% Fallback`;
+      if (customBar) customBar.style.width = customPct + '%';
+      if (fallbackBar) fallbackBar.style.width = fallbackPct + '%';
+      
+      if (highText) highText.textContent = priorities.high === 0 ? "0" : (priorities.high + "h (" + (priorities.high / 8) + "d)");
+      if (mediumText) mediumText.textContent = priorities.medium === 0 ? "0" : (priorities.medium + "h (" + (priorities.medium / 8) + "d)");
+      if (lowText) lowText.textContent = priorities.low === 0 ? "0" : (priorities.low + "h (" + (priorities.low / 8) + "d)");
     }
 
     function runDiagnostics() {
