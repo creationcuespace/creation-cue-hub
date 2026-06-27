@@ -879,9 +879,13 @@
     });
 
     document.getElementById('btn-google-login').addEventListener('click', () => {
-      auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(err => {
-        alert("Authentication failed: " + err.message);
-      });
+      const provider = new firebase.auth.GoogleAuthProvider();
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (isMobile) {
+        auth.signInWithRedirect(provider).catch(err => alert("Authentication failed: " + err.message));
+      } else {
+        auth.signInWithPopup(provider).catch(err => alert("Authentication failed: " + err.message));
+      }
     });
 
     window.promoCodesCache = {};

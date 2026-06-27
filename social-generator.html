@@ -1813,12 +1813,22 @@
             document.getElementById('login-loading').style.display = 'block';
             document.getElementById('btn-google-login').style.display = 'none';
             const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).catch(err => {
-                console.error("Sign-in failed:", err);
-                alert("Sign-in failed: " + err.message);
-                document.getElementById('login-loading').style.display = 'none';
-                document.getElementById('btn-google-login').style.display = 'flex';
-            });
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (isMobile) {
+                auth.signInWithRedirect(provider).catch(err => {
+                    console.error("Sign-in failed:", err);
+                    alert("Sign-in failed: " + err.message);
+                    document.getElementById('login-loading').style.display = 'none';
+                    document.getElementById('btn-google-login').style.display = 'flex';
+                });
+            } else {
+                auth.signInWithPopup(provider).catch(err => {
+                    console.error("Sign-in failed:", err);
+                    alert("Sign-in failed: " + err.message);
+                    document.getElementById('login-loading').style.display = 'none';
+                    document.getElementById('btn-google-login').style.display = 'flex';
+                });
+            }
         });
 
         // Logout Action

@@ -1881,7 +1881,7 @@
 
   <!-- Footer -->
   <footer style="text-align: center; padding: 24px; font-size: 10px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: auto; font-family: var(--font-body); letter-spacing: 0.5px; opacity: 0.6;">
-    CreationCue™ Planner &bull; v1.4.0
+    CreationCue™ Planner &bull; v1.4.1
   </footer>
 
   <!-- Inline Override Dialog -->
@@ -2023,9 +2023,17 @@
 
     // Google Login Events
     document.getElementById('btn-google-login').addEventListener('click', () => {
-      auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(err => {
-        alert("Authentication failed: " + err.message);
-      });
+      var provider = new firebase.auth.GoogleAuthProvider();
+      var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (isMobile) {
+        auth.signInWithRedirect(provider).catch(err => {
+          alert("Authentication failed: " + err.message);
+        });
+      } else {
+        auth.signInWithPopup(provider).catch(err => {
+          alert("Authentication failed: " + err.message);
+        });
+      }
     });
 
     function handleLogout() {
