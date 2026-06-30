@@ -1334,7 +1334,7 @@
   <!-- Main Body -->
   <div class="main">
     <!-- Backup Reminder Banner -->
-    <div style="background: rgba(245, 197, 24, 0.08); border: 1px solid rgba(245, 197, 24, 0.2); border-radius: 4px; padding: 10px 14px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); line-height: 1.4;">
+    <div id="github-sync-reminder" style="background: rgba(245, 197, 24, 0.08); border: 1px solid rgba(245, 197, 24, 0.2); border-radius: 4px; padding: 10px 14px; margin-bottom: 20px; display: none; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); line-height: 1.4;">
       <span>💡</span>
       <span><strong>Developer Reminder:</strong> You only need to upload <code>play-versions.html</code> to your GitHub repository when new design/features are added to the code (not when watch face version numbers or notes change). Make sure to upload this current file now to back up our latest dashboard changes!</span>
     </div>
@@ -2206,12 +2206,63 @@
     var githubConfig = null;
     var checkIntervalId = null;
 
+    const CURRENT_PAGE_VERSION = "1.0.6";
+
     // Load GitHub Config from Database
     function loadGithubConfig() {
       db.ref('github_config').once('value').then(snapshot => {
         githubConfig = snapshot.val();
+        checkGithubSyncStatus();
       }).catch(err => {
         console.warn("Could not load github_config:", err);
+      });
+    }
+
+    // Query GitHub REST API to see if the repo's play-versions.html matches CURRENT_PAGE_VERSION
+    function checkGithubSyncStatus() {
+      const banner = document.getElementById('github-sync-reminder');
+      if (!banner) return;
+
+      if (!githubConfig || !githubConfig.repo || !githubConfig.token) {
+        // If not configured, hide the warning banner
+        banner.style.display = 'none';
+        return;
+      }
+
+      const parts = githubConfig.repo.split('/');
+      if (parts.length < 2) return;
+      const owner = parts[0];
+      const repo = parts[1];
+      const branch = githubConfig.branch || 'main';
+      const url = `https://api.github.com/repos/${owner}/${repo}/contents/play-versions.html?ref=${branch}`;
+
+      fetch(url, {
+        headers: {
+          'Authorization': 'Bearer ' + githubConfig.token,
+          'Accept': 'application/vnd.github+json'
+        }
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("File not found or permission issue");
+        return res.json();
+      })
+      .then(data => {
+        if (data.content) {
+          // Decode base64 contents
+          const githubHtml = decodeURIComponent(escape(atob(data.content.replace(/\s/g, ''))));
+          if (githubHtml.includes(`CURRENT_PAGE_VERSION = "${CURRENT_PAGE_VERSION}"`)) {
+            // Match found! Code on GitHub is fully up-to-date! Hide the warning banner!
+            banner.style.display = 'none';
+          } else {
+            // Out of sync! Show the warning banner!
+            banner.style.display = 'flex';
+          }
+        }
+      })
+      .catch(err => {
+        console.warn("Could not check sync status:", err);
+        // On error, default to showing the banner to be safe
+        banner.style.display = 'flex';
       });
     }
 
