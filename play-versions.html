@@ -497,12 +497,14 @@
       resize: vertical;
       min-height: 50px;
       outline: none;
-      transition: all 0.15s;
+      transition: min-height 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
     }
 
     .note-textarea:focus {
       border-color: var(--yellow);
       background: var(--dark);
+      min-height: 140px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
 
     .note-cell {
