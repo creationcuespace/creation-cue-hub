@@ -1387,7 +1387,8 @@
           <option value="id-desc">Sort: ID (Desc)</option>
           <option value="title-asc">Sort: Title (A-Z)</option>
           <option value="wear-desc">Sort: Wear OS Version (Newest)</option>
-          <option value="date-desc">Sort: Update Date (Newest)</option>
+          <option value="date-desc">Sort: Last Store Update (Newest)</option>
+          <option value="date-asc">Sort: Last Store Update (Oldest)</option>
         </select>
         <button id="btn-clear-all" class="clear-all-btn">Reset Filters</button>
         <button id="btn-ai-query" class="ai-btn">💡 Ask AI</button>
@@ -1781,6 +1782,12 @@
           const dA = new Date(a.lastUpdatedDate).getTime() || 0;
           const dB = new Date(b.lastUpdatedDate).getTime() || 0;
           return dB - dA;
+        }
+        
+        if (sortVal === 'date-asc') {
+          const dA = new Date(a.lastUpdatedDate).getTime() || Infinity;
+          const dB = new Date(b.lastUpdatedDate).getTime() || Infinity;
+          return dA - dB;
         }
         return 0;
       });
