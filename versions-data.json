@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-29T19:33:23.806Z",
+  "lastUpdated": "2026-06-30T08:03:45.207Z",
   "results": [
     {
       "id": "cue003",
@@ -767,7 +767,7 @@
       "packageName": "com.creationcue.crc043",
       "companionVersion": "18 (6.0.0)",
       "wearVersion": "10000014 (2.0.0)",
-      "lastUpdatedDate": "Mar 14, 2026"
+      "lastUpdatedDate": "Jun 29, 2026"
     },
     {
       "id": "crc042",
@@ -791,7 +791,7 @@
       "packageName": "com.watchfacestudio.crc039",
       "companionVersion": "14 (6.0.0)",
       "wearVersion": "10000011 (2.2.1)",
-      "lastUpdatedDate": "Feb 13, 2026"
+      "lastUpdatedDate": "Jun 29, 2026"
     },
     {
       "id": "crc036",
