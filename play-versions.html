@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://cdn.jsdelivr.net https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.jsdelivr.net https://creationcue.space https://via.placeholder.com https://wsrv.nl https://*.googleusercontent.com https://raw.githubusercontent.com https://*.githubusercontent.com https://api.qrserver.com; connect-src 'self' https://raw.githubusercontent.com wss://*.firebasedatabase.app wss://*.europe-west1.firebasedatabase.app https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.google.com/recaptcha/ https://ntfy.sh https://corsproxy.io https://api.allorigins.win https://www.gstatic.com https://api.github.com; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://*.firebaseapp.com https://accounts.google.com https://content-firebaseauth.googleapis.com https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://www.google.com/recaptcha/ https://recaptcha.net/;">
+  <meta name="theme-color" content="#141414">
+  <title>CreationCue | Watch Face Play Store Versions</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2310B981'/%3E%3Cstop offset='100%25' stop-color='%23059669'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='6' fill='url(%23grad)'/%3E%3Cpath d='M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9C19 9.55228 18.5523 10 18 10C17.4477 10 17 10.4477 17 11V13C17 13.5523 17.4477 14 18 14C18.5523 14 19 14.4477 19 15C19 15.5523 18.5523 16 18 16H6C5.44772 16 5 15.5523 5 15C5 14.4477 5.44772 14 6 14C6.55228 14 7 13.5523 7 13V11C7 10.4477 6.55228 10 6 10C5.44772 10 5 9.55228 5 9Z' fill='white'/%3E%3Cpath d='M10 11C10 11.5523 9.55228 12 9 12C8.44772 12 8 11.5523 8 11C8 10.4477 8.44772 10 9 10C9.55228 10 10 10.4477 10 11ZM16 13C16 13.5523 15.5523 14 15 14C14.4477 14 14 13.5523 14 13C14 12.4477 14.4477 12 15 12C15.5523 12 16 12.4477 16 13ZM15 10L9 14' stroke='%23059669' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E">
+
+  <style>
+    :root {
+      --red: #e8281e;
+      --blue: #1a3a6b;
+      --yellow: #f5c518;
+      --black: #141414;
+      --dark: #1e1e1e;
+      --mid: #2a2a2a;
+      --border: #3a3a3a;
+      --text: #f0f0f0;
+      --muted: #888;
+      --green: #4caf50;
+      --bg-color: hsl(240, 10%, 3%);
+      --surface-color: hsl(240, 10%, 7%);
+      --surface-hover: hsl(240, 10%, 12%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 50px;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background-color: var(--yellow); }
+
+    .header {
+      width: 100%;
+      background: var(--dark);
+      border-bottom: 2px solid var(--yellow);
+      padding: 14px 20px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .header-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .header-title span { color: var(--yellow); }
+
+    .header-btns {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .header-btn {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Teko', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      line-height: 1;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-btn:hover {
+      background: var(--border);
+      color: var(--text);
+      border-color: var(--muted);
+      transform: translateY(-1px);
+    }
+
+    .header-btn.active-btn {
+      border: 1px solid var(--yellow);
+      color: var(--yellow);
+      background: rgba(255, 184, 0, 0.04);
+    }
+
+    .main {
+      width: 100%;
+      max-width: 1400px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--yellow);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    /* Stats Section */
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-left: 3px solid var(--yellow);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .stat-value {
+      font-family: 'Teko', sans-serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    /* Filter Controls */
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 14px 20px;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      padding: 10px 14px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-input:focus {
+      border-color: var(--yellow);
+    }
+
+    .filters-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .filter-select {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      padding: 10px 14px;
+      font-size: 14px;
+      outline: none;
+      cursor: pointer;
+      min-width: 150px;
+    }
+
+    .filter-select:focus {
+      border-color: var(--yellow);
+    }
+
+    /* Table Styling */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--dark);
+    }
+
+    .versions-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .versions-table th, .versions-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .versions-table th {
+      background: rgba(255, 255, 255, 0.02);
+      font-family: 'Teko', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--yellow);
+    }
+
+    .versions-table tbody tr {
+      cursor: pointer;
+    }
+
+    .versions-table tbody tr:hover td {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .wf-thumb-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .wf-thumb {
+      width: 42px;
+      height: 42px;
+      border-radius: 4px;
+      object-fit: cover;
+      background: var(--mid);
+      border: 1px solid var(--border);
+    }
+
+    .wf-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wf-title {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .wf-id {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pkg-name-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pkg-name {
+      font-family: monospace;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .copy-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      transition: color 0.15s;
+    }
+
+    .copy-btn:hover {
+      color: var(--yellow);
+    }
+
+    .version-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 12px;
+      font-family: monospace;
+    }
+
+    .version-badge.companion {
+      background: rgba(26, 58, 107, 0.3);
+      color: #8da9d4;
+      border: 1px solid rgba(26, 58, 107, 0.5);
+    }
+
+    .version-badge.wear {
+      background: rgba(76, 175, 80, 0.15);
+      color: #81c784;
+      border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+
+    .version-badge.error {
+      background: rgba(232, 40, 30, 0.15);
+      color: #ef9a9a;
+      border: 1px solid rgba(232, 40, 30, 0.3);
+    }
+
+    .date-badge {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .note-textarea {
+      width: 100%;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      padding: 6px 10px;
+      resize: vertical;
+      min-height: 50px;
+      outline: none;
+      transition: all 0.15s;
+    }
+
+    .note-textarea:focus {
+      border-color: var(--yellow);
+      background: var(--dark);
+    }
+
+    .note-cell {
+      position: relative;
+      min-width: 250px;
+    }
+
+    .save-indicator {
+      position: absolute;
+      bottom: 16px;
+      right: 22px;
+      font-size: 11px;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+      background: var(--mid);
+      padding: 2px 6px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+
+    .save-indicator.saving {
+      color: var(--yellow);
+      opacity: 1;
+    }
+
+    .save-indicator.saved {
+      color: var(--green);
+      opacity: 1;
+    }
+
+    /* Login Gate Overlay */
+    #login-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(20, 20, 20, 0.98);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .login-card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 40px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border-top: 3px solid var(--yellow);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .login-logo {
+      font-family: 'Teko', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text);
+    }
+    .login-logo span { color: var(--yellow); }
+
+    .login-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Google Sign-in Button */
+    .google-btn {
+      width: 100%;
+      height: 44px;
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color .218s, border-color .218s, box-shadow .218s;
+      border: none;
+      padding: 0;
+    }
+
+    .google-btn:hover {
+      background-color: #f1f1f1;
+      box-shadow: 0 0 3px 3px rgba(66,133,244,.3);
+    }
+
+    .google-icon-wrapper {
+      margin-left: 1px;
+      width: 42px;
+      height: 42px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .google-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .google-btn-text {
+      color: #757575;
+      font-size: 14px;
+      font-weight: bold;
+      font-family: 'Roboto', 'Inter', sans-serif;
+      margin: 0 24px 0 12px;
+    }
+
+    /* Loading Overlay */
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--black);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .loader {
+      border: 3px solid var(--mid);
+      border-top: 3px solid var(--yellow);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Details Panel Sidebar Drawer */
+    #details-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 998;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    #details-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #details-panel {
+      position: fixed;
+      top: 0;
+      right: -460px;
+      width: 460px;
+      height: 100vh;
+      background: var(--dark);
+      border-left: 1px solid var(--border);
+      z-index: 999;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #details-panel.open {
+      right: 0;
+    }
+
+    .details-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    .details-header-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--yellow);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .details-close-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 20px;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s;
+    }
+
+    .details-close-btn:hover {
+      color: var(--text);
+    }
+
+    .details-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .details-preview-container {
+      width: 100%;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .details-preview-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .details-badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .details-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 3px;
+      letter-spacing: 0.5px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+      color: #aaa;
+    }
+
+    .details-badge.primary-badge {
+      background: rgba(245, 197, 24, 0.1);
+      color: var(--yellow);
+      border-color: rgba(245, 197, 24, 0.2);
+    }
+
+    .details-badge.free-badge {
+      background: rgba(76, 175, 80, 0.1);
+      color: #81c784;
+      border-color: rgba(76, 175, 80, 0.2);
+    }
+
+    .details-section {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .details-section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    .details-desc-text {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text);
+      background: var(--mid);
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      white-space: pre-wrap;
+    }
+
+    .details-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .details-info-box {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .details-info-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .details-info-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .details-textarea {
+      width: 100%;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      padding: 10px 14px;
+      font-size: 13px;
+      min-height: 100px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .details-textarea:focus {
+      border-color: var(--yellow);
+    }
+
+    .details-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .details-action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Teko', sans-serif;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .details-action-btn:hover {
+      background: var(--border);
+      border-color: var(--muted);
+      transform: translateY(-1px);
+    }
+
+    .details-action-btn.primary-btn {
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+    }
+
+    .details-action-btn.primary-btn:hover {
+      background: #e5b615;
+    }
+
+    .cloud-update-btn {
+      flex: 1;
+      border: 1px solid var(--border);
+      background: var(--mid);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 4px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: background-color 0.15s, border-color 0.15s;
+    }
+
+    .cloud-update-btn:hover {
+      background: var(--border);
+      border-color: var(--muted);
+    }
+
+    .cloud-update-btn.running {
+      color: var(--yellow);
+      border-color: rgba(245, 197, 24, 0.3);
+      cursor: wait;
+    }
+
+    .cloud-update-btn.success {
+      color: #81c784;
+      border-color: rgba(76, 175, 80, 0.3);
+    }
+
+    .cloud-update-btn.error {
+      color: #ef9a9a;
+      border-color: rgba(232, 40, 30, 0.3);
+    }
+
+    .cloud-config-btn {
+      border: 1px solid var(--border);
+      background: var(--mid);
+      cursor: pointer;
+      font-size: 12px;
+      padding: 6.5px 8px;
+      border-radius: 4px;
+      color: var(--muted);
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cloud-config-btn:hover {
+      color: var(--text);
+      background: var(--border);
+      border-color: var(--muted);
+    }
+
+    /* GitHub Modal overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .github-modal-content {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      overflow: hidden;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .github-modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .github-modal-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .github-modal-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 16px;
+      transition: color 0.15s;
+    }
+
+    .github-modal-close:hover {
+      color: var(--text);
+    }
+
+    .github-modal-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .github-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .github-form-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    .github-form-input {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      padding: 8px 12px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .github-form-input:focus {
+      border-color: var(--yellow);
+    }
+
+    .github-save-btn {
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+      font-family: 'Teko', sans-serif;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.15s;
+      margin-top: 8px;
+    }
+
+    .github-save-btn:hover {
+      background: #e5b615;
+    }
+
+    /* Mobile Responsive styling override */
+    @media (max-width: 768px) {
+      .header {
+        padding: 12px 10px;
+      }
+      .header-btns {
+        gap: 6px;
+      }
+      .header-btn {
+        font-size: 12px;
+        padding: 6px 8px;
+      }
+      .controls-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .search-input-wrapper {
+        width: 100%;
+        min-width: 0;
+      }
+      .filters-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .versions-table th:nth-child(3), .versions-table td:nth-child(3), /* Package Name */
+      .versions-table th:nth-child(6), .versions-table td:nth-child(6)  /* Date */ {
+        display: none;
+      }
+
+      /* Mobile bottom sheet transformation */
+      #details-panel {
+        width: 100%;
+        height: 85vh;
+        right: 0 !important;
+        bottom: -85vh;
+        top: auto;
+        border-left: none;
+        border-top: 2px solid var(--yellow);
+        border-radius: 16px 16px 0 0;
+        transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      #details-panel.open {
+        bottom: 0;
+      }
+
+      .mobile-handle {
+        width: 40px;
+        height: 4px;
+        background: var(--border);
+        border-radius: 2px;
+        margin: 8px auto 0;
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Loading overlay -->
+  <div id="loading-overlay">
+    <div class="loader"></div>
+    <div style="color:var(--muted); font-size:14px;">Loading Version Dashboard...</div>
+  </div>
+
+  <!-- Google Sign-In Gate Overlay -->
+  <div id="login-overlay" style="display: none;">
+    <div class="login-card">
+      <div class="login-logo">Creation<span>Cue</span></div>
+      <div class="login-desc">
+        This is an administrator developer dashboard. Please sign in with your authorized Google Account.
+      </div>
+      <button class="google-btn" id="btn-google-login">
+        <div class="google-icon-wrapper">
+          <svg class="google-icon" viewBox="0 0 24 24">
+            <path fill="#EA4335" d="M12 5.04c1.67 0 3.17.58 4.35 1.71l3.25-3.25C17.65 1.58 15.02 1 12 1 7.37 1 3.42 3.66 1.5 7.55l3.9 3.03C6.33 7.66 8.95 5.04 12 5.04z" />
+            <path fill="#4285F4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.36H12v4.51h6.46c-.29 1.48-1.14 2.73-2.4 3.58l3.73 2.89c2.18-2.01 3.7-4.99 3.7-8.62z" />
+            <path fill="#FBBC05" d="M5.4 10.58c-.24-.73-.38-1.51-.38-2.33s.14-1.6.38-2.33L1.5 2.9C.54 4.83 0 7.02 0 9.33c0 2.31.54 4.5 1.5 6.43l3.9-3.18z" />
+            <path fill="#34A853" d="M12 23c3.24 0 5.97-1.07 7.96-2.91l-3.73-2.89c-1.03.69-2.36 1.1-3.96 1.1-3.05 0-5.67-2.62-6.6-5.59l-3.9 3.03C3.42 19.34 7.37 23 12 23z" />
+          </svg>
+        </div>
+        <span class="google-btn-text">Sign in with Google</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <a href="index.html" class="header-left">
+      <div class="header-title">Creation<span>Cue</span></div>
+    </a>
+    <div class="header-btns">
+      <a href="manage-coupons.html" class="header-btn">Coupons</a>
+      <a href="social-generator.html" class="header-btn">Socials</a>
+      <a href="month-planner.html" class="header-btn">Planner</a>
+      <a href="play-versions.html" class="header-btn active-btn">Versions</a>
+      <button onclick="handleLogout()" class="header-btn">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Body -->
+  <div class="main">
+    <!-- Stats Cards -->
+    <div class="stats-container">
+      <div class="stat-card">
+        <div class="stat-label">Total Watch Faces</div>
+        <div class="stat-value" id="stat-total">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Wear OS Version Range</div>
+        <div class="stat-value" id="stat-wear-range">N/A</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">API Configuration Errors</div>
+        <div class="stat-value" id="stat-errors" style="color: var(--yellow);">0</div>
+      </div>
+      <div class="stat-card" style="display: flex; flex-direction: column;">
+        <div class="stat-label">Last Dashboard Update</div>
+        <div class="stat-value" id="stat-scan-date" style="font-size: 16px; flex: 1;">N/A</div>
+        <div style="display: flex; gap: 6px; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; align-items: center; width: 100%;">
+          <button id="btn-cloud-update" class="cloud-update-btn">☁️ Update from Cloud</button>
+          <button id="btn-cloud-config" class="cloud-config-btn" title="Configure GitHub Integration">⚙️</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls Row -->
+    <div class="controls-row">
+      <div class="search-input-wrapper">
+        <input class="search-input" id="search-box" type="text" placeholder="Search by ID, Title, Package Name or Notes...">
+      </div>
+      <div class="filters-group">
+        <select class="filter-select" id="filter-notes">
+          <option value="all">All Notes Status</option>
+          <option value="has-notes">Has Notes</option>
+          <option value="no-notes">Needs Notes</option>
+        </select>
+        <select class="filter-select" id="filter-api">
+          <option value="all">All API Status</option>
+          <option value="ok">API Normal</option>
+          <option value="error">API Error</option>
+        </select>
+        <select class="filter-select" id="sort-order">
+          <option value="id-asc">Sort: ID (Asc)</option>
+          <option value="id-desc">Sort: ID (Desc)</option>
+          <option value="title-asc">Sort: Title (A-Z)</option>
+          <option value="wear-desc">Sort: Wear OS Version (Newest)</option>
+          <option value="date-desc">Sort: Update Date (Newest)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      <table class="versions-table">
+        <thead>
+          <tr>
+            <th>Watch Face</th>
+            <th>Package ID</th>
+            <th>Companion App</th>
+            <th>Wear OS App</th>
+            <th>Last Updated</th>
+            <th>Developer Notes</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- Dynamically filled -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Details Panel Sidebar / Mobile Bottom Sheet -->
+  <div id="details-backdrop" onclick="closeDetailsPanel()"></div>
+  <div id="details-panel">
+    <div class="mobile-handle"></div>
+    <div class="details-header">
+      <div class="details-header-title" id="details-title">Watch Face Details</div>
+      <button class="details-close-btn" onclick="closeDetailsPanel()" title="Close Details">✕</button>
+    </div>
+    <div class="details-body">
+      <!-- Mockup Preview -->
+      <div class="details-preview-container">
+        <img src="" alt="Watch Face Preview" class="details-preview-img" id="details-img">
+      </div>
+
+      <!-- Badges -->
+      <div class="details-badges-row" id="details-badges">
+        <!-- Filled dynamically -->
+      </div>
+
+      <!-- Info Grid (Versions & Date) -->
+      <div class="details-info-grid">
+        <div class="details-info-box">
+          <div class="details-info-label">Companion Version</div>
+          <div class="details-info-val" id="details-companion-ver">N/A</div>
+        </div>
+        <div class="details-info-box">
+          <div class="details-info-label">Wear OS Version</div>
+          <div class="details-info-val" id="details-wear-ver">N/A</div>
+        </div>
+        <div class="details-info-box" style="grid-column: span 2;">
+          <div class="details-info-label">Last Store Update</div>
+          <div class="details-info-val" id="details-store-date">N/A</div>
+        </div>
+      </div>
+
+      <!-- Package ID -->
+      <div class="details-section">
+        <div class="details-section-title">Package Name</div>
+        <div class="pkg-container" style="margin-top:0;">
+          <span class="pkg-name" id="details-pkg-name">com.creation.example</span>
+          <button class="copy-btn" id="details-pkg-copy" title="Copy Package Name">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- English Description -->
+      <div class="details-section" id="details-desc-en-section">
+        <div class="details-section-title">Description (English)</div>
+        <div class="details-desc-text" id="details-desc-en">No description available.</div>
+      </div>
+
+      <!-- German Description -->
+      <div class="details-section" id="details-desc-de-section">
+        <div class="details-section-title">Description (German)</div>
+        <div class="details-desc-text" id="details-desc-de">No description available.</div>
+      </div>
+
+      <!-- Developer Notes & Logs -->
+      <div class="details-section">
+        <div class="details-section-title">Developer Logs & Notes</div>
+        <textarea class="details-textarea" id="details-notes-textarea" placeholder="Add developer logs, milestones, or version remarks..."></textarea>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="details-section">
+        <div class="details-section-title" style="margin-bottom: 4px;">Quick Navigation</div>
+        <div class="details-actions-grid">
+          <a href="#" target="_blank" class="details-action-btn primary-btn" id="details-btn-store">Play Store</a>
+          <a href="#" class="details-action-btn" id="details-btn-socials">Socials</a>
+          <a href="#" class="details-action-btn" id="details-btn-planner">Planner</a>
+          <a href="#" class="details-action-btn" id="details-btn-coupons">Coupons</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GitHub Configuration Modal -->
+  <div id="github-modal" class="modal-overlay" style="display: none;">
+    <div class="github-modal-content">
+      <div class="github-modal-header">
+        <div class="github-modal-title">GitHub Integration Settings</div>
+        <button class="github-modal-close" onclick="closeGithubModal()">✕</button>
+      </div>
+      <div class="github-modal-body">
+        <p style="font-size: 11px; color: var(--muted); line-height: 1.4; margin-bottom: 8px;">
+          Enter your GitHub details to trigger automatic dashboard updates. This config is saved securely in your private Firebase database.
+        </p>
+        <div class="github-form-group">
+          <label class="github-form-label">GitHub Username/Repository</label>
+          <input type="text" id="gh-repo" class="github-form-input" placeholder="e.g., username/repo-name">
+        </div>
+        <div class="github-form-group">
+          <label class="github-form-label">Workflow Branch</label>
+          <input type="text" id="gh-branch" class="github-form-input" placeholder="e.g., main" value="main">
+        </div>
+        <div class="github-form-group">
+          <label class="github-form-label">GitHub Personal Access Token (PAT)</label>
+          <input type="password" id="gh-token" class="github-form-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxx">
+          <div style="font-size: 10px; color: var(--muted); margin-top: 4px;">
+            Required scopes: <strong>repo</strong> or <strong>actions:write</strong>.
+          </div>
+        </div>
+        <button id="btn-save-github" class="github-save-btn">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Firebase Config
+    var firebaseConfig = {
+      apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+      authDomain: "creation-cue-manage.firebaseapp.com",
+      databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "creation-cue-manage",
+      storageBucket: "creation-cue-manage.firebasestorage.app",
+      messagingSenderId: "186324516022",
+      appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.database();
+    var auth = firebase.auth();
+
+    // Data containers
+    var managerData = [];
+    var versionsData = {};
+    var notesData = {};
+    var combinedData = [];
+
+    // Auth state handler
+    auth.onAuthStateChanged(function (user) {
+      if (user && (user.email === 'sotsor@gmail.com' || user.uid === 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || user.uid === 'JKq9NWxPshRbCEXjV2eTUVV6A992')) {
+        document.getElementById('login-overlay').style.display = 'none';
+        initDashboard();
+      } else {
+        document.getElementById('login-overlay').style.display = 'flex';
+        document.getElementById('loading-overlay').style.display = 'none';
+        if (user) {
+          alert("Unauthorized account. Only the administrator can access this dashboard.");
+          auth.signOut();
+        }
+      }
+    });
+
+    document.getElementById('btn-google-login').addEventListener('click', () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider).catch(err => alert("Authentication failed: " + err.message));
+    });
+
+    function handleLogout() {
+      auth.signOut().then(() => {
+        window.location.reload();
+      });
+    }
+
+    async function initDashboard() {
+      try {
+        // Load manager.json
+        const managerRes = await fetch('manager.json?t=' + Date.now());
+        const managerJson = await managerRes.json();
+        managerData = managerJson.watch_faces || [];
+
+        // Load versions-data.json
+        try {
+          const versionsRes = await fetch('versions-data.json?t=' + Date.now());
+          const versionsResponse = await versionsRes.json();
+          
+          // Parse timestamp if available
+          if (versionsResponse.lastUpdated) {
+            window.lastScanDateStr = versionsResponse.lastUpdated;
+          }
+          
+          // Parse results list
+          const versionsList = versionsResponse.results || [];
+          versionsList.forEach(item => {
+            versionsData[item.packageName] = item;
+          });
+        } catch (e) {
+          console.warn("Could not load versions-data.json, showing local placeholders", e);
+        }
+
+        // Connect to Realtime Database to load Notes
+        db.ref('watch_face_notes').on('value', function(snapshot) {
+          notesData = snapshot.val() || {};
+          buildCombinedData();
+          renderDashboard();
+          document.getElementById('loading-overlay').style.display = 'none';
+        }, function(err) {
+          console.warn("Could not load notes from database (rules might block it):", err);
+          // Fall back to empty notes so the dashboard still loads!
+          notesData = {};
+          buildCombinedData();
+          renderDashboard();
+          document.getElementById('loading-overlay').style.display = 'none';
+
+          // Show a warning banner that notes are read-only until database rules are updated
+          if (!document.getElementById('db-rules-warning')) {
+            const warning = document.createElement('div');
+            warning.id = 'db-rules-warning';
+            warning.style.cssText = 'background: rgba(232, 40, 30, 0.15); border: 1px solid rgba(232, 40, 30, 0.3); color: #fff; padding: 12px; text-align: center; font-size: 13px; font-weight: 500; border-radius: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 16px;';
+            warning.innerHTML = `⚠️ <span>Database read permission denied for "watch_face_notes". Notes will not save until you update your Firebase Database rules to allow read/write access under this node. Dashboard loaded in read-only mode.</span>`;
+            document.querySelector('.main').prepend(warning);
+          }
+        });
+
+        // Load GitHub Config
+        loadGithubConfig();
+
+      } catch (err) {
+        console.error("Dashboard initialization error:", err);
+        document.getElementById('loading-overlay').innerHTML = `<div style="color:var(--red); font-weight:bold; padding:20px;">Failed to initialize: ${err.message}</div>`;
+      }
+    }
+
+    function getPackageName(urlStr) {
+      if (!urlStr) return null;
+      try {
+        let checkUrl = urlStr.trim();
+        if (checkUrl.startsWith('market://')) {
+          checkUrl = checkUrl.replace('market://', 'https://play.google.com/');
+        }
+        const parsed = new URL(checkUrl);
+        return parsed.searchParams.get('id');
+      } catch (e) {
+        const match = urlStr.match(/[?&]id=([^&]+)/);
+        return match ? match[1] : null;
+      }
+    }
+
+    function buildCombinedData() {
+      combinedData = managerData.map(wf => {
+        const packageName = getPackageName(wf.play_store_url) || '';
+        const playInfo = versionsData[packageName] || {};
+        
+        return {
+          id: wf.id || '',
+          title: wf.title || wf.id || 'Unknown',
+          imageUrl: wf.image_url || 'https://via.placeholder.com/150',
+          packageName: packageName,
+          companionVersion: playInfo.companionVersion || 'N/A',
+          wearVersion: playInfo.wearVersion || 'N/A',
+          lastUpdatedDate: playInfo.lastUpdatedDate || 'N/A',
+          note: notesData[wf.id] || ''
+        };
+      });
+    }
+
+    function renderDashboard() {
+      const searchVal = document.getElementById('search-box').value.toLowerCase().trim();
+      const notesFilter = document.getElementById('filter-notes').value;
+      const apiFilter = document.getElementById('filter-api').value;
+      const sortVal = document.getElementById('sort-order').value;
+
+      // Filter
+      let filtered = combinedData.filter(wf => {
+        // Search filter
+        const matchSearch = wf.id.toLowerCase().includes(searchVal) || 
+                            wf.title.toLowerCase().includes(searchVal) || 
+                            wf.packageName.toLowerCase().includes(searchVal) ||
+                            wf.note.toLowerCase().includes(searchVal);
+
+        // Notes filter
+        let matchNotes = true;
+        if (notesFilter === 'has-notes') matchNotes = wf.note !== '';
+        if (notesFilter === 'no-notes') matchNotes = wf.note === '';
+
+        // API filter
+        let matchApi = true;
+        const hasApiError = wf.wearVersion.includes('API Error') || wf.companionVersion.includes('API Error');
+        if (apiFilter === 'ok') matchApi = !hasApiError && wf.wearVersion !== 'N/A';
+        if (apiFilter === 'error') matchApi = hasApiError;
+
+        return matchSearch && matchNotes && matchApi;
+      });
+
+      // Sort
+      filtered.sort((a, b) => {
+        if (sortVal === 'id-asc') return a.id.localeCompare(b.id, undefined, { numeric: true, sensitivity: 'base' });
+        if (sortVal === 'id-desc') return b.id.localeCompare(a.id, undefined, { numeric: true, sensitivity: 'base' });
+        if (sortVal === 'title-asc') return a.title.localeCompare(b.title);
+        
+        if (sortVal === 'wear-desc') {
+          const vA = parseInt(a.wearVersion) || 0;
+          const vB = parseInt(b.wearVersion) || 0;
+          return vB - vA;
+        }
+        
+        if (sortVal === 'date-desc') {
+          const dA = new Date(a.lastUpdatedDate).getTime() || 0;
+          const dB = new Date(b.lastUpdatedDate).getTime() || 0;
+          return dB - dA;
+        }
+        return 0;
+      });
+
+      // Render stats
+      document.getElementById('stat-total').textContent = combinedData.length;
+      
+      // Calculate wear version ranges
+      const wearCodes = combinedData
+        .map(wf => parseInt(wf.wearVersion))
+        .filter(v => !isNaN(v) && v > 0);
+      if (wearCodes.length > 0) {
+        const minWear = Math.min(...wearCodes);
+        const maxWear = Math.max(...wearCodes);
+        document.getElementById('stat-wear-range').textContent = `${minWear} - ${maxWear}`;
+      } else {
+        document.getElementById('stat-wear-range').textContent = 'N/A';
+      }
+
+      // Count API errors
+      const errorCount = combinedData.filter(wf => 
+        wf.wearVersion.includes('API Error') || wf.companionVersion.includes('API Error')
+      ).length;
+      document.getElementById('stat-errors').textContent = errorCount;
+      document.getElementById('stat-errors').style.color = errorCount > 0 ? 'var(--red)' : 'var(--green)';
+
+      // Set last scan date and time
+      if (window.lastScanDateStr) {
+        const scanDate = new Date(window.lastScanDateStr);
+        if (!isNaN(scanDate.getTime())) {
+          document.getElementById('stat-scan-date').textContent = scanDate.toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric', 
+            year: 'numeric'
+          }) + ' ' + scanDate.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+        } else {
+          document.getElementById('stat-scan-date').textContent = 'N/A';
+        }
+      } else {
+        document.getElementById('stat-scan-date').textContent = 'N/A';
+      }
+
+      // Render table rows
+      const tbody = document.getElementById('table-body');
+      tbody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--muted); padding:30px;">No watch faces found matching criteria.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(wf => {
+        const tr = document.createElement('tr');
+        
+        // Row click opens the details panel
+        tr.addEventListener('click', (e) => {
+          if (e.target.tagName === 'TEXTAREA' || e.target.closest('.copy-btn') || e.target.tagName === 'A' || e.target.closest('a')) {
+            return;
+          }
+          openDetailsPanel(wf.id);
+        });
+        
+        const hasWearError = wf.wearVersion.includes('API Error');
+        const hasCompanionError = wf.companionVersion.includes('API Error');
+
+        const wearBadgeClass = hasWearError ? 'version-badge error' : (wf.wearVersion === 'N/A' ? 'version-badge error' : 'version-badge wear');
+        const companionBadgeClass = hasCompanionError ? 'version-badge error' : (wf.companionVersion === 'N/A' ? 'version-badge error' : 'version-badge companion');
+
+        const wearText = hasWearError ? 'Error' : wf.wearVersion;
+        const companionText = hasCompanionError ? 'Error' : wf.companionVersion;
+
+        tr.innerHTML = `
+          <td>
+            <div class="wf-thumb-wrapper">
+              <img class="wf-thumb" src="${wf.imageUrl}" alt="${wf.title}" onerror="this.src='https://via.placeholder.com/150'">
+              <div class="wf-details">
+                <span class="wf-title">${wf.title}</span>
+                <span class="wf-id">${wf.id}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="pkg-name-wrapper">
+              <span class="pkg-name">${wf.packageName ? wf.packageName : 'No package'}</span>
+              ${wf.packageName ? `
+                <button class="copy-btn" onclick="copyText('${wf.packageName}', this)" title="Copy Package Name">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+              ` : ''}
+            </div>
+          </td>
+          <td>
+            <span class="${companionBadgeClass}">${companionText}</span>
+          </td>
+          <td>
+            <span class="${wearBadgeClass}">${wearText}</span>
+          </td>
+          <td>
+            <span class="date-badge">${wf.lastUpdatedDate}</span>
+          </td>
+          <td class="note-cell">
+            <textarea class="note-textarea" data-wf-id="${wf.id}" onblur="saveNote('${wf.id}', this.value, this)" placeholder="Add developer logs or notes...">${wf.note}</textarea>
+            <div class="save-indicator">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Saved</span>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Copy to clipboard helper
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const origHtml = btn.innerHTML;
+        btn.innerHTML = `<span style="color:var(--green); font-size:10px; font-weight:bold;">Copied!</span>`;
+        setTimeout(() => { btn.innerHTML = origHtml; }, 1500);
+      });
+    }
+
+    // Save notes to Firebase Realtime Database
+    function saveNote(id, noteText, textarea) {
+      const cell = textarea.closest('.note-cell');
+      const indicator = cell.querySelector('.save-indicator');
+      
+      // Trim note
+      noteText = noteText.trim();
+      
+      // Update cache
+      notesData[id] = noteText;
+      combinedData.forEach(item => {
+        if (item.id === id) item.note = noteText;
+      });
+
+      // Show saving spinner
+      indicator.querySelector('span').textContent = 'Saving...';
+      indicator.querySelector('svg').style.display = 'none';
+      indicator.className = 'save-indicator saving';
+
+      db.ref('watch_face_notes/' + id).set(noteText)
+        .then(() => {
+          // Show saved animation
+          indicator.querySelector('span').textContent = 'Saved';
+          indicator.querySelector('svg').style.display = 'inline-block';
+          indicator.className = 'save-indicator saved';
+          setTimeout(() => {
+            indicator.className = 'save-indicator';
+          }, 1500);
+        })
+        .catch(err => {
+          console.error("Save error:", err);
+          indicator.querySelector('span').textContent = 'Failed';
+          indicator.className = 'save-indicator saving';
+          indicator.style.color = 'var(--red)';
+        });
+    }
+
+    var activeDetailsWfId = null;
+
+    function openDetailsPanel(id) {
+      const wf = combinedData.find(item => item.id === id);
+      if (!wf) return;
+
+      activeDetailsWfId = id;
+
+      // Find catalog info (from managerData)
+      const rawWf = managerData.find(item => item.id === id) || {};
+
+      // Fill basic details
+      document.getElementById('details-title').textContent = wf.title;
+      document.getElementById('details-img').src = wf.imageUrl;
+      document.getElementById('details-companion-ver').textContent = wf.companionVersion;
+      document.getElementById('details-wear-ver').textContent = wf.wearVersion;
+      document.getElementById('details-store-date').textContent = wf.lastUpdatedDate;
+      document.getElementById('details-pkg-name').textContent = wf.packageName || 'N/A';
+
+      // Setup copy button for package name
+      const copyBtn = document.getElementById('details-pkg-copy');
+      if (wf.packageName) {
+        copyBtn.style.display = 'inline-flex';
+        copyBtn.onclick = (e) => {
+          e.stopPropagation();
+          copyText(wf.packageName, copyBtn);
+        };
+      } else {
+        copyBtn.style.display = 'none';
+      }
+
+      // Badges
+      const badgeContainer = document.getElementById('details-badges');
+      badgeContainer.innerHTML = '';
+
+      // Add Category / type badges
+      if (rawWf.filters && Array.isArray(rawWf.filters)) {
+        rawWf.filters.forEach(filter => {
+          const b = document.createElement('span');
+          b.className = 'details-badge';
+          b.textContent = filter;
+          badgeContainer.appendChild(b);
+        });
+      }
+
+      // Add FREE / HOT badges
+      if (rawWf.is_free) {
+        const b = document.createElement('span');
+        b.className = 'details-badge free-badge';
+        b.textContent = 'FREE';
+        badgeContainer.appendChild(b);
+      }
+      if (rawWf.badge_text) {
+        const b = document.createElement('span');
+        b.className = 'details-badge primary-badge';
+        b.textContent = rawWf.badge_text;
+        badgeContainer.appendChild(b);
+      }
+
+      // Descriptions
+      const descEn = rawWf.description_en || 'No description available.';
+      const descDe = rawWf.description_de || 'No description available.';
+      document.getElementById('details-desc-en').textContent = descEn;
+      document.getElementById('details-desc-de').textContent = descDe;
+
+      // Sync Notes
+      const notesTextarea = document.getElementById('details-notes-textarea');
+      notesTextarea.value = wf.note;
+      
+      // Notes listener on change
+      notesTextarea.onblur = function() {
+        const noteVal = notesTextarea.value.trim();
+        
+        // Find corresponding textarea in main table and call saveNote
+        const mainTextarea = document.querySelector(`.note-textarea[data-wf-id="${id}"]`);
+        if (mainTextarea) {
+          mainTextarea.value = noteVal;
+          saveNote(id, noteVal, mainTextarea);
+        } else {
+          // If row is filtered out or doesn't exist, save directly to db
+          db.ref('watch_face_notes/' + id).set(noteVal).then(() => {
+            notesData[id] = noteVal;
+            combinedData.forEach(item => {
+              if (item.id === id) item.note = noteVal;
+            });
+          });
+        }
+      };
+
+      // Quick links
+      document.getElementById('details-btn-store').href = rawWf.play_store_url || '#';
+      document.getElementById('details-btn-socials').href = `social-generator.html?wf=${id}`;
+      document.getElementById('details-btn-planner').href = 'month-planner.html';
+      document.getElementById('details-btn-coupons').href = 'manage-coupons.html';
+
+      // Open drawer & backdrop
+      document.getElementById('details-panel').classList.add('open');
+      document.getElementById('details-backdrop').classList.add('open');
+    }
+
+    function closeDetailsPanel() {
+      activeDetailsWfId = null;
+      document.getElementById('details-panel').classList.remove('open');
+      document.getElementById('details-backdrop').classList.remove('open');
+    }
+
+    var githubConfig = null;
+    var checkIntervalId = null;
+
+    // Load GitHub Config from Database
+    function loadGithubConfig() {
+      db.ref('github_config').once('value').then(snapshot => {
+        githubConfig = snapshot.val();
+      }).catch(err => {
+        console.warn("Could not load github_config:", err);
+      });
+    }
+
+    function openGithubModal() {
+      if (githubConfig) {
+        document.getElementById('gh-repo').value = githubConfig.repo || '';
+        document.getElementById('gh-branch').value = githubConfig.branch || 'main';
+        document.getElementById('gh-token').value = githubConfig.token || '';
+      } else {
+        document.getElementById('gh-repo').value = '';
+        document.getElementById('gh-branch').value = 'main';
+        document.getElementById('gh-token').value = '';
+      }
+      document.getElementById('github-modal').style.display = 'flex';
+    }
+
+    function closeGithubModal() {
+      document.getElementById('github-modal').style.display = 'none';
+    }
+
+    // Save GitHub Config
+    document.getElementById('btn-save-github').addEventListener('click', () => {
+      const repo = document.getElementById('gh-repo').value.trim();
+      const branch = document.getElementById('gh-branch').value.trim() || 'main';
+      const token = document.getElementById('gh-token').value.trim();
+
+      if (!repo || !token) {
+        alert("Please enter both repository name and GitHub Personal Access Token.");
+        return;
+      }
+
+      const config = { repo, branch, token };
+      db.ref('github_config').set(config).then(() => {
+        githubConfig = config;
+        closeGithubModal();
+        alert("GitHub Integration Settings Saved successfully!");
+      }).catch(err => {
+        alert("Failed to save settings: " + err.message);
+      });
+    });
+
+    // Cloud Update Trigger
+    document.getElementById('btn-cloud-update').addEventListener('click', () => {
+      if (!githubConfig || !githubConfig.token || !githubConfig.repo) {
+        // If not configured, open config modal first
+        openGithubModal();
+        return;
+      }
+
+      // Check if already running
+      const btn = document.getElementById('btn-cloud-update');
+      if (btn.classList.contains('running')) return;
+
+      triggerGithubWorkflow();
+    });
+
+    document.getElementById('btn-cloud-config').addEventListener('click', openGithubModal);
+
+    function triggerGithubWorkflow() {
+      const btn = document.getElementById('btn-cloud-update');
+      btn.textContent = '☁️ Triggering...';
+      btn.className = 'cloud-update-btn running';
+
+      const [owner, repo] = githubConfig.repo.split('/');
+      if (!owner || !repo) {
+        btn.textContent = '☁️ Config Error';
+        btn.className = 'cloud-update-btn error';
+        alert("Invalid repository format. Must be 'owner/repository'. Click the gear to fix.");
+        return;
+      }
+
+      const url = `https://api.github.com/repos/${owner}/${repo}/actions/workflows/play-versions-update.yml/dispatches`;
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + githubConfig.token,
+          'Accept': 'application/vnd.github+json',
+          'X-GitHub-Api-Version': '2022-11-28',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ref: githubConfig.branch || 'main'
+        })
+      }).then(res => {
+        if (res.status === 204) {
+          // Triggered successfully! Start polling
+          btn.textContent = '☁️ Running... (0m)';
+          pollWorkflowStatus(owner, repo);
+        } else {
+          res.json().then(data => {
+            btn.textContent = '☁️ Failed';
+            btn.className = 'cloud-update-btn error';
+            alert("Failed to trigger update: " + (data.message || res.statusText));
+            setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = '☁️ Update from Cloud'; }, 4000);
+          }).catch(() => {
+            btn.textContent = '☁️ Failed';
+            btn.className = 'cloud-update-btn error';
+            alert("Failed to trigger update. HTTP Status: " + res.status);
+            setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = '☁️ Update from Cloud'; }, 4000);
+          });
+        }
+      }).catch(err => {
+        btn.textContent = '☁️ Failed';
+        btn.className = 'cloud-update-btn error';
+        alert("Connection error: " + err.message);
+        setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = '☁️ Update from Cloud'; }, 4000);
+      });
+    }
+
+    var pollStartTime = 0;
+    function pollWorkflowStatus(owner, repo) {
+      pollStartTime = Date.now();
+      if (checkIntervalId) clearInterval(checkIntervalId);
+
+      // Check status every 15 seconds
+      checkIntervalId = setInterval(() => {
+        const elapsedMins = Math.floor((Date.now() - pollStartTime) / 60000);
+        const elapsedSecs = Math.floor(((Date.now() - pollStartTime) % 60000) / 1000);
+        const btn = document.getElementById('btn-cloud-update');
+        btn.textContent = `☁️ Running... (${elapsedMins}m ${elapsedSecs}s)`;
+
+        // Query runs for play-versions-update.yml
+        const url = `https://api.github.com/repos/${owner}/${repo}/actions/runs?workflow_id=play-versions-update.yml&per_page=1`;
+        
+        fetch(url, {
+          headers: {
+            'Authorization': 'Bearer ' + githubConfig.token,
+            'Accept': 'application/vnd.github+json'
+          }
+        }).then(res => res.json()).then(data => {
+          if (data.workflow_runs && data.workflow_runs.length > 0) {
+            const latestRun = data.workflow_runs[0];
+            const runTime = new Date(latestRun.created_at).getTime();
+            
+            // Make sure the run started *after* we triggered it (allow 30s buffer)
+            if (runTime > pollStartTime - 30000) {
+              const status = latestRun.status; // queued, in_progress, completed
+              const conclusion = latestRun.conclusion; // success, failure, cancelled, skipped
+
+              if (status === 'completed') {
+                clearInterval(checkIntervalId);
+                if (conclusion === 'success') {
+                  btn.textContent = '☁️ Success!';
+                  btn.className = 'cloud-update-btn success';
+                  // Refresh versions-data.json after a 5s delay (allowing firebase release to finalize)
+                  setTimeout(() => {
+                    initDashboard();
+                    setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = '☁️ Update from Cloud'; }, 3000);
+                  }, 5000);
+                } else {
+                  btn.textContent = '☁️ Failed';
+                  btn.className = 'cloud-update-btn error';
+                  alert(`GitHub Actions run completed with status: ${conclusion || 'unknown'}`);
+                  setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = '☁️ Update from Cloud'; }, 5000);
+                }
+              }
+            }
+          }
+        }).catch(err => {
+          console.warn("Polling error:", err);
+        });
+
+        // Timeout polling after 5 minutes
+        if (Date.now() - pollStartTime > 300000) {
+          clearInterval(checkIntervalId);
+          btn.textContent = '☁️ Timeout';
+          btn.className = 'cloud-update-btn error';
+          alert("Update status check timed out. Please check your GitHub Actions tab manually.");
+          setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = '☁️ Update from Cloud'; }, 5000);
+        }
+
+      }, 15000);
+    }
+
+    // Event listeners
+    document.getElementById('search-box').addEventListener('input', renderDashboard);
+    document.getElementById('filter-notes').addEventListener('change', renderDashboard);
+    document.getElementById('filter-api').addEventListener('change', renderDashboard);
+    document.getElementById('sort-order').addEventListener('change', renderDashboard);
+
+  </script>
+</body>
+
+</html>
