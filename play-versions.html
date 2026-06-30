@@ -227,7 +227,7 @@
       border: 1px solid var(--border);
       border-radius: 4px;
       color: var(--text);
-      padding: 10px 14px;
+      padding: 10px 32px 10px 14px;
       font-size: 14px;
       outline: none;
       transition: border-color 0.15s;
@@ -235,6 +235,32 @@
 
     .search-input:focus {
       border-color: var(--yellow);
+    }
+
+    .search-clear-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 13px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      padding: 0;
+      line-height: 1;
+      transition: color 0.15s, background-color 0.15s;
+    }
+
+    .search-clear-btn:hover {
+      color: var(--text);
+      background-color: var(--border);
     }
 
     .filters-group {
@@ -257,6 +283,60 @@
 
     .filter-select:focus {
       border-color: var(--yellow);
+    }
+
+    .clear-all-btn {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 10px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .clear-all-btn:hover {
+      background: var(--border);
+      color: var(--yellow);
+      border-color: var(--muted);
+    }
+
+    .ai-btn {
+      background: rgba(245, 197, 24, 0.12);
+      border: 1px solid var(--yellow);
+      color: var(--yellow);
+      padding: 10px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.15s, color 0.15s, transform 0.15s;
+    }
+
+    .ai-btn:hover {
+      background: var(--yellow);
+      color: var(--black);
+      transform: translateY(-1px);
+    }
+
+    .ai-prompt-preview {
+      width: 100%;
+      height: 160px;
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      padding: 10px;
+      font-family: monospace;
+      font-size: 11px;
+      resize: none;
+      outline: none;
+      margin-top: 8px;
     }
 
     /* Table Styling */
@@ -387,6 +467,22 @@
     .date-badge {
       font-size: 13px;
       color: var(--text);
+    }
+
+    .sdk-warning-badge {
+      display: inline-block;
+      background: rgba(232, 40, 30, 0.15);
+      border: 1px solid rgba(232, 40, 30, 0.3);
+      color: #ef9a9a;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      vertical-align: middle;
+      cursor: help;
     }
 
     .note-textarea {
@@ -809,6 +905,154 @@
       background: #e5b615;
     }
 
+    /* Details properties grid */
+    .details-properties-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .property-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .property-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .property-value {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .property-link-wrapper {
+      display: flex;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .property-copy-input {
+      flex: 1;
+      background: var(--dark);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 4px;
+      font-size: 11px;
+      padding: 6px 8px;
+      outline: none;
+      font-family: monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .property-copy-btn, .property-open-btn {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.15s, color 0.15s;
+    }
+
+    .property-copy-btn:hover, .property-open-btn:hover {
+      background: var(--border);
+      color: var(--yellow);
+    }
+
+    /* Release status grid */
+    .details-release-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 480px) {
+      .details-release-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .release-track-box {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .track-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--yellow);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .track-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+    }
+
+    .track-label {
+      color: var(--muted);
+    }
+
+    .track-val {
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .track-notes-box {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 4px;
+      border-top: 1px dashed var(--border);
+      padding-top: 6px;
+    }
+
+    .track-notes-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .track-notes-content {
+      font-size: 11px;
+      color: var(--text);
+      line-height: 1.4;
+      background: rgba(255,255,255,0.02);
+      border-radius: 4px;
+      padding: 6px;
+      max-height: 80px;
+      overflow-y: auto;
+      font-style: italic;
+    }
+
     .cloud-update-btn {
       flex: 1;
       border: 1px solid var(--border);
@@ -1115,12 +1359,23 @@
     <div class="controls-row">
       <div class="search-input-wrapper">
         <input class="search-input" id="search-box" type="text" placeholder="Search by ID, Title, Package Name or Notes...">
+        <button id="search-clear-btn" class="search-clear-btn" title="Clear Search">✕</button>
       </div>
       <div class="filters-group">
         <select class="filter-select" id="filter-notes">
           <option value="all">All Notes Status</option>
           <option value="has-notes">Has Notes</option>
           <option value="no-notes">Needs Notes</option>
+        </select>
+        <select class="filter-select" id="filter-price">
+          <option value="all">All Pricing</option>
+          <option value="free">Free Watch Faces</option>
+          <option value="paid">Paid Watch Faces</option>
+        </select>
+        <select class="filter-select" id="filter-rollout">
+          <option value="all">All Rollout Status</option>
+          <option value="staged">Staged Rollouts (<100%)</option>
+          <option value="completed">Completed (100%)</option>
         </select>
         <select class="filter-select" id="filter-api">
           <option value="all">All API Status</option>
@@ -1134,6 +1389,8 @@
           <option value="wear-desc">Sort: Wear OS Version (Newest)</option>
           <option value="date-desc">Sort: Update Date (Newest)</option>
         </select>
+        <button id="btn-clear-all" class="clear-all-btn">Reset Filters</button>
+        <button id="btn-ai-query" class="ai-btn">💡 Ask AI</button>
       </div>
     </div>
 
@@ -1146,7 +1403,7 @@
             <th>Package ID</th>
             <th>Companion App</th>
             <th>Wear OS App</th>
-            <th>Last Updated</th>
+            <th>Last Store Update</th>
             <th>Developer Notes</th>
           </tr>
         </thead>
@@ -1221,14 +1478,64 @@
         <textarea class="details-textarea" id="details-notes-textarea" placeholder="Add developer logs, milestones, or version remarks..."></textarea>
       </div>
 
-      <!-- Action Buttons -->
+      <!-- Watch Face Properties Section -->
       <div class="details-section">
-        <div class="details-section-title" style="margin-bottom: 4px;">Quick Navigation</div>
-        <div class="details-actions-grid">
-          <a href="#" target="_blank" class="details-action-btn primary-btn" id="details-btn-store">Play Store</a>
-          <a href="#" class="details-action-btn" id="details-btn-socials">Socials</a>
-          <a href="#" class="details-action-btn" id="details-btn-planner">Planner</a>
-          <a href="#" class="details-action-btn" id="details-btn-coupons">Coupons</a>
+        <div class="details-section-title">Watch Face Catalog Properties</div>
+        <div class="details-properties-grid">
+          <div class="property-item">
+            <span class="property-label">Style Type:</span>
+            <span class="property-value" id="details-type">N/A</span>
+          </div>
+          <div class="property-item">
+            <span class="property-label">Pricing:</span>
+            <span class="property-value" id="details-pricing">N/A</span>
+          </div>
+          <div class="property-item" style="grid-column: span 2;">
+            <span class="property-label">Mockup Link:</span>
+            <div class="property-link-wrapper">
+              <input type="text" readonly id="details-mockup-url" class="property-copy-input">
+              <button onclick="copyToClipboard('details-mockup-url')" class="property-copy-btn">Copy</button>
+            </div>
+          </div>
+          <div class="property-item" style="grid-column: span 2;">
+            <span class="property-label">Web Store Link:</span>
+            <div class="property-link-wrapper">
+              <input type="text" readonly id="details-web-url" class="property-copy-input">
+              <a href="#" target="_blank" id="details-web-link" class="property-open-btn">Open</a>
+            </div>
+          </div>
+          <div class="property-item" style="grid-column: span 2;">
+            <span class="property-label">Market URL:</span>
+            <div class="property-link-wrapper">
+              <input type="text" readonly id="details-market-url" class="property-copy-input">
+              <button onclick="copyToClipboard('details-market-url')" class="property-copy-btn">Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cloud Release Status Section -->
+      <div class="details-section">
+        <div class="details-section-title">Cloud Release Status (Google Play)</div>
+        <div class="details-release-grid">
+          <div class="release-track-box">
+            <div class="track-title">Companion App</div>
+            <div class="track-row"><span class="track-label">Status:</span><span id="details-companion-status" class="track-val">N/A</span></div>
+            <div class="track-row"><span class="track-label">Rollout:</span><span id="details-companion-rollout" class="track-val">N/A</span></div>
+            <div class="track-notes-box">
+              <div class="track-notes-title">What's New:</div>
+              <div id="details-companion-notes" class="track-notes-content">N/A</div>
+            </div>
+          </div>
+          <div class="release-track-box">
+            <div class="track-title">Wear OS App</div>
+            <div class="track-row"><span class="track-label">Status:</span><span id="details-wear-status" class="track-val">N/A</span></div>
+            <div class="track-row"><span class="track-label">Rollout:</span><span id="details-wear-rollout" class="track-val">N/A</span></div>
+            <div class="track-notes-box">
+              <div class="track-notes-title">What's New:</div>
+              <div id="details-wear-notes" class="track-notes-content">N/A</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1263,8 +1570,6 @@
         <button id="btn-save-github" class="github-save-btn">Save Settings</button>
       </div>
     </div>
-  </div>
-
   <script>
     // Firebase Config
     var firebaseConfig = {
@@ -1399,8 +1704,15 @@
           imageUrl: wf.image_url || 'https://via.placeholder.com/150',
           packageName: packageName,
           companionVersion: playInfo.companionVersion || 'N/A',
+          companionStatus: playInfo.companionStatus || 'N/A',
+          companionRollout: playInfo.companionRollout || '100%',
+          companionNotes: playInfo.companionNotes || 'None',
           wearVersion: playInfo.wearVersion || 'N/A',
+          wearStatus: playInfo.wearStatus || 'N/A',
+          wearRollout: playInfo.wearRollout || '100%',
+          wearNotes: playInfo.wearNotes || 'None',
           lastUpdatedDate: playInfo.lastUpdatedDate || 'N/A',
+          isFree: wf.is_free || false,
           note: notesData[wf.id] || ''
         };
       });
@@ -1409,6 +1721,8 @@
     function renderDashboard() {
       const searchVal = document.getElementById('search-box').value.toLowerCase().trim();
       const notesFilter = document.getElementById('filter-notes').value;
+      const priceFilter = document.getElementById('filter-price').value;
+      const rolloutFilter = document.getElementById('filter-rollout').value;
       const apiFilter = document.getElementById('filter-api').value;
       const sortVal = document.getElementById('sort-order').value;
 
@@ -1425,13 +1739,30 @@
         if (notesFilter === 'has-notes') matchNotes = wf.note !== '';
         if (notesFilter === 'no-notes') matchNotes = wf.note === '';
 
+        // Price filter
+        let matchPrice = true;
+        if (priceFilter === 'free') matchPrice = wf.isFree === true;
+        if (priceFilter === 'paid') matchPrice = wf.isFree === false;
+
+        // Rollout filter
+        let matchRollout = true;
+        if (rolloutFilter === 'staged') {
+          const companionStaged = wf.companionRollout && wf.companionRollout !== '100%' && wf.companionRollout !== 'N/A';
+          const wearStaged = wf.wearRollout && wf.wearRollout !== '100%' && wf.wearRollout !== 'N/A';
+          matchRollout = companionStaged || wearStaged;
+        } else if (rolloutFilter === 'completed') {
+          const companionCompleted = wf.companionRollout === '100%' || wf.companionRollout === 'N/A';
+          const wearCompleted = wf.wearRollout === '100%' || wf.wearRollout === 'N/A';
+          matchRollout = companionCompleted && wearCompleted;
+        }
+
         // API filter
         let matchApi = true;
         const hasApiError = wf.wearVersion.includes('API Error') || wf.companionVersion.includes('API Error');
         if (apiFilter === 'ok') matchApi = !hasApiError && wf.wearVersion !== 'N/A';
         if (apiFilter === 'error') matchApi = hasApiError;
 
-        return matchSearch && matchNotes && matchApi;
+        return matchSearch && matchNotes && matchPrice && matchRollout && matchApi;
       });
 
       // Sort
@@ -1455,7 +1786,13 @@
       });
 
       // Render stats
-      document.getElementById('stat-total').textContent = combinedData.length;
+      const totalCount = combinedData.length;
+      const filteredCount = filtered.length;
+      if (filteredCount === totalCount) {
+        document.getElementById('stat-total').textContent = totalCount;
+      } else {
+        document.getElementById('stat-total').textContent = `${filteredCount} of ${totalCount}`;
+      }
       
       // Calculate wear version ranges
       const wearCodes = combinedData
@@ -1524,6 +1861,20 @@
         const wearText = hasWearError ? 'Error' : wf.wearVersion;
         const companionText = hasCompanionError ? 'Error' : wf.companionVersion;
 
+        // Calculate outdated status (Google Play Target SDK warning indicator)
+        let isOutdated = false;
+        if (wf.lastUpdatedDate && wf.lastUpdatedDate !== 'N/A' && wf.lastUpdatedDate !== 'Fetch Failed') {
+          const scanDate = new Date(wf.lastUpdatedDate);
+          if (!isNaN(scanDate.getTime())) {
+            const now = new Date();
+            const diffTime = Math.abs(now - scanDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            if (diffDays > 365) {
+              isOutdated = true;
+            }
+          }
+        }
+
         tr.innerHTML = `
           <td>
             <div class="wf-thumb-wrapper">
@@ -1551,7 +1902,10 @@
             <span class="${wearBadgeClass}">${wearText}</span>
           </td>
           <td>
-            <span class="date-badge">${wf.lastUpdatedDate}</span>
+            <div style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
+              <span class="date-badge">${wf.lastUpdatedDate}</span>
+              ${isOutdated ? `<span class="sdk-warning-badge" title="Has not been updated in over 1 year. Google Play Console may require a Target SDK update soon.">⚠️ Outdated</span>` : ''}
+            </div>
           </td>
           <td class="note-cell">
             <textarea class="note-textarea" data-wf-id="${wf.id}" onblur="saveNote('${wf.id}', this.value, this)" placeholder="Add developer logs or notes...">${wf.note}</textarea>
@@ -1700,11 +2054,32 @@
         }
       };
 
-      // Quick links
-      document.getElementById('details-btn-store').href = rawWf.play_store_url || '#';
-      document.getElementById('details-btn-socials').href = `social-generator.html?wf=${id}`;
-      document.getElementById('details-btn-planner').href = 'month-planner.html';
-      document.getElementById('details-btn-coupons').href = 'manage-coupons.html';
+      // Populate Watch Face Catalog Properties
+      document.getElementById('details-type').textContent = rawWf.type || 'N/A';
+      document.getElementById('details-pricing').textContent = rawWf.is_free ? 'Free' : 'Paid';
+      
+      const mockupUrl = rawWf.image_url || '';
+      document.getElementById('details-mockup-url').value = mockupUrl;
+      
+      const webUrl = wf.packageName ? `https://play.google.com/store/apps/details?id=${wf.packageName}` : '';
+      document.getElementById('details-web-url').value = webUrl;
+      document.getElementById('details-web-link').href = webUrl || '#';
+      if (webUrl) {
+        document.getElementById('details-web-link').style.display = 'inline-flex';
+      } else {
+        document.getElementById('details-web-link').style.display = 'none';
+      }
+      
+      document.getElementById('details-market-url').value = rawWf.play_store_url || '';
+
+      // Populate Cloud Release Status (Google Play)
+      document.getElementById('details-companion-status').textContent = wf.companionStatus || 'N/A';
+      document.getElementById('details-companion-rollout').textContent = wf.companionRollout || '100%';
+      document.getElementById('details-companion-notes').textContent = wf.companionNotes || 'None';
+
+      document.getElementById('details-wear-status').textContent = wf.wearStatus || 'N/A';
+      document.getElementById('details-wear-rollout').textContent = wf.wearRollout || '100%';
+      document.getElementById('details-wear-notes').textContent = wf.wearNotes || 'None';
 
       // Open drawer & backdrop
       document.getElementById('details-panel').classList.add('open');
@@ -1716,6 +2091,102 @@
       document.getElementById('details-panel').classList.remove('open');
       document.getElementById('details-backdrop').classList.remove('open');
     }
+
+    // Copy input field contents to clipboard helper
+    window.copyToClipboard = function(elementId) {
+      const input = document.getElementById(elementId);
+      if (!input || !input.value) return;
+      navigator.clipboard.writeText(input.value).then(() => {
+        // Temporary success message inside the button if possible, else alert
+        alert("Copied to clipboard: " + input.value);
+      });
+    };
+
+    // Compile AI analytical prompt from active catalog data
+    function compileAiPrompt() {
+      const totalCount = combinedData.length;
+      const searchVal = document.getElementById('search-box').value.trim();
+      const notesFilter = document.getElementById('filter-notes').value;
+      const priceFilter = document.getElementById('filter-price').value;
+      const rolloutFilter = document.getElementById('filter-rollout').value;
+      const apiFilter = document.getElementById('filter-api').value;
+
+      // Filter exactly like renderDashboard
+      let activeItems = combinedData.filter(wf => {
+        const matchSearch = !searchVal || wf.id.toLowerCase().includes(searchVal.toLowerCase()) || 
+                            wf.title.toLowerCase().includes(searchVal.toLowerCase()) || 
+                            wf.packageName.toLowerCase().includes(searchVal.toLowerCase()) ||
+                            wf.note.toLowerCase().includes(searchVal.toLowerCase());
+        
+        let matchNotes = true;
+        if (notesFilter === 'has-notes') matchNotes = wf.note !== '';
+        if (notesFilter === 'no-notes') matchNotes = wf.note === '';
+
+        let matchPrice = true;
+        if (priceFilter === 'free') matchPrice = wf.isFree === true;
+        if (priceFilter === 'paid') matchPrice = wf.isFree === false;
+
+        let matchRollout = true;
+        if (rolloutFilter === 'staged') {
+          const companionStaged = wf.companionRollout && wf.companionRollout !== '100%' && wf.companionRollout !== 'N/A';
+          const wearStaged = wf.wearRollout && wf.wearRollout !== '100%' && wf.wearRollout !== 'N/A';
+          matchRollout = companionStaged || wearStaged;
+        } else if (rolloutFilter === 'completed') {
+          const companionCompleted = wf.companionRollout === '100%' || wf.companionRollout === 'N/A';
+          const wearCompleted = wf.wearRollout === '100%' || wf.wearRollout === 'N/A';
+          matchRollout = companionCompleted && wearCompleted;
+        }
+
+        let matchApi = true;
+        const hasApiError = wf.wearVersion.includes('API Error') || wf.companionVersion.includes('API Error');
+        if (apiFilter === 'ok') matchApi = !hasApiError && wf.wearVersion !== 'N/A';
+        if (apiFilter === 'error') matchApi = hasApiError;
+
+        return matchSearch && matchNotes && matchPrice && matchRollout && matchApi;
+      });
+
+      const errorCount = activeItems.filter(wf => 
+        wf.wearVersion.includes('API Error') || wf.companionVersion.includes('API Error')
+      ).length;
+      
+      const stagedCount = activeItems.filter(wf => {
+        const companionStaged = wf.companionRollout && wf.companionRollout !== '100%' && wf.companionRollout !== 'N/A';
+        const wearStaged = wf.wearRollout && wf.wearRollout !== '100%' && wf.wearRollout !== 'N/A';
+        return companionStaged || wearStaged;
+      }).length;
+
+      let prompt = `Hi Antigravity! Please analyze my watch face catalog and give me a detailed release report. Here is my current dashboard data:\n\n`;
+      prompt += `### OVERALL DASHBOARD SUMMARY\n`;
+      prompt += `- Watch Faces Listed: ${activeItems.length} of ${totalCount}\n`;
+      prompt += `- Active Staged Rollouts: ${stagedCount}\n`;
+      prompt += `- API Sync Errors: ${errorCount}\n`;
+      prompt += `- Active Filters:\n`;
+      if (searchVal) prompt += `  * Search term: "${searchVal}"\n`;
+      if (notesFilter !== 'all') prompt += `  * Notes status: ${notesFilter}\n`;
+      if (priceFilter !== 'all') prompt += `  * Pricing: ${priceFilter}\n`;
+      if (rolloutFilter !== 'all') prompt += `  * Rollout status: ${rolloutFilter}\n`;
+      if (apiFilter !== 'all') prompt += `  * API status: ${apiFilter}\n`;
+      prompt += `\n`;
+      
+      prompt += `### ACTIVE WATCH FACE CATALOG DATA\n`;
+      prompt += `| ID | Title | Companion Ver | Companion Rollout | Wear OS Ver | Wear OS Rollout | Last Scrape Update | Notes |\n`;
+      prompt += `| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n`;
+      
+      activeItems.forEach(wf => {
+        const noteText = wf.note ? wf.note.replace(/\n/g, ' ') : 'None';
+        prompt += `| ${wf.id} | ${wf.title} | ${wf.companionVersion} | ${wf.companionRollout} (${wf.companionStatus}) | ${wf.wearVersion} | ${wf.wearRollout} (${wf.wearStatus}) | ${wf.lastUpdatedDate} | ${noteText} |\n`;
+      });
+      
+      prompt += `\n`;
+      prompt += `Please provide me with:\n`;
+      prompt += `1. An executive summary of my catalog version alignment and release health.\n`;
+      prompt += `2. Actionable recommendations on which specific watch faces need updates, bug fixes, or should have their staged rollouts promoted to 100%.\n`;
+      prompt += `3. Insights or categorizations on developer logs/milestones based on the notes I've written.`;
+
+      return prompt;
+    }
+
+
 
     var githubConfig = null;
     var checkIntervalId = null;
@@ -1902,10 +2373,65 @@
     }
 
     // Event listeners
-    document.getElementById('search-box').addEventListener('input', renderDashboard);
+    document.getElementById('filter-price').addEventListener('change', renderDashboard);
+    const searchBox = document.getElementById('search-box');
+    const searchClear = document.getElementById('search-clear-btn');
+
+    searchBox.addEventListener('input', () => {
+      searchClear.style.display = searchBox.value.length > 0 ? 'flex' : 'none';
+      renderDashboard();
+    });
+
+    searchClear.addEventListener('click', () => {
+      searchBox.value = '';
+      searchClear.style.display = 'none';
+      searchBox.focus();
+      renderDashboard();
+    });
+
     document.getElementById('filter-notes').addEventListener('change', renderDashboard);
+    document.getElementById('filter-rollout').addEventListener('change', renderDashboard);
     document.getElementById('filter-api').addEventListener('change', renderDashboard);
     document.getElementById('sort-order').addEventListener('change', renderDashboard);
+
+    document.getElementById('btn-clear-all').addEventListener('click', () => {
+      searchBox.value = '';
+      searchClear.style.display = 'none';
+      document.getElementById('filter-notes').value = 'all';
+      document.getElementById('filter-price').value = 'all';
+      document.getElementById('filter-rollout').value = 'all';
+      document.getElementById('filter-api').value = 'all';
+      document.getElementById('sort-order').value = 'id-asc';
+      renderDashboard();
+    });
+
+    document.getElementById('btn-ai-query').addEventListener('click', () => {
+      try {
+        const promptText = compileAiPrompt();
+        navigator.clipboard.writeText(promptText).then(() => {
+          const btn = document.getElementById('btn-ai-query');
+          const origHtml = btn.innerHTML;
+          btn.innerHTML = '✓ Copied! Opening Gemini...';
+          btn.style.background = '#81c784';
+          btn.style.color = '#141414';
+          btn.style.borderColor = '#81c784';
+          
+          // Open Gemini in a new tab
+          window.open('https://gemini.google.com/', '_blank');
+          
+          setTimeout(() => {
+            btn.innerHTML = origHtml;
+            btn.style.background = 'rgba(245, 197, 24, 0.12)';
+            btn.style.color = 'var(--yellow)';
+            btn.style.borderColor = 'var(--yellow)';
+          }, 3000);
+        }).catch(err => {
+          alert("Failed to copy prompt to clipboard: " + err.message);
+        });
+      } catch (err) {
+        alert("Failed to compile AI data: " + err.message);
+      }
+    });
 
   </script>
 </body>
