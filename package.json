@@ -1,0 +1,20 @@
+{
+  "name": "github-creation-cue-page",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "firebase-tools": "^15.22.3"
+  },
+  "dependencies": {
+    "axios": "^1.18.1",
+    "googleapis": "^173.0.0"
+  }
+}
