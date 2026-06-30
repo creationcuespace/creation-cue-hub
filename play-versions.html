@@ -1657,17 +1657,28 @@
 
         // Connect to Realtime Database to load Notes
         db.ref('watch_face_notes').on('value', function(snapshot) {
-          notesData = snapshot.val() || {};
-          buildCombinedData();
-          renderDashboard();
-          document.getElementById('loading-overlay').style.display = 'none';
+          try {
+            notesData = snapshot.val() || {};
+            buildCombinedData();
+            renderDashboard();
+          } catch (e) {
+            console.error("Error rendering dashboard:", e);
+          } finally {
+            const overlay = document.getElementById('loading-overlay');
+            if (overlay) overlay.style.display = 'none';
+          }
         }, function(err) {
           console.warn("Could not load notes from database (rules might block it):", err);
-          // Fall back to empty notes so the dashboard still loads!
-          notesData = {};
-          buildCombinedData();
-          renderDashboard();
-          document.getElementById('loading-overlay').style.display = 'none';
+          try {
+            notesData = {};
+            buildCombinedData();
+            renderDashboard();
+          } catch (e) {
+            console.error("Error rendering dashboard on error path:", e);
+          } finally {
+            const overlay = document.getElementById('loading-overlay');
+            if (overlay) overlay.style.display = 'none';
+          }
 
           // Show a warning banner that notes are read-only until database rules are updated
           if (!document.getElementById('db-rules-warning')) {
@@ -1675,7 +1686,8 @@
             warning.id = 'db-rules-warning';
             warning.style.cssText = 'background: rgba(232, 40, 30, 0.15); border: 1px solid rgba(232, 40, 30, 0.3); color: #fff; padding: 12px; text-align: center; font-size: 13px; font-weight: 500; border-radius: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 16px;';
             warning.innerHTML = `⚠️ <span>Database read permission denied for "watch_face_notes". Notes will not save until you update your Firebase Database rules to allow read/write access under this node. Dashboard loaded in read-only mode.</span>`;
-            document.querySelector('.main').prepend(warning);
+            const mainBody = document.querySelector('.main');
+            if (mainBody) mainBody.prepend(warning);
           }
         });
 
@@ -1729,12 +1741,23 @@
     }
 
     function renderDashboard() {
-      const searchVal = document.getElementById('search-box').value.toLowerCase().trim();
-      const notesFilter = document.getElementById('filter-notes').value;
-      const priceFilter = document.getElementById('filter-price').value;
-      const rolloutFilter = document.getElementById('filter-rollout').value;
-      const apiFilter = document.getElementById('filter-api').value;
-      const sortVal = document.getElementById('sort-order').value;
+      const searchBoxEl = document.getElementById('search-box');
+      const searchVal = searchBoxEl ? searchBoxEl.value.toLowerCase().trim() : '';
+
+      const notesFilterEl = document.getElementById('filter-notes');
+      const notesFilter = notesFilterEl ? notesFilterEl.value : 'all';
+
+      const priceFilterEl = document.getElementById('filter-price');
+      const priceFilter = priceFilterEl ? priceFilterEl.value : 'all';
+
+      const rolloutFilterEl = document.getElementById('filter-rollout');
+      const rolloutFilter = rolloutFilterEl ? rolloutFilterEl.value : 'all';
+
+      const apiFilterEl = document.getElementById('filter-api');
+      const apiFilter = apiFilterEl ? apiFilterEl.value : 'all';
+
+      const sortValEl = document.getElementById('sort-order');
+      const sortVal = sortValEl ? sortValEl.value : 'id-asc';
 
       // Filter
       let filtered = combinedData.filter(wf => {
@@ -1874,8 +1897,8 @@
           openDetailsPanel(wf.id);
         });
         
-        const hasWearError = wf.wearVersion.includes('API Error');
-        const hasCompanionError = wf.companionVersion.includes('API Error');
+        const hasWearError = String(wf.wearVersion || '').includes('API Error');
+        const hasCompanionError = String(wf.companionVersion || '').includes('API Error');
 
         const wearBadgeClass = hasWearError ? 'version-badge error' : (wf.wearVersion === 'N/A' ? 'version-badge error' : 'version-badge wear');
         const companionBadgeClass = hasCompanionError ? 'version-badge error' : (wf.companionVersion === 'N/A' ? 'version-badge error' : 'version-badge companion');
@@ -1883,7 +1906,7 @@
         const wearText = hasWearError ? 'Error' : wf.wearVersion;
         let companionText = hasCompanionError ? 'Error' : wf.companionVersion;
         if (!hasCompanionError && companionText !== 'N/A') {
-          const match = companionText.match(/\(([^)]+)\)/);
+          const match = String(companionText).match(/\(([^)]+)\)/);
           if (match) {
             companionText = `(${match[1]})`;
           }
@@ -2233,21 +2256,38 @@
 
     // Query GitHub REST API to see if the repo's play-versions.html matches CURRENT_PAGE_VERSION
     function checkGithubSyncStatus() {
+      console.log("[GitHub Sync] Starting check...");
       const banner = document.getElementById('github-sync-reminder');
-      if (!banner) return;
+      if (!banner) {
+        console.warn("[GitHub Sync] Banner element not found in DOM");
+        return;
+      }
 
-      if (!githubConfig || !githubConfig.repo || !githubConfig.token) {
-        // If not configured, hide the warning banner
+      if (!githubConfig) {
+        console.log("[GitHub Sync] No githubConfig found, hiding banner");
+        banner.style.display = 'none';
+        return;
+      }
+
+      if (!githubConfig.repo || !githubConfig.token) {
+        console.log("[GitHub Sync] GitHub repo or token missing in config, hiding banner");
         banner.style.display = 'none';
         return;
       }
 
       const parts = githubConfig.repo.split('/');
-      if (parts.length < 2) return;
+      if (parts.length < 2) {
+        console.warn("[GitHub Sync] Repo path must be in 'owner/repo' format. Got:", githubConfig.repo);
+        banner.style.display = 'none';
+        return;
+      }
+
       const owner = parts[0];
       const repo = parts[1];
       const branch = githubConfig.branch || 'main';
       const url = `https://api.github.com/repos/${owner}/${repo}/contents/play-versions.html?ref=${branch}`;
+
+      console.log("[GitHub Sync] Querying GitHub API at:", url);
 
       fetch(url, {
         headers: {
@@ -2256,24 +2296,42 @@
         }
       })
       .then(res => {
-        if (!res.ok) throw new Error("File not found or permission issue");
+        console.log("[GitHub Sync] HTTP Response Status:", res.status);
+        if (!res.ok) throw new Error("GitHub API responded with status " + res.status);
         return res.json();
       })
       .then(data => {
-        if (data.content) {
-          // Decode base64 contents
-          const githubHtml = decodeURIComponent(escape(atob(data.content.replace(/\s/g, ''))));
-          if (githubHtml.includes(`CURRENT_PAGE_VERSION = "${CURRENT_PAGE_VERSION}"`)) {
-            // Match found! Code on GitHub is fully up-to-date! Hide the warning banner!
-            banner.style.display = 'none';
-          } else {
-            // Out of sync! Show the warning banner!
-            banner.style.display = 'flex';
+        if (!data || !data.content) {
+          throw new Error("No file content returned from GitHub");
+        }
+
+        // Decode base64 contents safely
+        let githubHtml = '';
+        try {
+          const rawBin = atob(data.content.replace(/\s/g, ''));
+          githubHtml = decodeURIComponent(escape(rawBin));
+        } catch (e) {
+          console.warn("[GitHub Sync] UTF-8 Base64 decoding failed, trying direct text parse:", e);
+          try {
+            githubHtml = atob(data.content.replace(/\s/g, ''));
+          } catch (err2) {
+            throw new Error("Base64 decoding failed: " + err2.message);
           }
+        }
+
+        console.log("[GitHub Sync] File loaded successfully. Local Target Version:", CURRENT_PAGE_VERSION);
+        const searchPattern = `CURRENT_PAGE_VERSION = "${CURRENT_PAGE_VERSION}"`;
+
+        if (githubHtml.includes(searchPattern)) {
+          console.log("[GitHub Sync] Success! File on GitHub is in sync. Hiding banner.");
+          banner.style.display = 'none';
+        } else {
+          console.log("[GitHub Sync] Out of sync! File on GitHub is older/different. Showing banner.");
+          banner.style.display = 'flex';
         }
       })
       .catch(err => {
-        console.warn("Could not check sync status:", err);
+        console.error("[GitHub Sync] Sync status check failed:", err);
         // On error, default to showing the banner to be safe
         banner.style.display = 'flex';
       });
@@ -2451,66 +2509,86 @@
       }, 15000);
     }
 
-    // Event listeners
-    document.getElementById('filter-price').addEventListener('change', renderDashboard);
+    // Event listeners safely wrapped for cache protection
+    const filterPriceEl = document.getElementById('filter-price');
+    if (filterPriceEl) filterPriceEl.addEventListener('change', renderDashboard);
+
     const searchBox = document.getElementById('search-box');
     const searchClear = document.getElementById('search-clear-btn');
 
-    searchBox.addEventListener('input', () => {
-      searchClear.style.display = searchBox.value.length > 0 ? 'flex' : 'none';
-      renderDashboard();
-    });
+    if (searchBox) {
+      searchBox.addEventListener('input', () => {
+        if (searchClear) searchClear.style.display = searchBox.value.length > 0 ? 'flex' : 'none';
+        renderDashboard();
+      });
+    }
 
-    searchClear.addEventListener('click', () => {
-      searchBox.value = '';
-      searchClear.style.display = 'none';
-      searchBox.focus();
-      renderDashboard();
-    });
+    if (searchClear) {
+      searchClear.addEventListener('click', () => {
+        if (searchBox) {
+          searchBox.value = '';
+          searchBox.focus();
+        }
+        searchClear.style.display = 'none';
+        renderDashboard();
+      });
+    }
 
-    document.getElementById('filter-notes').addEventListener('change', renderDashboard);
-    document.getElementById('filter-rollout').addEventListener('change', renderDashboard);
-    document.getElementById('filter-api').addEventListener('change', renderDashboard);
-    document.getElementById('sort-order').addEventListener('change', renderDashboard);
+    const filterNotesEl = document.getElementById('filter-notes');
+    if (filterNotesEl) filterNotesEl.addEventListener('change', renderDashboard);
 
-    document.getElementById('btn-clear-all').addEventListener('click', () => {
-      searchBox.value = '';
-      searchClear.style.display = 'none';
-      document.getElementById('filter-notes').value = 'all';
-      document.getElementById('filter-price').value = 'all';
-      document.getElementById('filter-rollout').value = 'all';
-      document.getElementById('filter-api').value = 'all';
-      document.getElementById('sort-order').value = 'id-asc';
-      renderDashboard();
-    });
+    const filterRolloutEl = document.getElementById('filter-rollout');
+    if (filterRolloutEl) filterRolloutEl.addEventListener('change', renderDashboard);
 
-    document.getElementById('btn-ai-query').addEventListener('click', () => {
-      try {
-        const promptText = compileAiPrompt();
-        navigator.clipboard.writeText(promptText).then(() => {
-          const btn = document.getElementById('btn-ai-query');
-          const origHtml = btn.innerHTML;
-          btn.innerHTML = '✓ Copied! Opening Gemini...';
-          btn.style.background = '#81c784';
-          btn.style.color = '#141414';
-          btn.style.borderColor = '#81c784';
-          
-          // Open Gemini in a new tab
-          window.open('https://gemini.google.com/', '_blank');
-          
-          setTimeout(() => {
-            btn.innerHTML = origHtml;
-            btn.style.background = 'rgba(245, 197, 24, 0.12)';
-            btn.style.color = 'var(--yellow)';
-            btn.style.borderColor = 'var(--yellow)';
-          }, 3000);
-        }).catch(err => {
-          alert("Failed to copy prompt to clipboard: " + err.message);
-        });
-      } catch (err) {
-        alert("Failed to compile AI data: " + err.message);
-      }
-    });
+    const filterApiEl = document.getElementById('filter-api');
+    if (filterApiEl) filterApiEl.addEventListener('change', renderDashboard);
+
+    const sortOrderEl = document.getElementById('sort-order');
+    if (sortOrderEl) sortOrderEl.addEventListener('change', renderDashboard);
+
+    const btnClearAllEl = document.getElementById('btn-clear-all');
+    if (btnClearAllEl) {
+      btnClearAllEl.addEventListener('click', () => {
+        if (searchBox) searchBox.value = '';
+        if (searchClear) searchClear.style.display = 'none';
+        if (filterNotesEl) filterNotesEl.value = 'all';
+        if (filterPriceEl) filterPriceEl.value = 'all';
+        if (filterRolloutEl) filterRolloutEl.value = 'all';
+        if (filterApiEl) filterApiEl.value = 'all';
+        if (sortOrderEl) sortOrderEl.value = 'id-asc';
+        renderDashboard();
+      });
+    }
+
+    const btnAiQueryEl = document.getElementById('btn-ai-query');
+    if (btnAiQueryEl) {
+      btnAiQueryEl.addEventListener('click', () => {
+        try {
+          const promptText = compileAiPrompt();
+          navigator.clipboard.writeText(promptText).then(() => {
+            const origHtml = btnAiQueryEl.innerHTML;
+            btnAiQueryEl.innerHTML = '✓ Copied! Opening Gemini...';
+            btnAiQueryEl.style.background = '#81c784';
+            btnAiQueryEl.style.color = '#141414';
+            btnAiQueryEl.style.borderColor = '#81c784';
+            
+            // Open Gemini in a new tab
+            window.open('https://gemini.google.com/', '_blank');
+            
+            setTimeout(() => {
+              btnAiQueryEl.innerHTML = origHtml;
+              btnAiQueryEl.style.background = 'rgba(245, 197, 24, 0.12)';
+              btnAiQueryEl.style.color = 'var(--yellow)';
+              btnAiQueryEl.style.borderColor = 'var(--yellow)';
+            }, 3000);
+          }).catch(err => {
+            alert("Failed to copy prompt to clipboard: " + err.message);
+          });
+        } catch (err) {
+          alert("Failed to compile AI data: " + err.message);
+        }
+      });
+    }
 
   </script>
 </body>
