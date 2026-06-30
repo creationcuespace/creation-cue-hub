@@ -1,0 +1,52 @@
+name: Nightly Google Play Versions Update
+
+on:
+  schedule:
+    # Run every day at 3:00 AM UTC
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+    # Allow manual triggering
+
+permissions:
+  contents: write
+  deployments: write
+
+jobs:
+  update-versions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Create credentials file
+        run: |
+          echo '${{ secrets.PLAY_CREDENTIALS_JSON }}' > play-credentials.json
+
+      - name: Run version fetcher script
+        run: node fetch-play-versions.js
+
+      - name: Cleanup credentials file
+        run: rm -f play-credentials.json
+
+      - name: Commit and push versions data
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add versions-data.json
+          git diff-index --quiet HEAD || (git commit -m "chore: nightly version update [skip ci]" && git push)
+
+      - name: Deploy to Firebase Hosting
+        run: |
+          npx firebase-tools deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}"
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
