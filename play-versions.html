@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head><script>if(location.hostname.includes("firebaseapp.com")){location.replace(location.href.replace(location.hostname,"creation-cue-manage.web.app"));}</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://cdn.jsdelivr.net https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.jsdelivr.net https://creationcue.space https://via.placeholder.com https://wsrv.nl https://*.googleusercontent.com https://raw.githubusercontent.com https://*.githubusercontent.com https://api.qrserver.com; connect-src 'self' https://raw.githubusercontent.com wss://*.firebasedatabase.app wss://*.europe-west1.firebasedatabase.app https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.google.com/recaptcha/ https://ntfy.sh https://corsproxy.io https://api.allorigins.win https://www.gstatic.com https://api.github.com; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://*.firebaseapp.com https://accounts.google.com https://content-firebaseauth.googleapis.com https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://www.google.com/recaptcha/ https://recaptcha.net/;">
@@ -17,8 +17,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2310B981'/%3E%3Cstop offset='100%25' stop-color='%23059669'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='6' fill='url(%23grad)'/%3E%3Cpath d='M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9C19 9.55228 18.5523 10 18 10C17.4477 10 17 10.4477 17 11V13C17 13.5523 17.4477 14 18 14C18.5523 14 19 14.4477 19 15C19 15.5523 18.5523 16 18 16H6C5.44772 16 5 15.5523 5 15C5 14.4477 5.44772 14 6 14C6.55228 14 7 13.5523 7 13V11C7 10.4477 6.55228 10 6 10C5.44772 10 5 9.55228 5 9Z' fill='white'/%3E%3Cpath d='M10 11C10 11.5523 9.55228 12 9 12C8.44772 12 8 11.5523 8 11C8 10.4477 8.44772 10 9 10C9.55228 10 10 10.4477 10 11ZM16 13C16 13.5523 15.5523 14 15 14C14.4477 14 14 13.5523 14 13C14 12.4477 14.4477 12 15 12C15.5523 12 16 12.4477 16 13ZM15 10L9 14' stroke='%23059669' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <!-- Favicon (Purple/Indigo theme — unique to play-versions dashboard) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%237C3AED'/%3E%3Cstop offset='100%25' stop-color='%234F46E5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='5' fill='url(%23g)'/%3E%3Ccircle cx='12' cy='10' r='5' fill='none' stroke='white' stroke-width='1.5'/%3E%3Cpolygon points='10.5,8 10.5,12 14,10' fill='white'/%3E%3Crect x='5' y='17' width='4' height='1.5' rx='0.75' fill='rgba(255,255,255,0.6)'/%3E%3Crect x='10' y='17' width='5' height='1.5' rx='0.75' fill='rgba(255,255,255,0.6)'/%3E%3Crect x='16' y='17' width='3' height='1.5' rx='0.75' fill='rgba(255,255,255,0.6)'/%3E%3C/svg%3E">
 
   <style>
     :root {
@@ -361,13 +361,48 @@
     }
 
     .versions-table th {
-      background: rgba(255, 255, 255, 0.02);
+      background: var(--dark);
       font-family: 'Teko', sans-serif;
       font-size: 18px;
       font-weight: 500;
       letter-spacing: 1px;
       text-transform: uppercase;
       color: var(--yellow);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 1px 0 var(--border);
+      white-space: nowrap;
+    }
+
+    .sortable-th {
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.15s, background-color 0.15s;
+    }
+
+    .sortable-th:hover {
+      color: #fff;
+      background: rgba(124, 58, 237, 0.12);
+    }
+
+    .sortable-th.active-sort {
+      color: #fff;
+      background: rgba(124, 58, 237, 0.18);
+    }
+
+    .sort-indicator {
+      display: inline-block;
+      font-size: 11px;
+      margin-left: 4px;
+      opacity: 0.4;
+      vertical-align: middle;
+      transition: opacity 0.15s, color 0.15s;
+    }
+
+    .sortable-th.active-sort .sort-indicator {
+      opacity: 1;
+      color: #a78bfa;
     }
 
     .versions-table tbody tr {
@@ -1232,42 +1267,116 @@
 
     /* Mobile Responsive styling override */
     @media (max-width: 768px) {
+      body {
+        align-items: stretch;
+        padding-bottom: 60px;
+      }
+
       .header {
-        padding: 12px 10px;
+        padding: 10px 12px;
       }
+
+      .header-title {
+        font-size: 20px;
+      }
+
       .header-btns {
-        gap: 6px;
+        gap: 4px;
       }
+
       .header-btn {
-        font-size: 12px;
-        padding: 6px 8px;
+        font-size: 11px;
+        padding: 5px 7px;
+        letter-spacing: 0.5px;
       }
+
+      .main {
+        padding: 12px;
+        gap: 12px;
+      }
+
+      .stats-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .stat-card {
+        padding: 12px;
+      }
+
+      .stat-value {
+        font-size: 24px;
+      }
+
       .controls-row {
         flex-direction: column;
         align-items: stretch;
+        padding: 12px;
+        gap: 10px;
       }
+
       .search-input-wrapper {
         width: 100%;
         min-width: 0;
       }
+
       .filters-group {
-        flex-direction: column;
-        align-items: stretch;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
       }
+
+      .filter-select {
+        min-width: 0;
+        width: 100%;
+        font-size: 13px;
+        padding: 9px 10px;
+      }
+
+      .clear-all-btn, .ai-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Hide less important table columns on mobile */
       .versions-table th:nth-child(3), .versions-table td:nth-child(3), /* Package Name */
       .versions-table th:nth-child(6), .versions-table td:nth-child(6)  /* Date */ {
         display: none;
       }
 
+      /* Disable sticky headers on mobile */
+      .versions-table th {
+        position: static;
+        box-shadow: none;
+      }
+
+      .versions-table th, .versions-table td {
+        padding: 10px 10px;
+      }
+
+      .wf-thumb {
+        width: 36px;
+        height: 36px;
+      }
+
+      .wf-title {
+        font-size: 13px;
+      }
+
+      .version-badge {
+        font-size: 11px;
+        padding: 3px 6px;
+      }
+
       /* Mobile bottom sheet transformation */
       #details-panel {
         width: 100%;
-        height: 85vh;
+        height: 88vh;
         right: 0 !important;
-        bottom: -85vh;
+        bottom: -88vh;
         top: auto;
         border-left: none;
-        border-top: 2px solid var(--yellow);
+        border-top: 2px solid #7C3AED;
         border-radius: 16px 16px 0 0;
         transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
@@ -1284,6 +1393,27 @@
         border-radius: 2px;
         margin: 8px auto 0;
         display: block;
+      }
+    }
+
+    /* Extra small screens */
+    @media (max-width: 420px) {
+      .header-btn {
+        font-size: 10px;
+        padding: 4px 6px;
+      }
+
+      .stats-container {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .filters-group {
+        grid-template-columns: 1fr;
+      }
+
+      /* Only show name and companion/wear columns on very small screens */
+      .versions-table th:nth-child(5), .versions-table td:nth-child(5) /* Rollout */ {
+        display: none;
       }
     }
   </style>
@@ -1318,7 +1448,7 @@
   </div>
 
   <!-- Header -->
-  <header class="header">
+  <header class="header"><script>if(location.hostname.includes("firebaseapp.com")){location.replace(location.href.replace(location.hostname,"creation-cue-manage.web.app"));}</script>
     <a href="index.html" class="header-left">
       <div class="header-title">Creation<span>Cue</span></div>
     </a>
@@ -1390,15 +1520,6 @@
           <option value="ok">API Normal</option>
           <option value="error">API Error</option>
         </select>
-        <select class="filter-select" id="sort-order">
-          <option value="id-asc">Sort: ID (Asc)</option>
-          <option value="id-desc">Sort: ID (Desc)</option>
-          <option value="title-asc">Sort: Title (A-Z)</option>
-          <option value="companion-desc">Sort: Companion Version (Newest)</option>
-          <option value="wear-desc">Sort: Wear OS Version (Newest)</option>
-          <option value="date-desc">Sort: Last Store Update (Newest)</option>
-          <option value="date-asc">Sort: Last Store Update (Oldest)</option>
-        </select>
         <button id="btn-clear-all" class="clear-all-btn">Reset Filters</button>
         <button id="btn-ai-query" class="ai-btn">💡 Ask AI</button>
       </div>
@@ -1409,11 +1530,11 @@
       <table class="versions-table">
         <thead>
           <tr>
-            <th>Watch Face</th>
-            <th>Package ID</th>
-            <th>Companion App</th>
-            <th>Wear OS App</th>
-            <th>Last Store Update</th>
+            <th class="sortable-th" data-sort="title-asc" data-sort-asc="title-asc" data-sort-desc="title-desc" title="Click to sort by Watch Face name">Watch Face <span class="sort-indicator" id="sort-ind-title"></span></th>
+            <th class="sortable-th" data-sort="id-asc" data-sort-asc="id-asc" data-sort-desc="id-desc" title="Click to sort by ID">Package ID <span class="sort-indicator" id="sort-ind-id">▲</span></th>
+            <th class="sortable-th" data-sort="companion-desc" data-sort-asc="companion-asc" data-sort-desc="companion-desc" title="Click to sort by Companion App version">Companion App <span class="sort-indicator" id="sort-ind-companion"></span></th>
+            <th class="sortable-th" data-sort="wear-desc" data-sort-asc="wear-asc" data-sort-desc="wear-desc" title="Click to sort by Wear OS version">Wear OS App <span class="sort-indicator" id="sort-ind-wear"></span></th>
+            <th class="sortable-th" data-sort="date-desc" data-sort-asc="date-asc" data-sort-desc="date-desc" title="Click to sort by Last Store Update">Last Store Update <span class="sort-indicator" id="sort-ind-date"></span></th>
             <th>Developer Notes</th>
           </tr>
         </thead>
@@ -1756,8 +1877,7 @@
       const apiFilterEl = document.getElementById('filter-api');
       const apiFilter = apiFilterEl ? apiFilterEl.value : 'all';
 
-      const sortValEl = document.getElementById('sort-order');
-      const sortVal = sortValEl ? sortValEl.value : 'id-asc';
+      const sortVal = window.currentSort || 'id-asc';
 
       // Filter
       let filtered = combinedData.filter(wf => {
@@ -1803,17 +1923,28 @@
         if (sortVal === 'id-asc') return a.id.localeCompare(b.id, undefined, { numeric: true, sensitivity: 'base' });
         if (sortVal === 'id-desc') return b.id.localeCompare(a.id, undefined, { numeric: true, sensitivity: 'base' });
         if (sortVal === 'title-asc') return a.title.localeCompare(b.title);
+        if (sortVal === 'title-desc') return b.title.localeCompare(a.title);
         
         if (sortVal === 'companion-desc') {
           const vA = parseInt(a.companionVersion) || 0;
           const vB = parseInt(b.companionVersion) || 0;
           return vB - vA;
         }
+        if (sortVal === 'companion-asc') {
+          const vA = parseInt(a.companionVersion) || 0;
+          const vB = parseInt(b.companionVersion) || 0;
+          return vA - vB;
+        }
 
         if (sortVal === 'wear-desc') {
           const vA = parseInt(a.wearVersion) || 0;
           const vB = parseInt(b.wearVersion) || 0;
           return vB - vA;
+        }
+        if (sortVal === 'wear-asc') {
+          const vA = parseInt(a.wearVersion) || 0;
+          const vB = parseInt(b.wearVersion) || 0;
+          return vA - vB;
         }
         
         if (sortVal === 'date-desc') {
@@ -2242,7 +2373,7 @@
     var githubConfig = null;
     var checkIntervalId = null;
 
-    const CURRENT_PAGE_VERSION = "1.0.7";
+    const CURRENT_PAGE_VERSION = "1.0.8";
 
     // Load GitHub Config from Database
     function loadGithubConfig() {
@@ -2543,8 +2674,45 @@
     const filterApiEl = document.getElementById('filter-api');
     if (filterApiEl) filterApiEl.addEventListener('change', renderDashboard);
 
-    const sortOrderEl = document.getElementById('sort-order');
-    if (sortOrderEl) sortOrderEl.addEventListener('change', renderDashboard);
+    // Header column sort — state variable tracks current sort
+    window.currentSort = 'id-asc';
+
+    function updateSortIndicators(activeSort) {
+      const cols = [
+        { id: 'sort-ind-title',     asc: 'title-asc',     desc: 'title-desc',     thSort: 'title-asc' },
+        { id: 'sort-ind-id',        asc: 'id-asc',        desc: 'id-desc',        thSort: 'id-asc' },
+        { id: 'sort-ind-companion', asc: 'companion-asc', desc: 'companion-desc', thSort: 'companion-desc' },
+        { id: 'sort-ind-wear',      asc: 'wear-asc',      desc: 'wear-desc',      thSort: 'wear-desc' },
+        { id: 'sort-ind-date',      asc: 'date-asc',      desc: 'date-desc',      thSort: 'date-desc' },
+      ];
+      cols.forEach(col => {
+        const ind = document.getElementById(col.id);
+        const th = ind ? ind.closest('th') : null;
+        if (!ind || !th) return;
+        const isActive = activeSort === col.asc || activeSort === col.desc;
+        th.classList.toggle('active-sort', isActive);
+        if (!isActive) { ind.textContent = '▲'; ind.style.opacity = '0.2'; return; }
+        ind.textContent = activeSort === col.asc ? '▲' : '▼';
+        ind.style.opacity = '';
+      });
+    }
+
+    document.querySelectorAll('.sortable-th').forEach(th => {
+      th.addEventListener('click', () => {
+        const ascVal  = th.dataset.sortAsc;
+        const descVal = th.dataset.sortDesc;
+        // Toggle: if already on this column flip direction, else default to desc
+        if (window.currentSort === descVal) {
+          window.currentSort = ascVal;
+        } else {
+          window.currentSort = descVal;
+        }
+        updateSortIndicators(window.currentSort);
+        renderDashboard();
+      });
+    });
+
+    updateSortIndicators(window.currentSort);
 
     const btnClearAllEl = document.getElementById('btn-clear-all');
     if (btnClearAllEl) {
@@ -2555,7 +2723,8 @@
         if (filterPriceEl) filterPriceEl.value = 'all';
         if (filterRolloutEl) filterRolloutEl.value = 'all';
         if (filterApiEl) filterApiEl.value = 'all';
-        if (sortOrderEl) sortOrderEl.value = 'id-asc';
+        window.currentSort = 'id-asc';
+        updateSortIndicators(window.currentSort);
         renderDashboard();
       });
     }
