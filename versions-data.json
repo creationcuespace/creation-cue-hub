@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-30T08:03:45.207Z",
+  "lastUpdated": "2026-07-01T04:49:07.359Z",
   "results": [
     {
       "id": "cue003",
@@ -701,9 +701,9 @@
       "id": "crc069",
       "title": "CRC069",
       "packageName": "com.creationcue.crc069watchface",
-      "companionVersion": "14 (5.0.1)",
+      "companionVersion": "18 (6.0.0)",
       "wearVersion": "10000007 (2.0.0)",
-      "lastUpdatedDate": "Mar 19, 2026"
+      "lastUpdatedDate": "Jun 30, 2026"
     },
     {
       "id": "crc068",
