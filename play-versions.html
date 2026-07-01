@@ -413,6 +413,206 @@
       background: rgba(255, 255, 255, 0.03);
     }
 
+    .versions-table tbody tr.row-selected td {
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .versions-table tbody tr.row-selected:hover td {
+      background: rgba(124, 58, 237, 0.14);
+    }
+
+    /* Floating selection toolbar */
+    #selection-toolbar {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #1e1b2e;
+      border: 1px solid rgba(124, 58, 237, 0.5);
+      border-radius: 999px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      z-index: 9000;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s;
+      opacity: 0;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    #selection-toolbar.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .toolbar-count {
+      font-size: 13px;
+      font-weight: 700;
+      color: #a78bfa;
+    }
+
+    .toolbar-divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(124,58,237,0.35);
+    }
+
+    .toolbar-btn-create {
+      background: linear-gradient(135deg, #7C3AED, #4F46E5);
+      border: none;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      transition: opacity 0.15s;
+    }
+
+    .toolbar-btn-create:hover { opacity: 0.85; }
+
+    .toolbar-btn-clear {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 4px;
+      transition: color 0.15s;
+    }
+
+    .toolbar-btn-clear:hover { color: var(--text); }
+
+    /* Task creation modal */
+    #task-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 10100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    #task-modal {
+      background: #1a1a2e;
+      border: 1px solid rgba(124,58,237,0.4);
+      border-top: 3px solid #7C3AED;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 440px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    .task-modal-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: #a78bfa;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .task-modal-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .task-modal-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+    }
+
+    .task-modal-select, .task-modal-input, .task-modal-date {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--text);
+      font-size: 13px;
+      padding: 9px 12px;
+      outline: none;
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+
+    .task-modal-select:focus, .task-modal-input:focus, .task-modal-date:focus {
+      border-color: #7C3AED;
+    }
+
+    .task-modal-priority-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .priority-pill {
+      flex: 1;
+      text-align: center;
+      padding: 7px 4px;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+      background: var(--mid);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 0.5px;
+    }
+
+    .priority-pill.active-low  { background: rgba(52,211,153,0.15); border-color: #34D399; color: #34D399; }
+    .priority-pill.active-medium { background: rgba(245,197,24,0.15); border-color: var(--yellow); color: var(--yellow); }
+    .priority-pill.active-high { background: rgba(239,68,68,0.15); border-color: #EF4444; color: #EF4444; }
+
+    .task-modal-footer {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .task-modal-btn-confirm {
+      flex: 1;
+      background: linear-gradient(135deg, #7C3AED, #4F46E5);
+      border: none;
+      color: #fff;
+      font-family: 'Teko', sans-serif;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .task-modal-btn-confirm:hover { opacity: 0.85; }
+
+    .task-modal-btn-cancel {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .task-modal-btn-cancel:hover { color: var(--text); }
+
     .wf-thumb-wrapper {
       display: flex;
       align-items: center;
@@ -1530,6 +1730,9 @@
       <table class="versions-table">
         <thead>
           <tr>
+            <th id="th-select" style="width:36px; padding: 12px 8px; text-align:center;">
+              <input type="checkbox" id="select-all-cb" title="Select / Deselect all visible" style="width:15px;height:15px;accent-color:#7C3AED;cursor:pointer;">
+            </th>
             <th class="sortable-th" data-sort="title-asc" data-sort-asc="title-asc" data-sort-desc="title-desc" title="Click to sort by Watch Face name">Watch Face <span class="sort-indicator" id="sort-ind-title"></span></th>
             <th class="sortable-th" data-sort="id-asc" data-sort-asc="id-asc" data-sort-desc="id-desc" title="Click to sort by ID">Package ID <span class="sort-indicator" id="sort-ind-id">▲</span></th>
             <th class="sortable-th" data-sort="companion-desc" data-sort-asc="companion-asc" data-sort-desc="companion-desc" title="Click to sort by Companion App version">Companion App <span class="sort-indicator" id="sort-ind-companion"></span></th>
@@ -1669,10 +1872,100 @@
           </div>
         </div>
       </div>
+
+      <!-- Quick Open in Other Tools -->
+      <div class="details-section">
+        <div class="details-section-title">Quick Open in Other Tools</div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;">
+          <a id="details-open-coupons" href="#" target="_blank"
+            style="flex:1; min-width:120px; display:flex; align-items:center; justify-content:center; gap:6px;
+                   background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.35);
+                   color: #a78bfa; font-size:12px; font-weight:600; padding:9px 12px;
+                   border-radius:6px; text-decoration:none; transition: background 0.15s, border-color 0.15s;
+                   letter-spacing:0.3px;"
+            onmouseover="this.style.background='rgba(124,58,237,0.22)';this.style.borderColor='rgba(124,58,237,0.6)'"
+            onmouseout="this.style.background='rgba(124,58,237,0.12)';this.style.borderColor='rgba(124,58,237,0.35)'">
+            🎟️ Open in Coupons
+          </a>
+          <a id="details-open-social" href="#" target="_blank"
+            style="flex:1; min-width:120px; display:flex; align-items:center; justify-content:center; gap:6px;
+                   background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.25);
+                   color: var(--yellow); font-size:12px; font-weight:600; padding:9px 12px;
+                   border-radius:6px; text-decoration:none; transition: background 0.15s, border-color 0.15s;
+                   letter-spacing:0.3px;"
+            onmouseover="this.style.background='rgba(245,197,24,0.16)';this.style.borderColor='rgba(245,197,24,0.5)'"
+            onmouseout="this.style.background='rgba(245,197,24,0.08)';this.style.borderColor='rgba(245,197,24,0.25)'">
+            📣 Open in Socials
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating selection toolbar -->
+  <div id="selection-toolbar">
+    <span class="toolbar-count" id="toolbar-count">0 selected</span>
+    <div class="toolbar-divider"></div>
+    <button class="toolbar-btn-create" onclick="openTaskModal()">📅 Create Planner Tasks</button>
+    <button class="toolbar-btn-clear" onclick="clearSelection()" title="Clear selection">✕</button>
+  </div>
+
+  <!-- Task creation modal -->
+  <div id="task-modal-overlay" style="display:none;">
+    <div id="task-modal">
+      <div class="task-modal-title" id="task-modal-heading">Create Tasks</div>
+
+      <div class="task-modal-field">
+        <div class="task-modal-label">Task Title Template</div>
+        <select class="task-modal-select" id="task-template-select" onchange="onTemplateChange()">
+          <option value="combined">Update [ID] (companion + Wear OS)</option>
+          <option value="companion">Update [ID] — companion app</option>
+          <option value="wear">Update [ID] — Wear OS app</option>
+          <option value="review">Review [ID] versions</option>
+          <option value="custom">✏️ Custom prefix...</option>
+        </select>
+      </div>
+
+      <div class="task-modal-field" id="task-custom-field" style="display:none;">
+        <div class="task-modal-label">Custom Title (use [ID] or [TITLE] as placeholder)</div>
+        <input type="text" class="task-modal-input" id="task-custom-input" placeholder="e.g. Submit [ID] to review">
+      </div>
+
+      <div class="task-modal-field">
+        <div class="task-modal-label">Preview (first selected face)</div>
+        <div id="task-preview" style="font-size:12px; color:var(--muted); background:var(--dark); border:1px solid var(--border); border-radius:5px; padding:8px 12px; font-style:italic;">—</div>
+      </div>
+
+      <div class="task-modal-field">
+        <div class="task-modal-label">Start Date</div>
+        <input type="date" class="task-modal-date" id="task-start-date">
+      </div>
+
+      <div class="task-modal-field">
+        <div class="task-modal-label">Priority</div>
+        <div class="task-modal-priority-row">
+          <button class="priority-pill" id="pill-low" onclick="setPriority('low')">LOW</button>
+          <button class="priority-pill active-medium" id="pill-medium" onclick="setPriority('medium')">MEDIUM</button>
+          <button class="priority-pill" id="pill-high" onclick="setPriority('high')">HIGH</button>
+        </div>
+      </div>
+
+      <div class="task-modal-field" id="spread-field" style="display:none;">
+        <div class="task-modal-label">Spread tasks across days</div>
+        <label style="display:flex;align-items:center;gap:6px;">
+          <input type="checkbox" id="spread-toggle" />
+          <span>2 tasks per day (like the Planner)</span>
+        </label>
+      </div>
+      <div class="task-modal-footer">
+        <button class="task-modal-btn-confirm" id="task-confirm-btn" onclick="confirmCreateTasks()">Create Tasks</button>
+        <button class="task-modal-btn-cancel" onclick="closeTaskModal()">Cancel</button>
+      </div>
     </div>
   </div>
 
   <!-- GitHub Configuration Modal -->
+
   <div id="github-modal" class="modal-overlay" style="display: none;">
     <div class="github-modal-content">
       <div class="github-modal-header">
@@ -1717,6 +2010,7 @@
     firebase.initializeApp(firebaseConfig);
     var db = firebase.database();
     var auth = firebase.auth();
+    var currentUser = null;
 
     // Data containers
     var managerData = [];
@@ -1727,6 +2021,7 @@
     // Auth state handler
     auth.onAuthStateChanged(function (user) {
       if (user && (user.email === 'sotsor@gmail.com' || user.uid === 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || user.uid === 'JKq9NWxPshRbCEXjV2eTUVV6A992')) {
+        currentUser = user;
         document.getElementById('login-overlay').style.display = 'none';
         initDashboard();
       } else {
@@ -2013,16 +2308,42 @@
       tbody.innerHTML = '';
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--muted); padding:30px;">No watch faces found matching criteria.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--muted); padding:30px;">No watch faces found matching criteria.</td></tr>`;
         return;
       }
 
+      // Update select-all checkbox state based on current selection
+      const selectAllCb = document.getElementById('select-all-cb');
+      if (selectAllCb) {
+        selectAllCb.checked = false;
+        selectAllCb.indeterminate = false;
+      }
+
+      // Ensure toolbar reflects current selection after rendering rows
+      updateSelectionToolbar();
       filtered.forEach(wf => {
         const tr = document.createElement('tr');
+        if (selectedFaceIds.has(wf.id)) tr.classList.add('row-selected');
         
+        // Checkbox cell
+        const cbTd = document.createElement('td');
+        cbTd.style.cssText = 'width:36px; padding:12px 8px; text-align:center; vertical-align:middle;';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.style.cssText = 'width:15px;height:15px;accent-color:#7C3AED;cursor:pointer;';
+        cb.checked = selectedFaceIds.has(wf.id);
+        cb.addEventListener('change', (e) => {
+          e.stopPropagation();
+          if (cb.checked) { selectedFaceIds.add(wf.id); tr.classList.add('row-selected'); }
+          else { selectedFaceIds.delete(wf.id); tr.classList.remove('row-selected'); }
+          updateSelectionToolbar();
+        });
+        cbTd.appendChild(cb);
+        tr.appendChild(cbTd);
+
         // Row click opens the details panel
         tr.addEventListener('click', (e) => {
-          if (e.target.tagName === 'TEXTAREA' || e.target.closest('.copy-btn') || e.target.tagName === 'A' || e.target.closest('a')) {
+          if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.closest('.copy-btn') || e.target.tagName === 'A' || e.target.closest('a')) {
             return;
           }
           openDetailsPanel(wf.id);
@@ -2035,13 +2356,8 @@
         const companionBadgeClass = hasCompanionError ? 'version-badge error' : (wf.companionVersion === 'N/A' ? 'version-badge error' : 'version-badge companion');
 
         const wearText = hasWearError ? 'Error' : wf.wearVersion;
-        let companionText = hasCompanionError ? 'Error' : wf.companionVersion;
-        if (!hasCompanionError && companionText !== 'N/A') {
-          const match = String(companionText).match(/\(([^)]+)\)/);
-          if (match) {
-            companionText = `(${match[1]})`;
-          }
-        }
+        // Show full companion version number (e.g. "2.6.0.6 (3.1)")
+        let companionText = hasCompanionError ? 'Error' : (wf.companionVersion || 'N/A');
 
         // Calculate outdated status (Google Play Target SDK warning indicator)
         let isOutdated = false;
@@ -2057,7 +2373,7 @@
           }
         }
 
-        tr.innerHTML = `
+        const contentHtml = `
           <td>
             <div class="wf-thumb-wrapper">
               <img class="wf-thumb" src="${wf.imageUrl}" alt="${wf.title}" onerror="this.src='https://via.placeholder.com/150'">
@@ -2077,16 +2393,12 @@
               ` : ''}
             </div>
           </td>
-          <td>
-            <span class="${companionBadgeClass}">${companionText}</span>
-          </td>
-          <td>
-            <span class="${wearBadgeClass}">${wearText}</span>
-          </td>
+          <td><span class="${companionBadgeClass}">${companionText}</span></td>
+          <td><span class="${wearBadgeClass}">${wearText}</span></td>
           <td>
             <div style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
               <span class="date-badge">${wf.lastUpdatedDate}</span>
-              ${isOutdated ? `<span class="sdk-warning-badge" title="Has not been updated in over 1 year. Google Play Console may require a Target SDK update soon.">⚠️ Outdated</span>` : ''}
+              ${isOutdated ? `<span class="sdk-warning-badge" title="Has not been updated in over 1 year.">⚠️ Outdated</span>` : ''}
             </div>
           </td>
           <td class="note-cell">
@@ -2097,8 +2409,27 @@
             </div>
           </td>
         `;
+        tr.insertAdjacentHTML('beforeend', contentHtml);
         tbody.appendChild(tr);
       });
+
+      // Wire up select-all checkbox
+      if (selectAllCb) {
+        const visibleIds = filtered.map(w => w.id);
+        const allSelected = visibleIds.length > 0 && visibleIds.every(id => selectedFaceIds.has(id));
+        const someSelected = visibleIds.some(id => selectedFaceIds.has(id));
+        selectAllCb.checked = allSelected;
+        selectAllCb.indeterminate = !allSelected && someSelected;
+
+        selectAllCb.onchange = () => {
+          if (selectAllCb.checked) {
+            visibleIds.forEach(id => selectedFaceIds.add(id));
+          } else {
+            visibleIds.forEach(id => selectedFaceIds.delete(id));
+          }
+          renderDashboard(); // re-render to update row highlights + toolbar
+        };
+      }
     }
 
     // Copy to clipboard helper
@@ -2253,6 +2584,11 @@
       }
       
       document.getElementById('details-market-url').value = rawWf.play_store_url || '';
+
+      // Quick Open buttons — pre-select this face in other tools
+      const base = 'https://creation-cue-manage.web.app/';
+      document.getElementById('details-open-coupons').href = `${base}manage-coupons.html?face=${encodeURIComponent(id)}`;
+      document.getElementById('details-open-social').href   = `${base}social-generator.html?face=${encodeURIComponent(id)}`;
 
       // Populate Cloud Release Status (Google Play)
       document.getElementById('details-companion-status').textContent = wf.companionStatus || 'N/A';
@@ -2675,6 +3011,173 @@
     if (filterApiEl) filterApiEl.addEventListener('change', renderDashboard);
 
     // Header column sort — state variable tracks current sort
+    // ─── Multi-select & Batch Task Creation ───────────────────────────────────
+    const selectedFaceIds = new Set();
+    let taskModalPriority = 'medium';
+
+    function updateSelectionToolbar() {
+      const count = selectedFaceIds.size;
+      const toolbar = document.getElementById('selection-toolbar');
+      const label   = document.getElementById('toolbar-count');
+      if (!toolbar || !label) return;
+      label.textContent = `${count} face${count !== 1 ? 's' : ''} selected`;
+      toolbar.classList.toggle('visible', count > 0);
+    }
+
+    function clearSelection() {
+      selectedFaceIds.clear();
+      updateSelectionToolbar();
+      renderDashboard();
+    }
+
+    function buildTaskTitle(template, wf) {
+      if (template === 'combined')  return `Update ${wf.id} (companion + Wear OS)`;
+      if (template === 'companion') return `Update ${wf.id} — companion app`;
+      if (template === 'wear')      return `Update ${wf.id} — Wear OS app`;
+      if (template === 'review')    return `Review ${wf.id} versions`;
+      if (template === 'custom') {
+        const custom = (document.getElementById('task-custom-input').value.trim()) || 'Update [ID]';
+        return custom.replace(/\[ID\]/g, wf.id).replace(/\[TITLE\]/g, wf.title);
+      }
+      return `Update ${wf.id}`;
+    }
+
+    function updateTaskPreview() {
+      const template = document.getElementById('task-template-select').value;
+      const previewEl = document.getElementById('task-preview');
+      if (!previewEl) return;
+      const firstId = [...selectedFaceIds][0];
+      const firstWf = firstId ? combinedData.find(w => w.id === firstId) : null;
+      if (firstWf) {
+        previewEl.textContent = buildTaskTitle(template, firstWf);
+      } else {
+        previewEl.textContent = '—';
+      }
+    }
+
+    function onTemplateChange() {
+      const template = document.getElementById('task-template-select').value;
+      const customField = document.getElementById('task-custom-field');
+      if (customField) customField.style.display = template === 'custom' ? 'flex' : 'none';
+      updateTaskPreview();
+    }
+
+    function setPriority(p) {
+      taskModalPriority = p;
+      ['low','medium','high'].forEach(lvl => {
+        const el = document.getElementById('pill-' + lvl);
+        if (el) el.className = 'priority-pill' + (lvl === p ? ` active-${lvl}` : '');
+      });
+    }
+
+    function openTaskModal() {
+      if (selectedFaceIds.size === 0) return;
+      // Set default date to today
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const dd = String(today.getDate()).padStart(2, '0');
+      const dateEl = document.getElementById('task-start-date');
+      if (dateEl) dateEl.value = `${yyyy}-${mm}-${dd}`;
+      // Reset priority
+      setPriority('medium');
+      // Update heading
+      const heading = document.getElementById('task-modal-heading');
+      if (heading) heading.textContent = `Create ${selectedFaceIds.size} Task${selectedFaceIds.size !== 1 ? 's' : ''}`;
+      // Reset template
+      const tmplEl = document.getElementById('task-template-select');
+      if (tmplEl) tmplEl.value = 'combined';
+      const customField = document.getElementById('task-custom-field');
+      if (customField) customField.style.display = 'none';
+      // Show/hide spread option (only useful when >2 tasks)
+      const spreadField = document.getElementById('spread-field');
+      if (spreadField) spreadField.style.display = selectedFaceIds.size > 2 ? 'block' : 'none';
+      // Reset spread toggle
+      const spreadToggle = document.getElementById('spread-toggle');
+      if (spreadToggle) spreadToggle.checked = false;
+      updateTaskPreview();
+      // Show modal
+      document.getElementById('task-modal-overlay').style.display = 'flex';
+    }
+
+    function closeTaskModal() {
+      document.getElementById('task-modal-overlay').style.display = 'none';
+    }
+
+    // Wire custom input preview update
+    document.addEventListener('DOMContentLoaded', () => {
+      const customIn = document.getElementById('task-custom-input');
+      if (customIn) customIn.addEventListener('input', updateTaskPreview);
+    });
+
+    async function confirmCreateTasks() {
+      if (!currentUser) {
+        alert('You must be logged in to create planner tasks.');
+        return;
+      }
+      const template  = document.getElementById('task-template-select').value;
+      const startDate = document.getElementById('task-start-date').value || new Date().toISOString().split('T')[0];
+      const priority  = taskModalPriority;
+      const confirmBtn = document.getElementById('task-confirm-btn');
+
+      const selectedWfs = [...selectedFaceIds]
+        .map(id => combinedData.find(w => w.id === id))
+        .filter(Boolean);
+
+      if (selectedWfs.length === 0) { closeTaskModal(); return; }
+
+      confirmBtn.textContent = 'Saving...';
+      confirmBtn.disabled = true;
+
+      try {
+        const snap = await db.ref('work_planner/' + currentUser.uid).once('value');
+        const data = snap.val() || {};
+        const existing = Array.isArray(data.customTasks) ? data.customTasks : [];
+
+        const spreadEnabled = document.getElementById('spread-toggle')?.checked;
+        const newTasks = selectedWfs.map((wf, i) => {
+          let taskDate = startDate;
+          if (spreadEnabled) {
+            // Add floor(i/2) days to spread 2 tasks per day
+            const [y, m, d] = startDate.split('-').map(Number);
+            const base = new Date(y, m - 1, d);
+            base.setDate(base.getDate() + Math.floor(i / 2));
+            taskDate = base.getFullYear() + '-' +
+              String(base.getMonth() + 1).padStart(2, '0') + '-' +
+              String(base.getDate()).padStart(2, '0');
+          }
+          return {
+            id: 'task_' + Date.now() + '_' + i + '_' + Math.random().toString(36).substr(2, 4),
+            title: buildTaskTitle(template, wf),
+            priority: priority,
+            duration: 1.0,
+            startDate: taskDate,
+            createdAt: Date.now()
+          };
+        });
+
+        data.customTasks = [...existing, ...newTasks];
+        await db.ref('work_planner/' + currentUser.uid).set(data);
+
+        closeTaskModal();
+        clearSelection();
+
+        // Toast success
+        const toast = document.createElement('div');
+        toast.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1e1b2e;border:1px solid rgba(52,211,153,0.4);color:#34D399;font-size:13px;font-weight:600;padding:10px 20px;border-radius:999px;z-index:99999;box-shadow:0 4px 20px rgba(0,0,0,0.4);';
+        toast.textContent = `✅ ${newTasks.length} task${newTasks.length !== 1 ? 's' : ''} added to Planner!`;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3500);
+
+      } catch (err) {
+        console.error('Failed creating planner tasks:', err);
+        alert('Error creating tasks: ' + err.message);
+        confirmBtn.textContent = 'Create Tasks';
+        confirmBtn.disabled = false;
+      }
+    }
+    // ─────────────────────────────────────────────────────────────────────────
+
     window.currentSort = 'id-asc';
 
     function updateSortIndicators(activeSort) {
