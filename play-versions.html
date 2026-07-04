@@ -2006,7 +2006,10 @@
       appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
     };
 
-    // Initialize Fireba    // Force HTTP long-polling on mobile devices to bypass blocked WebSocket connections
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Force HTTP long-polling on mobile devices to bypass blocked WebSocket connections
     var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (isMobile) {
       try {
