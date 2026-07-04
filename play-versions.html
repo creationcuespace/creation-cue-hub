@@ -2028,6 +2028,8 @@
     var db = firebase.database();
     var auth = firebase.auth();
     var currentUser = null;
+    var taskModalStartDate = '';
+
 
     // Data containers
     var managerData = [];
@@ -3116,8 +3118,9 @@
       const yyyy = today.getFullYear();
       const mm = String(today.getMonth() + 1).padStart(2, '0');
       const dd = String(today.getDate()).padStart(2, '0');
+      taskModalStartDate = `${yyyy}-${mm}-${dd}`;
       const dateEl = document.getElementById('task-start-date');
-      if (dateEl) dateEl.value = `${yyyy}-${mm}-${dd}`;
+      if (dateEl) dateEl.value = taskModalStartDate;
       // Reset priority
       setPriority('medium');
       // Update heading
@@ -3143,10 +3146,20 @@
       document.getElementById('task-modal-overlay').style.display = 'none';
     }
 
-    // Wire custom input preview update
+    // Wire custom input preview update and date input listeners
     document.addEventListener('DOMContentLoaded', () => {
       const customIn = document.getElementById('task-custom-input');
       if (customIn) customIn.addEventListener('input', updateTaskPreview);
+      
+      const dateEl = document.getElementById('task-start-date');
+      if (dateEl) {
+        dateEl.addEventListener('input', (e) => {
+          taskModalStartDate = e.target.value;
+        });
+        dateEl.addEventListener('change', (e) => {
+          taskModalStartDate = e.target.value;
+        });
+      }
     });
 
     async function confirmCreateTasks() {
@@ -3155,7 +3168,7 @@
         return;
       }
       const template  = document.getElementById('task-template-select').value;
-      const startDate = document.getElementById('task-start-date').value || new Date().toISOString().split('T')[0];
+      const startDate = taskModalStartDate || document.getElementById('task-start-date').value || new Date().toISOString().split('T')[0];
       const priority  = taskModalPriority;
       const confirmBtn = document.getElementById('task-confirm-btn');
 
