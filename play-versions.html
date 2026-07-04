@@ -3173,17 +3173,70 @@
         const data = snap.val() || {};
         const existing = Array.isArray(data.customTasks) ? data.customTasks : [];
 
+        const customHolidays = Array.isArray(data.customHolidays) ? data.customHolidays : [];
+
+        // Helper to parse date string resiliantly across different formats/locales
+        function parseDateToYmd(dateStr) {
+          if (!dateStr) return new Date();
+          dateStr = dateStr.trim();
+          
+          var matchYmd = dateStr.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+          if (matchYmd) {
+            return new Date(parseInt(matchYmd[1], 10), parseInt(matchYmd[2], 10) - 1, parseInt(matchYmd[3], 10));
+          }
+          
+          var matchSlashes = dateStr.match(/^(\d{1,2})[\/\.-](\d{1,2})[\/\.-](\d{4})$/);
+          if (matchSlashes) {
+            var d1 = parseInt(matchSlashes[1], 10);
+            var d2 = parseInt(matchSlashes[2], 10);
+            var y = parseInt(matchSlashes[3], 10);
+            if (d1 > 12) {
+              return new Date(y, d2 - 1, d1); // d1 is day
+            }
+            return new Date(y, d1 - 1, d2); // d1 is month
+          }
+          
+          var parsed = new Date(dateStr);
+          if (!isNaN(parsed.getTime())) return parsed;
+          return new Date();
+        }
+
+        // Helper to calculate working date with offset, skipping Sundays and custom holidays
+        function getWorkingDateWithOffset(startDateObj, offset) {
+          var current = new Date(startDateObj.getTime());
+          var workingDaysFound = 0;
+          
+          while (workingDaysFound < offset) {
+            current.setDate(current.getDate() + 1);
+            var y = current.getFullYear();
+            var m = String(current.getMonth() + 1).padStart(2, '0');
+            var day = String(current.getDate()).padStart(2, '0');
+            var checkStr = `${y}-${m}-${day}`;
+            
+            var isSunday = (current.getDay() === 0);
+            var isHoliday = customHolidays.includes(checkStr);
+            if (!isSunday && !isHoliday) {
+              workingDaysFound++;
+            }
+          }
+          var y = current.getFullYear();
+          var m = String(current.getMonth() + 1).padStart(2, '0');
+          var day = String(current.getDate()).padStart(2, '0');
+          return `${y}-${m}-${day}`;
+        }
+
         const spreadEnabled = document.getElementById('spread-toggle')?.checked;
+        const parsedStartDate = parseDateToYmd(startDate);
+
         const newTasks = selectedWfs.map((wf, i) => {
-          let taskDate = startDate;
+          let taskDate;
           if (spreadEnabled) {
-            // Add floor(i/2) days to spread 2 tasks per day
-            const [y, m, d] = startDate.split('-').map(Number);
-            const base = new Date(y, m - 1, d);
-            base.setDate(base.getDate() + Math.floor(i / 2));
-            taskDate = base.getFullYear() + '-' +
-              String(base.getMonth() + 1).padStart(2, '0') + '-' +
-              String(base.getDate()).padStart(2, '0');
+            var workingDaysOffset = Math.floor(i / 2);
+            taskDate = getWorkingDateWithOffset(parsedStartDate, workingDaysOffset);
+          } else {
+            taskDate = parsedStartDate.getFullYear() + '-' +
+              String(parsedStartDate.getMonth() + 1).padStart(2, '0') + '-' +
+              String(parsedStartDate.getDate()).padStart(2, '0');
           }
           return {
             id: 'task_' + Date.now() + '_' + i + '_' + Math.random().toString(36).substr(2, 4),
