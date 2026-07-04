@@ -3196,7 +3196,9 @@
         });
 
         data.customTasks = [...existing, ...newTasks];
+        data._writtenBy = 'dashboard_' + Math.random().toString(36).substr(2, 9);
         await db.ref('work_planner/' + currentUser.uid).set(data);
+
 
         closeTaskModal();
         clearSelection();
