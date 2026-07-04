@@ -9,7 +9,11 @@
       "package-lock.json",
       "fetch-play-versions.js",
       "update-versions.bat",
-      "play-credentials.json"
+      "generate-firebase-token.bat",
+      "inject_redirect.ps1",
+      "play-credentials.json",
+      "stats.json",
+      "OFF*"
     ]
   }
 }
