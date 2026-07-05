@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script>if(location.hostname.includes("firebaseapp.com")){location.replace(location.href.replace(location.hostname,"creation-cue-manage.web.app"));}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://cdn.jsdelivr.net https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.jsdelivr.net https://creationcue.space https://via.placeholder.com https://wsrv.nl https://*.googleusercontent.com https://raw.githubusercontent.com https://*.githubusercontent.com https://api.qrserver.com; connect-src 'self' https://raw.githubusercontent.com wss://*.firebasedatabase.app wss://*.europe-west1.firebasedatabase.app https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.google.com/recaptcha/ https://ntfy.sh https://corsproxy.io https://api.allorigins.win; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://*.firebaseapp.com https://accounts.google.com https://content-firebaseauth.googleapis.com https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://www.google.com/recaptcha/ https://recaptcha.net/;">
+  <meta name="theme-color" content="#141414">
+  <title>Manage Promotions & Coupons</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2310B981'/%3E%3Cstop offset='100%25' stop-color='%23059669'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='6' fill='url(%23grad)'/%3E%3Cpath d='M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9C19 9.55228 18.5523 10 18 10C17.4477 10 17 10.4477 17 11V13C17 13.5523 17.4477 14 18 14C18.5523 14 19 14.4477 19 15C19 15.5523 18.5523 16 18 16H6C5.44772 16 5 15.5523 5 15C5 14.4477 5.44772 14 6 14C6.55228 14 7 13.5523 7 13V11C7 10.4477 6.55228 10 6 10C5.44772 10 5 9.55228 5 9Z' fill='white'/%3E%3Cpath d='M10 11C10 11.5523 9.55228 12 9 12C8.44772 12 8 11.5523 8 11C8 10.4477 8.44772 10 9 10C9.55228 10 10 10.4477 10 11ZM16 13C16 13.5523 15.5523 14 15 14C14.4477 14 14 13.5523 14 13C14 12.4477 14.4477 12 15 12C15.5523 12 16 12.4477 16 13ZM15 10L9 14' stroke='%23059669' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --red: #e8281e;
+      --blue: #1a3a6b;
+      --yellow: #f5c518;
+      --black: #141414;
+      --dark: #1e1e1e;
+      --mid: #2a2a2a;
+      --border: #3a3a3a;
+      --text: #f0f0f0;
+      --muted: #888;
+      --green: #4caf50;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 50px;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 10px;
+      border: 3px solid var(--black);
+      background-clip: content-box;
+    }
+
+    ::-webkit-scrollbar-thumb:hover { background-color: var(--yellow); }
+
+    .header {
+      width: 100%;
+      background: var(--dark);
+      border-bottom: 2px solid var(--yellow);
+      padding: 14px 20px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-mark {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+    }
+
+    .logo-mark span {
+      display: block;
+      width: 7px;
+      height: 22px;
+      border-radius: 1px;
+    }
+
+    .logo-mark .r { background: var(--red); }
+    .logo-mark .b { background: var(--blue); }
+    .logo-mark .y { background: var(--yellow); }
+
+    .header-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .header-title span { color: var(--yellow); }
+
+    .header-btns {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .header-btn {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Teko', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      line-height: 1;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-btn:hover {
+      background: var(--border);
+      color: var(--text);
+      border-color: var(--muted);
+      transform: translateY(-1px);
+    }
+
+    .header-btn.back-btn {
+      border: 1px solid var(--yellow);
+      color: var(--yellow);
+      background: rgba(255, 184, 0, 0.04);
+    }
+
+    .header-btn.subscribers-btn {
+      border: 1px solid var(--green);
+      color: var(--green);
+      background: rgba(76, 175, 80, 0.04);
+    }
+
+    .main {
+      width: 100%;
+      max-width: 1100px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .desktop-columns {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      .header { padding: 14px 40px 12px; }
+      .main { padding: 30px 40px; }
+      .desktop-columns {
+        flex-direction: row;
+        gap: 30px;
+        align-items: flex-start;
+      }
+      .col-left { flex: 4; }
+      .col-right { flex: 6; }
+    }
+
+    @media (max-width: 600px) {
+      .hide-mobile {
+        display: none;
+      }
+      .header {
+        padding: 12px 10px;
+        gap: 8px;
+      }
+      .header-left img {
+        height: 24px !important;
+      }
+      .header-title span:first-child {
+        font-size: 18px !important;
+      }
+      .header-title span:last-child {
+        font-size: 8px !important;
+        letter-spacing: 1.5px !important;
+      }
+      .header-btns {
+        gap: 6px;
+        flex-shrink: 1;
+        min-width: 0;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      .header-btns::-webkit-scrollbar {
+        display: none;
+      }
+      .header-btn {
+        font-size: 12px;
+        padding: 6px 8px;
+        flex-shrink: 0;
+      }
+    }
+
+    .card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--yellow);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .input-text, .input-area {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+
+    .input-text:focus, .input-area:focus {
+      border-color: var(--yellow);
+    }
+
+    .input-area {
+      min-height: 120px;
+      resize: vertical;
+      font-family: monospace;
+      font-size: 13px;
+    }
+
+    .btn {
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+      border-radius: 4px;
+      font-family: 'Teko', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 12px 20px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn:hover { background: #e5b615; }
+    .btn:active { transform: scale(0.98); }
+
+    .btn.ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .btn.ghost:hover {
+      background: var(--mid);
+      color: var(--text);
+    }
+
+    .btn.red {
+      background: var(--red);
+      color: white;
+    }
+
+    .btn.red:hover { background: #c61e16; }
+
+    .btn.small {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(40px);
+      background: var(--yellow);
+      color: #000;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border-radius: 4px;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+      z-index: 200;
+      white-space: nowrap;
+      opacity: 0;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .promo-block {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .promo-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .promo-toggle-header {
+      transition: background 0.15s ease;
+      padding: 6px;
+      margin: -6px;
+    }
+
+    .promo-toggle-header:hover {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 4px;
+    }
+
+    .promo-info h3 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .promo-slug {
+      font-size: 11px;
+      color: var(--muted);
+      background: var(--black);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+
+    .promo-stats {
+      font-family: 'Teko', sans-serif;
+      font-size: 20px;
+      display: flex;
+      gap: 14px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 6px 0;
+    }
+
+    .promo-stats span span { color: var(--yellow); }
+
+    .link-copy-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .link-display {
+      flex: 1;
+      min-width: 0;
+      background: var(--black);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      font-size: 13px;
+      color: var(--muted);
+      padding: 6px 10px;
+      font-family: monospace;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .link-display:hover {
+      color: var(--yellow);
+      border-color: var(--yellow);
+      background: rgba(245, 197, 24, 0.02);
+    }
+
+    .claims-list-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .claims-container {
+      max-height: 200px;
+      overflow-y: auto;
+      background: var(--black);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      font-size: 13px;
+    }
+
+    .claim-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .claim-row:last-child { border-bottom: none; }
+
+    .claim-time { color: var(--muted); }
+    .claim-code { font-family: monospace; color: var(--yellow); font-weight: bold; }
+
+    .empty-state {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 20px 0;
+    }
+
+    #login-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    #rules-helper-card {
+      border: 1px solid var(--red);
+      background: rgba(232, 40, 30, 0.03);
+    }
+
+    .btn-ai {
+      background: linear-gradient(135deg, #3a86f0, #9f5afd);
+      color: white;
+      font-family: 'Teko', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 16px;
+      width: 100%;
+      margin-top: 10px;
+      box-shadow: 0 4px 10px rgba(159, 90, 253, 0.2);
+    }
+
+    .btn-ai:hover:not(:disabled) {
+      background: linear-gradient(135deg, #2a76e0, #8f4aed);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 12px rgba(159, 90, 253, 0.3);
+    }
+
+    .btn-ai:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+
+    .btn-ai:disabled {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      cursor: not-allowed;
+      box-shadow: none;
+      opacity: 0.5;
+    }
+
+    .modal-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .modal-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+    }
+
+    /* Search Select Dropdown for Catalog */
+    .search-select-container {
+      position: relative;
+      width: 100%;
+    }
+
+    .catalog-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: rgba(30, 30, 30, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      max-height: 240px;
+      overflow-y: auto;
+      z-index: 100;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
+      display: none;
+      flex-direction: column;
+    }
+
+    .catalog-dropdown::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .catalog-dropdown::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .catalog-dropdown::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+
+    .catalog-dropdown::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .catalog-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .catalog-item:last-child {
+      border-bottom: none;
+    }
+
+    .catalog-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .catalog-item img {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+    }
+
+    .catalog-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .catalog-item-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .catalog-item-desc {
+      font-size: 10px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <a href="index.html" class="header-left">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2310B981'/%3E%3Cstop offset='100%25' stop-color='%23059669'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='6' fill='url(%23grad)'/%3E%3Cpath d='M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9C19 9.55228 18.5523 10 18 10C17.4477 10 17 10.4477 17 11V13C17 13.5523 17.4477 14 18 14C18.5523 14 19 14.4477 19 15C19 15.5523 18.5523 16 18 16H6C5.44772 16 5 15.5523 5 15C5 14.4477 5.44772 14 6 14C6.55228 14 7 13.5523 7 13V11C7 10.4477 6.55228 10 6 10C5.44772 10 5 9.55228 5 9Z' fill='white'/%3E%3Cpath d='M10 11C10 11.5523 9.55228 12 9 12C8.44772 12 8 11.5523 8 11C8 10.4477 8.44772 10 9 10C9.55228 10 10 10.4477 10 11ZM16 13C16 13.5523 15.5523 14 15 14C14.4477 14 14 13.5523 14 13C14 12.4477 14.4477 12 15 12C15.5523 12 16 12.4477 16 13ZM15 10L9 14' stroke='%23059669' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E" alt="CreationCue Logo" style="height: 32px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));">
+      <div class="header-title" style="display: flex; flex-direction: column; line-height: 0.9; align-items: flex-start; margin-top: -2px;">
+        <span style="font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 1px; text-transform: none;">Creation<span style="color: var(--yellow);">Cue</span>™</span>
+        <span style="font-size: 9px; font-weight: 600; color: var(--yellow); letter-spacing: 2.2px; text-transform: uppercase; margin-top: 1px;">Promotions</span>
+      </div>
+    </a>
+    <div class="header-btns">
+      <button id="btn-subscribers-header" onclick="openSubscribersModal()" class="header-btn subscribers-btn" style="display: none;">SUBSCRIBERS</button>
+      <a href="social-generator.html" class="header-btn">SOCIALS</a>
+      <a href="month-planner.html" class="header-btn">PLANNER</a>
+      <a href="play-versions.html" class="header-btn">VERSIONS</a>
+      <a href="play-deploy.html" class="header-btn">DEPLOY</a>
+      <button onclick="handleLogout()" class="header-btn" id="btn-logout-header" style="display: none; background: rgba(232, 40, 30, 0.15); border: 1px solid rgba(232, 40, 30, 0.3); color: #fff;" onmouseover="this.style.background='rgba(232, 40, 30, 0.25)'" onmouseout="this.style.background='rgba(232, 40, 30, 0.15)'">LOGOUT</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="desktop-columns">
+      <!-- Left Column: Create Promotion -->
+      <div class="col-left">
+        <div class="card" id="create-promo-card">
+          <div class="card-title" id="form-title" onclick="toggleCreateForm()" style="cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; border-bottom: none; padding-bottom: 0;">
+            <span>Create Promotion</span>
+            <svg id="create-form-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s ease;">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          
+          <div id="create-form-body" style="display: none; flex-direction: column; gap: 16px; margin-top: 16px; border-top: 1px solid var(--border); padding-top: 16px;">
+            <div class="form-group" style="position: relative;">
+              <span class="form-label">Quick Select Watch Face (from Catalog)</span>
+              <div class="search-select-container">
+                <input class="input-text" id="catalog-search" type="text" placeholder="🔍 Search face name (e.g. CUE177)..." autocomplete="off" style="width: 100%;">
+                <div class="catalog-dropdown" id="catalog-dropdown" style="display: none;"></div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Promotion ID (Unique URL Slug)</span>
+              <input class="input-text" id="promo-id" type="text" placeholder="e.g. classic-retro-gold" pattern="[a-zA-Z0-9\-]+">
+              <span style="font-size:10px; color:var(--muted); margin-top:2px;">Only letters, numbers, and dashes. Used in URL.</span>
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Watch Face Name</span>
+              <input class="input-text" id="promo-name" type="text" placeholder="e.g. CUE Retro Classic Gold">
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Description (Optional)</span>
+              <input class="input-text" id="promo-desc" type="text" placeholder="e.g. A gorgeous gold-accented hybrid retro face.">
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Google Play Store Link</span>
+              <input class="input-text" id="promo-link" type="text" placeholder="https://play.google.com/store/apps/details?id=...">
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Watch Face Preview Image URL (Optional)</span>
+              <input class="input-text" id="promo-img" type="text" placeholder="e.g. https://mywebsite.com/watchface.png">
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Visibility</span>
+              <select class="input-text" id="promo-visibility" style="cursor: pointer; background: var(--mid);">
+                <option value="private">Private (Only claimable via unique One-Time Links)</option>
+                <option value="public">Public (Anyone with public link can claim)</option>
+              </select>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+              <div class="form-group" style="flex:1;">
+                <span class="form-label">Start Date/Time (Optional)</span>
+                <div style="display:flex; gap:6px;">
+                  <input class="input-text" id="promo-starts-text" type="text" placeholder="e.g. 8 Jun 2027" oninput="parseStartsText()" style="flex:1;">
+                  <div style="position:relative; width:44px; height:38px; flex:none;">
+                    <div class="input-text" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:var(--mid); pointer-events:none; border:1px solid var(--border); border-radius:4px;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                      </svg>
+                    </div>
+                    <input id="promo-starts" type="datetime-local" oninput="syncStartsText()" onclick="try { this.showPicker(); } catch(e) {}" style="position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%;">
+                  </div>
+                </div>
+                <span style="font-size:10px; color:var(--muted); margin-top:2px;">Type/paste date or select with calendar icon.</span>
+              </div>
+              <div class="form-group" style="flex:1;">
+                <span class="form-label">Expiration Date (Optional)</span>
+                <div style="display:flex; gap:6px;">
+                  <input class="input-text" id="promo-expiry-text" type="text" placeholder="e.g. 8 Jun 2027" oninput="parseExpiryText()" style="flex:1;">
+                  <div style="position:relative; width:44px; height:38px; flex:none;">
+                    <div class="input-text" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:var(--mid); pointer-events:none; border:1px solid var(--border); border-radius:4px;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                      </svg>
+                    </div>
+                    <input id="promo-expiry" type="datetime-local" oninput="syncExpiryText()" onclick="try { this.showPicker(); } catch(e) {}" style="position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%;">
+                  </div>
+                </div>
+                <span style="font-size:10px; color:var(--muted); margin-top:2px;">Type/paste date or select with calendar icon.</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Coupons / Promo Codes (Paste raw list)</span>
+              <textarea class="input-area" id="promo-codes" placeholder="Paste codes here.
+One code per line.
+Example:
+XXXX-YYYY-ZZZZ
+AAAA-BBBB-CCCC"></textarea>
+              <span style="font-size:10px; color:var(--muted); margin-top:2px;">Lines will be cleaned and empty ones ignored automatically.</span>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+              <button class="btn" id="btn-create" style="flex:1;">CREATE PROMOTION</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Active Promotions -->
+      <div class="col-right">
+        <!-- DB Rules Helper Card -->
+        <div class="card" id="rules-helper-card" style="display: none;">
+          <div class="card-title" style="color:var(--red);">Security Rules Configuration Required</div>
+          <div style="font-size:12px; line-height:1.4;">
+            To secure your coupons and authorize writes, copy the following admin ID to your Firebase Database rules.
+          </div>
+          <div class="form-group">
+            <span class="form-label">Your Admin UID</span>
+            <div style="display:flex; gap:8px;">
+              <input class="input-text" id="admin-uid-display" type="text" readonly style="font-family:monospace; font-size:11px;">
+              <button class="btn small" onclick="copyAdminUid()">Copy</button>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:12px; border-top:1px solid rgba(255,255,255,0.08); padding-top:12px;">
+            <span class="form-label">Authenticated Account</span>
+            <div id="auth-email-text" style="font-size:12px; font-weight:700; color:var(--muted); margin-bottom:8px;">Checking...</div>
+            <span class="form-label">Database Connection Status</span>
+            <div id="db-status-text" style="font-size:12px; font-weight:700; color:var(--yellow);">Connecting...</div>
+          </div>
+        </div>
+
+        <!-- Direct Review Link Generator Card -->
+        <div class="card" id="review-generator-card">
+          <div class="card-title">Direct Review Link Generator</div>
+          <div style="font-size:12px; line-height:1.4; color:var(--muted); margin-bottom:8px;">
+            Enter your Google Play Store App Link or Package Name to generate direct review links and a custom QR code.
+          </div>
+          <div class="form-group">
+            <span class="form-label">Google Play App Link or Package Name</span>
+            <div style="display:flex; gap:8px;">
+              <input class="input-text" id="gen-app-link" type="text" placeholder="e.g. com.creationcue.classicretro or full play store link">
+              <button class="btn small" onclick="generateReviewLinks()" style="flex:none;">Generate</button>
+            </div>
+          </div>
+          
+          <div id="gen-results-area" style="display:none; flex-direction:column; gap:12px; margin-top:8px; border-top:1px solid var(--border); padding-top:12px;">
+            <div class="form-group">
+              <span class="form-label">Google Play Web Review Link</span>
+              <div style="display:flex; gap:8px;">
+                <input class="input-text" id="gen-web-link" type="text" readonly style="font-family:monospace; font-size:11px;">
+                <button class="btn small" onclick="copyGenLink('gen-web-link', 'Web review link')">Copy</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="form-label">Play Store App Intent (Deep Link)</span>
+              <div style="display:flex; gap:8px;">
+                <input class="input-text" id="gen-intent-link" type="text" readonly style="font-family:monospace; font-size:11px;">
+                <button class="btn small" onclick="copyGenLink('gen-intent-link', 'App deep link')">Copy</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <span class="form-label">Direct Write Review Link</span>
+              <div style="display:flex; gap:8px;">
+                <input class="input-text" id="gen-direct-link" type="text" readonly style="font-family:monospace; font-size:11px;">
+                <button class="btn small" onclick="copyGenLink('gen-direct-link', 'Direct review link')">Copy</button>
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:8px; background:var(--mid); border:1px solid var(--border); padding:12px; border-radius:4px;">
+              <span class="form-label">Generated Review QR Code</span>
+              <div id="gen-qrcode-container" style="background:white; padding:8px; border-radius:4px; display:flex; align-items:center; justify-content:center; width:166px; height:166px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+                <!-- Image tag will load QR code -->
+              </div>
+              <div style="font-size:10px; color:var(--muted); text-align:center;">Right-click the QR code image to save or copy it.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Active Promotions</div>
+          <div style="margin-top: -6px; margin-bottom: 2px;">
+            <input class="input-text" id="promotions-search" type="text" placeholder="Search promotions by name, ID, or description..." oninput="filterPromotions()">
+          </div>
+          <div id="promotions-list" class="empty-state">
+            Loading active promotions...
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 24px; font-size: 10px; color: var(--muted); border-top: 1px solid var(--border); margin-top: auto; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; opacity: 0.6;">
+    CreationCue™ Coupons &bull; v1.5.8
+  </footer>
+
+  <div class="toast" id="toast">Link Copied!</div>
+
+
+
+  <!-- Subscribers List Modal -->
+  <div id="subscribers-modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease; padding: 15px;">
+    <div id="subscribers-modal-card" style="background: var(--dark); border: 1px solid var(--border); border-radius: 6px; width: 100%; max-width: 800px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.2s ease;">
+      <!-- Header -->
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border);">
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span style="font-family: 'Teko', sans-serif; font-size: 24px; font-weight: 500; letter-spacing: 1px; color: #fff; text-transform: uppercase;">Newsletter Subscribers</span>
+          <span id="subscribers-count-badge" style="font-size: 11px; background: rgba(76, 175, 80, 0.15); color: var(--green); padding: 2px 8px; border-radius: 10px; font-weight: bold; border: 1px solid rgba(76, 175, 80, 0.2);">0</span>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <button onclick="exportSubscribersCSV()" class="btn small" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff; font-size: 11px; padding: 4px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family:'Inter', sans-serif; text-transform:none;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Export CSV
+          </button>
+          <button onclick="closeSubscribersModal()" style="background: none; border: none; color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px; transition: color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+      <!-- Search Bar -->
+      <div style="padding: 12px 20px; border-bottom: 1px solid var(--border); display: flex; gap: 10px;">
+        <input class="input-text" id="subscribers-search" type="text" placeholder="Search by email, watch model, or preferences..." oninput="filterSubscribers()" style="flex: 1; padding: 8px 12px; font-size: 13px;">
+      </div>
+      <!-- Body -->
+      <div id="subscribers-modal-body" style="padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;">
+        <!-- Dynamic List -->
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Google Sign In Overlay -->
+  <div id="login-overlay">
+    <div class="logo-mark" style="transform:scale(2); margin-bottom:20px;"><span class="r"></span><span class="b"></span><span class="y"></span></div>
+    <div style="font-size:32px; font-weight:600; letter-spacing:4px; text-transform:uppercase;">CUE <span style="color:var(--yellow)">Promotions</span></div>
+    
+    <!-- Startup Check Session Loader -->
+    <div id="login-loading-spinner" style="display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 10px;">
+      <div style="width: 24px; height: 24px; border: 2.5px solid rgba(255,255,255,0.1); border-top-color: var(--green); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+      <span style="color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;">Checking session...</span>
+    </div>
+
+    <!-- Sign In Interactive Area -->
+    <div id="login-form-area" style="display: none; flex-direction: column; align-items: center; gap: 20px;">
+      <div style="font-size:16px; color:var(--muted); font-family:'Inter', sans-serif; letter-spacing:0.5px;">sign in with Google to manage coupons</div>
+      <button id="btn-google-login" style="display:flex; align-items:center; gap:12px; background:white; color:#333; border:none; border-radius:4px; padding:10px 24px; font-family:'Teko', sans-serif; font-size:20px; font-weight:500; letter-spacing:1px; cursor:pointer; margin-top:10px;">
+        <svg width="20" height="20" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+        </svg>
+        SIGN IN WITH GOOGLE
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Firebase Config (Identical to main app)
+    var firebaseConfig = {
+      apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+      authDomain: "creation-cue-manage.firebaseapp.com",
+      databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "creation-cue-manage",
+      storageBucket: "creation-cue-manage.firebasestorage.app",
+      messagingSenderId: "186324516022",
+      appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
+    };
+
+    // Force clear any stuck websocket failures on startup
+    try {
+      localStorage.removeItem('firebase:previous_websocket_failure');
+    } catch(e) {}
+
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.database();
+    var auth = firebase.auth();
+    var currentUser = null;
+
+    // Handle Auth redirect result on page load
+    auth.getRedirectResult().catch(err => {
+      console.error("Redirect auth error:", err);
+      alert("Authentication failed: " + err.message);
+    });
+
+    function showToast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function () { t.classList.remove('show'); }, 2200);
+    }
+
+    function formatDateTime(ts, includeSeconds) {
+      if (!ts) return '';
+      var d = new Date(ts);
+      var day = String(d.getDate()).padStart(2, '0');
+      var month = String(d.getMonth() + 1).padStart(2, '0');
+      var year = d.getFullYear();
+      var hours = String(d.getHours()).padStart(2, '0');
+      var minutes = String(d.getMinutes()).padStart(2, '0');
+      var str = day + '/' + month + '/' + year + ' ' + hours + ':' + minutes;
+      if (includeSeconds) {
+        var seconds = String(d.getSeconds()).padStart(2, '0');
+        str += ':' + seconds;
+      }
+      return str;
+    }
+
+    window.parseStartsText = function() {
+      var textVal = document.getElementById('promo-starts-text').value.trim();
+      var picker = document.getElementById('promo-starts');
+      if (!textVal) {
+        picker.value = '';
+        return;
+      }
+      var d = new Date(textVal);
+      if (!isNaN(d.getTime())) {
+        var offset = d.getTimezoneOffset() * 60000;
+        var localISOTime = (new Date(d.getTime() - offset)).toISOString().slice(0, 16);
+        picker.value = localISOTime;
+      }
+    };
+
+    window.syncStartsText = function() {
+      var pickerVal = document.getElementById('promo-starts').value;
+      var textInput = document.getElementById('promo-starts-text');
+      if (!pickerVal) {
+        textInput.value = '';
+        return;
+      }
+      var d = new Date(pickerVal);
+      textInput.value = formatHumanDate(d);
+    };
+
+    window.parseExpiryText = function() {
+      var textVal = document.getElementById('promo-expiry-text').value.trim();
+      var picker = document.getElementById('promo-expiry');
+      if (!textVal) {
+        picker.value = '';
+        return;
+      }
+      var d = new Date(textVal);
+      if (!isNaN(d.getTime())) {
+        var offset = d.getTimezoneOffset() * 60000;
+        var localISOTime = (new Date(d.getTime() - offset)).toISOString().slice(0, 16);
+        picker.value = localISOTime;
+      }
+    };
+
+    window.syncExpiryText = function() {
+      var pickerVal = document.getElementById('promo-expiry').value;
+      var textInput = document.getElementById('promo-expiry-text');
+      if (!pickerVal) {
+        textInput.value = '';
+        return;
+      }
+      var d = new Date(pickerVal);
+      textInput.value = formatHumanDate(d);
+    };
+
+    function formatHumanDate(d) {
+      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      var day = d.getDate();
+      var month = months[d.getMonth()];
+      var year = d.getFullYear();
+      var hours = String(d.getHours()).padStart(2, '0');
+      var minutes = String(d.getMinutes()).padStart(2, '0');
+      if (hours === '00' && minutes === '00') {
+        return day + ' ' + month + ' ' + year;
+      }
+      return day + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes;
+    }
+
+    auth.onAuthStateChanged(function (user) {
+      if (user) {
+        currentUser = user;
+        document.getElementById('login-overlay').style.display = 'none';
+        document.getElementById('admin-uid-display').value = user.uid;
+        var emailEl = document.getElementById('auth-email-text');
+        if (emailEl) emailEl.textContent = user.email || 'No email returned';
+        document.getElementById('rules-helper-card').style.display = 'flex';
+        var subBtn = document.getElementById('btn-subscribers-header');
+        if (subBtn) subBtn.style.display = 'flex';
+        var supportBtn = document.getElementById('btn-support-header');
+        if (supportBtn) supportBtn.style.display = 'flex';
+        var logoutBtn = document.getElementById('btn-logout-header');
+        if (logoutBtn) logoutBtn.style.display = 'inline-block';
+        loadPromotions();
+        startSubscribersListener();
+        startSupportListener();
+        
+        // Handle duplication load from promo-details.html
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('duplicate') === 'true') {
+          var cacheStr = localStorage.getItem('cc_promo_duplicate_cache');
+          if (cacheStr) {
+            try {
+              var promo = JSON.parse(cacheStr);
+              localStorage.removeItem('cc_promo_duplicate_cache');
+              
+              var baseId = promo.name.toLowerCase().replace(/[^a-z0-9\-]/g, '').replace(/-copy$/, '');
+              document.getElementById('promo-id').value = baseId + '-copy';
+              document.getElementById('promo-name').value = promo.name || '';
+              document.getElementById('promo-desc').value = promo.description || '';
+              document.getElementById('promo-link').value = promo.storeLink || '';
+              document.getElementById('promo-img').value = promo.imageUrl || '';
+              document.getElementById('promo-visibility').value = promo.visibility || 'public';
+              
+              if (promo.startsAt) {
+                var localDate = new Date(promo.startsAt);
+                var offset = localDate.getTimezoneOffset() * 60000;
+                document.getElementById('promo-starts').value = (new Date(localDate.getTime() - offset)).toISOString().slice(0, 16);
+                document.getElementById('promo-starts-text').value = formatHumanDate(localDate);
+              }
+              if (promo.expiresAt) {
+                var localDate = new Date(promo.expiresAt);
+                var offset = localDate.getTimezoneOffset() * 60000;
+                document.getElementById('promo-expiry').value = (new Date(localDate.getTime() - offset)).toISOString().slice(0, 16);
+                document.getElementById('promo-expiry-text').value = formatHumanDate(localDate);
+              }
+              
+              if (typeof toggleCreateForm === 'function') toggleCreateForm(true);
+              showToast("Details duplicated! Paste codes.");
+            } catch(e) {
+              console.error(e);
+            }
+          }
+        }
+      } else {
+        currentUser = null;
+        document.getElementById('login-overlay').style.display = 'flex';
+        var spinner = document.getElementById('login-loading-spinner');
+        if (spinner) spinner.style.display = 'none';
+        var formArea = document.getElementById('login-form-area');
+        if (formArea) formArea.style.display = 'flex';
+        var subBtn = document.getElementById('btn-subscribers-header');
+        if (subBtn) subBtn.style.display = 'none';
+        var supportBtn = document.getElementById('btn-support-header');
+        if (supportBtn) supportBtn.style.display = 'none';
+        var logoutBtn = document.getElementById('btn-logout-header');
+        if (logoutBtn) logoutBtn.style.display = 'none';
+        firebase.database().ref('newsletter_subscribers').off('value');
+        firebase.database().ref('support_requests').off('value');
+      }
+    });
+
+    document.getElementById('btn-google-login').addEventListener('click', () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider).catch(err => alert("Login failed: " + err.message));
+    });
+
+    window.handleLogout = function() {
+      if (confirm("Are you sure you want to sign out?")) {
+        auth.signOut().then(() => {
+          // Clear stuck storage keys
+          localStorage.removeItem('firebase:previous_websocket_failure');
+          // Clear auth tokens
+          for (var key in localStorage) {
+            if (key.startsWith('firebase:AuthEvent') || key.startsWith('firebase:authUser')) {
+              localStorage.removeItem(key);
+            }
+          }
+          window.location.reload();
+        }).catch(err => {
+          alert("Sign out failed: " + err.message);
+        });
+      }
+    };
+
+    function copyAdminUid() {
+      var copyText = document.getElementById('admin-uid-display');
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(copyText.value).then(function() {
+        showToast("Admin UID Copied!");
+      });
+    }
+
+    // Create Promotion Logic
+    document.getElementById('btn-create').addEventListener('click', function() {
+      if (!currentUser) return;
+      
+      var promoId = document.getElementById('promo-id').value.trim().toLowerCase().replace(/[^a-z0-9\-]/g, '');
+      var name = document.getElementById('promo-name').value.trim();
+      var desc = document.getElementById('promo-desc').value.trim();
+      var link = document.getElementById('promo-link').value.trim();
+      var imgUrl = document.getElementById('promo-img').value.trim();
+      var visibility = document.getElementById('promo-visibility').value;
+      var rawCodes = document.getElementById('promo-codes').value.trim();
+      
+      var startsVal = document.getElementById('promo-starts').value;
+      var startsAt = startsVal ? new Date(startsVal).getTime() : null;
+      
+      var expiryVal = document.getElementById('promo-expiry').value;
+      var expiresAt = expiryVal ? new Date(expiryVal).getTime() : null;
+
+      if (!promoId) { alert("Please enter a valid unique Promotion ID (Slug)"); return; }
+      if (!name) { alert("Please enter a Watch Face Name"); return; }
+
+      var codesList = rawCodes.split('\n').map(c => c.trim()).filter(c => c.length > 0);
+
+      if (!rawCodes) { alert("Please paste coupon codes"); return; }
+      if (codesList.length === 0) { alert("No valid coupon codes found."); return; }
+
+      // Check if promotion ID already exists
+      db.ref('promotions/' + promoId).once('value').then(function(snapshot) {
+        if (snapshot.exists()) {
+          alert("A promotion with ID '" + promoId + "' already exists! Please choose another ID.");
+          return;
+        }
+
+        if (!confirm("Are you sure you want to create promotion '" + name + "' with " + codesList.length + " coupon codes?")) {
+          return;
+        }
+
+        // Build updates
+        var updates = {};
+        updates['promotions/' + promoId + '/public'] = {
+          name: name,
+          description: desc,
+          storeLink: link,
+          imageUrl: imgUrl,
+          visibility: visibility,
+          totalCoupons: codesList.length,
+          claimedCount: 0,
+          active: true,
+          startsAt: startsAt,
+          expiresAt: expiresAt,
+          createdAt: firebase.database.ServerValue.TIMESTAMP
+        };
+
+        var codesMap = {};
+        codesList.forEach((code, index) => {
+          codesMap[index] = code;
+        });
+        updates['promotion_codes/' + promoId] = codesMap;
+
+        db.ref().update(updates).then(function() {
+          showToast("Promotion created!");
+          // Clear inputs
+          document.getElementById('catalog-search').value = '';
+          document.getElementById('promo-id').value = '';
+          document.getElementById('promo-name').value = '';
+          document.getElementById('promo-desc').value = '';
+          document.getElementById('promo-link').value = '';
+          document.getElementById('promo-img').value = '';
+          document.getElementById('promo-codes').value = '';
+          document.getElementById('promo-starts').value = '';
+          document.getElementById('promo-starts-text').value = '';
+          document.getElementById('promo-expiry').value = '';
+          document.getElementById('promo-expiry-text').value = '';
+          // Collapse the form after creation
+          if (typeof toggleCreateForm === 'function') toggleCreateForm(false);
+        }).catch(function(err) {
+          console.error(err);
+          alert("Error creating promotion. Make sure your database rules are deployed. Error: " + err.message);
+        });
+      });
+    });
+
+
+    window.rawPromotionsData = null;
+
+    // Load active promotions
+    function loadPromotions() {
+      var statusEl = document.getElementById('db-status-text');
+      if (statusEl) {
+        statusEl.textContent = "Connecting...";
+        statusEl.style.color = "var(--yellow)";
+      }
+      
+      // Set a 6-second connection timeout
+      var connectionTimeout = setTimeout(function() {
+        if (statusEl && statusEl.textContent === "Connecting...") {
+          statusEl.textContent = "Connecting taking longer than usual... Recovering session...";
+          statusEl.style.color = "var(--yellow)";
+          
+          // Force refresh the auth token to recover connection
+          if (currentUser) {
+            console.log("Database connection timeout. Refreshing auth token...");
+            currentUser.getIdToken(true).then(function() {
+              console.log("Token refreshed. Retrying database connection...");
+              // Retry load
+              loadPromotions();
+            }).catch(function(err) {
+              console.error("Token refresh failed:", err);
+              statusEl.textContent = "Session expired. Please log out and log back in.";
+              statusEl.style.color = "var(--red)";
+            });
+          }
+        }
+      }, 6000);
+      
+      firebase.database().ref('promotions').once('value')
+        .then(function(snapshot) {
+          clearTimeout(connectionTimeout);
+          // Success! Hide the helper card.
+          var helperCard = document.getElementById('rules-helper-card');
+          if (helperCard) helperCard.style.display = 'none';
+          if (statusEl) {
+            statusEl.textContent = "Connected (Success)";
+            statusEl.style.color = "var(--green)";
+          }
+          window.rawPromotionsData = snapshot.val();
+          renderPromotions();
+          
+          // Now set up the live listener
+          firebase.database().ref('promotions').on('value', function(liveSnapshot) {
+            window.rawPromotionsData = liveSnapshot.val();
+            renderPromotions();
+          });
+        })
+        .catch(function(err) {
+          clearTimeout(connectionTimeout);
+          console.error("Database read error details:", err);
+          if (statusEl) {
+            statusEl.textContent = "Error: " + err.message;
+            statusEl.style.color = "var(--red)";
+          }
+          var listEl = document.getElementById('promotions-list');
+          listEl.innerHTML = `
+            <div class="empty-state" style="color:var(--red);">
+              Error loading database: ${err.message}. Please configure your rules.
+            </div>
+          `;
+        });
+    }
+
+    function renderPromotions() {
+      var data = window.rawPromotionsData;
+      var listEl = document.getElementById('promotions-list');
+      
+      if (!data) {
+        listEl.innerHTML = '<div class="empty-state">No promotions created yet.</div>';
+        return;
+      }
+
+      listEl.innerHTML = '';
+      var promoKeys = Object.keys(data);
+      
+      // Sort by creation date descending (newest first)
+      promoKeys.sort(function(a, b) {
+        var tA = (data[a].public && data[a].public.createdAt) || 0;
+        var tB = (data[b].public && data[b].public.createdAt) || 0;
+        return tB - tA;
+      });
+
+      var query = document.getElementById('promotions-search') ? document.getElementById('promotions-search').value.toLowerCase().trim() : '';
+
+      var filteredKeys = promoKeys.filter(function(key) {
+        var promo = data[key].public;
+        if (!promo) return false;
+        if (!query) return true;
+        
+        var nameMatch = promo.name && promo.name.toLowerCase().includes(query);
+        var idMatch = key.toLowerCase().includes(query);
+        var descMatch = promo.description && promo.description.toLowerCase().includes(query);
+        return nameMatch || idMatch || descMatch;
+      });
+
+      if (filteredKeys.length === 0) {
+        listEl.innerHTML = '<div class="empty-state">No promotions match search criteria.</div>';
+        return;
+      }
+
+      filteredKeys.forEach(function(key) {
+        var promo = data[key].public;
+        if (!promo) return;
+
+        var total = promo.totalCoupons || 0;
+        var claimed = promo.claimedCount || 0;
+        var remaining = Math.max(0, total - claimed);
+
+        if (!window.promoCache) window.promoCache = {};
+        window.promoCache[key] = promo; // Store full promo details in cache
+
+        var block = document.createElement('div');
+        block.className = 'promo-block';
+        block.style.marginTop = '10px';
+
+        var now = Date.now();
+        var isExpired = promo.expiresAt && now > promo.expiresAt;
+        var isScheduled = promo.startsAt && now < promo.startsAt;
+
+        var activeStatusHtml = '';
+        if (!promo.active) {
+          activeStatusHtml = '<span style="color:var(--red); font-size:11px; font-weight:bold; background:rgba(232,40,30,0.1); padding:4px 8px; border-radius:3px;">● PAUSED</span>';
+        } else if (remaining === 0) {
+          activeStatusHtml = '<span style="color:var(--muted); font-size:11px; font-weight:bold; background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:3px; border:1px solid var(--border);">● COMPLETED</span>';
+        } else if (isExpired) {
+          activeStatusHtml = '<span style="color:var(--red); font-size:11px; font-weight:bold; background:rgba(232,40,30,0.1); padding:4px 8px; border-radius:3px;">● EXPIRED</span>';
+        } else if (isScheduled) {
+          activeStatusHtml = '<span style="color:var(--yellow); font-size:11px; font-weight:bold; background:rgba(245,197,24,0.1); padding:4px 8px; border-radius:3px;">● SCHEDULED</span>';
+        } else {
+          activeStatusHtml = '<span style="color:var(--green); font-size:11px; font-weight:bold; background:rgba(76,175,80,0.1); padding:4px 8px; border-radius:3px;">● ACTIVE</span>';
+        }
+
+        block.innerHTML = `
+          <!-- Clickable Header Bar (opens details page) -->
+          <div class="promo-toggle-header" onclick="window.location.href = 'promo-details.html?p=${key}'" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none;">
+            <div style="display: flex; gap: 12px; align-items: center; flex: 1; min-width: 0;">
+              ${promo.imageUrl ? `
+                <div style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); overflow: hidden; background: var(--mid); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                  <img src="${promo.imageUrl}" alt="${promo.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+              ` : `
+                <div style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); overflow: hidden; background: var(--mid); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--muted); opacity: 0.5;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+              `}
+              <div class="promo-info" style="min-width: 0; display: flex; flex-direction: column; gap: 3px; text-align: left;">
+                <h3 style="margin: 0; line-height: 1.3; font-size: 15px; font-weight: 600; color: var(--text);">${promo.name}</h3>
+                <span class="promo-slug" style="width: fit-content; margin: 0;">${key}</span>
+                <span style="font-size: 11px; color: var(--yellow); font-weight: 600; display: block; margin: 0;">(left ${remaining} from ${total})</span>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+              ${activeStatusHtml}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+        `;
+
+        listEl.appendChild(block);
+      });
+    }
+
+    window.filterPromotions = function() {
+      renderPromotions();
+      window.addEventListener('popstate', function(event) {
+        var subModal = document.getElementById('subscribers-modal');
+        if (subModal && subModal.style.display !== 'none') {
+          closeSubscribersModal(true);
+        }
+      });
+    };
+
+    // Review link generator helper functions
+    window.loadPromoIntoGenerator = function(encodedLink) {
+      var link = decodeURIComponent(encodedLink);
+      document.getElementById('gen-app-link').value = link;
+      generateReviewLinks();
+    };
+
+    window.generateReviewLinks = function(optionalPkgName) {
+      var inputVal = (optionalPkgName || document.getElementById('gen-app-link').value).trim();
+      if (!inputVal) {
+        alert("Please enter a Play Store link or package name.");
+        return;
+      }
+      
+      // Extract package name
+      var pkg = inputVal;
+      if (inputVal.includes("id=")) {
+        try {
+          var url = new URL(inputVal);
+          pkg = url.searchParams.get("id") || pkg;
+        } catch(e) {
+          var match = inputVal.match(/[?&]id=([^&#]+)/);
+          if (match) pkg = match[1];
+        }
+      } else if (inputVal.includes("details/")) {
+        var parts = inputVal.split("details/");
+        if (parts.length > 1) {
+          pkg = parts[1].split(/[?&#]/)[0];
+        }
+      }
+      
+      // Clean package name (only alphanumeric, dots, hyphens, underscores)
+      pkg = pkg.replace(/[^a-zA-Z0-9._-]/g, '');
+      
+      if (!pkg) {
+        alert("Could not extract a valid package name. Please double check the input.");
+        return;
+      }
+      
+      if (!optionalPkgName) {
+        document.getElementById('gen-app-link').value = pkg;
+      }
+      
+      // Generate URLs
+      var webUrl = "https://play.google.com/store/apps/details?id=" + pkg + "&showAllReviews=true";
+      var intentUrl = "market://details?id=" + pkg + "&showAllReviews=true";
+      var directUrl = "https://play.google.com/store/apps/details?id=" + pkg + "&rdid=" + pkg + "&rdot=1&feature=md";
+      
+      document.getElementById('gen-web-link').value = webUrl;
+      document.getElementById('gen-intent-link').value = intentUrl;
+      document.getElementById('gen-direct-link').value = directUrl;
+      
+      // QR Code
+      var qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(webUrl);
+      var qrContainer = document.getElementById('gen-qrcode-container');
+      qrContainer.innerHTML = `<img src="${qrUrl}" alt="QR Code" style="width:150px; height:150px; display:block;">`;
+      
+      document.getElementById('gen-results-area').style.display = 'flex';
+      
+      if (!optionalPkgName) {
+        document.getElementById('review-generator-card').scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+    
+    window.copyGenLink = function(inputId, label) {
+      var copyText = document.getElementById(inputId);
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(copyText.value).then(function() {
+        showToast(label + " copied!");
+      });
+    };
+
+    window.addEventListener('popstate', function(event) {
+      var subModal = document.getElementById('subscribers-modal');
+      if (subModal && subModal.style.display !== 'none') {
+        closeSubscribersModal(true);
+      }
+    });
+
+    // Subscribers Modal Operations
+    window.allSubscribers = {};
+
+    window.openSubscribersModal = function() {
+      var modal = document.getElementById('subscribers-modal');
+      var card = document.getElementById('subscribers-modal-card');
+      if (modal && card) {
+        modal.style.display = 'flex';
+        modal.offsetWidth;
+        modal.style.opacity = '1';
+        card.style.transform = 'scale(1)';
+      }
+      window.history.pushState({ modalSubscribers: true }, '');
+      loadSubscribersList();
+    };
+
+    window.closeSubscribersModal = function(isPopState) {
+      var modal = document.getElementById('subscribers-modal');
+      var card = document.getElementById('subscribers-modal-card');
+      if (modal && card) {
+        modal.style.opacity = '0';
+        card.style.transform = 'scale(0.95)';
+        setTimeout(function() {
+          modal.style.display = 'none';
+        }, 200);
+      }
+      if (!isPopState && window.history.state && window.history.state.modalSubscribers) {
+        window.history.back();
+      }
+    };
+
+    // Add event listener to close subscribers modal on background click
+    var subModal = document.getElementById('subscribers-modal');
+    if (subModal) {
+      subModal.addEventListener('click', function(e) {
+        if (e.target === subModal) {
+          closeSubscribersModal();
+        }
+      });
+    }
+
+    function startSubscribersListener() {
+      firebase.database().ref('newsletter_subscribers').on('value', function(snapshot) {
+        window.allSubscribers = snapshot.val() || {};
+        var count = Object.keys(window.allSubscribers).length;
+        
+        // Update header button count badge
+        var subBtn = document.getElementById('btn-subscribers-header');
+        if (subBtn) {
+          subBtn.innerHTML = `SUBSCRIBERS <span style="margin-left: 6px; background: rgba(76, 175, 80, 0.15); border: 1px solid rgba(76, 175, 80, 0.3); padding: 2px 6px; border-radius: 10px; font-size: 11px; font-weight: bold; color: var(--green); font-family: 'Inter', sans-serif;">${count}</span>`;
+        }
+        
+        // If modal is currently open, refresh the view
+        var modal = document.getElementById('subscribers-modal');
+        if (modal && modal.style.display !== 'none') {
+          renderSubscribersList(window.allSubscribers);
+        }
+      }, function(err) {
+        console.warn("Could not listen to subscribers:", err);
+        var subBtn = document.getElementById('btn-subscribers-header');
+        if (subBtn) {
+          subBtn.textContent = 'SUBSCRIBERS';
+        }
+      });
+    }
+
+    function loadSubscribersList() {
+      renderSubscribersList(window.allSubscribers);
+    }
+
+    function renderSubscribersList(subscribers) {
+      var body = document.getElementById('subscribers-modal-body');
+      var countBadge = document.getElementById('subscribers-count-badge');
+      var keys = Object.keys(subscribers);
+      
+      countBadge.textContent = keys.length;
+      
+      if (keys.length === 0) {
+        body.innerHTML = '<div style="text-align:center; padding:30px; color:var(--muted);">No subscribers found.</div>';
+        return;
+      }
+      
+      // Sort subscribers by subscribedAt descending
+      var sortedSubscribers = keys.map(function(key) {
+        var sub = subscribers[key];
+        sub.key = key;
+        return sub;
+      }).sort(function(a, b) {
+        return (b.subscribedAt || 0) - (a.subscribedAt || 0);
+      });
+      
+      var searchInput = document.getElementById('subscribers-search').value.toLowerCase().trim();
+      if (searchInput) {
+        sortedSubscribers = sortedSubscribers.filter(function(sub) {
+          var emailMatch = sub.email && sub.email.toLowerCase().includes(searchInput);
+          var watchMatch = sub.watches && sub.watches.some(function(w) { return w.toLowerCase().includes(searchInput); });
+          var prefMatch = false;
+          if (sub.preferences) {
+            if (sub.preferences.newReleases && "releases".includes(searchInput)) prefMatch = true;
+            if (sub.preferences.deals && "deals".includes(searchInput)) prefMatch = true;
+          }
+          return emailMatch || watchMatch || prefMatch;
+        });
+      }
+      
+      if (sortedSubscribers.length === 0) {
+        body.innerHTML = '<div style="text-align:center; padding:30px; color:var(--muted);">No subscribers match search criteria.</div>';
+        return;
+      }
+      
+      var html = '';
+      sortedSubscribers.forEach(function(sub) {
+        var dateStr = formatDateTime(sub.subscribedAt);
+        
+        // Watch chips
+        var watchHtml = '';
+        if (sub.watches && sub.watches.length > 0) {
+          sub.watches.forEach(function(w) {
+            watchHtml += `<span style="font-size:10px; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:3px; padding:2px 6px; color:var(--text);">${w}</span>`;
+          });
+        } else {
+          watchHtml = '<span style="font-size:10px; color:var(--muted); font-style:italic;">None selected</span>';
+        }
+        
+        // Preferences badges
+        var prefHtml = '';
+        if (sub.preferences) {
+          if (sub.preferences.newReleases) {
+            prefHtml += `<span style="font-size:10px; background:rgba(76,175,80,0.1); border:1px solid rgba(76,175,80,0.2); border-radius:3px; padding:2px 6px; color:var(--green);">Releases</span> `;
+          }
+          if (sub.preferences.deals) {
+            prefHtml += `<span style="font-size:10px; background:rgba(33,150,243,0.1); border:1px solid rgba(33,150,243,0.2); border-radius:3px; padding:2px 6px; color:var(--blue);">Deals</span>`;
+          }
+        }
+        if (!prefHtml) {
+          prefHtml = '<span style="font-size:10px; color:var(--muted); font-style:italic;">None</span>';
+        }
+        
+        html += `
+          <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:4px; padding:12px 16px; gap:12px;">
+            <div style="flex: 1.5; min-width: 0; display:flex; flex-direction:column; gap:4px;">
+              <span style="font-weight:600; color:#fff; word-break:break-all; font-size:14px;">${sub.email || ''}</span>
+              <span style="font-size:10px; color:var(--muted);">Subscribed: ${dateStr}</span>
+            </div>
+            
+            <div style="flex: 1.2; display:flex; flex-wrap:wrap; gap:4px; align-items:center;">
+              ${watchHtml}
+            </div>
+            
+            <div style="flex: 0.8; display:flex; flex-wrap:wrap; gap:4px; align-items:center;">
+              ${prefHtml}
+            </div>
+            
+            <div>
+              <button onclick="deleteSubscriber('${sub.key}')" style="background:none; border:none; color:var(--muted); cursor:pointer; padding:6px; border-radius:4px; transition:color 0.15s, background 0.15s;" onmouseover="this.style.color='var(--red)'; this.style.background='rgba(232,40,30,0.1)'" onmouseout="this.style.color='var(--muted)'; this.style.background='none'">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+              </button>
+            </div>
+          </div>
+        `;
+      });
+      
+      body.innerHTML = html;
+    }
+
+    window.filterSubscribers = function() {
+      renderSubscribersList(window.allSubscribers);
+    };
+
+    window.deleteSubscriber = function(key) {
+      if (confirm("Are you sure you want to remove this subscriber?")) {
+        db.ref('newsletter_subscribers/' + key).remove().then(function() {
+          delete window.allSubscribers[key];
+          renderSubscribersList(window.allSubscribers);
+          showToast("Subscriber removed");
+        }).catch(function(err) {
+          console.error("Error removing subscriber:", err);
+          alert("Failed to remove subscriber. Check permissions.");
+        });
+      }
+    };
+
+    window.exportSubscribersCSV = function() {
+      var keys = Object.keys(window.allSubscribers);
+      if (keys.length === 0) {
+        alert("No subscribers to export.");
+        return;
+      }
+      
+      var csvRows = [["Email", "Watch Models", "New Releases", "Deals", "Subscribed At"]];
+      
+      keys.forEach(function(key) {
+        var sub = window.allSubscribers[key];
+        var watches = (sub.watches || []).join("; ");
+        var rel = sub.preferences && sub.preferences.newReleases ? "TRUE" : "FALSE";
+        var deals = sub.preferences && sub.preferences.deals ? "TRUE" : "FALSE";
+        var date = sub.subscribedAt ? new Date(sub.subscribedAt).toISOString() : "";
+        csvRows.push([
+          sub.email || "",
+          watches,
+          rel,
+          deals,
+          date
+        ]);
+      });
+      
+      var csvContent = csvRows.map(e => e.map(val => `"${val.replace(/"/g, '""')}"`).join(",")).join("\n");
+      
+      var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      var url = URL.createObjectURL(blob);
+      var link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", "creationcue_subscribers.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+
+    // Catalog face loading and search functionality
+    var catalogFaces = [];
+
+    async function loadCatalog() {
+      try {
+        var cached = localStorage.getItem('cc_catalog_cache');
+        if (cached) {
+          try {
+            var parsed = JSON.parse(cached);
+            catalogFaces = parsed.watch_faces || parsed.faces || [];
+            renderDropdownItems(catalogFaces);
+          } catch(e) {}
+        }
+        
+        var url = 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/manager.json?v=' + Date.now();
+        var response = await fetch(url);
+        if (response.ok) {
+          var parsed = await response.json();
+          localStorage.setItem('cc_catalog_cache', JSON.stringify(parsed));
+          catalogFaces = parsed.watch_faces || parsed.faces || [];
+          renderDropdownItems(catalogFaces);
+        }
+
+        // Auto-select face from URL param ?face=ID (from play-versions quick open)
+        var urlFaceId = new URLSearchParams(window.location.search).get('face');
+        if (urlFaceId && catalogFaces.length > 0) {
+          var match = catalogFaces.find(function(f) { return f.id === urlFaceId; });
+          if (match) {
+            var webUrl = getWebUrl(match.play_store_url);
+            document.getElementById('promo-name').value = match.title || '';
+            document.getElementById('promo-desc').value = match.description_en || '';
+            document.getElementById('promo-link').value = webUrl || '';
+            document.getElementById('promo-img').value = match.image_url || '';
+            var slug = (match.title || '').toLowerCase()
+              .replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/(^-|-$)/g, '');
+            document.getElementById('promo-id').value = slug;
+            document.getElementById('catalog-search').value = match.title;
+            // Scroll form into view
+            var formEl = document.getElementById('promo-name');
+            if (formEl) formEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      } catch (err) {
+        console.warn("Failed loading catalog:", err);
+      }
+    }
+
+    function getWebUrl(playStoreUrl) {
+      if (!playStoreUrl) return '';
+      var id = '';
+      if (playStoreUrl.includes('id=')) {
+        id = playStoreUrl.split('id=')[1].split('&')[0];
+      } else {
+        id = playStoreUrl;
+      }
+      return 'https://play.google.com/store/apps/details?id=' + id;
+    }
+
+    function renderDropdownItems(faces) {
+      var dropdown = document.getElementById('catalog-dropdown');
+      if (!dropdown) return;
+      dropdown.innerHTML = '';
+      
+      if (faces.length === 0) {
+        dropdown.innerHTML = '<div style="padding: 12px 16px; font-size:11px; color:var(--muted); text-align:center;">No faces found</div>';
+        return;
+      }
+      
+      faces.forEach(function(f) {
+        var item = document.createElement('div');
+        item.className = 'catalog-item';
+        
+        var webUrl = getWebUrl(f.play_store_url);
+        
+        item.innerHTML = `
+          <img src="${f.image_url}" alt="${f.title}" onerror="this.src='https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png'">
+          <div class="catalog-item-info">
+            <div class="catalog-item-title">${f.title}</div>
+            <div class="catalog-item-desc">${f.description_en || ''}</div>
+          </div>
+        `;
+        
+        item.addEventListener('click', function() {
+          document.getElementById('promo-name').value = f.title || '';
+          document.getElementById('promo-desc').value = f.description_en || '';
+          document.getElementById('promo-link').value = webUrl || '';
+          document.getElementById('promo-img').value = f.image_url || '';
+          
+          // Generate unique slug
+          var slug = (f.title || '').toLowerCase()
+            .replace(/[^a-z0-9]/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/(^-|-$)/g, '');
+          document.getElementById('promo-id').value = slug;
+          
+          // Set search input value
+          document.getElementById('catalog-search').value = f.title;
+          dropdown.style.display = 'none';
+        });
+        
+        dropdown.appendChild(item);
+      });
+    }
+
+    function filterCatalog() {
+      var searchInput = document.getElementById('catalog-search');
+      var query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+      if (!query) {
+        renderDropdownItems(catalogFaces);
+        return;
+      }
+      var filtered = catalogFaces.filter(function(f) {
+        return (f.title && f.title.toLowerCase().indexOf(query) !== -1) ||
+               (f.description_en && f.description_en.toLowerCase().indexOf(query) !== -1);
+      });
+      renderDropdownItems(filtered);
+    }
+
+    function initCatalogSearch() {
+      var searchInput = document.getElementById('catalog-search');
+      var dropdown = document.getElementById('catalog-dropdown');
+      if (searchInput && dropdown) {
+        searchInput.addEventListener('focus', function() {
+          dropdown.style.display = 'flex';
+          filterCatalog();
+        });
+        
+        searchInput.addEventListener('input', function() {
+          filterCatalog();
+        });
+        
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.search-select-container')) {
+            dropdown.style.display = 'none';
+          }
+        });
+      }
+      loadCatalog();
+    }
+
+    // Toggle collapsible Create Promotion form
+    window.toggleCreateForm = function(forceState) {
+      var body = document.getElementById('create-form-body');
+      var arrow = document.getElementById('create-form-arrow');
+      var title = document.getElementById('form-title');
+      if (body && arrow && title) {
+        var isHidden = body.style.display === 'none';
+        var shouldExpand = forceState !== undefined ? forceState : isHidden;
+        
+        if (shouldExpand) {
+          body.style.display = 'flex';
+          arrow.style.transform = 'rotate(180deg)';
+          title.style.borderBottom = '1px solid var(--border)';
+          title.style.paddingBottom = '8px';
+        } else {
+          body.style.display = 'none';
+          arrow.style.transform = 'rotate(0deg)';
+          title.style.borderBottom = 'none';
+          title.style.paddingBottom = '0';
+        }
+      }
+    };
+
+    // Set initial form state: expanded on desktop (>=768px), collapsed on mobile
+    if (window.innerWidth >= 768) {
+      toggleCreateForm(true);
+    } else {
+      toggleCreateForm(false);
+    }
+
+    // Initialize catalog search
+    initCatalogSearch();
+  </script>
+</body>
+
+</html>
