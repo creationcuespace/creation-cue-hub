@@ -563,7 +563,6 @@
             border: 1px solid var(--border-color);
             border-radius: var(--border-radius-md);
             padding: 16px;
-            padding-right: 85px;
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -604,6 +603,8 @@
             width: 100%;
             min-height: 160px;
             resize: vertical;
+            padding-right: 85px;
+            box-sizing: border-box;
         }
 
         .output-short-input {
@@ -612,8 +613,11 @@
             color: var(--text-primary);
             font-family: var(--font-main);
             font-size: 14px;
-            width: 90%;
+            width: 100%;
             font-weight: 500;
+            padding-right: 85px;
+            box-sizing: border-box;
+            outline: none;
         }
 
         .rules-checker {
@@ -743,7 +747,7 @@
                 <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" class="brand-logo" alt="Logo">
                 <div class="brand-title">
                     <span>Creation<span>Cue</span>™</span>
-                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.5.8</span></span>
+                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.5.9</span></span>
                 </div>
             </a>
             <div class="header-btns">
