@@ -747,7 +747,7 @@
                 <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" class="brand-logo" alt="Logo">
                 <div class="brand-title">
                     <span>Creation<span>Cue</span>™</span>
-                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.5.9</span></span>
+                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.6.0</span></span>
                 </div>
             </a>
             <div class="header-btns">
@@ -893,6 +893,25 @@
                         </div>
                     </div>
 
+                    <!-- App Title -->
+                    <div class="form-group">
+                        <label>App Title</label>
+                        <div class="output-box-wrapper">
+                            <button class="copy-overlay-btn" onclick="copyText('out-app-title', 'App Title')">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                            <input type="text" id="out-app-title" class="output-short-input" placeholder="Hybrid Watch Face CUE..." oninput="saveDeployState()">
+                            
+                            <!-- Title Quick Options -->
+                            <div style="display: flex; gap: 8px; margin-top: 12px;">
+                                <button class="btn btn-secondary" style="flex: 1; padding: 6px; font-size: 11px;" onclick="generateTitle('Hybrid')">Hybrid</button>
+                                <button class="btn btn-secondary" style="flex: 1; padding: 6px; font-size: 11px;" onclick="generateTitle('Digital')">Digital</button>
+                                <button class="btn btn-secondary" style="flex: 1; padding: 6px; font-size: 11px;" onclick="generateTitle('Analog')">Analog</button>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Short Store Description -->
                     <div class="form-group">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -973,6 +992,28 @@
                             </button>
                             <textarea id="out-health-decl" class="output-textarea" style="min-height: 60px;" oninput="saveDeployState()">This Watch Face shows real-time activity data (BPM and Steps) sourced from Wear OS sensors.</textarea>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Support Email</label>
+                        <div class="output-box-wrapper">
+                            <button class="copy-overlay-btn" onclick="copyText('out-support-email', 'Support Email')">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                            <input type="text" id="out-support-email" class="output-short-input" value="creationcuespace@gmail.com" oninput="saveDeployState()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deployment Checklist Card -->
+                <div class="card" style="margin-top: 0;">
+                    <div class="card-title">
+                        Deployment Checklist
+                        <button class="header-btn" style="font-size: 11px; padding: 4px 8px; border-radius: 4px;" onclick="toggleChecklistEdit()" id="btn-edit-checklist">Edit Steps</button>
+                    </div>
+                    <div class="form-group" id="checklist-container">
+                        <!-- steps will be generated via JS -->
                     </div>
                 </div>
             </div>
@@ -1090,8 +1131,11 @@
                 shortDesc: document.getElementById('out-short-desc').value,
                 longDesc: document.getElementById('out-long-desc').value,
                 longDescAi: document.getElementById('out-long-desc-ai') ? document.getElementById('out-long-desc-ai').value : '',
+                appTitle: document.getElementById('out-app-title') ? document.getElementById('out-app-title').value : '',
                 policyLink: document.getElementById('out-policy-link') ? document.getElementById('out-policy-link').value : 'https://creationcuespace.github.io/creation-cue-hub/privacy.html',
                 healthDecl: document.getElementById('out-health-decl') ? document.getElementById('out-health-decl').value : 'This Watch Face shows real-time activity data (BPM and Steps) sourced from Wear OS sensors.',
+                supportEmail: document.getElementById('out-support-email') ? document.getElementById('out-support-email').value : 'creationcuespace@gmail.com',
+                checklistSteps: window.currentChecklistSteps || [],
                 features: [],
                 shortDescOptions: []
             };
@@ -1139,6 +1183,23 @@
                 saveDeployState();
             });
             updatePackageId();
+
+            if (savedState.appTitle && document.getElementById('out-app-title')) document.getElementById('out-app-title').value = savedState.appTitle;
+            if (savedState.supportEmail && document.getElementById('out-support-email')) document.getElementById('out-support-email').value = savedState.supportEmail;
+            
+            if (savedState.checklistSteps && savedState.checklistSteps.length > 0) {
+                window.currentChecklistSteps = savedState.checklistSteps;
+            } else {
+                window.currentChecklistSteps = [
+                    "1 Dashboard",
+                    "2 Test & release > production > countries",
+                    "3 Test & release > Advanced settings > add form factor wear > screenshots",
+                    "4 Test & release > Production > WearOS only > Create new release",
+                    "5 Test & release > Setup > Advanced settings > opt > not now",
+                    "6 Test & release > Production > PhoneTablets... > Create new release > not now"
+                ];
+            }
+            renderChecklist();
 
             const outShort = document.getElementById('out-short-desc');
             if (savedState.shortDesc) {
@@ -1878,6 +1939,70 @@ INSTRUCTIONS:
             const wordCount = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
             const counter = document.getElementById('long-desc-ai-counter');
             if(counter) counter.textContent = `${len} chars / ${wordCount} words`;
+        }
+
+        function generateTitle(type) {
+            let num = document.getElementById('package-num').value.trim();
+            if (!num) num = '___';
+            const titleField = document.getElementById('out-app-title');
+            if (titleField) {
+                titleField.value = `${type} Watch Face CUE${num}`;
+                saveDeployState();
+            }
+        }
+
+        let isChecklistEditable = false;
+
+        function renderChecklist() {
+            const container = document.getElementById('checklist-container');
+            if (!container) return;
+            const steps = window.currentChecklistSteps || [];
+            
+            container.innerHTML = '';
+            steps.forEach((step, index) => {
+                const stepRow = document.createElement('div');
+                stepRow.style.display = 'flex';
+                stepRow.style.gap = '8px';
+                stepRow.style.alignItems = 'flex-start';
+                stepRow.style.marginBottom = '6px';
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.style.marginTop = '4px';
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = step;
+                input.className = 'output-short-input';
+                input.style.flex = '1';
+                input.style.padding = '4px 8px';
+                input.style.background = isChecklistEditable ? 'rgba(0,0,0,0.2)' : 'transparent';
+                input.style.border = isChecklistEditable ? '1px solid var(--border-color)' : 'none';
+                input.style.borderRadius = '4px';
+                input.readOnly = !isChecklistEditable;
+                
+                input.oninput = () => {
+                    const inputs = document.querySelectorAll('#checklist-container input[type="text"]');
+                    window.currentChecklistSteps = Array.from(inputs).map(inp => inp.value);
+                    saveDeployState();
+                };
+                
+                stepRow.appendChild(checkbox);
+                stepRow.appendChild(input);
+                container.appendChild(stepRow);
+            });
+        }
+
+        function toggleChecklistEdit() {
+            isChecklistEditable = !isChecklistEditable;
+            const btn = document.getElementById('btn-edit-checklist');
+            if (btn) {
+                btn.innerText = isChecklistEditable ? 'Done Editing' : 'Edit Steps';
+                btn.style.borderColor = isChecklistEditable ? 'var(--primary)' : 'var(--border-color)';
+                btn.style.color = isChecklistEditable ? 'var(--primary)' : 'var(--text-secondary)';
+                btn.style.background = isChecklistEditable ? 'var(--primary-glow)' : 'var(--surface-variant)';
+            }
+            renderChecklist();
         }
 
         // General copy to clipboard helper
