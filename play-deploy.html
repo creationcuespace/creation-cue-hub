@@ -742,7 +742,7 @@
                 <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" class="brand-logo" alt="Logo">
                 <div class="brand-title">
                     <span>Creation<span>Cue</span>™</span>
-                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.5.3</span></span>
+                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.5.4</span></span>
                 </div>
             </a>
             <div class="header-btns">
@@ -851,6 +851,10 @@
                     <div class="features-container" id="features-list-div">
                         <!-- Dynamic items loaded by script -->
                     </div>
+
+                    <button class="btn btn-secondary" onclick="addRawFeatureRow()" style="margin-top: 8px; width: 100%; font-size: 13px; padding: 6px 12px; background: rgba(255, 193, 7, 0.1); border-color: rgba(255, 193, 7, 0.2); color: var(--primary);">
+                        + Add Custom Text Row (AI will completely ignore this row)
+                    </button>
 
                     <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 12px; margin-top: 10px;">
                         <button class="btn btn-secondary" onclick="buildStandardDescription()">
@@ -1053,7 +1057,8 @@
                 if (checkbox && textarea) {
                     data.features.push({
                         text: textarea.value,
-                        checked: checkbox.checked
+                        checked: checkbox.checked,
+                        isRaw: row.dataset.raw === 'true'
                     });
                 }
             });
@@ -1279,6 +1284,11 @@
             loadedFeatures.forEach((featObj, index) => {
                 const row = document.createElement('div');
                 row.className = 'feature-row' + (featObj.checked ? ' checked-row' : '');
+                if (featObj.isRaw) {
+                    row.dataset.raw = 'true';
+                    row.style.borderLeft = '3px solid var(--primary)';
+                    row.style.backgroundColor = 'rgba(255, 193, 7, 0.05)';
+                }
                 row.id = `row-feat-${index}`;
                 row.draggable = true;
 
@@ -1630,7 +1640,7 @@ Enjoying ${faceName}? Leave a review on the Play Store to help us grow and creat
                 const chk = row.querySelector('.feature-checkbox');
                 const txtArea = row.querySelector('.feature-textarea');
                 if (chk && chk.checked && txtArea) {
-                    checked.push(txtArea.value.trim());
+                    checked.push({ text: txtArea.value.trim(), isRaw: row.dataset.raw === 'true' });
                 }
             });
             return checked;
@@ -1644,9 +1654,13 @@ Enjoying ${faceName}? Leave a review on the Play Store to help us grow and creat
             if (features.length > 0) {
                 result += "Key Features:\n";
                 features.forEach(f => {
-                    // Check if it already has bullet
-                    let featText = f.replace(/^[-*•▸]\s*/, '');
-                    result += `▸ ${featText}\n\n`;
+                    if (f.isRaw) {
+                        result += `${f.text}\n\n`;
+                    } else {
+                        // Check if it already has bullet
+                        let featText = f.text.replace(/^[-*•▸]\s*/, '');
+                        result += `▸ ${featText}\n\n`;
+                    }
                 });
                 result += "\n";
             }
@@ -1680,7 +1694,17 @@ Enjoying ${faceName}? Leave a review on the Play Store to help us grow and creat
             btn.disabled = true;
             btn.innerHTML = '<div class="spinner"></div> Optimizing...';
 
-            const featuresListString = features.map(f => `▸ ${f.replace(/^[-*•▸]\s*/, '')}`).join('\n\n');
+            let rawMap = {};
+            let rawCounter = 0;
+            const featuresListString = features.map(f => {
+                if (f.isRaw) {
+                    const id = `[[RAW_${rawCounter++}]]`;
+                    rawMap[id] = f.text;
+                    return id;
+                } else {
+                    return `▸ ${f.text.replace(/^[-*•▸]\s*/, '')}`;
+                }
+            }).join('\n\n');
             const promptText = `Generate a Google Play Store long description for a Wear OS watch face based on the list of features provided.
 Features List:
 ${featuresListString}
@@ -1732,6 +1756,13 @@ INSTRUCTIONS:
                     throw new Error(`Prompt blocked. Reason: ${data.promptFeedback.blockReason}`);
                 }
 
+                // Swap raw placeholders back in
+                for (const [id, originalText] of Object.entries(rawMap)) {
+                    output = output.replace(`▸ ${id}`, originalText);
+                    output = output.replace(`- ${id}`, originalText);
+                    output = output.replace(id, originalText);
+                }
+
                 // Merge and format
                 let finalDescription = `${output}\n\n${getFooterText()}`;
 
@@ -1747,6 +1778,26 @@ INSTRUCTIONS:
                 btn.disabled = false;
                 btn.innerHTML = originalText;
             }
+        }
+
+        function addRawFeatureRow() {
+            let loaded = [];
+            const listDiv = document.getElementById('features-list-div');
+            const rows = listDiv.querySelectorAll('.feature-row');
+            rows.forEach(row => {
+                const checkbox = row.querySelector('.feature-checkbox');
+                const textarea = row.querySelector('.feature-textarea');
+                if (checkbox && textarea) {
+                    loaded.push({ text: textarea.value, checked: checkbox.checked, isRaw: row.dataset.raw === 'true' });
+                }
+            });
+            loaded.push({ text: "", checked: true, isRaw: true });
+            populateFeaturesList(loaded);
+            saveDeployState();
+            setTimeout(() => {
+                const newRows = listDiv.querySelectorAll('.feature-row');
+                if (newRows.length > 0) newRows[newRows.length - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
         }
 
         // Live long description stats
