@@ -742,7 +742,7 @@
                 <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" class="brand-logo" alt="Logo">
                 <div class="brand-title">
                     <span>Creation<span>Cue</span>™</span>
-                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.5.4</span></span>
+                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.5.5</span></span>
                 </div>
             </a>
             <div class="header-btns">
@@ -920,15 +920,30 @@
                     <!-- Long Store Description -->
                     <div class="form-group">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <label>Long Description</label>
+                            <label>Standard Description</label>
                             <span id="long-desc-counter" style="font-size: 11px; color: var(--text-muted); font-weight: 500;">0 chars / 0 words</span>
                         </div>
                         <div class="output-box-wrapper">
-                            <button class="copy-overlay-btn" onclick="copyText('out-long-desc', 'Long description')">
+                            <button class="copy-overlay-btn" onclick="copyText('out-long-desc', 'Standard description')">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                                 Copy
                             </button>
-                            <textarea id="out-long-desc" class="output-textarea" placeholder="Generated long description will appear here..." oninput="updateLongDescStats(this.value)"></textarea>
+                            <textarea id="out-long-desc" class="output-textarea" placeholder="Generated standard description will appear here..." oninput="updateLongDescStats(this.value)"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Long Store Description (AI) -->
+                    <div class="form-group">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <label>AI Optimized Description <span style="font-size: 10px; background: rgba(255,193,7,0.2); color: var(--primary); padding: 2px 6px; border-radius: 4px; margin-left: 8px;">Gemini</span></label>
+                            <span id="long-desc-ai-counter" style="font-size: 11px; color: var(--text-muted); font-weight: 500;">0 chars / 0 words</span>
+                        </div>
+                        <div class="output-box-wrapper" style="border-color: rgba(255, 193, 7, 0.4);">
+                            <button class="copy-overlay-btn" onclick="copyText('out-long-desc-ai', 'AI description')">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                            <textarea id="out-long-desc-ai" class="output-textarea" placeholder="Generated AI description will appear here..." oninput="updateLongDescAIStats(this.value)"></textarea>
                         </div>
                     </div>
                 </div>
@@ -1046,6 +1061,7 @@
                 packageNum: document.getElementById('package-num').value,
                 shortDesc: document.getElementById('out-short-desc').value,
                 longDesc: document.getElementById('out-long-desc').value,
+                longDescAi: document.getElementById('out-long-desc-ai') ? document.getElementById('out-long-desc-ai').value : '',
                 features: [],
                 shortDescOptions: []
             };
@@ -1130,6 +1146,15 @@
                 if (typeof updateLongDescStats === 'function') updateLongDescStats(savedState.longDesc);
             }
             outLong.addEventListener('input', saveDeployState);
+
+            const outLongAi = document.getElementById('out-long-desc-ai');
+            if (outLongAi) {
+                if (savedState.longDescAi) {
+                    outLongAi.value = savedState.longDescAi;
+                    if (typeof updateLongDescAIStats === 'function') updateLongDescAIStats(savedState.longDescAi);
+                }
+                outLongAi.addEventListener('input', saveDeployState);
+            }
 
             setupImageDragAndDrop();
             populateFeaturesList(savedState.features);
@@ -1766,9 +1791,10 @@ INSTRUCTIONS:
                 // Merge and format
                 let finalDescription = `${output}\n\n${getFooterText()}`;
 
-                const outArea = document.getElementById('out-long-desc');
-                outArea.value = finalDescription;
-                updateLongDescStats(finalDescription);
+                const outAreaAi = document.getElementById('out-long-desc-ai');
+                outAreaAi.value = finalDescription;
+                updateLongDescAIStats(finalDescription);
+                saveDeployState();
                 showToast("Long description optimized with Gemini AI!");
 
             } catch (err) {
@@ -1806,6 +1832,13 @@ INSTRUCTIONS:
             const wordCount = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
             const counter = document.getElementById('long-desc-counter');
             counter.textContent = `${len} chars / ${wordCount} words`;
+        }
+
+        function updateLongDescAIStats(text) {
+            const len = text.length;
+            const wordCount = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            const counter = document.getElementById('long-desc-ai-counter');
+            if(counter) counter.textContent = `${len} chars / ${wordCount} words`;
         }
 
         // General copy to clipboard helper
