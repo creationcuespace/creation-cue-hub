@@ -753,7 +753,7 @@
                 <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" class="brand-logo" alt="Logo">
                 <div class="brand-title">
                     <span>Creation<span>Cue</span>™</span>
-                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.6.3</span></span>
+                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.6.4</span></span>
                 </div>
             </a>
             <div class="header-btns">
@@ -887,37 +887,6 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     </div>
 
-                    <!-- Package ID -->
-                    <div class="form-group">
-                        <label>Package ID</label>
-                        <div class="output-box-wrapper" style="padding: 12px 16px;">
-                            <span id="out-package-id" style="font-family: monospace; font-size: 14px; font-weight: 600; color: var(--primary);">com.creation.cue___watchface</span>
-                            <button class="copy-overlay-btn" onclick="copyText('out-package-id', 'Package ID')">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                                Copy
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- App Title -->
-                    <div class="form-group">
-                        <label>App Title</label>
-                        <div class="output-box-wrapper">
-                            <button class="copy-overlay-btn" onclick="copyText('out-app-title', 'App Title')">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                                Copy
-                            </button>
-                            <input type="text" id="out-app-title" class="output-short-input" placeholder="Hybrid Watch Face CUE..." oninput="saveDeployState()">
-                            
-                            <!-- Title Quick Options -->
-                            <div style="display: flex; gap: 8px; margin-top: 12px;">
-                                <button class="btn btn-secondary" style="flex: 1; padding: 6px; font-size: 11px;" onclick="generateTitle('Hybrid')">Hybrid</button>
-                                <button class="btn btn-secondary" style="flex: 1; padding: 6px; font-size: 11px;" onclick="generateTitle('Digital')">Digital</button>
-                                <button class="btn btn-secondary" style="flex: 1; padding: 6px; font-size: 11px;" onclick="generateTitle('Analog')">Analog</button>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Short Store Description -->
                     <div class="form-group">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -1013,10 +982,49 @@
                 </div>
             </div>
 
-            <!-- Third Column (Checklist) -->
-            <div style="display: flex; flex-direction: column; gap: 24px;">
+            <!-- Third Column (Config & Checklist) -->
+            <div style="display: flex; flex-direction: column; gap: 24px; position: sticky; top: 88px;">
+                <!-- App Config Card -->
+                <div class="card" style="margin-top: 0;">
+                    <div class="card-title">
+                        App Identity
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    </div>
+
+                    <!-- Package ID -->
+                    <div class="form-group">
+                        <label>Package ID</label>
+                        <div class="output-box-wrapper" style="padding: 12px 16px;">
+                            <span id="out-package-id" style="font-family: monospace; font-size: 14px; font-weight: 600; color: var(--primary);">com.creation.cue___watchface</span>
+                            <button class="copy-overlay-btn" onclick="copyText('out-package-id', 'Package ID')">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- App Title -->
+                    <div class="form-group">
+                        <label>App Title</label>
+                        <div class="output-box-wrapper">
+                            <button class="copy-overlay-btn" onclick="copyText('out-app-title', 'App Title')">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                            <input type="text" id="out-app-title" class="output-short-input" placeholder="Hybrid Watch Face CUE..." oninput="saveDeployState()">
+                            
+                            <!-- Title Quick Options -->
+                            <div style="display: flex; gap: 8px; margin-top: 12px;">
+                                <button class="btn btn-secondary" style="flex: 1; padding: 6px; font-size: 11px;" onclick="generateTitle('Hybrid')">Hybrid</button>
+                                <button class="btn btn-secondary" style="flex: 1; padding: 6px; font-size: 11px;" onclick="generateTitle('Digital')">Digital</button>
+                                <button class="btn btn-secondary" style="flex: 1; padding: 6px; font-size: 11px;" onclick="generateTitle('Analog')">Analog</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Deployment Checklist Card -->
-                <div class="card" style="margin-top: 0; position: sticky; top: 88px;">
+                <div class="card" style="margin-top: 0;">
                     <div class="card-title">
                         Deployment Checklist
                         <button class="header-btn" style="font-size: 11px; padding: 4px 8px; border-radius: 4px;" onclick="toggleChecklistEdit()" id="btn-edit-checklist">Edit Steps</button>
