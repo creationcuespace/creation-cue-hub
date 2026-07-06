@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script>if(location.hostname.includes("firebaseapp.com")){location.replace(location.href.replace(location.hostname,"creation-cue-manage.web.app"));}</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://cdn.jsdelivr.net https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.jsdelivr.net https://creationcue.space https://via.placeholder.com https://wsrv.nl https://*.googleusercontent.com https://raw.githubusercontent.com https://*.githubusercontent.com; connect-src 'self' https://raw.githubusercontent.com wss://*.firebasedatabase.app wss://*.europe-west1.firebasedatabase.app https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.google.com/recaptcha/ https://ntfy.sh https://corsproxy.io https://api.allorigins.win https://generativelanguage.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://*.firebaseapp.com https://accounts.google.com https://content-firebaseauth.googleapis.com https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://www.google.com/recaptcha/ https://recaptcha.net/;">
+    <meta name="theme-color" content="#141414">
+    <title>CreationCue | Play Store Deploy Helper</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Teko:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+    <!-- Favicon (Deploy Gold theme) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23f1b31c'/%3E%3Cstop offset='100%25' stop-color='%23ff9f00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='5' fill='url(%23g)'/%3E%3Cpath d='M12,4 L19,9 L19,16 L12,20 L5,16 L5,9 Z' fill='none' stroke='black' stroke-width='1.5'/%3E%3Cpolyline points='12,4 12,20' stroke='black' stroke-width='1'/%3E%3Cpolyline points='5,9 12,13 19,9' fill='none' stroke='black' stroke-width='1'/%3E%3C/svg%3E">
+
+    <style>
+        :root {
+            --bg-color: hsl(240, 10%, 3%);
+            --surface-color: hsl(240, 10%, 7%);
+            --surface-hover: hsl(240, 10%, 12%);
+            --surface-variant: hsl(240, 5%, 15%);
+            
+            --primary: hsl(43, 89%, 53%);      /* Custom Gold #f1b31c */
+            --primary-glow: hsla(43, 89%, 53%, 0.15);
+            --primary-text: hsl(43, 89%, 60%);
+            
+            --text-primary: hsl(0, 0%, 100%);
+            --text-secondary: hsl(240, 5%, 70%);
+            --text-muted: hsl(240, 5%, 45%);
+            
+            --success: hsl(142, 72%, 40%);
+            --success-bg: hsla(142, 72%, 29%, 0.15);
+            --warning: hsl(27, 96%, 51%);
+            --warning-bg: hsla(27, 96%, 51%, 0.15);
+            --danger: hsl(350, 89%, 50%);
+            --danger-bg: hsla(350, 89%, 50%, 0.15);
+            
+            --border-color: hsla(0, 0%, 100%, 0.08);
+            
+            --glass-bg: rgba(15, 15, 20, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-shadow: rgba(0, 0, 0, 0.5);
+            
+            --font-main: 'Inter', sans-serif;
+            --font-display: 'Outfit', sans-serif;
+            
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius-lg: 16px;
+            --border-radius-md: 12px;
+            --border-radius-sm: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            outline: none;
+            scrollbar-width: thin;
+            scrollbar-color: var(--surface-variant) var(--bg-color);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--surface-variant);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* Top Header */
+        .top-header {
+            width: 100%;
+            background: var(--surface-color);
+            border-bottom: 2px solid var(--primary);
+            padding: 14px 20px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .brand-logo-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            height: 32px;
+            width: auto;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+        }
+
+        .brand-title {
+            display: flex;
+            flex-direction: column;
+            line-height: 0.9;
+            align-items: flex-start;
+            margin-top: -2px;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .brand-title span {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .brand-title span span {
+            color: var(--primary);
+        }
+
+        .brand-subtitle {
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: 2.2px;
+            text-transform: uppercase;
+            margin-top: 1px;
+        }
+
+        .header-btns {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .header-btn {
+            background: var(--surface-variant);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-family: 'Teko', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            line-height: 1;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-btn:hover {
+            background: var(--surface-hover);
+            color: var(--text-primary);
+            border-color: var(--text-muted);
+            transform: translateY(-1px);
+        }
+
+        .header-btn.active-btn {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            background: var(--primary-glow);
+        }
+
+        /* Container Layout */
+        .app-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 24px;
+            flex: 1;
+        }
+
+        @media (max-width: 1024px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Panel Card */
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: fit-content;
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title svg {
+            color: var(--primary);
+        }
+
+        /* Forms Styling */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-text {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            color: var(--text-primary);
+            padding: 12px 16px;
+            font-family: var(--font-main);
+            font-size: 14px;
+            transition: var(--transition-smooth);
+        }
+
+        .input-text:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-glow);
+        }
+
+        .textarea-custom {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Drag-and-drop Image Upload */
+        .upload-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            background: rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: var(--primary);
+            background: rgba(241, 179, 28, 0.05);
+        }
+
+        .upload-icon {
+            font-size: 32px;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+        }
+
+        .upload-zone:hover .upload-icon {
+            color: var(--primary);
+        }
+
+        .image-preview-container {
+            position: relative;
+            width: 100%;
+            max-height: 250px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            background: #000;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+        }
+
+        .clear-img-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .clear-img-btn:hover {
+            background: var(--danger);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* API Settings Panel Drawer */
+        .settings-toggle {
+            font-size: 12px;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            user-select: none;
+            width: fit-content;
+            transition: var(--transition-smooth);
+        }
+
+        .settings-toggle:hover {
+            color: var(--text-secondary);
+        }
+
+        .settings-toggle svg {
+            transition: transform 0.2s ease;
+        }
+
+        .settings-toggle.active svg {
+            transform: rotate(90deg);
+        }
+
+        .settings-panel {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 12px;
+            margin-top: 4px;
+        }
+
+        /* Buttons */
+        .btn {
+            background: var(--primary);
+            color: black;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--border-radius-md);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: var(--font-main);
+        }
+
+        .btn:hover {
+            background: hsl(43, 89%, 60%);
+            box-shadow: 0 4px 16px rgba(241, 179, 28, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            background: var(--surface-variant);
+            color: var(--text-muted);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-hover);
+            border-color: var(--text-muted);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-sm {
+            padding: 8px 12px;
+            font-size: 12px;
+            border-radius: var(--border-radius-sm);
+        }
+
+        /* Checkboxes Checklist Grid */
+        .features-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .features-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 450px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-row {
+            display: grid;
+            grid-template-columns: auto auto 1fr;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 10px;
+            border-radius: var(--border-radius-sm);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid transparent;
+            transition: var(--transition-smooth);
+        }
+
+        .feature-row:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .feature-row.checked-row {
+            background: rgba(241, 179, 28, 0.03);
+            border-color: rgba(241, 179, 28, 0.15);
+        }
+
+        .drag-handle {
+            color: var(--text-muted);
+            cursor: grab;
+            padding-right: 6px;
+            padding-top: 2px;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+        }
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+        .feature-row.dragging {
+            opacity: 0.5;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .feature-row.over {
+            border-top: 2px solid var(--primary);
+        }
+
+        .feature-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+            margin-top: 4px;
+        }
+
+        .feature-textarea {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: var(--font-main);
+            font-size: 13.5px;
+            resize: none;
+            width: 100%;
+            height: auto;
+            line-height: 1.4;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: var(--transition-smooth);
+        }
+
+        .feature-textarea:focus {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+
+        .feature-row.checked-row .feature-textarea {
+            color: var(--text-primary);
+        }
+
+        /* Validation metrics styling */
+        .metric-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            line-height: 1;
+        }
+
+        .badge-success {
+            background: var(--success-bg);
+            color: var(--success);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .badge-warning {
+            background: var(--warning-bg);
+            color: var(--warning);
+            border: 1px solid rgba(255, 159, 0, 0.2);
+        }
+
+        .badge-danger {
+            background: var(--danger-bg);
+            color: var(--danger);
+            border: 1px solid rgba(232, 40, 30, 0.2);
+        }
+
+        /* Output Card Actions */
+        .output-box-wrapper {
+            position: relative;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .copy-overlay-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition-smooth);
+            z-index: 10;
+        }
+
+        .copy-overlay-btn:hover {
+            background: var(--primary);
+            color: black;
+            border-color: var(--primary);
+        }
+
+        .output-textarea {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            font-size: 13.5px;
+            line-height: 1.5;
+            width: 100%;
+            min-height: 160px;
+            resize: vertical;
+        }
+
+        .output-short-input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            font-size: 14px;
+            width: 90%;
+            font-weight: 500;
+        }
+
+        .rules-checker {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        /* Spinner */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-top: 2px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--surface-color);
+            border: 1px solid var(--primary);
+            color: var(--text-primary);
+            padding: 14px 24px;
+            border-radius: var(--border-radius-md);
+            font-weight: 600;
+            font-size: 13px;
+            box-shadow: 0 8px 24px rgba(241, 179, 28, 0.4);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition-smooth);
+            z-index: 11000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Google Sign In Overlay */
+        #login-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-color);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .logo-mark {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .logo-mark span {
+            display: block;
+            width: 12px;
+            height: 36px;
+            border-radius: 2px;
+        }
+
+        .logo-mark .r { background: #e8281e; }
+        .logo-mark .b { background: #1a3a6b; }
+        .logo-mark .y { background: var(--primary); }
+
+        .login-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            color: #333;
+            border: none;
+            border-radius: 24px;
+            padding: 12px 28px;
+            font-family: var(--font-display);
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: var(--transition-smooth);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Google Sign In Overlay -->
+    <div id="login-overlay" style="display: flex;">
+        <div class="logo-mark"><span class="r"></span><span class="b"></span><span class="y"></span></div>
+        <div style="font-family: var(--font-display); font-size: 28px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">Creation<span style="color: var(--primary);">Cue</span></div>
+        <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px;">Sign in with Google to access Deploy Helper</div>
+        <div id="login-loading" style="display: none;" class="spinner"></div>
+        <button id="btn-google-login" class="login-btn">
+            <svg width="18" height="18" viewBox="0 0 48 48">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+            </svg>
+            SIGN IN WITH GOOGLE
+        </button>
+    </div>
+
+    <!-- Main Container -->
+    <div id="admin-container" style="display: none; flex-direction: column; min-height: 100vh;">
+        <!-- Header -->
+        <header class="top-header">
+            <a href="index.html" class="brand-logo-area">
+                <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" class="brand-logo" alt="Logo">
+                <div class="brand-title">
+                    <span>Creation<span>Cue</span>™</span>
+                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.5.3</span></span>
+                </div>
+            </a>
+            <div class="header-btns">
+                <a href="manage-coupons.html" class="header-btn">Coupons</a>
+                <a href="social-generator.html" class="header-btn">Socials</a>
+                <a href="month-planner.html" class="header-btn">Planner</a>
+                <a href="play-versions.html" class="header-btn">Versions</a>
+                <a href="play-deploy.html" class="header-btn active-btn">Deploy</a>
+                <button onclick="handleLogout()" class="header-btn">Logout</button>
+            </div>
+        </header>
+
+        <!-- Body content -->
+        <main class="app-container">
+            <!-- Left Side Inputs -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                <!-- Package ID generator -->
+                <div class="card">
+                    <div class="card-title">
+                        Package ID Generator
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                    </div>
+                    <div class="form-group">
+                        <label for="package-num">Watch Face Number</label>
+                        <input type="number" id="package-num" class="input-text" placeholder="e.g. 178" min="1" step="1">
+                    </div>
+                </div>
+
+                <!-- Short Description AI Generator -->
+                <div class="card">
+                    <div class="card-title">
+                        Short Description Generator
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </div>
+                    
+                    <!-- Settings Drawer for API Key -->
+                    <div class="settings-toggle" id="settings-toggle" onclick="toggleSettingsPanel()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        Gemini API Settings
+                    </div>
+                    <div class="settings-panel" id="settings-panel">
+                        <div class="form-group">
+                            <label for="gemini-key">Gemini API Key</label>
+                            <input type="password" id="gemini-key" class="input-text" placeholder="Paste your API key here..." oninput="saveApiKey(this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label for="gemini-model">Gemini Model</label>
+                            <input type="text" id="gemini-model" class="input-text" placeholder="e.g. gemini-1.5-flash" oninput="saveApiSettings()">
+                            <div style="font-size: 11px; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; line-height: 1.4;">
+                                Presets: 
+                                <span style="color: var(--primary); cursor: pointer; text-decoration: underline;" onclick="setPresetModel('gemini-1.5-flash')">1.5-flash</span> |
+                                <span style="color: var(--primary); cursor: pointer; text-decoration: underline;" onclick="setPresetModel('gemini-2.5-flash')">2.5-flash</span> |
+                                <span style="color: var(--primary); cursor: pointer; text-decoration: underline;" onclick="setPresetModel('gemini-2.0-flash')">2.0-flash</span> |
+                                <span style="color: var(--primary); cursor: pointer; text-decoration: underline;" onclick="setPresetModel('gemini-1.5-flash-8b')">1.5-flash-8b</span> |
+                                <span style="color: var(--primary); cursor: pointer; text-decoration: underline;" onclick="setPresetModel('gemini-1.5-pro')">1.5-pro</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="gemini-version">API Version</label>
+                            <select id="gemini-version" class="input-text" style="background-color: var(--surface-color);" onchange="saveApiSettings()">
+                                <option value="v1">v1 (Stable)</option>
+                                <option value="v1beta">v1beta (Beta / Experimental)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-top: 4px;">
+                            <button class="btn btn-secondary btn-sm" onclick="listAvailableModels()" style="width: 100%;">List Available Models</button>
+                            <div id="available-models-list" style="font-size: 11px; margin-top: 8px; max-height: 120px; overflow-y: auto; display: none; background: rgba(0,0,0,0.4); padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); flex-direction: column; gap: 4px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Watch Face Screenshot</label>
+                        <div class="upload-zone" id="upload-zone">
+                            <div class="upload-icon">📸</div>
+                            <div style="font-weight: 600; font-size: 13px;">Drag & Drop Screenshot here</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">or click to select file</div>
+                            <input type="file" id="screenshot-input" accept="image/*" style="display: none;">
+                        </div>
+                        <div class="image-preview-container" id="preview-container">
+                            <img src="" alt="Preview" class="image-preview" id="img-preview">
+                            <button class="clear-img-btn" id="btn-clear-img" onclick="clearUploadedImage()" title="Clear Image">×</button>
+                        </div>
+                    </div>
+
+                    <button class="btn" id="btn-generate-short" onclick="generateShortDescription()" disabled>
+                        <span>Generate Short Description</span>
+                    </button>
+                </div>
+
+                <!-- Long Description Features checklist -->
+                <div class="card">
+                    <div class="card-title">
+                        Features Checklist
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
+
+                    <div class="features-header-bar">
+                        <label>Select Features</label>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-secondary btn-sm" onclick="toggleSelectAllFeatures(true)">Select All</button>
+                            <button class="btn btn-secondary btn-sm" onclick="toggleSelectAllFeatures(false)">Clear All</button>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Checklist Content -->
+                    <div class="features-container" id="features-list-div">
+                        <!-- Dynamic items loaded by script -->
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 12px; margin-top: 10px;">
+                        <button class="btn btn-secondary" onclick="buildStandardDescription()">
+                            Build Template
+                        </button>
+                        <button class="btn" id="btn-optimize-long" onclick="optimizeDescriptionWithAI()">
+                            <span>Optimize with Gemini AI</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side Outputs -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                <!-- Live Output Card -->
+                <div class="card" style="position: sticky; top: 88px;">
+                    <div class="card-title">
+                        Generated Store Content
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    </div>
+
+                    <!-- Package ID -->
+                    <div class="form-group">
+                        <label>Package ID</label>
+                        <div class="output-box-wrapper" style="padding: 12px 16px;">
+                            <span id="out-package-id" style="font-family: monospace; font-size: 14px; font-weight: 600; color: var(--primary);">com.creation.cue___watchface</span>
+                            <button class="copy-overlay-btn" onclick="copyText('out-package-id', 'Package ID')">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Short Store Description -->
+                    <div class="form-group">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <label>Short Description</label>
+                            <span id="short-desc-counter" class="metric-badge badge-success">0 / 80</span>
+                        </div>
+                        <div class="output-box-wrapper" style="padding: 10px 12px 14px;">
+                            <button class="copy-overlay-btn" onclick="copyText('out-short-desc', 'Short description')">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                            <input type="text" id="out-short-desc" class="output-short-input" placeholder="Generated description will appear here..." oninput="validateShortDescText(this.value)">
+                            
+                            <!-- AI Options Container -->
+                            <div id="ai-short-desc-options" style="display: none; flex-direction: column; gap: 8px; margin-top: 12px; margin-bottom: 8px;">
+                                <div style="font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Select an option:</div>
+                                <div id="ai-options-list" style="display: flex; flex-direction: column; gap: 6px;"></div>
+                            </div>
+                            
+                            <!-- AI rule checker badge lists -->
+                            <div class="rules-checker">
+                                <span class="metric-badge badge-warning" id="chk-len">Under 80 Chars</span>
+                                <span class="metric-badge badge-warning" id="chk-colors">No Colors</span>
+                                <span class="metric-badge badge-warning" id="chk-data">No Display Data</span>
+                                <span class="metric-badge badge-warning" id="chk-sentences">One Sentence</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Long Store Description -->
+                    <div class="form-group">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <label>Long Description</label>
+                            <span id="long-desc-counter" style="font-size: 11px; color: var(--text-muted); font-weight: 500;">0 chars / 0 words</span>
+                        </div>
+                        <div class="output-box-wrapper">
+                            <button class="copy-overlay-btn" onclick="copyText('out-long-desc', 'Long description')">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                            <textarea id="out-long-desc" class="output-textarea" placeholder="Generated long description will appear here..." oninput="updateLongDescStats(this.value)"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">Copied to Clipboard!</div>
+
+    <script>
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+            authDomain: "creation-cue-manage.firebaseapp.com",
+            databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "creation-cue-manage",
+            storageBucket: "creation-cue-manage.firebasestorage.app",
+            messagingSenderId: "186324516022",
+            appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
+        };
+
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
+        let currentUser = null;
+
+        // Auth redirects error handling
+        auth.getRedirectResult().catch(err => {
+            console.error("Redirect auth error:", err);
+            alert("Authentication failed: " + err.message);
+        });
+
+        // Auth Gate listener
+        auth.onAuthStateChanged(function (user) {
+            const loginOverlay = document.getElementById('login-overlay');
+            const adminContainer = document.getElementById('admin-container');
+            const loadingSpinner = document.getElementById('login-loading');
+            const loginBtn = document.getElementById('btn-google-login');
+
+            if (user && (user.email === 'sotsor@gmail.com' || user.uid === 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || user.uid === 'JKq9NWxPshRbCEXjV2eTUVV6A992')) {
+                currentUser = user;
+                loginOverlay.style.display = 'none';
+                adminContainer.style.display = 'flex';
+                initializePage();
+            } else {
+                currentUser = null;
+                loginOverlay.style.display = 'flex';
+                adminContainer.style.display = 'none';
+                loadingSpinner.style.display = 'none';
+                loginBtn.style.display = 'flex';
+                if (user) {
+                    alert("Unauthorized account. Access is restricted to the administrator.");
+                    auth.signOut();
+                }
+            }
+        });
+
+        // Sign In
+        document.getElementById('btn-google-login').addEventListener('click', () => {
+            document.getElementById('login-loading').style.display = 'block';
+            document.getElementById('btn-google-login').style.display = 'none';
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).catch(err => {
+                console.error("Sign-in failed:", err);
+                alert("Sign-in failed: " + err.message);
+                document.getElementById('login-loading').style.display = 'none';
+                document.getElementById('btn-google-login').style.display = 'flex';
+            });
+        });
+
+        // Logout
+        function handleLogout() {
+            if (confirm("Log out of Admin Dashboard?")) {
+                auth.signOut();
+            }
+        }
+
+        // --- Core Page Logic ---
+
+        // List of features - un-checked by default, editable in UI
+        const defaultFeatures = [
+            "24-hour format or AM/PM (without leading zero - based on phone settings).",
+            "For the small digital time display: 24-hour format or AM/PM (without leading zero - based on phone settings).",
+            "Big central minute digits with rotating hour numbers.",
+            "Steps counter and distance covered in km or miles plus progress bar.",
+            "The date, battery, and distance reposition when hour digits get close, staying clear and easy to read.",
+            "Current weather display with temperature, UV index, precipitation chance, min max day's temperature and weather condition (text & icon). Each UV index level is represented by a different color for easy recognition.",
+            "Forecast for the next two days includes icons, minimum and maximum temperatures, and precipitation percentage.",
+            "Battery power display with low-level alert and progress bar.",
+            "Charging indication.",
+            "Heart rate display that can be replaced with custom complication.",
+            "Customizable border colors for the battery and heart rate.",
+            "Dynamic full moon alert: only shows up 6 days before the full moon.",
+            "This watch face comes with:",
+            "Full AOD display.",
+            "2 AOD options. Full or time and date only display.",
+            "Week and Day in Year appears at the left in AOD mode.",
+            "Multiple color themes available.",
+            "Seconds gauge with a number that stays visible and never gets covered by the pointer.",
+            "Try different settings and combinations of digital time styles, border colors, and watch hands to find your personal style.",
+            "The complication slots display data from either external or pre-installed apps. These customizable areas let you add a wide variety of information.",
+            "Bold and readily readable figures for enhanced user experience.",
+            "This watch face is compatible with Wear OS watches with API Level 33+.",
+            "Best fit for the top right long text complication is 'Weather'. Best fit for the left long text complication field is 'Google Calendar' (install it on your watch)."
+        ];
+
+        let uploadedFileBase64 = null;
+        let uploadedFileMime = null;
+
+        function saveDeployState() {
+            const data = {
+                packageNum: document.getElementById('package-num').value,
+                shortDesc: document.getElementById('out-short-desc').value,
+                longDesc: document.getElementById('out-long-desc').value,
+                features: [],
+                shortDescOptions: []
+            };
+            const listDiv = document.getElementById('features-list-div');
+            const rows = listDiv.querySelectorAll('.feature-row');
+            rows.forEach(row => {
+                const checkbox = row.querySelector('.feature-checkbox');
+                const textarea = row.querySelector('.feature-textarea');
+                if (checkbox && textarea) {
+                    data.features.push({
+                        text: textarea.value,
+                        checked: checkbox.checked
+                    });
+                }
+            });
+            const optBtns = document.querySelectorAll('#ai-options-list button');
+            optBtns.forEach(btn => {
+                data.shortDescOptions.push(btn.textContent.replace(/^Option \d+: /, ''));
+            });
+            localStorage.setItem('cc_deploy_state', JSON.stringify(data));
+        }
+
+        function initializePage() {
+            // Load key from LocalStorage
+            const storedKey = localStorage.getItem('cc_gemini_api_key') || '';
+            document.getElementById('gemini-key').value = storedKey;
+
+            const storedModel = localStorage.getItem('cc_gemini_model') || 'gemini-1.5-flash';
+            document.getElementById('gemini-model').value = storedModel;
+
+            const storedVersion = localStorage.getItem('cc_gemini_version') || 'v1';
+            document.getElementById('gemini-version').value = storedVersion;
+            
+            let savedState = {};
+            try {
+                const str = localStorage.getItem('cc_deploy_state');
+                if (str) savedState = JSON.parse(str);
+            } catch(e) {}
+
+            const packageNumInput = document.getElementById('package-num');
+            if (savedState.packageNum) packageNumInput.value = savedState.packageNum;
+            packageNumInput.addEventListener('input', () => {
+                updatePackageId();
+                saveDeployState();
+            });
+            updatePackageId();
+
+            const outShort = document.getElementById('out-short-desc');
+            if (savedState.shortDesc) {
+                outShort.value = savedState.shortDesc;
+                if (typeof validateShortDescText === 'function') validateShortDescText(savedState.shortDesc);
+            }
+            outShort.addEventListener('input', saveDeployState);
+
+            if (savedState.shortDescOptions && savedState.shortDescOptions.length > 0) {
+                const optionsContainer = document.getElementById('ai-short-desc-options');
+                const optionsList = document.getElementById('ai-options-list');
+                optionsList.innerHTML = '';
+                savedState.shortDescOptions.forEach((opt, idx) => {
+                    const btnOpt = document.createElement('button');
+                    btnOpt.className = 'btn btn-secondary';
+                    btnOpt.style.padding = '8px 12px';
+                    btnOpt.style.textAlign = 'left';
+                    btnOpt.style.fontSize = '13px';
+                    btnOpt.style.lineHeight = '1.3';
+                    btnOpt.style.height = 'auto';
+                    btnOpt.textContent = `Option ${idx + 1}: ${opt}`;
+                    btnOpt.onclick = () => {
+                        outShort.value = opt;
+                        if (typeof validateShortDescText === 'function') validateShortDescText(opt);
+                        saveDeployState();
+                    };
+                    optionsList.appendChild(btnOpt);
+                });
+                optionsContainer.style.display = 'flex';
+            }
+
+            const outLong = document.getElementById('out-long-desc');
+            if (savedState.longDesc) {
+                outLong.value = savedState.longDesc;
+                if (typeof updateLongDescStats === 'function') updateLongDescStats(savedState.longDesc);
+            }
+            outLong.addEventListener('input', saveDeployState);
+
+            setupImageDragAndDrop();
+            populateFeaturesList(savedState.features);
+        }
+
+        // API settings toggle
+        function toggleSettingsPanel() {
+            const panel = document.getElementById('settings-panel');
+            const toggle = document.getElementById('settings-toggle');
+            if (panel.style.display === 'flex') {
+                panel.style.display = 'none';
+                toggle.classList.remove('active');
+            } else {
+                panel.style.display = 'flex';
+                toggle.classList.add('active');
+            }
+        }
+
+        function saveApiKey(val) {
+            localStorage.setItem('cc_gemini_api_key', val.trim());
+        }
+
+        function saveApiSettings() {
+            const model = document.getElementById('gemini-model').value;
+            const version = document.getElementById('gemini-version').value;
+            localStorage.setItem('cc_gemini_model', model.trim());
+            localStorage.setItem('cc_gemini_version', version);
+        }
+
+        function setPresetModel(modelName) {
+            document.getElementById('gemini-model').value = modelName;
+            saveApiSettings();
+        }
+
+        async function listAvailableModels() {
+            const apiKey = localStorage.getItem('cc_gemini_api_key') || '';
+            if (!apiKey) {
+                alert("Please enter an API Key first.");
+                return;
+            }
+            const listDiv = document.getElementById('available-models-list');
+            listDiv.innerHTML = '<div style="color: var(--text-secondary);">Querying available models...</div>';
+            listDiv.style.display = 'flex';
+
+            const apiVersion = document.getElementById('gemini-version').value;
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/${apiVersion}/models?key=${apiKey}`);
+                if (!response.ok) {
+                    throw new Error("Failed to fetch models list");
+                }
+                const data = await response.json();
+                listDiv.innerHTML = '';
+                
+                if (data.models && data.models.length > 0) {
+                    const header = document.createElement('div');
+                    header.style.fontWeight = 'bold';
+                    header.style.marginBottom = '4px';
+                    header.textContent = 'Available models (click to select):';
+                    listDiv.appendChild(header);
+
+                    // Filter models that support generateContent
+                    const generateModels = data.models.filter(m => m.supportedGenerationMethods.includes('generateContent'));
+                    
+                    generateModels.forEach(m => {
+                        const cleanName = m.name.replace(/^models\//, '');
+                        const item = document.createElement('span');
+                        item.style.color = 'var(--primary)';
+                        item.style.cursor = 'pointer';
+                        item.style.textDecoration = 'underline';
+                        item.style.display = 'block';
+                        item.style.margin = '2px 0';
+                        item.textContent = cleanName;
+                        item.addEventListener('click', () => {
+                            document.getElementById('gemini-model').value = cleanName;
+                            saveApiSettings();
+                        });
+                        listDiv.appendChild(item);
+                    });
+                } else {
+                    listDiv.innerHTML = '<div style="color: var(--warning);">No models found for this key.</div>';
+                }
+            } catch (err) {
+                console.error("List models error:", err);
+                listDiv.innerHTML = `<div style="color: var(--danger);">Error: ${err.message}. Ensure your API Key is correct and has the Generative Language API enabled.</div>`;
+            }
+        }
+
+        // Live Package ID generator
+        function updatePackageId() {
+            const num = document.getElementById('package-num').value.trim();
+            const display = document.getElementById('out-package-id');
+            if (num) {
+                display.textContent = `com.creation.cue${num}watchface`;
+            } else {
+                display.textContent = 'com.creation.cue___watchface';
+            }
+        }
+
+        let dragSrcEl = null;
+
+        function handleDragStart(e) {
+            dragSrcEl = this;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.outerHTML);
+            this.classList.add('dragging');
+        }
+        function handleDragOver(e) {
+            if (e.preventDefault) e.preventDefault();
+            this.classList.add('over');
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+        function handleDragEnter(e) {
+            this.classList.add('over');
+        }
+        function handleDragLeave(e) {
+            this.classList.remove('over');
+        }
+        function handleDrop(e) {
+            if (e.stopPropagation) e.stopPropagation();
+            if (dragSrcEl !== this) {
+                const list = this.parentNode;
+                const siblings = [...list.querySelectorAll('.feature-row')];
+                const srcIdx = siblings.indexOf(dragSrcEl);
+                const tgtIdx = siblings.indexOf(this);
+                if (srcIdx < tgtIdx) {
+                    this.after(dragSrcEl);
+                } else {
+                    this.before(dragSrcEl);
+                }
+                saveDeployState();
+            }
+            return false;
+        }
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            const rows = document.querySelectorAll('.feature-row');
+            rows.forEach(row => row.classList.remove('over'));
+        }
+
+        // Populate dynamic checkboxes with textareas for inline editing
+        function populateFeaturesList(savedFeaturesArray = null) {
+            const listDiv = document.getElementById('features-list-div');
+            listDiv.innerHTML = '';
+
+            let loadedFeatures = savedFeaturesArray;
+            if (!loadedFeatures || loadedFeatures.length === 0) {
+                loadedFeatures = defaultFeatures.map(f => ({ text: f, checked: false }));
+            }
+
+            loadedFeatures.forEach((featObj, index) => {
+                const row = document.createElement('div');
+                row.className = 'feature-row' + (featObj.checked ? ' checked-row' : '');
+                row.id = `row-feat-${index}`;
+                row.draggable = true;
+
+                row.addEventListener('dragstart', handleDragStart);
+                row.addEventListener('dragenter', handleDragEnter);
+                row.addEventListener('dragover', handleDragOver);
+                row.addEventListener('dragleave', handleDragLeave);
+                row.addEventListener('drop', handleDrop);
+                row.addEventListener('dragend', handleDragEnd);
+
+                const dragHandle = document.createElement('div');
+                dragHandle.className = 'drag-handle';
+                dragHandle.innerHTML = '⋮⋮';
+                dragHandle.title = "Drag to reorder";
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'feature-checkbox';
+                checkbox.id = `check-feat-${index}`;
+                checkbox.checked = featObj.checked;
+                checkbox.addEventListener('change', () => {
+                    if (checkbox.checked) row.classList.add('checked-row');
+                    else row.classList.remove('checked-row');
+                    saveDeployState();
+                });
+
+                const textarea = document.createElement('textarea');
+                textarea.className = 'feature-textarea';
+                textarea.id = `text-feat-${index}`;
+                textarea.rows = 1;
+                textarea.value = featObj.text;
+                
+                // Elastic height helper
+                textarea.addEventListener('input', () => {
+                    textarea.style.height = 'auto';
+                    textarea.style.height = textarea.scrollHeight + 'px';
+                    saveDeployState();
+                });
+
+                row.appendChild(dragHandle);
+                row.appendChild(checkbox);
+                row.appendChild(textarea);
+                listDiv.appendChild(row);
+
+                // Initial layout adjustment after inserting
+                setTimeout(() => {
+                    textarea.style.height = textarea.scrollHeight + 'px';
+                }, 0);
+            });
+        }
+
+        function toggleSelectAllFeatures(select) {
+            const listDiv = document.getElementById('features-list-div');
+            const rows = listDiv.querySelectorAll('.feature-row');
+            rows.forEach(row => {
+                const chk = row.querySelector('.feature-checkbox');
+                if (chk) {
+                    chk.checked = select;
+                    if (select) {
+                        row.classList.add('checked-row');
+                    } else {
+                        row.classList.remove('checked-row');
+                    }
+                }
+            });
+            saveDeployState();
+        }
+
+        // Screenshot Drag and Drop Logic
+        function setupImageDragAndDrop() {
+            const zone = document.getElementById('upload-zone');
+            const fileInput = document.getElementById('screenshot-input');
+
+            zone.addEventListener('click', () => fileInput.click());
+
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('dragover');
+            });
+
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('dragover');
+            });
+
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                zone.classList.remove('dragover');
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    handleImageFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files && e.target.files[0]) {
+                    handleImageFile(e.target.files[0]);
+                }
+            });
+        }
+
+        function handleImageFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please upload an image file (PNG/JPG/WEBP).');
+                return;
+            }
+
+            uploadedFileMime = file.type;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                uploadedFileBase64 = e.target.result.split(',')[1];
+                
+                // Show preview
+                document.getElementById('upload-zone').style.display = 'none';
+                const previewContainer = document.getElementById('preview-container');
+                const previewImg = document.getElementById('img-preview');
+                previewImg.src = e.target.result;
+                previewContainer.style.display = 'flex';
+
+                // Enable generator button
+                document.getElementById('btn-generate-short').disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearUploadedImage() {
+            uploadedFileBase64 = null;
+            uploadedFileMime = null;
+            
+            // Clear input and displays
+            document.getElementById('screenshot-input').value = '';
+            document.getElementById('img-preview').src = '';
+            document.getElementById('preview-container').style.display = 'none';
+            document.getElementById('upload-zone').style.display = 'flex';
+            
+            // Disable button
+            document.getElementById('btn-generate-short').disabled = true;
+        }
+
+        // --- Call Gemini REST API for Short Description ---
+        async function generateShortDescription() {
+            const apiKey = localStorage.getItem('cc_gemini_api_key') || '';
+            if (!apiKey) {
+                alert("Please set your Gemini API Key in the settings panel first.");
+                toggleSettingsPanel();
+                return;
+            }
+
+            if (!uploadedFileBase64) {
+                alert("Please upload a watch face screenshot first.");
+                return;
+            }
+
+            const btn = document.getElementById('btn-generate-short');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner"></div> Generating...';
+
+            const promptText = "Generate exactly 3 different options for a Google Play Store short description for this watch face.\nIMPORTANT: Do not mention colors, and do not mention any data like steps or battery.\nSEO REQUIREMENT: You MUST naturally include the exact phrase 'watch face' or 'Wear OS' in every single option to ensure it ranks in search results.\nEach option must be exactly one short, engaging sentence.\nOutput the 3 options separated by a newline, with no numbers or bullet points.\nExample output:\nA clean, modern watch face layout with premium aesthetics.\nThis bold digital Wear OS display features a sporty design.\nA sleek and minimalistic watch face for everyday use.";
+
+            const modelName = localStorage.getItem('cc_gemini_model') || 'gemini-1.5-flash';
+            const apiVersion = localStorage.getItem('cc_gemini_version') || 'v1';
+
+            try {
+                // Fetch using retry mechanism
+                const response = await fetch(`https://generativelanguage.googleapis.com/${apiVersion}/models/${modelName}:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [
+                            {
+                                parts: [
+                                    { text: promptText },
+                                    {
+                                        inlineData: {
+                                            mimeType: uploadedFileMime,
+                                            data: uploadedFileBase64
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        generationConfig: {
+                            temperature: 0.7
+                        }
+                    })
+                });
+
+                if (!response.ok) {
+                    const errBody = await response.json();
+                    throw new Error(errBody.error ? errBody.error.message : 'API call failed');
+                }
+
+                const data = await response.json();
+                let output = '';
+                if (data.candidates && data.candidates.length > 0) {
+                    const candidate = data.candidates[0];
+                    if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
+                        output = candidate.content.parts[0].text.trim();
+                    } else if (candidate.finishReason) {
+                        throw new Error(`Generation stopped early. Reason: ${candidate.finishReason}`);
+                    }
+                } else if (data.promptFeedback && data.promptFeedback.blockReason) {
+                    throw new Error(`Prompt blocked. Reason: ${data.promptFeedback.blockReason}`);
+                }
+
+                // Split by newline and filter empty
+                const options = output.split(/\r?\n/).map(s => s.replace(/^[0-9.-]+\s*/, '').replace(/^[-*•]\s*/, '').replace(/^"|"$/g, '').replace(/^'|'$/g, '').trim()).filter(s => s.length > 0);
+                
+                if (options.length > 0) {
+                    const outField = document.getElementById('out-short-desc');
+                    outField.value = options[0];
+                    validateShortDescText(options[0]);
+                    
+                    const optionsContainer = document.getElementById('ai-short-desc-options');
+                    const optionsList = document.getElementById('ai-options-list');
+                    optionsList.innerHTML = '';
+                    options.forEach((opt, idx) => {
+                        const btnOpt = document.createElement('button');
+                        btnOpt.className = 'btn btn-secondary';
+                        btnOpt.style.padding = '8px 12px';
+                        btnOpt.style.textAlign = 'left';
+                        btnOpt.style.fontSize = '13px';
+                        btnOpt.style.lineHeight = '1.3';
+                        btnOpt.style.height = 'auto';
+                        btnOpt.textContent = `Option ${idx + 1}: ${opt}`;
+                        btnOpt.onclick = () => {
+                            outField.value = opt;
+                            validateShortDescText(opt);
+                            saveDeployState();
+                        };
+                        optionsList.appendChild(btnOpt);
+                    });
+                    optionsContainer.style.display = 'flex';
+                }
+                
+                showToast("Short descriptions generated!");
+                saveDeployState();
+
+            } catch (err) {
+                console.error("Gemini API Error:", err);
+                alert("Gemini generation failed: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
+        // Real-time SEO and Rules Checker for Short Description
+        const colorWords = ['red', 'blue', 'green', 'yellow', 'gold', 'white', 'black', 'orange', 'purple', 'pink', 'brown', 'gray', 'grey', 'cyan', 'magenta', 'turquoise', 'silver', 'bronze'];
+        const dataWords = ['time', 'date', 'steps', 'battery', 'heart', 'bpm', 'kcal', 'calories', 'weather', 'temp', 'temperature', 'uv', 'index', 'moon', 'am', 'pm', '24h', '24-hour', '12h', '12-hour', 'clock'];
+
+        function validateShortDescText(text) {
+            const textLower = text.toLowerCase();
+            const len = text.length;
+
+            // Character counter
+            const counterBadge = document.getElementById('short-desc-counter');
+            counterBadge.textContent = `${len} / 80`;
+
+            if (len > 80) {
+                counterBadge.className = 'metric-badge badge-danger';
+            } else if (len > 70) {
+                counterBadge.className = 'metric-badge badge-warning';
+            } else {
+                counterBadge.className = 'metric-badge badge-success';
+            }
+
+            // Check length rule
+            const chkLen = document.getElementById('chk-len');
+            if (len <= 80 && len > 0) {
+                chkLen.className = 'metric-badge badge-success';
+                chkLen.textContent = '✓ Under 80 Chars';
+            } else {
+                chkLen.className = 'metric-badge badge-danger';
+                chkLen.textContent = len === 0 ? 'Under 80 Chars' : '✗ Over 80 Chars';
+            }
+
+            // Check color rule
+            const chkColors = document.getElementById('chk-colors');
+            const hasColors = colorWords.some(w => {
+                const reg = new RegExp(`\\b${w}\\b`, 'i');
+                return reg.test(textLower);
+            });
+            if (len === 0) {
+                chkColors.className = 'metric-badge badge-warning';
+                chkColors.textContent = 'No Colors';
+            } else if (!hasColors) {
+                chkColors.className = 'metric-badge badge-success';
+                chkColors.textContent = '✓ No Colors';
+            } else {
+                chkColors.className = 'metric-badge badge-danger';
+                chkColors.textContent = '✗ Colors Mentioned';
+            }
+
+            // Check data rule
+            const chkData = document.getElementById('chk-data');
+            const hasData = dataWords.some(w => {
+                const reg = new RegExp(`\\b${w}\\b`, 'i');
+                return reg.test(textLower);
+            });
+            if (len === 0) {
+                chkData.className = 'metric-badge badge-warning';
+                chkData.textContent = 'No Display Data';
+            } else if (!hasData) {
+                chkData.className = 'metric-badge badge-success';
+                chkData.textContent = '✓ No Display Data';
+            } else {
+                chkData.className = 'metric-badge badge-danger';
+                chkData.textContent = '✗ Display Data Mentioned';
+            }
+
+            // Check sentences rule (one sentence has exactly one or zero periods at the very end)
+            const chkSentences = document.getElementById('chk-sentences');
+            const sentencesCount = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+            if (len === 0) {
+                chkSentences.className = 'metric-badge badge-warning';
+                chkSentences.textContent = 'One Sentence';
+            } else if (sentencesCount <= 1) {
+                chkSentences.className = 'metric-badge badge-success';
+                chkSentences.textContent = '✓ One Sentence';
+            } else {
+                chkSentences.className = 'metric-badge badge-danger';
+                chkSentences.textContent = '✗ Multiple Sentences';
+            }
+        }
+
+        // --- Long Description Formatting & Optimization ---
+
+        function getFooterText() {
+            let num = document.getElementById('package-num').value.trim();
+            if (!num) num = '___';
+            const faceName = `CUE${num}`;
+
+            return `Compatibility:
+Built for modern smartwatches. Compatible with all Wear OS devices running API Level 33+.
+
+Support and Feedback:
+For technical assistance, feature requests, or general inquiries, please contact our team:
+Email: creationcuespace@gmail.com
+
+Enjoying ${faceName}? Leave a review on the Play Store to help us grow and create more designs!`;
+        }
+
+        // Gather all UI features that are checked (and edited)
+        function getCheckedFeatures() {
+            const checked = [];
+            const listDiv = document.getElementById('features-list-div');
+            const rows = listDiv.querySelectorAll('.feature-row');
+            rows.forEach(row => {
+                const chk = row.querySelector('.feature-checkbox');
+                const txtArea = row.querySelector('.feature-textarea');
+                if (chk && chk.checked && txtArea) {
+                    checked.push(txtArea.value.trim());
+                }
+            });
+            return checked;
+        }
+
+        function buildStandardDescription() {
+            const features = getCheckedFeatures();
+
+            let result = '';
+            
+            if (features.length > 0) {
+                result += "Key Features:\n";
+                features.forEach(f => {
+                    // Check if it already has bullet
+                    let featText = f.replace(/^[-*•▸]\s*/, '');
+                    result += `▸ ${featText}\n\n`;
+                });
+                result += "\n";
+            }
+
+            result += getFooterText();
+
+            const outArea = document.getElementById('out-long-desc');
+            outArea.value = result;
+            updateLongDescStats(result);
+            showToast("Standard template built!");
+            saveDeployState();
+        }
+
+        async function optimizeDescriptionWithAI() {
+            const apiKey = localStorage.getItem('cc_gemini_api_key') || '';
+            if (!apiKey) {
+                alert("Please set your Gemini API Key in the settings panel first.");
+                toggleSettingsPanel();
+                return;
+            }
+
+            const features = getCheckedFeatures();
+
+            if (features.length === 0) {
+                alert("Please select at least one feature to optimize.");
+                return;
+            }
+
+            const btn = document.getElementById('btn-optimize-long');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner"></div> Optimizing...';
+
+            const featuresListString = features.map(f => `▸ ${f.replace(/^[-*•▸]\s*/, '')}`).join('\n\n');
+            const promptText = `Generate a Google Play Store long description for a Wear OS watch face based on the list of features provided.
+Features List:
+${featuresListString}
+
+INSTRUCTIONS:
+1. Format this into a simple, professional Google Play Store description.
+2. Structure the description logically with a short engaging hook, followed by a "Key Features:" section.
+3. Keep the features list simple. Just mention the features. ALWAYS put a "▸" symbol directly in front of each feature, and separate each feature with a blank line.
+4. POLICY COMPLIANCE: Do NOT mention "battery saver" or similar battery saving terminology. Heart rate displays should NOT sound like medical instruments (e.g. use "heart rate display" or "monitor", do not use medical terminology). Ensure full Google Play Store policy compliance.
+5. Do NOT output markdown code blocks (e.g. do not wrap with \`\`\` or \`\`\`markdown). Output raw text.
+6. Do NOT include any links, social media profiles, or email addresses in your generated description (these will be added separately by the system).`;
+
+            const modelName = localStorage.getItem('cc_gemini_model') || 'gemini-1.5-flash';
+            const apiVersion = localStorage.getItem('cc_gemini_version') || 'v1';
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/${apiVersion}/models/${modelName}:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [
+                            {
+                                parts: [
+                                    { text: promptText }
+                                ]
+                            }
+                        ],
+                        generationConfig: {
+                            temperature: 0.4
+                        }
+                    })
+                });
+
+                if (!response.ok) {
+                    const errBody = await response.json();
+                    throw new Error(errBody.error ? errBody.error.message : 'API call failed');
+                }
+
+                const data = await response.json();
+                let output = '';
+                if (data.candidates && data.candidates.length > 0) {
+                    const candidate = data.candidates[0];
+                    if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
+                        output = candidate.content.parts[0].text.trim();
+                    } else if (candidate.finishReason) {
+                        throw new Error(`Generation stopped early. Reason: ${candidate.finishReason}`);
+                    }
+                } else if (data.promptFeedback && data.promptFeedback.blockReason) {
+                    throw new Error(`Prompt blocked. Reason: ${data.promptFeedback.blockReason}`);
+                }
+
+                // Merge and format
+                let finalDescription = `${output}\n\n${getFooterText()}`;
+
+                const outArea = document.getElementById('out-long-desc');
+                outArea.value = finalDescription;
+                updateLongDescStats(finalDescription);
+                showToast("Long description optimized with Gemini AI!");
+
+            } catch (err) {
+                console.error("Gemini API Error:", err);
+                alert("Gemini optimization failed: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
+        // Live long description stats
+        function updateLongDescStats(text) {
+            const len = text.length;
+            const wordCount = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            const counter = document.getElementById('long-desc-counter');
+            counter.textContent = `${len} chars / ${wordCount} words`;
+        }
+
+        // General copy to clipboard helper
+        function copyText(elementId, labelName) {
+            const el = document.getElementById(elementId);
+            let textToCopy = '';
+            
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                textToCopy = el.value;
+            } else {
+                textToCopy = el.textContent;
+            }
+
+            if (!textToCopy) {
+                alert(`No ${labelName} content available to copy.`);
+                return;
+            }
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast(`${labelName} copied to clipboard!`);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                alert('Copying failed. Please copy the text manually.');
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+
+</html>

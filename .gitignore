@@ -1,0 +1,4 @@
+# Google Play credentials
+play-credentials.json
+node_modules/
+.firebase/
