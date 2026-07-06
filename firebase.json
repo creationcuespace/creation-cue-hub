@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "creationcue",
     "public": ".",
     "ignore": [
       "firebase.json",
