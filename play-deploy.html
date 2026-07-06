@@ -56,7 +56,29 @@
             --border-radius-lg: 16px;
             --border-radius-md: 12px;
             --border-radius-sm: 8px;
+
+            --zone-input: hsl(210, 100%, 56%);
+            --zone-gen: hsl(142, 72%, 40%);
+            --zone-config: hsl(280, 80%, 65%);
         }
+
+        .zone-input { border-top: 2px solid var(--zone-input); }
+        .zone-gen { border-top: 2px solid var(--zone-gen); }
+        .zone-config { border-top: 2px solid var(--zone-config); }
+
+        .badge-tag {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+        .badge-input { background: hsla(210, 100%, 56%, 0.15); color: var(--zone-input); }
+        .badge-gen { background: var(--success-bg); color: var(--zone-gen); }
+        .badge-config { background: hsla(280, 80%, 65%, 0.15); color: var(--zone-config); }
 
         * {
             box-sizing: border-box;
@@ -258,7 +280,8 @@
         }
 
         .input-text {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
             border: 1px solid var(--border-color);
             border-radius: var(--border-radius-md);
             color: var(--text-primary);
@@ -565,7 +588,8 @@
         /* Output Card Actions */
         .output-box-wrapper {
             position: relative;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border-color);
             border-radius: var(--border-radius-md);
             padding: 16px;
@@ -753,7 +777,7 @@
                 <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" class="brand-logo" alt="Logo">
                 <div class="brand-title">
                     <span>Creation<span>Cue</span>™</span>
-                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.6.5</span></span>
+                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.7.0</span></span>
                 </div>
             </a>
             <div class="header-btns">
@@ -771,9 +795,9 @@
             <!-- Left Side Inputs -->
             <div style="display: flex; flex-direction: column; gap: 24px;">
                 <!-- Package ID generator -->
-                <div class="card">
+                <div class="card zone-input">
                     <div class="card-title">
-                        Package ID Generator
+                        <div><span class="badge-tag badge-input">Input</span> Package ID Generator</div>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
                     </div>
                     <div class="form-group">
@@ -783,9 +807,9 @@
                 </div>
 
                 <!-- Short Description AI Generator -->
-                <div class="card">
+                <div class="card zone-input">
                     <div class="card-title">
-                        Short Description Generator
+                        <div><span class="badge-tag badge-input">Input</span> Short Description Generator</div>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                     </div>
                     
@@ -844,9 +868,9 @@
                 </div>
 
                 <!-- Long Description Features checklist -->
-                <div class="card">
+                <div class="card zone-input">
                     <div class="card-title">
-                        Features Checklist
+                        <div><span class="badge-tag badge-input">Input</span> Features Checklist</div>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                     </div>
 
@@ -881,9 +905,9 @@
             <!-- Right Side Outputs -->
             <div style="display: flex; flex-direction: column; gap: 24px;">
                 <!-- Live Output Card -->
-                <div class="card">
+                <div class="card zone-gen">
                     <div class="card-title">
-                        Generated Store Content
+                        <div><span class="badge-tag badge-gen">Auto-Generated</span> Generated Store Content</div>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     </div>
 
@@ -952,9 +976,9 @@
             <!-- Third Column (Config & Checklist) -->
             <div style="display: flex; flex-direction: column; gap: 24px; position: sticky; top: 88px;">
                 <!-- App Config Card -->
-                <div class="card" style="margin-top: 0;">
+                <div class="card zone-config" style="margin-top: 0;">
                     <div class="card-title">
-                        App Identity
+                        <div><span class="badge-tag badge-config">Static</span> App Identity</div>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                     </div>
 
@@ -1025,9 +1049,9 @@
                 </div>
 
                 <!-- Deployment Checklist Card -->
-                <div class="card" style="margin-top: 0;">
+                <div class="card zone-config" style="margin-top: 0;">
                     <div class="card-title">
-                        Deployment Checklist
+                        <div><span class="badge-tag badge-config">Action</span> Deployment Checklist</div>
                         <button class="header-btn" style="font-size: 11px; padding: 4px 8px; border-radius: 4px;" onclick="toggleChecklistEdit()" id="btn-edit-checklist">Edit Steps</button>
                     </div>
                     <div class="form-group" id="checklist-container">
@@ -1154,6 +1178,7 @@
                 healthDecl: document.getElementById('out-health-decl') ? document.getElementById('out-health-decl').value : 'This Watch Face shows real-time activity data (BPM and Steps) sourced from Wear OS sensors.',
                 supportEmail: document.getElementById('out-support-email') ? document.getElementById('out-support-email').value : 'creationcuespace@gmail.com',
                 checklistSteps: window.currentChecklistSteps || [],
+                checklistStates: window.currentChecklistStates || [],
                 features: [],
                 shortDescOptions: []
             };
@@ -1207,6 +1232,7 @@
             
             if (savedState.checklistSteps && savedState.checklistSteps.length > 0) {
                 window.currentChecklistSteps = savedState.checklistSteps;
+                window.currentChecklistStates = savedState.checklistStates || new Array(savedState.checklistSteps.length).fill(false);
             } else {
                 window.currentChecklistSteps = [
                     "1 Dashboard",
@@ -1216,6 +1242,7 @@
                     "5 Test & release > Setup > Advanced settings > opt > not now",
                     "6 Test & release > Production > PhoneTablets... > Create new release > not now"
                 ];
+                window.currentChecklistStates = new Array(window.currentChecklistSteps.length).fill(false);
             }
             renderChecklist();
 
@@ -1976,6 +2003,11 @@ INSTRUCTIONS:
             if (!container) return;
             const steps = window.currentChecklistSteps || [];
             
+            // Add a state array if it doesn't exist
+            if (!window.currentChecklistStates) {
+                window.currentChecklistStates = new Array(steps.length).fill(false);
+            }
+            
             container.innerHTML = '';
             steps.forEach((step, index) => {
                 const stepRow = document.createElement('div');
@@ -1986,7 +2018,8 @@ INSTRUCTIONS:
                 
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
-                checkbox.style.marginTop = '4px';
+                checkbox.style.marginTop = '8px';
+                checkbox.checked = window.currentChecklistStates[index];
                 
                 const input = document.createElement('input');
                 input.type = 'text';
@@ -1997,7 +2030,25 @@ INSTRUCTIONS:
                 input.style.background = isChecklistEditable ? 'rgba(0,0,0,0.2)' : 'transparent';
                 input.style.border = isChecklistEditable ? '1px solid var(--border-color)' : 'none';
                 input.style.borderRadius = '4px';
+                input.style.transition = 'all 0.2s ease';
                 input.readOnly = !isChecklistEditable;
+                
+                if (checkbox.checked) {
+                    input.style.textDecoration = 'line-through';
+                    input.style.opacity = '0.5';
+                }
+                
+                checkbox.onchange = (e) => {
+                    window.currentChecklistStates[index] = e.target.checked;
+                    if (e.target.checked) {
+                        input.style.textDecoration = 'line-through';
+                        input.style.opacity = '0.5';
+                    } else {
+                        input.style.textDecoration = 'none';
+                        input.style.opacity = '1';
+                    }
+                    saveDeployState();
+                };
                 
                 input.oninput = () => {
                     const inputs = document.querySelectorAll('#checklist-container input[type="text"]');
