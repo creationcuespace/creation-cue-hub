@@ -192,13 +192,19 @@
         /* Container Layout */
         .app-container {
             width: 100%;
-            max-width: 1400px;
+            max-width: 1800px;
             margin: 0 auto;
             padding: 24px;
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
+            grid-template-columns: 1.2fr 1fr 0.8fr;
             gap: 24px;
             flex: 1;
+        }
+
+        @media (max-width: 1400px) {
+            .app-container {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
         @media (max-width: 1024px) {
@@ -747,7 +753,7 @@
                 <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" class="brand-logo" alt="Logo">
                 <div class="brand-title">
                     <span>Creation<span>Cue</span>™</span>
-                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.6.1</span></span>
+                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.6.2</span></span>
                 </div>
             </a>
             <div class="header-btns">
@@ -1005,9 +1011,13 @@
                         </div>
                     </div>
                 </div>
+                </div>
+            </div>
 
+            <!-- Third Column (Checklist) -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
                 <!-- Deployment Checklist Card -->
-                <div class="card" style="margin-top: 0;">
+                <div class="card" style="margin-top: 0; position: sticky; top: 88px;">
                     <div class="card-title">
                         Deployment Checklist
                         <button class="header-btn" style="font-size: 11px; padding: 4px 8px; border-radius: 4px;" onclick="toggleChecklistEdit()" id="btn-edit-checklist">Edit Steps</button>
