@@ -742,7 +742,7 @@
                 <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" class="brand-logo" alt="Logo">
                 <div class="brand-title">
                     <span>Creation<span>Cue</span>™</span>
-                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.5.5</span></span>
+                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.5.6</span></span>
                 </div>
             </a>
             <div class="header-btns">
@@ -947,6 +947,29 @@
                         </div>
                     </div>
                 </div>
+
+                    <!-- Console Utilities -->
+                    <div class="form-group" style="margin-top: 16px;">
+                        <label>Privacy Policy Link</label>
+                        <div class="output-box-wrapper" style="padding: 10px 12px;">
+                            <button class="copy-overlay-btn" onclick="copyText('out-policy-link', 'Privacy Policy Link')">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                            <input type="text" id="out-policy-link" class="output-short-input" value="https://creationcuespace.github.io/creation-cue-hub/privacy.html" oninput="saveDeployState()">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Health App Declaration</label>
+                        <div class="output-box-wrapper" style="padding: 10px 12px;">
+                            <button class="copy-overlay-btn" onclick="copyText('out-health-decl', 'Health Declaration')">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                            <textarea id="out-health-decl" class="output-textarea" style="min-height: 60px;" oninput="saveDeployState()">This Watch Face shows real-time activity data (BPM and Steps) sourced from Wear OS sensors.</textarea>
+                        </div>
+                    </div>
             </div>
         </main>
     </div>
@@ -1062,6 +1085,8 @@
                 shortDesc: document.getElementById('out-short-desc').value,
                 longDesc: document.getElementById('out-long-desc').value,
                 longDescAi: document.getElementById('out-long-desc-ai') ? document.getElementById('out-long-desc-ai').value : '',
+                policyLink: document.getElementById('out-policy-link') ? document.getElementById('out-policy-link').value : 'https://creationcuespace.github.io/creation-cue-hub/privacy.html',
+                healthDecl: document.getElementById('out-health-decl') ? document.getElementById('out-health-decl').value : 'This Watch Face shows real-time activity data (BPM and Steps) sourced from Wear OS sensors.',
                 features: [],
                 shortDescOptions: []
             };
@@ -1154,6 +1179,15 @@
                     if (typeof updateLongDescAIStats === 'function') updateLongDescAIStats(savedState.longDescAi);
                 }
                 outLongAi.addEventListener('input', saveDeployState);
+            }
+
+            const outPolicy = document.getElementById('out-policy-link');
+            if (outPolicy && savedState.policyLink !== undefined) {
+                outPolicy.value = savedState.policyLink;
+            }
+            const outHealth = document.getElementById('out-health-decl');
+            if (outHealth && savedState.healthDecl !== undefined) {
+                outHealth.value = savedState.healthDecl;
             }
 
             setupImageDragAndDrop();
