@@ -753,7 +753,7 @@
                 <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" class="brand-logo" alt="Logo">
                 <div class="brand-title">
                     <span>Creation<span>Cue</span>™</span>
-                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.6.4</span></span>
+                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.6.5</span></span>
                 </div>
             </a>
             <div class="header-btns">
@@ -946,39 +946,6 @@
                         </div>
                     </div>
 
-                    <!-- Console Utilities -->
-                    <div class="form-group" style="margin-top: 16px;">
-                        <label>Privacy Policy Link</label>
-                        <div class="output-box-wrapper" style="padding: 10px 12px;">
-                            <button class="copy-overlay-btn" onclick="copyText('out-policy-link', 'Privacy Policy Link')">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                                Copy
-                            </button>
-                            <input type="text" id="out-policy-link" class="output-short-input" value="https://creationcuespace.github.io/creation-cue-hub/privacy.html" oninput="saveDeployState()">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Health App Declaration</label>
-                        <div class="output-box-wrapper" style="padding: 10px 12px;">
-                            <button class="copy-overlay-btn" onclick="copyText('out-health-decl', 'Health Declaration')">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                                Copy
-                            </button>
-                            <textarea id="out-health-decl" class="output-textarea" style="min-height: 60px;" oninput="saveDeployState()">This Watch Face shows real-time activity data (BPM and Steps) sourced from Wear OS sensors.</textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Support Email</label>
-                        <div class="output-box-wrapper">
-                            <button class="copy-overlay-btn" onclick="copyText('out-support-email', 'Support Email')">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                                Copy
-                            </button>
-                            <input type="text" id="out-support-email" class="output-short-input" value="creationcuespace@gmail.com" oninput="saveDeployState()">
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -1019,6 +986,40 @@
                                 <button class="btn btn-secondary" style="flex: 1; padding: 6px; font-size: 11px;" onclick="generateTitle('Digital')">Digital</button>
                                 <button class="btn btn-secondary" style="flex: 1; padding: 6px; font-size: 11px;" onclick="generateTitle('Analog')">Analog</button>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Console Utilities -->
+                    <div class="form-group">
+                        <label>Privacy Policy Link</label>
+                        <div class="output-box-wrapper" style="padding: 10px 12px;">
+                            <button class="copy-overlay-btn" onclick="copyText('out-policy-link', 'Privacy Policy Link')">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                            <input type="text" id="out-policy-link" class="output-short-input" value="https://creationcuespace.github.io/creation-cue-hub/privacy.html" oninput="saveDeployState()">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Health App Declaration</label>
+                        <div class="output-box-wrapper" style="padding: 10px 12px;">
+                            <button class="copy-overlay-btn" onclick="copyText('out-health-decl', 'Health Declaration')">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                            <textarea id="out-health-decl" class="output-textarea" style="min-height: 60px;" oninput="saveDeployState()">This Watch Face shows real-time activity data (BPM and Steps) sourced from Wear OS sensors.</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Support Email</label>
+                        <div class="output-box-wrapper">
+                            <button class="copy-overlay-btn" onclick="copyText('out-support-email', 'Support Email')">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                            <input type="text" id="out-support-email" class="output-short-input" value="creationcuespace@gmail.com" oninput="saveDeployState()">
                         </div>
                     </div>
                 </div>
