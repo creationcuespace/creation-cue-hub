@@ -24,6 +24,13 @@
       "play_store_url": "market://details?id=com.creation.cue136watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue136_free"
     },
 	     {
+      "id": "cue178",
+      "title": "CUE178 (AD)",
+      "badge_text": "NEW",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue178.png",
+      "play_store_url": "market://details?id=com.creation.cue178watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue178"
+    },   
+	  {
       "id": "cue003",
       "title": "CUE003 (AD)",
       "badge_text": "NEW",
