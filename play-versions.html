@@ -1787,7 +1787,7 @@
               <input type="checkbox" id="select-all-cb" title="Select / Deselect all visible" style="width:15px;height:15px;accent-color:#7C3AED;cursor:pointer;">
             </th>
             <th class="sortable-th" data-sort="title-asc" data-sort-asc="title-asc" data-sort-desc="title-desc" title="Click to sort by Watch Face name">Watch Face <span class="sort-indicator" id="sort-ind-title"></span></th>
-            <th class="sortable-th" data-sort="id-asc" data-sort-asc="id-asc" data-sort-desc="id-desc" title="Click to sort by ID">Package ID <span class="sort-indicator" id="sort-ind-id">▲</span></th>
+            <th class="sortable-th" data-sort="id-asc" data-sort-asc="id-asc" data-sort-desc="id-desc" title="Click to sort by ID">Package ID <span class="sort-indicator" id="sort-ind-id"></span></th>
             <th class="sortable-th" data-sort="companion-desc" data-sort-asc="companion-asc" data-sort-desc="companion-desc" title="Click to sort by Companion App version">Companion App <span class="sort-indicator" id="sort-ind-companion"></span></th>
             <th class="sortable-th" data-sort="wear-desc" data-sort-asc="wear-asc" data-sort-desc="wear-desc" title="Click to sort by Wear OS version">Wear OS App <span class="sort-indicator" id="sort-ind-wear"></span></th>
             <th class="sortable-th" data-sort="date-desc" data-sort-asc="date-asc" data-sort-desc="date-desc" title="Click to sort by Last Store Update">Last Store Update <span class="sort-indicator" id="sort-ind-date"></span></th>
@@ -3365,7 +3365,7 @@
     }
     // ─────────────────────────────────────────────────────────────────────────
 
-    window.currentSort = 'id-asc';
+    window.currentSort = 'date-desc';
 
     function updateSortIndicators(activeSort) {
       const cols = [
@@ -3413,7 +3413,7 @@
         if (filterPriceEl) filterPriceEl.value = 'all';
         if (filterRolloutEl) filterRolloutEl.value = 'all';
         if (filterApiEl) filterApiEl.value = 'all';
-        window.currentSort = 'id-asc';
+        window.currentSort = 'date-desc';
         updateSortIndicators(window.currentSort);
         renderDashboard();
       });
