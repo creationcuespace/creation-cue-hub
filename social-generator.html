@@ -1290,6 +1290,45 @@
             width: 100%;
         }
 
+        /* Collapsible Inputs Toggle styling */
+        .toggle-inputs-btn {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 16px;
+            border-radius: var(--border-radius-md);
+            font-family: var(--font-display);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            user-select: none;
+            margin-top: 4px;
+        }
+
+        .toggle-inputs-btn:hover {
+            background: var(--surface-hover);
+            border-color: var(--primary);
+        }
+
+        .toggle-inputs-btn .chevron-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-inputs-btn.active .chevron-icon {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-inputs-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
         @media (max-width: 1024px) {
             .app-container {
                 grid-template-columns: 1fr;
@@ -1297,6 +1336,39 @@
             .input-panel {
                 position: relative;
                 top: 0;
+            }
+            .toggle-inputs-btn {
+                display: flex;
+            }
+            .collapsible-inputs-wrapper {
+                display: none;
+                margin-top: 10px;
+            }
+            .collapsible-inputs-wrapper.show {
+                display: flex;
+            }
+            /* Sticky platform tabs header on mobile */
+            .tabs-header {
+                position: sticky;
+                top: 61px; /* below top-header */
+                background: rgba(15, 15, 20, 0.95);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                z-index: 99;
+                padding-top: 12px;
+                padding-bottom: 8px;
+                margin-left: -24px;
+                margin-right: -24px;
+                padding-left: 24px;
+                padding-right: 24px;
+                border-bottom: 1.5px solid var(--border-color);
+            }
+        }
+
+        @media (max-width: 600px) {
+            /* Sticky platform tabs header below mobile header */
+            .tabs-header {
+                top: 45px;
             }
         }
     </style>
@@ -1354,51 +1426,59 @@
                     </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="watch-name">Watch Face Name</label>
-                    <input class="input-text" id="watch-name" type="text" placeholder="e.g. CUE Retro Classic Gold">
-                </div>
+                <!-- Collapsible container for manual inputs on mobile -->
+                <button type="button" class="toggle-inputs-btn" id="toggle-inputs-btn" onclick="toggleMobileInputs()">
+                    <span>Manual Inputs & Settings</span>
+                    <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
 
-                <div class="form-group">
-                    <label for="watch-link">Play Store Link</label>
-                    <div style="display: flex; gap: 8px;">
-                        <input class="input-text" id="watch-link" type="text" placeholder="https://play.google.com/store/apps/details?id=..." style="flex: 1;">
-                        <button class="header-btn" id="btn-fetch-link" onclick="fetchPlayStoreData()" style="flex: none; white-space: nowrap; height: 43px; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            Fetch Info
+                <div class="collapsible-inputs-wrapper" id="collapsible-inputs-wrapper">
+                    <div class="form-group">
+                        <label for="watch-name">Watch Face Name</label>
+                        <input class="input-text" id="watch-name" type="text" placeholder="e.g. CUE Retro Classic Gold">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="watch-link">Play Store Link</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input class="input-text" id="watch-link" type="text" placeholder="https://play.google.com/store/apps/details?id=..." style="flex: 1;">
+                            <button class="header-btn" id="btn-fetch-link" onclick="fetchPlayStoreData()" style="flex: none; white-space: nowrap; height: 43px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                Fetch Info
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="free-coupons-link">Free Coupons Link</label>
+                        <input class="input-text" id="free-coupons-link" type="text" placeholder="https://..." oninput="updateCommentsUI()">
+                    </div>
+
+                    <div class="form-group" style="flex-direction: row; align-items: center; gap: 8px; cursor: pointer; user-select: none; margin-top: 4px;">
+                        <input type="checkbox" id="free-coupons-active" style="width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer;" onchange="updateCommentsUI(); generateFastSocialDescriptions();">
+                        <label for="free-coupons-active" style="cursor: pointer; margin-bottom: 0; font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Free Coupons Promo Active</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tone Preset</label>
+                        <div class="preset-group">
+                            <button class="preset-btn" id="preset-simple" onclick="setPreset('simple')">✨ Simple</button>
+                            <button class="preset-btn active" id="preset-sleek" onclick="setPreset('sleek')">💼 Serious</button>
+                            <button class="preset-btn" id="preset-features" onclick="setPreset('features')">📊 Features</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="play-store-desc">Play Store Description</label>
+                        <textarea class="input-area" id="play-store-desc" placeholder="Paste the full Google Play description here..."></textarea>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 8px;">
+                        <button class="btn-generate" id="btn-generate-fast" onclick="generateFastSocialDescriptions()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                            Fast Generate
                         </button>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="free-coupons-link">Free Coupons Link</label>
-                    <input class="input-text" id="free-coupons-link" type="text" placeholder="https://..." oninput="updateCommentsUI()">
-                </div>
-
-                <div class="form-group" style="flex-direction: row; align-items: center; gap: 8px; cursor: pointer; user-select: none; margin-top: 4px;">
-                    <input type="checkbox" id="free-coupons-active" style="width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer;" onchange="updateCommentsUI(); generateFastSocialDescriptions();">
-                    <label for="free-coupons-active" style="cursor: pointer; margin-bottom: 0; font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Free Coupons Promo Active</label>
-                </div>
-
-                <div class="form-group">
-                    <label>Tone Preset</label>
-                    <div class="preset-group">
-                        <button class="preset-btn" id="preset-simple" onclick="setPreset('simple')">✨ Simple</button>
-                        <button class="preset-btn active" id="preset-sleek" onclick="setPreset('sleek')">💼 Serious</button>
-                        <button class="preset-btn" id="preset-features" onclick="setPreset('features')">📊 Features</button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="play-store-desc">Play Store Description</label>
-                    <textarea class="input-area" id="play-store-desc" placeholder="Paste the full Google Play description here..."></textarea>
-                </div>
-
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <button class="btn-generate" id="btn-generate-fast" onclick="generateFastSocialDescriptions()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                        Fast Generate
-                    </button>
                 </div>
             </aside>
 
@@ -1945,6 +2025,7 @@
                         document.getElementById('catalog-search').value = match.title;
                         updateCommentsUI();
                         updateMockupImages(match.image_url);
+                        generateFastSocialDescriptions();
                     }
                 }
             } catch (err) {
@@ -2002,8 +2083,8 @@
                     // Update mockup images immediately
                     updateMockupImages(f.image_url);
                     
-                    // No longer automatically trigger play store fetch on click to prevent hanging.
-                    // The user can edit the populated catalog text and then click "Generate Entries".
+                    // Generate social descriptions instantly
+                    generateFastSocialDescriptions();
                 });
                 
                 dropdown.appendChild(item);
@@ -2100,6 +2181,15 @@
             } else {
                 panel.style.display = 'flex';
                 toggle.classList.add('active');
+            }
+        }
+
+        function toggleMobileInputs() {
+            const wrapper = document.getElementById('collapsible-inputs-wrapper');
+            const btn = document.getElementById('toggle-inputs-btn');
+            if (wrapper && btn) {
+                wrapper.classList.toggle('show');
+                btn.classList.toggle('active');
             }
         }
 

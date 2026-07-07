@@ -833,7 +833,9 @@
       
       var total = promoData.totalCoupons || 0;
       var claimed = promoData.claimedCount || 0;
-      var remaining = Math.max(0, total - claimed);
+      var cap = promoData.claimsCap || 0;
+      var allowedMax = (cap && cap > 0) ? Math.min(cap, total) : total;
+      var remaining = Math.max(0, allowedMax - claimed);
       
       var statusPill = document.querySelector('.promo-status-pill');
       var labelEl = document.getElementById('promo-count-label');
@@ -1002,8 +1004,10 @@
       db.ref('promotions/' + promoId + '/public/claimedCount').once('value').then(function(countSnap) {
         var nextIndex = countSnap.val() || 0;
         var total = promoData.totalCoupons || 0;
+        var cap = promoData.claimsCap || 0;
+        var allowedMax = (cap && cap > 0) ? Math.min(cap, total) : total;
         
-        if (nextIndex >= total) {
+        if (nextIndex >= allowedMax) {
           showToast("Sorry, all coupons were just claimed!");
           renderPromotion(); // refresh UI
           isClaiming = false;
@@ -1054,9 +1058,11 @@
 
               // Send push alert if this was the last coupon
               var total = promoData.totalCoupons || 0;
-              var remaining = Math.max(0, total - (nextIndex + 1));
+              var cap = promoData.claimsCap || 0;
+              var allowedMax = (cap && cap > 0) ? Math.min(cap, total) : total;
+              var remaining = Math.max(0, allowedMax - (nextIndex + 1));
               if (remaining === 0) {
-                triggerCompletedNotification(promoData.name, promoId, total);
+                triggerCompletedNotification(promoData.name, promoId, allowedMax);
               }
             } else {
               showToast("Error retrieving code. Please contact admin.");
@@ -1087,7 +1093,9 @@
       if (claimBtn) {
         var total = promoData.totalCoupons || 0;
         var claimed = promoData.claimedCount || 0;
-        var remaining = Math.max(0, total - claimed);
+        var cap = promoData.claimsCap || 0;
+        var allowedMax = (cap && cap > 0) ? Math.min(cap, total) : total;
+        var remaining = Math.max(0, allowedMax - claimed);
         if (remaining === 0) {
           claimBtn.disabled = true;
           claimBtn.textContent = "OUT OF COUPONS";
@@ -1144,7 +1152,9 @@
         
         var total = promoData.totalCoupons || 0;
         var claimed = promoData.claimedCount || 0;
-        var remaining = Math.max(0, total - claimed);
+        var cap = promoData.claimsCap || 0;
+        var allowedMax = (cap && cap > 0) ? Math.min(cap, total) : total;
+        var remaining = Math.max(0, allowedMax - claimed);
         
         if (remaining === 0) {
           claimBtn.disabled = true;
