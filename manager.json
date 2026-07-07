@@ -6,6 +6,18 @@
   },
   "watch_faces": [
     {
+      "id": "cue178",
+      "title": "CUE178",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue178.png",
+      "play_store_url": "market://details?id=com.creation.cue178watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue178",
+      "description_en": "This bold digital watch face features a striking, easy-to-read time display.",
+      "description_de": "",
+      "filters": ["NEW" ],
+      "type": "digital",
+      "is_free":false,
+      "badge_text": "NEW"
+    },
+    {
       "id": "cue003",
       "title": "CUE003",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue003.png",
