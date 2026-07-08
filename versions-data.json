@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-08T03:36:33.977Z",
+  "lastUpdated": "2026-07-08T10:44:44.567Z",
   "results": [
     {
       "id": "cue178",
@@ -143,7 +143,7 @@
       "packageName": "com.creation.cue162watchface",
       "companionVersion": "5 (6.0.0)",
       "wearVersion": "10000004 (1.0.1)",
-      "lastUpdatedDate": "Jun 26, 2026"
+      "lastUpdatedDate": "Jun 27, 2026"
     },
     {
       "id": "cue161",
@@ -389,9 +389,9 @@
       "id": "cue132",
       "title": "CUE132",
       "packageName": "com.creation.cue132watchface",
-      "companionVersion": "6 (5.0.3)",
+      "companionVersion": "8 (6.0.0)",
       "wearVersion": "10000007 (1.1.1)",
-      "lastUpdatedDate": "May 11, 2026"
+      "lastUpdatedDate": "Jul 8, 2026"
     },
     {
       "id": "cue131",
@@ -423,7 +423,7 @@
       "packageName": "com.creation.cue128watchface",
       "companionVersion": "14 (6.0.0)",
       "wearVersion": "10000013 (2.0.0)",
-      "lastUpdatedDate": "Jun 16, 2026"
+      "lastUpdatedDate": "Jun 17, 2026"
     },
     {
       "id": "cue127",
@@ -522,14 +522,6 @@
       "lastUpdatedDate": "Jun 4, 2026"
     },
     {
-      "id": "cue108",
-      "title": "CUE108",
-      "packageName": "com.creation.cue108watchface",
-      "companionVersion": "13 (6.0.0)",
-      "wearVersion": "10000007 (3.2.1)",
-      "lastUpdatedDate": "Jun 9, 2026"
-    },
-    {
       "id": "cue107",
       "title": "CUE107",
       "packageName": "com.creation.cue107watchface",
@@ -599,7 +591,7 @@
       "packageName": "com.creation.cue099watchface",
       "companionVersion": "7 (1.0.1)",
       "wearVersion": "10000006 (3.0.0)",
-      "lastUpdatedDate": "Jul 17, 2025"
+      "lastUpdatedDate": "Jul 18, 2025"
     },
     {
       "id": "cue098",
@@ -623,7 +615,7 @@
       "packageName": "com.creationcue.crc094watchface",
       "companionVersion": "16 (6.0.0)",
       "wearVersion": "10000010 (6.0.0)",
-      "lastUpdatedDate": "Jun 12, 2026"
+      "lastUpdatedDate": "Jun 13, 2026"
     },
     {
       "id": "crc092",
@@ -791,7 +783,7 @@
       "packageName": "com.watchfacestudio.crc041",
       "companionVersion": "16 (6.0.0)",
       "wearVersion": "10000009 (2.0.0)",
-      "lastUpdatedDate": "Mar 19, 2026"
+      "lastUpdatedDate": "Jul 7, 2026"
     },
     {
       "id": "crc039",
@@ -863,7 +855,7 @@
       "packageName": "com.watchfacestudio.crc027",
       "companionVersion": "7 (6.0.0)",
       "wearVersion": "10000008 (4.0.0)",
-      "lastUpdatedDate": "Jun 4, 2026"
+      "lastUpdatedDate": "Jun 5, 2026"
     },
     {
       "id": "cue024",
@@ -917,17 +909,17 @@
       "id": "cueindus",
       "title": "Cue Indus",
       "packageName": "com.creation.cueinduswatchface",
-      "companionVersion": "9 (5.0.1)",
+      "companionVersion": "10 (6.0.0)",
       "wearVersion": "10000001 (1.0.0)",
-      "lastUpdatedDate": "Mar 19, 2026"
+      "lastUpdatedDate": "Jul 8, 2026"
     },
     {
       "id": "cueindus_pro",
       "title": "Cue Indus Pro",
       "packageName": "com.creation.cueindusprowatchface",
-      "companionVersion": "2 (1.0.1)",
+      "companionVersion": "4 (6.0.0)",
       "wearVersion": "10000003 (1.1.0)",
-      "lastUpdatedDate": "Mar 30, 2026"
+      "lastUpdatedDate": "Jul 8, 2026"
     }
   ]
 }
