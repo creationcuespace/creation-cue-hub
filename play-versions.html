@@ -1736,6 +1736,10 @@
         <div class="stat-label">API Configuration Errors</div>
         <div class="stat-value" id="stat-errors" style="color: var(--yellow);">0</div>
       </div>
+      <div class="stat-card">
+        <div class="stat-label">Staged Rollouts (&lt;100%)</div>
+        <div class="stat-value" id="stat-rollouts" style="color: var(--yellow);">0</div>
+      </div>
       <div class="stat-card" style="display: flex; flex-direction: column;">
         <div class="stat-label">Last Dashboard Update</div>
         <div class="stat-value" id="stat-scan-date" style="font-size: 16px; flex: 1;">N/A</div>
@@ -2367,6 +2371,18 @@
       ).length;
       document.getElementById('stat-errors').textContent = errorCount;
       document.getElementById('stat-errors').style.color = errorCount > 0 ? 'var(--red)' : 'var(--green)';
+
+      // Count staged rollouts (<100%)
+      const stagedCount = combinedData.filter(wf => {
+        const companionStaged = wf.companionRollout && wf.companionRollout !== '100%' && wf.companionRollout !== 'N/A';
+        const wearStaged = wf.wearRollout && wf.wearRollout !== '100%' && wf.wearRollout !== 'N/A';
+        return companionStaged || wearStaged;
+      }).length;
+      const statRolloutsEl = document.getElementById('stat-rollouts');
+      if (statRolloutsEl) {
+        statRolloutsEl.textContent = stagedCount;
+        statRolloutsEl.style.color = stagedCount > 0 ? 'var(--yellow)' : 'var(--green)';
+      }
 
       // Set last scan date and time
       if (window.lastScanDateStr) {
