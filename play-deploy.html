@@ -748,10 +748,158 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
         }
-    </style>
+    
+    /* Slide-out Menu (Desktop Only) */
+    .app-slide-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 6000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .app-slide-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .app-slide-menu {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 280px;
+      height: 100%;
+      background: var(--bg-color, var(--black, #141414));
+      border-right: 1px solid var(--border-color, var(--border, #3a3a3a));
+      z-index: 6001;
+      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-slide-menu.open {
+      left: 0;
+    }
+
+    .app-slide-header {
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--border-color, var(--border, #3a3a3a));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .app-slide-links {
+      padding: 16px 0;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .app-slide-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 24px;
+      color: var(--text-primary, var(--text, #f0f0f0));
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .app-slide-link:hover, .app-slide-link.active {
+      background: rgba(255, 255, 255, 0.05);
+      border-left-color: var(--primary, var(--yellow, #f5c518));
+      color: var(--primary, var(--yellow, #f5c518));
+    }
+    
+    .btn-app-menu {
+      background: none;
+      border: none;
+      color: var(--text-primary, var(--text, #f0f0f0));
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      font-family: 'Teko', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-app-menu:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--primary, var(--yellow, #f5c518));
+    }
+
+    @media (max-width: 768px) {
+      .app-slide-menu, .app-slide-overlay, .btn-app-menu {
+        display: none !important;
+      }
+    }
+
+</style>
 </head>
 
 <body>
+
+  <!-- Slide-Out Apps Menu -->
+  <div id="app-slide-overlay" class="app-slide-overlay" onclick="closeAppMenu()"></div>
+  <div id="app-slide-menu" class="app-slide-menu">
+    <div class="app-slide-header">
+      <div style="display: flex; flex-direction: column; line-height: 0.9; font-family: 'Teko', sans-serif;">
+        <span style="font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 1px; text-transform: none;">Creation<span style="color: var(--primary, var(--yellow, #f5c518));">Cue</span>™</span>
+        <span style="font-size: 9px; font-weight: 600; color: var(--text-muted, var(--muted, #888)); letter-spacing: 2.2px; text-transform: uppercase; margin-top: 1px;">App Suite</span>
+      </div>
+      <button onclick="closeAppMenu()" style="background: none; border: none; color: var(--text-muted, var(--muted, #888)); cursor: pointer; padding: 4px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="app-slide-links">
+      <a href="https://cue-earnings.sotsor.workers.dev/" class="app-slide-link" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        Earnings
+      </a>
+      <a href="https://cue-earnings.sotsor.workers.dev/analytics" class="app-slide-link" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        Analytics
+      </a>
+      <a href="manage-coupons.html" class="app-slide-link ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+        Coupons
+      </a>
+      <a href="social-generator.html" class="app-slide-link ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        Socials
+      </a>
+      <a href="month-planner.html" class="app-slide-link ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        Planner
+      </a>
+      <a href="play-versions.html" class="app-slide-link ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        Versions
+      </a>
+      <a href="play-deploy.html" class="app-slide-link active">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        Deploy
+      </a>
+    </div>
+  </div>
+
     <!-- Google Sign In Overlay -->
     <div id="login-overlay" style="display: flex;">
         <div class="logo-mark"><span class="r"></span><span class="b"></span><span class="y"></span></div>
@@ -773,13 +921,18 @@
     <div id="admin-container" style="display: none; flex-direction: column; min-height: 100vh;">
         <!-- Header -->
         <header class="top-header">
-            <a href="index.html" class="brand-logo-area">
-                <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" class="brand-logo" alt="Logo">
-                <div class="brand-title">
-                    <span>Creation<span>Cue</span>™</span>
-                    <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.7.0</span></span>
-                </div>
-            </a>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <button class="btn-app-menu" onclick="toggleAppMenu()" title="Apps Menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+                <a href="index.html" class="brand-logo-area">
+                    <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" class="brand-logo" alt="Logo">
+                    <div class="brand-title">
+                        <span>Creation<span>Cue</span>™</span>
+                        <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.7.0</span></span>
+                    </div>
+                </a>
+            </div>
             <div class="header-btns">
                 <a href="manage-coupons.html" class="header-btn">Coupons</a>
                 <a href="social-generator.html" class="header-btn">Socials</a>
@@ -2107,6 +2260,28 @@ INSTRUCTIONS:
             }, 2500);
         }
     </script>
+
+  <script>
+    // App Suite Slide-out Menu functions
+    function toggleAppMenu() {
+      var menu = document.getElementById('app-slide-menu');
+      var overlay = document.getElementById('app-slide-overlay');
+      if (menu && overlay) {
+        menu.classList.toggle('open');
+        overlay.classList.toggle('active');
+      }
+    }
+    
+    function closeAppMenu() {
+      var menu = document.getElementById('app-slide-menu');
+      var overlay = document.getElementById('app-slide-overlay');
+      if (menu && overlay) {
+        menu.classList.remove('open');
+        overlay.classList.remove('active');
+      }
+    }
+  </script>
+
 </body>
 
 </html>
