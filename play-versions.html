@@ -2688,13 +2688,14 @@
             }
           }
         }
+        const watchFaceName = wf.title.toLowerCase().startsWith('watch face') ? wf.title : 'Watch Face ' + wf.title;
 
         const contentHtml = `
           <td>
             <div class="wf-thumb-wrapper">
               <img class="wf-thumb" src="${wf.imageUrl}" alt="${wf.title}" onerror="this.src='https://via.placeholder.com/150'">
               <div class="wf-details">
-                <span class="wf-title">${wf.title}</span>
+                <span class="wf-title">${watchFaceName}</span>
                 <span class="wf-id">${wf.id}</span>
               </div>
             </div>
@@ -2703,8 +2704,8 @@
             <div style="display: flex; flex-direction: column; gap: 6px;">
               <!-- Watch Face Name with Copy Button -->
               <div class="pkg-name-wrapper" style="font-weight: 600; color: #fff; font-size: 13px;">
-                <span class="pkg-name" style="color: #fff;">${wf.title}</span>
-                <button class="copy-btn" onclick="copyText('${wf.title.replace(/'/g, "\\'")}', this)" title="Copy Watch Face Name">
+                <span class="pkg-name" style="color: #fff;">${watchFaceName}</span>
+                <button class="copy-btn" onclick="copyText('${watchFaceName.replace(/'/g, "\\'")}', this)" title="Copy Watch Face Name">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 </button>
               </div>
