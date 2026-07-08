@@ -1656,6 +1656,25 @@
       height: 16px;
       flex-shrink: 0;
     }
+
+    /* Clickable Stat Cards */
+    .clickable-card {
+      cursor: pointer;
+      transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .clickable-card:hover {
+      border-color: var(--yellow);
+      background: var(--surface-hover);
+      transform: translateY(-2px);
+    }
+    .clickable-card:active {
+      transform: translateY(0);
+    }
+    .clickable-card.active-filter {
+      border-color: var(--yellow);
+      background: rgba(245, 197, 24, 0.05);
+      box-shadow: 0 0 10px rgba(245, 197, 24, 0.15);
+    }
   </style>
 </head>
 
@@ -1732,11 +1751,11 @@
           </div>
         </div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card clickable-card" id="card-errors" title="Click to filter by API Errors only">
         <div class="stat-label">API Configuration Errors</div>
         <div class="stat-value" id="stat-errors" style="color: var(--yellow);">0</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card clickable-card" id="card-rollouts" title="Click to filter by Staged Rollouts (<100%) only">
         <div class="stat-label">Staged Rollouts (&lt;100%)</div>
         <div class="stat-value" id="stat-rollouts" style="color: var(--yellow);">0</div>
       </div>
@@ -2269,6 +2288,16 @@
 
       const apiFilterEl = document.getElementById('filter-api');
       const apiFilter = apiFilterEl ? apiFilterEl.value : 'all';
+
+      // Highlight active filters on the stat cards
+      const cardErrors = document.getElementById('card-errors');
+      if (cardErrors) {
+        cardErrors.classList.toggle('active-filter', apiFilter === 'error');
+      }
+      const cardRollouts = document.getElementById('card-rollouts');
+      if (cardRollouts) {
+        cardRollouts.classList.toggle('active-filter', rolloutFilter === 'staged');
+      }
 
       const sortVal = window.currentSort || 'id-asc';
 
@@ -3146,6 +3175,29 @@
 
     const filterApiEl = document.getElementById('filter-api');
     if (filterApiEl) filterApiEl.addEventListener('change', renderDashboard);
+
+    // Click handlers for stats cards to filter the dashboard
+    const cardErrors = document.getElementById('card-errors');
+    if (cardErrors) {
+      cardErrors.addEventListener('click', () => {
+        const filterApiEl = document.getElementById('filter-api');
+        if (filterApiEl) {
+          filterApiEl.value = filterApiEl.value === 'error' ? 'all' : 'error';
+          renderDashboard();
+        }
+      });
+    }
+
+    const cardRollouts = document.getElementById('card-rollouts');
+    if (cardRollouts) {
+      cardRollouts.addEventListener('click', () => {
+        const filterRolloutEl = document.getElementById('filter-rollout');
+        if (filterRolloutEl) {
+          filterRolloutEl.value = filterRolloutEl.value === 'staged' ? 'all' : 'staged';
+          renderDashboard();
+        }
+      });
+    }
 
     // Header column sort — state variable tracks current sort
     // ─── Multi-select & Batch Task Creation ───────────────────────────────────
