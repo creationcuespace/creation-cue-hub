@@ -122,7 +122,8 @@ async function main() {
       wearVersion = `API Error: ${apiError.code || apiError.message}`;
     }
 
-    // Scrape last updated date from Play Store
+    // Scrape last updated date and title from Play Store
+    let playStoreTitle = wf.title;
     try {
       const playStoreUrl = `https://play.google.com/store/apps/details?id=${packageName}&hl=en`;
       const response = await axios.get(playStoreUrl, {
@@ -133,20 +134,32 @@ async function main() {
         timeout: 5000
       });
       const html = response.data;
-      const regex = /Updated on<\/div><div class="[^"]+">([^<]+)<\/div>/i;
-      const match = html.match(regex);
-      if (match) {
-        lastUpdatedDate = match[1];
+      
+      const dateRegex = /Updated on<\/div><div class="[^"]+">([^<]+)<\/div>/i;
+      const dateMatch = html.match(dateRegex);
+      if (dateMatch) {
+        lastUpdatedDate = dateMatch[1];
+      }
+
+      const titleRegex = /<title[^>]*>([^<]+)<\/title>/i;
+      const titleMatch = html.match(titleRegex);
+      if (titleMatch) {
+        let parsedTitle = titleMatch[1].trim();
+        parsedTitle = parsedTitle.replace(/\s*-\s*Apps on Google Play$/i, '');
+        if (parsedTitle) {
+          playStoreTitle = parsedTitle;
+        }
       }
     } catch (scrapeError) {
       lastUpdatedDate = 'Fetch Failed';
     }
 
-    console.log(`Done (Companion: ${companionVersion}, Wear: ${wearVersion}, Updated: ${lastUpdatedDate})`);
+    console.log(`Done (Companion: ${companionVersion}, Wear: ${wearVersion}, Updated: ${lastUpdatedDate}, Title: ${playStoreTitle})`);
 
     results.push({
       id: wf.id,
       title: wf.title,
+      playStoreTitle,
       packageName,
       companionVersion,
       wearVersion,

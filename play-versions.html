@@ -2447,6 +2447,7 @@
           wearRollout: playInfo.wearRollout || '100%',
           wearNotes: playInfo.wearNotes || 'None',
           lastUpdatedDate: playInfo.lastUpdatedDate || 'N/A',
+          playStoreTitle: playInfo.playStoreTitle || '',
           isFree: wf.is_free || false,
           note: notesData[wf.id] || ''
         };
@@ -2688,7 +2689,7 @@
             }
           }
         }
-        const watchFaceName = wf.title.toLowerCase().startsWith('watch face') ? wf.title : 'Watch Face ' + wf.title;
+        const watchFaceName = wf.playStoreTitle || wf.title;
 
         const contentHtml = `
           <td>
