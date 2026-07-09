@@ -2837,12 +2837,38 @@
       copyText(text, btn);
     }
 
-    // Copy to clipboard helper
+    // Copy to clipboard helper (with plain text & clean HTML table for Excel macro compatibility)
     function copyText(text, btn) {
+      const rows = text.split('\n').map(line => `<tr><td>${line}</td></tr>`).join('');
+      const htmlText = `<table>${rows}</table>`;
+
+      const blobText = new Blob([text], { type: 'text/plain' });
+      const blobHtml = new Blob([htmlText], { type: 'text/html' });
+
+      if (navigator.clipboard && window.ClipboardItem) {
+        const data = [new ClipboardItem({
+          'text/plain': blobText,
+          'text/html': blobHtml
+        })];
+        navigator.clipboard.write(data).then(() => {
+          showCopiedState(btn);
+        }).catch(err => {
+          fallbackCopyText(text, btn);
+        });
+      } else {
+        fallbackCopyText(text, btn);
+      }
+    }
+
+    function showCopiedState(btn) {
+      const origHtml = btn.innerHTML;
+      btn.innerHTML = `<span style="color:var(--green); font-size:10px; font-weight:bold;">Copied!</span>`;
+      setTimeout(() => { btn.innerHTML = origHtml; }, 1500);
+    }
+
+    function fallbackCopyText(text, btn) {
       navigator.clipboard.writeText(text).then(() => {
-        const origHtml = btn.innerHTML;
-        btn.innerHTML = `<span style="color:var(--green); font-size:10px; font-weight:bold;">Copied!</span>`;
-        setTimeout(() => { btn.innerHTML = origHtml; }, 1500);
+        showCopiedState(btn);
       });
     }
 
