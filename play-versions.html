@@ -2830,10 +2830,10 @@
       return isWear ? (val % 1000) : val;
     }
 
-    // Helper to copy Name, Package, and Version together
+    // Helper to copy Name, Package, and Version together (separated by newlines for Excel vertical pasting)
     function copyCombinedData(name, packageName, version, btn) {
-      const versionSuffix = (version && version > 0) ? ` ${version}` : '';
-      const text = `${name} ${packageName}${versionSuffix}`;
+      const versionSuffix = (version && version > 0) ? `\n${version}` : '';
+      const text = `${name}\n${packageName}${versionSuffix}`;
       copyText(text, btn);
     }
 
