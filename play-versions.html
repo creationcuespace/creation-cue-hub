@@ -1700,6 +1700,28 @@
       color: #90caf9;
       border-color: rgba(33, 150, 243, 0.2);
     }
+
+    /* Copier Bars */
+    .copier-bar {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 4px 8px;
+      transition: background 0.2s ease, border-color 0.2s ease;
+      user-select: none;
+    }
+    .copier-bar:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--yellow);
+    }
+    .copier-bar:active {
+      background: rgba(255, 255, 255, 0.1);
+    }
   
     /* Slide-out Menu (Desktop Only) */
     .app-slide-overlay {
@@ -1916,17 +1938,17 @@
       <div class="stat-card" style="display: flex; flex-direction: column; gap: 8px; padding: 12px 16px;">
         <div class="stat-label" style="margin-bottom: 2px;">Quick Copier</div>
         <div style="display: flex; flex-direction: column; gap: 6px; font-size: 11px; flex: 1; justify-content: center;">
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 4px; padding: 4px 8px;">
-            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); max-width: 140px;" title="Privacy Policy Link">Privacy Link</span>
-            <button class="header-btn" onclick="copyText('https://creationcuespace.github.io/creation-cue-hub/privacy.html', this)" style="padding: 2px 8px; font-size: 10px; margin: 0; line-height: 1.2;">Copy</button>
+          <div class="copier-bar" onclick="copyText('https://creationcuespace.github.io/creation-cue-hub/privacy.html', this.querySelector('.header-btn'))" title="Click to copy Privacy Policy Link">
+            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); max-width: 140px;">Privacy Link</span>
+            <button class="header-btn" style="padding: 2px 8px; font-size: 10px; margin: 0; line-height: 1.2; pointer-events: none;">Copy</button>
           </div>
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 4px; padding: 4px 8px;">
-            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); max-width: 140px;" title="This Watch Face shows real-time activity data (BPM and Steps) sourced from Wear OS sensors.">Sensor Disclosure</span>
-            <button class="header-btn" onclick="copyText('This Watch Face shows real-time activity data (BPM and Steps) sourced from Wear OS sensors.', this)" style="padding: 2px 8px; font-size: 10px; margin: 0; line-height: 1.2;">Copy</button>
+          <div class="copier-bar" onclick="copyText('This Watch Face shows real-time activity data (BPM and Steps) sourced from Wear OS sensors.', this.querySelector('.header-btn'))" title="Click to copy Sensor Disclosure Statement">
+            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); max-width: 140px;">Sensor Disclosure</span>
+            <button class="header-btn" style="padding: 2px 8px; font-size: 10px; margin: 0; line-height: 1.2; pointer-events: none;">Copy</button>
           </div>
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 4px; padding: 4px 8px;">
-            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); max-width: 140px;" title="creationcuespace@gmail.com">Contact Email</span>
-            <button class="header-btn" onclick="copyText('creationcuespace@gmail.com', this)" style="padding: 2px 8px; font-size: 10px; margin: 0; line-height: 1.2;">Copy</button>
+          <div class="copier-bar" onclick="copyText('creationcuespace@gmail.com', this.querySelector('.header-btn'))" title="Click to copy Contact Email Address">
+            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); max-width: 140px;">Contact Email</span>
+            <button class="header-btn" style="padding: 2px 8px; font-size: 10px; margin: 0; line-height: 1.2; pointer-events: none;">Copy</button>
           </div>
         </div>
       </div>
