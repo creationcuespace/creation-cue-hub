@@ -1963,9 +1963,12 @@
       <div class="stat-card" style="display: flex; flex-direction: column;">
         <div class="stat-label">Last Dashboard Update</div>
         <div class="stat-value" id="stat-scan-date" style="font-size: 16px; flex: 1;">N/A</div>
-        <div style="display: flex; gap: 6px; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; align-items: center; width: 100%;">
-          <button id="btn-cloud-update" class="cloud-update-btn">☁️ Update from Cloud</button>
-          <button id="btn-cloud-config" class="cloud-config-btn" title="Configure GitHub Integration">⚙️</button>
+        <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; width: 100%;">
+          <div style="display: flex; gap: 6px; align-items: center; width: 100%;">
+            <button id="btn-cloud-update" class="cloud-update-btn" style="flex: 1;">☁️ Update All</button>
+            <button id="btn-cloud-config" class="cloud-config-btn" title="Configure GitHub Integration">⚙️</button>
+          </div>
+          <button id="btn-cloud-update-selected" class="cloud-update-btn" style="display: none; width: 100%; background: rgba(245, 197, 24, 0.1); border-color: rgba(245, 197, 24, 0.3); color: var(--yellow);">☁️ Sync Selected (0)</button>
         </div>
       </div>
     </div>
@@ -3302,37 +3305,74 @@
       });
     });
 
-    // Cloud Update Trigger
+    // Cloud Update Trigger (All)
     document.getElementById('btn-cloud-update').addEventListener('click', () => {
       if (!githubConfig || !githubConfig.token || !githubConfig.repo) {
-        // If not configured, open config modal first
         openGithubModal();
         return;
       }
 
-      // Check if already running
       const btn = document.getElementById('btn-cloud-update');
       if (btn.classList.contains('running')) return;
 
       triggerGithubWorkflow();
     });
 
+    // Cloud Update Trigger (Selected only)
+    document.getElementById('btn-cloud-update-selected').addEventListener('click', () => {
+      if (!githubConfig || !githubConfig.token || !githubConfig.repo) {
+        openGithubModal();
+        return;
+      }
+
+      const btn = document.getElementById('btn-cloud-update-selected');
+      if (btn.classList.contains('running')) return;
+
+      const pkgs = [...selectedFaceIds]
+        .map(id => {
+          const wf = combinedData.find(item => item.id === id);
+          return wf ? wf.packageName : null;
+        })
+        .filter(Boolean);
+
+      if (pkgs.length === 0) return;
+
+      triggerGithubWorkflow(pkgs.join(','));
+    });
+
     document.getElementById('btn-cloud-config').addEventListener('click', openGithubModal);
 
-    function triggerGithubWorkflow() {
-      const btn = document.getElementById('btn-cloud-update');
+    function triggerGithubWorkflow(packagesList = null) {
+      const btnId = packagesList ? 'btn-cloud-update-selected' : 'btn-cloud-update';
+      const otherBtnId = packagesList ? 'btn-cloud-update' : 'btn-cloud-update-selected';
+      
+      const btn = document.getElementById(btnId);
+      const otherBtn = document.getElementById(otherBtnId);
+      const originalText = packagesList ? '☁️ Sync Selected' : '☁️ Update All';
+
       btn.textContent = '☁️ Triggering...';
       btn.className = 'cloud-update-btn running';
+      if (otherBtn) otherBtn.style.pointerEvents = 'none';
 
       const [owner, repo] = githubConfig.repo.split('/');
       if (!owner || !repo) {
         btn.textContent = '☁️ Config Error';
         btn.className = 'cloud-update-btn error';
+        if (otherBtn) otherBtn.style.pointerEvents = 'auto';
         alert("Invalid repository format. Must be 'owner/repository'. Click the gear to fix.");
         return;
       }
 
       const url = `https://api.github.com/repos/${owner}/${repo}/actions/workflows/play-versions-update.yml/dispatches`;
+
+      const requestBody = {
+        ref: githubConfig.branch || 'main'
+      };
+      if (packagesList) {
+        requestBody.inputs = {
+          packages: packagesList
+        };
+      }
 
       fetch(url, {
         method: 'POST',
@@ -3342,37 +3382,36 @@
           'X-GitHub-Api-Version': '2022-11-28',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          ref: githubConfig.branch || 'main'
-        })
+        body: JSON.stringify(requestBody)
       }).then(res => {
         if (res.status === 204) {
-          // Triggered successfully! Start polling
           btn.textContent = '☁️ Running... (0m)';
-          pollWorkflowStatus(owner, repo);
+          pollWorkflowStatus(owner, repo, btnId);
         } else {
           res.json().then(data => {
             btn.textContent = '☁️ Failed';
             btn.className = 'cloud-update-btn error';
+            if (otherBtn) otherBtn.style.pointerEvents = 'auto';
             alert("Failed to trigger update: " + (data.message || res.statusText));
-            setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = '☁️ Update from Cloud'; }, 4000);
+            setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = originalText; }, 4000);
           }).catch(() => {
             btn.textContent = '☁️ Failed';
             btn.className = 'cloud-update-btn error';
+            if (otherBtn) otherBtn.style.pointerEvents = 'auto';
             alert("Failed to trigger update. HTTP Status: " + res.status);
-            setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = '☁️ Update from Cloud'; }, 4000);
+            setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = originalText; }, 4000);
           });
         }
       }).catch(err => {
         btn.textContent = '☁️ Failed';
         btn.className = 'cloud-update-btn error';
+        if (otherBtn) otherBtn.style.pointerEvents = 'auto';
         alert("Connection error: " + err.message);
-        setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = '☁️ Update from Cloud'; }, 4000);
+        setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = originalText; }, 4000);
       });
     }
-
     var pollStartTime = 0;
-    function pollWorkflowStatus(owner, repo) {
+    function pollWorkflowStatus(owner, repo, btnId = 'btn-cloud-update') {
       pollStartTime = Date.now();
       if (checkIntervalId) clearInterval(checkIntervalId);
 
@@ -3380,8 +3419,10 @@
       checkIntervalId = setInterval(() => {
         const elapsedMins = Math.floor((Date.now() - pollStartTime) / 60000);
         const elapsedSecs = Math.floor(((Date.now() - pollStartTime) % 60000) / 1000);
-        const btn = document.getElementById('btn-cloud-update');
-        btn.textContent = `☁️ Running... (${elapsedMins}m ${elapsedSecs}s)`;
+        const btn = document.getElementById(btnId);
+        if (btn) {
+          btn.textContent = `☁️ Running... (${elapsedMins}m ${elapsedSecs}s)`;
+        }
 
         // Query runs for play-versions-update.yml
         const url = `https://api.github.com/repos/${owner}/${repo}/actions/runs?workflow_id=play-versions-update.yml&per_page=1`;
@@ -3403,19 +3444,42 @@
 
               if (status === 'completed') {
                 clearInterval(checkIntervalId);
+                const activeBtn = document.getElementById(btnId);
+                const originalText = btnId === 'btn-cloud-update-selected' ? '☁️ Sync Selected' : '☁️ Update All';
+                
+                // Re-enable other button
+                const otherBtnId = btnId === 'btn-cloud-update-selected' ? 'btn-cloud-update' : 'btn-cloud-update-selected';
+                const otherBtn = document.getElementById(otherBtnId);
+                if (otherBtn) otherBtn.style.pointerEvents = 'auto';
+
                 if (conclusion === 'success') {
-                  btn.textContent = '☁️ Success!';
-                  btn.className = 'cloud-update-btn success';
+                  if (activeBtn) {
+                    activeBtn.textContent = '☁️ Success!';
+                    activeBtn.className = 'cloud-update-btn success';
+                  }
                   // Refresh versions-data.json after a 5s delay (allowing firebase release to finalize)
                   setTimeout(() => {
                     initDashboard();
-                    setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = '☁️ Update from Cloud'; }, 3000);
+                    setTimeout(() => { 
+                      if (activeBtn) {
+                        activeBtn.className = 'cloud-update-btn'; 
+                        activeBtn.textContent = originalText;
+                        updateSelectionToolbar();
+                      }
+                    }, 3000);
                   }, 5000);
                 } else {
-                  btn.textContent = '☁️ Failed';
-                  btn.className = 'cloud-update-btn error';
+                  if (activeBtn) {
+                    activeBtn.textContent = '☁️ Failed';
+                    activeBtn.className = 'cloud-update-btn error';
+                  }
                   alert(`GitHub Actions run completed with status: ${conclusion || 'unknown'}`);
-                  setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = '☁️ Update from Cloud'; }, 5000);
+                  setTimeout(() => { 
+                    if (activeBtn) {
+                      activeBtn.className = 'cloud-update-btn'; 
+                      activeBtn.textContent = originalText; 
+                    }
+                  }, 5000);
                 }
               }
             }
@@ -3427,10 +3491,22 @@
         // Timeout polling after 5 minutes
         if (Date.now() - pollStartTime > 300000) {
           clearInterval(checkIntervalId);
-          btn.textContent = '☁️ Timeout';
-          btn.className = 'cloud-update-btn error';
-          alert("Update status check timed out. Please check your GitHub Actions tab manually.");
-          setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = '☁️ Update from Cloud'; }, 5000);
+          const activeBtn = document.getElementById(btnId);
+          const originalText = btnId === 'btn-cloud-update-selected' ? '☁️ Sync Selected' : '☁️ Update All';
+          
+          // Re-enable other button
+          const otherBtnId = btnId === 'btn-cloud-update-selected' ? 'btn-cloud-update' : 'btn-cloud-update-selected';
+          const otherBtn = document.getElementById(otherBtnId);
+          if (otherBtn) otherBtn.style.pointerEvents = 'auto';
+
+          if (activeBtn) {
+            activeBtn.textContent = '☁️ Timeout';
+            activeBtn.className = 'cloud-update-btn error';
+            setTimeout(() => { 
+              activeBtn.className = 'cloud-update-btn'; 
+              activeBtn.textContent = originalText; 
+            }, 5000);
+          }
         }
 
       }, 15000);
@@ -3505,6 +3581,16 @@
       if (!toolbar || !label) return;
       label.textContent = `${count} face${count !== 1 ? 's' : ''} selected`;
       toolbar.classList.toggle('visible', count > 0);
+
+      const selBtn = document.getElementById('btn-cloud-update-selected');
+      if (selBtn) {
+        if (count > 0) {
+          selBtn.style.display = 'block';
+          selBtn.textContent = `☁️ Sync Selected (${count})`;
+        } else {
+          selBtn.style.display = 'none';
+        }
+      }
     }
 
     function clearSelection() {

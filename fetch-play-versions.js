@@ -50,34 +50,49 @@ async function main() {
   const managerData = JSON.parse(fs.readFileSync(managerPath, 'utf8'));
   const watchFaces = managerData.watch_faces || [];
   
-  console.log(`Found ${watchFaces.length} watch faces in manager.json.`);
-  console.log('Fetching active version codes and last updated dates...\n');
+  // Parse command line arguments for target packages to scan
+  let targetPackageNames = [];
+  const args = process.argv.slice(2);
+  for (const arg of args) {
+    if (arg.startsWith('--packages=')) {
+      targetPackageNames = arg.split('=')[1].split(',').map(p => p.trim()).filter(Boolean);
+    }
+  }
 
+  let targetWatchFaces = watchFaces;
+  if (targetPackageNames.length > 0) {
+    targetWatchFaces = watchFaces.filter(wf => {
+      const pkg = getPackageName(wf.play_store_url);
+      return pkg && targetPackageNames.includes(pkg);
+    });
+    console.log(`Filtering scan to target packages: ${targetPackageNames.join(', ')} (${targetWatchFaces.length} matches).`);
+  }
+
+  const CONCURRENCY = 10;
   const results = [];
 
-  for (let i = 0; i < watchFaces.length; i++) {
-    const wf = watchFaces[i];
+  console.log(`Found ${watchFaces.length} watch faces in manager.json.`);
+  console.log(`Scanning ${targetWatchFaces.length} watch faces with concurrency level ${CONCURRENCY}...\n`);
+
+  async function worker(wf, index, total) {
     const packageName = getPackageName(wf.play_store_url);
     if (!packageName) {
-      console.log(`[${i + 1}/${watchFaces.length}] Skipping ${wf.id || wf.title} - No package name found.`);
-      continue;
+      console.log(`[${index}/${total}] Skipping ${wf.id || wf.title} - No package name found.`);
+      return;
     }
-
-    process.stdout.write(`[${i + 1}/${watchFaces.length}] Fetching ${wf.id} (${packageName})... `);
 
     let companionVersion = 'N/A';
     let wearVersion = 'N/A';
     let lastUpdatedDate = 'N/A';
+    let playStoreTitle = wf.title;
 
     try {
-      // Create a edit transaction for the Google Play Developer API
       const edit = await play.edits.insert({
         packageName,
       });
       const editId = edit.data.id;
 
       try {
-        // Query phone companion app version (production track)
         const track = await play.edits.tracks.get({
           packageName,
           editId,
@@ -89,12 +104,9 @@ async function main() {
             companionVersion = activeRelease.name || (activeRelease.versionCodes ? activeRelease.versionCodes.join(', ') : 'N/A');
           }
         }
-      } catch (e) {
-        // Track might not exist or contain active releases
-      }
+      } catch (e) {}
 
       try {
-        // Query Wear OS app version (wear:production track)
         const wearTrack = await play.edits.tracks.get({
           packageName,
           editId,
@@ -106,29 +118,23 @@ async function main() {
             wearVersion = activeRelease.name || (activeRelease.versionCodes ? activeRelease.versionCodes.join(', ') : 'N/A');
           }
         }
-      } catch (e) {
-        // Wear track might not exist or contain active releases
-      }
+      } catch (e) {}
 
-      // Cleanup edit transaction
       await play.edits.delete({
         packageName,
         editId,
       });
 
     } catch (apiError) {
-      // If service account lacks permission for this package, or API is disabled
       companionVersion = `API Error: ${apiError.code || apiError.message}`;
       wearVersion = `API Error: ${apiError.code || apiError.message}`;
     }
 
-    // Scrape last updated date and title from Play Store
-    let playStoreTitle = wf.title;
     try {
       const playStoreUrl = `https://play.google.com/store/apps/details?id=${packageName}&hl=en`;
       const response = await axios.get(playStoreUrl, {
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, fill=none; Gecko) Chrome/120.0.0.0 Safari/537.36',
           'Accept-Language': 'en-US,en;q=0.9',
         },
         timeout: 5000
@@ -154,7 +160,7 @@ async function main() {
       lastUpdatedDate = 'Fetch Failed';
     }
 
-    console.log(`Done (Companion: ${companionVersion}, Wear: ${wearVersion}, Updated: ${lastUpdatedDate}, Title: ${playStoreTitle})`);
+    console.log(`[${index}/${total}] Done: ${wf.id} (Companion: ${companionVersion}, Wear: ${wearVersion}, Updated: ${lastUpdatedDate}, Title: ${playStoreTitle})`);
 
     results.push({
       id: wf.id,
@@ -167,6 +173,23 @@ async function main() {
     });
   }
 
+  let activeIndex = 0;
+  const promises = [];
+  
+  async function next() {
+    if (activeIndex >= targetWatchFaces.length) return;
+    const currentIdx = activeIndex++;
+    const wf = targetWatchFaces[currentIdx];
+    await worker(wf, currentIdx + 1, targetWatchFaces.length);
+    await next();
+  }
+
+  for (let i = 0; i < Math.min(CONCURRENCY, targetWatchFaces.length); i++) {
+    promises.push(next());
+  }
+
+  await Promise.all(promises);
+
   // Generate markdown output
   console.log('\n\n================================================================');
   console.log('## Google Play Store App Versions and Dates');
@@ -178,11 +201,31 @@ async function main() {
   }
   console.log('\n================================================================\n');
 
-  // Save results to versions-data.json
+  // Save and merge results to versions-data.json
   const versionsDataPath = path.join(__dirname, 'versions-data.json');
+  let finalResults = results;
+  
+  if (fs.existsSync(versionsDataPath)) {
+    try {
+      const existingData = JSON.parse(fs.readFileSync(versionsDataPath, 'utf8'));
+      const existingResults = existingData.results || [];
+      
+      const mergedMap = new Map();
+      for (const res of existingResults) {
+        mergedMap.set(res.packageName, res);
+      }
+      for (const res of results) {
+        mergedMap.set(res.packageName, res);
+      }
+      finalResults = Array.from(mergedMap.values());
+    } catch (e) {
+      console.warn("Could not merge with existing data, overwriting instead:", e.message);
+    }
+  }
+
   const outputData = {
     lastUpdated: new Date().toISOString(),
-    results: results
+    results: finalResults
   };
   fs.writeFileSync(versionsDataPath, JSON.stringify(outputData, null, 2), 'utf8');
   console.log(`Saved version data to ${versionsDataPath}`);
