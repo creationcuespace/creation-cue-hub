@@ -2450,15 +2450,35 @@
       }
     }
 
+    function getOptimizedImageUrl(url, width = 84) {
+      if (!url) return 'https://via.placeholder.com/150';
+      if (url.startsWith('data:')) return url;
+      
+      let finalUrl = url;
+      if (url.startsWith('images/')) {
+        finalUrl = window.location.origin + '/' + url;
+      }
+      
+      if (finalUrl.startsWith('http') && !finalUrl.includes('wsrv.nl')) {
+        return `https://wsrv.nl/?url=${encodeURIComponent(finalUrl)}&w=${width}&output=webp&q=80`;
+      }
+      return finalUrl;
+    }
+
     function buildCombinedData() {
       combinedData = managerData.map(wf => {
         const packageName = getPackageName(wf.play_store_url) || '';
         const playInfo = versionsData[packageName] || {};
         
+        let localImageUrl = wf.image_url || 'https://via.placeholder.com/150';
+        if (localImageUrl.includes('/images/')) {
+          localImageUrl = 'images/' + localImageUrl.split('/images/')[1];
+        }
+
         return {
           id: wf.id || '',
           title: wf.title || wf.id || 'Unknown',
-          imageUrl: wf.image_url || 'https://via.placeholder.com/150',
+          imageUrl: localImageUrl,
           packageName: packageName,
           companionVersion: playInfo.companionVersion || 'N/A',
           companionStatus: playInfo.companionStatus || 'N/A',
@@ -2719,7 +2739,7 @@
         const contentHtml = `
           <td>
             <div class="wf-thumb-wrapper">
-              <img class="wf-thumb" src="${wf.imageUrl}" alt="${wf.title}" onerror="this.src='https://via.placeholder.com/150'">
+              <img class="wf-thumb" src="${getOptimizedImageUrl(wf.imageUrl, 84)}" alt="${wf.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/150'">
               <div class="wf-details">
                 <span class="wf-title">${watchFaceName}</span>
                 <span class="wf-id">${wf.id}</span>
@@ -2924,7 +2944,7 @@
 
       // Fill basic details
       document.getElementById('details-title').textContent = wf.title;
-      document.getElementById('details-img').src = wf.imageUrl;
+      document.getElementById('details-img').src = getOptimizedImageUrl(wf.imageUrl, 240);
       document.getElementById('details-companion-ver').textContent = wf.companionVersion;
       document.getElementById('details-wear-ver').textContent = wf.wearVersion;
       document.getElementById('details-store-date').textContent = wf.lastUpdatedDate;
