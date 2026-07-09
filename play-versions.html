@@ -3541,6 +3541,12 @@
       taskModalStartDate = displayDate;
       const dateEl = document.getElementById('task-start-date');
       if (dateEl) dateEl.value = displayDate;
+      // Reset confirm button state
+      const confirmBtn = document.getElementById('task-confirm-btn');
+      if (confirmBtn) {
+        confirmBtn.textContent = 'Create Tasks';
+        confirmBtn.disabled = false;
+      }
       // Reset priority
       setPriority('medium');
       // Update heading
@@ -3685,6 +3691,10 @@
 
         closeTaskModal();
         clearSelection();
+
+        // Reset button state
+        confirmBtn.textContent = 'Create Tasks';
+        confirmBtn.disabled = false;
 
         // Toast success
         const toast = document.createElement('div');
