@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-09T15:27:59.920Z",
+  "lastUpdated": "2026-07-09T16:20:14.936Z",
   "results": [
     {
       "id": "cue178",
@@ -510,9 +510,9 @@
       "title": "CUE124",
       "playStoreTitle": "Digital Watch Face CUE124",
       "packageName": "com.creation.cue124",
-      "companionVersion": "8 (4.0.0)",
+      "companionVersion": "9 (6.0.0)",
       "wearVersion": "10000006 (2.0.0)",
-      "lastUpdatedDate": "Feb 13, 2026"
+      "lastUpdatedDate": "Jul 9, 2026"
     },
     {
       "id": "cue123",
