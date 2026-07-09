@@ -2472,7 +2472,10 @@
         
         let localImageUrl = wf.image_url || 'https://via.placeholder.com/150';
         if (localImageUrl.includes('/images/')) {
-          localImageUrl = 'images/' + localImageUrl.split('/images/')[1];
+          let filename = localImageUrl.split('/images/')[1];
+          if (filename === 'cue152.png') filename = 'CUE152.png';
+          if (filename === 'cue158.png') filename = 'CUE158.png';
+          localImageUrl = 'images/' + filename;
         }
 
         return {
