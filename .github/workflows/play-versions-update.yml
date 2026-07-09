@@ -5,7 +5,11 @@ on:
     # Run every day at 3:00 AM Local Time (12:00 AM UTC)
     - cron: '0 0 * * *'
   workflow_dispatch:
-    # Allow manual triggering from the GitHub Actions tab
+    inputs:
+      packages:
+        description: 'Comma-separated package names to sync (leave blank for all)'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -33,7 +37,12 @@ jobs:
           echo '${{ secrets.PLAY_CREDENTIALS_JSON }}' > play-credentials.json
 
       - name: Run version fetcher script
-        run: node fetch-play-versions.js
+        run: |
+          if [ -n "${{ github.event.inputs.packages }}" ]; then
+            node fetch-play-versions.js --packages="${{ github.event.inputs.packages }}"
+          else
+            node fetch-play-versions.js
+          fi
 
       - name: Cleanup credentials file
         run: rm -f play-credentials.json
