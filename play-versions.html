@@ -2712,6 +2712,9 @@
           }
         }
         const watchFaceName = wf.playStoreTitle || wf.title;
+        const companionVal = getVersionCode(wf.companionVersion, false);
+        const wearVal = getVersionCode(wf.wearVersion, true);
+        const maxVal = Math.max(companionVal, wearVal);
 
         const contentHtml = `
           <td>
@@ -2724,23 +2727,23 @@
             </div>
           </td>
           <td>
-            <div style="display: flex; flex-direction: column; gap: 6px;">
-              <!-- Watch Face Name with Copy Button -->
-              <div class="pkg-name-wrapper" style="font-weight: 600; color: #fff; font-size: 13px;">
-                <span class="pkg-name" style="color: #fff;">${watchFaceName}</span>
-                <button class="copy-btn" onclick="copyText('${watchFaceName.replace(/'/g, "\\'")}', this)" title="Copy Watch Face Name">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+              <div style="display: flex; flex-direction: column; gap: 4px; overflow: hidden; max-width: 170px;">
+                <!-- Watch Face Name -->
+                <div style="font-weight: 600; color: #fff; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${watchFaceName}">
+                  ${watchFaceName}
+                </div>
+                <!-- Package Name -->
+                <div style="font-size: 11px; opacity: 0.7; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${wf.packageName ? wf.packageName : 'No package'}">
+                  ${wf.packageName ? wf.packageName : 'No package'}
+                </div>
+              </div>
+              <!-- Combined Copy Button -->
+              ${wf.packageName ? `
+                <button class="copy-btn" onclick="copyCombinedData('${watchFaceName.replace(/'/g, "\\'")}', '${wf.packageName}', ${maxVal}, this)" title="Copy Name, Package, and Version" style="flex-shrink: 0; padding: 6px; border-radius: 4px; background: rgba(255,255,255,0.03); border: 1px solid var(--border);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 </button>
-              </div>
-              <!-- Package Name with Copy Button -->
-              <div class="pkg-name-wrapper" style="font-size: 11px; opacity: 0.7;">
-                <span class="pkg-name">${wf.packageName ? wf.packageName : 'No package'}</span>
-                ${wf.packageName ? `
-                  <button class="copy-btn" onclick="copyText('${wf.packageName}', this)" title="Copy Package Name">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  </button>
-                ` : ''}
-              </div>
+              ` : ''}
             </div>
           </td>
           <td><span class="${companionBadgeClass}">${companionText}</span></td>
@@ -2814,6 +2817,24 @@
           toast.remove();
         }, 300);
       }, 2500);
+    }
+
+    // Helper to get version code number from version string (outside parenthesis, taking last 3 digits for Wear OS)
+    function getVersionCode(versionStr, isWear = false) {
+      if (!versionStr) return 0;
+      if (versionStr.includes('API Error') || versionStr === 'N/A') return 0;
+      const match = versionStr.match(/^([^(]+)/);
+      if (!match) return 0;
+      const val = parseInt(match[1].trim(), 10);
+      if (isNaN(val)) return 0;
+      return isWear ? (val % 1000) : val;
+    }
+
+    // Helper to copy Name, Package, and Version together
+    function copyCombinedData(name, packageName, version, btn) {
+      const versionSuffix = (version && version > 0) ? ` ${version}` : '';
+      const text = `${name} ${packageName}${versionSuffix}`;
+      copyText(text, btn);
     }
 
     // Copy to clipboard helper
