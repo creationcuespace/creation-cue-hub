@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-09T04:05:44.943Z",
+  "lastUpdated": "2026-07-10T15:51:45.629Z",
   "results": [
     {
       "id": "cue178",
@@ -107,7 +107,7 @@
       "packageName": "com.creation.cue168watchface",
       "companionVersion": "3 (4.0.0)",
       "wearVersion": "10000001 (1.0.0)",
-      "lastUpdatedDate": "Feb 25, 2026"
+      "lastUpdatedDate": "Feb 24, 2026"
     },
     {
       "id": "cue167",
@@ -123,9 +123,9 @@
       "title": "CUE166",
       "playStoreTitle": "Hybrid Watch Face CUE166",
       "packageName": "com.creation.cue166watchface",
-      "companionVersion": "8 (5.0.3)",
+      "companionVersion": "9 (6.0.0)",
       "wearVersion": "10000003 (1.0.1)",
-      "lastUpdatedDate": "May 9, 2026"
+      "lastUpdatedDate": "Jul 8, 2026"
     },
     {
       "id": "cue165",
@@ -161,7 +161,7 @@
       "packageName": "com.creation.cue162watchface",
       "companionVersion": "5 (6.0.0)",
       "wearVersion": "10000004 (1.0.1)",
-      "lastUpdatedDate": "Jun 27, 2026"
+      "lastUpdatedDate": "Jun 26, 2026"
     },
     {
       "id": "cue161",
@@ -269,16 +269,16 @@
       "packageName": "com.creation.cue150watchface",
       "companionVersion": "4 (4.0.0)",
       "wearVersion": "10000001 (1.0.0)",
-      "lastUpdatedDate": "Feb 25, 2026"
+      "lastUpdatedDate": "Feb 24, 2026"
     },
     {
       "id": "cue149",
       "title": "CUE149",
       "playStoreTitle": "Watch Face CUE149",
       "packageName": "com.creation.cue149watchface",
-      "companionVersion": "9 (5.0.2)",
+      "companionVersion": "10 (6.0.0)",
       "wearVersion": "10000006 (1.0.1)",
-      "lastUpdatedDate": "Apr 21, 2026"
+      "lastUpdatedDate": "Jul 9, 2026"
     },
     {
       "id": "cue148",
@@ -339,9 +339,9 @@
       "title": "CUE142",
       "playStoreTitle": "Watch Face CUE142",
       "packageName": "com.creation.cue142watchface",
-      "companionVersion": "7 (5.0.2)",
+      "companionVersion": "8 (6.0.0)",
       "wearVersion": "10000001 (1.0.0)",
-      "lastUpdatedDate": "Mar 20, 2026"
+      "lastUpdatedDate": "Jul 8, 2026"
     },
     {
       "id": "cue141",
@@ -447,9 +447,9 @@
       "title": "CUE131",
       "playStoreTitle": "Digital Watch Face CUE131",
       "packageName": "com.creation.cue131watchface",
-      "companionVersion": "5 (2.0.0)",
+      "companionVersion": "6 (6.0.0)",
       "wearVersion": "10000003 (1.0.1)",
-      "lastUpdatedDate": "Feb 10, 2026"
+      "lastUpdatedDate": "Jul 10, 2026"
     },
     {
       "id": "cue130",
@@ -476,7 +476,7 @@
       "packageName": "com.creation.cue128watchface",
       "companionVersion": "14 (6.0.0)",
       "wearVersion": "10000013 (2.0.0)",
-      "lastUpdatedDate": "Jun 17, 2026"
+      "lastUpdatedDate": "Jun 16, 2026"
     },
     {
       "id": "cue127",
@@ -510,9 +510,9 @@
       "title": "CUE124",
       "playStoreTitle": "Digital Watch Face CUE124",
       "packageName": "com.creation.cue124",
-      "companionVersion": "8 (4.0.0)",
+      "companionVersion": "9 (6.0.0)",
       "wearVersion": "10000006 (2.0.0)",
-      "lastUpdatedDate": "Feb 13, 2026"
+      "lastUpdatedDate": "Jul 9, 2026"
     },
     {
       "id": "cue123",
@@ -528,27 +528,27 @@
       "title": "CUE122",
       "playStoreTitle": "Digital Watch Face CUE122",
       "packageName": "com.creation.cue122watchface",
-      "companionVersion": "13 (4.0.0)",
+      "companionVersion": "14 (6.0.0)",
       "wearVersion": "10000011 (3.0.0)",
-      "lastUpdatedDate": "Feb 13, 2026"
+      "lastUpdatedDate": "Jul 9, 2026"
     },
     {
       "id": "cue116",
       "title": "CUE116",
       "playStoreTitle": "Digital Watch Face CUE116",
       "packageName": "com.creation.cue116watchface",
-      "companionVersion": "20 (5.0.1)",
+      "companionVersion": "21 (6.0.0)",
       "wearVersion": "10000016 (3.2.0)",
-      "lastUpdatedDate": "Mar 19, 2026"
+      "lastUpdatedDate": "Jul 8, 2026"
     },
     {
       "id": "cue115",
       "title": "CUE115",
       "playStoreTitle": "Digital Watch Face CUE115",
       "packageName": "com.creation.cue115watchface",
-      "companionVersion": "10 (4.0.0)",
+      "companionVersion": "11 (6.0.0)",
       "wearVersion": "10000008 (2.4.0)",
-      "lastUpdatedDate": "Feb 13, 2026"
+      "lastUpdatedDate": "Jul 9, 2026"
     },
     {
       "id": "cue114",
@@ -557,7 +557,7 @@
       "packageName": "com.creation.cue114watchface",
       "companionVersion": "10 (4.0.0)",
       "wearVersion": "10000008 (3.3.2)",
-      "lastUpdatedDate": "Feb 25, 2026"
+      "lastUpdatedDate": "Feb 24, 2026"
     },
     {
       "id": "cue111",
@@ -573,9 +573,9 @@
       "title": "CUE110",
       "playStoreTitle": "Digital Watch Face CUE110",
       "packageName": "com.creation.cue110watchface",
-      "companionVersion": "14 (5.0.2)",
+      "companionVersion": "16 (6.0.0)",
       "wearVersion": "10000015 (4.0.0)",
-      "lastUpdatedDate": "Mar 23, 2026"
+      "lastUpdatedDate": "Jul 8, 2026"
     },
     {
       "id": "cue109",
@@ -620,7 +620,7 @@
       "packageName": "com.creation.cue104watchface",
       "companionVersion": "8 (4.0.0)",
       "wearVersion": "10000006 (3.0.0)",
-      "lastUpdatedDate": "Feb 25, 2026"
+      "lastUpdatedDate": "Feb 24, 2026"
     },
     {
       "id": "cue103",
@@ -665,7 +665,7 @@
       "packageName": "com.creation.cue099watchface",
       "companionVersion": "7 (1.0.1)",
       "wearVersion": "10000006 (3.0.0)",
-      "lastUpdatedDate": "Jul 18, 2025"
+      "lastUpdatedDate": "Jul 17, 2025"
     },
     {
       "id": "cue098",
@@ -692,7 +692,7 @@
       "packageName": "com.creationcue.crc094watchface",
       "companionVersion": "16 (6.0.0)",
       "wearVersion": "10000010 (6.0.0)",
-      "lastUpdatedDate": "Jun 13, 2026"
+      "lastUpdatedDate": "Jun 12, 2026"
     },
     {
       "id": "crc092",
@@ -854,7 +854,7 @@
       "packageName": "com.creationcue.crc044",
       "companionVersion": "8 (4.0.0)",
       "wearVersion": "10000006 (2.0.0)",
-      "lastUpdatedDate": "Feb 25, 2026"
+      "lastUpdatedDate": "Feb 24, 2026"
     },
     {
       "id": "crc043",
@@ -908,7 +908,7 @@
       "packageName": "com.watchfacestudio.crc035",
       "companionVersion": "10 (4.0.0)",
       "wearVersion": "10000008 (4.0.0)",
-      "lastUpdatedDate": "Feb 20, 2026"
+      "lastUpdatedDate": "Feb 19, 2026"
     },
     {
       "id": "crc034",
@@ -962,7 +962,7 @@
       "packageName": "com.watchfacestudio.crc027",
       "companionVersion": "7 (6.0.0)",
       "wearVersion": "10000008 (4.0.0)",
-      "lastUpdatedDate": "Jun 5, 2026"
+      "lastUpdatedDate": "Jun 4, 2026"
     },
     {
       "id": "cue024",
