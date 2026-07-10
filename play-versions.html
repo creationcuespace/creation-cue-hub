@@ -1917,7 +1917,7 @@
       <a href="social-generator.html" class="header-btn">Socials</a>
       <a href="month-planner.html" class="header-btn">Planner</a>
       <a href="play-versions.html" class="header-btn active-btn">Versions</a>
-      <span style="font-size: 10px; font-weight: 700; color: var(--yellow); background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.3); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.9;">v1.5</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--yellow); background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.3); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.9;">v1.6</span>
       <button onclick="handleLogout()" class="header-btn">Logout</button>
     </div>
   </header>
@@ -2699,13 +2699,42 @@
         cb.type = 'checkbox';
         cb.style.cssText = 'width:15px;height:15px;accent-color:#7C3AED;cursor:pointer;';
         cb.checked = selectedFaceIds.has(wf.id);
-        cb.addEventListener('change', (e) => {
+
+        cb.addEventListener('click', (e) => {
           e.stopPropagation();
-          if (cb.checked) { selectedFaceIds.add(wf.id); tr.classList.add('row-selected'); }
-          else { selectedFaceIds.delete(wf.id); tr.classList.remove('row-selected'); }
+
+          // Shift+Click on checkbox: range-select all rows between anchor and this one
+          if (e.shiftKey && lastClickedRowIndex >= 0) {
+            e.preventDefault(); // prevent the checkbox from toggling on its own
+            const start = Math.min(lastClickedRowIndex, rowIndex);
+            const end   = Math.max(lastClickedRowIndex, rowIndex);
+            for (let i = start; i <= end; i++) {
+              const targetWf = filtered[i];
+              if (!targetWf) continue;
+              selectedFaceIds.add(targetWf.id);
+              const domRow = tbody.querySelector(`tr[data-row-index="${i}"]`);
+              if (domRow) {
+                domRow.classList.add('row-selected');
+                const cbEl = domRow.querySelector('input[type="checkbox"]');
+                if (cbEl) cbEl.checked = true;
+              }
+            }
+            updateSelectionToolbar();
+            return;
+          }
+
+          // Normal checkbox click: toggle this row
+          if (cb.checked) {
+            selectedFaceIds.add(wf.id);
+            tr.classList.add('row-selected');
+          } else {
+            selectedFaceIds.delete(wf.id);
+            tr.classList.remove('row-selected');
+          }
           lastClickedRowIndex = rowIndex;
           updateSelectionToolbar();
         });
+
         cbTd.appendChild(cb);
         tr.appendChild(cbTd);
 
