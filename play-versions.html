@@ -12,6 +12,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Flatpickr date picker -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <style>
+    .flatpickr-calendar { background: #1e1e2e !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 10px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important; }
+    .flatpickr-day { color: #e0e0e0 !important; border-radius: 6px !important; }
+    .flatpickr-day:hover, .flatpickr-day.selected { background: #7C3AED !important; border-color: #7C3AED !important; color: #fff !important; }
+    .flatpickr-day.today { border-color: rgba(245,197,24,0.5) !important; }
+    .flatpickr-months, .flatpickr-month { background: #1e1e2e !important; color: #e0e0e0 !important; fill: #e0e0e0 !important; }
+    .flatpickr-current-month, .flatpickr-monthDropdown-months { color: #e0e0e0 !important; }
+    .flatpickr-weekday { color: rgba(255,255,255,0.4) !important; }
+    .flatpickr-prev-month svg, .flatpickr-next-month svg { fill: #e0e0e0 !important; }
+    .flatpickr-prev-month:hover svg, .flatpickr-next-month:hover svg { fill: #7C3AED !important; }
+    .numInputWrapper input { color: #e0e0e0 !important; }
+  </style>
 
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
@@ -1917,7 +1932,7 @@
       <a href="social-generator.html" class="header-btn">Socials</a>
       <a href="month-planner.html" class="header-btn">Planner</a>
       <a href="play-versions.html" class="header-btn active-btn">Versions</a>
-      <span style="font-size: 10px; font-weight: 700; color: var(--yellow); background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.3); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.9;">v1.7</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--yellow); background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.3); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.9;">v1.8</span>
       <button onclick="handleLogout()" class="header-btn">Logout</button>
     </div>
   </header>
@@ -2220,7 +2235,7 @@
 
       <div class="task-modal-field">
         <div class="task-modal-label">Start Date</div>
-        <input type="date" class="task-modal-input" id="task-start-date" style="text-align: center; color-scheme: dark;">
+        <input type="text" class="task-modal-input" id="task-start-date" placeholder="DD/MM/YYYY" style="text-align: center; cursor: pointer;" readonly>
       </div>
 
       <div class="task-modal-field">
@@ -3764,18 +3779,22 @@
       document.getElementById('task-modal-overlay').style.display = 'none';
     }
 
-    // Wire custom input preview update and date input listeners
+    // Wire custom input preview update and initialize Flatpickr date picker
     document.addEventListener('DOMContentLoaded', () => {
       const customIn = document.getElementById('task-custom-input');
       if (customIn) customIn.addEventListener('input', updateTaskPreview);
       
       const dateEl = document.getElementById('task-start-date');
-      if (dateEl) {
-        dateEl.addEventListener('input', (e) => {
-          taskModalStartDate = e.target.value;
-        });
-        dateEl.addEventListener('change', (e) => {
-          taskModalStartDate = e.target.value;
+      if (dateEl && typeof flatpickr !== 'undefined') {
+        flatpickr(dateEl, {
+          dateFormat: 'Y-m-d',        // internal value stored (YYYY-MM-DD for Firebase)
+          altInput: true,              // show a separate display input
+          altFormat: 'd/m/Y',         // display format: DD/MM/YYYY
+          defaultDate: 'today',
+          disableMobile: false,
+          onChange: (selectedDates, dateStr) => {
+            taskModalStartDate = dateStr; // YYYY-MM-DD
+          }
         });
       }
     });
