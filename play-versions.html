@@ -1917,7 +1917,7 @@
       <a href="social-generator.html" class="header-btn">Socials</a>
       <a href="month-planner.html" class="header-btn">Planner</a>
       <a href="play-versions.html" class="header-btn active-btn">Versions</a>
-      <span style="font-size: 10px; font-weight: 700; color: var(--yellow); background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.3); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.9;">v1.4</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--yellow); background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.3); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.9;">v1.5</span>
       <button onclick="handleLogout()" class="header-btn">Logout</button>
     </div>
   </header>
@@ -2709,8 +2709,8 @@
         cbTd.appendChild(cb);
         tr.appendChild(cbTd);
 
-        // Row click opens the details panel (or selects with Shift/Ctrl)
-        tr.addEventListener('click', (e) => {
+        // Handle Shift+Click and Ctrl+Click on mousedown to beat browser text selection
+        tr.addEventListener('mousedown', (e) => {
           if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.closest('.copy-btn') || e.target.tagName === 'A' || e.target.closest('a')) {
             return;
           }
@@ -2736,17 +2736,15 @@
 
           // Shift+Click: range selection from last anchor
           if (e.shiftKey) {
-            e.preventDefault();
+            e.preventDefault(); // stops text highlight
             window.getSelection && window.getSelection().removeAllRanges();
             const anchorIndex = lastClickedRowIndex >= 0 ? lastClickedRowIndex : rowIndex;
             const start = Math.min(anchorIndex, rowIndex);
             const end   = Math.max(anchorIndex, rowIndex);
-            // Walk current filtered list directly (no DOM dependency)
             for (let i = start; i <= end; i++) {
               const targetWf = filtered[i];
               if (!targetWf) continue;
               selectedFaceIds.add(targetWf.id);
-              // Also update the DOM row if it exists
               const domRow = tbody.querySelector(`tr[data-row-index="${i}"]`);
               if (domRow) {
                 domRow.classList.add('row-selected');
@@ -2757,8 +2755,14 @@
             updateSelectionToolbar();
             return;
           }
+        });
 
-          // Normal click: set anchor and open panel
+        // Normal click: set anchor and open panel
+        tr.addEventListener('click', (e) => {
+          if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.closest('.copy-btn') || e.target.tagName === 'A' || e.target.closest('a')) {
+            return;
+          }
+          if (e.shiftKey || e.ctrlKey || e.metaKey) return; // handled in mousedown
           lastClickedRowIndex = rowIndex;
           openDetailsPanel(wf.id);
         });
