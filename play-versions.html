@@ -2686,9 +2686,10 @@
 
       // Ensure toolbar reflects current selection after rendering rows
       updateSelectionToolbar();
-      filtered.forEach(wf => {
+      filtered.forEach((wf, rowIndex) => {
         const tr = document.createElement('tr');
         if (selectedFaceIds.has(wf.id)) tr.classList.add('row-selected');
+        tr.dataset.rowIndex = rowIndex;
         
         // Checkbox cell
         const cbTd = document.createElement('td');
@@ -2701,17 +2702,60 @@
           e.stopPropagation();
           if (cb.checked) { selectedFaceIds.add(wf.id); tr.classList.add('row-selected'); }
           else { selectedFaceIds.delete(wf.id); tr.classList.remove('row-selected'); }
+          lastClickedRowIndex = rowIndex;
           updateSelectionToolbar();
         });
         cbTd.appendChild(cb);
         tr.appendChild(cbTd);
 
-        // Row click opens the details panel
+        // Row click opens the details panel (or selects with Shift/Ctrl)
         tr.addEventListener('click', (e) => {
           if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.closest('.copy-btn') || e.target.tagName === 'A' || e.target.closest('a')) {
             return;
           }
+
+          // Ctrl/Cmd+Click: toggle single row
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            if (selectedFaceIds.has(wf.id)) {
+              selectedFaceIds.delete(wf.id);
+              tr.classList.remove('row-selected');
+              const cbEl = tr.querySelector('input[type="checkbox"]');
+              if (cbEl) cbEl.checked = false;
+            } else {
+              selectedFaceIds.add(wf.id);
+              tr.classList.add('row-selected');
+              const cbEl = tr.querySelector('input[type="checkbox"]');
+              if (cbEl) cbEl.checked = true;
+            }
+            lastClickedRowIndex = rowIndex;
+            updateSelectionToolbar();
+            return;
+          }
+
+          // Shift+Click: range selection
+          if (e.shiftKey && lastClickedRowIndex !== -1) {
+            e.preventDefault();
+            const start = Math.min(lastClickedRowIndex, rowIndex);
+            const end   = Math.max(lastClickedRowIndex, rowIndex);
+            const rows = tbody.querySelectorAll('tr');
+            for (let i = start; i <= end; i++) {
+              const targetRow = rows[i];
+              if (!targetRow) continue;
+              const targetIdx = parseInt(targetRow.dataset.rowIndex);
+              const targetWf  = filtered[targetIdx];
+              if (!targetWf) continue;
+              selectedFaceIds.add(targetWf.id);
+              targetRow.classList.add('row-selected');
+              const cbEl = targetRow.querySelector('input[type="checkbox"]');
+              if (cbEl) cbEl.checked = true;
+            }
+            updateSelectionToolbar();
+            return;
+          }
+
           openDetailsPanel(wf.id);
+          lastClickedRowIndex = rowIndex;
         });
         
         const hasWearError = String(wf.wearVersion || '').includes('API Error');
@@ -3572,6 +3616,7 @@
     // Header column sort — state variable tracks current sort
     // ─── Multi-select & Batch Task Creation ───────────────────────────────────
     const selectedFaceIds = new Set();
+    let lastClickedRowIndex = -1;
     let taskModalPriority = 'medium';
 
     function updateSelectionToolbar() {
