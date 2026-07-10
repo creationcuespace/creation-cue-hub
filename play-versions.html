@@ -1917,7 +1917,7 @@
       <a href="social-generator.html" class="header-btn">Socials</a>
       <a href="month-planner.html" class="header-btn">Planner</a>
       <a href="play-versions.html" class="header-btn active-btn">Versions</a>
-      <span style="font-size: 10px; font-weight: 700; color: var(--yellow); background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.3); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.9;">v1.3</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--yellow); background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.3); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.9;">v1.4</span>
       <button onclick="handleLogout()" class="header-btn">Logout</button>
     </div>
   </header>
@@ -2715,7 +2715,7 @@
             return;
           }
 
-          // Ctrl/Cmd+Click: toggle single row
+          // Ctrl/Cmd+Click: toggle single row without opening panel
           if (e.ctrlKey || e.metaKey) {
             e.preventDefault();
             if (selectedFaceIds.has(wf.id)) {
@@ -2734,29 +2734,33 @@
             return;
           }
 
-          // Shift+Click: range selection
-          if (e.shiftKey && lastClickedRowIndex !== -1) {
+          // Shift+Click: range selection from last anchor
+          if (e.shiftKey) {
             e.preventDefault();
-            const start = Math.min(lastClickedRowIndex, rowIndex);
-            const end   = Math.max(lastClickedRowIndex, rowIndex);
-            const rows = tbody.querySelectorAll('tr');
+            window.getSelection && window.getSelection().removeAllRanges();
+            const anchorIndex = lastClickedRowIndex >= 0 ? lastClickedRowIndex : rowIndex;
+            const start = Math.min(anchorIndex, rowIndex);
+            const end   = Math.max(anchorIndex, rowIndex);
+            // Walk current filtered list directly (no DOM dependency)
             for (let i = start; i <= end; i++) {
-              const targetRow = rows[i];
-              if (!targetRow) continue;
-              const targetIdx = parseInt(targetRow.dataset.rowIndex);
-              const targetWf  = filtered[targetIdx];
+              const targetWf = filtered[i];
               if (!targetWf) continue;
               selectedFaceIds.add(targetWf.id);
-              targetRow.classList.add('row-selected');
-              const cbEl = targetRow.querySelector('input[type="checkbox"]');
-              if (cbEl) cbEl.checked = true;
+              // Also update the DOM row if it exists
+              const domRow = tbody.querySelector(`tr[data-row-index="${i}"]`);
+              if (domRow) {
+                domRow.classList.add('row-selected');
+                const cbEl = domRow.querySelector('input[type="checkbox"]');
+                if (cbEl) cbEl.checked = true;
+              }
             }
             updateSelectionToolbar();
             return;
           }
 
-          openDetailsPanel(wf.id);
+          // Normal click: set anchor and open panel
           lastClickedRowIndex = rowIndex;
+          openDetailsPanel(wf.id);
         });
         
         const hasWearError = String(wf.wearVersion || '').includes('API Error');
