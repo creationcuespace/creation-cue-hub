@@ -1,0 +1,79 @@
+name: Automated Blog Post Draft Generator
+
+on:
+  schedule:
+    # Run twice a week: Mondays and Thursdays at 9:00 AM UTC (12:00 PM Local)
+    - cron: '0 9 * * 1,4'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate-blog-draft:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run blog generation script
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/blog-generate.js
+
+      - name: Create Pull Request with Draft
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if there are any new files or changes in the blog folder
+          if git status --porcelain blog/ | grep -q .; then
+            echo "Changes detected in blog directory. Creating draft PR..."
+            
+            # Setup Git credentials
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            
+            # Create a unique branch name
+            BRANCH_NAME="draft/blog-$(date +%Y%m%d-%H%M)"
+            git checkout -b "$BRANCH_NAME"
+            
+            # Commit and push changes
+            git add blog/
+            git commit -m "draft: automated blog post generation"
+            git push origin "$BRANCH_NAME"
+            
+            # Extract article title from posts.json (if possible) for PR title
+            PR_TITLE="Draft Blog Post: $(date +%Y-%m-%d)"
+            if [ -f "blog/posts.json" ]; then
+              FIRST_TITLE=$(node -e "console.log(JSON.parse(fs.readFileSync('blog/posts.json', 'utf8'))[0].title)")
+              if [ -n "$FIRST_TITLE" ]; then
+                PR_TITLE="Draft: $FIRST_TITLE"
+              fi
+            fi
+            
+            # Open Pull Request via GitHub CLI
+            gh pr create \
+              --title "$PR_TITLE" \
+              --body "This is an automated blog post draft generated from Wear OS RSS feeds using Google Gemini.
+
+### Actions Needed:
+1. Review the generated article HTML file inside the \`blog/\` folder.
+2. Edit or proofread the text to add your personal developer perspective.
+3. Merge this Pull Request to publish the post live to your website.
+
+*Generated on: $(date +'%A, %B %d, %Y')*" \
+              --base main \
+              --head "$BRANCH_NAME" \
+              --draft
+              
+            echo "Draft Pull Request successfully created!"
+          else
+            echo "No new blog content or changes generated."
+          fi

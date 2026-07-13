@@ -699,6 +699,16 @@
     // Get parameters
     var urlParams = new URLSearchParams(window.location.search);
     var promoId = urlParams.get('promo') || urlParams.get('p');
+    if (promoId) {
+      try {
+        var decoded = atob(promoId);
+        if (decoded && /^[a-z0-9\-]+$/i.test(decoded)) {
+          promoId = decoded;
+        }
+      } catch (e) {
+        // Leave promoId as is if not a valid base64 slug
+      }
+    }
     var tokenId = urlParams.get('token') || urlParams.get('t');
     var isTokenClaim = !!tokenId;
     var tokenData = null;

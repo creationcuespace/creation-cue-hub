@@ -753,13 +753,22 @@
                 <!-- Image tag will load QR code -->
               </div>
               <div style="font-size:10px; color:var(--muted); text-align:center;">Copy or save this QR code to include in social posts or emails.</div>
+              <button class="btn small" id="btn-copy-review-msg" style="width:100%; background:var(--blue); color:white; display:flex; align-items:center; justify-content:center; gap:6px;">
+                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                 Copy FB Review Comment
+               </button>
             </div>
           </div>
 
-          <!-- Danger & Actions Card -->
-          <div class="card" style="border-color: rgba(232, 40, 30, 0.3);">
-            <div class="card-title" style="color:var(--red);">Danger Zone</div>
-            <div style="display:flex; flex-direction:column; gap:10px;">
+          <!-- Danger & Actions Card (Collapsible) -->
+          <div class="card" style="border-color: rgba(232, 40, 30, 0.3); padding: 0; overflow: hidden;">
+            <div class="card-title" onclick="toggleDangerZone()" style="color:var(--red); cursor:pointer; user-select:none; margin:0; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; background: rgba(232, 40, 30, 0.03);">
+              <span>Danger Zone</span>
+              <svg id="danger-zone-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s ease;">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+            <div id="danger-zone-body" style="display:none; flex-direction:column; gap:10px; padding:16px 20px; border-top:1px solid rgba(232, 40, 30, 0.15);">
               <button class="btn ghost" id="btn-pause-promo" style="width:100%;">PAUSE PROMOTION</button>
               <button class="btn" id="btn-duplicate-promo" style="width:100%; background:var(--blue); color:white;">DUPLICATE PROMOTION</button>
               <button class="btn red" id="btn-delete-promo" style="width:100%;">DELETE PROMOTION PERMANENTLY</button>
@@ -1094,7 +1103,7 @@
 
       // Render Public Claim URLs
       var claimBaseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/claim.html';
-      var claimUrl = claimBaseUrl + '?p=' + promoId;
+      var claimUrl = claimBaseUrl + '?p=' + btoa(promoId);
       var urlLabel = document.getElementById('lbl-public-url');
       urlLabel.textContent = claimUrl;
       urlLabel.href = claimUrl;
@@ -1217,6 +1226,23 @@
         alert("Failed to shorten: " + err.message);
         btn.disabled = false;
         btn.textContent = "Shorten";
+      });
+    });
+
+    // Copy review message
+    document.getElementById('btn-copy-review-msg').addEventListener('click', function() {
+      if (!promoData || !promoData.storeLink) {
+        alert("Play Store link not available.");
+        return;
+      }
+      var appLink = promoData.storeLink;
+      var pkg = appLink;
+      if (appLink.includes("id=")) {
+        pkg = appLink.split("id=")[1].split("&")[0];
+      }
+      var textToCopy = "If you tried it, your feedback means a lot. Thanks.\nhttps://play.google.com/store/apps/details?id=" + pkg + "&reviewId=0";
+      navigator.clipboard.writeText(textToCopy).then(function() {
+        showToast("Review comment copied!");
       });
     });
 
@@ -1595,6 +1621,20 @@ Format this report with a professional tone in clean, beautiful Markdown with st
           input.value = '';
         } else {
           input.value = value;
+        }
+      }
+    };
+
+    window.toggleDangerZone = function() {
+      var body = document.getElementById('danger-zone-body');
+      var chevron = document.getElementById('danger-zone-chevron');
+      if (body && chevron) {
+        if (body.style.display === 'none') {
+          body.style.display = 'flex';
+          chevron.style.transform = 'rotate(180deg)';
+        } else {
+          body.style.display = 'none';
+          chevron.style.transform = 'rotate(0deg)';
         }
       }
     };
