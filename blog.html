@@ -24,6 +24,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Firebase SDK (For Admin Auth Detection) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    
     <style>
         :root {
             /* HSL tailored color palette matching main app */
@@ -326,10 +330,37 @@
     </footer>
 
     <script>
+        // Firebase Config (Identical to main app)
+        const firebaseConfig = {
+            apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+            authDomain: "creation-cue-manage.firebaseapp.com",
+            databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "creation-cue-manage",
+            storageBucket: "creation-cue-manage.firebasestorage.app",
+            messagingSenderId: "186324516022",
+            appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             // Show admin panel if ?admin=true is present in URL
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('admin') === 'true') {
+                showAdminPanel();
+            }
+
+            // Check Firebase Auth state dynamically
+            try {
+                firebase.initializeApp(firebaseConfig);
+                firebase.auth().onAuthStateChanged((user) => {
+                    if (user) {
+                        showAdminPanel();
+                    }
+                });
+            } catch (e) {
+                console.warn('Firebase auth check skipped/failed:', e);
+            }
+
+            function showAdminPanel() {
                 const adminPanel = document.getElementById('admin-panel');
                 if (adminPanel) adminPanel.style.display = 'block';
             }
