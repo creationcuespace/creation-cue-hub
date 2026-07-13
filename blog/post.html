@@ -31,6 +31,10 @@
     <!-- Markdown Parser -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
+    <!-- Firebase SDK (For Admin Auth Detection) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    
     <style>
         :root {
             --bg-color: hsl(240, 10%, 3%);
@@ -450,6 +454,16 @@
             }
         }
 
+        @media (max-width: 768px) {
+            .admin-option-divider {
+                border-left: none !important;
+                padding-left: 0 !important;
+                border-top: 1px dashed var(--border-color);
+                padding-top: 20px;
+                margin-top: 10px;
+            }
+        }
+
         @media (max-width: 600px) {
             .main-content-area {
                 padding: 16px 12px;
@@ -522,7 +536,34 @@
 
         <!-- Main Content Area -->
         <main class="main-content-area">
-        <article>
+            <!-- Admin Panel (Only visible with ?admin=true or when logged in) -->
+            <div id="admin-panel" style="display:none; background:rgba(241,179,28,0.08); border:1px solid var(--primary); border-radius:var(--border-radius-lg); padding:24px; margin-bottom:30px; box-shadow:0 8px 32px rgba(241,179,28,0.05);">
+                <h2 style="font-family:var(--font-display); font-size:18px; color:var(--primary); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+                    🔑 Admin Publishing Guide
+                </h2>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+                    <div>
+                        <h3 style="font-size:14px; color:var(--text-primary); margin-bottom:8px; font-family:var(--font-display); font-weight:700;">Option A: Publish Automated AI Drafts</h3>
+                        <ol style="margin-left:20px; font-size:13px; color:var(--text-secondary); display:flex; flex-direction:column; gap:6px; line-height:1.4;">
+                            <li>Go to the <a href="https://github.com/creationcuespace/creation-cue-hub/pulls" target="_blank" style="color:var(--text-primary); font-weight:600; text-decoration:underline;">GitHub Pull Requests</a> page.</li>
+                            <li>Open the draft, click the **Pencil icon** (edit), write edits under the **Preview** tab, and click **Commit**.</li>
+                            <li>Click **Ready for review** and then **Merge pull request**.</li>
+                            <li>Open **GitHub Desktop** on your computer, click **Pull origin**, and then run **<code>update-versions.bat</code>**.</li>
+                        </ol>
+                    </div>
+                    <div class="admin-option-divider" style="border-left:1px dashed var(--border-color); padding-left:20px;">
+                        <h3 style="font-size:14px; color:var(--text-primary); margin-bottom:8px; font-family:var(--font-display); font-weight:700;">Option B: Create Your Own Manual Article</h3>
+                        <ol style="margin-left:20px; font-size:13px; color:var(--text-secondary); display:flex; flex-direction:column; gap:6px; line-height:1.4;">
+                            <li>Double-click **<code>create-post.bat</code>** in your project folder.</li>
+                            <li>Answer the 3 simple questions (Title, Excerpt, Watch face ID) in the prompt window.</li>
+                            <li>**Notepad** will open automatically. Write or paste your article text.</li>
+                            <li>Save and close Notepad. The wizard will automatically commit, push, and deploy it live!</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <article>
             <div class="post-meta">
                 <span id="post-date">Loading...</span>
                 <span>•</span>
@@ -551,12 +592,73 @@
         </main>
     </div>
 
+    <!-- Footer -->
     <footer>
         &copy; 2026 CreationCue. All rights reserved. Smartwatch designs and Wear OS news hub.
+        <br><br>
+        <span onclick="toggleAdminPanel()" style="cursor:pointer; text-decoration:underline; opacity:0.6; font-size:11px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">🔑 Admin Portal</span>
     </footer>
 
     <script>
+        // Firebase Config (Identical to main app)
+        const firebaseConfig = {
+            apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+            authDomain: "creation-cue-manage.firebaseapp.com",
+            databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "creation-cue-manage",
+            storageBucket: "creation-cue-manage.firebasestorage.app",
+            messagingSenderId: "186324516022",
+            appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
+        };
+
+        function toggleAdminPanel() {
+            const adminPanel = document.getElementById('admin-panel');
+            if (!adminPanel) return;
+            
+            if (adminPanel.style.display === 'block') {
+                adminPanel.style.display = 'none';
+            } else {
+                const urlParams = new URLSearchParams(window.location.search);
+                const isAdminParam = urlParams.get('admin') === 'true';
+                
+                let isLoggedIn = false;
+                try {
+                    isLoggedIn = !!firebase.auth().currentUser;
+                } catch(e) {}
+                
+                if (isAdminParam || isLoggedIn) {
+                    adminPanel.style.display = 'block';
+                    adminPanel.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    alert('To access the Admin Portal, please log in on your coupon manager page first, or add ?admin=true to the URL.');
+                }
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            // Show admin panel if ?admin=true is present in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('admin') === 'true') {
+                showAdminPanel();
+            }
+
+            // Check Firebase Auth state dynamically
+            try {
+                firebase.initializeApp(firebaseConfig);
+                firebase.auth().onAuthStateChanged((user) => {
+                    if (user) {
+                        showAdminPanel();
+                    }
+                });
+            } catch (e) {
+                console.warn('Firebase auth check skipped/failed:', e);
+            }
+
+            function showAdminPanel() {
+                const adminPanel = document.getElementById('admin-panel');
+                if (adminPanel) adminPanel.style.display = 'block';
+            }
+
             loadMarkdownArticle();
         });
 
