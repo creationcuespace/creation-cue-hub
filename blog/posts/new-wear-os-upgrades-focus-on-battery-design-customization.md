@@ -1,4 +1,3 @@
-
 Google has officially introduced new updates for Wear OS smartwatch customization. The new features focus heavily on performance optimizations and streamlining how complication layout metrics are delivered to watch displays.
 
 ## Richer Complications & Dynamic Customization
