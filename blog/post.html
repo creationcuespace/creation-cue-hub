@@ -537,7 +537,116 @@
                 grid-column: 2;
                 padding: 40px 40px;
                 min-height: calc(100vh - 64px);
-                max-width: 900px;
+                max-width: 1200px;
+            }
+        }
+
+        /* Blog Layout Grid for Article + Sidebar */
+        .blog-layout-wrapper {
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .blog-layout-wrapper article {
+            flex: 1;
+            min-width: 0;
+            margin-bottom: 0;
+        }
+
+        .blog-sidebar {
+            width: 320px;
+            flex-shrink: 0;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            position: sticky;
+            top: 84px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .sidebar-title {
+            font-family: var(--font-display);
+            font-size: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-posts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-smooth);
+            padding: 8px;
+            border-radius: var(--border-radius-md);
+            border: 1px solid transparent;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: var(--border-color);
+            transform: translateX(4px);
+        }
+
+        .sidebar-thumb {
+            width: 64px;
+            height: 64px;
+            border-radius: var(--border-radius-sm);
+            object-fit: cover;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .sidebar-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        .sidebar-item-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .sidebar-item-date {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 992px) {
+            .blog-layout-wrapper {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .blog-sidebar {
+                width: 100%;
+                position: static;
             }
         }
 
@@ -673,25 +782,35 @@
                 </div>
             </details>
 
-            <article>
-            <div class="post-meta">
-                <span id="post-date">Loading...</span>
-                <span>•</span>
-                <span id="post-readtime">Loading...</span>
+            <div class="blog-layout-wrapper">
+                <article>
+                    <div class="post-meta">
+                        <span id="post-date">Loading...</span>
+                        <span>•</span>
+                        <span id="post-readtime">Loading...</span>
+                    </div>
+                    
+                    <h1 class="post-title" id="post-title">Loading Article...</h1>
+                    
+                    <img id="post-cover-image" src="" alt="Featured Watch Face" style="display:none; width:100%; max-height:280px; object-fit:contain; border-radius:var(--border-radius-md); margin-bottom:28px; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); padding:12px;">
+                    
+                    <div class="post-content" id="post-content">
+                        <p>Loading article content...</p>
+                    </div>
+                    
+                    <div class="sources-section" id="post-sources-container" style="display:none;">
+                        <strong>News Sources:</strong> <span id="post-sources"></span>
+                    </div>
+                </article>
+
+                <!-- Sidebar for other articles -->
+                <aside class="blog-sidebar" id="blog-sidebar-container">
+                    <h3 class="sidebar-title">Other Articles</h3>
+                    <div class="sidebar-posts-list" id="sidebar-posts-list">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </aside>
             </div>
-            
-            <h1 class="post-title" id="post-title">Loading Article...</h1>
-            
-            <img id="post-cover-image" src="" alt="Featured Watch Face" style="display:none; width:100%; max-height:280px; object-fit:contain; border-radius:var(--border-radius-md); margin-bottom:28px; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); padding:12px;">
-            
-            <div class="post-content" id="post-content">
-                <p>Loading article content...</p>
-            </div>
-            
-            <div class="sources-section" id="post-sources-container" style="display:none;">
-                <strong>News Sources:</strong> <span id="post-sources"></span>
-            </div>
-        </article>
 
         <section class="promo-section">
             <h3 class="related-section-title">Fresh Releases & Recent Updates</h3>
@@ -798,6 +917,7 @@
                     if (registryRes.ok) {
                         const posts = await registryRes.json();
                         postMeta = posts.find(p => p.slug === postId);
+                        renderSidebar(posts, postId);
                     }
                 } catch (e) {
                     console.warn('Could not load posts.json registry:', e);
@@ -943,6 +1063,40 @@
                 titleEl.textContent = 'Error Loading Article';
                 contentEl.innerHTML = '<p>We were unable to load this article. It may have been moved or deleted.</p>';
             }
+        }
+
+        function renderSidebar(posts, currentPostId) {
+            const listEl = document.getElementById('sidebar-posts-list');
+            if (!listEl) return;
+            listEl.innerHTML = '';
+            
+            // Filter out current post and keep top 5
+            const otherPosts = posts.filter(p => p.slug !== currentPostId).slice(0, 5);
+            
+            if (otherPosts.length === 0) {
+                const sidebarContainer = document.getElementById('blog-sidebar-container');
+                if (sidebarContainer) sidebarContainer.style.display = 'none';
+                return;
+            }
+            
+            otherPosts.forEach(post => {
+                const item = document.createElement('a');
+                item.className = 'sidebar-item';
+                item.href = '?id=' + post.slug;
+                
+                const thumbUrl = post.thumbnail 
+                    ? `https://wsrv.nl/?url=${encodeURIComponent(post.thumbnail)}&w=120&h=120&output=webp&q=80`
+                    : 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp';
+                    
+                item.innerHTML = `
+                    <img class="sidebar-thumb" src="${thumbUrl}" alt="${post.title}">
+                    <div class="sidebar-info">
+                        <div class="sidebar-item-title" title="${post.title}">${post.title}</div>
+                        <div class="sidebar-item-date">${post.date}</div>
+                    </div>
+                `;
+                listEl.appendChild(item);
+            });
         }
     </script>
     <script src="blog-carousel.js"></script>
