@@ -531,6 +531,8 @@
             
             <h1 class="post-title" id="post-title">Loading Article...</h1>
             
+            <img id="post-cover-image" src="" alt="Featured Watch Face" style="display:none; width:100%; max-height:280px; object-fit:contain; border-radius:var(--border-radius-md); margin-bottom:28px; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); padding:12px;">
+            
             <div class="post-content" id="post-content">
                 <p>Loading article content...</p>
             </div>
@@ -633,6 +635,21 @@
                 if (postMeta) {
                     document.getElementById('og-desc').setAttribute('content', postMeta.excerpt);
                     document.querySelector('meta[name="description"]').setAttribute('content', postMeta.excerpt);
+                    
+                    if (postMeta.thumbnail) {
+                        const coverImgEl = document.getElementById('post-cover-image');
+                        if (coverImgEl) {
+                            // Optimize image size using proxy
+                            coverImgEl.src = `https://wsrv.nl/?url=${encodeURIComponent(postMeta.thumbnail)}&w=600&output=webp&q=85`;
+                            coverImgEl.style.display = 'block';
+                        }
+                        
+                        // Dynamically update OG Image for rich social shares
+                        const ogImageMeta = document.querySelector('meta[property="og:image"]');
+                        if (ogImageMeta) {
+                            ogImageMeta.setAttribute('content', postMeta.thumbnail);
+                        }
+                    }
                 }
 
                 // Parse the Markdown using Marked

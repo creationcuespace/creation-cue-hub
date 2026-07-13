@@ -42,12 +42,31 @@ async function main() {
 
     console.log(`Selected ${filteredNews.length} articles for synthesis.`);
 
+    // Load watch faces catalog from manager.json
+    const managerPath = path.join(__dirname, '../manager.json');
+    let watchFacesList = [];
+    if (fs.existsSync(managerPath)) {
+        try {
+            const managerData = JSON.parse(fs.readFileSync(managerPath, 'utf8'));
+            if (managerData && managerData.watch_faces) {
+                watchFacesList = managerData.watch_faces.map(f => ({
+                    title: f.title || f.id,
+                    id: f.id,
+                    image_url: f.image_url,
+                    description: f.description_en || ''
+                }));
+            }
+        } catch (e) {
+            console.warn('Could not parse manager.json:', e.message);
+        }
+    }
+
     // 2. Draft content using Google Gemini API or Mock Fallback
     let blogData;
     if (GEMINI_API_KEY) {
         try {
             console.log('Generating article content using Gemini API...');
-            blogData = await generateArticleWithGemini(filteredNews);
+            blogData = await generateArticleWithGemini(filteredNews, watchFacesList);
         } catch (err) {
             console.error('Gemini API call failed, falling back to mock generator:', err.message);
             blogData = generateMockArticle();
@@ -111,7 +130,7 @@ async function main() {
         date: dateStr,
         readTime: blogData.readTime || '3 min',
         excerpt: blogData.excerpt,
-        thumbnail: 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp'
+        thumbnail: blogData.thumbnail || 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp'
     });
 
     fs.writeFileSync(registryPath, JSON.stringify(posts, null, 2), 'utf8');
@@ -187,12 +206,17 @@ function cleanXmlLink(link) {
 }
 
 // Gemini REST request
-function generateArticleWithGemini(newsItems) {
+function generateArticleWithGemini(newsItems, watchFacesList) {
     return new Promise((resolve, reject) => {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
         
         const contextHeadlines = newsItems.map((n, i) => `[${i+1}] Title: "${n.title}"\nUrl: "${n.link}"`).join('\n\n');
         
+        let catalogText = 'None available';
+        if (watchFacesList && watchFacesList.length > 0) {
+            catalogText = watchFacesList.map(f => `- Name: "${f.title}", ID: "${f.id}", Cover Image URL: "${f.image_url}", Description: "${f.description}"`).join('\n');
+        }
+
         const prompt = `You are a professional technology writer and developer writing for CreationCue, a premium Wear OS watch face design studio.
 Review the following recent Wear OS news headlines and forum topics:
 
@@ -207,10 +231,17 @@ Tone and Style Guidelines (CRITICAL for human writing style):
 4. Vary sentence length dynamically (mix short, punchy sentences with slightly longer ones) to mimic human flow.
 5. Write in first-person plural ("We at CreationCue...", "In our designs...") to show expert experience.
 
+Cover Image Selection:
+We want to feature one of our premium watch faces as the cover image of the article. Look at the catalog below:
+${catalogText}
+
+Choose the single most relevant watch face from our catalog that best matches the topic of the article you just wrote (e.g. choose a sporty face for activity/battery optimization, a classic face for elegance, etc.).
+
 Your response MUST be a structured JSON object with the following keys:
 - "title": A catchy, human-sounding, SEO-friendly headline.
 - "excerpt": A 2-sentence summary of the article for listings.
 - "readTime": Estimated read time (e.g. "3 min").
+- "thumbnail": The exact "Cover Image URL" of the watch face you chose from the list.
 - "content": The body content of the article formatted strictly in standard Markdown (using ## for subheadings, ** for bold, > for blockquotes, and - for bullet lists). Do NOT include a main title (#) inside the content.
 - "sourcesUsed": An array of objects representing the sources you discussed, with keys "title" and "url" matching the exact URLs provided in the list.
 
@@ -265,6 +296,7 @@ function generateMockArticle() {
         title: 'New Wear OS Upgrades focus on Battery & Design customization',
         excerpt: 'Google just announced major refinements to the Watch Face Format, offering designers and users much better battery life and richer complication options.',
         readTime: '3 min',
+        thumbnail: 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue178.png',
         content: `
 Google has officially introduced new updates for Wear OS smartwatch customization. The new features focus heavily on performance optimizations and streamlining how complication layout metrics are delivered to watch displays.
 
