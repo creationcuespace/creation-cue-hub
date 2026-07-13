@@ -3,7 +3,7 @@ name: Automated Blog Post Draft Generator
 on:
   schedule:
     # Run twice a week: Mondays and Thursdays at 9:00 AM UTC (12:00 PM Local)
-    - cron: '0 9 * * 1,4'
+    - cron: '0 9 * * 2,4'
   workflow_dispatch: {}
 
 permissions:
