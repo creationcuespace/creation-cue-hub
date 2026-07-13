@@ -193,16 +193,22 @@ function generateArticleWithGemini(newsItems) {
         
         const contextHeadlines = newsItems.map((n, i) => `[${i+1}] Title: "${n.title}"\nUrl: "${n.link}"`).join('\n\n');
         
-        const prompt = `You are a professional technology journalist writing for CreationCue, a premium Wear OS watch face design studio.
+        const prompt = `You are a professional technology writer and developer writing for CreationCue, a premium Wear OS watch face design studio.
 Review the following recent Wear OS news headlines and forum topics:
 
 ${contextHeadlines}
 
-Write a highly engaging, professional blog article (around 350-450 words) that discusses 1-2 major announcements, trends, or community issues from the topics above. 
-Provide a clear analysis of what these news updates mean for smartwatch users and smartwatch styling/personalization. 
+Write an engaging blog article (around 300-400 words) that discusses 1-2 major announcements, trends, or community issues from the topics above, analyzing what they mean for smartwatch customization.
+
+Tone and Style Guidelines (CRITICAL for human writing style):
+1. Write in a conversational, clean, and direct tone (as a passionate designer talking to other watch users).
+2. Use simple, common vocabulary. Avoid corporate hype, jargon, and empty buzzwords.
+3. STRICTLY BAN these overused AI words: "delve", "testament", "furthermore", "moreover", "in conclusion", "demystify", "revolutionize", "tapestry", "landscape", "beacon", "game-changer".
+4. Vary sentence length dynamically (mix short, punchy sentences with slightly longer ones) to mimic human flow.
+5. Write in first-person plural ("We at CreationCue...", "In our designs...") to show expert experience.
 
 Your response MUST be a structured JSON object with the following keys:
-- "title": A catchy, SEO-friendly headline.
+- "title": A catchy, human-sounding, SEO-friendly headline.
 - "excerpt": A 2-sentence summary of the article for listings.
 - "readTime": Estimated read time (e.g. "3 min").
 - "content": The body content of the article formatted strictly in standard Markdown (using ## for subheadings, ** for bold, > for blockquotes, and - for bullet lists). Do NOT include a main title (#) inside the content.
