@@ -55,9 +55,9 @@ async function initBlogCarousel() {
             }
         }
 
-        // Add Recently Updated faces to fill up to 4 items total
+        // Add Recently Updated faces to fill up to 5 items total
         for (const ver of sortedVersions) {
-            if (carouselItems.length >= 4) break;
+            if (carouselItems.length >= 5) break;
             const cleanId = ver.id.toLowerCase();
             
             // Check if already added
