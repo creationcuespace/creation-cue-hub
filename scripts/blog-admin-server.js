@@ -213,19 +213,31 @@ const server = http.createServer((req, res) => {
     res.end('Not Found');
 });
 
-// Start the server
-server.listen(PORT, () => {
-    console.log(`=============================================`);
-    console.log(`   CreationCue Blog Admin Server Running     `);
-    console.log(`   URL: http://localhost:${PORT}             `);
-    console.log(`=============================================`);
-    console.log(`\nLaunching dashboard in your browser...`);
-    
-    // Automatically open in default browser
-    const url = `http://localhost:${PORT}`;
-    const startCmd = process.platform === 'win32' ? `start ${url}` : `open ${url}`;
-    exec(startCmd);
-});
+// Start the server with automatic port-finding fallback
+function startServer(port) {
+    server.once('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+            console.log(`Port ${port} is already in use. Trying port ${port + 1}...`);
+            startServer(port + 1);
+        } else {
+            console.error('Server error:', err);
+        }
+    });
+
+    server.listen(port, () => {
+        console.log(`=============================================`);
+        console.log(`   CreationCue Blog Admin Server Running     `);
+        console.log(`   URL: http://localhost:${port}             `);
+        console.log(`=============================================`);
+        console.log(`\nLaunching dashboard in your browser...`);
+        
+        const url = `http://localhost:${port}`;
+        const startCmd = process.platform === 'win32' ? `start ${url}` : `open ${url}`;
+        exec(startCmd);
+    });
+}
+
+startServer(PORT);
 
 // Serve HTML contents
 function getAdminHtml() {
