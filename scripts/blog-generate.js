@@ -62,62 +62,37 @@ async function main() {
     const dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     const slug = slugify(blogData.title);
     
-    // 4. Build Sources HTML
-    let sourcesHtml = '';
+    // 4. Build Markdown file content
+    let markdownContent = `${blogData.content}\n\n`;
     if (blogData.sourcesUsed && blogData.sourcesUsed.length > 0) {
-        sourcesHtml = blogData.sourcesUsed.map(src => {
+        markdownContent += `### News References\n`;
+        blogData.sourcesUsed.forEach(src => {
             const url = src.url || 'https://wearos.google.com';
             const domain = extractDomain(url);
-            return `<a href="${url}" target="_blank">${src.title || domain} (${domain})</a>`;
-        }).join(', ');
+            markdownContent += `- [${src.title || domain}](${url})\n`;
+        });
     } else {
-        // Fallback references if API didn't list explicit sources
         const sourceLinks = filteredNews.slice(0, 2);
         if (sourceLinks.length > 0) {
-            sourcesHtml = sourceLinks.map(s => `<a href="${s.link}" target="_blank">${s.title}</a>`).join(', ');
-        } else {
-            sourcesHtml = '<a href="https://android-developers.googleblog.com" target="_blank">Android Developers Blog</a>';
+            markdownContent += `### News References\n`;
+            sourceLinks.forEach(s => {
+                markdownContent += `- [${s.title}](${s.link})\n`;
+            });
         }
     }
 
-    // 5. Load Template and inject values
-    const templatePath = path.join(__dirname, '../blog/blog-template.html');
-    if (!fs.existsSync(templatePath)) {
-        throw new Error(`Base template not found at: ${templatePath}`);
-    }
-    
-    let templateHtml = fs.readFileSync(templatePath, 'utf8');
-    
-    const placeholders = {
-        '{{BLOG_META_TITLE}}': `${blogData.title} | CreationCue™ Blog`,
-        '{{BLOG_META_DESCRIPTION}}': blogData.excerpt,
-        '{{BLOG_CANONICAL_URL}}': `https://creationcuespace.github.io/creation-cue-hub/blog/${slug}.html`,
-        '{{BLOG_OG_TITLE}}': blogData.title,
-        '{{BLOG_OG_DESCRIPTION}}': blogData.excerpt,
-        '{{BLOG_OG_IMAGE}}': 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp',
-        '{{BLOG_DATE}}': dateStr,
-        '{{BLOG_READ_TIME}}': blogData.readTime || '3 min',
-        '{{BLOG_TITLE}}': blogData.title,
-        '{{BLOG_CONTENT}}': blogData.content,
-        '{{BLOG_SOURCES}}': sourcesHtml
-    };
-
-    for (const [token, value] of Object.entries(placeholders)) {
-        templateHtml = templateHtml.replaceAll(token, value);
-    }
-
-    // 6. Write article HTML file
-    const outputDir = path.join(__dirname, '../blog');
+    // 5. Write article Markdown file
+    const outputDir = path.join(__dirname, '../blog/posts');
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir, { recursive: true });
     }
     
-    const outputPath = path.join(outputDir, `${slug}.html`);
-    fs.writeFileSync(outputPath, templateHtml, 'utf8');
-    console.log(`Successfully generated article file at: ${outputPath}`);
+    const outputPath = path.join(outputDir, `${slug}.md`);
+    fs.writeFileSync(outputPath, markdownContent, 'utf8');
+    console.log(`Successfully generated Markdown article file at: ${outputPath}`);
 
     // 7. Update posts.json registry list
-    const registryPath = path.join(outputDir, 'posts.json');
+    const registryPath = path.join(__dirname, '../blog/posts.json');
     let posts = [];
     if (fs.existsSync(registryPath)) {
         try {
@@ -230,7 +205,7 @@ Your response MUST be a structured JSON object with the following keys:
 - "title": A catchy, SEO-friendly headline.
 - "excerpt": A 2-sentence summary of the article for listings.
 - "readTime": Estimated read time (e.g. "3 min").
-- "content": The body content of the article formatted strictly in clean HTML paragraphs (<p>), subheadings (<h2>), and blockquotes (<blockquote>) if needed. Do NOT wrap in markdown formatting (such as triple backticks html).
+- "content": The body content of the article formatted strictly in standard Markdown (using ## for subheadings, ** for bold, > for blockquotes, and - for bullet lists). Do NOT include a main title (#) inside the content.
 - "sourcesUsed": An array of objects representing the sources you discussed, with keys "title" and "url" matching the exact URLs provided in the list.
 
 Respond ONLY with the JSON object. Do not include markdown code block syntax.`;
@@ -285,12 +260,17 @@ function generateMockArticle() {
         excerpt: 'Google just announced major refinements to the Watch Face Format, offering designers and users much better battery life and richer complication options.',
         readTime: '3 min',
         content: `
-            <p>Google has officially introduced new updates for Wear OS smartwatch customization. The new features focus heavily on performance optimizations and streamlining how complication layout metrics are delivered to watch displays.</p>
-            <h2>Richer Complications & Dynamic Customization</h2>
-            <p>Under the hood, the updated Watch Face Format allows designers to build animations and dynamic status meters that consume significantly less standby battery. Instead of refreshing the entire screen, smartwatches will run localized updates on specific indicators, keeping watch face widgets alive without compromising hardware efficiency.</p>
-            <blockquote>This transition represents a major leap forward for smartwatch designers, opening up new creative options for deep customization while preserving critical battery life.</blockquote>
-            <h2>What it means for CreationCue Watch Faces</h2>
-            <p>As active designers, these upgrades enable us to build watch faces with richer customized widgets, custom icons, and smoother digital complications. In the coming weeks, we will be updating our flagship watch face catalogs to take full advantage of these system improvements, ensuring a premium, optimized experience on your wrist.</p>
+Google has officially introduced new updates for Wear OS smartwatch customization. The new features focus heavily on performance optimizations and streamlining how complication layout metrics are delivered to watch displays.
+
+## Richer Complications & Dynamic Customization
+
+Under the hood, the updated Watch Face Format allows designers to build animations and dynamic status meters that consume significantly less standby battery. Instead of refreshing the entire screen, smartwatches will run localized updates on specific indicators, keeping watch face widgets alive without compromising hardware efficiency.
+
+> This transition represents a major leap forward for smartwatch designers, opening up new creative options for deep customization while preserving critical battery life.
+
+## What it means for CreationCue Watch Faces
+
+As active designers, these upgrades enable us to build watch faces with richer customized widgets, custom icons, and smoother digital complications. In the coming weeks, we will be updating our flagship watch face catalogs to take full advantage of these system improvements, ensuring a premium, optimized experience on your wrist.
         `,
         sourcesUsed: [
             { title: 'Android Developers Blog', url: 'https://android-developers.googleblog.com/feeds/posts/default/-/Wear%20OS' }

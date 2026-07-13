@@ -347,7 +347,7 @@
 
                     const card = document.createElement('a');
                     card.className = 'article-card';
-                    card.href = `blog/${post.slug}.html`;
+                    card.href = `blog/post.html?id=${post.slug}`;
                     card.innerHTML = `
                         <div class="article-thumb-container">
                             <img class="article-thumb" src="${thumbImg}" alt="${post.title}" loading="lazy">
