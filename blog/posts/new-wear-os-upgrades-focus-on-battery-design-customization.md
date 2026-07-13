@@ -9,7 +9,7 @@ Under the hood, the updated Watch Face Format allows designers to build animatio
 
 ## What it means for CreationCue Watch Faces
 
-We'll be adding support for these new features in upcoming updates to improve our watch faces and overall experience.
+As active designers, these upgrades enable us to build watch faces with richer customized widgets, custom icons, and smoother digital complications. In the coming weeks, we will be updating our flagship watch face catalogs to take full advantage of these system improvements, ensuring a premium, optimized experience on your wrist.
         
 
 ### News References

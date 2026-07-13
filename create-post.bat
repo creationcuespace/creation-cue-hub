@@ -1,15 +1,16 @@
 @echo off
-title CreationCue Blog Post Creator Wizard
+title CreationCue Blog Admin Dashboard
 color 0e
 echo ===================================================
-echo   CREATION CUE - BLOG POST CREATOR WIZARD
+echo   CREATION CUE - BLOG ADMIN DASHBOARD
 echo ===================================================
 echo.
-node scripts\blog-create.js
+echo Launching local server and opening admin dashboard in browser...
+node scripts\blog-admin-server.js
 if %errorlevel% neq 0 (
     echo.
     color 0c
-    echo [ERROR] Publishing wizard encountered an issue. Check errors above.
+    echo [ERROR] Admin server failed to start. Make sure Node.js is installed.
     echo.
+    pause
 )
-pause
