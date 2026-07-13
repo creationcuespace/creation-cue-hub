@@ -939,6 +939,10 @@
                                     } catch (e) {}
                                 }
 
+                                console.log('Parsed og:image URL:', image);
+                                console.log('Parsed og:title URL:', title);
+                                console.log('Parsed og:desc URL:', description);
+
                                 const card = document.getElementById(placeholderId);
                                 if (card) {
                                     card.innerHTML = `
