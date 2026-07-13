@@ -58,15 +58,13 @@ jobs:
               fi
             fi
             
-            # Create PR body file using heredoc to avoid any string escaping issues
-            cat << 'EOF' > pr_body.txt
-This is an automated blog post draft generated from Wear OS RSS feeds using Google Gemini.
-
-### Actions Needed:
-1. Review the generated article HTML file inside the `blog/` folder.
-2. Edit or proofread the text to add your personal developer perspective.
-3. Merge this Pull Request to publish the post live to your website.
-EOF
+            # Create PR body file using portable echo redirections
+            echo "This is an automated blog post draft generated from Wear OS RSS feeds using Google Gemini." > pr_body.txt
+            echo "" >> pr_body.txt
+            echo "### Actions Needed:" >> pr_body.txt
+            echo "1. Review the generated article HTML file inside the \`blog/\` folder." >> pr_body.txt
+            echo "2. Edit or proofread the text to add your personal developer perspective." >> pr_body.txt
+            echo "3. Merge this Pull Request to publish the post live to your website." >> pr_body.txt
             
             # Open Pull Request via GitHub CLI using the body file
             gh pr create \
