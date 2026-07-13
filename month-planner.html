@@ -17,7 +17,11 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
+  
+  <!-- Flatpickr for Cross-Browser Date Picker -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23F1B31C'/%3E%3Cstop offset='100%25' stop-color='%23D09200'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='6' fill='url(%23grad)'/%3E%3Crect x='5' y='7' width='14' height='12' rx='2' stroke='white' stroke-width='2'/%3E%3Cpath d='M9 5v4M15 5v4M5 12h14' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='15' r='1' fill='white'/%3E%3Ccircle cx='12' cy='15' r='1' fill='white'/%3E%3Ccircle cx='15' cy='15' r='1' fill='white'/%3E%3C/svg%3E">
 
   <style>
@@ -1737,7 +1741,7 @@
     </div>
     <div class="header-btns">
       <!-- Version badge -->
-      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.28</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.32</span>
       <!-- Firebase connection indicator dot & text -->
       <div id="header-sync-badge" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; flex-shrink: 0;">
         <span id="header-sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
@@ -1795,7 +1799,7 @@
               <button type="button" onclick="adjustStartDateOffset(-1)" class="btn-secondary" style="padding: 10px; border-radius: var(--border-radius-md); font-weight: bold; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;" title="Previous Day">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
               </button>
-              <input type="text" id="task-start-date" class="input-text" placeholder="e.g. 26/06/2026" style="text-align: center;">
+              <input type="text" id="task-start-date" class="input-text flatpickr-date" placeholder="e.g. 26/06/2026" style="text-align: center;">
               <button type="button" onclick="adjustStartDateOffset(1)" class="btn-secondary" style="padding: 10px; border-radius: var(--border-radius-md); font-weight: bold; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;" title="Next Day">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
               </button>
@@ -2138,14 +2142,31 @@
   <!-- Inline Override Dialog -->
   <div class="dialog-overlay" id="override-dialog">
     <div class="dialog-card">
-      <h3 class="drawer-title" style="border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">Override Slot Task</h3>
-      <div class="form-group">
+      <h3 class="drawer-title" style="border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">Edit Task</h3>
+      
+      <div class="form-group" style="margin-bottom: 12px;">
         <label for="dialog-task-input">Task Description</label>
         <input type="text" id="dialog-task-input" class="input-text">
       </div>
+      
+      <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+        <div class="form-group" style="flex: 1; margin-bottom: 0;">
+          <label for="dialog-task-priority">Priority</label>
+          <select id="dialog-task-priority" class="input-text" style="padding: 10px;">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex: 1; margin-bottom: 0;">
+          <label for="dialog-task-date">Start Date (DD/MM/YYYY)</label>
+          <input type="text" id="dialog-task-date" class="input-text flatpickr-date" style="padding: 9px;" placeholder="e.g. 26/06/2026">
+        </div>
+      </div>
+      
       <div style="display: flex; justify-content: flex-end; gap: 10px;">
         <button onclick="closeOverrideDialog()" class="btn-secondary" style="padding: 8px 14px;">Cancel</button>
-        <button onclick="saveOverrideDialog()" class="btn-primary" style="padding: 8px 14px;">Save Override</button>
+        <button onclick="saveOverrideDialog()" class="btn-primary" style="padding: 8px 14px;">Save Changes</button>
       </div>
     </div>
   </div>
@@ -3212,7 +3233,9 @@
       // Set default start date input to tomorrow
       var dateInput = document.getElementById('task-start-date');
       if (dateInput) {
-        dateInput.value = formatStandardDateToDisplay(getTomorrowDateString());
+        var formatted = formatStandardDateToDisplay(getTomorrowDateString());
+        dateInput.value = formatted;
+        if (dateInput._flatpickr) dateInput._flatpickr.setDate(formatted, false, "d/m/Y");
       }
 
       // Update toggle checkbox state
@@ -3293,7 +3316,11 @@
       if (titleInput) titleInput.value = task.baseTitle || task.title;
       if (priorityInput) priorityInput.value = task.priority;
       if (durationInput) durationInput.value = task.duration;
-      if (startDateInput) startDateInput.value = task.startDate ? formatStandardDateToDisplay(task.startDate) : '';
+      if (startDateInput) {
+        var formatted = task.startDate ? formatStandardDateToDisplay(task.startDate) : '';
+        startDateInput.value = formatted;
+        if (startDateInput._flatpickr) startDateInput._flatpickr.setDate(formatted, false, "d/m/Y");
+      }
       if (fixedDayChk) fixedDayChk.checked = task.isFixedDay || false;
       
       // Expand and scroll to add form
@@ -3476,7 +3503,9 @@
       var fixedDayChk = document.getElementById('task-fixed-day');
       if (fixedDayChk) fixedDayChk.checked = false;
       if (startDateInput) {
-        startDateInput.value = formatStandardDateToDisplay(appState.activeDayStr || getTodayDateString());
+        var formatted = formatStandardDateToDisplay(appState.activeDayStr || getTodayDateString());
+        startDateInput.value = formatted;
+        if (startDateInput._flatpickr) startDateInput._flatpickr.setDate(formatted, false, "d/m/Y");
       }
       
       // Uncheck repeat settings on successful add
@@ -3518,7 +3547,7 @@
       var startDateInput = document.getElementById('task-start-date');
       if (!startDateInput) return;
       var val = startDateInput.value.trim();
-      var stdDate = parseDateToStandardString(val);
+      var stdDate = val;
       if (!stdDate) return;
       
       var parts = stdDate.split('-');
@@ -3933,7 +3962,7 @@
       if (!dateInput) return;
       
       var val = dateInput.value.trim();
-      var stdDateStr = parseDateToStandardString(val);
+      var stdDateStr = val;
       if (!stdDateStr) return;
       
       var parts = stdDateStr.split('-');
@@ -3941,7 +3970,9 @@
       date.setDate(date.getDate() + offset);
       
       var newDateStr = formatDateString(date.getFullYear(), date.getMonth(), date.getDate());
-      dateInput.value = formatStandardDateToDisplay(newDateStr);
+      var formatted = formatStandardDateToDisplay(newDateStr);
+      dateInput.value = formatted;
+      if (dateInput._flatpickr) dateInput._flatpickr.setDate(formatted, false, "d/m/Y");
       
       // Auto select the new start day of week for recurrence if repeat section is enabled
       var repeatChk = document.getElementById('task-repeat-enable');
@@ -5075,7 +5106,9 @@
       // Update custom task start date picker to match the navigated day
       var dateInput = document.getElementById('task-start-date');
       if (dateInput) {
-        dateInput.value = formatStandardDateToDisplay(newDateStr);
+        var formatted = formatStandardDateToDisplay(newDateStr);
+        dateInput.value = formatted;
+        if (dateInput._flatpickr) dateInput._flatpickr.setDate(formatted, false, "d/m/Y");
       }
       
       // Update interactive month/year of general calendar to match
@@ -5147,8 +5180,18 @@
       var daySlots = appState.dayStates[dateStr];
       var slot = daySlots ? daySlots[slotIndices[0]] : null;
       var currentText = slot ? slot.title : "";
+      var currentPriority = slot ? (slot.priority || 'medium') : 'medium';
+      var formattedDate = formatStandardDateToDisplay(dateStr);
 
       document.getElementById('dialog-task-input').value = currentText;
+      document.getElementById('dialog-task-priority').value = currentPriority;
+      
+      var dateInput = document.getElementById('dialog-task-date');
+      if (dateInput) {
+        dateInput.value = formattedDate;
+        if (dateInput._flatpickr) dateInput._flatpickr.setDate(formattedDate, false, "d/m/Y");
+      }
+      
       document.getElementById('override-dialog').style.display = 'flex';
       document.getElementById('dialog-task-input').focus();
     }
@@ -5198,7 +5241,9 @@
 
       var dateInput = document.getElementById('dialog-move-date-input');
       if (dateInput) {
-        dateInput.value = formatStandardDateToDisplay(dateStr);
+        var formatted = formatStandardDateToDisplay(dateStr);
+        dateInput.value = formatted;
+        if (dateInput._flatpickr) dateInput._flatpickr.setDate(formatted, false, "d/m/Y");
       }
 
       document.getElementById('move-task-dialog').style.display = 'flex';
@@ -5237,36 +5282,39 @@
       var backlogTask = firstSlot.taskId ? appState.customTasks.find(t => t.id === firstSlot.taskId) : null;
 
       if (backlogTask) {
-        // Move by changing backlog task's start date
+        // Update its master start date so future allocations follow
         backlogTask.startDate = targetDateStr;
         showToast(`Moved task start date to ${formatStandardDateToDisplay(targetDateStr)}`);
-      } else {
-        // Move local override / rollover / fallback task manually
-        // 1. Remove from source date
-        appState.dayStates[activeMoveSourceDate] = daySlots.filter((_, idx) => !activeMoveSlotIndices.includes(idx));
+      }
 
-        // 2. Append to target date
-        if (!appState.dayStates[targetDateStr]) {
-          appState.dayStates[targetDateStr] = [];
-        }
-        slotsToMove.forEach(slot => {
-          appState.dayStates[targetDateStr].push({
-            taskId: slot.taskId,
-            title: slot.title,
-            priority: slot.priority || 'medium',
-            isFallback: slot.isFallback || false,
-            isOverridden: true, // Lock it on target day
-            typeLabel: slot.typeLabel || null,
-            faceId: slot.faceId || null,
-            completed: false
-          });
+      // Always manually move the slot to the target date
+      // 1. Remove from source date
+      appState.dayStates[activeMoveSourceDate] = daySlots.filter((_, idx) => !activeMoveSlotIndices.includes(idx));
+
+      // 2. Append to target date
+      if (!appState.dayStates[targetDateStr]) {
+        appState.dayStates[targetDateStr] = [];
+      }
+      slotsToMove.forEach(slot => {
+        appState.dayStates[targetDateStr].push({
+          taskId: slot.taskId,
+          title: slot.title,
+          priority: slot.priority || 'medium',
+          isFallback: slot.isFallback || false,
+          isOverridden: true, // Lock it on target day
+          typeLabel: slot.typeLabel || null,
+          faceId: slot.faceId || null,
+          completed: false
         });
+      });
+      if (!backlogTask) {
         showToast(`Moved task to ${formatStandardDateToDisplay(targetDateStr)}`);
       }
 
       saveState();
       closeMoveTaskDialog();
       scheduleFutureTasks();
+      saveState(); // Save again after scheduleFutureTasks recalculates future days
       renderCalendar();
       if (document.getElementById('day-view-container').style.display !== 'none') {
         renderDayView();
@@ -5284,7 +5332,9 @@
       // Update custom task start date picker to match the clicked day
       var dateInput = document.getElementById('task-start-date');
       if (dateInput) {
-        dateInput.value = formatStandardDateToDisplay(dateStr);
+        var formatted = formatStandardDateToDisplay(dateStr);
+        dateInput.value = formatted;
+        if (dateInput._flatpickr) dateInput._flatpickr.setDate(formatted, false, "d/m/Y");
       }
       
       switchViewMode('day');
@@ -5309,8 +5359,16 @@
       if (activeOverrideSlotIndex === null && activeOverrideGroupSlots === null) return;
 
       var inputVal = document.getElementById('dialog-task-input').value.trim();
+      var priorityVal = document.getElementById('dialog-task-priority').value;
+      var dateInputVal = document.getElementById('dialog-task-date').value.trim();
+      var newDateStr = parseDateToStandardString(dateInputVal);
+
       if (!inputVal) {
         alert("Please enter a task description.");
+        return;
+      }
+      if (!newDateStr) {
+        alert("Please select a date.");
         return;
       }
 
@@ -5327,19 +5385,54 @@
           slot = { completed: false, isFallback: true };
         }
         slot.title = inputVal;
+        slot.priority = priorityVal;
         slot.isOverridden = true; // Mark as overridden so reschedule doesn't clear it
         daySlots[slotIndex] = slot;
       });
 
-      appState.dayStates[activeDrawerDate] = daySlots;
+      var dateChanged = (newDateStr !== activeDrawerDate);
 
+      if (dateChanged) {
+        var firstSlot = daySlots[indicesToModify[0]];
+        var backlogTask = firstSlot.taskId ? appState.customTasks.find(t => t.id === firstSlot.taskId) : null;
+        
+        // Always manually move the overridden slot to the new date
+        if (!appState.dayStates[newDateStr]) {
+          appState.dayStates[newDateStr] = [];
+        }
+        indicesToModify.forEach(slotIndex => {
+          appState.dayStates[newDateStr].push(daySlots[slotIndex]);
+        });
+        
+        // Remove from the old date
+        appState.dayStates[activeDrawerDate] = daySlots.filter((_, idx) => !indicesToModify.includes(idx));
+        
+        // If it's a backlog task, also update its master start date so future allocations follow
+        if (backlogTask) {
+          backlogTask.startDate = newDateStr;
+        }
+      } else {
+        appState.dayStates[activeDrawerDate] = daySlots;
+      }
+
+      pushStateToHistory();
       saveState();
       closeOverrideDialog();
+      
+      if (dateChanged) {
+        appState.activeDayStr = newDateStr; // Navigate to the new day automatically
+      }
+      
+      if (dateChanged && backlogTask) {
+        scheduleFutureTasks();
+        saveState(); // Save again after scheduleFutureTasks recalculates future days
+      }
+      
       renderCalendar();
       if (document.getElementById('day-view-container').style.display !== 'none') {
         renderDayView();
       }
-      showToast("Slot text updated!");
+      showToast(dateChanged ? "Task updated and moved!" : "Task updated!");
     }
 
     // -------------------------------------------------------------
@@ -5726,7 +5819,9 @@
         
         var dateInput = document.getElementById('task-start-date');
         if (dateInput) {
-          dateInput.value = formatStandardDateToDisplay(getTodayDateString());
+          var formatted = formatStandardDateToDisplay(getTodayDateString());
+          dateInput.value = formatted;
+          if (dateInput._flatpickr) dateInput._flatpickr.setDate(formatted, false, "d/m/Y");
         }
         
         saveState();
@@ -5926,6 +6021,14 @@
       var backlogReport = backlogReportList.join('\n');
       logEl.textContent = report.join('\n') + "\n" + backlogReport;
     }
+
+    // Initialize flatpickr on all applicable inputs
+    document.addEventListener("DOMContentLoaded", function() {
+      flatpickr(".flatpickr-date", {
+        dateFormat: "d/m/Y",
+        allowInput: true
+      });
+    });
   </script>
 </body>
 
