@@ -105,33 +105,20 @@ const server = http.createServer(function(req, res) {
             return;
         }
 
-        // Special handling for Google Play Store URLs - use google-play-scraper for reliable metadata
+        // Special handling for Google Play Store URLs - return static card instantly (no scraping)
         if (targetUrl.includes('play.google.com/store/apps/details')) {
             try {
                 const playUrl = new URL(targetUrl);
-                const packageName = playUrl.searchParams.get('id');
-                if (packageName) {
-                    const gplay = require('google-play-scraper');
-                    gplay.app({ appId: packageName }).then(appData => {
-                        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-                        res.end(JSON.stringify({
-                            title: (appData.title || packageName) + ' – Google Play',
-                            description: appData.summary || appData.description || 'Available on Google Play Store.',
-                            image: appData.icon || '',
-                            url: targetUrl
-                        }));
-                    }).catch(err => {
-                        // Fallback: return minimal data without image
-                        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-                        res.end(JSON.stringify({
-                            title: packageName + ' – Google Play',
-                            description: 'Available on Google Play Store.',
-                            image: '',
-                            url: targetUrl
-                        }));
-                    });
-                    return;
-                }
+                const packageName = playUrl.searchParams.get('id') || '';
+                const appLabel = packageName.split('.').filter(p => !['com','creation','watchfacestudio'].includes(p)).join(' ') || packageName;
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({
+                    title: appLabel + ' — Google Play',
+                    description: 'Available on the Google Play Store. Tap to install or view details.',
+                    image: '',
+                    url: targetUrl
+                }));
+                return;
             } catch(e) {}
         }
 

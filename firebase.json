@@ -18,6 +18,7 @@
       "**/*.sh",
       "tracker/**",
       "docs/**"
-    ]
+    ],
+    "maxReleases": 5
   }
 }
