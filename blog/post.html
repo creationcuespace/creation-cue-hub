@@ -684,7 +684,7 @@
                 // 2. Fetch metadata from posts.json to display date and read time
                 let postMeta = null;
                 try {
-                    const registryRes = await fetch('posts.json');
+                    const registryRes = await fetch('posts.json?v=' + Date.now());
                     if (registryRes.ok) {
                         const posts = await registryRes.json();
                         postMeta = posts.find(p => p.slug === postId);
