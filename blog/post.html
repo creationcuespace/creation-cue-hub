@@ -902,13 +902,12 @@
                         el.replaceWith(placeholderCard);
 
                         // Fetch preview metadata client-side using a free CORS proxy
-                        fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(urlToUnfurl))
+                        fetch('https://corsproxy.io/?' + encodeURIComponent(urlToUnfurl))
                             .then(response => {
-                                if (response.ok) return response.json();
+                                if (response.ok) return response.text();
                                 throw new Error('Network response was not ok.');
                             })
-                            .then(data => {
-                                const html = data.contents;
+                            .then(html => {
                                 
                                 const getMetaTag = (propertyOrName) => {
                                     // Make regex flexible to handle single quotes, double quotes, property name before content, or content before property name
