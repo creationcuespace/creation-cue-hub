@@ -483,24 +483,41 @@
                     🔑 Admin Publishing Guide
                 </h2>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+
+                    <!-- Option A -->
                     <div>
-                        <h3 style="font-size:14px; color:var(--text-primary); margin-bottom:8px; font-family:var(--font-display); font-weight:700;">Option A: Publish Automated AI Drafts</h3>
-                        <ol style="margin-left:20px; font-size:13px; color:var(--text-secondary); display:flex; flex-direction:column; gap:6px; line-height:1.4;">
-                            <li>Go to the <a href="https://github.com/creationcuespace/creation-cue-hub/pulls" target="_blank" style="color:var(--text-primary); font-weight:600; text-decoration:underline;">GitHub Pull Requests</a> page.</li>
-                            <li>Open the draft, click the **Pencil icon** (edit), write edits under the **Preview** tab, and click **Commit**.</li>
-                            <li>Click **Ready for review** and then **Merge pull request**.</li>
-                            <li><strong>That's it!</strong> GitHub will automatically deploy it live in 30 seconds. (No local commands needed!).</li>
+                        <h3 style="font-size:14px; color:var(--text-primary); margin-bottom:10px; font-family:var(--font-display); font-weight:700;">
+                            🤖 Option A: Approve AI-Generated Drafts
+                        </h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px; line-height:1.5;">
+                            The AI generates articles automatically twice a week. They are hidden from visitors until you approve them.
+                        </p>
+                        <ol style="margin-left:18px; font-size:13px; color:var(--text-secondary); display:flex; flex-direction:column; gap:8px; line-height:1.5;">
+                            <li>Double-click <code style="background:rgba(255,255,255,0.08); padding:1px 5px; border-radius:4px;">create-post.bat</code> to open the <strong>Blog Admin Dashboard</strong>.</li>
+                            <li>AI drafts appear under <strong>"Pending AI Drafts"</strong> in the right sidebar.</li>
+                            <li>Click <strong>Edit</strong> to review and correct the article in the visual editor.</li>
+                            <li>Click <strong>Publish Live</strong> — it deploys automatically in ~30 seconds!</li>
+                            <li>Or click <strong>Discard</strong> to delete the draft completely.</li>
                         </ol>
                     </div>
+
+                    <!-- Option B -->
                     <div class="admin-option-divider" style="border-left:1px dashed var(--border-color); padding-left:20px;">
-                        <h3 style="font-size:14px; color:var(--text-primary); margin-bottom:8px; font-family:var(--font-display); font-weight:700;">Option B: Create & Delete Articles (Dashboard)</h3>
-                        <ol style="margin-left:20px; font-size:13px; color:var(--text-secondary); display:flex; flex-direction:column; gap:6px; line-height:1.4;">
-                            <li>Double-click **<code>create-post.bat</code>** in your project folder.</li>
-                            <li>The **Blog Admin Dashboard** will open in your browser automatically.</li>
-                            <li><strong>Create:</strong> Fill in the fields, write using the visual toolbar, and click <strong>Publish & Sync Live</strong>.</li>
-                            <li><strong>Delete:</strong> Click the red <strong>Delete</strong> button next to any article in the listing.</li>
+                        <h3 style="font-size:14px; color:var(--text-primary); margin-bottom:10px; font-family:var(--font-display); font-weight:700;">
+                            ✍️ Option B: Write Your Own Article
+                        </h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin-bottom:10px; line-height:1.5;">
+                            Write and publish your own articles using the visual browser-based editor.
+                        </p>
+                        <ol style="margin-left:18px; font-size:13px; color:var(--text-secondary); display:flex; flex-direction:column; gap:8px; line-height:1.5;">
+                            <li>Double-click <code style="background:rgba(255,255,255,0.08); padding:1px 5px; border-radius:4px;">create-post.bat</code> in your project folder.</li>
+                            <li>The <strong>Blog Admin Dashboard</strong> opens in your browser automatically.</li>
+                            <li>Fill in the Title, Excerpt, choose a Watch Face, and write using the rich text toolbar.</li>
+                            <li>Click <strong>Publish Live</strong> — it auto-commits to GitHub and deploys!</li>
+                            <li>To delete any article, click the red <strong>Delete</strong> button in the sidebar list.</li>
                         </ol>
                     </div>
+
                 </div>
             </div>
 
