@@ -717,7 +717,7 @@
                 }
 
                 // 3. Fetch the Markdown file
-                const markdownRes = await fetch(`posts/${postId}.md`);
+                const markdownRes = await fetch(`posts/${postId}.md?v=` + Date.now());
                 if (!markdownRes.ok) {
                     throw new Error('Markdown file not found.');
                 }
