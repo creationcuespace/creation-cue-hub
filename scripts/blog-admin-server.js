@@ -652,7 +652,7 @@ function getAdminHtml() {
                 faces.forEach(f => {
                     const opt = document.createElement('option');
                     opt.value = f.image_url;
-                    opt.textContent = \`\underline{\${f.title}} (\${f.id})\`;
+                    opt.textContent = `${f.title} (${f.id})`;
                     select.appendChild(opt);
                 });
             } catch (e) {
