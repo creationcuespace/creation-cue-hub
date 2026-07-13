@@ -230,7 +230,7 @@ const server = http.createServer(function(req, res) {
         req.on('end', function() {
             try {
                 var data = JSON.parse(body);
-                var title = data.title, excerpt = data.excerpt, thumbnail = data.thumbnail, content = data.content, originalSlug = data.originalSlug;
+                var title = data.title, excerpt = data.excerpt, thumbnail = data.thumbnail, content = data.content, originalSlug = data.originalSlug, pinned = !!data.pinned;
                 if (!title || !excerpt || !content) {
                     res.writeHead(400); res.end(JSON.stringify({ error: 'Missing required fields' })); return;
                 }
@@ -258,7 +258,8 @@ const server = http.createServer(function(req, res) {
                     readTime: Math.max(1, Math.ceil(wordCount / 200)) + ' min',
                     excerpt: excerpt,
                     thumbnail: thumbnail || 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp',
-                    draft: false
+                    draft: false,
+                    pinned: pinned
                 });
 
                 fs.writeFileSync(REGISTRY_PATH, JSON.stringify(posts, null, 2), 'utf8');

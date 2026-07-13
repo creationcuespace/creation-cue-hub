@@ -1070,8 +1070,17 @@
             if (!listEl) return;
             listEl.innerHTML = '';
             
-            // Filter out current post and keep top 5
-            const otherPosts = posts.filter(p => p.slug !== currentPostId).slice(0, 5);
+            // Filter out current post, sort pinned posts to the top, and keep top 5
+            const otherPosts = posts
+                .filter(p => p.slug !== currentPostId)
+                .sort((a, b) => {
+                    const aPinned = !!a.pinned;
+                    const bPinned = !!b.pinned;
+                    if (aPinned && !bPinned) return -1;
+                    if (!aPinned && bPinned) return 1;
+                    return 0; // maintain default newest-first order
+                })
+                .slice(0, 5);
             
             if (otherPosts.length === 0) {
                 const sidebarContainer = document.getElementById('blog-sidebar-container');
@@ -1088,10 +1097,11 @@
                     ? `https://wsrv.nl/?url=${encodeURIComponent(post.thumbnail)}&w=120&h=120&output=webp&q=80`
                     : 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp';
                     
+                const pinBadge = post.pinned ? '<span style="color:var(--primary); font-size: 11px; margin-right:4px;">📌</span>' : '';
                 item.innerHTML = `
                     <img class="sidebar-thumb" src="${thumbUrl}" alt="${post.title}">
                     <div class="sidebar-info">
-                        <div class="sidebar-item-title" title="${post.title}">${post.title}</div>
+                        <div class="sidebar-item-title" title="${post.title}">${pinBadge}${post.title}</div>
                         <div class="sidebar-item-date">${post.date}</div>
                     </div>
                 `;

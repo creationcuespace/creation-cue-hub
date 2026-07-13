@@ -201,6 +201,10 @@
                 <label>4. Article Content (Rich Formatting Toolbar)</label>
                 <textarea id="post-editor"></textarea>
             </div>
+            <div class="form-group" style="display:flex; align-items:center; gap:8px; margin-bottom:15px;">
+                <input type="checkbox" id="post-pinned" style="width:auto; margin:0; cursor:pointer;">
+                <label for="post-pinned" style="margin:0; cursor:pointer; font-weight:normal; font-size:13px; color:#ddd; display:inline-block;">📌 Pin this article to the sidebar</label>
+            </div>
             <div style="display:flex; gap:12px;">
                 <button class="btn" style="flex:1;" onclick="publishPost()">Publish Live</button>
                 <button class="btn" id="btn-cancel-edit" style="background:#495057; color:#fff; display:none; width:auto;" onclick="cancelEditing()">Cancel</button>
@@ -305,13 +309,14 @@
             var safeTitle = (p.title || '').replace(/'/g, "\\'");
             var safeExcerpt = (p.excerpt || '').replace(/'/g, "\\'");
             var safeThumb = (p.thumbnail || '');
-            var editBtn = '<button class="btn-edit" onclick="editPost(\'' + p.slug + '\',\'' + safeTitle + '\',\'' + safeExcerpt + '\',\'' + safeThumb + '\',' + isDraft + ')">Edit</button>';
+            var pinnedVal = !!p.pinned;
+            var editBtn = '<button class="btn-edit" onclick="editPost(\'' + p.slug + '\',\'' + safeTitle + '\',\'' + safeExcerpt + '\',\'' + safeThumb + '\',' + isDraft + ',' + pinnedVal + ')">Edit</button>';
             var delBtn = '<button class="btn-delete" onclick="deletePost(\'' + p.slug + '\')">' + (isDraft ? 'Discard' : 'Delete') + '</button>';
             item.innerHTML = '<div class="post-list-info"><img class="post-list-thumb" src="' + thumb + '" alt="Thumb"><div style="overflow:hidden;"><div class="post-list-title" title="' + (p.title||'') + '">' + (p.title||'') + '</div><div class="post-list-date">' + dateStr + '</div></div></div><div class="actions-wrap">' + editBtn + delBtn + '</div>';
             return item;
         }
 
-        async function editPost(slug, title, excerpt, thumbnail, isDraft) {
+        async function editPost(slug, title, excerpt, thumbnail, isDraft, pinned) {
             showStatus('Loading article content...');
             try {
                 var res = await fetch('/api/post-content?slug=' + slug + '&v=' + Date.now());
@@ -322,6 +327,7 @@
                 document.getElementById('post-title').value = title;
                 document.getElementById('post-excerpt').value = excerpt;
                 document.getElementById('post-face-select').value = thumbnail;
+                document.getElementById('post-pinned').checked = !!pinned;
                 easyMDE.value(content);
                 document.getElementById('editor-panel-title').innerHTML = isDraft
                     ? 'Review AI Draft: <span class="badge-draft">Draft</span>'
@@ -339,6 +345,7 @@
             document.getElementById('post-title').value = '';
             document.getElementById('post-excerpt').value = '';
             document.getElementById('post-face-select').value = '';
+            document.getElementById('post-pinned').checked = false;
             easyMDE.value('');
             document.getElementById('editor-panel-title').textContent = 'Create Custom Article';
             document.getElementById('btn-cancel-edit').style.display = 'none';
@@ -349,6 +356,7 @@
             var title = document.getElementById('post-title').value.trim();
             var excerpt = document.getElementById('post-excerpt').value.trim();
             var thumbnail = document.getElementById('post-face-select').value;
+            var pinned = document.getElementById('post-pinned').checked;
             var content = easyMDE.value().trim();
             if (!title || !excerpt || !content) { alert('Please fill out all fields before publishing!'); return; }
             showStatus('Publishing and Deploying Cloud updates...');
@@ -356,7 +364,7 @@
                 var res = await fetch('/api/publish', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ title: title, excerpt: excerpt, thumbnail: thumbnail, content: content, originalSlug: originalSlug })
+                    body: JSON.stringify({ title: title, excerpt: excerpt, thumbnail: thumbnail, content: content, originalSlug: originalSlug, pinned: pinned })
                 });
                 var result = await res.json();
                 hideStatus();
