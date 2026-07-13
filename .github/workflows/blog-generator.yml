@@ -4,7 +4,7 @@ on:
   schedule:
     # Run twice a week: Mondays and Thursdays at 9:00 AM UTC (12:00 PM Local)
     - cron: '0 9 * * 1,4'
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 permissions:
   contents: write
@@ -52,23 +52,26 @@ jobs:
             # Extract article title from posts.json (if possible) for PR title
             PR_TITLE="Draft Blog Post: $(date +%Y-%m-%d)"
             if [ -f "blog/posts.json" ]; then
-              FIRST_TITLE=$(node -e "console.log(JSON.parse(fs.readFileSync('blog/posts.json', 'utf8'))[0].title)")
+              FIRST_TITLE=$(node -e "const fs = require('fs'); console.log(JSON.parse(fs.readFileSync('blog/posts.json', 'utf8'))[0].title)")
               if [ -n "$FIRST_TITLE" ]; then
                 PR_TITLE="Draft: $FIRST_TITLE"
               fi
             fi
             
-            # Open Pull Request via GitHub CLI
-            gh pr create \
-              --title "$PR_TITLE" \
-              --body "This is an automated blog post draft generated from Wear OS RSS feeds using Google Gemini.
+            # Create PR body file using heredoc to avoid any string escaping issues
+            cat << 'EOF' > pr_body.txt
+This is an automated blog post draft generated from Wear OS RSS feeds using Google Gemini.
 
 ### Actions Needed:
-1. Review the generated article HTML file inside the \`blog/\` folder.
+1. Review the generated article HTML file inside the `blog/` folder.
 2. Edit or proofread the text to add your personal developer perspective.
 3. Merge this Pull Request to publish the post live to your website.
-
-*Generated on: $(date +'%A, %B %d, %Y')*" \
+EOF
+            
+            # Open Pull Request via GitHub CLI using the body file
+            gh pr create \
+              --title "$PR_TITLE" \
+              --body-file pr_body.txt \
               --base main \
               --head "$BRANCH_NAME" \
               --draft
