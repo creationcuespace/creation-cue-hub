@@ -105,20 +105,52 @@ const server = http.createServer(function(req, res) {
             return;
         }
 
+        // Special handling for Google Play Store URLs - use google-play-scraper for reliable metadata
+        if (targetUrl.includes('play.google.com/store/apps/details')) {
+            try {
+                const playUrl = new URL(targetUrl);
+                const packageName = playUrl.searchParams.get('id');
+                if (packageName) {
+                    const gplay = require('google-play-scraper');
+                    gplay.app({ appId: packageName }).then(appData => {
+                        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                        res.end(JSON.stringify({
+                            title: (appData.title || packageName) + ' – Google Play',
+                            description: appData.summary || appData.description || 'Available on Google Play Store.',
+                            image: appData.icon || '',
+                            url: targetUrl
+                        }));
+                    }).catch(err => {
+                        // Fallback: return minimal data without image
+                        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                        res.end(JSON.stringify({
+                            title: packageName + ' – Google Play',
+                            description: 'Available on Google Play Store.',
+                            image: '',
+                            url: targetUrl
+                        }));
+                    });
+                    return;
+                }
+            } catch(e) {}
+        }
+
         const clientModule = targetUrl.startsWith('https') ? require('https') : require('http');
         
         // Options with User-Agent to avoid getting blocked by site firewalls
         const options = {
+            timeout: 10000,
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+                'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.5',
+                'Cache-Control': 'no-cache'
             }
         };
 
         const clientReq = clientModule.get(targetUrl, options, (clientRes) => {
             // Handle redirects (e.g. 301, 302)
             if (clientRes.statusCode >= 300 && clientRes.statusCode < 400 && clientRes.headers.location) {
-                // Follow redirect once
                 const redirectUrl = clientRes.headers.location.startsWith('http') 
                     ? clientRes.headers.location 
                     : new URL(clientRes.headers.location, targetUrl).href;
@@ -135,6 +167,12 @@ const server = http.createServer(function(req, res) {
             handleResponseData(clientRes, targetUrl);
         });
 
+        // Timeout if no response in 10 seconds
+        clientReq.setTimeout(10000, () => {
+            clientReq.destroy();
+            sendErrorResponse(new Error('Request timed out'));
+        });
+
         clientReq.on('error', (err) => {
             sendErrorResponse(err);
         });
@@ -143,7 +181,6 @@ const server = http.createServer(function(req, res) {
             let dataChunks = '';
             response.on('data', (chunk) => {
                 dataChunks += chunk;
-                // Avoid downloading huge files
                 if (dataChunks.length > 500000) {
                     response.destroy();
                 }
@@ -153,12 +190,10 @@ const server = http.createServer(function(req, res) {
                 try {
                     const html = dataChunks;
                     
-                    // Simple Regex Helper
                     const getMetaTag = (propertyOrName) => {
                         const regex = new RegExp(`<meta[^>]*?(?:property|name)=["']${propertyOrName}["'][^>]*?content=["']([^"']*)["']`, 'i');
                         let match = html.match(regex);
                         if (!match) {
-                            // Try flipped order of content & property/name
                             const regexFlipped = new RegExp(`<meta[^>]*?content=["']([^"']*)["'][^>]*?(?:property|name)=["']${propertyOrName}["']`, 'i');
                             match = html.match(regexFlipped);
                         }
@@ -174,7 +209,6 @@ const server = http.createServer(function(req, res) {
                     const description = getMetaTag('og:description') || getMetaTag('twitter:description') || getMetaTag('description') || '';
                     let image = getMetaTag('og:image') || getMetaTag('twitter:image') || '';
                     
-                    // Make image URL absolute if it is relative
                     if (image && !image.startsWith('http') && !image.startsWith('//')) {
                         try {
                             image = new URL(image, urlSource).href;
@@ -182,12 +216,7 @@ const server = http.createServer(function(req, res) {
                     }
 
                     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-                    res.end(JSON.stringify({
-                        title: title,
-                        description: description,
-                        image: image,
-                        url: urlSource
-                    }));
+                    res.end(JSON.stringify({ title, description, image, url: urlSource }));
                 } catch (e) {
                     sendErrorResponse(e);
                 }

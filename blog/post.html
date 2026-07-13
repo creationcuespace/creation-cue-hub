@@ -867,110 +867,67 @@
                 // Parse the Markdown using Marked
                 contentEl.innerHTML = marked.parse(markdownText);
 
-                // Auto-unfurl any raw URLs or custom cards inside the container to show rich Facebook-style cards
-                const links = contentEl.querySelectorAll('p > a, p');
-                for (let el of links) {
-                    // Check if it's a paragraph containing just a single URL, or a link on its own line
+                // Auto-unfurl any raw URLs on their own line into static styled cards
+                const paragraphs = contentEl.querySelectorAll('p');
+                for (let el of paragraphs) {
                     let txt = el.textContent.trim();
                     let urlToUnfurl = '';
-                    if (el.tagName === 'A' && el.getAttribute('href') === txt) {
-                        urlToUnfurl = txt;
-                    } else if (el.tagName === 'P' && el.childNodes.length === 1 && el.childNodes[0].tagName === 'A') {
-                        const childLink = el.childNodes[0];
-                        if (childLink.getAttribute('href') === childLink.textContent.trim()) {
-                            urlToUnfurl = childLink.getAttribute('href');
+
+                    // Detect: paragraph is a bare URL link (sole child is an <a> matching its href)
+                    if (el.childNodes.length === 1 && el.childNodes[0].tagName === 'A') {
+                        const a = el.childNodes[0];
+                        if (a.getAttribute('href') === a.textContent.trim()) {
+                            urlToUnfurl = a.getAttribute('href');
                         }
-                    } else if (el.tagName === 'P' && /^https?:\/\/[^\s]+$/.test(txt)) {
+                    } else if (/^https?:\/\/[^\s]+$/.test(txt)) {
                         urlToUnfurl = txt;
                     }
 
-                    if (urlToUnfurl && (urlToUnfurl.includes('play.google.com') || urlToUnfurl.includes('github.com') || urlToUnfurl.includes('google.com') || urlToUnfurl.includes('weather'))) {
-                        // Create a placeholder card
-                        const placeholderId = 'lp-' + Math.random().toString(36).substr(2, 9);
-                        const placeholderCard = document.createElement('div');
-                        placeholderCard.className = 'link-preview-card';
-                        placeholderCard.id = placeholderId;
-                        placeholderCard.innerHTML = `
-                            <a href="${urlToUnfurl}" target="_blank" class="lp-card-inner">
-                                <div class="lp-card-info">
-                                    <div class="lp-card-title">Loading Preview...</div>
-                                    <div class="lp-card-desc">${urlToUnfurl}</div>
-                                    <div class="lp-card-url">${urlToUnfurl}</div>
-                                </div>
-                            </a>
-                        `;
-                        el.replaceWith(placeholderCard);
+                    if (!urlToUnfurl) continue;
 
-                        // Fetch preview metadata client-side using a free CORS proxy
-                        fetch('https://corsproxy.io/?' + encodeURIComponent(urlToUnfurl))
-                            .then(response => {
-                                if (response.ok) return response.text();
-                                throw new Error('Network response was not ok.');
-                            })
-                            .then(html => {
-                                
-                                const getMetaTag = (propertyOrName) => {
-                                    // Make regex flexible to handle single quotes, double quotes, property name before content, or content before property name
-                                    const pattern1 = new RegExp(`<meta[^>]*?(?:property|name)=["']${propertyOrName}["'][^>]*?content=["']([^"']*)["']`, 'i');
-                                    const pattern2 = new RegExp(`<meta[^>]*?content=["']([^"']*)["'][^>]*?(?:property|name)=["']${propertyOrName}["']`, 'i');
-                                    let match = html.match(pattern1) || html.match(pattern2);
-                                    
-                                    // Fallback for tags without quotes if any exist
-                                    if (!match) {
-                                        const patternNoQuotes = new RegExp(`<meta[^>]*?(?:property|name)=${propertyOrName}[^>]*?content=([^\\s>]+)`, 'i');
-                                        match = html.match(patternNoQuotes);
-                                    }
-                                    return match ? match[1] : '';
-                                };
+                    let cardHtml = '';
 
-                                const getTitleTag = () => {
-                                    const match = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
-                                    return match ? match[1].trim() : '';
-                                };
+                    if (urlToUnfurl.includes('play.google.com/store/apps/details')) {
+                        // Static Play Store card — no fetch needed
+                        let pkgName = '';
+                        try { pkgName = new URL(urlToUnfurl).searchParams.get('id') || ''; } catch(e) {}
+                        const displayName = pkgName ? pkgName.split('.').pop() : 'App on Google Play';
+                        cardHtml = `
+                            <div class="link-preview-card">
+                                <a href="${urlToUnfurl}" target="_blank" rel="noopener" class="lp-card-inner">
+                                    <div class="lp-card-img lp-play-badge" style="background:#01875f;display:flex;align-items:center;justify-content:center;">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M3 20.5v-17c0-.83 1-.97 1.5-.5l15 8.5-15 8.5c-.5.47-1.5.33-1.5-.5z"/></svg>
+                                    </div>
+                                    <div class="lp-card-info">
+                                        <div class="lp-card-title">${displayName} — Google Play</div>
+                                        <div class="lp-card-desc">Available on the Google Play Store. Tap to install or view details.</div>
+                                        <div class="lp-card-url">play.google.com</div>
+                                    </div>
+                                </a>
+                            </div>`;
+                    } else if (urlToUnfurl.includes('github.com')) {
+                        // Static GitHub card
+                        let repoPath = '';
+                        try { repoPath = new URL(urlToUnfurl).pathname.replace(/^\//, ''); } catch(e) {}
+                        cardHtml = `
+                            <div class="link-preview-card">
+                                <a href="${urlToUnfurl}" target="_blank" rel="noopener" class="lp-card-inner">
+                                    <div class="lp-card-img lp-play-badge" style="background:#161b22;display:flex;align-items:center;justify-content:center;">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                                    </div>
+                                    <div class="lp-card-info">
+                                        <div class="lp-card-title">${repoPath || 'GitHub Repository'}</div>
+                                        <div class="lp-card-desc">View this project on GitHub.</div>
+                                        <div class="lp-card-url">github.com</div>
+                                    </div>
+                                </a>
+                            </div>`;
+                    }
 
-                                const title = getMetaTag('og:title') || getMetaTag('twitter:title') || getTitleTag() || 'View App on Google Play';
-                                const description = getMetaTag('og:description') || getMetaTag('twitter:description') || getMetaTag('description') || 'Click to view application details and installation options.';
-                                let image = getMetaTag('og:image') || getMetaTag('twitter:image') || '';
-                                
-                                if (image && !image.startsWith('http') && !image.startsWith('//')) {
-                                    try {
-                                        image = new URL(image, urlToUnfurl).href;
-                                    } catch (e) {}
-                                }
-
-                                console.log('Parsed og:image URL:', image);
-                                console.log('Parsed og:title URL:', title);
-                                console.log('Parsed og:desc URL:', description);
-
-                                const card = document.getElementById(placeholderId);
-                                if (card) {
-                                    card.innerHTML = `
-                                        <a href="${urlToUnfurl}" target="_blank" class="lp-card-inner">
-                                            ${image ? `<div class="lp-card-img" style="background-image: url('${image}')"></div>` : ''}
-                                            <div class="lp-card-info">
-                                                <div class="lp-card-title">${title}</div>
-                                                <div class="lp-card-desc">${description}</div>
-                                                <div class="lp-card-url">${new URL(urlToUnfurl).hostname.replace('www.', '')}</div>
-                                            </div>
-                                        </a>
-                                    `;
-                                }
-                            })
-                            .catch(err => {
-                                // Fallback
-                                const card = document.getElementById(placeholderId);
-                                if (card) {
-                                    card.innerHTML = `
-                                        <a href="${urlToUnfurl}" target="_blank" class="lp-card-inner">
-                                            <div class="lp-card-info">
-                                                <div class="lp-card-title">Google Play Link</div>
-                                                <div class="lp-card-desc">Click to view this application on Google Play Store.</div>
-                                                <div class="lp-card-url">${new URL(urlToUnfurl).hostname.replace('www.', '')}</div>
-                                            </div>
-                                        </a>
-                                    `;
-                                }
-                            });
+                    if (cardHtml) {
+                        const wrapper = document.createElement('div');
+                        wrapper.innerHTML = cardHtml.trim();
+                        el.replaceWith(wrapper.firstElementChild);
                     }
                 }
 
