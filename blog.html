@@ -285,6 +285,13 @@
             .article-details {
                 padding: 20px;
             }
+            .admin-option-divider {
+                border-left: none !important;
+                padding-left: 0 !important;
+                border-top: 1px dashed var(--border-color);
+                padding-top: 20px;
+                margin-top: 10px;
+            }
         }
 
         /* Fixed Bottom Tab Navigation (Mobile) */
@@ -471,15 +478,31 @@
         <!-- Main Content Area -->
         <main class="main-content-area">
             <!-- Admin Panel (Only visible with ?admin=true) -->
-            <div id="admin-panel" style="display:none; background:rgba(241,179,28,0.08); border:1px solid var(--primary); border-radius:var(--border-radius-lg); padding:20px; margin-bottom:30px; box-shadow:0 8px 32px rgba(241,179,28,0.05);">
-                <h2 style="font-family:var(--font-display); font-size:18px; color:var(--primary); margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+            <!-- Admin Panel (Only visible with ?admin=true or when logged in) -->
+            <div id="admin-panel" style="display:none; background:rgba(241,179,28,0.08); border:1px solid var(--primary); border-radius:var(--border-radius-lg); padding:24px; margin-bottom:30px; box-shadow:0 8px 32px rgba(241,179,28,0.05);">
+                <h2 style="font-family:var(--font-display); font-size:18px; color:var(--primary); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
                     🔑 Admin Publishing Guide
                 </h2>
-                <ol style="margin-left:20px; font-size:14px; color:var(--text-secondary); display:flex; flex-direction:column; gap:8px;">
-                    <li><strong>Review & Merge:</strong> Go to the <a href="https://github.com/creationcuespace/creation-cue-hub/pulls" target="_blank" style="color:var(--text-primary); font-weight:600; text-decoration:underline;">GitHub Pull Requests</a> page. Open the draft article, review it using the <em>Preview</em> tab, and click <strong>Merge pull request</strong>.</li>
-                    <li><strong>Sync Local Files:</strong> Open your local **GitHub Desktop** app and click <strong>Pull origin</strong> to download the merged article to your computer.</li>
-                    <li><strong>Publish Live:</strong> Run the <strong><code>update-versions.bat</code></strong> file on your computer to deploy the changes to Firebase.</li>
-                </ol>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+                    <div>
+                        <h3 style="font-size:14px; color:var(--text-primary); margin-bottom:8px; font-family:var(--font-display); font-weight:700;">Option A: Publish Automated AI Drafts</h3>
+                        <ol style="margin-left:20px; font-size:13px; color:var(--text-secondary); display:flex; flex-direction:column; gap:6px; line-height:1.4;">
+                            <li>Go to the <a href="https://github.com/creationcuespace/creation-cue-hub/pulls" target="_blank" style="color:var(--text-primary); font-weight:600; text-decoration:underline;">GitHub Pull Requests</a> page.</li>
+                            <li>Open the draft, click the **Pencil icon** (edit), write edits under the **Preview** tab, and click **Commit**.</li>
+                            <li>Click **Ready for review** and then **Merge pull request**.</li>
+                            <li>Open **GitHub Desktop** on your computer, click **Pull origin**, and then run **<code>update-versions.bat</code>**.</li>
+                        </ol>
+                    </div>
+                    <div class="admin-option-divider" style="border-left:1px dashed var(--border-color); padding-left:20px;">
+                        <h3 style="font-size:14px; color:var(--text-primary); margin-bottom:8px; font-family:var(--font-display); font-weight:700;">Option B: Create Your Own Manual Article</h3>
+                        <ol style="margin-left:20px; font-size:13px; color:var(--text-secondary); display:flex; flex-direction:column; gap:6px; line-height:1.4;">
+                            <li>Double-click **<code>create-post.bat</code>** in your project folder.</li>
+                            <li>Answer the 3 simple questions (Title, Excerpt, Watch face ID) in the prompt window.</li>
+                            <li>**Notepad** will open automatically. Write or paste your article text.</li>
+                            <li>Save and close Notepad. The wizard will automatically commit, push, and deploy it live!</li>
+                        </ol>
+                    </div>
+                </div>
             </div>
 
             <div class="blog-header">
