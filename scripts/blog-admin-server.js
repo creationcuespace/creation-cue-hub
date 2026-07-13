@@ -349,6 +349,19 @@ function startServer(port) {
 }
 
 // Check if a server is already running on PORT before starting a new one
+let serverStarted = false;
+function doStart() {
+    if (serverStarted) return;
+    serverStarted = true;
+    console.log('=== Checking for AI Drafts & Cloud Updates ===');
+    try {
+        execSync('git pull', { stdio: 'inherit' });
+    } catch(e) {
+        console.warn('Startup git pull skipped:', e.message);
+    }
+    startServer(PORT);
+}
+
 const http2 = require('http');
 const checkReq = http2.get('http://localhost:' + PORT + '/', function(res) {
     // Server already running — just open browser to existing instance
@@ -356,24 +369,10 @@ const checkReq = http2.get('http://localhost:' + PORT + '/', function(res) {
     openBrowser('http://localhost:' + PORT);
 });
 checkReq.on('error', function() {
-    // No server running — pull latest drafts and start fresh
-    console.log('=== Checking for AI Drafts & Cloud Updates ===');
-    try {
-        execSync('git pull', { stdio: 'inherit' });
-    } catch(e) {
-        console.warn('Startup git pull skipped:', e.message);
-    }
-    startServer(PORT);
+    doStart();
 });
 checkReq.setTimeout(1500, function() {
     checkReq.destroy();
-    // Timeout = nothing running, start server
-    console.log('=== Checking for AI Drafts & Cloud Updates ===');
-    try {
-        execSync('git pull', { stdio: 'inherit' });
-    } catch(e) {
-        console.warn('Startup git pull skipped:', e.message);
-    }
-    startServer(PORT);
+    doStart();
 });
 
