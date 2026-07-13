@@ -178,6 +178,25 @@
                     <option value="">Default Banner (ccBanner1.webp)</option>
                 </select>
             </div>
+            <div class="form-group" style="background:rgba(255,255,255,0.03); border:1px dashed var(--border); padding:12px; border-radius:8px; margin-bottom:15px;">
+                <label style="font-size:12px; font-weight:700; margin-bottom:6px; display:block; color:var(--primary);">🔗 Add Facebook-Style Link Card</label>
+                <div style="display:flex; gap:8px; margin-bottom:8px;">
+                    <input type="text" id="preview-url-input" placeholder="Paste link (e.g. https://play.google.com/...)" style="margin:0; font-size:12px; flex:1;">
+                    <button class="btn" style="width:auto; padding:6px 12px; font-size:12px; background:var(--surface); border:1px solid var(--border); color:#fff;" onclick="generateLinkPreview()">Fetch Metadata</button>
+                </div>
+                <div id="preview-card-loader" style="display:none; font-size:11px; color:var(--text-muted); margin-bottom:8px;">Fetching site info...</div>
+                <div id="link-preview-box" style="display:none; background:var(--surface); border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-bottom:8px;">
+                    <div style="display:flex; gap:10px;">
+                        <img id="lp-image" style="width:90px; height:90px; object-fit:cover; display:none;" src="" alt="">
+                        <div style="padding:8px; overflow:hidden; flex:1; display:flex; flex-direction:column; justify-content:center;">
+                            <div id="lp-title" style="font-weight:700; font-size:12px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:4px;">Title</div>
+                            <div id="lp-desc" style="font-size:11px; color:var(--text-muted); display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical; overflow:hidden; line-height:1.3; margin-bottom:4px;">Description</div>
+                            <div id="lp-domain" style="font-size:10px; color:var(--primary); font-weight:700; text-transform:uppercase;">DOMAIN.COM</div>
+                        </div>
+                    </div>
+                </div>
+                <button id="lp-insert-btn" class="btn" style="width:100%; font-size:12px; padding:6px; display:none;" onclick="insertLinkCardMarkdown()">Insert Card Into Article</button>
+            </div>
             <div class="form-group">
                 <label>4. Article Content (Rich Formatting Toolbar)</label>
                 <textarea id="post-editor"></textarea>
@@ -368,6 +387,97 @@
         }
         function hideStatus() {
             document.getElementById('status-overlay').style.display = 'none';
+        }
+
+        // Link Preview Generator functions
+        let currentLinkPreviewData = null;
+
+        async function generateLinkPreview() {
+            const urlInput = document.getElementById('preview-url-input');
+            const url = urlInput.value.trim();
+            if (!url) {
+                alert('Please paste a URL first!');
+                return;
+            }
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                alert('URL must start with http:// or https://');
+                return;
+            }
+
+            const loader = document.getElementById('preview-card-loader');
+            const previewBox = document.getElementById('link-preview-box');
+            const insertBtn = document.getElementById('lp-insert-btn');
+
+            loader.style.display = 'block';
+            previewBox.style.display = 'none';
+            insertBtn.style.display = 'none';
+            currentLinkPreviewData = null;
+
+            try {
+                const res = await fetch('/api/link-preview?url=' + encodeURIComponent(url));
+                if (!res.ok) throw new Error('Failed to fetch metadata');
+                const data = await res.json();
+                
+                currentLinkPreviewData = data;
+                
+                // Show elements
+                document.getElementById('lp-title').textContent = data.title || 'Visit Website';
+                document.getElementById('lp-desc').textContent = data.description || 'View the shared link for more details.';
+                
+                let domainName = 'LINK';
+                try {
+                    domainName = new URL(data.url).hostname.replace('www.', '');
+                } catch(e) {}
+                document.getElementById('lp-domain').textContent = domainName;
+
+                const imgEl = document.getElementById('lp-image');
+                if (data.image) {
+                    imgEl.src = data.image;
+                    imgEl.style.display = 'block';
+                } else {
+                    imgEl.style.display = 'none';
+                }
+
+                loader.style.display = 'none';
+                previewBox.style.display = 'block';
+                insertBtn.style.display = 'block';
+            } catch(e) {
+                loader.style.display = 'none';
+                alert('Could not retrieve preview data from this website. You can still paste standard links directly.');
+            }
+        }
+
+        function insertLinkCardMarkdown() {
+            if (!currentLinkPreviewData) return;
+            
+            const title = (currentLinkPreviewData.title || 'Link Preview').replace(/"/g, '&quot;');
+            const desc = (currentLinkPreviewData.description || '').replace(/"/g, '&quot;');
+            const image = currentLinkPreviewData.image || '';
+            const url = currentLinkPreviewData.url;
+
+            // Generate raw HTML Card string that we will parse dynamically inside post.html
+            const cardHtml = `
+<div class="link-preview-card" data-url="${url}" data-title="${title}" data-desc="${desc}" data-image="${image}">
+  <a href="${url}" target="_blank" class="lp-card-inner">
+    ${image ? `<div class="lp-card-img" style="background-image: url('${image}')"></div>` : ''}
+    <div class="lp-card-info">
+      <div class="lp-card-title">${currentLinkPreviewData.title || 'External Link'}</div>
+      <div class="lp-card-desc">${currentLinkPreviewData.description || 'Click to view details.'}</div>
+      <div class="lp-card-url">${url}</div>
+    </div>
+  </a>
+</div>
+\n`;
+
+            // Insert into EasyMDE
+            const pos = easyMDE.codemirror.getCursor();
+            easyMDE.codemirror.replaceRange(cardHtml, pos);
+            
+            // Clean up
+            document.getElementById('preview-url-input').value = '';
+            document.getElementById('link-preview-box').style.display = 'none';
+            document.getElementById('lp-insert-btn').style.display = 'none';
+            currentLinkPreviewData = null;
         }
     </script>
 </body>

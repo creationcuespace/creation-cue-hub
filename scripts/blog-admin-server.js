@@ -95,6 +95,118 @@ const server = http.createServer(function(req, res) {
         return;
     }
 
+    // GET link metadata preview (scrape Open Graph headers)
+    if (req.url.startsWith('/api/link-preview') && req.method === 'GET') {
+        const urlParams = new URL(req.url, 'http://localhost:' + PORT);
+        const targetUrl = urlParams.searchParams.get('url');
+        if (!targetUrl) {
+            res.writeHead(400);
+            res.end(JSON.stringify({ error: 'Missing url parameter' }));
+            return;
+        }
+
+        const clientModule = targetUrl.startsWith('https') ? require('https') : require('http');
+        
+        // Options with User-Agent to avoid getting blocked by site firewalls
+        const options = {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+            }
+        };
+
+        const clientReq = clientModule.get(targetUrl, options, (clientRes) => {
+            // Handle redirects (e.g. 301, 302)
+            if (clientRes.statusCode >= 300 && clientRes.statusCode < 400 && clientRes.headers.location) {
+                // Follow redirect once
+                const redirectUrl = clientRes.headers.location.startsWith('http') 
+                    ? clientRes.headers.location 
+                    : new URL(clientRes.headers.location, targetUrl).href;
+                
+                const redirectModule = redirectUrl.startsWith('https') ? require('https') : require('http');
+                redirectModule.get(redirectUrl, options, (redRes) => {
+                    handleResponseData(redRes, redirectUrl);
+                }).on('error', (err) => {
+                    sendErrorResponse(err);
+                });
+                return;
+            }
+
+            handleResponseData(clientRes, targetUrl);
+        });
+
+        clientReq.on('error', (err) => {
+            sendErrorResponse(err);
+        });
+
+        function handleResponseData(response, urlSource) {
+            let dataChunks = '';
+            response.on('data', (chunk) => {
+                dataChunks += chunk;
+                // Avoid downloading huge files
+                if (dataChunks.length > 500000) {
+                    response.destroy();
+                }
+            });
+
+            response.on('end', () => {
+                try {
+                    const html = dataChunks;
+                    
+                    // Simple Regex Helper
+                    const getMetaTag = (propertyOrName) => {
+                        const regex = new RegExp(`<meta[^>]*?(?:property|name)=["']${propertyOrName}["'][^>]*?content=["']([^"']*)["']`, 'i');
+                        let match = html.match(regex);
+                        if (!match) {
+                            // Try flipped order of content & property/name
+                            const regexFlipped = new RegExp(`<meta[^>]*?content=["']([^"']*)["'][^>]*?(?:property|name)=["']${propertyOrName}["']`, 'i');
+                            match = html.match(regexFlipped);
+                        }
+                        return match ? match[1] : '';
+                    };
+
+                    const getTitleTag = () => {
+                        const match = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+                        return match ? match[1].trim() : '';
+                    };
+
+                    const title = getMetaTag('og:title') || getMetaTag('twitter:title') || getTitleTag() || 'Link Preview';
+                    const description = getMetaTag('og:description') || getMetaTag('twitter:description') || getMetaTag('description') || '';
+                    let image = getMetaTag('og:image') || getMetaTag('twitter:image') || '';
+                    
+                    // Make image URL absolute if it is relative
+                    if (image && !image.startsWith('http') && !image.startsWith('//')) {
+                        try {
+                            image = new URL(image, urlSource).href;
+                        } catch (e) {}
+                    }
+
+                    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                    res.end(JSON.stringify({
+                        title: title,
+                        description: description,
+                        image: image,
+                        url: urlSource
+                    }));
+                } catch (e) {
+                    sendErrorResponse(e);
+                }
+            });
+        }
+
+        function sendErrorResponse(err) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ 
+                title: 'External Link', 
+                description: 'Visit page to view content.', 
+                image: '', 
+                url: targetUrl 
+            }));
+        }
+
+        return;
+    }
+
     // POST publish
     if (req.url === '/api/publish' && req.method === 'POST') {
         var body = '';
