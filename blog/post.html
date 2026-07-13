@@ -867,6 +867,106 @@
                 // Parse the Markdown using Marked
                 contentEl.innerHTML = marked.parse(markdownText);
 
+                // Auto-unfurl any raw URLs or custom cards inside the container to show rich Facebook-style cards
+                const links = contentEl.querySelectorAll('p > a, p');
+                for (let el of links) {
+                    // Check if it's a paragraph containing just a single URL, or a link on its own line
+                    let txt = el.textContent.trim();
+                    let urlToUnfurl = '';
+                    if (el.tagName === 'A' && el.getAttribute('href') === txt) {
+                        urlToUnfurl = txt;
+                    } else if (el.tagName === 'P' && el.childNodes.length === 1 && el.childNodes[0].tagName === 'A') {
+                        const childLink = el.childNodes[0];
+                        if (childLink.getAttribute('href') === childLink.textContent.trim()) {
+                            urlToUnfurl = childLink.getAttribute('href');
+                        }
+                    } else if (el.tagName === 'P' && /^https?:\/\/[^\s]+$/.test(txt)) {
+                        urlToUnfurl = txt;
+                    }
+
+                    if (urlToUnfurl && (urlToUnfurl.includes('play.google.com') || urlToUnfurl.includes('github.com') || urlToUnfurl.includes('google.com') || urlToUnfurl.includes('weather'))) {
+                        // Create a placeholder card
+                        const placeholderId = 'lp-' + Math.random().toString(36).substr(2, 9);
+                        const placeholderCard = document.createElement('div');
+                        placeholderCard.className = 'link-preview-card';
+                        placeholderCard.id = placeholderId;
+                        placeholderCard.innerHTML = `
+                            <a href="${urlToUnfurl}" target="_blank" class="lp-card-inner">
+                                <div class="lp-card-info">
+                                    <div class="lp-card-title">Loading Preview...</div>
+                                    <div class="lp-card-desc">${urlToUnfurl}</div>
+                                    <div class="lp-card-url">${urlToUnfurl}</div>
+                                </div>
+                            </a>
+                        `;
+                        el.replaceWith(placeholderCard);
+
+                        // Fetch preview metadata client-side using a free CORS proxy
+                        fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(urlToUnfurl))
+                            .then(response => {
+                                if (response.ok) return response.json();
+                                throw new Error('Network response was not ok.');
+                            })
+                            .then(data => {
+                                const html = data.contents;
+                                
+                                const getMetaTag = (propertyOrName) => {
+                                    const regex = new RegExp(`<meta[^>]*?(?:property|name)=["']${propertyOrName}["'][^>]*?content=["']([^"']*)["']`, 'i');
+                                    let match = html.match(regex);
+                                    if (!match) {
+                                        const regexFlipped = new RegExp(`<meta[^>]*?content=["']([^"']*)["'][^>]*?(?:property|name)=["']${propertyOrName}["']`, 'i');
+                                        match = html.match(regexFlipped);
+                                    }
+                                    return match ? match[1] : '';
+                                };
+
+                                const getTitleTag = () => {
+                                    const match = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+                                    return match ? match[1].trim() : '';
+                                };
+
+                                const title = getMetaTag('og:title') || getMetaTag('twitter:title') || getTitleTag() || 'View App on Google Play';
+                                const description = getMetaTag('og:description') || getMetaTag('twitter:description') || getMetaTag('description') || 'Click to view application details and installation options.';
+                                let image = getMetaTag('og:image') || getMetaTag('twitter:image') || '';
+                                
+                                if (image && !image.startsWith('http') && !image.startsWith('//')) {
+                                    try {
+                                        image = new URL(image, urlToUnfurl).href;
+                                    } catch (e) {}
+                                }
+
+                                const card = document.getElementById(placeholderId);
+                                if (card) {
+                                    card.innerHTML = `
+                                        <a href="${urlToUnfurl}" target="_blank" class="lp-card-inner">
+                                            ${image ? `<div class="lp-card-img" style="background-image: url('${image}')"></div>` : ''}
+                                            <div class="lp-card-info">
+                                                <div class="lp-card-title">${title}</div>
+                                                <div class="lp-card-desc">${description}</div>
+                                                <div class="lp-card-url">${new URL(urlToUnfurl).hostname.replace('www.', '')}</div>
+                                            </div>
+                                        </a>
+                                    `;
+                                }
+                            })
+                            .catch(err => {
+                                // Fallback
+                                const card = document.getElementById(placeholderId);
+                                if (card) {
+                                    card.innerHTML = `
+                                        <a href="${urlToUnfurl}" target="_blank" class="lp-card-inner">
+                                            <div class="lp-card-info">
+                                                <div class="lp-card-title">Google Play Link</div>
+                                                <div class="lp-card-desc">Click to view this application on Google Play Store.</div>
+                                                <div class="lp-card-url">${new URL(urlToUnfurl).hostname.replace('www.', '')}</div>
+                                            </div>
+                                        </a>
+                                    `;
+                                }
+                            });
+                    }
+                }
+
                 // Look for a Sources list in the markdown text and extract it if necessary
                 // (Otherwise, default to a general link to the android dev blog)
                 if (markdownText.toLowerCase().includes('sources:')) {
