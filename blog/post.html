@@ -204,6 +204,15 @@
             color: var(--text-primary);
         }
 
+        .post-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius-md);
+            margin: 20px 0;
+            display: block;
+            border: 1px solid var(--border-color);
+        }
+
         .post-content blockquote {
             border-left: 3px solid var(--primary);
             background: rgba(241, 179, 28, 0.05);
@@ -641,12 +650,13 @@
         @media (max-width: 992px) {
             .blog-layout-wrapper {
                 flex-direction: column;
-                gap: 24px;
+                gap: 32px;
             }
 
             .blog-sidebar {
                 width: 100%;
                 position: static;
+                margin-top: 16px;
             }
         }
 
