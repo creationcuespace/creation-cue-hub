@@ -31,6 +31,7 @@ jobs:
       - name: Create Pull Request with Draft
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_TERMINAL_PROMPT: 0
         run: |
           # Check if there are any new files or changes in the blog folder
           if git status --porcelain blog/ | grep -q .; then
@@ -47,7 +48,7 @@ jobs:
             # Commit and push changes
             git add blog/
             git commit -m "draft: automated blog post generation"
-            git push origin "$BRANCH_NAME"
+            git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" "$BRANCH_NAME"
             
             # Extract article title from posts.json (if possible) for PR title
             PR_TITLE="Draft Blog Post: $(date +%Y-%m-%d)"
