@@ -911,11 +911,15 @@
                                 const html = data.contents;
                                 
                                 const getMetaTag = (propertyOrName) => {
-                                    const regex = new RegExp(`<meta[^>]*?(?:property|name)=["']${propertyOrName}["'][^>]*?content=["']([^"']*)["']`, 'i');
-                                    let match = html.match(regex);
+                                    // Make regex flexible to handle single quotes, double quotes, property name before content, or content before property name
+                                    const pattern1 = new RegExp(`<meta[^>]*?(?:property|name)=["']${propertyOrName}["'][^>]*?content=["']([^"']*)["']`, 'i');
+                                    const pattern2 = new RegExp(`<meta[^>]*?content=["']([^"']*)["'][^>]*?(?:property|name)=["']${propertyOrName}["']`, 'i');
+                                    let match = html.match(pattern1) || html.match(pattern2);
+                                    
+                                    // Fallback for tags without quotes if any exist
                                     if (!match) {
-                                        const regexFlipped = new RegExp(`<meta[^>]*?content=["']([^"']*)["'][^>]*?(?:property|name)=["']${propertyOrName}["']`, 'i');
-                                        match = html.match(regexFlipped);
+                                        const patternNoQuotes = new RegExp(`<meta[^>]*?(?:property|name)=${propertyOrName}[^>]*?content=([^\\s>]+)`, 'i');
+                                        match = html.match(patternNoQuotes);
                                     }
                                     return match ? match[1] : '';
                                 };
