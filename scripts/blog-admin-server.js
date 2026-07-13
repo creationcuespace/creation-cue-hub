@@ -321,7 +321,13 @@ const server = http.createServer(function(req, res) {
     res.writeHead(404); res.end('Not Found');
 });
 
-// Port fallback
+
+// Open browser helper - only ever called once
+function openBrowser(url) {
+    exec(process.platform === 'win32' ? 'start ' + url : 'open ' + url);
+}
+
+// Port fallback - tries next port but only opens browser on first success
 function startServer(port) {
     server.once('error', function(err) {
         if (err.code === 'EADDRINUSE') {
@@ -333,21 +339,41 @@ function startServer(port) {
     });
 
     server.listen(port, function() {
+        var url = 'http://localhost:' + port;
         console.log('=============================================');
         console.log('  CreationCue Blog Admin Server Running');
-        console.log('  URL: http://localhost:' + port);
+        console.log('  URL: ' + url);
         console.log('=============================================');
-        var url = 'http://localhost:' + port;
-        exec(process.platform === 'win32' ? 'start ' + url : 'open ' + url);
+        openBrowser(url);
     });
 }
 
-// Pull latest drafts on startup
-console.log('=== Checking for AI Drafts & Cloud Updates ===');
-try {
-    execSync('git pull', { stdio: 'inherit' });
-} catch(e) {
-    console.warn('Startup git pull skipped:', e.message);
-}
+// Check if a server is already running on PORT before starting a new one
+const http2 = require('http');
+const checkReq = http2.get('http://localhost:' + PORT + '/', function(res) {
+    // Server already running — just open browser to existing instance
+    console.log('Admin server already running on port ' + PORT + '. Opening browser...');
+    openBrowser('http://localhost:' + PORT);
+});
+checkReq.on('error', function() {
+    // No server running — pull latest drafts and start fresh
+    console.log('=== Checking for AI Drafts & Cloud Updates ===');
+    try {
+        execSync('git pull', { stdio: 'inherit' });
+    } catch(e) {
+        console.warn('Startup git pull skipped:', e.message);
+    }
+    startServer(PORT);
+});
+checkReq.setTimeout(1500, function() {
+    checkReq.destroy();
+    // Timeout = nothing running, start server
+    console.log('=== Checking for AI Drafts & Cloud Updates ===');
+    try {
+        execSync('git pull', { stdio: 'inherit' });
+    } catch(e) {
+        console.warn('Startup git pull skipped:', e.message);
+    }
+    startServer(PORT);
+});
 
-startServer(PORT);
