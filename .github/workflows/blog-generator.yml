@@ -28,54 +28,24 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: node scripts/blog-generate.js
 
-      - name: Create Pull Request with Draft
+      - name: Commit and Push Draft to Main
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_TERMINAL_PROMPT: 0
         run: |
-          # Check if there are any new files or changes in the blog folder
           if git status --porcelain blog/ | grep -q .; then
-            echo "Changes detected in blog directory. Creating draft PR..."
+            echo "Changes detected in blog directory. Committing draft to main..."
             
             # Setup Git credentials
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             
-            # Create a unique branch name
-            BRANCH_NAME="draft/blog-$(date +%Y%m%d-%H%M)"
-            git checkout -b "$BRANCH_NAME"
-            
-            # Commit and push changes
+            # Commit and push directly to main
             git add blog/
             git commit -m "draft: automated blog post generation"
-            git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" "$BRANCH_NAME"
+            git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" main
             
-            # Extract article title from posts.json (if possible) for PR title
-            PR_TITLE="Draft Blog Post: $(date +%Y-%m-%d)"
-            if [ -f "blog/posts.json" ]; then
-              FIRST_TITLE=$(node -e "const fs = require('fs'); console.log(JSON.parse(fs.readFileSync('blog/posts.json', 'utf8'))[0].title)")
-              if [ -n "$FIRST_TITLE" ]; then
-                PR_TITLE="Draft: $FIRST_TITLE"
-              fi
-            fi
-            
-            # Create PR body file using portable echo redirections
-            echo "This is an automated blog post draft generated from Wear OS RSS feeds using Google Gemini." > pr_body.txt
-            echo "" >> pr_body.txt
-            echo "### Actions Needed:" >> pr_body.txt
-            echo "1. Review the generated article HTML file inside the \`blog/\` folder." >> pr_body.txt
-            echo "2. Edit or proofread the text to add your personal developer perspective." >> pr_body.txt
-            echo "3. Merge this Pull Request to publish the post live to your website." >> pr_body.txt
-            
-            # Open Pull Request via GitHub CLI using the body file
-            gh pr create \
-              --title "$PR_TITLE" \
-              --body-file pr_body.txt \
-              --base main \
-              --head "$BRANCH_NAME" \
-              --draft
-              
-            echo "Draft Pull Request successfully created!"
+            echo "Draft successfully committed and pushed to main!"
           else
             echo "No new blog content or changes generated."
           fi

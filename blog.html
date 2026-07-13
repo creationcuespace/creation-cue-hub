@@ -599,13 +599,16 @@
                 }
                 const posts = await response.json();
 
-                if (!posts || posts.length === 0) {
+                // Filter out draft posts
+                const publicPosts = posts.filter(p => p.draft !== true);
+
+                if (!publicPosts || publicPosts.length === 0) {
                     container.innerHTML = '<div class="empty-blog">Check back soon! We are drafting new guides and updates.</div>';
                     return;
                 }
 
                 // Sort posts by date (newest first)
-                const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
+                const sortedPosts = [...publicPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
 
                 container.innerHTML = '';
                 sortedPosts.forEach(post => {

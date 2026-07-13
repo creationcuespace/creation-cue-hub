@@ -130,7 +130,8 @@ async function main() {
         date: dateStr,
         readTime: blogData.readTime || '3 min',
         excerpt: blogData.excerpt,
-        thumbnail: blogData.thumbnail || 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp'
+        thumbnail: blogData.thumbnail || 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp',
+        draft: true
     });
 
     fs.writeFileSync(registryPath, JSON.stringify(posts, null, 2), 'utf8');
