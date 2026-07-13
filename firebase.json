@@ -16,11 +16,7 @@
       "**/*.bat",
       "**/*.ps1",
       "**/*.sh",
-      "tracker/**",
-      "*.json",
-      "!blog/posts.json",
-      "!manager.json",
-      "!versions-data.json"
+      "tracker/**"
     ]
   }
 }
