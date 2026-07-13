@@ -477,7 +477,6 @@
 
         <!-- Main Content Area -->
         <main class="main-content-area">
-            <!-- Admin Panel (Only visible with ?admin=true) -->
             <!-- Admin Panel (Only visible with ?admin=true or when logged in) -->
             <div id="admin-panel" style="display:none; background:rgba(241,179,28,0.08); border:1px solid var(--primary); border-radius:var(--border-radius-lg); padding:24px; margin-bottom:30px; box-shadow:0 8px 32px rgba(241,179,28,0.05);">
                 <h2 style="font-family:var(--font-display); font-size:18px; color:var(--primary); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
@@ -490,7 +489,7 @@
                             <li>Go to the <a href="https://github.com/creationcuespace/creation-cue-hub/pulls" target="_blank" style="color:var(--text-primary); font-weight:600; text-decoration:underline;">GitHub Pull Requests</a> page.</li>
                             <li>Open the draft, click the **Pencil icon** (edit), write edits under the **Preview** tab, and click **Commit**.</li>
                             <li>Click **Ready for review** and then **Merge pull request**.</li>
-                            <li>Open **GitHub Desktop** on your computer, click **Pull origin**, and then run **<code>update-versions.bat</code>**.</li>
+                            <li><strong>That's it!</strong> GitHub will automatically deploy it live in 30 seconds. (No local commands needed!).</li>
                         </ol>
                     </div>
                     <div class="admin-option-divider" style="border-left:1px dashed var(--border-color); padding-left:20px;">
@@ -499,7 +498,7 @@
                             <li>Double-click **<code>create-post.bat</code>** in your project folder.</li>
                             <li>Answer the 3 simple questions (Title, Excerpt, Watch face ID) in the prompt window.</li>
                             <li>**Notepad** will open automatically. Write or paste your article text.</li>
-                            <li>Save and close Notepad. The wizard will automatically commit, push, and deploy it live!</li>
+                            <li>Save and close Notepad. The wizard automatically uploads it to GitHub, and the cloud deploys it live!</li>
                         </ol>
                     </div>
                 </div>
@@ -521,6 +520,8 @@
     <!-- Footer -->
     <footer>
         &copy; 2026 CreationCue. All rights reserved. Smartwatch designs and Wear OS news hub.
+        <br><br>
+        <span onclick="toggleAdminPanel()" style="cursor:pointer; text-decoration:underline; opacity:0.6; font-size:11px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">🔑 Admin Portal</span>
     </footer>
 
     <script>
@@ -534,6 +535,30 @@
             messagingSenderId: "186324516022",
             appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
         };
+
+        function toggleAdminPanel() {
+            const adminPanel = document.getElementById('admin-panel');
+            if (!adminPanel) return;
+            
+            if (adminPanel.style.display === 'block') {
+                adminPanel.style.display = 'none';
+            } else {
+                const urlParams = new URLSearchParams(window.location.search);
+                const isAdminParam = urlParams.get('admin') === 'true';
+                
+                let isLoggedIn = false;
+                try {
+                    isLoggedIn = !!firebase.auth().currentUser;
+                } catch(e) {}
+                
+                if (isAdminParam || isLoggedIn) {
+                    adminPanel.style.display = 'block';
+                    adminPanel.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    alert('To access the Admin Portal, please log in on your coupon manager page first, or add ?admin=true to the URL.');
+                }
+            }
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             // Show admin panel if ?admin=true is present in URL
