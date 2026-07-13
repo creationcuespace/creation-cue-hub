@@ -147,14 +147,22 @@ async function main() {
 // REST HTTPS GET wrapper
 function fetchUrl(url) {
     return new Promise((resolve, reject) => {
-        https.get(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' } }, (res) => {
+        const req = https.get(url, { 
+            headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' },
+            timeout: 10000 // 10 seconds timeout
+        }, (res) => {
             if (res.statusCode < 200 || res.statusCode >= 300) {
                 return reject(new Error(`Status Code: ${res.statusCode}`));
             }
             let data = '';
             res.on('data', chunk => data += chunk);
             res.on('end', () => resolve(data));
-        }).on('error', err => reject(err));
+        });
+        req.on('timeout', () => {
+            req.destroy();
+            reject(new Error('Request timeout'));
+        });
+        req.on('error', err => reject(err));
     });
 }
 
@@ -240,7 +248,8 @@ Respond ONLY with the JSON object. Do not include markdown code block syntax.`;
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            timeout: 30000 // 30 seconds timeout
         }, (res) => {
             let data = '';
             res.on('data', chunk => data += chunk);
@@ -259,6 +268,10 @@ Respond ONLY with the JSON object. Do not include markdown code block syntax.`;
             });
         });
 
+        req.on('timeout', () => {
+            req.destroy();
+            reject(new Error('Gemini API request timeout'));
+        });
         req.on('error', err => reject(err));
         req.write(requestBody);
         req.end();
