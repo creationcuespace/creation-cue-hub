@@ -503,6 +503,14 @@
 
                 var drafts = posts.filter(function(p) { return p.draft === true; });
                 var published = posts.filter(function(p) { return p.draft !== true; });
+                
+                var sortFn = function(a, b) {
+                    if (a.pinned && !b.pinned) return -1;
+                    if (!a.pinned && b.pinned) return 1;
+                    return new Date(b.date) - new Date(a.date);
+                };
+                drafts.sort(sortFn);
+                published.sort(sortFn);
 
                 var countBadge = document.getElementById('drafts-count');
                 if (drafts.length > 0) {
@@ -534,6 +542,7 @@
             item.className = 'post-list-item';
             var thumb = p.thumbnail || 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp';
             var dateStr = isDraft ? '⏳ Pending Draft' : p.date;
+            if (p.pinned) dateStr = '📌 ' + dateStr;
             var safeTitle = (p.title || '').replace(/'/g, "\\'");
             var safeExcerpt = (p.excerpt || '').replace(/'/g, "\\'");
             var safeThumb = (p.thumbnail || '');

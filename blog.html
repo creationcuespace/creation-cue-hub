@@ -725,8 +725,12 @@
                     return;
                 }
 
-                // Sort posts by date (newest first)
-                const sortedPosts = [...publicPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
+                // Sort posts by pinned status first, then date (newest first)
+                const sortedPosts = [...publicPosts].sort((a, b) => {
+                    if (a.pinned && !b.pinned) return -1;
+                    if (!a.pinned && b.pinned) return 1;
+                    return new Date(b.date) - new Date(a.date);
+                });
 
                 container.innerHTML = '';
                 sortedPosts.forEach(post => {
@@ -734,6 +738,8 @@
                     const thumbImg = post.thumbnail 
                         ? `https://wsrv.nl/?url=${encodeURIComponent(post.thumbnail)}&w=400&h=280&fit=cover&output=webp&q=80`
                         : 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp';
+
+                    const pinnedBadge = post.pinned ? '<span style="background:rgba(241,179,28,0.2); color:var(--primary); font-size:10px; font-weight:800; padding:3px 8px; border-radius:12px; margin-right:8px; border:1px solid rgba(241,179,28,0.5); display:inline-block;">📌 PINNED</span>' : '';
 
                     const card = document.createElement('a');
                     card.className = 'article-card';
@@ -744,7 +750,7 @@
                         </div>
                         <div class="article-details">
                             <div class="article-meta">
-                                <span>${post.date}</span>
+                                ${pinnedBadge}<span>${post.date}</span>
                                 <span>•</span>
                                 <span>${post.readTime || '3 min'} Read</span>
                             </div>
