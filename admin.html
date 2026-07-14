@@ -113,7 +113,8 @@
         .editor-toolbar { background: #2b3a4a !important; border-color: var(--border) !important; border-radius: 8px 8px 0 0 !important; }
         .editor-toolbar button { color: #fff !important; }
         .editor-toolbar button.active, .editor-toolbar button:hover { background: var(--surface) !important; }
-        .CodeMirror { background: rgba(0,0,0,0.3) !important; color: #fff !important; border-color: var(--border) !important; border-radius: 0 0 8px 8px !important; }
+        .CodeMirror { background: rgba(0,0,0,0.3) !important; color: #fff !important; border-color: var(--border) !important; border-radius: 0 0 8px 8px !important; max-width: 100%; }
+        .CodeMirror-scroll { overflow-x: hidden !important; }
         .CodeMirror-cursor { border-left: 2px solid #ffffff !important; }
         .btn {
             background: var(--primary);
@@ -401,6 +402,7 @@
                 element: document.getElementById('post-editor'),
                 spellChecker: false,
                 autosave: { enabled: false },
+                lineWrapping: true,
                 placeholder: "Write your blog post content here...",
                 toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "preview", "side-by-side", "fullscreen"]
             });
