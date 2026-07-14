@@ -2,16 +2,16 @@ At Creation Cue, a watch face has to look incredible first. If the design doesn'
 
 That is why I bake smart, subtle utility into every face I build. Here is what you can expect from a Creation Cue design:
 
-# **Aesthetics First**
+## Aesthetics First
 Every pixel matters. Whether you are running a sharp analog look or a data-heavy digital dashboard, the top priority on my list is always a clean, premium design. It has to look like it belongs on your smartwatch.
 
-# **Smart Battery Warnings**
+## **Smart Battery Warnings**
 Nobody likes looking down to a dead watch. My designs feature built-in low-battery warnings—usually a subtle red LED or a glowing indicator. It stays out of the way when you have a full charge, but grabs your attention right when you need to find a cable.
 
-# **Heart Rate Alerts**
+## **Heart Rate Alerts**
 For the watch faces that include heart rate tracking, I’ve added visual alerts for low and high BPM. You get a quick visual cue if your heart rate drops or spikes, keeping you aware without making you dig through health menus.
 
-# **The Full Moon Countdown**
+## **The Full Moon Countdown**
 This is a unique feature I love adding. If a Creation Cue face features a moon phase complication, it doesn't just show you a static image of the lunar cycle. It actively counts down the exact days until the next full moon.
 
 A smartwatch should give you the premium look you want, combined with the smart alerts you actually need.
