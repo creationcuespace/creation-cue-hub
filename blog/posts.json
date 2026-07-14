@@ -1,18 +1,18 @@
 [
   {
-    "slug": "form-meets-function-the-design-philosophy-at-creation-cue",
-    "title": "Form Meets Function: The Design Philosophy at Creation Cue",
-    "excerpt": "Premium watch faces built for real life. Enjoy clean designs packed with customizable complications, smart battery warnings, and unique moon phase countdowns.",
-    "date": "Jul 13, 2026",
-    "thumbnail": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue171.png",
-    "pinned": true
-  },
-  {
     "slug": "weather-complications",
     "title": "Weather complications",
     "excerpt": "Simple Weather app",
     "date": "Jul 13, 2026",
     "thumbnail": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue170.png",
+    "pinned": true
+  },
+  {
+    "slug": "form-meets-function-the-design-philosophy-at-creation-cue",
+    "title": "Form Meets Function: The Design Philosophy at Creation Cue",
+    "excerpt": "Premium watch faces built for real life. Enjoy clean designs packed with customizable complications, smart battery warnings, and unique moon phase countdowns.",
+    "date": "Jul 13, 2026",
+    "thumbnail": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue171.png",
     "pinned": true
   },
   {
