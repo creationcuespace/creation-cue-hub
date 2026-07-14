@@ -46,17 +46,19 @@
             gap: 30px;
         }
         @media (max-width: 900px) { 
-            .dashboard-grid { grid-template-columns: 1fr; gap: 20px; } 
-            body { padding: 20px 15px; }
-            header { flex-direction: column; align-items: flex-start; gap: 15px; }
-            header > div { width: 100%; justify-content: space-between; }
-            h1 { font-size: 24px; }
-            .panel { padding: 16px; margin-bottom: 20px; }
-            .post-list-item { flex-direction: column; align-items: stretch; gap: 12px; }
-            .actions-wrap { flex-direction: row; justify-content: flex-end; gap: 8px; width: 100%; }
-            .actions-wrap .btn-edit, .actions-wrap .btn-delete { padding: 10px 16px; font-size: 13px; margin: 0; flex: 1; }
+            .dashboard-grid { grid-template-columns: 1fr; gap: 15px; width: 100%; overflow: hidden; } 
+            body { padding: 15px 10px; overflow-x: hidden; width: 100%; }
+            header { flex-direction: column; align-items: flex-start; gap: 10px; padding-bottom: 10px; margin-bottom: 15px; }
+            header > div { width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+            h1 { font-size: 22px; }
+            .panel { padding: 12px; margin-bottom: 15px; width: 100%; overflow: hidden; box-sizing: border-box; }
+            .post-list-item { flex-direction: column; align-items: stretch; gap: 10px; width: 100%; overflow: hidden; }
+            .post-list-info { width: 100%; }
+            .actions-wrap { flex-direction: row; justify-content: space-between; gap: 8px; width: 100%; flex-wrap: nowrap; }
+            .actions-wrap .btn-edit, .actions-wrap .btn-delete { padding: 8px; font-size: 12px; margin: 0; flex: 1; text-align: center; min-width: 0; }
             .link-preview-input-group { flex-direction: column; }
-            .link-preview-input-group button { width: 100% !important; }
+            .link-preview-input-group button { width: 100% !important; margin-top: 5px; }
+            input, textarea, select { width: 100%; max-width: 100%; box-sizing: border-box; }
         }
         .panel {
             background: var(--surface);
