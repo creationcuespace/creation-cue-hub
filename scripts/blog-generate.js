@@ -272,7 +272,8 @@ Respond ONLY with the JSON object. Do not include markdown code block syntax.`;
                 }
                 try {
                     const parsedResponse = JSON.parse(data);
-                    const responseText = parsedResponse.candidates[0].content.parts[0].text;
+                    let responseText = parsedResponse.candidates[0].content.parts[0].text;
+                    responseText = responseText.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
                     const blogJSON = JSON.parse(responseText);
                     resolve(blogJSON);
                 } catch (err) {
