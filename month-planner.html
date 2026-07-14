@@ -1741,7 +1741,7 @@
     </div>
     <div class="header-btns">
       <!-- Version badge -->
-      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.34</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.38</span>
       <!-- Firebase connection indicator dot & text -->
       <div id="header-sync-badge" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; flex-shrink: 0;">
         <span id="header-sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
@@ -2700,6 +2700,127 @@
       if (migrated) {
         setTimeout(() => saveState(), 0);
       }
+
+      // v2.35 Migration: Clean up scattered "ghost" tasks from v2.33 bug
+      if (!localStorage.getItem('cc_migration_v235_applied')) {
+        var scatteredCleaned = false;
+        Object.keys(state.dayStates).forEach(dateStr => {
+          var slots = state.dayStates[dateStr];
+          if (slots && Array.isArray(slots)) {
+            var originalLen = slots.length;
+            var filtered = slots.filter(s => {
+              if (!s) return false;
+              if (s.isHoliday || s.completed || s.isRolledOver) return true;
+              if (!s.isOverridden) return true;
+              return false; // Drop scattered isOverridden tasks
+            });
+            if (filtered.length !== originalLen) {
+              state.dayStates[dateStr] = filtered;
+              scatteredCleaned = true;
+            }
+          }
+        });
+        localStorage.setItem('cc_migration_v235_applied', 'true');
+        if (scatteredCleaned) {
+          console.log("Cleaned up scattered tasks from v2.33 bug.");
+        }
+      }
+
+      // v2.38 Precision Recovery for tasks lost due to v2.35 migration
+      if (!localStorage.getItem('cc_recovery_v238_applied')) {
+        var todayStr = getTodayDateString();
+        var pastMaxRolled = {};
+        var futureCount = {};
+        var sampleTask = {};
+        
+        Object.keys(state.dayStates).forEach(dateStr => {
+          if (dateStr < todayStr) {
+            var slots = state.dayStates[dateStr];
+            if (slots && Array.isArray(slots)) {
+              var dayCounts = {};
+              slots.forEach(s => {
+                if (s && s.isRolledOver) {
+                  var originalTitle = s.title.replace(/^Rolled Over:\s*/, '');
+                  dayCounts[originalTitle] = (dayCounts[originalTitle] || 0) + 1;
+                  sampleTask[originalTitle] = {
+                    title: originalTitle,
+                    priority: s.priority || 'medium',
+                    isFallback: s.isFallback || false,
+                    typeLabel: s.typeLabel || null,
+                    faceId: s.faceId || null
+                  };
+                }
+              });
+              Object.keys(dayCounts).forEach(title => {
+                pastMaxRolled[title] = Math.max(pastMaxRolled[title] || 0, dayCounts[title]);
+              });
+            }
+          } else {
+            var slots = state.dayStates[dateStr];
+            if (slots && Array.isArray(slots)) {
+              slots.forEach(s => {
+                if (s && !s.isHoliday) {
+                  var tTitle = s.title.replace(/^Rolled Over:\s*/, '');
+                  futureCount[tTitle] = (futureCount[tTitle] || 0) + 1;
+                }
+              });
+            }
+          }
+        });
+        
+        var recoveredCount = 0;
+        var currDate = new Date();
+        var debugMsg = "";
+        
+        Object.keys(pastMaxRolled).forEach(title => {
+          var deficit = pastMaxRolled[title] - (futureCount[title] || 0);
+          if (deficit > 0) {
+            debugMsg += title + " (lost: " + deficit + ")\n";
+            for (var i = 0; i < deficit; i++) {
+              var placed = false;
+              var safety = 0;
+              var tempDate = new Date(currDate.getTime());
+              
+              while (!placed && safety < 1000) {
+                var dStr = formatDateString(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
+                var off = isHolidayOrWeekend(dStr);
+                
+                if (!off) {
+                  if (!state.dayStates[dStr]) state.dayStates[dStr] = [];
+                  state.dayStates[dStr].push({
+                    title: sampleTask[title].title,
+                    priority: sampleTask[title].priority,
+                    isFallback: sampleTask[title].isFallback,
+                    isOverridden: true,
+                    isRolledOver: true,
+                    typeLabel: sampleTask[title].typeLabel,
+                    faceId: sampleTask[title].faceId,
+                    completed: false
+                  });
+                  placed = true;
+                  recoveredCount++;
+                } else {
+                  tempDate.setDate(tempDate.getDate() + 1);
+                }
+                safety++;
+              }
+            }
+          }
+        });
+        
+        localStorage.setItem('cc_recovery_v238_applied', 'true');
+        if (recoveredCount > 0) {
+          alert("SYSTEM RECOVERY:\nRecovered " + recoveredCount + " missing blocks!\n\nTasks Restored:\n" + debugMsg);
+          // Don't wait. Force save immediately.
+          setTimeout(() => {
+             saveState();
+             renderCalendar();
+             renderDayView();
+          }, 500);
+        } else {
+          alert("SYSTEM RECOVERY: 0 tasks were missing. This means the tasks are actively in the future calendar (futureCount >= pastMaxRolled).");
+        }
+      }
     }
 
     // Load from LocalStorage
@@ -3275,6 +3396,21 @@
 
       calculateProductivityStreak();
       switchViewMode('day');
+      
+      // DIAGNOSTIC DUMP
+      setTimeout(() => {
+        var todayStr = getTodayDateString();
+        var slots = appState.dayStates[todayStr] || [];
+        var dbg = document.getElementById('debug-dump-v238');
+        if (!dbg) {
+          dbg = document.createElement('div');
+          dbg.id = 'debug-dump-v238';
+          dbg.style = 'background: #b91c1c; color: white; padding: 15px; font-family: monospace; font-size: 12px; max-height: 200px; overflow-y: auto; z-index: 99999; border-bottom: 3px solid white;';
+          document.body.insertBefore(dbg, document.body.firstChild);
+        }
+        dbg.innerHTML = "<b>DIAGNOSTIC DUMP (Today: " + todayStr + ") - Total Blocks: " + slots.length + "</b><br>" + 
+          slots.map((s, i) => i + ": " + (s ? s.title + " | overridden=" + s.isOverridden + " | rolledOver=" + s.isRolledOver : "null")).join("<br>");
+      }, 2500);
 
       // Start live realtime listener LAST — after all local init writes are done
       // so we don't overwrite incoming remote changes
