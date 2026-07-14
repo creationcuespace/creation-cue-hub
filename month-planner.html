@@ -1741,7 +1741,7 @@
     </div>
     <div class="header-btns">
       <!-- Version badge -->
-      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.32</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.34</span>
       <!-- Firebase connection indicator dot & text -->
       <div id="header-sync-badge" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; flex-shrink: 0;">
         <span id="header-sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
@@ -3258,7 +3258,6 @@
       // Initialization is complete. Future saveState() calls will save changes to Firebase.
       isInitializing = false;
 
-      // Run automatic rollover silently in-memory on initialization
       var rolledCount = triggerRollover(true, true);
       if (rolledCount > 0) {
         setTimeout(function() {
@@ -3267,6 +3266,13 @@
       }
 
       scheduleFutureTasks();
+      
+      // If tasks rolled over, save the newly generated state to Firebase immediately
+      // before the realtime listener connects, so the rollover isn't overwritten by old cloud data.
+      if (rolledCount > 0) {
+        saveState();
+      }
+
       calculateProductivityStreak();
       switchViewMode('day');
 
@@ -4371,8 +4377,8 @@
             }
             var targetSlots = appState.dayStates[dateStr];
             
-            // Limit checks: count non-holiday tasks currently assigned to this day
-            var activeTasksCount = targetSlots.filter(s => s && !s.isHoliday).length;
+            // Limit checks: count ONLY preserved tasks (completed/overridden) since normal scheduled tasks will be wiped anyway
+            var activeTasksCount = targetSlots.filter(s => s && !s.isHoliday && (s.completed || s.isOverridden || s.isRolledOver)).length;
             
             if (activeTasksCount < 12) {
               targetSlots.push({
@@ -4381,6 +4387,7 @@
                 priority: task.priority,
                 isFallback: task.isFallback,
                 isOverridden: true, // Preserve it so reschedule doesn't clear it
+                isRolledOver: true, // Mark it so the UI shows the "Rolled Over" badge
                 typeLabel: task.typeLabel,
                 faceId: task.faceId,
                 completed: false

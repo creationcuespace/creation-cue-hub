@@ -535,7 +535,14 @@
             var pinnedVal = !!p.pinned;
             var editBtn = '<button class="btn-edit" onclick="editPost(\'' + p.slug + '\',\'' + safeTitle + '\',\'' + safeExcerpt + '\',\'' + safeThumb + '\',' + isDraft + ',' + pinnedVal + ')">Edit</button>';
             var delBtn = '<button class="btn-delete" onclick="deletePost(\'' + p.slug + '\', ' + isDraft + ')">' + (isDraft ? 'Discard' : 'Delete') + '</button>';
-            item.innerHTML = '<div class="post-list-info"><img class="post-list-thumb" src="' + thumb + '" alt="Thumb"><div style="overflow:hidden;"><div class="post-list-title" title="' + (p.title||'') + '">' + (p.title||'') + '</div><div class="post-list-date">' + dateStr + '</div></div></div><div class="actions-wrap">' + editBtn + delBtn + '</div>';
+            var postUrl = isDraft ? '#' : 'blog/post.html?id=' + p.slug;
+            var linkTarget = isDraft ? '' : ' target="_blank"';
+            var linkStyle = isDraft ? 'text-decoration:none; color:inherit; cursor:default;' : 'text-decoration:none; color:inherit; cursor:pointer; transition: opacity 0.2s;';
+            var linkHover = isDraft ? '' : ' onmouseover="this.style.opacity=\\\'0.8\\\'" onmouseout="this.style.opacity=\\\'1\\\'"';
+            
+            var linkStart = '<a class="post-list-info" href="' + postUrl + '"' + linkTarget + ' style="' + linkStyle + '"' + linkHover + '>';
+            var linkEnd = '</a>';
+            item.innerHTML = linkStart + '<img class="post-list-thumb" src="' + thumb + '" alt="Thumb"><div style="overflow:hidden;"><div class="post-list-title" title="' + (p.title||'') + '">' + (p.title||'') + '</div><div class="post-list-date">' + dateStr + '</div></div>' + linkEnd + '<div class="actions-wrap">' + editBtn + delBtn + '</div>';
             return item;
         }
 
