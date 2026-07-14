@@ -436,14 +436,15 @@
                     opt.style.cssText = 'padding: 10px 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s;';
                     opt.onmouseover = function() { this.style.background = 'rgba(255,255,255,0.1)'; };
                     opt.onmouseout = function() { this.style.background = 'transparent'; };
-                    opt.onclick = function() { selectFaceOption(f.image_url, f.title + ' (' + f.id + ')'); };
+                    opt.dataset.faceObj = JSON.stringify(f);
+                    opt.onclick = function() { selectFaceOption(f.image_url, f.title + ' (' + f.id + ')', f, false); };
                     opt.innerHTML = '<img src="' + f.image_url + '" style="width:30px; height:30px; border-radius:5px; object-fit:cover;" onerror="this.src=\'https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png\'"><span style="font-size:14px; color:var(--text-primary);">' + f.title + ' (' + f.id + ')</span>';
                     dropdown.appendChild(opt);
                 });
             } catch(e) { console.error('Error loading faces:', e); }
         }
 
-        function selectFaceOption(value, text) {
+        function selectFaceOption(value, text, faceObj = null, isSyncing = false) {
             document.getElementById('post-face-select').value = value;
             document.getElementById('custom-select-text').textContent = text;
             if (value) {
@@ -453,22 +454,36 @@
                 document.getElementById('custom-select-img').style.display = 'none';
             }
             document.getElementById('custom-select-dropdown').style.display = 'none';
+
+            if (!isSyncing && typeof easyMDE !== 'undefined' && easyMDE) {
+                let md = easyMDE.value() || '';
+                const regex = /<!-- WATCH_FACE_LINK_START -->[\s\S]*?<!-- WATCH_FACE_LINK_END -->\n?/g;
+                md = md.replace(regex, '').trim();
+
+                if (value && faceObj && faceObj.play_store_url) {
+                    const snippet = `\n\n<!-- WATCH_FACE_LINK_START -->\n<a href="${faceObj.play_store_url}" class="lp-card-inner" target="_blank" rel="noopener noreferrer">\n    <div class="link-preview-card">\n        <div class="lp-card-img" style="background-image: url('${faceObj.image_url}')"></div>\n        <div class="lp-card-info">\n            <div class="lp-card-title">${faceObj.title}</div>\n            <div class="lp-card-desc">Check out this watch face on Google Play</div>\n        </div>\n    </div>\n</a>\n<!-- WATCH_FACE_LINK_END -->\n`;
+                    md += snippet;
+                }
+                easyMDE.value(md);
+            }
         }
 
         function syncFaceDropdown(value) {
             if (!value) {
-                selectFaceOption('', 'Default Banner');
+                selectFaceOption('', 'Default Banner', null, true);
                 return;
             }
             var text = value;
+            var faceObj = null;
             var options = document.querySelectorAll('.custom-option');
             options.forEach(function(opt) {
                 var img = opt.querySelector('img');
                 if (img && img.src === value) {
                     text = opt.querySelector('span:last-child').textContent;
+                    if (opt.dataset.faceObj) faceObj = JSON.parse(opt.dataset.faceObj);
                 }
             });
-            selectFaceOption(value, text);
+            selectFaceOption(value, text, faceObj, true);
         }
 
         document.addEventListener('click', function(event) {
