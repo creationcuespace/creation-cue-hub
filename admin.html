@@ -153,6 +153,13 @@
         .post-list-title { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .post-list-date { font-size: 11px; color: var(--text-muted); }
         .actions-wrap { display: flex; align-items: center; }
+        
+        .header-btns { display: flex; gap: 8px; align-items: center; overflow-x: auto; padding-bottom: 4px; flex-wrap: nowrap; }
+        .header-btns::-webkit-scrollbar { height: 4px; }
+        .header-btns::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+        .header-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; color: #ccc; font-size: 13px; text-decoration: none; white-space: nowrap; transition: 0.2s; }
+        .header-btn:hover { background: rgba(255,255,255,0.1); color: var(--primary); border-color: var(--primary); }
+
         #status-overlay {
             display: none;
             position: fixed;
@@ -171,9 +178,15 @@
 <body>
     <header>
         <h1>Creation<span>Cue</span> Blog Dashboard</h1>
-        <div style="display:flex; gap: 10px; align-items:center;">
-            <div style="font-size:12px; color:var(--text-muted);">Cloud CMS</div>
-            <button class="btn btn-edit" style="width:auto; padding:8px 16px; margin:0;" onclick="showSettings()">GitHub Settings</button>
+        <div style="width: 100%; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; align-items: center;">
+            <div class="header-btns">
+                <a href="index.html" class="header-btn">Home</a>
+                <a href="manage-coupons.html" class="header-btn">Coupons</a>
+                <a href="month-planner.html" class="header-btn">Planner</a>
+                <a href="play-versions.html" class="header-btn">Versions</a>
+                <a href="social-generator.html" class="header-btn">Socials</a>
+            </div>
+            <button class="btn btn-edit" style="width:auto; padding:8px 16px; margin:0; flex-shrink: 0;" onclick="showSettings()">GitHub Settings</button>
         </div>
     </header>
 
