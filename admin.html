@@ -457,18 +457,26 @@
             document.getElementById('custom-select-dropdown').style.display = 'none';
 
             if (!isSyncing && typeof easyMDE !== 'undefined' && easyMDE) {
-                console.log("Injecting snippet for face:", faceObj);
                 let md = easyMDE.value() || '';
                 const regex = /<!-- WATCH_FACE_LINK_START -->[\s\S]*?<!-- WATCH_FACE_LINK_END -->\n?/g;
                 md = md.replace(regex, '').trim();
 
-                if (value && faceObj && faceObj.play_store_url) {
-                    const snippet = `\n\n<!-- WATCH_FACE_LINK_START -->\n<a href="${faceObj.play_store_url}" class="lp-card-inner" target="_blank" rel="noopener noreferrer">\n    <div class="link-preview-card">\n        <div class="lp-card-img" style="background-image: url('${faceObj.image_url}')"></div>\n        <div class="lp-card-info">\n            <div class="lp-card-title">${faceObj.title}</div>\n            <div class="lp-card-desc">Check out this watch face on Google Play</div>\n        </div>\n    </div>\n</a>\n<!-- WATCH_FACE_LINK_END -->\n`;
-                    md += snippet;
+                if (value && faceObj) {
+                    if (faceObj.play_store_url) {
+                        const snippet = `\n\n<!-- WATCH_FACE_LINK_START -->\n<a href="${faceObj.play_store_url}" class="lp-card-inner" target="_blank" rel="noopener noreferrer">\n    <div class="link-preview-card">\n        <div class="lp-card-img" style="background-image: url('${faceObj.image_url}')"></div>\n        <div class="lp-card-info">\n            <div class="lp-card-title">${faceObj.title}</div>\n            <div class="lp-card-desc">Check out this watch face on Google Play</div>\n        </div>\n    </div>\n</a>\n<!-- WATCH_FACE_LINK_END -->\n`;
+                        md += snippet;
+                        alert('Link injected into editor! Scroll to the bottom to see the HTML snippet.');
+                    } else {
+                        alert('Debug: Selected face does not have a play_store_url in manager.json');
+                    }
+                } else if (value && !faceObj) {
+                    alert('Debug: faceObj is missing!');
                 }
                 const pos = easyMDE.codemirror.getCursor();
                 easyMDE.value(md);
                 if (pos) easyMDE.codemirror.setCursor(pos);
+            } else if (!isSyncing) {
+                alert('Debug: easyMDE is not defined!');
             }
         }
 
