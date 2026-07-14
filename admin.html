@@ -54,7 +54,9 @@
             .panel { padding: 16px; margin-bottom: 20px; }
             .post-list-item { flex-direction: column; align-items: stretch; gap: 12px; }
             .actions-wrap { flex-direction: row; justify-content: flex-end; gap: 8px; width: 100%; }
-            .btn-edit, .btn-delete { padding: 10px 16px; font-size: 13px; margin: 0; flex: 1; }
+            .actions-wrap .btn-edit, .actions-wrap .btn-delete { padding: 10px 16px; font-size: 13px; margin: 0; flex: 1; }
+            .link-preview-input-group { flex-direction: column; }
+            .link-preview-input-group button { width: 100% !important; }
         }
         .panel {
             background: var(--surface);
@@ -193,9 +195,9 @@
             </div>
             <div class="form-group" style="background:rgba(255,255,255,0.03); border:1px dashed var(--border); padding:12px; border-radius:8px; margin-bottom:15px;">
                 <label style="font-size:12px; font-weight:700; margin-bottom:6px; display:block; color:var(--primary);">🔗 Add Facebook-Style Link Card</label>
-                <div style="display:flex; gap:8px; margin-bottom:8px;">
-                    <input type="text" id="preview-url-input" placeholder="Paste link (e.g. https://play.google.com/...)" style="margin:0; font-size:12px; flex:1;">
-                    <button class="btn" style="width:auto; padding:6px 12px; font-size:12px; background:var(--surface); border:1px solid var(--border); color:#fff;" onclick="generateLinkPreview()">Fetch Metadata</button>
+                <div class="link-preview-input-group" style="display:flex; gap:8px; margin-bottom:8px;">
+                    <input type="text" id="preview-url-input" placeholder="Paste link (e.g. https://play.google.com/...)" style="margin:0; font-size:12px; flex:1; min-width:0;">
+                    <button class="btn" style="width:auto; padding:12px; font-size:12px; background:var(--surface); border:1px solid var(--border); color:#fff;" onclick="generateLinkPreview()">Fetch Metadata</button>
                 </div>
                 <div id="preview-card-loader" style="display:none; font-size:11px; color:var(--text-muted); margin-bottom:8px;">Fetching site info...</div>
                 <div id="link-preview-box" style="display:none; background:var(--surface); border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-bottom:8px;">
