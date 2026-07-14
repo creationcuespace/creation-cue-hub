@@ -294,7 +294,12 @@
             text-overflow: ellipsis;
         }
 
-        @media (max-width: 550px) {
+        @media (max-width: 768px) {
+            .main-container { padding: 16px 12px; }
+            article { padding: 20px; border-radius: var(--border-radius-md); }
+            .post-title { font-size: clamp(1.5rem, 7vw, 2rem); margin-bottom: 16px; }
+            .post-meta { flex-direction: column; gap: 8px; }
+            .post-content { font-size: 15px; }
             .lp-card-inner {
                 flex-direction: column;
             }
