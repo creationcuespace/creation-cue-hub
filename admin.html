@@ -472,7 +472,7 @@
         async function editPost(slug, title, excerpt, thumbnail, isDraft, pinned) {
             showStatus('Loading article content from GitHub...', 'Fetching Markdown...');
             try {
-                const folder = isDraft ? 'drafts' : 'posts';
+                const folder = 'posts';
                 const fileData = await ghGetFile(`blog/${folder}/${slug}.md`);
                 if (!fileData) throw new Error('Could not find markdown file on GitHub');
                 
@@ -545,16 +545,10 @@
 
                     // If slug changed, delete old markdown
                     if (slug !== originalSlug) {
-                        const oldFolder = oldDraft ? 'drafts' : 'posts';
+                        const oldFolder = 'posts';
                         const oldMd = await ghGetFile(`blog/${oldFolder}/${originalSlug}.md`);
                         if (oldMd) {
                             await ghDeleteFile(`blog/${oldFolder}/${originalSlug}.md`, `Rename/Move post ${originalSlug}`, oldMd.sha);
-                        }
-                    } else if (oldDraft) {
-                        // If it was a draft and we are publishing it, delete the draft file
-                        const oldMd = await ghGetFile(`blog/drafts/${originalSlug}.md`);
-                        if (oldMd) {
-                            await ghDeleteFile(`blog/drafts/${originalSlug}.md`, `Publish draft ${originalSlug}`, oldMd.sha);
                         }
                     }
                 }
@@ -610,7 +604,7 @@
                 await ghPutFile('blog/posts.json', JSON.stringify(posts, null, 2), `Delete post entry ${slug}`, postsFileData.sha);
 
                 // 3. Delete Markdown file
-                const folder = isDraft ? 'drafts' : 'posts';
+                const folder = 'posts';
                 const mdPath = `blog/${folder}/${slug}.md`;
                 const mdFile = await ghGetFile(mdPath);
                 if (mdFile) {
