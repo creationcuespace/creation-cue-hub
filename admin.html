@@ -222,6 +222,9 @@
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </div>
                     <div id="custom-select-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(26,26,26,0.95); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 100; margin-top: 5px; box-shadow: 0 10px 25px rgba(0,0,0,0.8);">
+                        <div style="padding: 10px; position: sticky; top: 0; background: rgba(26,26,26,0.98); z-index: 10; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <input type="text" id="face-search-input" placeholder="Search faces..." style="margin: 0; padding: 8px 12px; font-size: 13px;" onclick="event.stopPropagation();" oninput="filterFaceOptions(this.value)">
+                        </div>
                         <div class="custom-option" onclick="selectFaceOption('', 'Default Banner')" style="padding: 10px 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">
                             <span style="width:30px; height:30px; background:rgba(255,255,255,0.1); border-radius:5px; display:inline-block;"></span>
                             <span style="font-size:14px; color:var(--text-primary);">Default Banner</span>
@@ -447,6 +450,19 @@
             } catch(e) { console.error('Error loading faces:', e); }
         }
 
+        function filterFaceOptions(query) {
+            var filter = query.toLowerCase();
+            var options = document.querySelectorAll('.custom-option');
+            options.forEach(function(opt) {
+                var text = opt.textContent.toLowerCase();
+                if (text.includes(filter)) {
+                    opt.style.display = 'flex';
+                } else {
+                    opt.style.display = 'none';
+                }
+            });
+        }
+
         function selectFaceOption(value, text, faceObj = null, isSyncing = false) {
             document.getElementById('post-face-select').value = value;
             document.getElementById('custom-select-text').textContent = text;
@@ -465,14 +481,13 @@
 
                 if (value && faceObj) {
                     if (faceObj.play_store_url) {
-                        const snippet = `\n\n<!-- WATCH_FACE_LINK_START -->\n<a href="${faceObj.play_store_url}" class="lp-card-inner" target="_blank" rel="noopener noreferrer">\n    <div class="link-preview-card">\n        <div class="lp-card-img" style="background-image: url('${faceObj.image_url}')"></div>\n        <div class="lp-card-info">\n            <div class="lp-card-title">${faceObj.title}</div>\n            <div class="lp-card-desc">Check out this watch face on Google Play</div>\n        </div>\n    </div>\n</a>\n<!-- WATCH_FACE_LINK_END -->\n`;
+                        let webUrl = faceObj.play_store_url;
+                        if (webUrl.startsWith('market://details')) {
+                            webUrl = webUrl.replace('market://details', 'https://play.google.com/store/apps/details');
+                        }
+                        const snippet = `\n\n<!-- WATCH_FACE_LINK_START -->\n<a href="${webUrl}" class="lp-card-inner" target="_blank" rel="noopener noreferrer">\n    <div class="link-preview-card">\n        <div class="lp-card-img" style="background-image: url('${faceObj.image_url}')"></div>\n        <div class="lp-card-info">\n            <div class="lp-card-title">${faceObj.title} Watch Face</div>\n            <div class="lp-card-desc">Check out this watch face on Google Play</div>\n        </div>\n    </div>\n</a>\n<!-- WATCH_FACE_LINK_END -->\n`;
                         md += snippet;
-                        alert('Link injected into editor! Scroll to the bottom to see the HTML snippet.');
-                    } else {
-                        alert('Debug: Selected face does not have a play_store_url in manager.json');
                     }
-                } else if (value && !faceObj) {
-                    alert('Debug: faceObj is missing!');
                 }
                 const pos = easyMDE.codemirror.getCursor();
                 easyMDE.value(md);
