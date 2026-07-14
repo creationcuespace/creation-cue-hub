@@ -401,10 +401,13 @@
                 let faces = [];
                 if (GH_PAT) {
                     const data = await ghGetFile('manager.json');
-                    if(data) faces = JSON.parse(data.content);
+                    if(data) faces = JSON.parse(data.content).watch_faces || [];
                 } else {
                     const res = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/manager.json`);
-                    if(res.ok) faces = await res.json();
+                    if(res.ok) {
+                        const json = await res.json();
+                        faces = json.watch_faces || [];
+                    }
                 }
                 
                 var select = document.getElementById('post-face-select');
