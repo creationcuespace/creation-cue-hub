@@ -156,7 +156,10 @@
 <body>
     <header>
         <h1>Creation<span>Cue</span> Blog Dashboard</h1>
-        <div style="font-size:12px; color:var(--text-muted);">Local CMS Publisher</div>
+        <div style="display:flex; gap: 10px; align-items:center;">
+            <div style="font-size:12px; color:var(--text-muted);">Cloud CMS</div>
+            <button class="btn btn-edit" style="width:auto; padding:8px 16px; margin:0;" onclick="showSettings()">GitHub Settings</button>
+        </div>
     </header>
 
     <div class="dashboard-grid">
@@ -219,13 +222,13 @@
                     <span id="drafts-count" class="badge-draft" style="display:none;">0</span>
                 </div>
                 <div id="drafts-list-container">
-                    <div style="color:var(--text-muted); font-size:13px; padding:10px 0;">No drafts pending.</div>
+                    <div style="color:var(--text-muted); font-size:13px; padding:10px 0;">Configure PAT to load drafts.</div>
                 </div>
             </div>
             <div class="post-list-section">
                 <div class="section-subtitle">Published Articles</div>
                 <div id="posts-list-container">
-                    <div style="color:var(--text-muted); font-size:13px; padding:10px 0;">Loading posts...</div>
+                    <div style="color:var(--text-muted); font-size:13px; padding:10px 0;">Configure PAT to load posts.</div>
                 </div>
             </div>
         </div>
@@ -235,11 +238,114 @@
     <div id="status-overlay">
         <div class="spinner"></div>
         <div id="status-message" style="font-size:18px; font-weight:700; font-family:'Outfit', sans-serif;">Deploying...</div>
-        <div style="font-size:12px; color:var(--text-muted);">Please keep this page open. This takes around 20-30 seconds.</div>
+        <div id="status-submessage" style="font-size:12px; color:var(--text-muted);">Please keep this page open. This may take a moment.</div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center;">
+        <div class="panel" style="width: 400px; max-width: 90%;">
+            <div class="panel-title">GitHub API Configuration</div>
+            <div class="form-group">
+                <label>Personal Access Token (PAT)</label>
+                <input type="password" id="gh-pat-input" placeholder="ghp_xxxxxxxxxxxx">
+                <div style="font-size:11px; color:var(--text-muted); margin-top:8px;">
+                    Required to manage posts directly on GitHub. Needs "repo" permissions. 
+                    Stored securely in your local browser storage.
+                </div>
+            </div>
+            <div style="display:flex; gap:12px;">
+                <button class="btn" style="flex:1;" onclick="saveSettings()">Save & Connect</button>
+                <button class="btn" style="background:#495057; color:#fff; width:auto;" onclick="hideSettings()">Close</button>
+            </div>
+        </div>
     </div>
 
     <script>
         let easyMDE;
+
+        // --- GITHUB API CLIENT ---
+        const REPO_OWNER = 'creationcuespace';
+        const REPO_NAME = 'creation-cue-hub';
+        const BRANCH = 'main';
+        let GH_PAT = localStorage.getItem('gh_pat') || '';
+
+        function showSettings() {
+            document.getElementById('gh-pat-input').value = GH_PAT;
+            document.getElementById('settings-modal').style.display = 'flex';
+        }
+        function hideSettings() {
+            document.getElementById('settings-modal').style.display = 'none';
+        }
+        function saveSettings() {
+            GH_PAT = document.getElementById('gh-pat-input').value.trim();
+            localStorage.setItem('gh_pat', GH_PAT);
+            hideSettings();
+            if (GH_PAT) {
+                loadExistingPosts();
+            } else {
+                alert('A valid GitHub PAT is required to manage posts.');
+            }
+        }
+
+        async function ghApi(endpoint, method = 'GET', body = null) {
+            if (!GH_PAT) throw new Error("GitHub PAT not configured. Please open Settings.");
+            const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}${endpoint}`;
+            const headers = {
+                'Authorization': `Bearer ${GH_PAT}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'X-GitHub-Api-Version': '2022-11-28'
+            };
+            const options = { method, headers };
+            if (body) {
+                headers['Content-Type'] = 'application/json';
+                options.body = JSON.stringify(body);
+            }
+            const res = await fetch(url, options);
+            if (!res.ok) {
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.message || `GitHub API error: ${res.status}`);
+            }
+            return res.json();
+        }
+
+        // Unicode-safe Base64 encoding/decoding
+        function b64EncodeUnicode(str) {
+            return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+                return String.fromCharCode('0x' + p1);
+            }));
+        }
+        function b64DecodeUnicode(str) {
+            return decodeURIComponent(atob(str).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+        }
+
+        async function ghGetFile(path) {
+            try {
+                const data = await ghApi(`/contents/${path}?ref=${BRANCH}`);
+                return { content: b64DecodeUnicode(data.content), sha: data.sha };
+            } catch (e) {
+                if (e.message.includes('Not Found')) return null;
+                throw e;
+            }
+        }
+
+        async function ghPutFile(path, content, message, sha = null) {
+            const body = {
+                message,
+                content: b64EncodeUnicode(content),
+                branch: BRANCH
+            };
+            if (sha) body.sha = sha;
+            return await ghApi(`/contents/${path}`, 'PUT', body);
+        }
+
+        async function ghDeleteFile(path, message, sha) {
+            const body = { message, sha, branch: BRANCH };
+            return await ghApi(`/contents/${path}`, 'DELETE', body);
+        }
+        // --- END GITHUB API CLIENT ---
+
 
         document.addEventListener('DOMContentLoaded', function() {
             easyMDE = new EasyMDE({
@@ -249,14 +355,29 @@
                 placeholder: "Write your blog post content here...",
                 toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "preview", "side-by-side", "fullscreen"]
             });
+            
             loadCatalogFaces();
-            loadExistingPosts();
+            
+            if (GH_PAT) {
+                loadExistingPosts();
+            } else {
+                showSettings();
+            }
         });
 
         async function loadCatalogFaces() {
             try {
-                var res = await fetch('/api/faces');
-                var faces = await res.json();
+                // Fetch manager.json directly from raw github to avoid rate limits if possible, 
+                // but since we need it reliably we can use the ghApi if PAT is present, else standard fetch.
+                let faces = [];
+                if (GH_PAT) {
+                    const data = await ghGetFile('manager.json');
+                    if(data) faces = JSON.parse(data.content);
+                } else {
+                    const res = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/manager.json`);
+                    if(res.ok) faces = await res.json();
+                }
+                
                 var select = document.getElementById('post-face-select');
                 faces.forEach(function(f) {
                     var opt = document.createElement('option');
@@ -268,11 +389,25 @@
         }
 
         async function loadExistingPosts() {
+            var draftsContainer = document.getElementById('drafts-list-container');
+            var postsContainer = document.getElementById('posts-list-container');
+            
+            if(!GH_PAT) {
+                draftsContainer.innerHTML = '<div style="color:var(--text-muted); font-size:13px; padding:10px 0;">Configure PAT to load drafts.</div>';
+                postsContainer.innerHTML = '<div style="color:var(--text-muted); font-size:13px; padding:10px 0;">Configure PAT to load posts.</div>';
+                return;
+            }
+
             try {
-                var res = await fetch('/api/posts?v=' + Date.now());
-                var posts = await res.json();
-                var draftsContainer = document.getElementById('drafts-list-container');
-                var postsContainer = document.getElementById('posts-list-container');
+                draftsContainer.innerHTML = '<div style="color:var(--text-muted); font-size:13px; padding:10px 0;">Loading...</div>';
+                postsContainer.innerHTML = '<div style="color:var(--text-muted); font-size:13px; padding:10px 0;">Loading...</div>';
+
+                const fileData = await ghGetFile('blog/posts.json');
+                let posts = [];
+                if (fileData) {
+                    posts = JSON.parse(fileData.content);
+                }
+
                 draftsContainer.innerHTML = '';
                 postsContainer.innerHTML = '';
 
@@ -298,7 +433,10 @@
                 } else {
                     published.forEach(function(p) { postsContainer.appendChild(createPostListItem(p, false)); });
                 }
-            } catch(e) { console.error('Error loading posts:', e); }
+            } catch(e) { 
+                console.error('Error loading posts:', e); 
+                alert('Failed to load posts from GitHub. Check your PAT and internet connection.');
+            }
         }
 
         function createPostListItem(p, isDraft) {
@@ -311,17 +449,19 @@
             var safeThumb = (p.thumbnail || '');
             var pinnedVal = !!p.pinned;
             var editBtn = '<button class="btn-edit" onclick="editPost(\'' + p.slug + '\',\'' + safeTitle + '\',\'' + safeExcerpt + '\',\'' + safeThumb + '\',' + isDraft + ',' + pinnedVal + ')">Edit</button>';
-            var delBtn = '<button class="btn-delete" onclick="deletePost(\'' + p.slug + '\')">' + (isDraft ? 'Discard' : 'Delete') + '</button>';
+            var delBtn = '<button class="btn-delete" onclick="deletePost(\'' + p.slug + '\', ' + isDraft + ')">' + (isDraft ? 'Discard' : 'Delete') + '</button>';
             item.innerHTML = '<div class="post-list-info"><img class="post-list-thumb" src="' + thumb + '" alt="Thumb"><div style="overflow:hidden;"><div class="post-list-title" title="' + (p.title||'') + '">' + (p.title||'') + '</div><div class="post-list-date">' + dateStr + '</div></div></div><div class="actions-wrap">' + editBtn + delBtn + '</div>';
             return item;
         }
 
         async function editPost(slug, title, excerpt, thumbnail, isDraft, pinned) {
-            showStatus('Loading article content...');
+            showStatus('Loading article content from GitHub...', 'Fetching Markdown...');
             try {
-                var res = await fetch('/api/post-content?slug=' + slug + '&v=' + Date.now());
-                if (!res.ok) throw new Error('Could not load markdown content');
-                var content = await res.text();
+                const folder = isDraft ? 'drafts' : 'posts';
+                const fileData = await ghGetFile(`blog/${folder}/${slug}.md`);
+                if (!fileData) throw new Error('Could not find markdown file on GitHub');
+                
+                var content = fileData.content;
                 hideStatus();
                 document.getElementById('original-slug').value = slug;
                 document.getElementById('post-title').value = title;
@@ -352,6 +492,7 @@
         }
 
         async function publishPost() {
+            if(!GH_PAT) { alert('GitHub PAT required.'); return; }
             var originalSlug = document.getElementById('original-slug').value;
             var title = document.getElementById('post-title').value.trim();
             var excerpt = document.getElementById('post-excerpt').value.trim();
@@ -359,45 +500,129 @@
             var pinned = document.getElementById('post-pinned').checked;
             var content = easyMDE.value().trim();
             if (!title || !excerpt || !content) { alert('Please fill out all fields before publishing!'); return; }
-            showStatus('Publishing and Deploying Cloud updates...');
+            
+            showStatus('Publishing to GitHub...', 'Saving markdown and updating posts.json');
             try {
-                var res = await fetch('/api/publish', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ title: title, excerpt: excerpt, thumbnail: thumbnail, content: content, originalSlug: originalSlug, pinned: pinned })
-                });
-                var result = await res.json();
+                // 1. Generate new slug and date
+                const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                const dateObj = new Date();
+                const dateStr = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                const timeStr = dateObj.toISOString();
+
+                // 2. Fetch current posts.json
+                const postsFileData = await ghGetFile('blog/posts.json');
+                let posts = postsFileData ? JSON.parse(postsFileData.content) : [];
+                let postsSha = postsFileData ? postsFileData.sha : null;
+
+                // 3. Handle updates/moves
+                let isUpdate = false;
+                let oldDraft = false;
+                let existingIndex = -1;
+
+                if (originalSlug) {
+                    existingIndex = posts.findIndex(p => p.slug === originalSlug);
+                    if (existingIndex !== -1) {
+                        isUpdate = true;
+                        oldDraft = posts[existingIndex].draft === true;
+                        // Remove old entry so we can insert updated one
+                        posts.splice(existingIndex, 1);
+                    }
+
+                    // If slug changed, delete old markdown
+                    if (slug !== originalSlug) {
+                        const oldFolder = oldDraft ? 'drafts' : 'posts';
+                        const oldMd = await ghGetFile(`blog/${oldFolder}/${originalSlug}.md`);
+                        if (oldMd) {
+                            await ghDeleteFile(`blog/${oldFolder}/${originalSlug}.md`, `Rename/Move post ${originalSlug}`, oldMd.sha);
+                        }
+                    } else if (oldDraft) {
+                        // If it was a draft and we are publishing it, delete the draft file
+                        const oldMd = await ghGetFile(`blog/drafts/${originalSlug}.md`);
+                        if (oldMd) {
+                            await ghDeleteFile(`blog/drafts/${originalSlug}.md`, `Publish draft ${originalSlug}`, oldMd.sha);
+                        }
+                    }
+                }
+
+                // 4. Save new/updated markdown file
+                const newMdPath = `blog/posts/${slug}.md`;
+                const existingMd = await ghGetFile(newMdPath);
+                await ghPutFile(newMdPath, content, `Publish/Update post: ${slug}`, existingMd ? existingMd.sha : null);
+
+                // 5. Update posts.json array
+                const newEntry = {
+                    slug: slug,
+                    title: title,
+                    excerpt: excerpt,
+                    date: isUpdate ? (originalSlug === slug ? (posts[existingIndex] ? posts[existingIndex].date : dateStr) : dateStr) : dateStr,
+                    thumbnail: thumbnail,
+                    timestamp: isUpdate ? (originalSlug === slug ? (posts[existingIndex] ? posts[existingIndex].timestamp : timeStr) : timeStr) : timeStr
+                };
+                if(pinned) newEntry.pinned = true;
+
+                // Insert at top
+                posts.unshift(newEntry);
+                // Sort by timestamp descending
+                posts.sort((a,b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+                // Save posts.json
+                await ghPutFile('blog/posts.json', JSON.stringify(posts, null, 2), `Update posts registry for ${slug}`, postsSha);
+
                 hideStatus();
-                if (result.success) { alert('SUCCESS! Article published live!'); cancelEditing(); loadExistingPosts(); }
-                else { alert('Error deploying updates: ' + result.error); }
-            } catch(e) { hideStatus(); alert('An error occurred: ' + e.message); }
+                alert('SUCCESS! Article published live to GitHub!'); 
+                cancelEditing(); 
+                loadExistingPosts();
+            } catch(e) { 
+                hideStatus(); 
+                console.error(e);
+                alert('An error occurred: ' + e.message); 
+            }
         }
 
-        async function deletePost(slug) {
+        async function deletePost(slug, isDraft) {
+            if(!GH_PAT) { alert('GitHub PAT required.'); return; }
             if (!confirm('Are you sure you want to delete/discard this article permanently?')) return;
-            showStatus('Deleting and Deploying Cloud updates...');
+            showStatus('Deleting from GitHub...', 'Removing markdown and registry entry...');
+            
             try {
-                var res = await fetch('/api/delete', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ slug: slug })
-                });
-                var result = await res.json();
+                // 1. Fetch posts.json
+                const postsFileData = await ghGetFile('blog/posts.json');
+                if (!postsFileData) throw new Error("posts.json not found.");
+                let posts = JSON.parse(postsFileData.content);
+                
+                // 2. Remove from posts array
+                posts = posts.filter(p => p.slug !== slug);
+                await ghPutFile('blog/posts.json', JSON.stringify(posts, null, 2), `Delete post entry ${slug}`, postsFileData.sha);
+
+                // 3. Delete Markdown file
+                const folder = isDraft ? 'drafts' : 'posts';
+                const mdPath = `blog/${folder}/${slug}.md`;
+                const mdFile = await ghGetFile(mdPath);
+                if (mdFile) {
+                    await ghDeleteFile(mdPath, `Delete post markdown ${slug}`, mdFile.sha);
+                }
+
                 hideStatus();
-                if (result.success) { alert('SUCCESS! Article deleted!'); cancelEditing(); loadExistingPosts(); }
-                else { alert('Error deploying updates: ' + result.error); }
-            } catch(e) { hideStatus(); alert('An error occurred: ' + e.message); }
+                alert('SUCCESS! Article deleted!'); 
+                cancelEditing(); 
+                loadExistingPosts();
+            } catch(e) { 
+                hideStatus(); 
+                console.error(e);
+                alert('An error occurred: ' + e.message); 
+            }
         }
 
-        function showStatus(msg) {
+        function showStatus(msg, submsg) {
             document.getElementById('status-message').textContent = msg;
+            if(submsg) document.getElementById('status-submessage').textContent = submsg;
             document.getElementById('status-overlay').style.display = 'flex';
         }
         function hideStatus() {
             document.getElementById('status-overlay').style.display = 'none';
         }
 
-        // Link Preview Generator functions
+        // Link Preview Generator functions (Modified for client-side)
         let currentLinkPreviewData = null;
 
         async function generateLinkPreview() {
@@ -422,25 +647,41 @@
             currentLinkPreviewData = null;
 
             try {
-                const res = await fetch('/api/link-preview?url=' + encodeURIComponent(url));
-                if (!res.ok) throw new Error('Failed to fetch metadata');
+                // Client-side fallback: Try to use a free CORS proxy to fetch HTML and extract basic meta tags
+                // If this fails, we will instruct the user to insert it manually.
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+                const res = await fetch(proxyUrl);
                 const data = await res.json();
                 
-                currentLinkPreviewData = data;
+                if (!data.contents) throw new Error('No content returned');
+                
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data.contents, "text/html");
+                
+                const getMeta = (prop) => {
+                    const el = doc.querySelector(`meta[property="${prop}"], meta[name="${prop}"]`);
+                    return el ? el.getAttribute('content') : '';
+                };
+
+                const title = getMeta('og:title') || getMeta('twitter:title') || doc.title || 'External Link';
+                const description = getMeta('og:description') || getMeta('twitter:description') || getMeta('description') || 'View the shared link for more details.';
+                const image = getMeta('og:image') || getMeta('twitter:image') || '';
+
+                currentLinkPreviewData = { title, description, image, url };
                 
                 // Show elements
-                document.getElementById('lp-title').textContent = data.title || 'Visit Website';
-                document.getElementById('lp-desc').textContent = data.description || 'View the shared link for more details.';
+                document.getElementById('lp-title').textContent = title;
+                document.getElementById('lp-desc').textContent = description;
                 
                 let domainName = 'LINK';
                 try {
-                    domainName = new URL(data.url).hostname.replace('www.', '');
+                    domainName = new URL(url).hostname.replace('www.', '');
                 } catch(e) {}
                 document.getElementById('lp-domain').textContent = domainName;
 
                 const imgEl = document.getElementById('lp-image');
-                if (data.image) {
-                    imgEl.src = data.image;
+                if (image) {
+                    imgEl.src = image;
                     imgEl.style.display = 'block';
                 } else {
                     imgEl.style.display = 'none';
@@ -450,8 +691,9 @@
                 previewBox.style.display = 'block';
                 insertBtn.style.display = 'block';
             } catch(e) {
+                console.error(e);
                 loader.style.display = 'none';
-                alert('Could not retrieve preview data from this website. You can still paste standard links directly.');
+                alert('Could not retrieve preview data automatically due to browser CORS limits. You can still paste standard markdown links manually.');
             }
         }
 
@@ -463,7 +705,6 @@
             const image = currentLinkPreviewData.image || '';
             const url = currentLinkPreviewData.url;
 
-            // Generate raw HTML Card string that we will parse dynamically inside post.html
             const cardHtml = `
 <div class="link-preview-card" data-url="${url}" data-title="${title}" data-desc="${desc}" data-image="${image}">
   <a href="${url}" target="_blank" class="lp-card-inner">
@@ -477,11 +718,9 @@
 </div>
 \n`;
 
-            // Insert into EasyMDE
             const pos = easyMDE.codemirror.getCursor();
             easyMDE.codemirror.replaceRange(cardHtml, pos);
             
-            // Clean up
             document.getElementById('preview-url-input').value = '';
             document.getElementById('link-preview-box').style.display = 'none';
             document.getElementById('lp-insert-btn').style.display = 'none';
