@@ -733,33 +733,64 @@
                 });
 
                 container.innerHTML = '';
-                sortedPosts.forEach(post => {
-                    // Create optimized thumbnail URL
-                    const thumbImg = post.thumbnail 
-                        ? `https://wsrv.nl/?url=${encodeURIComponent(post.thumbnail)}&w=400&h=280&fit=cover&output=webp&q=80`
-                        : 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp';
+                
+                const ITEMS_PER_PAGE = 6;
+                let currentIndex = 0;
 
-                    const pinnedBadge = post.pinned ? '<span style="background:rgba(241,179,28,0.2); color:var(--primary); font-size:10px; font-weight:800; padding:3px 8px; border-radius:12px; margin-right:8px; border:1px solid rgba(241,179,28,0.5); display:inline-block;">📌 PINNED</span>' : '';
+                const loadMoreBtn = document.createElement('button');
+                loadMoreBtn.className = 'btn';
+                loadMoreBtn.style.cssText = 'margin: 30px auto; display: block; max-width: 200px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-primary); border-radius: 20px; transition: 0.2s; cursor: pointer;';
+                loadMoreBtn.textContent = 'Load More Articles';
+                loadMoreBtn.onmouseover = () => loadMoreBtn.style.background = 'rgba(255,255,255,0.1)';
+                loadMoreBtn.onmouseout = () => loadMoreBtn.style.background = 'rgba(255,255,255,0.05)';
+                
+                function renderNextBatch() {
+                    const nextBatch = sortedPosts.slice(currentIndex, currentIndex + ITEMS_PER_PAGE);
+                    nextBatch.forEach(post => {
+                        const thumbImg = post.thumbnail 
+                            ? `https://wsrv.nl/?url=${encodeURIComponent(post.thumbnail)}&w=400&h=280&fit=cover&output=webp&q=80`
+                            : 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp';
 
-                    const card = document.createElement('a');
-                    card.className = 'article-card';
-                    card.href = `blog/post.html?id=${post.slug}`;
-                    card.innerHTML = `
-                        <div class="article-thumb-container">
-                            <img class="article-thumb" src="${thumbImg}" alt="${post.title}" loading="lazy">
-                        </div>
-                        <div class="article-details">
-                            <div class="article-meta">
-                                ${pinnedBadge}<span>${post.date}</span>
-                                <span>•</span>
-                                <span>${post.readTime || '3 min'} Read</span>
+                        const pinnedBadge = post.pinned ? '<span style="background:rgba(241,179,28,0.2); color:var(--primary); font-size:10px; font-weight:800; padding:3px 8px; border-radius:12px; margin-right:8px; border:1px solid rgba(241,179,28,0.5); display:inline-block;">📌 PINNED</span>' : '';
+
+                        const card = document.createElement('a');
+                        card.className = 'article-card';
+                        card.href = `blog/post.html?id=${post.slug}`;
+                        card.innerHTML = `
+                            <div class="article-thumb-container">
+                                <img class="article-thumb" src="${thumbImg}" alt="${post.title}" loading="lazy">
                             </div>
-                            <h2 class="article-title">${post.title}</h2>
-                            <p class="article-excerpt">${post.excerpt || ''}</p>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
+                            <div class="article-details">
+                                <div class="article-meta">
+                                    ${pinnedBadge}<span>${post.date}</span>
+                                    <span>•</span>
+                                    <span>${post.readTime || '3 min'} Read</span>
+                                </div>
+                                <h2 class="article-title">${post.title}</h2>
+                                <p class="article-excerpt">${post.excerpt || ''}</p>
+                            </div>
+                        `;
+                        
+                        if (loadMoreBtn.parentNode) {
+                            container.insertBefore(card, loadMoreBtn);
+                        } else {
+                            container.appendChild(card);
+                        }
+                    });
+                    
+                    currentIndex += ITEMS_PER_PAGE;
+                    
+                    if (currentIndex >= sortedPosts.length) {
+                        if (loadMoreBtn.parentNode) {
+                            loadMoreBtn.parentNode.removeChild(loadMoreBtn);
+                        }
+                    } else if (!loadMoreBtn.parentNode) {
+                        container.appendChild(loadMoreBtn);
+                    }
+                }
+
+                loadMoreBtn.addEventListener('click', renderNextBatch);
+                renderNextBatch();
 
             } catch (err) {
                 console.warn('Error loading blog posts:', err);
