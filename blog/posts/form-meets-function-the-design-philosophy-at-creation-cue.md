@@ -15,3 +15,15 @@ For the watch faces that include heart rate tracking, I’ve added visual alerts
 This is a unique feature I love adding. If a Creation Cue face features a moon phase complication, it doesn't just show you a static image of the lunar cycle. It actively counts down the exact days until the next full moon.
 
 A smartwatch should give you the premium look you want, combined with the smart alerts you actually need.
+
+<!-- WATCH_FACE_LINK_START -->
+<a href="market://details?id=com.creation.cue171watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue171" class="lp-card-inner" target="_blank" rel="noopener noreferrer">
+    <div class="link-preview-card">
+        <div class="lp-card-img" style="background-image: url('https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue171.png')"></div>
+        <div class="lp-card-info">
+            <div class="lp-card-title">CUE171</div>
+            <div class="lp-card-desc">Check out this watch face on Google Play</div>
+        </div>
+    </div>
+</a>
+<!-- WATCH_FACE_LINK_END -->
