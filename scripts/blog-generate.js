@@ -223,13 +223,13 @@ Review the following recent Wear OS news headlines and forum topics:
 
 ${contextHeadlines}
 
-Write an engaging blog article (around 300-400 words) that discusses 1-2 major announcements, trends, or community issues from the topics above, analyzing what they mean for smartwatch customization.
+Write an engaging blog article (around 200-300 words) that discusses 1-2 major announcements, trends, or community issues from the topics above, analyzing what they mean for smartwatch customization.
 
 Tone and Style Guidelines (CRITICAL for human writing style):
-1. Write in a conversational, clean, and direct tone (as a passionate designer talking to other watch users).
-2. Use simple, common vocabulary. Avoid corporate hype, jargon, and empty buzzwords.
+1. Write with LESS WORDS and MORE MEANING. Be extremely concise. Get straight to the point without fluffy introductions or padding.
+2. Use very simple, everyday, common vocabulary. Talk like a regular person. Avoid corporate hype, jargon, and empty buzzwords entirely.
 3. STRICTLY BAN these overused AI words: "delve", "testament", "furthermore", "moreover", "in conclusion", "demystify", "revolutionize", "tapestry", "landscape", "beacon", "game-changer".
-4. Vary sentence length dynamically (mix short, punchy sentences with slightly longer ones) to mimic human flow.
+4. Keep sentences short and punchy. Make it highly readable for mobile users.
 5. Write in first-person plural ("We at CreationCue...", "In our designs...") to show expert experience.
 
 Cover Image Selection:
