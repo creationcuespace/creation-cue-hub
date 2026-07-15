@@ -1761,7 +1761,7 @@
     </div>
     <div class="header-btns">
       <!-- Version badge -->
-      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.49</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.50</span>
       <!-- Firebase connection indicator dot & text -->
       <div id="header-sync-badge" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; flex-shrink: 0;">
         <span id="header-sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
@@ -2141,7 +2141,7 @@
         </div>
 
         <!-- Day View Slots Grid / List -->
-        <div id="day-view-slots-list" style="display: flex; flex-direction: column; gap: 16px;">
+        <div id="day-view-slots-list" style="display: flex; flex-direction: column; gap: 0;">
           <!-- Large day tasks slots will render here -->
         </div>
 
@@ -4954,9 +4954,32 @@
 
       // Sort grouped tasks by priority: High -> Medium -> Low -> Fallback
       var priorityWeights = { 'high': 3, 'medium': 2, 'low': 1, 'fallback': 0 };
+      
+      // Extract face IDs to group related tasks
+      grouped.forEach(g => {
+        var t = (g.title || "").toLowerCase();
+        for (var i = 0; i < appState.watchFacesCatalog.length; i++) {
+          var id = (appState.watchFacesCatalog[i].id || "").toLowerCase();
+          var fTitle = (appState.watchFacesCatalog[i].title || "").toLowerCase();
+          if (id && t.includes(id)) { g.extractedFaceId = id; break; }
+          if (fTitle && t.includes(fTitle)) { g.extractedFaceId = id; break; }
+        }
+        if (!g.extractedFaceId) {
+          var match = t.match(/(crc|cue)\d{3}/);
+          if (match) g.extractedFaceId = match[0];
+        }
+      });
+      
       grouped.sort((a, b) => {
         if (a.isHoliday) return -1;
         if (b.isHoliday) return 1;
+        
+        // 1. Group by Watch Face ID first to visually cluster them
+        if (a.extractedFaceId && b.extractedFaceId && a.extractedFaceId !== b.extractedFaceId) {
+          return a.extractedFaceId.localeCompare(b.extractedFaceId);
+        }
+        if (a.extractedFaceId && !b.extractedFaceId) return -1;
+        if (!a.extractedFaceId && b.extractedFaceId) return 1;
         
         var weightA = a.isFallback ? 0 : (priorityWeights[a.priority || 'medium'] || 1);
         var weightB = b.isFallback ? 0 : (priorityWeights[b.priority || 'medium'] || 1);
@@ -4991,6 +5014,7 @@
             var item = document.createElement('div');
             item.className = 'day-view-slot-card holiday';
             item.style.justifyContent = "center";
+            item.style.marginBottom = "16px";
             item.innerHTML = `
               <div style="font-size: 14px; font-weight: 600; color: var(--text-muted); font-style: italic; text-align: center; padding: 8px 0;">
                 🌴 Off-Day: No tasks scheduled
@@ -5002,6 +5026,25 @@
 
           var item = document.createElement('div');
           item.className = 'day-view-slot-card';
+          
+          // Detect if it should visually merge with adjacent identical face IDs
+          var isConnectedTop = (index > 0 && group.extractedFaceId && grouped[index-1] && grouped[index-1].extractedFaceId === group.extractedFaceId);
+          var isConnectedBottom = (index < grouped.length - 1 && group.extractedFaceId && grouped[index+1] && grouped[index+1].extractedFaceId === group.extractedFaceId);
+          
+          if (isConnectedTop) {
+            item.style.borderTopLeftRadius = '0';
+            item.style.borderTopRightRadius = '0';
+            item.style.borderTop = 'none';
+          }
+          if (isConnectedBottom) {
+            item.style.borderBottomLeftRadius = '0';
+            item.style.borderBottomRightRadius = '0';
+            item.style.marginBottom = '0';
+            item.style.borderBottom = '1px dashed rgba(255,255,255,0.08)';
+          } else {
+            item.style.marginBottom = '16px';
+          }
+          
           if (group.completed) item.classList.add('completed');
           if (group.isRolledOver) item.classList.add('rolled-over');
           
