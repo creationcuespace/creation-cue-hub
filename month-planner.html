@@ -1761,7 +1761,7 @@
     </div>
     <div class="header-btns">
       <!-- Version badge -->
-      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.47</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.48</span>
       <!-- Firebase connection indicator dot & text -->
       <div id="header-sync-badge" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; flex-shrink: 0;">
         <span id="header-sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
@@ -4861,7 +4861,6 @@
       if (!daySlots || !Array.isArray(daySlots)) return [];
       
       var groups = [];
-      var currentGroup = null;
       
       for (var s = 0; s < daySlots.length; s++) {
         var slot = daySlots[s];
@@ -4869,41 +4868,43 @@
           slot = { title: "Unassigned Maintenance", completed: false, isFallback: true, taskId: null };
         }
         
-        // Group slots if same holiday status, taskId, title, completed state, and fallback status
-        var isMatch = currentGroup && (
-          (slot.isHoliday && currentGroup.isHoliday) ||
-          (!slot.isHoliday && !currentGroup.isHoliday && 
-           slot.taskId === currentGroup.taskId && 
-           slot.title === currentGroup.title && 
-           slot.completed === currentGroup.completed && 
-           slot.isFallback === currentGroup.isFallback)
-        );
+        var cleanTitle = slot.title ? slot.title.replace(/^Rolled Over:\s*/, '') : "";
+        var isRolled = slot.isRolledOver || false;
         
-        if (isMatch) {
-          currentGroup.slotIndices.push(s);
-          currentGroup.hours++;
-        } else {
-          if (currentGroup) {
-            groups.push(currentGroup);
+        var existingGroup = groups.find(g => {
+          if (slot.isHoliday && g.isHoliday) return true;
+          if (!slot.isHoliday && !g.isHoliday) {
+            // Merge if they are the exact same task (ignoring Rolled Over prefix)
+            // AND same completion state
+            var titleMatch = (cleanTitle === g.cleanTitle);
+            var idMatch = (slot.taskId && g.taskId) ? (slot.taskId === g.taskId) : true;
+            return titleMatch && idMatch && slot.completed === g.completed && slot.isFallback === g.isFallback;
           }
-          currentGroup = {
+          return false;
+        });
+        
+        if (existingGroup) {
+          existingGroup.slotIndices.push(s);
+          existingGroup.hours++;
+          // If we merge a rolled-over block and a normal block, display it as rolled-over to highlight the urgency
+          existingGroup.isRolledOver = existingGroup.isRolledOver || isRolled;
+        } else {
+          groups.push({
             taskId: slot.taskId,
-            title: slot.title,
+            title: cleanTitle, // Clean title for display
+            cleanTitle: cleanTitle, // For matching future slots
             priority: slot.priority || 'low',
             isFallback: slot.isFallback || false,
             completed: slot.completed || false,
             isHoliday: slot.isHoliday || false,
-            isRolledOver: slot.isRolledOver || false,
+            isRolledOver: isRolled,
             isOverridden: slot.isOverridden || false,
             typeLabel: slot.typeLabel || null,
             faceId: slot.faceId || null,
             slotIndices: [s],
             hours: 1
-          };
+          });
         }
-      }
-      if (currentGroup) {
-        groups.push(currentGroup);
       }
       return groups;
     }
