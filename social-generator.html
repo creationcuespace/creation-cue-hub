@@ -1774,6 +1774,17 @@
                                     <button class="header-btn primary-btn" onclick="copyCommentText('instagram')">Copy Comment</button>
                                 </div>
                             </div>
+
+                            <!-- DM Trigger Comment Result Box -->
+                            <div style="margin-top: 16px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
+                                <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">DM Trigger Comment</label>
+                                <div class="result-box-wrapper">
+                                    <textarea class="result-box comment-textarea" id="res-dm-comment-instagram"></textarea>
+                                </div>
+                                <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
+                                    <button class="header-btn primary-btn" onclick="copyDmCommentText()">Copy DM Comment</button>
+                                </div>
+                            </div>
                         </div>
                         
                         <!-- Instagram Mockup -->
@@ -2080,6 +2091,7 @@
 
         let catalogFaces = [];
         let scrapedOgImage = '';
+        let currentFaceId = '';
 
         function getPackageNameFromUrl(url) {
             if (!url) return '';
@@ -2176,6 +2188,7 @@
                 if (urlFaceId && catalogFaces.length > 0) {
                     const match = catalogFaces.find(f => f.id === urlFaceId);
                     if (match) {
+                        currentFaceId = match.id;
                         const webUrl = getWebUrl(match.play_store_url);
                         document.getElementById('watch-link').value = webUrl;
                         document.getElementById('watch-name').value = match.title;
@@ -2227,6 +2240,7 @@
                 `;
                 
                 item.addEventListener('click', () => {
+                    currentFaceId = f.id;
                     document.getElementById('watch-link').value = webUrl;
                     document.getElementById('watch-name').value = f.title;
                     document.getElementById('play-store-desc').value = f.description_en || '';
@@ -2387,11 +2401,13 @@
             document.getElementById('tab-btn-' + platform).classList.add('active');
             document.getElementById('content-' + platform).classList.add('active');
             currentSocialTab = platform;
-            
             // Auto-expand visible textareas on tab switch
             setTimeout(() => {
                 autoExpand(document.getElementById('res-text-' + platform));
                 autoExpand(document.getElementById('res-comment-' + platform));
+                if (platform === 'instagram') {
+                    autoExpand(document.getElementById('res-dm-comment-instagram'));
+                }
             }, 0);
         }
 
@@ -2414,7 +2430,6 @@
                 alert("Failed to copy. Please manually select and copy text.");
             });
         }
-
         function copyCommentText(platform) {
             const commentBox = document.getElementById('res-comment-' + platform);
             if (!commentBox) return;
@@ -2427,6 +2442,17 @@
             });
         }
 
+        function copyDmCommentText() {
+            const commentBox = document.getElementById('res-dm-comment-instagram');
+            if (!commentBox) return;
+            const text = commentBox.value;
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("DM Comment copied!");
+            }).catch(() => {
+                alert("Failed to copy. Please manually select and copy text.");
+            });
+        }
         function updateCommentsUI() {
             const nameInput = document.getElementById('watch-name');
             const linkInput = document.getElementById('watch-link');
@@ -2458,6 +2484,22 @@
             if (commentInstagram) commentInstagram.value = bioComment;
             if (commentShorts) commentShorts.value = linkComment;
             if (commentReels) commentReels.value = linkComment;
+
+            // Update DM comment for Instagram
+            const dmCommentInstagram = document.getElementById('res-dm-comment-instagram');
+            if (dmCommentInstagram) {
+                let faceCode = 'CUE';
+                const nameVal = nameInput.value.trim();
+                const matchCue = nameVal.match(/(cue\s*\d+|cue\s*[a-z0-9_]+)/i);
+                if (matchCue) {
+                    faceCode = matchCue[1].toUpperCase().replace(/\s+/g, '');
+                } else if (currentFaceId) {
+                    faceCode = currentFaceId.toUpperCase().replace(/\s+/g, '');
+                } else if (nameVal) {
+                    faceCode = nameVal.split(' ')[0].toUpperCase();
+                }
+                dmCommentInstagram.value = `Comment "${faceCode}" to get the direct link.`;
+            }
         }
 
         function copyShortsTitle() {
@@ -2748,11 +2790,12 @@
 
             // Update comments
             updateCommentsUI();
-
             // Auto-expand visible textareas
             autoExpand(document.getElementById('res-text-' + currentSocialTab));
             autoExpand(document.getElementById('res-comment-' + currentSocialTab));
-        }
+            if (currentSocialTab === 'instagram') {
+                autoExpand(document.getElementById('res-dm-comment-instagram'));
+            }        }
     </script>
 
   <script>
