@@ -433,11 +433,100 @@
       transform: translateY(1px);
     }
 
+    .logo-title-text {
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    .logo-sub-text {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--yellow);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+
     @media (max-width: 480px) {
+      body {
+        padding: 12px;
+      }
+      
+      .header-logo {
+        margin-bottom: 16px;
+      }
+      
+      .logo-title-text {
+        font-size: 22px;
+      }
+      
+      .logo-sub-text {
+        font-size: 9px;
+        letter-spacing: 1.5px;
+      }
+      
+      .card {
+        padding: 20px 16px;
+        gap: 16px;
+      }
+      
+      .watchface-preview {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .wf-name {
+        font-size: 18px;
+      }
+      
+      .wf-desc {
+        font-size: 12px;
+      }
+      
+      .promo-status-pill {
+        padding: 8px 16px;
+        font-size: 12px;
+      }
+      
+      .btn {
+        font-size: 18px;
+        padding: 10px 12px;
+      }
+      
       .code-box {
-        font-size: 16px;
+        font-size: 18px;
         padding: 12px 8px;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
+      }
+      
+      .install-guide-card {
+        padding: 10px;
+      }
+      
+      .install-guide-card summary {
+        font-size: 12px;
+      }
+      
+      .install-step {
+        font-size: 11px;
+      }
+      
+      .review-callout {
+        padding: 16px 12px;
+        margin-top: 12px;
+        gap: 8px;
+      }
+      
+      .review-btn-accent {
+        font-size: 18px;
+        padding: 10px 12px;
+      }
+      
+      #claim-countdown-block {
+        padding: 16px 12px;
+        gap: 10px;
       }
     }
 
@@ -449,7 +538,7 @@
       padding: 12px;
       text-align: left;
       margin-top: 4px;
-      transition: border-color 0.2s;
+      transition: all 0.2s ease;
     }
 
     .install-guide-card summary {
@@ -496,8 +585,8 @@
   <a href="index.html" class="header-logo" title="Go to CreationCue Hub">
     <img src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" alt="CreationCue Logo" style="height: 38px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));">
     <div class="logo-text" style="display: flex; flex-direction: column; line-height: 0.9; align-items: flex-start; margin-top: -2px;">
-      <span style="font-size: 26px; font-weight: 700; color: #fff; letter-spacing: 1px;">Creation<span style="color: var(--yellow);">CUE</span></span>
-      <span style="font-size: 11px; font-weight: 600; color: var(--yellow); letter-spacing: 2px; text-transform: uppercase; margin-top: 1px;">Promotions</span>
+      <span class="logo-title-text">Creation<span style="color: var(--yellow);">CUE</span></span>
+      <span class="logo-sub-text">Promotions</span>
     </div>
   </a>
 
