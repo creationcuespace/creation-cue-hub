@@ -1,6 +1,3 @@
-Check out the latest Wear OS watch face cue178 - 3D-style design for the time, weather, and battery display.
-
-
-
-
-https://play.google.com/store/apps/details?id=com.creation.cue178watchface
+<p>Check out the latest Wear OS watch face, Cue178, featuring a 3D-style design for the time, weather, and battery display. It was created with a clean, easy-to-read interface in mind, but as always, style remains the top priority.</p><p>
+</p><p><a href="https://play.google.com/store/apps/details?id=com.creation.cue178watchface">https://play.google.com/store/apps/details?id=com.creation.cue178watchface</a></p><p>
+</p>
