@@ -213,7 +213,10 @@
                 <input type="text" id="post-excerpt" placeholder="A short 1-2 sentence preview for listings.">
             </div>
             <div class="form-group">
-                <label>3. Select Watch Face to Feature</label>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <label style="margin-bottom: 0;">3. Select Watch Face to Feature (Cover Image)</label>
+                    <a href="javascript:void(0)" onclick="setCustomCoverImage()" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 4px 10px; border-radius: 4px; color: #ccc; font-size: 11px; text-decoration: none; transition: 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'; this.style.color='var(--primary)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.color='#ccc'; this.style.borderColor='var(--border)'">🖼️ Paste Custom URL</a>
+                </div>
                 <div class="custom-select-wrapper" style="position: relative;" id="face-dropdown-wrapper">
                     <div id="custom-select-display" onclick="document.getElementById('custom-select-dropdown').style.display = document.getElementById('custom-select-dropdown').style.display === 'none' ? 'block' : 'none'" style="padding: 12px; background: rgba(26,26,26,0.9); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: var(--text-primary);">
                         <div style="display:flex; align-items:center; gap:10px;">
@@ -482,6 +485,13 @@
                     opt.style.display = 'none';
                 }
             });
+        }
+
+        function setCustomCoverImage() {
+            const url = prompt('Please paste the image URL for the cover (e.g. from your GitHub images folder):');
+            if (url) {
+                selectFaceOption(url, 'Custom Cover Image');
+            }
         }
 
         function selectFaceOption(value, text, faceObj = null, isSyncing = false) {
