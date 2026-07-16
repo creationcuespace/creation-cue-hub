@@ -1,4 +1,4 @@
-<p><img src="blog/images/ChatGPT Image Jul 16, 2026, 07_48_40 PM (1).png">Great weather complications are available for your watch face via the free app 'Simple Weather'
+<p>Great weather complications are available for your watch face via the free app 'Simple Weather'
 
 https://play.google.com/store/apps/details?id=com.thewizrd.simpleweather
 
