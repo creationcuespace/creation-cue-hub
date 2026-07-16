@@ -356,15 +356,12 @@
             gap: 12px;
             padding-top: 4px;
             padding-bottom: 8px;
-            scrollbar-width: thin;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
         }
 
         .related-slider-container::-webkit-scrollbar {
-            height: 6px;
-        }
-        .related-slider-container::-webkit-scrollbar-thumb {
-            background: var(--surface-variant);
-            border-radius: 3px;
+            display: none; /* Chrome, Safari and Opera */
         }
 
         .related-card {
