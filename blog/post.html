@@ -950,6 +950,7 @@
             }
 
             function showAdminPanel() {
+                window.isAdminView = true;
                 const adminPanel = document.getElementById('admin-panel');
                 if (adminPanel) adminPanel.style.display = 'block';
                 const adminBar = document.getElementById('admin-bar');
@@ -1029,6 +1030,9 @@
 
                 // Render dynamic details
                 titleEl.textContent = title;
+                if (window.isAdminView) {
+                    titleEl.innerHTML += ` <a href="../admin.html?edit=${postId}" title="Edit this article" style="font-size: 20px; color: var(--primary); text-decoration: none; margin-left: 12px; display: inline-block; vertical-align: middle; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">✏️</a>`;
+                }
                 document.title = `${title} | CreationCue™ Blog`;
                 
                 // Set OG Tags dynamically for social crawlers
@@ -1056,6 +1060,7 @@
                 }
 
                 // Parse the Markdown using Marked
+                marked.setOptions({ breaks: true });
                 contentEl.innerHTML = marked.parse(markdownText);
 
                 // Auto-unfurl any raw URLs on their own line into static styled cards

@@ -17,7 +17,8 @@
       "**/*.ps1",
       "**/*.sh",
       "tracker/**",
-      "docs/**"
+      "docs/**",
+      "blog/images/**"
     ],
     "maxReleases": 5
   }

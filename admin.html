@@ -6,8 +6,9 @@
     <title>Blog</title>
     <link rel="icon" href="/images/favicon-admin.png" type="image/png">
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -110,12 +111,12 @@
             transition: border-color 0.2s;
         }
         input:focus, textarea:focus, select:focus { outline: none; border-color: var(--primary); }
-        .editor-toolbar { background: #2b3a4a !important; border-color: var(--border) !important; border-radius: 8px 8px 0 0 !important; }
-        .editor-toolbar button { color: #fff !important; }
-        .editor-toolbar button.active, .editor-toolbar button:hover { background: var(--surface) !important; }
-        .CodeMirror { background: rgba(0,0,0,0.3) !important; color: #fff !important; border-color: var(--border) !important; border-radius: 0 0 8px 8px !important; max-width: 100%; }
-        .CodeMirror-scroll { overflow-x: hidden !important; }
-        .CodeMirror-cursor { border-left: 2px solid #ffffff !important; }
+        .ql-toolbar { background: #2b3a4a !important; border-color: var(--border) !important; border-radius: 8px 8px 0 0 !important; }
+        .ql-container { background: rgba(0,0,0,0.3) !important; border-color: var(--border) !important; border-radius: 0 0 8px 8px !important; color: #fff !important; font-family: inherit !important; font-size: 15px !important; min-height: 300px; }
+        .ql-stroke { stroke: #ccc !important; }
+        .ql-fill { fill: #ccc !important; }
+        .ql-picker { color: #ccc !important; }
+        .ql-picker-options { background: var(--surface) !important; border-color: var(--border) !important; }
         .btn {
             background: var(--primary);
             color: #000;
@@ -253,9 +254,12 @@
                 </div>
                 <button id="lp-insert-btn" class="btn" style="width:100%; font-size:12px; padding:6px; display:none;" onclick="insertLinkCardMarkdown()">Insert Card Into Article</button>
             </div>
-            <div class="form-group">
-                <label>4. Article Content (Rich Formatting Toolbar)</label>
-                <textarea id="post-editor"></textarea>
+            <div class="form-group" style="color: black;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <label style="color: var(--text-muted); margin-bottom: 0;">4. Article Content (Rich Formatting Toolbar)</label>
+                    <a href="https://github.com/creationcuespace/creation-cue-hub/tree/main/blog/images" target="_blank" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 4px 10px; border-radius: 4px; color: #ccc; font-size: 11px; text-decoration: none; transition: 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'; this.style.color='var(--primary)'; this.style.borderColor='var(--primary)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.color='#ccc'; this.style.borderColor='var(--border)'">📁 Open Image Folder</a>
+                </div>
+                <div id="post-editor" style="background: rgba(0,0,0,0.3); color: #fff; min-height: 400px;"></div>
             </div>
             <div class="form-group" style="display:flex; align-items:center; gap:8px; margin-bottom:15px;">
                 <input type="checkbox" id="post-pinned" style="width:auto; margin:0; cursor:pointer;">
@@ -314,7 +318,7 @@
     </div>
 
     <script>
-        let easyMDE;
+        let quillEditor;
 
         // --- GITHUB API CLIENT ---
         const REPO_OWNER = 'creationcuespace';
@@ -401,13 +405,30 @@
 
 
         document.addEventListener('DOMContentLoaded', function() {
-            easyMDE = new EasyMDE({
-                element: document.getElementById('post-editor'),
-                spellChecker: false,
-                autosave: { enabled: false },
-                lineWrapping: true,
-                placeholder: "Write your blog post content here...",
-                toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "preview", "side-by-side", "fullscreen"]
+            quillEditor = new Quill('#post-editor', {
+                theme: 'snow',
+                placeholder: 'Write your blog post content here...',
+                modules: {
+                    toolbar: {
+                        container: [
+                            [{ 'header': [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            ['blockquote', 'code-block'],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            ['link', 'image', 'video'],
+                            ['clean']
+                        ],
+                        handlers: {
+                            image: function() {
+                                const url = prompt('Please paste the image URL (e.g. your raw GitHub link):');
+                                if (url) {
+                                    const range = this.quill.getSelection();
+                                    this.quill.insertEmbed(range ? range.index : 0, 'image', url);
+                                }
+                            }
+                        }
+                    }
+                }
             });
             
             loadCatalogFaces();
@@ -474,10 +495,10 @@
             }
             document.getElementById('custom-select-dropdown').style.display = 'none';
 
-            if (!isSyncing && typeof easyMDE !== 'undefined' && easyMDE) {
-                let md = easyMDE.value() || '';
-                const regex = /<!-- WATCH_FACE_LINK_START -->[\s\S]*?<!-- WATCH_FACE_LINK_END -->\n?/g;
-                md = md.replace(regex, '').trim();
+            if (!isSyncing && typeof quillEditor !== 'undefined' && quillEditor) {
+                let html = quillEditor.root.innerHTML || '';
+                const regex = /<!-- WATCH_FACE_LINK_START -->[\s\S]*?<!-- WATCH_FACE_LINK_END -->/g;
+                html = html.replace(regex, '').trim();
 
                 if (value && faceObj) {
                     if (faceObj.play_store_url) {
@@ -485,15 +506,13 @@
                         if (webUrl.startsWith('market://details')) {
                             webUrl = webUrl.replace('market://details', 'https://play.google.com/store/apps/details');
                         }
-                        const snippet = `\n\n<!-- WATCH_FACE_LINK_START -->\n<a href="${webUrl}" class="lp-card-inner" target="_blank" rel="noopener noreferrer">\n    <div class="link-preview-card">\n        <div class="lp-card-img" style="background-image: url('${faceObj.image_url}')"></div>\n        <div class="lp-card-info">\n            <div class="lp-card-title">${faceObj.title} Watch Face</div>\n            <div class="lp-card-desc">Check out this watch face on Google Play</div>\n        </div>\n    </div>\n</a>\n<!-- WATCH_FACE_LINK_END -->\n`;
-                        md += snippet;
+                        const snippet = `<!-- WATCH_FACE_LINK_START --><p><br></p><a href="${webUrl}" class="lp-card-inner" target="_blank" rel="noopener noreferrer" style="text-decoration:none;"><div class="link-preview-card" style="margin: 24px 0; background: #1f2833; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.25); display: flex; color: inherit;"><div class="lp-card-img" style="width: 150px; min-height: 110px; background-size: cover; background-position: center; flex-shrink: 0; border-right: 1px solid rgba(255,255,255,0.08); background-image: url('${faceObj.image_url}')"></div><div class="lp-card-info" style="padding: 16px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; flex: 1;"><div class="lp-card-title" style="font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${faceObj.title} Watch Face</div><div class="lp-card-desc" style="font-size: 13px; color: #8b9bb4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">Check out this watch face on Google Play</div></div></div></a><p><br></p><!-- WATCH_FACE_LINK_END -->`;
+                        html += snippet;
                     }
                 }
-                const pos = easyMDE.codemirror.getCursor();
-                easyMDE.value(md);
-                if (pos) easyMDE.codemirror.setCursor(pos);
+                quillEditor.root.innerHTML = html;
             } else if (!isSyncing) {
-                alert('Debug: easyMDE is not defined!');
+                alert('Debug: Editor is not defined!');
             }
         }
 
@@ -575,6 +594,17 @@
                 } else {
                     published.forEach(function(p) { postsContainer.appendChild(createPostListItem(p, false)); });
                 }
+
+                // Auto-edit from URL params if requested
+                const urlParams = new URLSearchParams(window.location.search);
+                const editSlug = urlParams.get('edit');
+                if (editSlug && !window.hasAutoEdited) {
+                    window.hasAutoEdited = true;
+                    const post = posts.find(p => p.slug === editSlug);
+                    if (post) {
+                        editPost(post.slug, post.title, post.excerpt, post.thumbnail, post.draft === true, !!post.pinned);
+                    }
+                }
             } catch(e) { 
                 console.error('Error loading posts:', e); 
                 alert('Failed to load posts from GitHub. Check your PAT and internet connection.');
@@ -618,7 +648,14 @@
                 document.getElementById('post-excerpt').value = excerpt;
                 syncFaceDropdown(thumbnail);
                 document.getElementById('post-pinned').checked = !!pinned;
-                easyMDE.value(content);
+                
+                marked.setOptions({ breaks: true });
+                const isHtml = /<[a-z][\s\S]*>/i.test(content) && !content.includes('**');
+                if (isHtml) {
+                    quillEditor.root.innerHTML = content;
+                } else {
+                    quillEditor.root.innerHTML = marked.parse(content);
+                }
                 document.getElementById('editor-panel-title').innerHTML = isDraft
                     ? 'Review AI Draft: <span class="badge-draft">Draft</span>'
                     : 'Edit Published Article';
@@ -636,7 +673,7 @@
             document.getElementById('post-excerpt').value = '';
             syncFaceDropdown('');
             document.getElementById('post-pinned').checked = false;
-            easyMDE.value('');
+            quillEditor.root.innerHTML = '';
             document.getElementById('editor-panel-title').textContent = 'Create Custom Article';
             document.getElementById('btn-cancel-edit').style.display = 'none';
         }
@@ -648,7 +685,7 @@
             var excerpt = document.getElementById('post-excerpt').value.trim();
             var thumbnail = document.getElementById('post-face-select').value;
             var pinned = document.getElementById('post-pinned').checked;
-            var content = easyMDE.value().trim();
+            var content = quillEditor.root.innerHTML.trim();
             if (!title || !excerpt || !content) { alert('Please fill out all fields before publishing!'); return; }
             
             showStatus('Publishing to GitHub...', 'Saving markdown and updating posts.json');
@@ -862,8 +899,8 @@
 </div>
 \n`;
 
-            const pos = easyMDE.codemirror.getCursor();
-            easyMDE.codemirror.replaceRange(cardHtml, pos);
+            const range = quillEditor.getSelection(true);
+            quillEditor.clipboard.dangerouslyPasteHTML(range.index, cardHtml);
             
             document.getElementById('preview-url-input').value = '';
             document.getElementById('link-preview-box').style.display = 'none';
