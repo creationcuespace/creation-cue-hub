@@ -4,6 +4,4 @@
 </p><p><br></p><p>
 </p><h2>What it means for CreationCue Watch Faces</h2><p>
 </p><p>We'll be adding support for these new features in upcoming updates to improve our watch faces and overall experience.</p><p>
-</p><h3>News References</h3><p>
-</p><p><br></p><p>
 </p>
