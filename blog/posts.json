@@ -1,18 +1,18 @@
 [
   {
-    "slug": "weather-complications",
-    "title": "Weather complications",
-    "excerpt": "Simple Weather app",
-    "date": "Jul 13, 2026",
-    "thumbnail": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue170.png",
-    "pinned": true
-  },
-  {
     "slug": "redeem-your-google-play-gift-card-or-gift-code",
     "title": "Redeem your Google Play gift card or gift code",
     "excerpt": "How to redeem your play store coupon.",
     "date": "Jul 13, 2026",
     "thumbnail": "",
+    "pinned": true
+  },
+  {
+    "slug": "weather-complications",
+    "title": "Weather complications",
+    "excerpt": "Simple Weather app",
+    "date": "Jul 13, 2026",
+    "thumbnail": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue170.png",
     "pinned": true
   },
   {
