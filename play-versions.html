@@ -1932,7 +1932,14 @@
       <a href="social-generator.html" class="header-btn">Socials</a>
       <a href="month-planner.html" class="header-btn">Planner</a>
       <a href="play-versions.html" class="header-btn active-btn">Versions</a>
-      <span style="font-size: 10px; font-weight: 700; color: var(--yellow); background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.3); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.9;">v1.8</span>
+      
+      <!-- Notification Bell -->
+      <button class="header-btn" style="position: relative; display: flex; align-items: center; justify-content: center; padding: 0 12px;" onclick="openReviewsPanel()" title="Unreplied Reviews">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        <span id="reviews-badge" style="display: none; position: absolute; top: 4px; right: 4px; background: var(--danger); color: white; font-size: 10px; font-weight: bold; border-radius: 50%; min-width: 16px; height: 16px; align-items: center; justify-content: center;">0</span>
+      </button>
+
+      <span style="font-size: 10px; font-weight: 700; color: var(--yellow); background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.3); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.9;">v1.9</span>
       <button onclick="handleLogout()" class="header-btn">Logout</button>
     </div>
   </header>
@@ -1954,7 +1961,7 @@
       <div class="stat-card" style="display: flex; flex-direction: column; gap: 8px; padding: 12px 16px;">
         <div class="stat-label" style="margin-bottom: 2px;">Quick Copier</div>
         <div style="display: flex; flex-direction: column; gap: 6px; font-size: 11px; flex: 1; justify-content: center;">
-          <div class="copier-bar" onclick="copyText('https://creationcuespace.github.io/creation-cue-hub/privacy.html', this.querySelector('.header-btn'))" title="Click to copy Privacy Policy Link">
+          <div class="copier-bar" onclick="copyText('https://creationcue.web.app/privacy.html', this.querySelector('.header-btn'))" title="Click to copy Privacy Policy Link">
             <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); max-width: 140px;">Privacy Link</span>
             <button class="header-btn" style="padding: 2px 8px; font-size: 10px; margin: 0; line-height: 1.2; pointer-events: none;">Copy</button>
           </div>
@@ -2291,6 +2298,23 @@
         <button id="btn-save-github" class="github-save-btn">Save Settings</button>
       </div>
     </div>
+
+    <!-- Reviews Panel (Hidden by default) -->
+    <div id="reviews-panel" class="right-panel" style="width: 400px; transform: translateX(100%);">
+      <div class="drawer-header" style="justify-content: space-between;">
+        <h3 class="drawer-title" style="display: flex; align-items: center; gap: 8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          Unreplied Reviews
+        </h3>
+        <button class="drawer-close" onclick="closeReviewsPanel()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="drawer-content" id="reviews-content" style="padding: 16px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; height: calc(100vh - 60px);">
+        <!-- Reviews will be injected here -->
+        <div style="color: var(--text-muted); text-align: center; margin-top: 40px; font-size: 14px;">Loading reviews...</div>
+      </div>
+    </div>
   <script>
     // Firebase Config
     var firebaseConfig = {
@@ -2333,6 +2357,7 @@
     var versionsData = {};
     var notesData = {};
     var combinedData = [];
+    var unrepliedReviews = [];
 
     // Auth state handler
     auth.onAuthStateChanged(function (user) {
@@ -2373,18 +2398,36 @@
           const versionsRes = await fetch('versions-data.json?t=' + Date.now());
           const versionsResponse = await versionsRes.json();
           
-          // Parse timestamp if available
           if (versionsResponse.lastUpdated) {
             window.lastScanDateStr = versionsResponse.lastUpdated;
           }
           
-          // Parse results list
           const versionsList = versionsResponse.results || [];
           versionsList.forEach(item => {
             versionsData[item.packageName] = item;
           });
         } catch (e) {
           console.warn("Could not load versions-data.json, showing local placeholders", e);
+        }
+
+        // Load reviews-data.json
+        try {
+          const reviewsRes = await fetch('reviews-data.json?t=' + Date.now());
+          const reviewsResponse = await reviewsRes.json();
+          unrepliedReviews = reviewsResponse.reviews || [];
+          
+          const badge = document.getElementById('reviews-badge');
+          if (badge) {
+            if (unrepliedReviews.length > 0) {
+              badge.textContent = unrepliedReviews.length;
+              badge.style.display = 'flex';
+            } else {
+              badge.style.display = 'none';
+            }
+          }
+          renderReviews();
+        } catch (e) {
+          console.warn("Could not load reviews-data.json", e);
         }
 
         // Set a timeout of 5 seconds to load from cache/placeholders if Firebase hangs
@@ -3921,6 +3964,62 @@
         confirmBtn.disabled = false;
       }
     }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Reviews Panel Logic
+    // ─────────────────────────────────────────────────────────────────────────
+    function openReviewsPanel() {
+      document.getElementById('reviews-panel').style.transform = 'translateX(0)';
+      renderReviews();
+    }
+
+    function closeReviewsPanel() {
+      document.getElementById('reviews-panel').style.transform = 'translateX(100%)';
+    }
+
+    function renderReviews() {
+      const content = document.getElementById('reviews-content');
+      if (!content) return;
+
+      if (!unrepliedReviews || unrepliedReviews.length === 0) {
+        content.innerHTML = `<div style="color: var(--text-muted); text-align: center; margin-top: 40px; font-size: 14px;">No unreplied reviews! 🎉</div>`;
+        return;
+      }
+
+      let html = '';
+      unrepliedReviews.forEach(r => {
+        const dateStr = new Date(r.lastModified).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+        
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+          starsHtml += `<span style="color: ${i <= r.starRating ? 'var(--yellow)' : '#444'}; font-size: 14px;">★</span>`;
+        }
+
+        html += `
+          <div class="card" style="padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+              <div>
+                <div style="font-size: 13px; font-weight: bold; color: var(--primary); margin-bottom: 2px;">${r.title}</div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  ${starsHtml}
+                  <span style="font-size: 10px; color: var(--text-muted);">${dateStr}</span>
+                </div>
+              </div>
+              <a href="https://play.google.com/console/developers/reviews?packageName=${r.packageName}" target="_blank" style="font-size: 11px; padding: 4px 8px; background: var(--primary); color: #000; border-radius: 4px; text-decoration: none; font-weight: bold;">Reply</a>
+            </div>
+            <div style="font-size: 13px; color: #eee; line-height: 1.4; margin-bottom: 8px;">
+              "${r.text || 'No text'}"
+            </div>
+            <div style="font-size: 11px; color: var(--text-muted); display: flex; gap: 10px;">
+              <span>📱 ${r.deviceMetadata}</span>
+              <span>🌐 ${r.reviewerLanguage}</span>
+            </div>
+          </div>
+        `;
+      });
+      content.innerHTML = html;
+    }
+
     // ─────────────────────────────────────────────────────────────────────────
 
     window.currentSort = 'date-desc';

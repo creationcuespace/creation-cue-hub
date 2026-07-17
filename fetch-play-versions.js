@@ -70,6 +70,7 @@ async function main() {
 
   const CONCURRENCY = 10;
   const results = [];
+  const allReviews = [];
 
   console.log(`Found ${watchFaces.length} watch faces in manager.json.`);
   console.log(`Scanning ${targetWatchFaces.length} watch faces with concurrency level ${CONCURRENCY}...\n`);
@@ -162,6 +163,40 @@ async function main() {
 
     console.log(`[${index}/${total}] Done: ${wf.id} (Companion: ${companionVersion}, Wear: ${wearVersion}, Updated: ${lastUpdatedDate}, Title: ${playStoreTitle})`);
 
+    // Fetch Unreplied Reviews
+    try {
+      const reviewsResponse = await play.reviews.list({
+        packageName,
+        maxResults: 50 // Fetch recent reviews
+      });
+      
+      if (reviewsResponse.data.reviews && reviewsResponse.data.reviews.length > 0) {
+        for (const review of reviewsResponse.data.reviews) {
+          const comments = review.comments || [];
+          const userCommentObj = comments.find(c => c.userComment);
+          const devReplyObj = comments.find(c => c.developerComment);
+          
+          if (userCommentObj && !devReplyObj) {
+            const c = userCommentObj.userComment;
+            allReviews.push({
+              reviewId: review.reviewId,
+              packageName,
+              title: playStoreTitle || wf.title,
+              wfId: wf.id,
+              starRating: c.starRating,
+              reviewerLanguage: c.reviewerLanguage,
+              deviceMetadata: c.deviceMetadata ? c.deviceMetadata.productName : 'Unknown',
+              text: c.text,
+              lastModified: c.lastModified ? new Date(parseInt(c.lastModified.seconds, 10) * 1000).toISOString() : new Date().toISOString()
+            });
+          }
+        }
+      }
+    } catch (reviewError) {
+      // Ignore 403 errors (permissions) silently to not spam logs if some apps lack review access, 
+      // but you can log them if needed. We'll just silently skip to not break version fetching.
+    }
+
     results.push({
       id: wf.id,
       title: wf.title,
@@ -229,6 +264,35 @@ async function main() {
   };
   fs.writeFileSync(versionsDataPath, JSON.stringify(outputData, null, 2), 'utf8');
   console.log(`Saved version data to ${versionsDataPath}`);
+
+  // Save and merge reviews data
+  const reviewsDataPath = path.join(__dirname, 'reviews-data.json');
+  let finalReviews = allReviews;
+
+  if (fs.existsSync(reviewsDataPath)) {
+    try {
+      const existingReviewsData = JSON.parse(fs.readFileSync(reviewsDataPath, 'utf8'));
+      const existingReviews = existingReviewsData.reviews || [];
+      
+      // Remove old reviews for the packages we just scanned
+      const scannedPackages = new Set(targetWatchFaces.map(wf => getPackageName(wf.play_store_url)).filter(Boolean));
+      const retainedReviews = existingReviews.filter(r => !scannedPackages.has(r.packageName));
+      
+      finalReviews = [...retainedReviews, ...allReviews];
+      
+      // Sort reviews by date descending
+      finalReviews.sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified));
+    } catch (e) {
+      console.warn("Could not merge with existing reviews data, overwriting instead:", e.message);
+    }
+  }
+
+  const outputReviewsData = {
+    lastUpdated: new Date().toISOString(),
+    reviews: finalReviews
+  };
+  fs.writeFileSync(reviewsDataPath, JSON.stringify(outputReviewsData, null, 2), 'utf8');
+  console.log(`Saved reviews data to ${reviewsDataPath} (${finalReviews.length} unreplied reviews)`);
 }
 
 main().catch(err => {
