@@ -51,7 +51,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add versions-data.json
+          git add versions-data.json reviews-data.json
           git diff-index --quiet HEAD || (git commit -m "chore: nightly version update [skip ci]" && git push)
 
       - name: Deploy to Firebase Hosting
