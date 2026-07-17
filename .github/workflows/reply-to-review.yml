@@ -1,0 +1,53 @@
+name: Reply to Google Play Review
+
+on:
+  workflow_dispatch:
+    inputs:
+      packageName:
+        description: 'Package Name'
+        required: true
+      reviewId:
+        description: 'Review ID'
+        required: true
+      replyText:
+        description: 'Reply Text'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  reply-to-review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Create credentials file
+        run: |
+          echo '${{ secrets.PLAY_CREDENTIALS_JSON }}' > play-credentials.json
+
+      - name: Run reply script
+        env:
+          PACKAGE_NAME: ${{ github.event.inputs.packageName }}
+          REVIEW_ID: ${{ github.event.inputs.reviewId }}
+          REPLY_TEXT: ${{ github.event.inputs.replyText }}
+        run: node reply-to-review.js
+
+      - name: Commit and push updated reviews
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add reviews-data.json
+          git commit -m "chore: remove replied review from dashboard" || echo "No changes to commit"
+          git push
