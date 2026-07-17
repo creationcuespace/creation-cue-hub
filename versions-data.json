@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-16T15:06:17.988Z",
+  "lastUpdated": "2026-07-17T03:28:27.648Z",
   "results": [
     {
       "id": "cue178",
@@ -906,7 +906,7 @@
       "title": "CRC035",
       "playStoreTitle": "Info Watch Face crc035",
       "packageName": "com.watchfacestudio.crc035",
-      "companionVersion": "10 (4.0.0)",
+      "companionVersion": "11 (6.0.0)",
       "wearVersion": "10000008 (4.0.0)",
       "lastUpdatedDate": "Feb 20, 2026"
     },
