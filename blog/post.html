@@ -358,10 +358,44 @@
             padding-bottom: 8px;
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none;  /* IE and Edge */
+            scroll-behavior: smooth;
         }
 
         .related-slider-container::-webkit-scrollbar {
             display: none; /* Chrome, Safari and Opera */
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: var(--transition-smooth);
+            backdrop-filter: blur(4px);
+        }
+        .carousel-nav:hover {
+            background: var(--primary);
+            color: black;
+            border-color: var(--primary);
+        }
+        .carousel-nav.prev { left: -16px; }
+        .carousel-nav.next { right: -16px; }
+        
+        @media (min-width: 769px) {
+            #carousel-wrapper:hover .carousel-nav {
+                display: flex;
+            }
         }
 
         .related-card {
@@ -878,8 +912,12 @@
 
         <section class="promo-section">
             <h3 class="related-section-title">Fresh Releases & Recent Updates</h3>
-            <div class="related-slider-container" id="blog-carousel-slider">
-                <!-- Carousel loaded dynamically -->
+            <div style="position: relative;" id="carousel-wrapper">
+                <button class="carousel-nav prev" onclick="scrollCarousel(-300)" aria-label="Scroll left">&#10094;</button>
+                <div class="related-slider-container" id="blog-carousel-slider">
+                    <!-- Carousel loaded dynamically -->
+                </div>
+                <button class="carousel-nav next" onclick="scrollCarousel(300)" aria-label="Scroll right">&#10095;</button>
             </div>
         </section>
         </main>
@@ -906,8 +944,6 @@
 
         function toggleAdminPanel() {
             const adminPanel = document.getElementById('admin-panel');
-            if (!adminPanel) return;
-            
             if (adminPanel.style.display === 'block') {
                 adminPanel.style.display = 'none';
             } else {
@@ -921,10 +957,18 @@
                 
                 if (isAdminParam || isLoggedIn) {
                     adminPanel.style.display = 'block';
+                    adminPanel.open = true; // Auto-expand if details element
                     adminPanel.scrollIntoView({ behavior: 'smooth' });
                 } else {
                     alert('To access the Admin Portal, please log in on your coupon manager page first, or add ?admin=true to the URL.');
                 }
+            }
+        }
+
+        function scrollCarousel(amount) {
+            const slider = document.getElementById('blog-carousel-slider');
+            if (slider) {
+                slider.scrollBy({ left: amount, behavior: 'smooth' });
             }
         }
 
