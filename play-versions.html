@@ -4127,9 +4127,21 @@
         return;
       }
 
-      const ghRepo = document.getElementById('gh-repo') ? document.getElementById('gh-repo').value.trim() : '';
-      const ghBranch = document.getElementById('gh-branch') ? document.getElementById('gh-branch').value.trim() || 'main' : 'main';
-      const ghToken = document.getElementById('gh-token') ? document.getElementById('gh-token').value.trim() : '';
+      let ghRepo = '';
+      let ghBranch = 'main';
+      let ghToken = '';
+
+      if (typeof githubConfig !== 'undefined' && githubConfig) {
+        ghRepo = githubConfig.repo || '';
+        ghBranch = githubConfig.branch || 'main';
+        ghToken = githubConfig.token || '';
+      }
+
+      if (!ghRepo || !ghToken) {
+        ghRepo = document.getElementById('gh-repo') ? document.getElementById('gh-repo').value.trim() : '';
+        ghBranch = document.getElementById('gh-branch') ? document.getElementById('gh-branch').value.trim() || 'main' : 'main';
+        ghToken = document.getElementById('gh-token') ? document.getElementById('gh-token').value.trim() : '';
+      }
 
       if (!ghRepo || !ghToken) {
         alert('Missing GitHub Configuration! Please click the Gear icon in the top right and enter your repository and PAT token.');
