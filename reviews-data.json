@@ -1,16 +1,4 @@
 {
   "lastUpdated": "2026-07-17T14:31:30.895Z",
-  "reviews": [
-    {
-      "reviewId": "7ee48b88-cccb-4723-97f9-5a1624fc1a41",
-      "packageName": "com.creation.cue155watchface",
-      "title": "Watch Face CUE155",
-      "wfId": "cue155",
-      "starRating": 5,
-      "reviewerLanguage": "en",
-      "deviceMetadata": "komodo (Pixel 9 Pro XL)",
-      "text": "\tSuperb watch face. Nice to come across something a bit different that works so well and looks great👍",
-      "lastModified": "2026-07-17T13:14:16.000Z"
-    }
-  ]
+  "reviews": []
 }
