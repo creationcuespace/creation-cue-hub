@@ -967,7 +967,8 @@
     }
 
     #reviews-panel.open {
-      right: 0;
+      right: 0 !important;
+      visibility: visible !important;
     }
 
     @keyframes pulse-badge {
@@ -4002,8 +4003,23 @@
     // Reviews Panel Logic
     // ─────────────────────────────────────────────────────────────────────────
     function openReviewsPanel() {
-      document.getElementById('reviews-panel').classList.add('open');
-      renderReviews();
+      console.log('Bell clicked');
+      try {
+        const panel = document.getElementById('reviews-panel');
+        if (panel) {
+          panel.classList.add('open');
+          panel.style.right = '0';
+          panel.style.visibility = 'visible';
+          panel.style.display = 'flex';
+          panel.style.zIndex = '999999';
+        } else {
+          alert('Panel not found in DOM!');
+        }
+        renderReviews();
+      } catch (e) {
+        console.error(e);
+        alert('Error opening panel: ' + e.message);
+      }
     }
 
     function closeReviewsPanel() {
@@ -4011,46 +4027,54 @@
     }
 
     function renderReviews() {
-      const content = document.getElementById('reviews-content');
-      if (!content) return;
+      try {
+        const content = document.getElementById('reviews-content');
+        if (!content) return;
 
-      if (!unrepliedReviews || unrepliedReviews.length === 0) {
-        content.innerHTML = `<div style="color: var(--text-muted); text-align: center; margin-top: 40px; font-size: 14px;">No unreplied reviews! 🎉</div>`;
-        return;
-      }
-
-      let html = '';
-      unrepliedReviews.forEach(r => {
-        const dateStr = new Date(r.lastModified).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-        
-        let starsHtml = '';
-        for (let i = 1; i <= 5; i++) {
-          starsHtml += `<span style="color: ${i <= r.starRating ? 'var(--yellow)' : '#444'}; font-size: 14px;">★</span>`;
+        if (!unrepliedReviews || unrepliedReviews.length === 0) {
+          content.innerHTML = `<div style="color: var(--text-muted); text-align: center; margin-top: 40px; font-size: 14px;">No unreplied reviews! 🎉</div>`;
+          return;
         }
 
-        html += `
-          <div class="card" style="padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-              <div>
-                <div style="font-size: 13px; font-weight: bold; color: var(--primary); margin-bottom: 2px;">${r.title}</div>
-                <div style="display: flex; align-items: center; gap: 6px;">
-                  ${starsHtml}
-                  <span style="font-size: 10px; color: var(--text-muted);">${dateStr}</span>
+        let html = '';
+        unrepliedReviews.forEach(r => {
+          let dateStr = 'Unknown Date';
+          try {
+            dateStr = new Date(r.lastModified).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+          } catch(e) {}
+          
+          let starsHtml = '';
+          for (let i = 1; i <= 5; i++) {
+            starsHtml += `<span style="color: ${i <= r.starRating ? 'var(--yellow)' : '#444'}; font-size: 14px;">★</span>`;
+          }
+
+          html += `
+            <div class="card" style="padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                <div>
+                  <div style="font-size: 13px; font-weight: bold; color: var(--primary); margin-bottom: 2px;">${r.title}</div>
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    ${starsHtml}
+                    <span style="font-size: 10px; color: var(--text-muted);">${dateStr}</span>
+                  </div>
                 </div>
+                <a href="https://play.google.com/console/developers/reviews?packageName=${r.packageName}" target="_blank" style="font-size: 11px; padding: 4px 8px; background: var(--primary); color: #000; border-radius: 4px; text-decoration: none; font-weight: bold;">Reply</a>
               </div>
-              <a href="https://play.google.com/console/developers/reviews?packageName=${r.packageName}" target="_blank" style="font-size: 11px; padding: 4px 8px; background: var(--primary); color: #000; border-radius: 4px; text-decoration: none; font-weight: bold;">Reply</a>
+              <div style="font-size: 13px; color: #eee; line-height: 1.4; margin-bottom: 8px;">
+                "${r.text || 'No text'}"
+              </div>
+              <div style="font-size: 11px; color: var(--text-muted); display: flex; gap: 10px;">
+                <span>📱 ${r.deviceMetadata}</span>
+                <span>🌐 ${r.reviewerLanguage}</span>
+              </div>
             </div>
-            <div style="font-size: 13px; color: #eee; line-height: 1.4; margin-bottom: 8px;">
-              "${r.text || 'No text'}"
-            </div>
-            <div style="font-size: 11px; color: var(--text-muted); display: flex; gap: 10px;">
-              <span>📱 ${r.deviceMetadata}</span>
-              <span>🌐 ${r.reviewerLanguage}</span>
-            </div>
-          </div>
-        `;
-      });
-      content.innerHTML = html;
+          `;
+        });
+        content.innerHTML = html;
+      } catch (e) {
+        console.error(e);
+        alert('Error rendering reviews: ' + e.message);
+      }
     }
 
     // ─────────────────────────────────────────────────────────────────────────
