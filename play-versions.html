@@ -2416,17 +2416,36 @@
       });
     }
 
+    async function fetchLiveData(filename) {
+      if (typeof githubConfig !== 'undefined' && githubConfig && githubConfig.token && githubConfig.repo) {
+        try {
+          const url = `https://api.github.com/repos/${githubConfig.repo}/contents/${filename}?ref=${githubConfig.branch || 'main'}`;
+          const res = await fetch(url, {
+            headers: {
+              'Authorization': `Bearer ${githubConfig.token}`,
+              'Accept': 'application/vnd.github.v3.raw'
+            }
+          });
+          if (res.ok) {
+            return await res.json();
+          }
+        } catch(e) {
+          console.warn(`Failed to fetch ${filename} from GitHub API, falling back to local`, e);
+        }
+      }
+      const res = await fetch(`${filename}?t=` + Date.now());
+      return await res.json();
+    }
+
     async function initDashboard() {
       try {
         // Load manager.json
-        const managerRes = await fetch('manager.json?t=' + Date.now());
-        const managerJson = await managerRes.json();
+        const managerJson = await fetchLiveData('manager.json');
         managerData = managerJson.watch_faces || [];
 
         // Load versions-data.json
         try {
-          const versionsRes = await fetch('versions-data.json?t=' + Date.now());
-          const versionsResponse = await versionsRes.json();
+          const versionsResponse = await fetchLiveData('versions-data.json');
           
           if (versionsResponse.lastUpdated) {
             window.lastScanDateStr = versionsResponse.lastUpdated;
@@ -2442,8 +2461,7 @@
 
         // Load reviews-data.json
         try {
-          const reviewsRes = await fetch('reviews-data.json?t=' + Date.now());
-          const reviewsResponse = await reviewsRes.json();
+          const reviewsResponse = await fetchLiveData('reviews-data.json');
           unrepliedReviews = reviewsResponse.reviews || [];
           
           const badge = document.getElementById('reviews-badge');
