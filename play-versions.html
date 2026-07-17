@@ -4051,9 +4051,9 @@
           }
 
           let iconUrl = '';
-          if (window.storeData && window.storeData.watchfaces) {
-            const match = window.storeData.watchfaces.find(w => w.id === r.wfId);
-            if (match) iconUrl = match.imageUrl;
+          if (window.storeData && window.storeData.watch_faces) {
+            const match = window.storeData.watch_faces.find(w => w.id === r.wfId);
+            if (match) iconUrl = match.image_url;
           }
           const iconImgHtml = iconUrl ? `<img src="${getOptimizedImageUrl(iconUrl, 48)}" style="width: 32px; height: 32px; border-radius: 6px; margin-right: 12px; object-fit: cover;" alt="icon">` : '';
 
