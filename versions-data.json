@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-17T03:28:27.648Z",
+  "lastUpdated": "2026-07-17T13:55:20.214Z",
   "results": [
     {
       "id": "cue178",
@@ -366,7 +366,7 @@
       "title": "CUE139",
       "playStoreTitle": "Watch Face CUE139",
       "packageName": "com.creation.cue139watchface",
-      "companionVersion": "4 (4.0.0)",
+      "companionVersion": "5 (6.0.0)",
       "wearVersion": "10000001 (1.0.0)",
       "lastUpdatedDate": "Feb 24, 2026"
     },
@@ -501,7 +501,7 @@
       "title": "CUE125",
       "playStoreTitle": "Digital Watch Face CUE125",
       "packageName": "com.creation.cue125watchface",
-      "companionVersion": "9 (4.0.0)",
+      "companionVersion": "10 (6.0.0)",
       "wearVersion": "10000007 (2.0.0)",
       "lastUpdatedDate": "Feb 20, 2026"
     },
