@@ -933,7 +933,7 @@
       var total = promoData.totalCoupons || 0;
       var claimed = promoData.claimedCount || 0;
       var cap = promoData.claimsCap || 0;
-      var allowedMax = (cap && cap > 0) ? Math.min(cap, total) : total;
+      var allowedMax = (cap && cap > 0 && !isTokenClaim) ? Math.min(cap, total) : total;
       var remaining = Math.max(0, allowedMax - claimed);
       
       var statusPill = document.querySelector('.promo-status-pill');
@@ -1104,7 +1104,7 @@
         var nextIndex = countSnap.val() || 0;
         var total = promoData.totalCoupons || 0;
         var cap = promoData.claimsCap || 0;
-        var allowedMax = (cap && cap > 0) ? Math.min(cap, total) : total;
+        var allowedMax = (cap && cap > 0 && !isTokenClaim) ? Math.min(cap, total) : total;
         
         if (nextIndex >= allowedMax) {
           showToast("Sorry, all coupons were just claimed!");
@@ -1158,7 +1158,7 @@
               // Send push alert if this was the last coupon
               var total = promoData.totalCoupons || 0;
               var cap = promoData.claimsCap || 0;
-              var allowedMax = (cap && cap > 0) ? Math.min(cap, total) : total;
+              var allowedMax = (cap && cap > 0 && !isTokenClaim) ? Math.min(cap, total) : total;
               var remaining = Math.max(0, allowedMax - (nextIndex + 1));
               if (remaining === 0) {
                 triggerCompletedNotification(promoData.name, promoId, allowedMax);
@@ -1193,7 +1193,7 @@
         var total = promoData.totalCoupons || 0;
         var claimed = promoData.claimedCount || 0;
         var cap = promoData.claimsCap || 0;
-        var allowedMax = (cap && cap > 0) ? Math.min(cap, total) : total;
+        var allowedMax = (cap && cap > 0 && !isTokenClaim) ? Math.min(cap, total) : total;
         var remaining = Math.max(0, allowedMax - claimed);
         if (remaining === 0) {
           claimBtn.disabled = true;
@@ -1252,7 +1252,7 @@
         var total = promoData.totalCoupons || 0;
         var claimed = promoData.claimedCount || 0;
         var cap = promoData.claimsCap || 0;
-        var allowedMax = (cap && cap > 0) ? Math.min(cap, total) : total;
+        var allowedMax = (cap && cap > 0 && !isTokenClaim) ? Math.min(cap, total) : total;
         var remaining = Math.max(0, allowedMax - claimed);
         
         if (remaining === 0) {
