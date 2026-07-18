@@ -1,16 +1,4 @@
 {
   "lastUpdated": "2026-07-18T03:17:56.456Z",
-  "reviews": [
-    {
-      "reviewId": "a5dd1436-eaf3-4e46-ba0d-8df605cf9099",
-      "packageName": "com.watchfacestudio.cc014",
-      "title": "Watch face CRC014",
-      "wfId": "cc014",
-      "starRating": 5,
-      "reviewerLanguage": "en",
-      "deviceMetadata": "r13s (Galaxy S25 FE)",
-      "text": "\tA really spectacular watch face created by the master . Love this digital design. Amazing job. Thank you for giving us always the best designs.",
-      "lastModified": "2026-07-17T18:59:18.000Z"
-    }
-  ]
+  "reviews": []
 }
