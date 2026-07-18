@@ -120,6 +120,14 @@
       display: flex;
       gap: 10px;
       align-items: center;
+      overflow-x: auto;
+      max-width: 100vw;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none;  /* IE and Edge */
+    }
+    .header-btns::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
     }
 
     .header-btn {
