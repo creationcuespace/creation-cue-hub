@@ -827,6 +827,7 @@
         
         var authTimeout = setTimeout(function() {
           showState('error');
+          document.getElementById('error-title').textContent = "Connection Error";
           document.getElementById('error-msg').textContent = "Connection timeout. Your network or Ad Blocker may be blocking secure connections.";
         }, 8000);
         
@@ -836,6 +837,7 @@
           clearTimeout(authTimeout);
           console.error("Anonymous auth failed", error);
           showState('error');
+          document.getElementById('error-title').textContent = "Connection Blocked";
           document.getElementById('error-msg').textContent = "Failed to connect securely. Please reload or disable Ad Blockers.";
         });
       } else {
