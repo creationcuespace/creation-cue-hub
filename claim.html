@@ -856,9 +856,17 @@
       
       document.getElementById('loading-msg').textContent = "Loading claim details...";
       
+      var dbLoadTimeout = setTimeout(function() {
+        if (!promoData && !tokenData) {
+          showState('error');
+          document.getElementById('error-msg').textContent = "Database connection timed out. Please disable Ad Blockers, VPNs, or strict network firewalls and reload.";
+        }
+      }, 10000);
+      
       if (isTokenClaim) {
         // One-time token redemption flow
         db.ref('one_time_tokens/' + tokenId).on('value', function(tokenSnapshot) {
+          clearTimeout(dbLoadTimeout);
           tokenData = tokenSnapshot.val();
           if (!tokenData) {
             showState('error');
@@ -916,6 +924,7 @@
       } else {
         // Public claim flow
         db.ref('promotions/' + promoId + '/public').on('value', function(snapshot) {
+          clearTimeout(dbLoadTimeout);
           promoData = snapshot.val();
           if (!promoData || promoData.active === false) {
             showState('error');
