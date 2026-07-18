@@ -1,27 +1,4 @@
 {
   "lastUpdated": "2026-07-18T03:17:56.456Z",
-  "reviews": [
-    {
-      "reviewId": "a5dd1436-eaf3-4e46-ba0d-8df605cf9099",
-      "packageName": "com.watchfacestudio.cc014",
-      "title": "Watch face CRC014",
-      "wfId": "cc014",
-      "starRating": 5,
-      "reviewerLanguage": "en",
-      "deviceMetadata": "r13s (Galaxy S25 FE)",
-      "text": "\tA really spectacular watch face created by the master . Love this digital design. Amazing job. Thank you for giving us always the best designs.",
-      "lastModified": "2026-07-17T18:59:18.000Z"
-    },
-    {
-      "reviewId": "f36e6958-1b1a-4f79-a5ad-4d5b71e7e121",
-      "packageName": "com.creation.cue116watchface",
-      "title": "Digital Watch Face CUE116",
-      "wfId": "cue116",
-      "starRating": 5,
-      "reviewerLanguage": "fr",
-      "deviceMetadata": "a55x (Galaxy A55 5G)",
-      "text": "\tthx for the great work uv doing",
-      "lastModified": "2026-07-17T17:10:26.000Z"
-    }
-  ]
+  "reviews": []
 }
