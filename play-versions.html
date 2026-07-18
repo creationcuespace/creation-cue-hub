@@ -59,7 +59,8 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    html, body {
+    body {
+      overflow-x: clip;
       background: var(--black);
       color: var(--text);
       font-family: 'Inter', sans-serif;
@@ -355,10 +356,10 @@
       margin-top: 8px;
     }
 
-    /* Table Styling */
     .table-container {
       width: 100%;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       border: 1px solid var(--border);
       border-radius: 4px;
       background: var(--dark);
