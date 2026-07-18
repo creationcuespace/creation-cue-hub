@@ -707,7 +707,7 @@
         <line x1="12" y1="8" x2="12" y2="12"></line>
         <line x1="12" y1="16" x2="12.01" y2="16"></line>
       </svg>
-      <div style="font-size: 18px; font-weight: bold;">Promotion Not Found</div>
+      <div id="error-title" style="font-size: 18px; font-weight: bold;">Promotion Not Found</div>
       <div class="status-msg" id="error-msg">This promotion link is invalid, expired, or has ended.</div>
       <a href="index.html" class="btn ghost" style="text-decoration: none; margin-top: 10px; width: 100%; display: flex;">
         BROWSE OTHER WATCH FACES
@@ -859,6 +859,7 @@
       var dbLoadTimeout = setTimeout(function() {
         if (!promoData && !tokenData) {
           showState('error');
+          document.getElementById('error-title').textContent = "Connection Error";
           document.getElementById('error-msg').textContent = "Database connection timed out. Please disable Ad Blockers, VPNs, or strict network firewalls and reload.";
         }
       }, 10000);
@@ -913,11 +914,13 @@
             checkUserClaim();
           }, function(error) {
             showState('error');
+            document.getElementById('error-title').textContent = "Connection Blocked";
             document.getElementById('error-msg').textContent = "Connection blocked. Please disable Ad Blockers or VPNs and reload.";
             console.error(error);
           });
         }, function(error) {
           showState('error');
+          document.getElementById('error-title').textContent = "Connection Blocked";
           document.getElementById('error-msg').textContent = "Connection blocked. Please disable Ad Blockers or VPNs and reload.";
           console.error("Firebase read failed:", error);
         });
@@ -947,6 +950,7 @@
         }, function(err) {
           console.error(err);
           showState('error');
+          document.getElementById('error-title').textContent = "Connection Blocked";
           document.getElementById('error-msg').textContent = "Connection blocked. Please disable Ad Blockers or VPNs and reload.";
         });
       }
