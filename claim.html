@@ -743,21 +743,41 @@
 
     firebase.initializeApp(firebaseConfig);
 
-    // Initialize App Check (reCAPTCHA v3)
-    // To complete setup, register this app in the Firebase Console (App Check section) 
-    // and provide your public reCAPTCHA v3 site key here.
+    // Get parameters
+    var urlParams = new URLSearchParams(window.location.search);
+    var promoId = urlParams.get('promo') || urlParams.get('p');
+    if (promoId) {
+      try {
+        var decoded = atob(promoId);
+        if (decoded && /^[a-z0-9\-]+$/i.test(decoded)) {
+          promoId = decoded;
+        }
+      } catch (e) {
+        // Leave promoId as is if not a valid base64 slug
+      }
+    }
+    var tokenId = urlParams.get('token') || urlParams.get('t');
+    var isTokenClaim = !!tokenId;
+    var tokenData = null;
+
+    // Initialize App Check (reCAPTCHA v3) - ONLY for public links
+    // One-time links bypass this to avoid strict ad-blockers freezing the page
     var RECAPTCHA_SITE_KEY = "6LdLZxUtAAAAABqVIC2pc-4gdnLKcuuTmE8tCstc";
 
-    if (RECAPTCHA_SITE_KEY && RECAPTCHA_SITE_KEY !== "YOUR_RECAPTCHA_V3_SITE_KEY") {
-      try {
-        var appCheck = firebase.appCheck();
-        appCheck.activate(RECAPTCHA_SITE_KEY, true);
-        console.log("Firebase App Check initialized successfully.");
-      } catch (err) {
-        console.error("Firebase App Check initialization failed:", err);
+    if (!isTokenClaim) {
+      if (RECAPTCHA_SITE_KEY && RECAPTCHA_SITE_KEY !== "YOUR_RECAPTCHA_V3_SITE_KEY") {
+        try {
+          var appCheck = firebase.appCheck();
+          appCheck.activate(RECAPTCHA_SITE_KEY, true);
+          console.log("Firebase App Check initialized successfully.");
+        } catch (err) {
+          console.error("Firebase App Check initialization failed:", err);
+        }
+      } else {
+        console.warn("Firebase App Check: RECAPTCHA_SITE_KEY is not configured. Bot protection is disabled.");
       }
     } else {
-      console.warn("Firebase App Check: RECAPTCHA_SITE_KEY is not configured. Bot protection is disabled.");
+      console.log("One-time token detected. Bypassing App Check/reCAPTCHA.");
     }
 
     // ntfy.sh Topic for completed promotion push alerts (leave empty to disable)
@@ -785,22 +805,7 @@
     var currentUser = null;
     var promoData = null;
 
-    // Get parameters
-    var urlParams = new URLSearchParams(window.location.search);
-    var promoId = urlParams.get('promo') || urlParams.get('p');
-    if (promoId) {
-      try {
-        var decoded = atob(promoId);
-        if (decoded && /^[a-z0-9\-]+$/i.test(decoded)) {
-          promoId = decoded;
-        }
-      } catch (e) {
-        // Leave promoId as is if not a valid base64 slug
-      }
-    }
-    var tokenId = urlParams.get('token') || urlParams.get('t');
-    var isTokenClaim = !!tokenId;
-    var tokenData = null;
+
 
     function showToast(msg) {
       var t = document.getElementById('toast');
