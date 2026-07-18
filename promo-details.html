@@ -792,7 +792,6 @@
               <div class="link-copy-row">
                 <a class="link-display" id="lbl-public-url" target="_blank">Loading...</a>
                 <button class="btn small" id="btn-copy-public-link">Copy</button>
-                <button class="btn small" id="btn-shorten-public-link" style="background:var(--blue); color:white;">Shorten</button>
               </div>
             </div>
 
@@ -1103,10 +1102,20 @@
 
       // Render Public Claim URLs
       var claimBaseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/claim.html';
-      var claimUrl = claimBaseUrl + '?p=' + btoa(promoId);
+      var claimUrl = claimBaseUrl + '?p=' + btoa(promoId).replace(/=/g, '');
       var urlLabel = document.getElementById('lbl-public-url');
-      urlLabel.textContent = claimUrl;
-      urlLabel.href = claimUrl;
+      
+      if (promoData.shortUrl) {
+        urlLabel.textContent = promoData.shortUrl;
+        urlLabel.href = promoData.shortUrl;
+      } else {
+        urlLabel.textContent = claimUrl;
+        urlLabel.href = claimUrl;
+        if (!shortenerQueue.some(function(q) { return q.id === promoId; })) {
+          shortenerQueue.push({ type: 'public', id: promoId, longUrl: claimUrl });
+          processShortenerQueue();
+        }
+      }
 
       var publicBadge = document.getElementById('lbl-public-badge');
       if (promoData.visibility === 'private') {
@@ -1199,35 +1208,7 @@
       });
     });
 
-    // Shorten public link
-    document.getElementById('btn-shorten-public-link').addEventListener('click', function() {
-      var btn = this;
-      var text = document.getElementById('lbl-public-url').textContent;
-      if (text.includes("is.gd/") || text.includes("shrtr.top/")) {
-        // Already shortened
-        navigator.clipboard.writeText(text).then(function() {
-          showToast("Short link copied!");
-        });
-        return;
-      }
-      btn.disabled = true;
-      btn.textContent = "⌛";
-      shortenUrl(text).then(function(shortUrl) {
-        var urlLabel = document.getElementById('lbl-public-url');
-        urlLabel.textContent = shortUrl;
-        urlLabel.href = shortUrl;
-        navigator.clipboard.writeText(shortUrl).then(function() {
-          showToast("Short link copied!");
-        });
-        btn.disabled = false;
-        btn.textContent = "Shortened";
-        btn.style.background = "var(--green)";
-      }).catch(function(err) {
-        alert("Failed to shorten: " + err.message);
-        btn.disabled = false;
-        btn.textContent = "Shorten";
-      });
-    });
+
 
     // Copy review message
     document.getElementById('btn-copy-review-msg').addEventListener('click', function() {
@@ -1329,6 +1310,14 @@
         tokenKeys.forEach(function(tokenId) {
           var token = tokens[tokenId];
           var claimUrl = claimBaseUrl + '?t=' + tokenId;
+          var displayUrl = token.shortUrl || claimUrl;
+          
+          if (!token.shortUrl && !token.claimed) {
+            if (!shortenerQueue.some(function(q) { return q.id === tokenId; })) {
+              shortenerQueue.push({ type: 'token', id: tokenId, longUrl: claimUrl });
+              processShortenerQueue();
+            }
+          }
           
           var statusHtml = '';
           if (token.claimed) {
@@ -1344,9 +1333,8 @@
                 <span style="font-size:11px;">${statusHtml}</span>
               </div>
               <div style="display:flex; gap:6px; margin-top:6px; align-items:center;">
-                <input class="input-text" id="token-input-${tokenId}" type="text" readonly value="${claimUrl}" style="padding:4px 8px; font-size:12px; font-family:monospace; height:auto; flex:1; min-width:0; background:var(--black);">
+                <input class="input-text" id="token-input-${tokenId}" type="text" readonly value="${displayUrl}" style="padding:4px 8px; font-size:12px; font-family:monospace; height:auto; flex:1; min-width:0; background:var(--black);">
                 <button class="btn small" style="padding:4px 8px; font-size:11px; flex:none; height:auto;" onclick="copyTokenUrl('${tokenId}')">Copy</button>
-                <button class="btn small" style="padding:4px 8px; font-size:11px; flex:none; height:auto; background:var(--blue); color:white;" onclick="shortenTokenUrl('${tokenId}', '${claimUrl}', this)">Shorten</button>
                 <button class="btn red small" style="padding:4px 8px; font-size:11px; flex:none; height:auto;" onclick="deleteToken('${tokenId}')">Delete</button>
               </div>
               ${token.claimed && token.code ? `
@@ -1570,34 +1558,7 @@ Format this report with a professional tone in clean, beautiful Markdown with st
       }
     }
 
-    window.shortenTokenUrl = function(tokenId, claimUrl, btnEl) {
-      if (btnEl) {
-        btnEl.disabled = true;
-        btnEl.textContent = "⌛";
-      }
-      shortenUrl(claimUrl).then(function(shortUrl) {
-        var input = document.getElementById('token-input-' + tokenId);
-        if (input) {
-          input.value = shortUrl;
-        }
-        var wfName = document.getElementById('promo-name').value.trim() || (promoData ? promoData.name : '') || 'the watch face';
-        var textToCopy = "Hi,\nHere is your coupon for " + wfName + ". A review is appreciated.\n" + shortUrl;
-        navigator.clipboard.writeText(textToCopy).then(function() {
-          showToast("Claim message copied!");
-        });
-        if (btnEl) {
-          btnEl.disabled = false;
-          btnEl.textContent = "Shortened";
-          btnEl.style.background = "var(--green)";
-        }
-      }).catch(function(err) {
-        alert("Failed to shorten: " + err.message);
-        if (btnEl) {
-          btnEl.disabled = false;
-          btnEl.textContent = "Shorten";
-        }
-      });
-    };
+
 
     window.selectCapOption = function(containerId, value, inputId) {
       var container = document.getElementById(containerId);
@@ -1638,6 +1599,32 @@ Format this report with a professional tone in clean, beautiful Markdown with st
         }
       }
     };
+
+    // Auto-shortener Queue System
+    var shortenerQueue = [];
+    var isShortening = false;
+
+    async function processShortenerQueue() {
+      if (isShortening || shortenerQueue.length === 0) return;
+      isShortening = true;
+      var item = shortenerQueue[0];
+      try {
+        var shortUrl = await shortenUrl(item.longUrl);
+        if (item.type === 'public') {
+          await db.ref('promotions/' + promoId + '/public/shortUrl').set(shortUrl);
+        } else if (item.type === 'token') {
+          await db.ref('one_time_tokens/' + item.id + '/shortUrl').set(shortUrl);
+        }
+        shortenerQueue.shift(); // Success
+      } catch (err) {
+        console.error("Auto shorten failed for " + item.id, err);
+        shortenerQueue.shift(); // Skip on failure to prevent blocking
+      }
+      setTimeout(function() {
+        isShortening = false;
+        processShortenerQueue();
+      }, 1000); // 1 second delay
+    }
   </script>
 </body>
 </html>
