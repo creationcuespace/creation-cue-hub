@@ -819,10 +819,19 @@
     auth.onAuthStateChanged(function(user) {
       if (!user) {
         document.getElementById('loading-msg').textContent = "Authenticating guest session...";
-        auth.signInAnonymously().catch(function(error) {
+        
+        var authTimeout = setTimeout(function() {
+          showState('error');
+          document.getElementById('error-msg').textContent = "Connection timeout. Your network or Ad Blocker may be blocking secure connections.";
+        }, 8000);
+        
+        auth.signInAnonymously().then(function() {
+          clearTimeout(authTimeout);
+        }).catch(function(error) {
+          clearTimeout(authTimeout);
           console.error("Anonymous auth failed", error);
           showState('error');
-          document.getElementById('error-msg').textContent = "Failed to connect securely. Please reload.";
+          document.getElementById('error-msg').textContent = "Failed to connect securely. Please reload or disable Ad Blockers.";
         });
       } else {
         currentUser = user;
@@ -889,7 +898,15 @@
             
             renderPromotion();
             checkUserClaim();
+          }, function(error) {
+            showState('error');
+            document.getElementById('error-msg').textContent = "Connection blocked. Please disable Ad Blockers or VPNs and reload.";
+            console.error(error);
           });
+        }, function(error) {
+          showState('error');
+          document.getElementById('error-msg').textContent = "Connection blocked. Please disable Ad Blockers or VPNs and reload.";
+          console.error("Firebase read failed:", error);
         });
       } else {
         // Public claim flow
