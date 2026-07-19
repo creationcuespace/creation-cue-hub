@@ -828,7 +828,7 @@
         var authTimeout = setTimeout(function() {
           showState('error');
           document.getElementById('error-title').textContent = "Connection Error";
-          document.getElementById('error-msg').textContent = "Connection timeout. Your network or Ad Blocker may be blocking secure connections.";
+          document.getElementById('error-msg').textContent = "Connection timeout. Your network, Ad Blocker, or in-app browser may be blocking secure connections. Please try opening this link in a standard browser like Chrome or Safari.";
         }, 8000);
         
         auth.signInAnonymously().then(function() {
@@ -838,7 +838,7 @@
           console.error("Anonymous auth failed", error);
           showState('error');
           document.getElementById('error-title').textContent = "Connection Blocked";
-          document.getElementById('error-msg').textContent = "Failed to connect securely. Please reload or disable Ad Blockers.";
+          document.getElementById('error-msg').textContent = "Failed to connect securely. Please disable Ad Blockers or open this link in a standard browser like Chrome or Safari.";
         });
       } else {
         currentUser = user;
@@ -862,7 +862,7 @@
         if (!promoData && !tokenData) {
           showState('error');
           document.getElementById('error-title').textContent = "Connection Error";
-          document.getElementById('error-msg').textContent = "Database connection timed out. Please disable Ad Blockers, VPNs, or strict network firewalls and reload.";
+          document.getElementById('error-msg').textContent = "Database connection timed out. Please disable Ad Blockers, or open this link in a standard browser like Chrome or Safari.";
         }
       }, 10000);
       
@@ -917,13 +917,13 @@
           }, function(error) {
             showState('error');
             document.getElementById('error-title').textContent = "Connection Blocked";
-            document.getElementById('error-msg').textContent = "Connection blocked. Please disable Ad Blockers or VPNs and reload.";
+            document.getElementById('error-msg').textContent = "Connection blocked. Please disable Ad Blockers, or open this link in a standard browser like Chrome or Safari.";
             console.error(error);
           });
         }, function(error) {
           showState('error');
           document.getElementById('error-title').textContent = "Connection Blocked";
-          document.getElementById('error-msg').textContent = "Connection blocked. Please disable Ad Blockers or VPNs and reload.";
+          document.getElementById('error-msg').textContent = "Connection blocked. Please disable Ad Blockers, or open this link in a standard browser like Chrome or Safari.";
           console.error("Firebase read failed:", error);
         });
       } else {
@@ -953,7 +953,7 @@
           console.error(err);
           showState('error');
           document.getElementById('error-title').textContent = "Connection Blocked";
-          document.getElementById('error-msg').textContent = "Connection blocked. Please disable Ad Blockers or VPNs and reload.";
+          document.getElementById('error-msg').textContent = "Connection blocked. Please disable Ad Blockers, or open this link in a standard browser like Chrome or Safari.";
         });
       }
     }
