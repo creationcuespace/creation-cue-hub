@@ -1,4 +1,16 @@
 {
-  "lastUpdated": "2026-07-18T03:17:56.456Z",
-  "reviews": []
+  "lastUpdated": "2026-07-19T03:38:39.921Z",
+  "reviews": [
+    {
+      "reviewId": "58235656-a8d8-4257-a283-25cadc5b509d",
+      "packageName": "com.creation.cue133watchface",
+      "title": "Watch Face CUE133",
+      "wfId": "cue133",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "r13s (Galaxy S25 FE)",
+      "text": "\tOh brilliant so much to love about this design. The color choices is awesome. It just all around a perfect watch face for everyone to love and have in yoir collection. Thank you for a beautiful design.",
+      "lastModified": "2026-07-18T18:34:36.000Z"
+    }
+  ]
 }
