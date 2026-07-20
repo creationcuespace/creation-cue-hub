@@ -990,6 +990,22 @@
       animation: pulse-badge 1.5s infinite cubic-bezier(0.66, 0, 0, 1);
     }
 
+    @keyframes ring-bell {
+      0% { transform: rotate(0); }
+      10% { transform: rotate(20deg); }
+      20% { transform: rotate(-15deg); }
+      30% { transform: rotate(10deg); }
+      40% { transform: rotate(-10deg); }
+      50% { transform: rotate(5deg); }
+      60% { transform: rotate(0); }
+      100% { transform: rotate(0); }
+    }
+
+    .ringing {
+      animation: ring-bell 2s ease infinite;
+      transform-origin: top center;
+    }
+
     .details-header {
       padding: 16px 20px;
       border-bottom: 1px solid var(--border);
@@ -1975,7 +1991,7 @@
       
       <!-- Notification Bell -->
       <button class="header-btn" style="position: relative; display: flex; align-items: center; justify-content: center; padding: 0 12px; transition: all 0.2s;" onclick="openReviewsPanel()" title="Unreplied Reviews" id="reviews-bell-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        <svg id="reviews-bell-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
         <span id="reviews-badge" class="pulse-badge" style="display: none; position: absolute; top: -4px; right: -4px; background: var(--danger); color: white; font-size: 11px; font-weight: bold; border-radius: 50%; min-width: 20px; height: 20px; align-items: center; justify-content: center; border: 2px solid var(--dark);">0</span>
       </button>
 
@@ -2488,10 +2504,12 @@
               badge.textContent = unrepliedReviews.length;
               badge.style.display = 'flex';
               if (bellBtn) {
-                bellBtn.style.background = 'var(--danger)';
-                bellBtn.style.color = 'white';
+                bellBtn.style.background = 'rgba(239, 68, 68, 0.15)';
+                bellBtn.style.color = 'var(--danger)';
                 bellBtn.style.borderRadius = '6px';
-                bellBtn.classList.add('pulse-badge');
+                bellBtn.classList.remove('pulse-badge');
+                const bellIcon = document.getElementById('reviews-bell-icon');
+                if (bellIcon) bellIcon.classList.add('ringing');
               }
             } else {
               badge.style.display = 'none';
@@ -2500,6 +2518,8 @@
                 bellBtn.style.color = '';
                 bellBtn.style.borderRadius = '';
                 bellBtn.classList.remove('pulse-badge');
+                const bellIcon = document.getElementById('reviews-bell-icon');
+                if (bellIcon) bellIcon.classList.remove('ringing');
               }
             }
           }
@@ -4233,6 +4253,8 @@
                   bellBtn.style.color = 'var(--text-muted)';
                   bellBtn.style.borderRadius = '';
                   bellBtn.classList.remove('pulse-badge');
+                  const bellIcon = document.getElementById('reviews-bell-icon');
+                  if (bellIcon) bellIcon.classList.remove('ringing');
                 }
               }
             }
