@@ -2453,6 +2453,9 @@
 
     async function initDashboard() {
       try {
+        // Load GitHub Config first so fetchLiveData can use the API immediately
+        loadGithubConfig();
+
         // Load manager.json
         const managerJson = await fetchLiveData('manager.json');
         managerData = managerJson.watch_faces || [];
@@ -2552,9 +2555,6 @@
             if (mainBody) mainBody.prepend(warning);
           }
         });
-
-        // Load GitHub Config
-        loadGithubConfig();
 
       } catch (err) {
         console.error("Dashboard initialization error:", err);
