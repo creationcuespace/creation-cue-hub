@@ -2330,7 +2330,11 @@
         </div>
         <div class="github-form-group">
           <label class="github-form-label">GitHub Personal Access Token (PAT)</label>
-          <input type="password" id="gh-token" class="github-form-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxx">
+          <div style="display: flex; gap: 8px;">
+            <input type="password" id="gh-token" class="github-form-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxx" style="flex: 1;">
+            <button onclick="navigator.clipboard.writeText(document.getElementById('gh-token').value); showToast('Token copied to clipboard!');" style="background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 0 12px; border-radius: 6px; cursor: pointer;" title="Copy Token">📋 Copy</button>
+            <button onclick="const tokenInput = document.getElementById('gh-token'); tokenInput.type = tokenInput.type === 'password' ? 'text' : 'password';" style="background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 0 12px; border-radius: 6px; cursor: pointer;" title="Show/Hide Token">👁️</button>
+          </div>
           <div style="font-size: 10px; color: var(--muted); margin-top: 4px;">
             Required scopes: <strong>repo</strong> or <strong>actions:write</strong>.
           </div>
