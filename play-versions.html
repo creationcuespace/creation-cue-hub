@@ -2453,11 +2453,17 @@
           const res = await fetch(url, {
             headers: {
               'Authorization': `Bearer ${githubConfig.token}`,
-              'Accept': 'application/vnd.github.v3.raw'
+              'Accept': 'application/vnd.github.v3+json'
             }
           });
           if (res.ok) {
-            return await res.json();
+            const data = await res.json();
+            if (data && data.content && data.encoding === 'base64') {
+              // Decode base64 to utf-8 text using browser atob + escape trick
+              const decodedText = decodeURIComponent(escape(atob(data.content)));
+              return JSON.parse(decodedText);
+            }
+            return data;
           }
         } catch(e) {
           console.warn(`Failed to fetch ${filename} from GitHub API, falling back to local`, e);
