@@ -981,13 +981,13 @@
     }
 
     @keyframes pulse-badge {
-      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-      70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.9); }
+      50% { transform: scale(1.25); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
       100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
     
     .pulse-badge {
-      animation: pulse-badge 2s infinite;
+      animation: pulse-badge 1.5s infinite cubic-bezier(0.66, 0, 0, 1);
     }
 
     .details-header {
@@ -1976,7 +1976,7 @@
       <!-- Notification Bell -->
       <button class="header-btn" style="position: relative; display: flex; align-items: center; justify-content: center; padding: 0 12px; transition: color 0.2s;" onclick="openReviewsPanel()" title="Unreplied Reviews" id="reviews-bell-btn">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-        <span id="reviews-badge" class="pulse-badge" style="display: none; position: absolute; top: -2px; right: -2px; background: var(--danger); color: white; font-size: 11px; font-weight: bold; border-radius: 50%; min-width: 18px; height: 18px; align-items: center; justify-content: center; border: 2px solid var(--dark);">0</span>
+        <span id="reviews-badge" class="pulse-badge" style="display: none; position: absolute; top: -6px; right: -6px; background: var(--danger); color: white; font-size: 13px; font-weight: bold; border-radius: 50%; min-width: 22px; height: 22px; align-items: center; justify-content: center; border: 2px solid var(--dark); padding-bottom: 1px;">0</span>
       </button>
 
       <span style="font-size: 10px; font-weight: 700; color: var(--yellow); background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.3); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.9;">v2.1</span>
