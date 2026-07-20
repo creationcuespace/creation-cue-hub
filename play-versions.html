@@ -3379,14 +3379,17 @@
 
     const CURRENT_PAGE_VERSION = "1.0.8";
 
-    // Load GitHub Config from Database
+    // Load GitHub Config from Local Storage
     function loadGithubConfig() {
-      db.ref('github_config').once('value').then(snapshot => {
-        githubConfig = snapshot.val();
+      try {
+        const stored = localStorage.getItem('github_config');
+        if (stored) {
+          githubConfig = JSON.parse(stored);
+        }
         checkGithubSyncStatus();
-      }).catch(err => {
-        console.warn("Could not load github_config:", err);
-      });
+      } catch (err) {
+        console.warn("Could not parse local github_config:", err);
+      }
     }
 
     // Query GitHub REST API to see if the repo's play-versions.html matches CURRENT_PAGE_VERSION
@@ -3501,13 +3504,14 @@
       }
 
       const config = { repo, branch, token };
-      db.ref('github_config').set(config).then(() => {
+      try {
+        localStorage.setItem('github_config', JSON.stringify(config));
         githubConfig = config;
         closeGithubModal();
-        alert("GitHub Integration Settings Saved successfully!");
-      }).catch(err => {
-        alert("Failed to save settings: " + err.message);
-      });
+        alert("GitHub Integration Settings Saved successfully to your device!");
+      } catch(err) {
+        alert("Failed to save settings to local storage: " + err.message);
+      }
     });
 
     // Cloud Update Trigger (All)
