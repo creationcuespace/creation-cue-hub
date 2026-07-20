@@ -1,16 +1,4 @@
 {
   "lastUpdated": "2026-07-20T03:55:34.841Z",
-  "reviews": [
-    {
-      "reviewId": "f762d48b-457f-4f18-89ec-5f5d36b165f3",
-      "packageName": "com.creation.cue136watchface",
-      "title": "Analog Watch Face CUE136",
-      "wfId": "cue136",
-      "starRating": 5,
-      "reviewerLanguage": "es",
-      "deviceMetadata": "r8q (Galaxy S20 FE 5G)",
-      "text": "\tbonito y funcional",
-      "lastModified": "2026-07-19T18:50:47.000Z"
-    }
-  ]
+  "reviews": []
 }
