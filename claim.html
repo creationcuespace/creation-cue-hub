@@ -979,7 +979,7 @@
       var indicator = document.getElementById('status-indicator-dot');
       
       if (statusPill) {
-        statusPill.style.display = 'inline-flex';
+        statusPill.style.display = isTokenClaim ? 'none' : 'inline-flex';
       }
       
       if (remaining === 0) {
