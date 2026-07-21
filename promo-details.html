@@ -1039,8 +1039,7 @@
       var total = promoData.totalCoupons || 0;
       var claimed = promoData.claimedCount || 0;
       var cap = promoData.claimsCap || 0;
-      var allowedMax = (cap && cap > 0) ? Math.min(cap, total) : total;
-      var remaining = Math.max(0, allowedMax - claimed);
+      var remaining = Math.max(0, total - claimed);
 
       document.getElementById('lbl-stat-total').textContent = total;
       document.getElementById('lbl-stat-cap').textContent = cap && cap > 0 ? cap : 'None';

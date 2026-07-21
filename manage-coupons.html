@@ -1539,8 +1539,7 @@ AAAA-BBBB-CCCC"></textarea>
         var total = promo.totalCoupons || 0;
         var claimed = promo.claimedCount || 0;
         var cap = promo.claimsCap || 0;
-        var allowedMax = (cap && cap > 0) ? Math.min(cap, total) : total;
-        var remaining = Math.max(0, allowedMax - claimed);
+        var remaining = Math.max(0, total - claimed);
 
         if (!window.promoCache) window.promoCache = {};
         window.promoCache[key] = promo; // Store full promo details in cache
