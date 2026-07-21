@@ -256,7 +256,7 @@ function cleanXmlLink(link) {
 // Gemini REST request
 function generateArticleWithGemini(newsItems, watchFacesList, customTopic) {
     return new Promise((resolve, reject) => {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
         
         const contextHeadlines = newsItems.map((n, i) => `[${i+1}] Title: "${n.title}"\nUrl: "${n.link}"`).join('\n\n');
         
@@ -349,7 +349,7 @@ Respond ONLY with the JSON object. Do not include markdown code block syntax.`;
 // Fallback Mock Article Generator
 function generateSuggestionsWithGemini(newsItems, customTopic) {
     return new Promise((resolve, reject) => {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
         const contextHeadlines = newsItems.map((n, i) => `[${i+1}] Title: "${n.title}"\nUrl: "${n.link}"`).join('\n\n');
 
         let instruction = `Based on the news above, suggest 4 highly relevant, interesting blog article topics.
