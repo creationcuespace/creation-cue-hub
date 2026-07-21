@@ -223,7 +223,8 @@ Review the following recent Wear OS news headlines and forum topics:
 
 ${contextHeadlines}
 
-Write an engaging blog article (around 200-300 words) that discusses 1-2 major announcements, trends, or community issues from the topics above, analyzing what they mean for smartwatch customization.
+Write a short, engaging blog article (around 150-200 words) that discusses 1-2 MAJOR tech announcements or high-value trends from the topics above (e.g., major hardware releases like Samsung Galaxy Watch Ultra, Google Pixel Watch, or Wear OS system updates). 
+CRITICAL: Completely IGNORE and filter out any topics related to scams (e.g., Vienna studios), low-quality developer drama, or irrelevant forum spam. Only focus on high-value news that matters to smartwatch users, and analyze what it means for customization.
 
 Tone and Style Guidelines (CRITICAL for human writing style):
 1. Write with LESS WORDS and MORE MEANING. Be extremely concise. Get straight to the point without fluffy introductions or padding.
