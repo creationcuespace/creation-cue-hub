@@ -284,7 +284,11 @@
                     </div>
                     <div style="display: flex; gap: 6px;">
                         <input type="text" id="ai-topic-input" placeholder="e.g. Samsung Watch Ultra 2" style="flex: 1; padding: 4px 8px; font-size: 11px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--surface-color); color: white;">
+                        <button class="btn" style="padding: 4px 10px; font-size: 11px; width: auto; background: var(--border-color); color: white;" onclick="triggerSuggestions()" title="Get 4 topic suggestions">Suggest</button>
                         <button class="btn" style="padding: 4px 10px; font-size: 11px; width: auto;" onclick="triggerAIGenerator()" title="Manually trigger the AI to generate a new draft">Generate</button>
+                    </div>
+                    <div id="ai-suggestions-container" style="display: none; flex-direction: column; gap: 6px; margin-top: 4px;">
+                        <!-- suggestions will be injected here -->
                     </div>
                 </div>
                 <div id="drafts-list-container">
@@ -430,6 +434,86 @@
                 throw new Error(errData.message || `GitHub API error: ${res.status}`);
             }
             return true;
+        }
+
+        async function fetchSuggestions() {
+            try {
+                const data = await ghApi(`/contents/blog/suggestions.json?ref=main&t=${Date.now()}`);
+                return JSON.parse(b64DecodeUnicode(data.content));
+            } catch (e) {
+                return null;
+            }
+        }
+
+        async function triggerSuggestions() {
+            const topicInput = document.getElementById('ai-topic-input');
+            const topic = topicInput ? topicInput.value.trim() : '';
+            
+            showStatus('Fetching news & suggesting topics...');
+            try {
+                let sha = null;
+                try {
+                    const existing = await ghApi(`/contents/blog/CUSTOM_TOPIC.txt?ref=main`);
+                    sha = existing.sha;
+                } catch (e) {}
+                await ghPutFile('blog/CUSTOM_TOPIC.txt', `REQUEST_SUGGESTIONS: ${topic}`, 'chore: request AI topic suggestions', sha);
+
+                const currentData = await fetchSuggestions();
+                const oldTimestamp = currentData ? currentData.timestamp : 0;
+
+                const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/blog-generator.yml/dispatches`;
+                await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${GH_PAT}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json',
+                        'X-GitHub-Api-Version': '2022-11-28'
+                    },
+                    body: JSON.stringify({ ref: 'main' })
+                });
+
+                let attempts = 0;
+                let newData = null;
+                while (attempts < 12) {
+                    await new Promise(r => setTimeout(r, 5000));
+                    newData = await fetchSuggestions();
+                    if (newData && newData.timestamp !== oldTimestamp) {
+                        break;
+                    }
+                    attempts++;
+                }
+
+                if (newData && newData.timestamp !== oldTimestamp) {
+                    renderSuggestions(newData.suggestions);
+                } else {
+                    alert('Timed out waiting for suggestions. The GitHub action might still be running, check back in a minute.');
+                }
+            } catch (err) {
+                alert('Failed to fetch suggestions: ' + err.message);
+            } finally {
+                hideStatus();
+            }
+        }
+
+        function renderSuggestions(suggestions) {
+            const container = document.getElementById('ai-suggestions-container');
+            container.innerHTML = '';
+            container.style.display = 'flex';
+            
+            suggestions.forEach((s, idx) => {
+                const div = document.createElement('div');
+                div.style.cssText = 'padding: 8px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 11px; cursor: pointer; transition: background 0.2s; background: rgba(255,255,255,0.05);';
+                div.innerHTML = `<strong>${idx+1}.</strong> ${s.topic}`;
+                div.onclick = () => {
+                    document.getElementById('ai-topic-input').value = s.topic;
+                    container.style.display = 'none';
+                    triggerAIGenerator();
+                };
+                div.onmouseover = () => div.style.background = 'rgba(255,255,255,0.1)';
+                div.onmouseout = () => div.style.background = 'rgba(255,255,255,0.05)';
+                container.appendChild(div);
+            });
         }
 
         async function triggerAIGenerator() {

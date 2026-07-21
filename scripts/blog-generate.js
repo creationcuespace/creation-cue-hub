@@ -17,6 +17,26 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 async function main() {
     console.log('--- Starting Wear OS Blog Generator ---');
     
+    let customTopic = '';
+    let isSuggestMode = false;
+    const topicPath = path.join(__dirname, '../blog/CUSTOM_TOPIC.txt');
+    if (fs.existsSync(topicPath)) {
+        try {
+            customTopic = fs.readFileSync(topicPath, 'utf8').trim();
+            fs.unlinkSync(topicPath);
+            
+            if (customTopic.startsWith('REQUEST_SUGGESTIONS:')) {
+                isSuggestMode = true;
+                customTopic = customTopic.replace('REQUEST_SUGGESTIONS:', '').trim();
+                console.log(`Suggest Mode Enabled. Topic filter: "${customTopic}"`);
+            } else {
+                console.log(`Found custom topic file with request: "${customTopic}"`);
+            }
+        } catch (e) {
+            console.warn('Error reading or deleting custom topic file:', e);
+        }
+    }
+
     // 1. Fetch news from RSS sources
     console.log('Fetching RSS feeds...');
     const newsItems = [];
@@ -41,6 +61,33 @@ async function main() {
         .slice(0, 15); // Top 15 articles to feed Gemini
 
     console.log(`Selected ${filteredNews.length} articles for synthesis.`);
+
+    if (isSuggestMode) {
+        console.log('Generating suggestions using Gemini API...');
+        let suggestions = [];
+        if (GEMINI_API_KEY) {
+            try {
+                suggestions = await generateSuggestionsWithGemini(filteredNews, customTopic);
+            } catch (err) {
+                console.error('Gemini API call failed:', err.message);
+            }
+        }
+        if (!suggestions || suggestions.length === 0) {
+            suggestions = [
+                { topic: "The upcoming Samsung Galaxy Watch Ultra 2 features and expectations." },
+                { topic: "How the latest Wear OS update improves battery life." },
+                { topic: "Best new classic watch faces for 2026." },
+                { topic: "Google Pixel Watch 3 vs Samsung Watch 7 design comparison." }
+            ];
+        }
+        const outputDir = path.join(__dirname, '../blog');
+        const outputPath = path.join(outputDir, 'suggestions.json');
+        const outData = { timestamp: Date.now(), suggestions: suggestions };
+        fs.writeFileSync(outputPath, JSON.stringify(outData, null, 2), 'utf8');
+        console.log(`Successfully wrote ${suggestions.length} suggestions to: ${outputPath}`);
+        console.log('--- Suggestion Mode Complete ---');
+        return; // Early exit
+    }
 
     // Load watch faces catalog from manager.json
     const managerPath = path.join(__dirname, '../manager.json');
@@ -218,18 +265,6 @@ function generateArticleWithGemini(newsItems, watchFacesList) {
             catalogText = watchFacesList.map(f => `- Name: "${f.title}", ID: "${f.id}", Cover Image URL: "${f.image_url}", Description: "${f.description}"`).join('\n');
         }
 
-        let customTopic = '';
-        const topicPath = path.join(__dirname, '../blog/CUSTOM_TOPIC.txt');
-        if (fs.existsSync(topicPath)) {
-            try {
-                customTopic = fs.readFileSync(topicPath, 'utf8').trim();
-                fs.unlinkSync(topicPath);
-                console.log(`Found custom topic file with request: "${customTopic}"`);
-            } catch (e) {
-                console.warn('Error reading or deleting custom topic file:', e);
-            }
-        }
-
         let topicInstruction = `Write a short, engaging blog article (around 150-200 words) that discusses 1-2 MAJOR tech announcements or high-value trends from the topics above (e.g., major hardware releases like Samsung Galaxy Watch Ultra, Google Pixel Watch, or Wear OS system updates). 
 CRITICAL: Completely IGNORE and filter out any topics related to scams (e.g., Vienna studios), low-quality developer drama, or irrelevant forum spam. Only focus on high-value news that matters to smartwatch users, and analyze what it means for customization.`;
 
@@ -313,6 +348,59 @@ Respond ONLY with the JSON object. Do not include markdown code block syntax.`;
 }
 
 // Fallback Mock Article Generator
+function generateSuggestionsWithGemini(newsItems, customTopic) {
+    return new Promise((resolve, reject) => {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+        const contextHeadlines = newsItems.map((n, i) => `[${i+1}] Title: "${n.title}"\nUrl: "${n.link}"`).join('\n\n');
+
+        let instruction = `Based on the news above, suggest 4 highly relevant, interesting blog article topics about Wear OS, smartwatches (like Samsung Galaxy Watch Ultra, Google Pixel Watch), and watch faces. Focus on big brands and major news. Ignore scams, drama, or spam.`;
+        
+        if (customTopic) {
+            instruction = `The user is interested in the following broad topic: "${customTopic}". Based on this, suggest 4 specific, highly relevant blog article topics. You can use the news headlines above if they relate to this topic, but focus primarily on the user's interest.`;
+        }
+
+        const prompt = `You are a professional technology writer.
+Review the following recent Wear OS news headlines:
+
+${contextHeadlines}
+
+${instruction}
+
+Your response MUST be a JSON array of 4 strings, where each string is a clear, specific topic instruction that can be fed back to you later to write a full article. (e.g. ["An article discussing the battery improvements in the Samsung Watch Ultra 2", "A guide to the new Wear OS 5 watch face format", "Google Pixel Watch 3 rumored specifications"])
+
+Respond ONLY with the JSON array. Do not include markdown code block syntax.`;
+
+        const requestBody = JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.7, topP: 0.9 }
+        });
+
+        const req = https.request(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(requestBody) }
+        }, (res) => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => {
+                if (res.statusCode !== 200) return reject(new Error(`API Error ${res.statusCode}: ${data}`));
+                try {
+                    const parsed = JSON.parse(data);
+                    let text = parsed.candidates[0].content.parts[0].text.trim();
+                    if (text.startsWith('```json')) text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+                    const suggestionsArr = JSON.parse(text);
+                    resolve(suggestionsArr.map(s => ({ topic: s })));
+                } catch (e) {
+                    reject(new Error(`Failed to parse Gemini response: ${e.message}\nResponse: ${data}`));
+                }
+            });
+        });
+
+        req.on('error', err => reject(err));
+        req.write(requestBody);
+        req.end();
+    });
+}
+
 function generateMockArticle() {
     return {
         title: 'New Wear OS Upgrades focus on Battery & Design customization',
