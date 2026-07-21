@@ -116,7 +116,7 @@ async function main() {
             blogData = await generateArticleWithGemini(filteredNews, watchFacesList);
         } catch (err) {
             console.error('Gemini API call failed, falling back to mock generator:', err.message);
-            blogData = generateMockArticle();
+            blogData = generateMockArticle(`API Error: ${err.message.substring(0, 50)}...`);
         }
     } else {
         console.log('GEMINI_API_KEY environment variable not found. Generating mock draft...');
@@ -256,7 +256,7 @@ function cleanXmlLink(link) {
 // Gemini REST request
 function generateArticleWithGemini(newsItems, watchFacesList) {
     return new Promise((resolve, reject) => {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
         
         const contextHeadlines = newsItems.map((n, i) => `[${i+1}] Title: "${n.title}"\nUrl: "${n.link}"`).join('\n\n');
         
@@ -349,7 +349,7 @@ Respond ONLY with the JSON object. Do not include markdown code block syntax.`;
 // Fallback Mock Article Generator
 function generateSuggestionsWithGemini(newsItems, customTopic) {
     return new Promise((resolve, reject) => {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
         const contextHeadlines = newsItems.map((n, i) => `[${i+1}] Title: "${n.title}"\nUrl: "${n.link}"`).join('\n\n');
 
         let instruction = `Based on the news above, suggest 4 highly relevant, interesting blog article topics.
@@ -403,9 +403,9 @@ Respond ONLY with the JSON array. Do not include markdown code block syntax.`;
     });
 }
 
-function generateMockArticle() {
+function generateMockArticle(errorMsg) {
     return {
-        title: 'New Wear OS Upgrades focus on Battery & Design customization',
+        title: errorMsg || 'New Wear OS Upgrades focus on Battery & Design customization',
         excerpt: 'Google just announced major refinements to the Watch Face Format, offering designers and users much better battery life and richer complication options.',
         readTime: '3 min',
         thumbnail: 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue178.png',
