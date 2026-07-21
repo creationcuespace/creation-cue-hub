@@ -113,7 +113,7 @@ async function main() {
     if (GEMINI_API_KEY) {
         try {
             console.log('Generating article content using Gemini API...');
-            blogData = await generateArticleWithGemini(filteredNews, watchFacesList);
+            blogData = await generateArticleWithGemini(filteredNews, watchFacesList, customTopic);
         } catch (err) {
             console.error('Gemini API call failed, falling back to mock generator:', err.message);
             blogData = generateMockArticle(`API Error: ${err.message.substring(0, 50)}...`);
@@ -254,7 +254,7 @@ function cleanXmlLink(link) {
 }
 
 // Gemini REST request
-function generateArticleWithGemini(newsItems, watchFacesList) {
+function generateArticleWithGemini(newsItems, watchFacesList, customTopic) {
     return new Promise((resolve, reject) => {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
         
