@@ -306,10 +306,7 @@ Respond ONLY with the JSON object. Do not include markdown code block syntax.`;
         const requestBody = JSON.stringify({
             contents: [{
                 parts: [{ text: prompt }]
-            }],
-            generationConfig: {
-                responseMimeType: 'application/json'
-            }
+            }]
         });
 
         const req = https.request(url, {
@@ -317,7 +314,7 @@ Respond ONLY with the JSON object. Do not include markdown code block syntax.`;
             headers: {
                 'Content-Type': 'application/json'
             },
-            timeout: 30000 // 30 seconds timeout
+            timeout: 60000 // 60 seconds timeout
         }, (res) => {
             let data = '';
             res.on('data', chunk => data += chunk);
