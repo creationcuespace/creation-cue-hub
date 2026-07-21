@@ -330,7 +330,54 @@
         </div>
     </div>
 
+    <!-- Custom Modal UI -->
+    <div id="custom-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+        <div class="panel" style="max-width: 400px; width: 90%; margin: 0; text-align: center; border: 1px solid var(--border-color); box-shadow: 0 10px 40px rgba(0,0,0,0.8);">
+            <div id="custom-modal-message" style="font-size: 14px; color: white; margin-bottom: 24px; line-height: 1.5; font-weight: 500;"></div>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button id="custom-modal-cancel" class="btn" style="display: none; background: rgba(255,255,255,0.1); color: white;">Cancel</button>
+                <button id="custom-modal-ok" class="btn" style="background: var(--primary); color: #000;">OK</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        window.customAlert = function(msg) {
+            return new Promise((resolve) => {
+                document.getElementById('custom-modal-message').innerText = msg;
+                document.getElementById('custom-modal-cancel').style.display = 'none';
+                const okBtn = document.getElementById('custom-modal-ok');
+                const overlay = document.getElementById('custom-modal-overlay');
+                
+                overlay.style.display = 'flex';
+                okBtn.onclick = () => {
+                    overlay.style.display = 'none';
+                    resolve();
+                };
+            });
+        };
+
+        window.customConfirm = function(msg) {
+            return new Promise((resolve) => {
+                document.getElementById('custom-modal-message').innerText = msg;
+                const cancelBtn = document.getElementById('custom-modal-cancel');
+                cancelBtn.style.display = 'block';
+                const okBtn = document.getElementById('custom-modal-ok');
+                const overlay = document.getElementById('custom-modal-overlay');
+                
+                overlay.style.display = 'flex';
+                
+                okBtn.onclick = () => {
+                    overlay.style.display = 'none';
+                    resolve(true);
+                };
+                cancelBtn.onclick = () => {
+                    overlay.style.display = 'none';
+                    resolve(false);
+                };
+            });
+        };
+
         let quillEditor;
 
         // --- GITHUB API CLIENT ---
@@ -353,7 +400,7 @@
             if (GH_PAT) {
                 loadExistingPosts();
             } else {
-                alert('A valid GitHub PAT is required to manage posts.');
+                window.customAlert('A valid GitHub PAT is required to manage posts.');
             }
         }
 
@@ -392,7 +439,8 @@
 
         async function ghGetFile(path) {
             try {
-                const data = await ghApi(`/contents/${path}?ref=${BRANCH}`);
+                const t = new Date().getTime();
+                const data = await ghApi(`/contents/${path}?ref=${BRANCH}&t=${t}`);
                 return { content: b64DecodeUnicode(data.content), sha: data.sha };
             } catch (e) {
                 if (e.message.includes('Not Found')) return null;
@@ -494,10 +542,10 @@
                 if (newData && newData.timestamp !== oldTimestamp) {
                     renderSuggestions(newData.suggestions, newData.timestamp);
                 } else {
-                    alert('Timed out waiting for suggestions. The GitHub action might still be running, check back in a minute.');
+                    await window.customAlert('Timed out waiting for suggestions. The GitHub action might still be running, check back in a minute.');
                 }
             } catch (err) {
-                alert('Failed to fetch suggestions: ' + err.message);
+                await window.customAlert('Failed to fetch suggestions: ' + err.message);
             } finally {
                 hideStatus();
             }
@@ -575,14 +623,15 @@
             const topicInput = document.getElementById('ai-topic-input');
             const topic = topicInput ? topicInput.value.trim() : '';
             
-            if (!confirm('This will trigger the AI to generate a new draft. This takes about 30-45 seconds. Proceed?')) return;
+            if (!(await window.customConfirm('This will trigger the AI to generate a new draft. This takes about 30-45 seconds. Proceed?'))) return;
             
             try {
                 if (topic) {
                     showStatus('Saving custom topic...');
                     let sha = null;
                     try {
-                        const existing = await ghApi(`/contents/blog/CUSTOM_TOPIC.txt?ref=main`);
+                        const t = new Date().getTime();
+                        const existing = await ghApi(`/contents/blog/CUSTOM_TOPIC.txt?ref=main&t=${t}`);
                         sha = existing.sha;
                     } catch (e) {}
                     await ghPutFile('blog/CUSTOM_TOPIC.txt', topic, 'chore: set custom AI topic', sha);
@@ -590,10 +639,10 @@
                 
                 showStatus('Triggering AI Generator...');
                 await ghDispatchWorkflow();
-                alert('Success! The AI is generating a draft right now. Please refresh this page in about 30-45 seconds to see it under Pending AI Drafts.');
+                await window.customAlert('Success! The AI is generating a draft right now. Please refresh this page in about 30-45 seconds to see it under Pending AI Drafts.');
                 if (topicInput) topicInput.value = '';
             } catch (err) {
-                alert('Failed to trigger AI generator: ' + err.message);
+                await window.customAlert('Failed to trigger AI generator: ' + err.message);
             } finally {
                 hideStatus();
             }
@@ -813,7 +862,7 @@
                 }
             } catch(e) { 
                 console.error('Error loading posts:', e); 
-                alert('Failed to load posts from GitHub. Check your PAT and internet connection.');
+                await window.customAlert('Failed to load posts from GitHub. Check your PAT and internet connection.');
             }
         }
 
@@ -869,7 +918,7 @@
                 document.getElementById('editor-panel-title').scrollIntoView({ behavior: 'smooth' });
             } catch(e) {
                 hideStatus();
-                alert('Error loading article content: ' + e.message);
+                await window.customAlert('Error loading article content: ' + e.message);
             }
         }
 
@@ -885,14 +934,14 @@
         }
 
         async function publishPost() {
-            if(!GH_PAT) { alert('GitHub PAT required.'); return; }
+            if(!GH_PAT) { await window.customAlert('GitHub PAT required.'); return; }
             var originalSlug = document.getElementById('original-slug').value;
             var title = document.getElementById('post-title').value.trim();
             var excerpt = document.getElementById('post-excerpt').value.trim();
             var thumbnail = document.getElementById('post-face-select').value;
             var pinned = document.getElementById('post-pinned').checked;
             var content = quillEditor.root.innerHTML.trim();
-            if (!title || !excerpt || !content) { alert('Please fill out all fields before publishing!'); return; }
+            if (!title || !excerpt || !content) { await window.customAlert('Please fill out all fields before publishing!'); return; }
             
             showStatus('Publishing to GitHub...', 'Saving markdown and updating posts.json');
             try {
@@ -956,19 +1005,19 @@
                 await ghPutFile('blog/posts.json', JSON.stringify(posts, null, 2), `Update posts registry for ${slug}`, postsSha);
 
                 hideStatus();
-                alert('SUCCESS! Article published live to GitHub!'); 
+                await window.customAlert('SUCCESS! Article published live to GitHub!'); 
                 cancelEditing(); 
                 loadExistingPosts();
             } catch(e) { 
                 hideStatus(); 
                 console.error(e);
-                alert('An error occurred: ' + e.message); 
+                await window.customAlert('An error occurred: ' + e.message); 
             }
         }
 
         async function deletePost(slug, isDraft) {
-            if(!GH_PAT) { alert('GitHub PAT required.'); return; }
-            if (!confirm('Are you sure you want to delete/discard this article permanently?')) return;
+            if(!GH_PAT) { await window.customAlert('GitHub PAT required.'); return; }
+            if (!(await window.customConfirm('Are you sure you want to delete/discard this article permanently?'))) return;
             showStatus('Deleting from GitHub...', 'Removing markdown and registry entry...');
             
             try {
@@ -990,13 +1039,13 @@
                 }
 
                 hideStatus();
-                alert('SUCCESS! Article deleted!'); 
+                await window.customAlert('SUCCESS! Article deleted!'); 
                 cancelEditing(); 
                 loadExistingPosts();
             } catch(e) { 
                 hideStatus(); 
                 console.error(e);
-                alert('An error occurred: ' + e.message); 
+                await window.customAlert('An error occurred: ' + e.message); 
             }
         }
 
@@ -1016,11 +1065,11 @@
             const urlInput = document.getElementById('preview-url-input');
             const url = urlInput.value.trim();
             if (!url) {
-                alert('Please paste a URL first!');
+                await window.customAlert('Please paste a URL first!');
                 return;
             }
             if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                alert('URL must start with http:// or https://');
+                await window.customAlert('URL must start with http:// or https://');
                 return;
             }
 
@@ -1077,10 +1126,10 @@
                 loader.style.display = 'none';
                 previewBox.style.display = 'block';
                 insertBtn.style.display = 'block';
-            } catch(e) {
-                console.error(e);
+            } catch (err) {
+                console.error(err);
+                await window.customAlert('Could not retrieve preview data automatically due to browser CORS limits. You can still paste standard markdown links manually.');
                 loader.style.display = 'none';
-                alert('Could not retrieve preview data automatically due to browser CORS limits. You can still paste standard markdown links manually.');
             }
         }
 
