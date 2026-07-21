@@ -218,13 +218,32 @@ function generateArticleWithGemini(newsItems, watchFacesList) {
             catalogText = watchFacesList.map(f => `- Name: "${f.title}", ID: "${f.id}", Cover Image URL: "${f.image_url}", Description: "${f.description}"`).join('\n');
         }
 
+        let customTopic = '';
+        const topicPath = path.join(__dirname, '../blog/CUSTOM_TOPIC.txt');
+        if (fs.existsSync(topicPath)) {
+            try {
+                customTopic = fs.readFileSync(topicPath, 'utf8').trim();
+                fs.unlinkSync(topicPath);
+                console.log(`Found custom topic file with request: "${customTopic}"`);
+            } catch (e) {
+                console.warn('Error reading or deleting custom topic file:', e);
+            }
+        }
+
+        let topicInstruction = `Write a short, engaging blog article (around 150-200 words) that discusses 1-2 MAJOR tech announcements or high-value trends from the topics above (e.g., major hardware releases like Samsung Galaxy Watch Ultra, Google Pixel Watch, or Wear OS system updates). 
+CRITICAL: Completely IGNORE and filter out any topics related to scams (e.g., Vienna studios), low-quality developer drama, or irrelevant forum spam. Only focus on high-value news that matters to smartwatch users, and analyze what it means for customization.`;
+
+        if (customTopic !== '') {
+            topicInstruction = `CRITICAL INSTRUCTION: The user has EXPLICITLY requested that you write an article about the following topic: "${customTopic}".
+You MUST write the article specifically about this topic. Use your own extensive internal knowledge to write about this, and use the provided headlines only if they are relevant to the user's topic. Ignore any headlines that are not relevant.`;
+        }
+
         const prompt = `You are a professional technology writer and developer writing for CreationCue, a premium Wear OS watch face design studio.
-Review the following recent Wear OS news headlines and forum topics:
+Review the following recent Wear OS news headlines and forum topics (if any):
 
 ${contextHeadlines}
 
-Write a short, engaging blog article (around 150-200 words) that discusses 1-2 MAJOR tech announcements or high-value trends from the topics above (e.g., major hardware releases like Samsung Galaxy Watch Ultra, Google Pixel Watch, or Wear OS system updates). 
-CRITICAL: Completely IGNORE and filter out any topics related to scams (e.g., Vienna studios), low-quality developer drama, or irrelevant forum spam. Only focus on high-value news that matters to smartwatch users, and analyze what it means for customization.
+${topicInstruction}
 
 Tone and Style Guidelines (CRITICAL for human writing style):
 1. Write with LESS WORDS and MORE MEANING. Be extremely concise. Get straight to the point without fluffy introductions or padding.
