@@ -450,10 +450,7 @@
         async function loadSuggestions() {
             const data = await fetchSuggestions();
             if (data && data.suggestions && data.suggestions.length > 0) {
-                const dismissed = localStorage.getItem('dismissed_suggestions');
-                if (dismissed != data.timestamp) {
-                    renderSuggestions(data.suggestions, data.timestamp);
-                }
+                renderSuggestions(data.suggestions, data.timestamp);
             }
         }
 
@@ -512,18 +509,53 @@
             const container = document.getElementById('ai-suggestions-container');
             container.innerHTML = '';
             
+            let dismissedData = JSON.parse(localStorage.getItem('dismissed_suggestions_data') || '{}');
+            if (dismissedData.timestamp !== timestamp) {
+                dismissedData = { timestamp: timestamp, dismissedIndexes: [] };
+            }
+            
+            const visibleSuggestions = suggestions.filter((_, idx) => !dismissedData.dismissedIndexes.includes(idx));
+            if (visibleSuggestions.length === 0) {
+                container.style.display = 'none';
+                return;
+            }
+
             if (timestamp) {
                 const header = document.createElement('div');
                 header.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding: 0 4px;';
                 header.innerHTML = `<span style="font-size: 11px; color: var(--primary); font-weight: 600;">Latest Suggestions:</span>
-                    <span style="font-size: 11px; cursor: pointer; color: var(--text-muted);" onclick="dismissSuggestions('${timestamp}')">✖ Clear</span>`;
+                    <span style="font-size: 11px; cursor: pointer; color: var(--text-muted);" onclick="dismissAllSuggestions('${timestamp}')">✖ Clear All</span>`;
                 container.appendChild(header);
             }
 
             suggestions.forEach((s, idx) => {
+                if (dismissedData.dismissedIndexes.includes(idx)) return;
+
                 const div = document.createElement('div');
-                div.style.cssText = 'padding: 8px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 11px; cursor: pointer; transition: background 0.2s; background: rgba(255,255,255,0.05);';
-                div.innerHTML = `<strong>${idx+1}.</strong> ${s.topic}`;
+                div.style.cssText = 'padding: 8px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 11px; cursor: pointer; transition: background 0.2s; background: rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center;';
+                
+                const textSpan = document.createElement('span');
+                textSpan.innerHTML = `<strong>${idx+1}.</strong> ${s.topic}`;
+                textSpan.style.flex = "1";
+                
+                const closeBtn = document.createElement('span');
+                closeBtn.innerHTML = '✖';
+                closeBtn.style.cssText = 'color: var(--text-muted); font-size: 10px; padding: 4px; margin-left: 8px; border-radius: 3px;';
+                closeBtn.onmouseover = (e) => { e.stopPropagation(); closeBtn.style.background = 'rgba(255,255,255,0.1)'; };
+                closeBtn.onmouseout = (e) => { e.stopPropagation(); closeBtn.style.background = 'transparent'; };
+                closeBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    dismissedData.dismissedIndexes.push(idx);
+                    localStorage.setItem('dismissed_suggestions_data', JSON.stringify(dismissedData));
+                    div.remove();
+                    if (container.children.length <= 1) {
+                        container.style.display = 'none';
+                    }
+                };
+
+                div.appendChild(textSpan);
+                div.appendChild(closeBtn);
+
                 div.onclick = () => {
                     document.getElementById('ai-topic-input').value = s.topic;
                     triggerAIGenerator();
@@ -535,8 +567,9 @@
             container.style.display = 'flex';
         }
 
-        function dismissSuggestions(timestamp) {
-            localStorage.setItem('dismissed_suggestions', timestamp);
+        function dismissAllSuggestions(timestamp) {
+            const dismissedData = { timestamp: timestamp, dismissedIndexes: [0, 1, 2, 3, 4, 5, 6, 7] };
+            localStorage.setItem('dismissed_suggestions_data', JSON.stringify(dismissedData));
             document.getElementById('ai-suggestions-container').style.display = 'none';
         }
 
