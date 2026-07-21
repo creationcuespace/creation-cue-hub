@@ -277,9 +277,12 @@
         <!-- Sidebar -->
         <div class="panel" style="height:fit-content;">
             <div class="post-list-section">
-                <div class="section-subtitle" style="color: var(--primary);">
-                    <span>Pending AI Drafts</span>
-                    <span id="drafts-count" class="badge-draft" style="display:none;">0</span>
+                <div class="section-subtitle" style="color: var(--primary); display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span>Pending AI Drafts</span>
+                        <span id="drafts-count" class="badge-draft" style="display:none;">0</span>
+                    </div>
+                    <button class="btn" style="padding: 2px 8px; font-size: 11px; width: auto;" onclick="triggerAIGenerator()" title="Manually trigger the AI to generate a new draft">Generate</button>
                 </div>
                 <div id="drafts-list-container">
                     <div style="color:var(--text-muted); font-size:13px; padding:10px 0;">Configure PAT to load drafts.</div>
@@ -403,6 +406,40 @@
         async function ghDeleteFile(path, message, sha) {
             const body = { message, sha, branch: BRANCH };
             return await ghApi(`/contents/${path}`, 'DELETE', body);
+        }
+
+        async function ghDispatchWorkflow() {
+            if (!GH_PAT) throw new Error("GitHub PAT not configured.");
+            const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/blog-generator.yml/dispatches`;
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${GH_PAT}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json',
+                    'X-GitHub-Api-Version': '2022-11-28'
+                },
+                body: JSON.stringify({ ref: 'main' })
+            });
+            if (!res.ok) {
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.message || `GitHub API error: ${res.status}`);
+            }
+            return true;
+        }
+
+        async function triggerAIGenerator() {
+            if (!confirm('This will trigger the AI to fetch news and generate a new draft. This takes about 30 seconds. Proceed?')) return;
+            
+            showStatus('Triggering AI Generator...');
+            try {
+                await ghDispatchWorkflow();
+                alert('Success! The AI is generating a draft right now. Please refresh this page in about 30-45 seconds to see it under Pending AI Drafts.');
+            } catch (err) {
+                alert('Failed to trigger AI generator: ' + err.message);
+            } finally {
+                hideStatus();
+            }
         }
         // --- END GITHUB API CLIENT ---
 
