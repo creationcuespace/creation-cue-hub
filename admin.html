@@ -959,6 +959,8 @@
                 // 3. Handle updates/moves
                 let isUpdate = false;
                 let oldDraft = false;
+                let oldDate = null;
+                let oldTimestamp = null;
                 let existingIndex = -1;
 
                 if (originalSlug) {
@@ -966,6 +968,8 @@
                     if (existingIndex !== -1) {
                         isUpdate = true;
                         oldDraft = posts[existingIndex].draft === true;
+                        oldDate = posts[existingIndex].date;
+                        oldTimestamp = posts[existingIndex].timestamp;
                         // Remove old entry so we can insert updated one
                         posts.splice(existingIndex, 1);
                     }
@@ -990,9 +994,9 @@
                     slug: slug,
                     title: title,
                     excerpt: excerpt,
-                    date: isUpdate ? (originalSlug === slug ? (posts[existingIndex] ? posts[existingIndex].date : dateStr) : dateStr) : dateStr,
+                    date: (isUpdate && !oldDraft) ? (oldDate || dateStr) : dateStr,
                     thumbnail: thumbnail,
-                    timestamp: isUpdate ? (originalSlug === slug ? (posts[existingIndex] ? posts[existingIndex].timestamp : timeStr) : timeStr) : timeStr
+                    timestamp: (isUpdate && !oldDraft) ? (oldTimestamp || timeStr) : timeStr
                 };
                 if(pinned) newEntry.pinned = true;
 
