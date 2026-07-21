@@ -1,5 +1,14 @@
 [
   {
+    "slug": "api-error-gemini-api-error-status-404-error",
+    "title": "API Error: Gemini API Error (status 404): {\n  \"error\": {\n    ...",
+    "date": "Jul 21, 2026",
+    "readTime": "3 min",
+    "excerpt": "Google just announced major refinements to the Watch Face Format, offering designers and users much better battery life and richer complication options.",
+    "thumbnail": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue178.png",
+    "draft": true
+  },
+  {
     "slug": "your-watch-your-data-the-power-of-smart-customization-on-wear-os",
     "title": "Your Watch, Your Data: The Power of Smart Customization on Wear OS",
     "excerpt": "Wear OS users are demanding more control over their watch faces, moving beyond just aesthetics. We're seeing a clear trend towards deep personalization, especially in managing complication data like calendar events.",
