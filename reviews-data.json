@@ -1,16 +1,4 @@
 {
   "lastUpdated": "2026-07-22T03:31:21.004Z",
-  "reviews": [
-    {
-      "reviewId": "bc12bc88-1dda-4a5e-a167-9a75c4d2f8f0",
-      "packageName": "com.creation.cue116watchface",
-      "title": "Digital Watch Face CUE116",
-      "wfId": "cue116",
-      "starRating": 5,
-      "reviewerLanguage": "de",
-      "deviceMetadata": "b0s (Galaxy S22 Ultra)",
-      "text": "\tsieht toll aus, einfache Installation, super!",
-      "lastModified": "2026-07-21T11:01:02.000Z"
-    }
-  ]
+  "reviews": []
 }
