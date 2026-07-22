@@ -1,0 +1,88 @@
+{
+  "rules": {
+    "cue-earnings": {
+      "$uid": {
+        ".read": "$uid == auth.uid",
+        ".write": "$uid == auth.uid"
+      }
+    },
+    "promotions": {
+      ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      "$promoId": {
+        "public": {
+          ".read": "true",
+          "claimedCount": {
+            ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992' || newData.val() == data.val() + 1)"
+          }
+        }
+      }
+    },
+    "promotion_codes": {
+      ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      "$promoId": {
+        "$codeIndex": {
+          ".read": "auth != null && ($codeIndex == root.child('promotion_claims').child($promoId).child(auth.uid).child('index').val())"
+        }
+      }
+    },
+    "promotion_claims": {
+      "$promoId": {
+        ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+        ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+        "$userId": {
+          ".read": "auth != null && auth.uid == $userId",
+          ".write": "auth != null && auth.uid == $userId && !data.exists() && newData.child('index').val() == root.child('promotions').child($promoId).child('public').child('claimedCount').val() + ''"
+        }
+      }
+    },
+    "newsletter_subscribers": {
+      ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      "$subscriberId": {
+        ".write": "true"
+      }
+    },
+    "support_requests": {
+      ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      "$requestId": {
+        ".write": "true"
+      }
+    },
+    "active_visitors": {
+      ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      "$visitorId": {
+        ".write": "true"
+      }
+    },
+    "one_time_tokens": {
+      ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992' || (data.exists() && newData.exists() && ((data.child('claimed').val() == false && newData.child('claimed').val() == true && newData.child('claimedBy').val() == auth.uid) || (data.child('claimedBy').val() == auth.uid && newData.child('claimedBy').val() == auth.uid))))",
+      "$tokenId": {
+        ".read": "true",
+        ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992' || (data.exists() && newData.exists() && ((data.child('claimed').val() == false && newData.child('claimed').val() == true && newData.child('claimedBy').val() == auth.uid) || (data.child('claimedBy').val() == auth.uid && newData.child('claimedBy').val() == auth.uid))))"
+      }
+    },
+    "work_planner": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    },
+    "watch_face_notes": {
+      ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')"
+    },
+    "github_config": {
+      ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')"
+    },
+    "companion_release_notes": {
+      ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')"
+    }
+  }
+}
