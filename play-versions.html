@@ -3136,7 +3136,7 @@
               ` : ''}
             </div>
           </td>
-          <td><span class="${companionBadgeClass}" ${companionText !== 'N/A' && companionText !== 'Error' && companionReleaseNotes[companionText] ? `onmouseenter="showVersionTooltip(event, '${companionText}', '${companionReleaseNotes[companionText].replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, '\\n')}')" onmouseleave="hideVersionTooltip()" style="cursor:help;"` : ''}>${companionText}</span></td>
+          <td><span class="${companionBadgeClass}" ${companionText !== 'N/A' && companionText !== 'Error' && companionReleaseNotes[companionText] ? `onclick="toggleVersionTooltip(event, '${companionText}', '${companionReleaseNotes[companionText].replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, '\\n')}')" onmouseenter="if(window.matchMedia('(hover: hover)').matches) showVersionTooltip(event, '${companionText}', '${companionReleaseNotes[companionText].replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, '\\n')}')" onmouseleave="if(window.matchMedia('(hover: hover)').matches) hideVersionTooltip()"` : ''}>${companionText}</span></td>
           <td><span class="${wearBadgeClass}">${wearText}</span></td>
           <td>
             <div style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
@@ -4446,10 +4446,13 @@
     updateSortIndicators(window.currentSort);
 
     // --- Version Tooltip Logic ---
+    let tooltipToggledByClick = false;
+
     function showVersionTooltip(e, version, text) {
       const tooltip = document.getElementById('global-version-tooltip');
       if (!tooltip) return;
       
+      tooltip.dataset.version = version;
       tooltip.innerHTML = `
         <div class="version-tooltip-header">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
@@ -4472,8 +4475,34 @@
 
     function hideVersionTooltip() {
       const tooltip = document.getElementById('global-version-tooltip');
-      if (tooltip) tooltip.classList.remove('visible');
+      if (tooltip) {
+        tooltip.classList.remove('visible');
+        tooltip.dataset.version = '';
+      }
     }
+
+    function toggleVersionTooltip(e, version, text) {
+      e.stopPropagation();
+      const tooltip = document.getElementById('global-version-tooltip');
+      if (tooltip && tooltip.classList.contains('visible') && tooltip.dataset.version === version) {
+        hideVersionTooltip();
+        tooltipToggledByClick = false;
+      } else {
+        showVersionTooltip(e, version, text);
+        tooltipToggledByClick = true;
+      }
+    }
+
+    document.addEventListener('click', function(e) {
+      if (tooltipToggledByClick) {
+        const tooltip = document.getElementById('global-version-tooltip');
+        // Close if click is outside tooltip
+        if (tooltip && !tooltip.contains(e.target)) {
+          hideVersionTooltip();
+          tooltipToggledByClick = false;
+        }
+      }
+    });
 
     // --- Companion Release Notes Logic ---
     function openReleaseNotesModal() {
