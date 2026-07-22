@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-22T03:31:21.002Z",
+  "lastUpdated": "2026-07-22T09:58:28.357Z",
   "results": [
     {
       "id": "cue178",
@@ -60,9 +60,9 @@
       "title": "CUE173",
       "playStoreTitle": "Watch Face CUE173",
       "packageName": "com.creation.cue173watchface",
-      "companionVersion": "21 (5.0.0)",
+      "companionVersion": "Android 16 API Update (v22)",
       "wearVersion": "10000022 (1.0.3)",
-      "lastUpdatedDate": "Jun 23, 2026"
+      "lastUpdatedDate": "Jul 22, 2026"
     },
     {
       "id": "cue172",
