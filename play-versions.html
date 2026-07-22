@@ -226,6 +226,85 @@
       line-height: 1;
     }
 
+    /* Release Notes Manager */
+    #release-notes-modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #release-notes-modal {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: 90%; max-width: 600px; max-height: 85vh;
+      display: flex; flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      animation: modalFadeIn 0.2s ease-out;
+    }
+    .release-notes-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .release-notes-title {
+      font-size: 18px; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 8px;
+    }
+    .release-notes-body {
+      padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px;
+    }
+    .release-note-item {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .release-note-version {
+      font-weight: 600; font-size: 14px; color: var(--yellow);
+    }
+    .release-note-input {
+      width: 100%; min-height: 60px;
+      background: rgba(0,0,0,0.2);
+      border: 1px solid var(--border);
+      border-radius: 4px; padding: 8px; color: #fff; font-size: 13px;
+      resize: vertical; font-family: inherit;
+    }
+    .release-note-input:focus {
+      outline: none; border-color: var(--primary);
+    }
+    .release-notes-footer {
+      padding: 16px 20px; border-top: 1px solid var(--border);
+      display: flex; justify-content: flex-end; gap: 12px;
+    }
+
+    /* Hover Tooltip */
+    .version-tooltip {
+      position: absolute;
+      background: rgba(20, 20, 20, 0.95);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 12px; color: #eee;
+      max-width: 250px;
+      width: max-content;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0; transition: opacity 0.2s, transform 0.2s;
+      transform: translateY(5px);
+      white-space: pre-wrap;
+      line-height: 1.4;
+    }
+    .version-tooltip.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    .version-tooltip-header {
+      font-weight: bold; color: var(--yellow); margin-bottom: 4px; display: flex; align-items: center; gap: 4px;
+    }
+
     /* Filter Controls */
     .controls-row {
       display: flex;
@@ -1996,6 +2075,11 @@
       </button>
 
       <span style="font-size: 10px; font-weight: 700; color: var(--yellow); background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.3); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.9;">v2.1</span>
+      <!-- Release Notes -->
+      <button class="header-btn" style="display: flex; align-items: center; justify-content: center; padding: 0 12px;" onclick="openReleaseNotesModal()" title="Companion Release Notes">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+      </button>
+
       <button onclick="handleLogout()" class="header-btn">Logout</button>
     </div>
   </header>
@@ -2375,8 +2459,32 @@
         <div style="color: var(--text-muted); text-align: center; margin-top: 40px; font-size: 14px;">Loading reviews...</div>
       </div>
     </div>
+  <!-- Release Notes Modal -->
+  <div id="release-notes-modal-overlay" style="display: none;" onclick="if(event.target===this) closeReleaseNotesModal()">
+    <div id="release-notes-modal">
+      <div class="release-notes-header">
+        <div class="release-notes-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Companion App Release Notes
+        </div>
+        <button class="github-modal-close" onclick="closeReleaseNotesModal()">✕</button>
+      </div>
+      <div class="release-notes-body" id="release-notes-list">
+        <!-- Dynamically filled -->
+      </div>
+      <div class="release-notes-footer">
+        <span id="release-notes-status" style="margin-right: auto; color: var(--green); font-size: 12px; display: none; align-items: center;">Saved!</span>
+        <button class="task-modal-btn-cancel" onclick="closeReleaseNotesModal()">Cancel</button>
+        <button class="task-modal-btn-confirm" onclick="saveReleaseNotes()" id="btn-save-notes">Save Notes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Tooltip for Version Hover -->
+  <div id="global-version-tooltip" class="version-tooltip"></div>
+
   <script>
-    // Firebase Config
+    // Firebase Configerencesfig
     var firebaseConfig = {
       apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
       authDomain: "creation-cue-manage.firebaseapp.com",
@@ -2415,9 +2523,9 @@
     // Data containers
     var managerData = [];
     var versionsData = {};
-    var notesData = {};
-    var combinedData = [];
     var unrepliedReviews = [];
+    var notesData = {};
+    var companionReleaseNotes = {};
 
     // Auth state handler
     auth.onAuthStateChanged(function (user) {
@@ -2552,45 +2660,60 @@
           }
         }, 5000);
 
-        // Connect to Realtime Database to load Notes
-        db.ref('watch_face_notes').on('value', function(snapshot) {
-          dbLoaded = true;
-          clearTimeout(dbTimeout);
-          try {
-            notesData = snapshot.val() || {};
-            buildCombinedData();
-            renderDashboard();
-          } catch (e) {
-            console.error("Error rendering dashboard:", e);
-          } finally {
-            const overlay = document.getElementById('loading-overlay');
-            if (overlay) overlay.style.display = 'none';
-          }
-        }, function(err) {
-          dbLoaded = true;
-          clearTimeout(dbTimeout);
-          console.warn("Could not load notes from database (rules might block it):", err);
-          try {
-            notesData = {};
-            buildCombinedData();
-            renderDashboard();
-          } catch (e) {
-            console.error("Error rendering dashboard on error path:", e);
-          } finally {
-            const overlay = document.getElementById('loading-overlay');
-            if (overlay) overlay.style.display = 'none';
-          }
+          // Connect to Realtime Database to load Notes
+          db.ref('watch_face_notes').on('value', function(snapshot) {
+            dbLoaded = true;
+            clearTimeout(dbTimeout);
+            try {
+              notesData = snapshot.val() || {};
+              buildCombinedData();
+              renderDashboard();
+            } catch (e) {
+              console.error("Error rendering dashboard:", e);
+            } finally {
+              const overlay = document.getElementById('loading-overlay');
+              if (overlay) overlay.style.display = 'none';
+            }
+          }, function(err) {
+            dbLoaded = true;
+            clearTimeout(dbTimeout);
+            console.warn("Could not load notes from database (rules might block it):", err);
+            try {
+              notesData = {};
+              buildCombinedData();
+              renderDashboard();
+            } catch (e) {
+              console.error("Error rendering dashboard on error path:", e);
+            } finally {
+              const overlay = document.getElementById('loading-overlay');
+              if (overlay) overlay.style.display = 'none';
+            }
 
-          // Show a warning banner that notes are read-only until database rules are updated
-          if (!document.getElementById('db-rules-warning')) {
-            const warning = document.createElement('div');
-            warning.id = 'db-rules-warning';
-            warning.style.cssText = 'background: rgba(232, 40, 30, 0.15); border: 1px solid rgba(232, 40, 30, 0.3); color: #fff; padding: 12px; text-align: center; font-size: 13px; font-weight: 500; border-radius: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 16px;';
-            warning.innerHTML = `⚠️ <span>Database read permission denied for "watch_face_notes". Notes will not save until you update your Firebase Database rules to allow read/write access under this node. Dashboard loaded in read-only mode.</span>`;
-            const mainBody = document.querySelector('.main');
-            if (mainBody) mainBody.prepend(warning);
-          }
-        });
+            // Show a warning banner that notes are read-only until database rules are updated
+            if (!document.getElementById('db-rules-warning')) {
+              const warning = document.createElement('div');
+              warning.id = 'db-rules-warning';
+              warning.style.cssText = 'background: rgba(232, 40, 30, 0.15); border: 1px solid rgba(232, 40, 30, 0.3); color: #fff; padding: 12px; text-align: center; font-size: 13px; font-weight: 500; border-radius: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 16px;';
+              warning.innerHTML = `⚠️ <span>Database read permission denied for "watch_face_notes". Notes will not save until you update your Firebase Database rules to allow read/write access under this node. Dashboard loaded in read-only mode.</span>`;
+              const mainBody = document.querySelector('.main');
+              if (mainBody) mainBody.prepend(warning);
+            }
+          });
+
+          // Connect to Realtime Database to load Companion Release Notes
+          db.ref('companion_release_notes').on('value', function(snapshot) {
+            companionReleaseNotes = snapshot.val() || {};
+            // Re-render dashboard to update tooltips if they are visible
+            renderDashboard();
+            // If modal is open, re-render it
+            const modal = document.getElementById('release-notes-modal-overlay');
+            if (modal && modal.style.display === 'flex') {
+              renderReleaseNotesModal();
+            }
+          }, function(err) {
+            console.warn("Could not load companion release notes:", err);
+            companionReleaseNotes = {};
+          });
 
       } catch (err) {
         console.error("Dashboard initialization error:", err);
@@ -3013,7 +3136,7 @@
               ` : ''}
             </div>
           </td>
-          <td><span class="${companionBadgeClass}">${companionText}</span></td>
+          <td><span class="${companionBadgeClass}" ${companionText !== 'N/A' && companionText !== 'Error' && companionReleaseNotes[companionText] ? `onmouseenter="showVersionTooltip(event, '${companionText}', '${companionReleaseNotes[companionText].replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, '\\n')}')" onmouseleave="hideVersionTooltip()" style="cursor:help;"` : ''}>${companionText}</span></td>
           <td><span class="${wearBadgeClass}">${wearText}</span></td>
           <td>
             <div style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
@@ -4321,6 +4444,119 @@
     });
 
     updateSortIndicators(window.currentSort);
+
+    // --- Version Tooltip Logic ---
+    function showVersionTooltip(e, version, text) {
+      const tooltip = document.getElementById('global-version-tooltip');
+      if (!tooltip) return;
+      
+      tooltip.innerHTML = `
+        <div class="version-tooltip-header">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          v${version} What's New
+        </div>
+        <div style="margin-top: 6px;">${text}</div>
+      `;
+      
+      const rect = e.target.getBoundingClientRect();
+      let top = rect.top + window.scrollY - tooltip.offsetHeight - 10;
+      let left = rect.left + window.scrollX + (rect.width / 2) - (tooltip.offsetWidth / 2);
+      
+      // Ensure it's not offscreen
+      if (top < window.scrollY + 10) top = rect.bottom + window.scrollY + 10;
+      
+      tooltip.style.top = top + 'px';
+      tooltip.style.left = left + 'px';
+      tooltip.classList.add('visible');
+    }
+
+    function hideVersionTooltip() {
+      const tooltip = document.getElementById('global-version-tooltip');
+      if (tooltip) tooltip.classList.remove('visible');
+    }
+
+    // --- Companion Release Notes Logic ---
+    function openReleaseNotesModal() {
+      document.getElementById('release-notes-modal-overlay').style.display = 'flex';
+      renderReleaseNotesModal();
+    }
+
+    function closeReleaseNotesModal() {
+      document.getElementById('release-notes-modal-overlay').style.display = 'none';
+      const statusEl = document.getElementById('release-notes-status');
+      if (statusEl) statusEl.style.display = 'none';
+    }
+
+    function renderReleaseNotesModal() {
+      const container = document.getElementById('release-notes-list');
+      if (!container) return;
+      container.innerHTML = '';
+      
+      // Extract unique companion versions
+      const versionsSet = new Set();
+      combinedData.forEach(item => {
+        if (item.companionVersion && item.companionVersion !== 'N/A' && item.companionVersion !== 'None' && !item.companionVersion.includes('API Error')) {
+          versionsSet.add(item.companionVersion);
+        }
+      });
+      
+      // Sort versions descending (simple string sort usually works for v1.x)
+      const sortedVersions = Array.from(versionsSet).sort((a,b) => b.localeCompare(a, undefined, {numeric: true}));
+      
+      if (sortedVersions.length === 0) {
+        container.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding: 20px;">No companion app versions found yet.</div>';
+        return;
+      }
+      
+      sortedVersions.forEach(v => {
+        const div = document.createElement('div');
+        div.className = 'release-note-item';
+        
+        const noteText = companionReleaseNotes[v] || '';
+        
+        div.innerHTML = `
+          <div class="release-note-version">Version ${v}</div>
+          <textarea class="release-note-input" id="rn-input-${v}" placeholder="Write what's new in this version...">${noteText}</textarea>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function saveReleaseNotes() {
+      const inputs = document.querySelectorAll('.release-note-input');
+      const newNotes = { ...companionReleaseNotes };
+      
+      inputs.forEach(input => {
+        const v = input.id.replace('rn-input-', '');
+        const val = input.value.trim();
+        if (val) {
+          newNotes[v] = val;
+        } else {
+          delete newNotes[v];
+        }
+      });
+      
+      const btn = document.getElementById('btn-save-notes');
+      const status = document.getElementById('release-notes-status');
+      if (!btn || !status) return;
+      
+      btn.innerText = 'Saving...';
+      btn.disabled = true;
+      status.style.display = 'none';
+      
+      db.ref('companion_release_notes').set(newNotes, function(error) {
+        btn.innerText = 'Save Notes';
+        btn.disabled = false;
+        if (error) {
+          alert('Failed to save release notes: ' + error.message);
+        } else {
+          status.style.display = 'flex';
+          setTimeout(() => { status.style.display = 'none'; }, 3000);
+          companionReleaseNotes = newNotes; // Update local cache immediately
+          renderDashboard(); // Re-render table to update tooltips
+        }
+      });
+    }
 
     const btnClearAllEl = document.getElementById('btn-clear-all');
     if (btnClearAllEl) {
