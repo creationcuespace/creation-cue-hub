@@ -2700,16 +2700,24 @@
             }
           });
 
-          // Connect to Realtime Database to load Companion Release Notes
-          db.ref('companion_release_notes').on('value', function(snapshot) {
-            companionReleaseNotes = snapshot.val() || {};
-            // Re-render dashboard to update tooltips if they are visible
-            renderDashboard();
-            // If modal is open, re-render it
-            const modal = document.getElementById('release-notes-modal-overlay');
-            if (modal && modal.style.display === 'flex') {
-              renderReleaseNotesModal();
-            }
+            // Connect to Realtime Database to load Companion Release Notes
+            db.ref('companion_release_notes').on('value', function(snapshot) {
+              const rawData = snapshot.val() || {};
+              const decodedNotes = {};
+              for (const k in rawData) {
+                // Decode Firebase-safe keys back to normal version strings
+                const decodedKey = k.replace(/%2E/g, '.').replace(/%23/g, '#').replace(/%24/g, '$').replace(/%5B/g, '[').replace(/%5D/g, ']');
+                decodedNotes[decodedKey] = rawData[k];
+              }
+              companionReleaseNotes = decodedNotes;
+              
+              // Re-render dashboard to update tooltips if they are visible
+              renderDashboard();
+              // If modal is open, re-render it
+              const modal = document.getElementById('release-notes-modal-overlay');
+              if (modal && modal.style.display === 'flex') {
+                renderReleaseNotesModal();
+              }
           }, function(err) {
             console.warn("Could not load companion release notes:", err);
             companionReleaseNotes = {};
@@ -4553,15 +4561,17 @@
 
     function saveReleaseNotes() {
       const inputs = document.querySelectorAll('.release-note-input');
-      const newNotes = { ...companionReleaseNotes };
+      const newNotes = {}; // Local cache object (unencoded keys)
+      const firebaseNotes = {}; // Firebase payload (encoded keys)
       
       inputs.forEach(input => {
         const v = input.id.replace('rn-input-', '');
         const val = input.value.trim();
         if (val) {
           newNotes[v] = val;
-        } else {
-          delete newNotes[v];
+          // Encode Firebase-restricted characters: . # $ [ ]
+          const encodedKey = v.replace(/\./g, '%2E').replace(/#/g, '%23').replace(/\$/g, '%24').replace(/\[/g, '%5B').replace(/\]/g, '%5D');
+          firebaseNotes[encodedKey] = val;
         }
       });
       
@@ -4573,7 +4583,7 @@
       btn.disabled = true;
       status.style.display = 'none';
       
-      db.ref('companion_release_notes').set(newNotes, function(error) {
+      db.ref('companion_release_notes').set(firebaseNotes, function(error) {
         btn.innerText = 'Save Notes';
         btn.disabled = false;
         if (error) {
