@@ -505,8 +505,16 @@
         </div>
 
         <!-- Reservations -->
-        <h2 class="section-title">Έγγραφα & Κρατήσεις</h2>
+        <h2 class="section-title">Έγγραφα & Κρατήσεις <i class="fa-solid fa-lock" id="lock-icon" style="font-size: 1rem; color: var(--text-muted);"></i></h2>
         
+        <div id="auth-container" class="glass" style="padding: 20px; text-align: center; margin-bottom: 20px;">
+            <p style="margin-bottom: 15px;">Αυτή η ενότητα περιέχει ευαίσθητα δεδομένα. Παρακαλώ εισάγετε το <strong>PIN του ξενοδοχείου</strong> σας για να τα δείτε.</p>
+            <input type="password" id="pin-input" placeholder="PIN" style="padding: 10px; border-radius: 6px; border: 1px solid var(--accent); background: rgba(0,0,0,0.3); color: white; margin-right: 10px; width: 100px; text-align: center;">
+            <button id="unlock-btn" class="btn-link" style="border: none; cursor: pointer;">Ξεκλείδωμα</button>
+            <p id="auth-error" style="color: #ef4444; display: none; margin-top: 10px; font-size: 0.9rem;">Λάθος PIN</p>
+        </div>
+
+        <div id="private-details" style="display: none;">
         <details class="booking-details">
             <summary><i class="fa-solid fa-plane"></i> Πτήσεις (Austrian Airlines)</summary>
             <div class="booking-content">
@@ -567,6 +575,7 @@
                 </div>
             </div>
         </details>
+        </div>
 
         <!-- The Itinerary -->
         <h2 class="section-title">Το Πρόγραμμα</h2>
@@ -800,6 +809,34 @@
                     localStorage.setItem('vienna_' + e.target.id, e.target.checked);
                 });
             });
+
+            // Password Protection Logic
+            const unlockBtn = document.getElementById('unlock-btn');
+            const pinInput = document.getElementById('pin-input');
+            const authError = document.getElementById('auth-error');
+            const authContainer = document.getElementById('auth-container');
+            const privateDetails = document.getElementById('private-details');
+            const lockIcon = document.getElementById('lock-icon');
+
+            if (unlockBtn) {
+                const checkPin = () => {
+                    // Simple obfuscation of the PIN to prevent casual viewing in source code
+                    if (btoa(pinInput.value) === 'Njg5Ng==') {
+                        authContainer.style.display = 'none';
+                        privateDetails.style.display = 'block';
+                        lockIcon.className = 'fa-solid fa-lock-open';
+                        lockIcon.style.color = 'var(--success)';
+                    } else {
+                        authError.style.display = 'block';
+                        pinInput.value = '';
+                    }
+                };
+
+                unlockBtn.addEventListener('click', checkPin);
+                pinInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') checkPin();
+                });
+            }
         });
     </script>
 </body>
