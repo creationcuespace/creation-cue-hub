@@ -344,6 +344,73 @@
             transform: scale(1.05);
         }
 
+        .booking-details {
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .booking-details summary {
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.3s;
+        }
+
+        .booking-details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .booking-details summary::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--accent);
+            transition: transform 0.3s;
+        }
+
+        .booking-details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .booking-details summary:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .booking-content {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        .booking-content strong {
+            color: white;
+        }
+        
+        .booking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .booking-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px;
+            border-radius: 6px;
+        }
+
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -436,6 +503,70 @@
             </div>
 
         </div>
+
+        <!-- Reservations -->
+        <h2 class="section-title">Έγγραφα & Κρατήσεις</h2>
+        
+        <details class="booking-details">
+            <summary><i class="fa-solid fa-plane"></i> Πτήσεις (Austrian Airlines)</summary>
+            <div class="booking-content">
+                <div class="booking-grid">
+                    <div class="booking-item">
+                        <strong>Αναχώρηση (10 Αυγούστου)</strong><br>
+                        <i class="fa-solid fa-plane-departure" style="color:var(--accent);"></i> Πτήση: OS806<br>
+                        Από: Αθήνα (ATH) - 06:30<br>
+                        Προς: Βιέννη (VIE) Terminal 3 - 07:40<br>
+                        Economy Basic (0 PC)
+                    </div>
+                    <div class="booking-item">
+                        <strong>Επιστροφή (14 Αυγούστου)</strong><br>
+                        <i class="fa-solid fa-plane-arrival" style="color:var(--accent);"></i> Πτήση: OS805<br>
+                        Από: Βιέννη (VIE) Terminal 3 - 22:05<br>
+                        Προς: Αθήνα (ATH) - 01:10 (επόμενη μέρα)<br>
+                        Economy Basic (0 PC)
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <details class="booking-details">
+            <summary><i class="fa-solid fa-taxi"></i> Μεταφορά από Αεροδρόμιο (AirTaxi)</summary>
+            <div class="booking-content">
+                <strong>Booking reference:</strong> 212866612<br>
+                <strong>Ημερομηνία:</strong> Δευτέρα, 10 Αυγούστου 2026, 07:40<br>
+                <strong>Από:</strong> Vienna International Airport (VIE)<br>
+                <strong>Προς:</strong> ARCOTEL Donauzentrum Wien<br>
+                <strong>Πτήση:</strong> OS806<br>
+                <strong>Όχημα:</strong> People Carrier (Get-e), Ride ID: 434900756<br>
+                <strong>Επιβάτες:</strong> Έως 5<br>
+                <br>
+                <em>Ο οδηγός θα παρακολουθεί την πτήση και θα περιμένει 45 λεπτά μετά την άφιξη.</em>
+            </div>
+        </details>
+
+        <details class="booking-details">
+            <summary><i class="fa-solid fa-hotel"></i> Ξενοδοχείο (ARCOTEL Donauzentrum)</summary>
+            <div class="booking-content">
+                <div class="booking-grid">
+                    <div class="booking-item">
+                        <strong>Στοιχεία Κράτησης (Booking.com)</strong><br>
+                        Επιβεβαίωση: 6357461136<br>
+                        PIN: 6896 (Εμπιστευτικό)<br>
+                        Κόστος: € 921.80 (Εξοφλημένο)<br>
+                        Διεύθυνση: Wagramer Strasse 83-85, 22. Donaustadt, Vienna<br>
+                        Τηλ: +43 1 2022333
+                    </div>
+                    <div class="booking-item">
+                        <strong>Διαμονή</strong><br>
+                        Check-in: 10 Αυγούστου (από 15:00)<br>
+                        Check-out: 14 Αυγούστου (έως 11:00)<br>
+                        Δωμάτια: 2 Comfort Double Rooms (4 νύχτες)<br>
+                        Επισκέπτες: 3 ενήλικες, 2 παιδιά (11 ετών)<br>
+                        Περιλαμβάνεται πρωινό.
+                    </div>
+                </div>
+            </div>
+        </details>
 
         <!-- The Itinerary -->
         <h2 class="section-title">Το Πρόγραμμα</h2>
