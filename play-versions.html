@@ -2139,7 +2139,7 @@
     <!-- Controls Row -->
     <div class="controls-row">
       <div class="search-input-wrapper">
-        <input class="search-input" id="search-box" type="search" autocomplete="off" spellcheck="false" placeholder="Search by ID, Title, Package Name or Notes...">
+        <input class="search-input" id="wf-search-input" name="wf-search-input-no-autofill" type="search" autocomplete="new-password" spellcheck="false" placeholder="Search by ID, Title, Package Name or Notes...">
         <button id="search-clear-btn" class="search-clear-btn" title="Clear Search">✕</button>
       </div>
       <div class="filters-group">
@@ -2794,7 +2794,7 @@
     }
 
     function renderDashboard() {
-      const searchBoxEl = document.getElementById('search-box');
+      const searchBoxEl = document.getElementById('wf-search-input');
       const searchVal = searchBoxEl ? searchBoxEl.value.toLowerCase().trim() : '';
 
       const notesFilterEl = document.getElementById('filter-notes');
@@ -3458,7 +3458,7 @@
     // Compile AI analytical prompt from active catalog data
     function compileAiPrompt() {
       const totalCount = combinedData.length;
-      const searchVal = document.getElementById('search-box').value.trim();
+      const searchVal = document.getElementById('wf-search-input').value.trim();
       const notesFilter = document.getElementById('filter-notes').value;
       const priceFilter = document.getElementById('filter-price').value;
       const rolloutFilter = document.getElementById('filter-rollout').value;
@@ -3892,7 +3892,7 @@
     const filterPriceEl = document.getElementById('filter-price');
     if (filterPriceEl) filterPriceEl.addEventListener('change', renderDashboard);
 
-    const searchBox = document.getElementById('search-box');
+    const searchBox = document.getElementById('wf-search-input');
     const searchClear = document.getElementById('search-clear-btn');
 
     if (searchBox) {
