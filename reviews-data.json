@@ -1,4 +1,16 @@
 {
-  "lastUpdated": "2026-07-22T09:58:28.357Z",
-  "reviews": []
+  "lastUpdated": "2026-07-23T03:35:58.369Z",
+  "reviews": [
+    {
+      "reviewId": "3ffd7c22-2629-426c-b0b5-942c60e79489",
+      "packageName": "com.creation.cue167watchface",
+      "title": "Watch Face CUE167",
+      "wfId": "cue167",
+      "starRating": 5,
+      "reviewerLanguage": "it",
+      "deviceMetadata": "OP627CL1 (Find X9 Ultra)",
+      "text": "\tgorgeous! is it possible to add more colours please?",
+      "lastModified": "2026-07-22T11:54:54.000Z"
+    }
+  ]
 }
