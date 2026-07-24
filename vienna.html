@@ -591,8 +591,9 @@
 
         <div id="private-details" style="display: none;">
         <!-- Checklist -->
-        <h2 class="section-title">Προετοιμασία & Κρατήσεις</h2>
-        <div class="checklist-grid">
+        <details class="booking-details" style="margin-bottom: 40px;">
+            <summary style="font-size: 1.5rem; color: var(--accent);"><i class="fa-solid fa-list-check"></i> Προετοιμασία & Κρατήσεις</summary>
+            <div class="checklist-grid" style="margin-top: 20px;">
             
             <div class="check-card glass">
                 <h3><i class="fa-solid fa-mobile-screen"></i> 1. Εφαρμογές</h3>
@@ -651,6 +652,7 @@
             </div>
 
         </div>
+        </details>
 
         <!-- Widgets & Info -->
         <h2 class="section-title">Χρήσιμες Πληροφορίες</h2>
@@ -701,9 +703,11 @@
         </div>
 
         <!-- Reservations -->
-        <h2 class="section-title">Έγγραφα & Κρατήσεις</h2>
-        <details class="booking-details">
-            <summary><i class="fa-solid fa-ticket-simple"></i> Εισιτήρια WienMobil (7 Days)</summary>
+        <details class="booking-details" style="margin-bottom: 40px;">
+            <summary style="font-size: 1.5rem; color: var(--accent);"><i class="fa-solid fa-folder-open"></i> Έγγραφα & Κρατήσεις</summary>
+            <div style="padding-top: 20px;">
+                <details class="booking-details">
+                    <summary><i class="fa-solid fa-ticket-simple"></i> Εισιτήρια WienMobil (7 Days)</summary>
             <div class="booking-content" style="display: flex; flex-direction: column; gap: 20px;">
                 
                 <!-- Εισιτήριο 1 -->
@@ -994,6 +998,8 @@
                 </div>
             </div>
         </details>
+        </div>
+        </details>
 
         <!-- The Itinerary -->
         <h2 class="section-title">Το Πρόγραμμα</h2>
@@ -1246,7 +1252,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 18; // Bump this on future updates
+            const SITE_VERSION = 19; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
