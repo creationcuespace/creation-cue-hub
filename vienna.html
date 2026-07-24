@@ -534,10 +534,13 @@
 
         @media (max-width: 768px) {
             .hero-content h1 { font-size: 2.5rem; }
-            .timeline::before { left: 30px; }
-            .timeline-day { padding-left: 70px; }
-            .day-marker { left: 11px; width: 38px; height: 38px; font-size: 0.9rem; }
-            .event-card { padding: 15px; }
+            .container { padding: 25px 12px; }
+            .timeline::before { left: 15px; }
+            .timeline-day { padding-left: 45px; margin-bottom: 40px; }
+            .day-marker { left: -3px; width: 36px; height: 36px; font-size: 0.85rem; }
+            .event-card { padding: 12px; }
+            .event-media img { height: 200px; }
+            #auth-container { padding: 20px !important; }
         }
     </style>
 </head>
@@ -1138,7 +1141,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 11; // Bump this on future updates
+            const SITE_VERSION = 12; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
