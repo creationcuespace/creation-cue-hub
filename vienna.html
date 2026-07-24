@@ -677,6 +677,17 @@
                 </ul>
             </div>
 
+            <!-- Toilets SOS -->
+            <div class="check-card glass" style="border: 1px solid #ef4444; box-shadow: 0 0 15px rgba(239, 68, 68, 0.15);">
+                <h3 style="color: #ef4444;"><i class="fa-solid fa-restroom"></i> SOS Τουαλέτας!</h3>
+                <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">
+                    Επειδή στη Βιέννη πίνουμε πολύ καφέ και νερό, αν υπάρξει... επείγουσα ανάγκη, πατήστε το παρακάτω κουμπί για να βρείτε την πιο κοντινή δημόσια τουαλέτα!
+                </p>
+                <a href="https://www.google.com/maps/search/public+toilet+near+me/" target="_blank" class="btn-map" style="background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ef4444; width: 100%; justify-content: center; font-size: 1.05rem; padding: 12px; box-sizing: border-box; margin: 0;">
+                    <i class="fa-solid fa-location-crosshairs"></i> Βρες Κοντινή Τουαλέτα
+                </a>
+            </div>
+
             <!-- German Cheat Sheet -->
             <div class="check-card glass">
                 <h3><i class="fa-solid fa-language"></i> Μικρό Λεξικό & Tips</h3>
@@ -957,6 +968,36 @@
             </div>
         </details>
 
+        <details class="booking-details" id="tickets-zoo">
+            <summary><i class="fa-solid fa-hippo"></i> Εισιτήρια Ζωολογικού (Schönbrunn)</summary>
+            <div class="booking-content" style="display: flex; flex-direction: column; gap: 20px;">
+                <p>Tiergarten Schönbrunn - Eintrittskarte. Παρασκευή 14 Αυγούστου. Μονή είσοδος.</p>
+                
+                <div class="booking-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                    <div>
+                        <h4 style="color: var(--accent); margin-bottom: 8px; font-size: 1.1rem;">Εισιτήριο 1 <span style="font-size: 0.9rem; color: #fff; font-weight: normal;">(Ενήλικας)</span></h4>
+                        <img src="images/zoo_ticket_1.png" alt="Zoo Ticket 1" style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);">
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent); margin-bottom: 8px; font-size: 1.1rem;">Εισιτήριο 2 <span style="font-size: 0.9rem; color: #fff; font-weight: normal;">(Ενήλικας)</span></h4>
+                        <img src="images/zoo_ticket_2.png" alt="Zoo Ticket 2" style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);">
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent); margin-bottom: 8px; font-size: 1.1rem;">Εισιτήριο 3 <span style="font-size: 0.9rem; color: #fff; font-weight: normal;">(Ενήλικας)</span></h4>
+                        <img src="images/zoo_ticket_3.png" alt="Zoo Ticket 3" style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);">
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent); margin-bottom: 8px; font-size: 1.1rem;">Εισιτήριο 4 <span style="font-size: 0.9rem; color: #fff; font-weight: normal;">(Παιδικό)</span></h4>
+                        <img src="images/zoo_ticket_4.png" alt="Zoo Ticket 4" style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);">
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent); margin-bottom: 8px; font-size: 1.1rem;">Εισιτήριο 5 <span style="font-size: 0.9rem; color: #fff; font-weight: normal;">(Παιδικό)</span></h4>
+                        <img src="images/zoo_ticket_5.png" alt="Zoo Ticket 5" style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);">
+                    </div>
+                </div>
+            </div>
+        </details>
+
         <!-- The Itinerary -->
         <h2 class="section-title">Το Πρόγραμμα</h2>
         <div class="timeline">
@@ -1163,7 +1204,9 @@
                         <p><strong>09:15</strong> Αναχώρηση από το ξενοδοχείο.</p>
                         <p><strong>10:00</strong> Επίσκεψη στον Ζωολογικό Κήπο Schönbrunn (Tiergarten Schönbrunn).</p>
                         <a href="https://www.google.com/maps/dir/?api=1&destination=Tiergarten+Schonbrunn,+Vienna&travelmode=transit" target="_blank" class="btn-map"><i class="fa-solid fa-train-subway"></i> Πώς θα πάω (Ζωολογικός)</a>
+                        <a href="#tickets-zoo" class="btn-link" style="margin-bottom: 15px; display: inline-block;" onclick="return window.openTicketDetails ? window.openTicketDetails('tickets-zoo') : true;"><i class="fa-solid fa-ticket"></i> Προβολή Εισιτηρίων</a>
                         <a href="https://www.zoovienna.at/en/" target="_blank" class="btn-link" style="margin-bottom: 15px; display: inline-block;"><i class="fa-solid fa-link"></i> Ιστοσελίδα Zoo</a>
+                        <a href="#" class="add-to-cal-btn" data-title="Ζωολογικός Κήπος Schönbrunn" data-start="20260814T100000" data-end="20260814T133000" data-loc="Tiergarten Schönbrunn"><i class="fa-regular fa-calendar-plus"></i> Προσθήκη στο Ημερολόγιο</a>
                     </div>
                 </div>
 
@@ -1206,7 +1249,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 15; // Bump this on future updates
+            const SITE_VERSION = 16; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
