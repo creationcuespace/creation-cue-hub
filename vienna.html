@@ -621,6 +621,7 @@
                         <span class="task-text">Κλείστε εισιτήρια τρένου επιστροφής από Μπρατισλάβα.</span>
                     </label>
                 </ul>
+                <a href="https://www.wienerlinien.at/en/maps" target="_blank" class="btn-map" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.5); color: #fff; width: 100%; justify-content: center; font-size: 1.05rem; padding: 12px; box-sizing: border-box; margin-top: 15px;"><i class="fa-solid fa-download"></i> Χάρτες Μετρό & Πόλης</a>
             </div>
 
             <div class="check-card glass">
@@ -757,6 +758,17 @@
                 </p>
                 <a href="https://www.google.com/maps/search/ice+cream+or+cafe+near+me/" target="_blank" class="btn-map" style="background: rgba(217, 70, 239, 0.15); border: 1px solid #d946ef; color: #d946ef; width: 100%; justify-content: center; font-size: 1.05rem; padding: 12px; box-sizing: border-box; margin: 0;">
                     <i class="fa-solid fa-location-crosshairs"></i> Βρες Κοντινό Παγωτό
+                </a>
+            </div>
+
+            <!-- Water Fountains SOS -->
+            <div class="check-card glass" style="border: 1px solid #14b8a6; box-shadow: 0 0 15px rgba(20, 184, 166, 0.15);">
+                <h3 style="color: #14b8a6;"><i class="fa-solid fa-glass-water-droplet"></i> Δωρεάν Πόσιμο Νερό!</h3>
+                <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">
+                    Η Βιέννη φημίζεται για το νερό της που έρχεται απευθείας από τις Άλπεις! Πατήστε εδώ για να βρείτε την κοντινότερη δημόσια βρύση (Trinkbrunnen) και να γεμίσετε τα παγούρια σας δωρεάν.
+                </p>
+                <a href="https://www.google.com/maps/search/Trinkbrunnen+near+me/" target="_blank" class="btn-map" style="background: rgba(20, 184, 166, 0.15); border: 1px solid #14b8a6; color: #14b8a6; width: 100%; justify-content: center; font-size: 1.05rem; padding: 12px; box-sizing: border-box; margin: 0;">
+                    <i class="fa-solid fa-location-crosshairs"></i> Βρες Κοντινή Βρύση
                 </a>
             </div>
 
@@ -1362,7 +1374,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 23; // Bump this on future updates
+            const SITE_VERSION = 24; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
