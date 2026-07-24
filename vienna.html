@@ -903,6 +903,36 @@
             </div>
         </details>
 
+        <details class="booking-details" id="tickets-catamaran">
+            <summary><i class="fa-solid fa-ship"></i> Εισιτήρια Καταμαράν (Μπρατισλάβα)</summary>
+            <div class="booking-content" style="display: flex; flex-direction: column; gap: 20px;">
+                <p>Twin City Liner Wien - Bratislava. Τετάρτη 12 Αυγούστου. Επιβίβαση: 08:00, Αναχώρηση: 08:30.</p>
+                
+                <div class="booking-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                    <div>
+                        <h4 style="color: var(--accent); margin-bottom: 8px; font-size: 1.1rem;">Εισιτήριο 1 <span style="font-size: 0.9rem; color: #fff; font-weight: normal;">(Ενήλικας - Θέση E)</span></h4>
+                        <img src="images/twincity_ticket_1.png" alt="Twin City Liner Ticket 1" style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);">
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent); margin-bottom: 8px; font-size: 1.1rem;">Εισιτήριο 2 <span style="font-size: 0.9rem; color: #fff; font-weight: normal;">(Παιδικό - Θέση I)</span></h4>
+                        <img src="images/twincity_ticket_2.png" alt="Twin City Liner Ticket 2" style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);">
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent); margin-bottom: 8px; font-size: 1.1rem;">Εισιτήριο 3 <span style="font-size: 0.9rem; color: #fff; font-weight: normal;">(Ενήλικας - Θέση G)</span></h4>
+                        <img src="images/twincity_ticket_3.png" alt="Twin City Liner Ticket 3" style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);">
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent); margin-bottom: 8px; font-size: 1.1rem;">Εισιτήριο 4 <span style="font-size: 0.9rem; color: #fff; font-weight: normal;">(Ενήλικας - Θέση F)</span></h4>
+                        <img src="images/twincity_ticket_4.png" alt="Twin City Liner Ticket 4" style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);">
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent); margin-bottom: 8px; font-size: 1.1rem;">Εισιτήριο 5 <span style="font-size: 0.9rem; color: #fff; font-weight: normal;">(Παιδικό - Θέση H)</span></h4>
+                        <img src="images/twincity_ticket_5.png" alt="Twin City Liner Ticket 5" style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);">
+                    </div>
+                </div>
+            </div>
+        </details>
+
         <!-- The Itinerary -->
         <h2 class="section-title">Το Πρόγραμμα</h2>
         <div class="timeline">
@@ -1012,14 +1042,17 @@
                 </div>
                 
                 <div class="event-card glass">
-                    <div class="event-time"><i class="fa-regular fa-clock"></i> 07:30 - 10:15</div>
+                    <div class="event-time"><i class="fa-regular fa-clock"></i> 07:00 - 10:15</div>
                     <div class="event-content">
                         <h4>Μετάβαση με Καταμαράν</h4>
-                        <p><strong>07:30</strong> Πρωινό.</p>
-                        <p><strong>08:15</strong> Αναχώρηση από το ξενοδοχείο.</p>
-                        <p><strong>09:00</strong> Αναχώρηση με το ποταμόπλοιο (Twin City Liner) από την πλατεία Schwedenplatz.</p>
+                        <p><strong>07:00</strong> Πρωινό.</p>
+                        <p><strong>07:30</strong> Αναχώρηση από το ξενοδοχείο.</p>
+                        <p style="background: rgba(56, 189, 248, 0.15); border-left: 4px solid var(--accent); padding: 8px 12px; border-radius: 0 4px 4px 0; margin: 12px 0;"><strong style="color: var(--accent); font-size: 1.1rem;">08:00</strong> <span style="font-weight: bold; color: #fff;">Επιβίβαση στο Twin City Liner</span> (Schwedenplatz). Μην αργήσετε!</p>
+                        <p><strong>08:30</strong> Αναχώρηση ποταμόπλοιου.</p>
                         <p><strong>10:15</strong> Άφιξη στην Μπρατισλάβα.</p>
-                        <p style="color: var(--accent); font-weight: bold;"><i class="fa-solid fa-passport"></i> Προσοχή: Μην ξεχάσετε τις ταυτότητες / διαβατήριά σας!</p>
+                        <p style="color: var(--accent); font-weight: bold; margin-top: 10px; margin-bottom: 15px;"><i class="fa-solid fa-passport"></i> Προσοχή: Μην ξεχάσετε τις ταυτότητες / διαβατήριά σας!</p>
+                        <a href="#tickets-catamaran" class="btn-link" style="margin-bottom: 15px; display: inline-block;" onclick="return window.openTicketDetails ? window.openTicketDetails('tickets-catamaran') : true;"><i class="fa-solid fa-ticket"></i> Προβολή Εισιτηρίων</a>
+                        <a href="#" class="add-to-cal-btn" data-title="Καταμαράν για Μπρατισλάβα" data-start="20260812T080000" data-end="20260812T101500" data-loc="Schiffstation Wien City, Schwedenplatz"><i class="fa-regular fa-calendar-plus"></i> Προσθήκη στο Ημερολόγιο</a>
                     </div>
                 </div>
 
@@ -1141,7 +1174,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 12; // Bump this on future updates
+            const SITE_VERSION = 13; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
