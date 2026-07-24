@@ -651,6 +651,54 @@
                 </ul>
             </div>
 
+            <div class="check-card glass">
+                <h3><i class="fa-solid fa-suitcase"></i> 5. Λίστα Βαλίτσας</h3>
+                <ul class="task-list">
+                    <label class="task-item">
+                        <input type="checkbox" class="task-checkbox" id="task-pack-1">
+                        <span class="task-text">Ζακέτες / Αντιανεμικά (απαραίτητα για το καταμαράν και τα βράδια)</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" class="task-checkbox" id="task-pack-2">
+                        <span class="task-text">Πολύ άνετα αθλητικά παπούτσια (έχει πολύ περπάτημα!)</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" class="task-checkbox" id="task-pack-3">
+                        <span class="task-text">Βασικό φαρμακείο (παυσίπονα, τσιρότα για φουσκάλες, θερμόμετρο)</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" class="task-checkbox" id="task-pack-4">
+                        <span class="task-text">Ομπρέλες σπαστές (ο καιρός στη Βιέννη είναι απρόβλεπτος)</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" class="task-checkbox" id="task-pack-5">
+                        <span class="task-text">Μικρό σακίδιο πλάτης (για τα σνακ και νερά της ημέρας)</span>
+                    </label>
+                </ul>
+            </div>
+
+            <div class="check-card glass">
+                <h3><i class="fa-solid fa-bag-shopping"></i> 6. Τι να αγοράσω; (Souvenirs)</h3>
+                <ul class="task-list">
+                    <label class="task-item">
+                        <input type="checkbox" class="task-checkbox" id="task-souv-1">
+                        <span class="task-text">Σοκολατάκια Mozart (Mozartkugeln) - Ιδανικά από Mirabell</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" class="task-checkbox" id="task-souv-2">
+                        <span class="task-text">Γκοφρέτες Manner (στο χαρακτηριστικό ροζ κουτί)</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" class="task-checkbox" id="task-souv-3">
+                        <span class="task-text">Βιεννέζικος Καφές (π.χ. Julius Meinl)</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" class="task-checkbox" id="task-souv-4">
+                        <span class="task-text">Δώρα με θέμα την Πριγκίπισσα Sisi (για τα παιδιά ή φίλους)</span>
+                    </label>
+                </ul>
+            </div>
+
         </div>
         </details>
 
@@ -698,6 +746,17 @@
                 </p>
                 <a href="https://www.google.com/maps/search/supermarket+near+me/" target="_blank" class="btn-map" style="background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; color: #f59e0b; width: 100%; justify-content: center; font-size: 1.05rem; padding: 12px; box-sizing: border-box; margin: 0;">
                     <i class="fa-solid fa-location-crosshairs"></i> Βρες Κοντινό Σούπερ Μάρκετ
+                </a>
+            </div>
+
+            <!-- Tired Kids SOS -->
+            <div class="check-card glass" style="border: 1px solid #d946ef; box-shadow: 0 0 15px rgba(217, 70, 239, 0.15);">
+                <h3 style="color: #d946ef;"><i class="fa-solid fa-ice-cream"></i> SOS: Κουρασμένα Παιδιά!</h3>
+                <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">
+                    Γκρίνια; Κούραση; Πατήστε εδώ για να βρείτε αμέσως την πιο κοντινή τζελατερία, ζαχαροπλαστείο ή καφέ για μια γρήγορη ανάσα (και παγωτό)!
+                </p>
+                <a href="https://www.google.com/maps/search/ice+cream+or+cafe+near+me/" target="_blank" class="btn-map" style="background: rgba(217, 70, 239, 0.15); border: 1px solid #d946ef; color: #d946ef; width: 100%; justify-content: center; font-size: 1.05rem; padding: 12px; box-sizing: border-box; margin: 0;">
+                    <i class="fa-solid fa-location-crosshairs"></i> Βρες Κοντινό Παγωτό
                 </a>
             </div>
 
@@ -1281,6 +1340,7 @@
                         <p><strong>19:30</strong> Αναχώρηση από το ξενοδοχείο και μετάβαση στο αεροδρόμιο της Βιέννης.</p>
                         <p><strong>20:15</strong> Άφιξη στο αεροδρόμιο για τον έλεγχο εισιτηρίων.</p>
                         <p><strong>22:10</strong> Πτήση επιστροφής. Καλό ταξίδι!</p>
+                        <a href="https://www.viennaairport.com/en/passengers/arrival__departure/departures" target="_blank" class="btn-map" style="background: rgba(168, 85, 247, 0.15); border: 1px solid #a855f7; color: #a855f7;"><i class="fa-solid fa-plane-radar"></i> Live Πτήσεις Αεροδρομίου (VIE)</a>
                         <div class="event-media">
                             <img src="images/vienna_departure_1784905014923.jpg" alt="Vienna Departure">
                         </div>
@@ -1302,7 +1362,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 22; // Bump this on future updates
+            const SITE_VERSION = 23; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
