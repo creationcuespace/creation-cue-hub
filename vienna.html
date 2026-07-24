@@ -856,18 +856,45 @@
         
     </div>
 
+    <!-- Firebase SDK (loaded from Hosting environment) -->
+    <script defer src="/__/firebase/10.7.1/firebase-app-compat.js"></script>
+    <script defer src="/__/firebase/10.7.1/firebase-database-compat.js"></script>
+    <script defer src="/__/firebase/init.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const checkboxes = document.querySelectorAll('.task-checkbox');
             
-            checkboxes.forEach(box => {
-                const isChecked = localStorage.getItem('vienna_' + box.id) === 'true';
-                box.checked = isChecked;
-                
-                box.addEventListener('change', (e) => {
-                    localStorage.setItem('vienna_' + e.target.id, e.target.checked);
-                });
-            });
+            // Allow time for Firebase to initialize
+            setTimeout(() => {
+                if (typeof firebase !== 'undefined') {
+                    const db = firebase.database();
+                    const tasksRef = db.ref('vienna_trip/tasks');
+
+                    // Listen for global changes
+                    tasksRef.on('value', (snapshot) => {
+                        const data = snapshot.val() || {};
+                        checkboxes.forEach(box => {
+                            box.checked = !!data[box.id];
+                        });
+                    });
+
+                    // Update database on change
+                    checkboxes.forEach(box => {
+                        box.addEventListener('change', (e) => {
+                            tasksRef.child(e.target.id).set(e.target.checked);
+                        });
+                    });
+                } else {
+                    // Fallback to localStorage if not running on Firebase Hosting
+                    checkboxes.forEach(box => {
+                        box.checked = localStorage.getItem('vienna_' + box.id) === 'true';
+                        box.addEventListener('change', (e) => {
+                            localStorage.setItem('vienna_' + e.target.id, e.target.checked);
+                        });
+                    });
+                }
+            }, 500);
 
             // Password Protection Logic
             const unlockBtn = document.getElementById('unlock-btn');

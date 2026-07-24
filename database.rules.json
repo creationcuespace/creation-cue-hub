@@ -83,6 +83,10 @@
     "companion_release_notes": {
       ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
       ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')"
+    },
+    "vienna_trip": {
+      ".read": "true",
+      ".write": "true"
     }
   }
 }
