@@ -318,6 +318,28 @@
             100% { background-color: transparent; }
         }
 
+        .add-to-cal-btn {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 15px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .add-to-cal-btn:hover {
+            background: var(--accent);
+            color: #0f172a;
+        }
+
         .timeline {
             position: relative;
             max-width: 900px;
@@ -794,7 +816,10 @@
                 </div>
                 
                 <div class="event-card glass">
-                    <div class="event-time"><i class="fa-regular fa-clock"></i> 07:40 - 09:45</div>
+                    <div class="event-time">
+                        <i class="fa-regular fa-clock"></i> 07:40 - 09:45
+                        <a href="#" class="add-to-cal-btn" data-title="Άφιξη στη Βιέννη" data-start="20260810T074000" data-end="20260810T084000" data-loc="Vienna International Airport" title="Προσθήκη στο Ημερολόγιο"><i class="fa-regular fa-calendar-plus"></i></a>
+                    </div>
                     <div class="event-content">
                         <h4>Άφιξη & Τακτοποίηση</h4>
                         <p><strong>07:40</strong> Άφιξη στο αεροδρόμιο της Βιέννης.</p>
@@ -813,7 +838,10 @@
                 </div>
 
                 <div class="event-card glass">
-                    <div class="event-time"><i class="fa-regular fa-clock"></i> 14:30 - 17:30</div>
+                    <div class="event-time">
+                        <i class="fa-regular fa-clock"></i> 14:30 - 17:30
+                        <a href="#" class="add-to-cal-btn" data-title="Check-in στο ξενοδοχείο" data-start="20260810T150000" data-end="20260810T153000" data-loc="ARCOTEL Donauzentrum" title="Προσθήκη στο Ημερολόγιο"><i class="fa-regular fa-calendar-plus"></i></a>
+                    </div>
                     <div class="event-content">
                         <h4>Check-in & Ξεκούραση</h4>
                         <p><strong>14:30</strong> Επιστροφή στο ξενοδοχείο.</p>
@@ -845,7 +873,10 @@
                 </div>
                 
                 <div class="event-card glass">
-                    <div class="event-time"><i class="fa-regular fa-clock"></i> 08:30 - 14:30</div>
+                    <div class="event-time">
+                        <i class="fa-regular fa-clock"></i> 08:30 - 14:30
+                        <a href="#" class="add-to-cal-btn" data-title="Άνω Μπελβεντέρε (Κλιμτ)" data-start="20260811T113000" data-end="20260811T133000" data-loc="Upper Belvedere" title="Προσθήκη στο Ημερολόγιο"><i class="fa-regular fa-calendar-plus"></i></a>
+                    </div>
                     <div class="event-content">
                         <h4>Μπελβεντέρε & Κλιμτ</h4>
                         <p><strong>08:30</strong> Πρωινό.</p>
@@ -858,7 +889,10 @@
                 </div>
 
                 <div class="event-card glass">
-                    <div class="event-time"><i class="fa-regular fa-clock"></i> 16:30 - 22:30</div>
+                    <div class="event-time">
+                        <i class="fa-regular fa-clock"></i> 16:30 - 22:30
+                        <a href="#" class="add-to-cal-btn" data-title="Ενυδρείο (Haus des Meeres)" data-start="20260811T170000" data-end="20260811T190000" data-loc="Haus des Meeres" title="Προσθήκη στο Ημερολόγιο"><i class="fa-regular fa-calendar-plus"></i></a>
+                    </div>
                     <div class="event-content">
                         <h4>Ενυδρείο & Mariahilf</h4>
                         <p><strong>16:30</strong> Αναχώρηση από το ξενοδοχείο.</p>
@@ -882,7 +916,10 @@
                 </div>
                 
                 <div class="event-card glass">
-                    <div class="event-time"><i class="fa-regular fa-clock"></i> 07:30 - 10:15</div>
+                    <div class="event-time">
+                        <i class="fa-regular fa-clock"></i> 07:30 - 10:15
+                        <a href="#" class="add-to-cal-btn" data-title="Twin City Liner (Μπρατισλάβα)" data-start="20260812T090000" data-end="20260812T101500" data-loc="Schwedenplatz" title="Προσθήκη στο Ημερολόγιο"><i class="fa-regular fa-calendar-plus"></i></a>
+                    </div>
                     <div class="event-content">
                         <h4>Μετάβαση με Καταμαράν</h4>
                         <p><strong>07:30</strong> Πρωινό.</p>
@@ -961,7 +998,10 @@
                 </div>
                 
                 <div class="event-card glass">
-                    <div class="event-time"><i class="fa-regular fa-clock"></i> 08:00 - 10:00</div>
+                    <div class="event-time">
+                        <i class="fa-regular fa-clock"></i> 08:00 - 10:00
+                        <a href="#" class="add-to-cal-btn" data-title="Ζωολογικός Κήπος Schönbrunn" data-start="20260814T100000" data-end="20260814T133000" data-loc="Tiergarten Schönbrunn" title="Προσθήκη στο Ημερολόγιο"><i class="fa-regular fa-calendar-plus"></i></a>
+                    </div>
                     <div class="event-content">
                         <h4>Check-out & Schönbrunn</h4>
                         <p><strong>08:00</strong> Πρωινό.</p>
@@ -986,7 +1026,10 @@
                 </div>
 
                 <div class="event-card glass">
-                    <div class="event-time"><i class="fa-regular fa-clock"></i> 19:00 - 22:10</div>
+                    <div class="event-time">
+                        <i class="fa-regular fa-clock"></i> 19:00 - 22:10
+                        <a href="#" class="add-to-cal-btn" data-title="Πτήση Επιστροφής" data-start="20260814T221000" data-end="20260814T235900" data-loc="Vienna International Airport" title="Προσθήκη στο Ημερολόγιο"><i class="fa-regular fa-calendar-plus"></i></a>
+                    </div>
                     <div class="event-content">
                         <h4>Πτήση Επιστροφής</h4>
                         <p><strong>19:00</strong> Επιστροφή στο ξενοδοχείο για παραλαβή των αποσκευών.</p>
@@ -1015,6 +1058,20 @@
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
+
+            // Setup Add to Calendar buttons
+            document.querySelectorAll('.add-to-cal-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const title = encodeURIComponent(btn.dataset.title || '');
+                    const start = btn.dataset.start || '';
+                    const end = btn.dataset.end || '';
+                    const loc = encodeURIComponent(btn.dataset.loc || '');
+                    
+                    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&location=${loc}&ctz=Europe/Vienna`;
+                    window.open(url, '_blank');
+                });
+            });
 
             function showToast(iconClass, title, message) {
                 const toast = document.createElement('div');
