@@ -745,7 +745,7 @@
             </div>
         </details>
 
-        <details class="booking-details">
+        <details id="tickets-belvedere" class="booking-details">
             <summary><i class="fa-solid fa-museum"></i> Άνω Μπελβεντέρε (Εισιτήρια)</summary>
             <div class="booking-content" style="display: flex; flex-direction: column; gap: 30px;">
                 
@@ -802,7 +802,7 @@
             </div>
         </details>
 
-        <details class="booking-details" style="margin-top: 15px;">
+        <details id="tickets-aquarium" class="booking-details" style="margin-top: 15px;">
             <summary><i class="fa-solid fa-fish"></i> Ενυδρείο (Haus des Meeres)</summary>
             <div class="booking-content" style="display: flex; flex-direction: column; gap: 30px;">
                 
@@ -936,6 +936,7 @@
                         <p><strong>13:30</strong> Μεσημεριανό γεύμα σε εστιατόριο στην περιοχή γύρω από το Μπελβεντέρε.</p>
                         <p><strong>15:00</strong> Επιστροφή στο ξενοδοχείο για μεσημεριανή ξεκούραση.</p>
                         <a href="https://www.belvedere.at/en" target="_blank" class="btn-link"><i class="fa-solid fa-link"></i> Ιστοσελίδα Belvedere</a>
+                        <a href="#tickets-belvedere" class="btn-link" onclick="setTimeout(() => document.getElementById('tickets-belvedere').open = true, 100);"><i class="fa-solid fa-ticket"></i> Προβολή Εισιτηρίων</a>
                     </div>
                 </div>
 
@@ -951,6 +952,7 @@
                         <p><strong>19:30</strong> Περίπατος στην εμπορική οδό Mariahilfer Straße.</p>
                         <p><strong>20:30</strong> Δείπνο σε εστιατόριο της περιοχής Mariahilf.</p>
                         <p><strong>22:30</strong> Επιστροφή στο ξενοδοχείο.</p>
+                        <a href="#tickets-aquarium" class="btn-link" style="margin-bottom: 15px; display: inline-block;" onclick="setTimeout(() => document.getElementById('tickets-aquarium').open = true, 100);"><i class="fa-solid fa-ticket"></i> Προβολή Εισιτηρίων</a>
                         <div class="event-media">
                             <img src="images/haus_des_meeres_1784428189624.png" alt="Haus des Meeres">
                         </div>
@@ -1096,7 +1098,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 7; // Bump this on future updates
+            const SITE_VERSION = 8; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
@@ -1208,9 +1210,18 @@
             const lockIcon = document.getElementById('lock-icon');
 
             if (unlockBtn) {
+                // Check if already unlocked in this browser
+                if (localStorage.getItem('vienna_unlocked') === 'true') {
+                    authContainer.style.display = 'none';
+                    privateDetails.style.display = 'block';
+                    lockIcon.className = 'fa-solid fa-lock-open';
+                    lockIcon.style.color = 'var(--success)';
+                }
+
                 const checkPin = () => {
                     // Simple obfuscation of the PIN to prevent casual viewing in source code
                     if (btoa(pinInput.value) === 'MjYwNg==') {
+                        localStorage.setItem('vienna_unlocked', 'true');
                         authContainer.style.display = 'none';
                         privateDetails.style.display = 'block';
                         lockIcon.className = 'fa-solid fa-lock-open';
