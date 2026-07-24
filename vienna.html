@@ -553,6 +553,16 @@
     </header>
 
     <div class="container">
+        <div id="auth-container" class="glass" style="padding: 30px; text-align: center; margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto;">
+            <i class="fa-solid fa-lock" id="lock-icon" style="font-size: 3rem; color: var(--accent); margin-bottom: 20px;"></i>
+            <h2 style="margin-bottom: 15px;">Προστατευμένη Πρόσβαση</h2>
+            <p style="margin-bottom: 25px; color: var(--text-muted);">Ολόκληρο το πρόγραμμα προστατεύεται. Παρακαλώ εισάγετε το <strong>Master PIN</strong>.</p>
+            <input type="password" id="pin-input" placeholder="PIN" style="padding: 12px; border-radius: 8px; border: 1px solid var(--accent); background: rgba(0,0,0,0.3); color: white; margin-right: 10px; width: 120px; text-align: center; font-size: 1.2rem;">
+            <button id="unlock-btn" class="btn-link" style="border: none; cursor: pointer; font-size: 1.1rem; padding: 12px 20px; background: var(--accent); color: var(--bg-dark); border-radius: 8px; font-weight: bold;">Ξεκλείδωμα</button>
+            <p id="auth-error" style="color: #ef4444; display: none; margin-top: 15px; font-size: 1rem;">Λάθος PIN</p>
+        </div>
+
+        <div id="private-details" style="display: none;">
         <!-- Checklist -->
         <h2 class="section-title">Προετοιμασία & Κρατήσεις</h2>
         <div class="checklist-grid">
@@ -616,16 +626,7 @@
         </div>
 
         <!-- Reservations -->
-        <h2 class="section-title">Έγγραφα & Κρατήσεις <i class="fa-solid fa-lock" id="lock-icon" style="font-size: 1rem; color: var(--text-muted);"></i></h2>
-        
-        <div id="auth-container" class="glass" style="padding: 20px; text-align: center; margin-bottom: 20px;">
-            <p style="margin-bottom: 15px;">Αυτή η ενότητα περιέχει τα εισιτήριά σας. Παρακαλώ εισάγετε το <strong>Master PIN</strong> για να την ξεκλειδώσετε.</p>
-            <input type="password" id="pin-input" placeholder="PIN" style="padding: 10px; border-radius: 6px; border: 1px solid var(--accent); background: rgba(0,0,0,0.3); color: white; margin-right: 10px; width: 100px; text-align: center;">
-            <button id="unlock-btn" class="btn-link" style="border: none; cursor: pointer;">Ξεκλείδωμα</button>
-            <p id="auth-error" style="color: #ef4444; display: none; margin-top: 10px; font-size: 0.9rem;">Λάθος PIN</p>
-        </div>
-
-        <div id="private-details" style="display: none;">
+        <h2 class="section-title">Έγγραφα & Κρατήσεις</h2>
         <details class="booking-details">
             <summary><i class="fa-solid fa-ticket-simple"></i> Εισιτήρια WienMobil (7 Days)</summary>
             <div class="booking-content" style="display: flex; flex-direction: column; gap: 20px;">
@@ -858,7 +859,6 @@
 
             </div>
         </details>
-        </div>
 
         <!-- The Itinerary -->
         <h2 class="section-title">Το Πρόγραμμα</h2>
@@ -1085,7 +1085,7 @@
             </div>
             
         </div>
-        
+        </div> <!-- End of private-details -->
     </div>
 
     <!-- Toast Container -->
@@ -1098,7 +1098,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 9; // Bump this on future updates
+            const SITE_VERSION = 10; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
