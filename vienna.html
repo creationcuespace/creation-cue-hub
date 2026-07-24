@@ -443,8 +443,14 @@
             list-style: none;
             display: flex;
             align-items: center;
-            justify-content: space-between;
             transition: background 0.3s;
+        }
+        
+        .booking-details summary i {
+            margin-right: 15px;
+            width: 24px;
+            text-align: center;
+            color: var(--accent);
         }
 
         .booking-details summary::-webkit-details-marker {
@@ -457,6 +463,7 @@
             font-weight: 900;
             color: var(--accent);
             transition: transform 0.3s;
+            margin-left: auto;
         }
 
         .booking-details[open] summary::after {
