@@ -648,8 +648,8 @@
                         <span class="task-text">Αγορά 7ήμερων καρτών στο WienMobil (€25.20/άτομο).</span>
                     </label>
                     <label class="task-item">
-                        <input type="checkbox" class="task-checkbox" id="task-4">
-                        <span class="task-text">Κλείστε εισιτήρια τρένου επιστροφής από Μπρατισλάβα.</span>
+                        <input type="checkbox" class="task-checkbox" id="task-4" checked>
+                        <span class="task-text">Εισιτήρια τρένου επιστροφής από Μπρατισλάβα. <span style="color: var(--success); font-weight: bold;">(Έτοιμα!)</span> <a href="#tickets-train" class="btn-link" style="padding: 2px 8px; font-size: 0.9rem; margin-left: 5px;" onclick="return window.openTicketDetails ? window.openTicketDetails('tickets-train') : true;">Προβολή</a></span>
                     </label>
                 </ul>
                 <a href="https://www.wienerlinien.at/en/maps" target="_blank" class="btn-map" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.5); color: #fff; width: 100%; justify-content: center; font-size: 1.05rem; padding: 12px; box-sizing: border-box; margin-top: 15px;"><i class="fa-solid fa-download"></i> Χάρτες Μετρό & Πόλης</a>
@@ -1103,6 +1103,25 @@
             </div>
         </details>
 
+        <details class="booking-details" id="tickets-train">
+            <summary><i class="fa-solid fa-train"></i> Εισιτήρια Τρένου ÖBB (Επιστροφή από Μπρατισλάβα)</summary>
+            <div class="booking-content" style="display: flex; flex-direction: column; gap: 20px;">
+                <p><strong>ÖBB Standard-Ticket Gruppe</strong> (3 Ενήλικες, 2 Παιδιά)<br>
+                <i class="fa-regular fa-clock" style="color: var(--accent);"></i> Ισχύει για όλες τις ώρες μεταξύ <strong>12.08.2026 - 13.08.2026</strong><br>
+                Από Μπρατισλάβα (Bratislava) προς Βιέννη (Wien).<br>
+                Κωδικός Κράτησης: <strong style="color: var(--success); font-size: 1.1rem;">2993 3644 2084 0884</strong> (Buchung 0061 7760 9396 9702)</p>
+                <div class="booking-grid">
+                    <div>
+                        <h4 style="color: var(--accent); margin-bottom: 8px; font-size: 1.1rem;">QR Code</h4>
+                        <div style="background: white; padding: 20px; border-radius: 8px; text-align: center; color: black; font-weight: bold;">
+                            <i class="fa-solid fa-qrcode" style="font-size: 5rem; margin-bottom: 10px;"></i><br>
+                            ÖBB Ticket
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </details>
+
         <details class="booking-details" id="tickets-zoo">
             <summary><i class="fa-solid fa-hippo"></i> Εισιτήρια Ζωολογικού (Schönbrunn)</summary>
             <div class="booking-content" style="display: flex; flex-direction: column; gap: 20px;">
@@ -1291,6 +1310,7 @@
                     <div class="event-content">
                         <h4>Επιστροφή με Τρένο</h4>
                         <p><strong>17:00</strong> Αναχώρηση από τον κεντρικό σιδηροδρομικό σταθμό της Μπρατισλάβας με το τρένο.</p>
+                        <a href="#tickets-train" class="btn-link" style="margin-bottom: 15px; display: inline-block; margin-top: 5px;" onclick="return window.openTicketDetails ? window.openTicketDetails('tickets-train') : true;"><i class="fa-solid fa-ticket"></i> Προβολή Εισιτηρίων Τρένου</a>
                         <p><strong>18:15</strong> Άφιξη στον κεντρικό σταθμό της Βιέννης (Hauptbahnhof).</p>
                         <p><strong>18:30</strong> Επιστροφή στο ξενοδοχείο.</p>
                         <p><strong>20:30</strong> Αναχώρηση για δείπνο σε κοντινό εστιατόριο της επιλογής σας.</p>
@@ -1405,7 +1425,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 29; // Bump this on future updates
+            const SITE_VERSION = 30; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
