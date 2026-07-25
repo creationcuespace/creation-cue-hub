@@ -959,6 +959,23 @@
                         Περιλαμβάνεται πρωινό.
                     </div>
                 </div>
+                <div style="margin-top: 20px; padding: 15px; background: rgba(16, 185, 129, 0.15); border-left: 4px solid var(--success); border-radius: 4px;">
+                    <h4 style="color: var(--success); margin-bottom: 10px; font-size: 1.1rem;"><i class="fa-solid fa-map-location-dot"></i> Tips Τοποθεσίας (Γιατί βολεύει απίστευτα!)</h4>
+                    <p style="margin-bottom: 10px; font-size: 0.95rem;">Το ARCOTEL Donauzentrum βρίσκεται πάνω στην πιο σημαντική γραμμή του μετρό για εσάς: την <strong>Κόκκινη Γραμμή U1 (Στάση Kagran)</strong>.</p>
+                    <ul style="list-style-type: none; padding-left: 0; font-size: 0.95rem; display: flex; flex-direction: column; gap: 8px; margin: 0;">
+                        <li><i class="fa-solid fa-ship" style="color: var(--accent); width: 25px;"></i> <strong>Καταμαράν (Ημέρα 3):</strong> Το λιμάνι Schwedenplatz είναι στην U1. Σε 10 λεπτά είστε εκεί!</li>
+                        <li><i class="fa-solid fa-train" style="color: var(--accent); width: 25px;"></i> <strong>Επιστροφή Τρένου:</strong> Ο σταθμός Wien Hbf είναι επίσης στην U1. Επιστρέφετε χωρίς αλλαγή!</li>
+                        <li><i class="fa-solid fa-water" style="color: var(--accent); width: 25px;"></i> <strong>Μπάνιο (Ημέρα 4):</strong> Το Alte Donau είναι 1 στάση μακριά. Πάτε, κάνετε μπάνιο και γυρνάτε αμέσως.</li>
+                        <li><i class="fa-solid fa-ferris-wheel" style="color: var(--accent); width: 25px;"></i> <strong>Πράτερ:</strong> 3-4 στάσεις μακριά, κατευθείαν στην U1 (Στάση Praterstern).</li>
+                        <li><i class="fa-solid fa-cart-shopping" style="color: var(--accent); width: 25px;"></i> <strong>Donau Zentrum Mall:</strong> Το ξενοδοχείο συνδέεται με το εμπορικό κέντρο. Ιδανικό για γρήγορο φαγητό ή σνακ (Interspar) για τα παιδιά.</li>
+                        <li><i class="fa-solid fa-plane-departure" style="color: var(--accent); width: 25px;"></i> <strong>Λεωφορείο Αεροδρομίου:</strong> Το VAL 3 σταματάει ακριβώς απ' έξω!</li>
+                    </ul>
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.95rem;">
+                        <strong style="color: #fbbf24; margin-bottom: 5px; display: block;">Αλλαγές γραμμών που θα χρειαστείτε:</strong>
+                        <span style="display: block; margin-bottom: 5px;">• <strong>Ζωολογικός / Schönbrunn:</strong> U1 μέχρι <em>Karlsplatz</em> ➔ Πράσινη <strong>U4</strong> (25-30 λ).</span>
+                        <span style="display: block;">• <strong>Ενυδρείο:</strong> U1 μέχρι <em>Stephansplatz</em> ➔ Πορτοκαλί <strong>U3</strong> (Στάση Neubaugasse).</span>
+                    </div>
+                </div>
             </div>
         </details>
 
@@ -1430,7 +1447,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 33; // Bump this on future updates
+            const SITE_VERSION = 34; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
