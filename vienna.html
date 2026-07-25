@@ -652,7 +652,7 @@
                         <span class="task-text">Εισιτήρια τρένου επιστροφής από Μπρατισλάβα. <span style="color: var(--success); font-weight: bold;">(Έτοιμα!)</span> <a href="#tickets-train" class="btn-link" style="padding: 2px 8px; font-size: 0.9rem; margin-left: 5px;" onclick="return window.openTicketDetails ? window.openTicketDetails('tickets-train') : true;">Προβολή</a></span>
                     </label>
                 </ul>
-                <a href="https://www.wienerlinien.at/en/maps" target="_blank" class="btn-map" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.5); color: #fff; width: 100%; justify-content: center; font-size: 1.05rem; padding: 12px; box-sizing: border-box; margin-top: 15px;"><i class="fa-solid fa-download"></i> Χάρτες Μετρό & Πόλης</a>
+                <a href="https://www.google.com/maps/search/Vienna+U-Bahn+Station/" target="_blank" class="btn-map" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.5); color: #fff; width: 100%; justify-content: center; font-size: 1.05rem; padding: 12px; box-sizing: border-box; margin-top: 15px;"><i class="fa-solid fa-map-location-dot"></i> Κοντινοί Σταθμοί Μετρό</a>
             </div>
 
             <div class="check-card glass">
@@ -1112,11 +1112,10 @@
                 Κωδικός Κράτησης: <strong style="color: var(--success); font-size: 1.1rem;">2993 3644 2084 0884</strong> (Buchung 0061 7760 9396 9702)</p>
                 <div class="booking-grid">
                     <div>
-                        <h4 style="color: var(--accent); margin-bottom: 8px; font-size: 1.1rem;">QR Code</h4>
-                        <div style="background: white; padding: 20px; border-radius: 8px; text-align: center; color: black; font-weight: bold;">
-                            <i class="fa-solid fa-qrcode" style="font-size: 5rem; margin-bottom: 10px;"></i><br>
-                            ÖBB Ticket
-                        </div>
+                        <a href="obb_train_ticket.pdf" target="_blank" style="display: block; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); padding: 20px; border-radius: 8px; text-align: center; color: white; font-weight: bold; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+                            <i class="fa-solid fa-file-pdf" style="font-size: 4rem; color: #ef4444; margin-bottom: 15px;"></i><br>
+                            Προβολή Εισιτηρίου (PDF)
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1310,6 +1309,7 @@
                     <div class="event-content">
                         <h4>Επιστροφή με Τρένο</h4>
                         <p><strong>17:00</strong> Αναχώρηση από τον κεντρικό σιδηροδρομικό σταθμό της Μπρατισλάβας με το τρένο.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=Bratislava+hlavn%C3%A1+stanica&travelmode=transit" target="_blank" class="btn-map" style="margin-bottom: 10px; margin-top: 5px;"><i class="fa-solid fa-train"></i> Πώς θα πάω (Σταθμός Τρένου)</a>
                         <a href="#tickets-train" class="btn-link" style="margin-bottom: 15px; display: inline-block; margin-top: 5px;" onclick="return window.openTicketDetails ? window.openTicketDetails('tickets-train') : true;"><i class="fa-solid fa-ticket"></i> Προβολή Εισιτηρίων Τρένου</a>
                         <p><strong>18:15</strong> Άφιξη στον κεντρικό σταθμό της Βιέννης (Hauptbahnhof).</p>
                         <p><strong>18:30</strong> Επιστροφή στο ξενοδοχείο.</p>
@@ -1425,7 +1425,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 30; // Bump this on future updates
+            const SITE_VERSION = 31; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
