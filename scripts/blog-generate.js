@@ -266,9 +266,9 @@ function generateArticleWithGemini(newsItems, watchFacesList, customTopic) {
         }
 
         let topicInstruction = `Write a short, engaging blog article (around 150-200 words) based on the news above.
-FIRST PRIORITY: Look for any news regarding new or upcoming Wear OS smartwatch releases from big brands (e.g. Samsung Galaxy Watch Ultra, Google Pixel Watch, Xiaomi, OnePlus). If such news exists, write the article about it.
-SECOND PRIORITY: If there are no new watch releases, discuss 1-2 MAJOR high-value tech announcements or Wear OS system updates.
-CRITICAL: Completely IGNORE and filter out any topics related to scams (e.g., Vienna studios), low-quality developer drama, or irrelevant forum spam. Only focus on high-value news that matters to smartwatch users, and analyze what it means for customization.`;
+FIRST PRIORITY: Look for any news regarding new or upcoming Wear OS smartwatch releases from big brands (e.g. Samsung Galaxy Watch Ultra, Google Pixel Watch, Xiaomi, OnePlus). If such news exists, write the article about it, focusing on what it means for watch face customization.
+SECOND PRIORITY: Focus on MAJOR Wear OS software updates, watch face design trends, or new watch face formats.
+CRITICAL: You MUST write an article that is highly interesting and valuable to Wear OS smartwatch users and watch face enthusiasts. Completely IGNORE and filter out any topics related to scams, low-quality developer drama, generic tech filler, or irrelevant forum spam. Do NOT write articles with no value. If the news is boring, write an interesting thought piece on the future of Wear OS watch faces instead.`;
 
         if (customTopic !== '') {
             topicInstruction = `CRITICAL INSTRUCTION: The user has EXPLICITLY requested that you write an article about the following topic: "${customTopic}".
@@ -354,8 +354,8 @@ function generateSuggestionsWithGemini(newsItems, customTopic) {
 
         let instruction = `Based on the news above, suggest 4 highly relevant, interesting blog article topics.
 FIRST PRIORITY: Look for news regarding new or upcoming Wear OS smartwatch releases from big brands (e.g. Samsung Galaxy Watch Ultra, Google Pixel Watch, Xiaomi, OnePlus) and base your suggestions on them.
-SECOND PRIORITY: If there are no big hardware releases, focus on major Wear OS software updates or significant watch face trends.
-CRITICAL: Ignore scams, drama, or spam.`;
+SECOND PRIORITY: Focus on major Wear OS software updates, watch face design trends, or smartwatch customization.
+CRITICAL: You MUST suggest topics that are highly interesting and valuable to Wear OS users and watch face enthusiasts. Ignore scams, drama, generic filler, or spam. No low-value topics.`;
         
         if (customTopic) {
             instruction = `The user is interested in the following broad topic: "${customTopic}". Based on this, suggest 4 specific, highly relevant blog article topics. You can use the news headlines above if they relate to this topic, but focus primarily on the user's interest.`;
