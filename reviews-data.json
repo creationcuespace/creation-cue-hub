@@ -1,4 +1,60 @@
 {
-  "lastUpdated": "2026-07-25T03:30:03.764Z",
-  "reviews": []
+  "lastUpdated": "2026-07-26T03:43:45.550Z",
+  "reviews": [
+    {
+      "reviewId": "7be58777-3497-4f01-a2a6-16ae6ed4c717",
+      "packageName": "com.watchfacestudio.crc035",
+      "title": "Info Watch Face crc035",
+      "wfId": "crc035",
+      "starRating": 4,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "Unknown",
+      "text": "\tHi. I like the app, but the color depiucted (white hour and red minutes) is not present. Not from my mobile nor my Samsung Ultra. Any ideas? Thanks!",
+      "lastModified": "2026-07-26T00:50:57.000Z"
+    },
+    {
+      "reviewId": "99270f7c-e096-4636-843c-3ad263b2532c",
+      "packageName": "com.creation.cue132watchface",
+      "title": "Analog Watch Face CUE132",
+      "wfId": "cue132",
+      "starRating": 4,
+      "reviewerLanguage": "hu",
+      "deviceMetadata": "pa3q (Galaxy S25 Ultra)",
+      "text": "\ttetszik",
+      "lastModified": "2026-07-25T18:35:47.000Z"
+    },
+    {
+      "reviewId": "8f38d7a1-95cf-4d67-b837-32ef47854687",
+      "packageName": "com.creation.cue132watchface",
+      "title": "Analog Watch Face CUE132",
+      "wfId": "cue132",
+      "starRating": 5,
+      "reviewerLanguage": "hu",
+      "deviceMetadata": "wise8us (Galaxy Watch8 Classic)",
+      "text": "\tTetszik",
+      "lastModified": "2026-07-25T18:34:53.000Z"
+    },
+    {
+      "reviewId": "d25bee37-8864-45b8-b9d0-cfc575f658dd",
+      "packageName": "com.creationcue.crc068watchface",
+      "title": "Digital Watch Face CRC068",
+      "wfId": "crc068",
+      "starRating": 4,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
+      "text": "\tGreat watch face simple and too the point, everything I need.",
+      "lastModified": "2026-07-25T14:44:32.000Z"
+    },
+    {
+      "reviewId": "46a3fe40-431e-43c2-ad04-32746b49e112",
+      "packageName": "com.creation.cue177watchface",
+      "title": "Analog Watch Face CUE177",
+      "wfId": "cue177",
+      "starRating": 5,
+      "reviewerLanguage": "nl",
+      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
+      "text": "\ttop",
+      "lastModified": "2026-07-25T04:38:20.000Z"
+    }
+  ]
 }
