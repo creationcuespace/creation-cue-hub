@@ -4356,6 +4356,8 @@
                     <span style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">${dateStr}</span>
                   </div>
                 </div>
+                
+                <button onclick="ignoreReview('${r.reviewId}')" style="font-size: 11px; padding: 5px 10px; background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border-color); border-radius: 4px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" title="Delete from list">✕</button>
               </div>
 
               <!-- Stars & Text -->
@@ -4377,7 +4379,6 @@
                 </div>
                 
                 <div style="display: flex; gap: 6px; align-items: center;">
-                  <button onclick="ignoreReview('${r.reviewId}')" style="font-size: 11px; padding: 5px 10px; background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border-color); border-radius: 4px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" title="Delete from list">✕</button>
                   <button onclick="toggleReplyBox('${r.reviewId}')" style="font-size: 11px; padding: 5px 12px; background: var(--primary); color: #fff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Reply</button>
                 </div>
               </div>
