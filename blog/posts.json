@@ -1,5 +1,15 @@
 [
   {
+    "slug": "weather-complications",
+    "title": "Weather complications",
+    "excerpt": "Simple Weather app",
+    "date": "Jul 13, 2026",
+    "thumbnail": "https://github.com/creationcuespace/creation-cue-hub/blob/main/blog/images/simpleWeather.jpg?raw=true",
+    "timestamp": "2026-07-26T07:21:47.979Z",
+    "pinned": true,
+    "pinStyle": "small"
+  },
+  {
     "slug": "redeem-your-google-play-gift-card-or-gift-code",
     "title": "Redeem your Google Play gift card or gift code",
     "excerpt": "How to redeem your play store coupon.",
@@ -48,14 +58,6 @@
     "date": "July 16, 2026",
     "thumbnail": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue178.png",
     "timestamp": "2026-07-16T18:01:26.255Z"
-  },
-  {
-    "slug": "weather-complications",
-    "title": "Weather complications",
-    "excerpt": "Simple Weather app",
-    "date": "Jul 13, 2026",
-    "thumbnail": "https://github.com/creationcuespace/creation-cue-hub/blob/main/blog/images/simpleWeather.jpg?raw=true",
-    "pinned": true
   },
   {
     "slug": "wear-os-watch-faces-navigating-community-customization-and-creator-trust",
