@@ -4333,7 +4333,7 @@
             const match = managerData.find(w => w.id === r.wfId);
             if (match) iconUrl = match.image_url;
           }
-          const iconImgHtml = iconUrl ? `<img src="${getOptimizedImageUrl(iconUrl, 32)}" style="width: 18px; height: 18px; border-radius: 4px; object-fit: cover;" alt="icon">` : '';
+          const iconImgHtml = iconUrl ? `<img src="${getOptimizedImageUrl(iconUrl, 48)}" style="width: 28px; height: 28px; border-radius: 4px; object-fit: cover; box-shadow: 0 1px 3px rgba(0,0,0,0.3);" alt="icon">` : '';
 
           const canned1 = "Thank you so much! Glad you like it! 😊";
           const canned2 = "Thanks for the review! Let me know if you have any feature requests!";
@@ -4345,7 +4345,7 @@
           html += `
             <div class="card" style="padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
               
-              <!-- Top Row: Author & Actions -->
+              <!-- Top Row: Author & Date -->
               <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
                 <div style="display: flex; align-items: center; gap: 10px;">
                   <div style="width: 34px; height: 34px; border-radius: 50%; background: ${getAvatarColor(authorName)}; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
@@ -4355,11 +4355,6 @@
                     <span style="font-weight: bold; font-size: 13px; color: #fff;">${authorName}</span>
                     <span style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">${dateStr}</span>
                   </div>
-                </div>
-                
-                <div style="display: flex; gap: 6px; align-items: center;">
-                  <button onclick="ignoreReview('${r.reviewId}')" style="font-size: 11px; padding: 4px 8px; background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border-color); border-radius: 4px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" title="Delete from list">✕</button>
-                  <button onclick="toggleReplyBox('${r.reviewId}')" style="font-size: 11px; padding: 4px 8px; background: var(--primary); color: #000; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; white-space: nowrap; box-shadow: 0 2px 4px rgba(245,197,24,0.2);">Reply</button>
                 </div>
               </div>
 
@@ -4371,15 +4366,19 @@
                 </div>
               </div>
 
-              <!-- Bottom Row: App & Meta -->
+              <!-- Bottom Row: App, Meta & Actions -->
               <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 11px; color: var(--text-muted);">
-                <div style="display: flex; align-items: center; gap: 6px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
                   ${iconImgHtml}
-                  <span style="color: var(--primary); font-weight: bold; letter-spacing: 0.5px;">${r.title}</span>
+                  <div style="display: flex; flex-direction: column;">
+                    <span style="color: var(--primary); font-weight: bold; letter-spacing: 0.5px; font-size: 12px;">${r.title}</span>
+                    <span style="font-size: 9px; opacity: 0.7;">📱 ${r.deviceMetadata} • 🌐 ${r.reviewerLanguage}</span>
+                  </div>
                 </div>
-                <div style="display: flex; gap: 10px;">
-                  <span>📱 ${r.deviceMetadata}</span>
-                  <span>🌐 ${r.reviewerLanguage}</span>
+                
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <button onclick="ignoreReview('${r.reviewId}')" style="font-size: 11px; padding: 5px 10px; background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border-color); border-radius: 4px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" title="Delete from list">✕</button>
+                  <button onclick="toggleReplyBox('${r.reviewId}')" style="font-size: 11px; padding: 5px 12px; background: var(--primary); color: #fff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Reply</button>
                 </div>
               </div>
               
