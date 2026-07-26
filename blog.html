@@ -862,7 +862,7 @@
                             </div>
                             <div class="article-details">
                                 <div class="article-meta">
-                                    <span style="background:rgba(241,179,28,0.2); color:var(--primary); padding:2px 6px; border-radius:8px; border:1px solid rgba(241,179,28,0.5);">📌 PINNED</span>
+                                    <span style="background:rgba(255,255,255,0.05); color:var(--text-muted); font-size:10px; font-weight:700; padding:2px 8px; border-radius:12px; border:1px solid rgba(255,255,255,0.1); display:inline-block; margin-right:8px; text-transform:uppercase; letter-spacing:0.5px;">Pinned</span>
                                     <span>${post.date}</span>
                                 </div>
                                 <h2 class="article-title">${post.title}</h2>
@@ -895,7 +895,7 @@
                             ? `https://wsrv.nl/?url=${encodeURIComponent(post.thumbnail)}&w=400&h=280&fit=cover&output=webp&q=80`
                             : 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp';
 
-                        const pinnedBadge = post.pinned ? '<span style="background:rgba(241,179,28,0.2); color:var(--primary); font-size:10px; font-weight:800; padding:3px 8px; border-radius:12px; margin-right:8px; border:1px solid rgba(241,179,28,0.5); display:inline-block;">📌 PINNED</span>' : '';
+                        const pinnedBadge = post.pinned ? '<span style="background:rgba(255,255,255,0.05); color:var(--text-muted); font-size:10px; font-weight:700; padding:2px 8px; border-radius:12px; margin-right:8px; border:1px solid rgba(255,255,255,0.1); display:inline-block; text-transform:uppercase; letter-spacing:0.5px;">Pinned</span>' : '';
 
                         const card = document.createElement('a');
                         card.className = 'article-card';
