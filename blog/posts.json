@@ -6,7 +6,8 @@
     "date": "Jul 13, 2026",
     "thumbnail": "https://github.com/creationcuespace/creation-cue-hub/blob/main/blog/images/coupon.jpg?raw=true",
     "timestamp": "2026-07-25T20:39:00.776Z",
-    "pinned": true
+    "pinned": true,
+    "pinStyle": "small"
   },
   {
     "slug": "form-meets-function-the-design-philosophy-at-creation-cue",
