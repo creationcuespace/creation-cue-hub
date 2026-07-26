@@ -1024,7 +1024,10 @@ AAAA-BBBB-CCCC"></textarea>
         </div>
 
         <div class="card">
-          <div class="card-title">Active Promotions</div>
+          <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Active Promotions</span>
+            <button class="btn small" onclick="loadPromotions()" style="background:rgba(255,255,255,0.1); border:none; padding:4px 8px; font-size:10px;">Refresh</button>
+          </div>
           <div style="margin-top: -6px; margin-bottom: 2px;">
             <input class="input-text" id="promotions-search" type="text" placeholder="Search promotions by name, ID, or description..." oninput="filterPromotions()">
           </div>
@@ -1472,12 +1475,6 @@ AAAA-BBBB-CCCC"></textarea>
           }
           window.rawPromotionsData = snapshot.val();
           renderPromotions();
-          
-          // Now set up the live listener
-          firebase.database().ref('promotions').on('value', function(liveSnapshot) {
-            window.rawPromotionsData = liveSnapshot.val();
-            renderPromotions();
-          });
         })
         .catch(function(err) {
           clearTimeout(connectionTimeout);
@@ -1732,7 +1729,7 @@ AAAA-BBBB-CCCC"></textarea>
     }
 
     function startSubscribersListener() {
-      firebase.database().ref('newsletter_subscribers').on('value', function(snapshot) {
+      firebase.database().ref('newsletter_subscribers').once('value').then(function(snapshot) {
         window.allSubscribers = snapshot.val() || {};
         var count = Object.keys(window.allSubscribers).length;
         
@@ -1747,8 +1744,8 @@ AAAA-BBBB-CCCC"></textarea>
         if (modal && modal.style.display !== 'none') {
           renderSubscribersList(window.allSubscribers);
         }
-      }, function(err) {
-        console.warn("Could not listen to subscribers:", err);
+      }).catch(function(err) {
+        console.warn("Could not load subscribers:", err);
         var subBtn = document.getElementById('btn-subscribers-header');
         if (subBtn) {
           subBtn.textContent = 'SUBSCRIBERS';

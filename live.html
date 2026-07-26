@@ -1,0 +1,4168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script>if(location.hostname.includes("firebaseapp.com")){location.replace(location.href.replace(location.hostname,"creationcue.web.app"));}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://cdn.jsdelivr.net https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.jsdelivr.net https://creationcue.space https://via.placeholder.com https://wsrv.nl https://*.googleusercontent.com https://raw.githubusercontent.com https://*.githubusercontent.com https://api.qrserver.com; connect-src 'self' https://raw.githubusercontent.com wss://*.firebasedatabase.app wss://*.europe-west1.firebasedatabase.app https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.google.com/recaptcha/ https://ntfy.sh https://corsproxy.io https://api.allorigins.win https://www.gstatic.com https://api.github.com; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://*.firebaseapp.com https://accounts.google.com https://content-firebaseauth.googleapis.com https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://www.google.com/recaptcha/ https://recaptcha.net/;">
+  <meta name="theme-color" content="#141414">
+  <title>Versions</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Flatpickr date picker -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <style>
+    .flatpickr-calendar { background: #1e1e2e !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 10px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important; }
+    .flatpickr-day { color: #e0e0e0 !important; border-radius: 6px !important; }
+    .flatpickr-day:hover, .flatpickr-day.selected { background: #7C3AED !important; border-color: #7C3AED !important; color: #fff !important; }
+    .flatpickr-day.today { border-color: rgba(245,197,24,0.5) !important; }
+    .flatpickr-months, .flatpickr-month { background: #1e1e2e !important; color: #e0e0e0 !important; fill: #e0e0e0 !important; }
+    .flatpickr-current-month, .flatpickr-monthDropdown-months { color: #e0e0e0 !important; }
+    .flatpickr-weekday { color: rgba(255,255,255,0.4) !important; }
+    .flatpickr-prev-month svg, .flatpickr-next-month svg { fill: #e0e0e0 !important; }
+    .flatpickr-prev-month:hover svg, .flatpickr-next-month:hover svg { fill: #7C3AED !important; }
+    .numInputWrapper input { color: #e0e0e0 !important; }
+  </style>
+
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+  <!-- Favicon (Purple/Indigo theme — unique to play-versions dashboard) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%237C3AED'/%3E%3Cstop offset='100%25' stop-color='%234F46E5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='5' fill='url(%23g)'/%3E%3Ccircle cx='12' cy='10' r='5' fill='none' stroke='white' stroke-width='1.5'/%3E%3Cpolygon points='10.5,8 10.5,12 14,10' fill='white'/%3E%3Crect x='5' y='17' width='4' height='1.5' rx='0.75' fill='rgba(255,255,255,0.6)'/%3E%3Crect x='10' y='17' width='5' height='1.5' rx='0.75' fill='rgba(255,255,255,0.6)'/%3E%3Crect x='16' y='17' width='3' height='1.5' rx='0.75' fill='rgba(255,255,255,0.6)'/%3E%3C/svg%3E">
+
+  <style>
+    :root {
+      --red: #e8281e;
+      --blue: #1a3a6b;
+      --yellow: #f5c518;
+      --black: #141414;
+      --dark: #1e1e1e;
+      --mid: #2a2a2a;
+      --border: #3a3a3a;
+      --text: #f0f0f0;
+      --muted: #888;
+      --green: #4caf50;
+      --bg-color: hsl(240, 10%, 3%);
+      --surface-color: hsl(240, 10%, 7%);
+      --surface-hover: hsl(240, 10%, 12%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 50px;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background-color: var(--yellow); }
+
+    .header {
+      width: 100%;
+      background: var(--dark);
+      border-bottom: 2px solid var(--yellow);
+      padding: 14px 20px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .header-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .header-title span { color: var(--yellow); }
+
+    .header-btns {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .header-btn {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Teko', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      line-height: 1;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-btn:hover {
+      background: var(--border);
+      color: var(--text);
+      border-color: var(--muted);
+      transform: translateY(-1px);
+    }
+
+    .header-btn.active-btn {
+      border: 1px solid var(--yellow);
+      color: var(--yellow);
+      background: rgba(255, 184, 0, 0.04);
+    }
+
+    .main {
+      width: 100%;
+      max-width: 1400px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--yellow);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    /* Stats Section */
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-left: 3px solid var(--yellow);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .stat-value {
+      font-family: 'Teko', sans-serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    /* Filter Controls */
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 14px 20px;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      padding: 10px 32px 10px 14px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-input:focus {
+      border-color: var(--yellow);
+    }
+
+    .search-clear-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 13px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      padding: 0;
+      line-height: 1;
+      transition: color 0.15s, background-color 0.15s;
+    }
+
+    .search-clear-btn:hover {
+      color: var(--text);
+      background-color: var(--border);
+    }
+
+    .filters-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .filter-select {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      padding: 10px 14px;
+      font-size: 14px;
+      outline: none;
+      cursor: pointer;
+      min-width: 150px;
+    }
+
+    .filter-select:focus {
+      border-color: var(--yellow);
+    }
+
+    .clear-all-btn {
+      background: var(--mid);
+      border: 1px solid rgba(232, 40, 30, 0.35);
+      color: #ff6b6b;
+      padding: 10px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .clear-all-btn:hover {
+      background: rgba(232, 40, 30, 0.12);
+      color: #fff;
+      border-color: var(--red);
+      box-shadow: 0 0 12px rgba(232, 40, 30, 0.25);
+    }
+
+    .ai-btn {
+      background: rgba(245, 197, 24, 0.12);
+      border: 1px solid var(--yellow);
+      color: var(--yellow);
+      padding: 10px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.15s, color 0.15s, transform 0.15s;
+    }
+
+    .ai-btn:hover {
+      background: var(--yellow);
+      color: var(--black);
+      transform: translateY(-1px);
+    }
+
+    .ai-prompt-preview {
+      width: 100%;
+      height: 160px;
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      padding: 10px;
+      font-family: monospace;
+      font-size: 11px;
+      resize: none;
+      outline: none;
+      margin-top: 8px;
+    }
+
+    /* Table Styling */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--dark);
+    }
+
+    .versions-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .versions-table th, .versions-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .versions-table th {
+      background: var(--dark);
+      font-family: 'Teko', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--yellow);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 1px 0 var(--border);
+      white-space: nowrap;
+    }
+
+    .sortable-th {
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.15s, background-color 0.15s;
+    }
+
+    .sortable-th:hover {
+      color: #fff;
+      background: rgba(124, 58, 237, 0.12);
+    }
+
+    .sortable-th.active-sort {
+      color: #fff;
+      background: rgba(124, 58, 237, 0.18);
+    }
+
+    .sort-indicator {
+      display: inline-block;
+      font-size: 11px;
+      margin-left: 4px;
+      opacity: 0.4;
+      vertical-align: middle;
+      transition: opacity 0.15s, color 0.15s;
+    }
+
+    .sortable-th.active-sort .sort-indicator {
+      opacity: 1;
+      color: #a78bfa;
+    }
+
+    .versions-table tbody tr {
+      cursor: pointer;
+    }
+
+    .versions-table tbody tr:hover td {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .versions-table tbody tr.row-selected td {
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .versions-table tbody tr.row-selected:hover td {
+      background: rgba(124, 58, 237, 0.14);
+    }
+
+    /* Floating selection toolbar */
+    #selection-toolbar {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #1e1b2e;
+      border: 1px solid rgba(124, 58, 237, 0.5);
+      border-radius: 999px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      z-index: 9000;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s;
+      opacity: 0;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    #selection-toolbar.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .toolbar-count {
+      font-size: 13px;
+      font-weight: 700;
+      color: #a78bfa;
+    }
+
+    .toolbar-divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(124,58,237,0.35);
+    }
+
+    .toolbar-btn-create {
+      background: linear-gradient(135deg, #7C3AED, #4F46E5);
+      border: none;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      transition: opacity 0.15s;
+    }
+
+    .toolbar-btn-create:hover { opacity: 0.85; }
+
+    .toolbar-btn-clear {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 4px;
+      transition: color 0.15s;
+    }
+
+    .toolbar-btn-clear:hover { color: var(--text); }
+
+    /* Task creation modal */
+    #task-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 10100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    #task-modal {
+      background: #1a1a2e;
+      border: 1px solid rgba(124,58,237,0.4);
+      border-top: 3px solid #7C3AED;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 440px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    .task-modal-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: #a78bfa;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .task-modal-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .task-modal-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+    }
+
+    .task-modal-select, .task-modal-input, .task-modal-date {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--text);
+      font-size: 13px;
+      padding: 9px 12px;
+      outline: none;
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+
+    .task-modal-select:focus, .task-modal-input:focus, .task-modal-date:focus {
+      border-color: #7C3AED;
+    }
+
+    .task-modal-priority-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .priority-pill {
+      flex: 1;
+      text-align: center;
+      padding: 7px 4px;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+      background: var(--mid);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 0.5px;
+    }
+
+    .priority-pill.active-low  { background: rgba(52,211,153,0.15); border-color: #34D399; color: #34D399; }
+    .priority-pill.active-medium { background: rgba(245,197,24,0.15); border-color: var(--yellow); color: var(--yellow); }
+    .priority-pill.active-high { background: rgba(239,68,68,0.15); border-color: #EF4444; color: #EF4444; }
+
+    .task-modal-footer {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .task-modal-btn-confirm {
+      flex: 1;
+      background: linear-gradient(135deg, #7C3AED, #4F46E5);
+      border: none;
+      color: #fff;
+      font-family: 'Teko', sans-serif;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .task-modal-btn-confirm:hover { opacity: 0.85; }
+
+    .task-modal-btn-cancel {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .task-modal-btn-cancel:hover { color: var(--text); }
+
+    .wf-thumb-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .wf-thumb {
+      width: 42px;
+      height: 42px;
+      border-radius: 4px;
+      object-fit: cover;
+      background: var(--mid);
+      border: 1px solid var(--border);
+    }
+
+    .wf-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wf-title {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .wf-id {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pkg-name-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pkg-name {
+      font-family: monospace;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .copy-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      transition: color 0.15s;
+    }
+
+    .copy-btn:hover {
+      color: var(--yellow);
+    }
+
+    .version-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 12px;
+      font-family: monospace;
+    }
+
+    .version-badge.companion {
+      background: rgba(26, 58, 107, 0.3);
+      color: #8da9d4;
+      border: 1px solid rgba(26, 58, 107, 0.5);
+    }
+
+    .version-badge.wear {
+      background: rgba(76, 175, 80, 0.15);
+      color: #81c784;
+      border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+
+    .version-badge.error {
+      background: rgba(232, 40, 30, 0.15);
+      color: #ef9a9a;
+      border: 1px solid rgba(232, 40, 30, 0.3);
+    }
+
+    .date-badge {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .sdk-warning-badge {
+      display: inline-block;
+      background: rgba(232, 40, 30, 0.15);
+      border: 1px solid rgba(232, 40, 30, 0.3);
+      color: #ef9a9a;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      vertical-align: middle;
+      cursor: help;
+    }
+
+    .note-textarea {
+      width: 100%;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      padding: 6px 10px;
+      resize: vertical;
+      min-height: 50px;
+      outline: none;
+      transition: min-height 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .note-textarea:focus {
+      border-color: var(--yellow);
+      background: var(--dark);
+      min-height: 140px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .note-cell {
+      position: relative;
+      min-width: 250px;
+    }
+
+    .save-indicator {
+      position: absolute;
+      bottom: 16px;
+      right: 22px;
+      font-size: 11px;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+      background: var(--mid);
+      padding: 2px 6px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+
+    .save-indicator.saving {
+      color: var(--yellow);
+      opacity: 1;
+    }
+
+    .save-indicator.saved {
+      color: var(--green);
+      opacity: 1;
+    }
+
+    /* Login Gate Overlay */
+    #login-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(20, 20, 20, 0.98);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .login-card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 40px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border-top: 3px solid var(--yellow);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .login-logo {
+      font-family: 'Teko', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text);
+    }
+    .login-logo span { color: var(--yellow); }
+
+    .login-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Google Sign-in Button */
+    .google-btn {
+      width: 100%;
+      height: 44px;
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color .218s, border-color .218s, box-shadow .218s;
+      border: none;
+      padding: 0;
+    }
+
+    .google-btn:hover {
+      background-color: #f1f1f1;
+      box-shadow: 0 0 3px 3px rgba(66,133,244,.3);
+    }
+
+    .google-icon-wrapper {
+      margin-left: 1px;
+      width: 42px;
+      height: 42px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .google-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .google-btn-text {
+      color: #757575;
+      font-size: 14px;
+      font-weight: bold;
+      font-family: 'Roboto', 'Inter', sans-serif;
+      margin: 0 24px 0 12px;
+    }
+
+    /* Loading Overlay */
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--black);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .loader {
+      border: 3px solid var(--mid);
+      border-top: 3px solid var(--yellow);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Details Panel Sidebar Drawer */
+    #details-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 998;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    #details-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #details-panel {
+      position: fixed;
+      top: 0;
+      right: -460px;
+      width: 460px;
+      height: 100vh;
+      background: var(--dark);
+      border-left: 1px solid var(--border);
+      z-index: 999;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #details-panel.open {
+      right: 0;
+    }
+
+    #reviews-panel {
+      position: fixed;
+      top: 0;
+      right: -460px;
+      width: 460px;
+      height: 100vh;
+      background: var(--dark);
+      border-left: 1px solid var(--border);
+      z-index: 1000;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #reviews-panel.open {
+      right: 0;
+    }
+
+    @keyframes pulse-badge {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+    
+    .pulse-badge {
+      animation: pulse-badge 2s infinite;
+    }
+
+    .details-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    .details-header-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--yellow);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .details-close-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 20px;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s;
+    }
+
+    .details-close-btn:hover {
+      color: var(--text);
+    }
+
+    .details-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .details-preview-container {
+      width: 100%;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .details-preview-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .details-badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .details-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 3px;
+      letter-spacing: 0.5px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+      color: #aaa;
+    }
+
+    .details-badge.primary-badge {
+      background: rgba(245, 197, 24, 0.1);
+      color: var(--yellow);
+      border-color: rgba(245, 197, 24, 0.2);
+    }
+
+    .details-badge.free-badge {
+      background: rgba(76, 175, 80, 0.1);
+      color: #81c784;
+      border-color: rgba(76, 175, 80, 0.2);
+    }
+
+    .details-section {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .details-section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    .details-desc-text {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text);
+      background: var(--mid);
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      white-space: pre-wrap;
+    }
+
+    .details-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .details-info-box {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .details-info-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .details-info-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .details-textarea {
+      width: 100%;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      padding: 10px 14px;
+      font-size: 13px;
+      min-height: 100px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .details-textarea:focus {
+      border-color: var(--yellow);
+    }
+
+    .details-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .details-action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Teko', sans-serif;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .details-action-btn:hover {
+      background: var(--border);
+      border-color: var(--muted);
+      transform: translateY(-1px);
+    }
+
+    .details-action-btn.primary-btn {
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+    }
+
+    .details-action-btn.primary-btn:hover {
+      background: #e5b615;
+    }
+
+    /* Details properties grid */
+    .details-properties-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .property-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .property-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .property-value {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .property-link-wrapper {
+      display: flex;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .property-copy-input {
+      flex: 1;
+      background: var(--dark);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 4px;
+      font-size: 11px;
+      padding: 6px 8px;
+      outline: none;
+      font-family: monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .property-copy-btn, .property-open-btn {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.15s, color 0.15s;
+    }
+
+    .property-copy-btn:hover, .property-open-btn:hover {
+      background: var(--border);
+      color: var(--yellow);
+    }
+
+    /* Release status grid */
+    .details-release-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 480px) {
+      .details-release-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .release-track-box {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .track-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--yellow);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .track-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+    }
+
+    .track-label {
+      color: var(--muted);
+    }
+
+    .track-val {
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .track-notes-box {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 4px;
+      border-top: 1px dashed var(--border);
+      padding-top: 6px;
+    }
+
+    .track-notes-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .track-notes-content {
+      font-size: 11px;
+      color: var(--text);
+      line-height: 1.4;
+      background: rgba(255,255,255,0.02);
+      border-radius: 4px;
+      padding: 6px;
+      max-height: 80px;
+      overflow-y: auto;
+      font-style: italic;
+    }
+
+    .cloud-update-btn {
+      flex: 1;
+      border: 1px solid var(--border);
+      background: var(--mid);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 4px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: background-color 0.15s, border-color 0.15s;
+    }
+
+    .cloud-update-btn:hover {
+      background: var(--border);
+      border-color: var(--muted);
+    }
+
+    .cloud-update-btn.running {
+      color: var(--yellow);
+      border-color: rgba(245, 197, 24, 0.3);
+      cursor: wait;
+    }
+
+    .cloud-update-btn.success {
+      color: #81c784;
+      border-color: rgba(76, 175, 80, 0.3);
+    }
+
+    .cloud-update-btn.error {
+      color: #ef9a9a;
+      border-color: rgba(232, 40, 30, 0.3);
+    }
+
+    .cloud-config-btn {
+      border: 1px solid var(--border);
+      background: var(--mid);
+      cursor: pointer;
+      font-size: 12px;
+      padding: 6.5px 8px;
+      border-radius: 4px;
+      color: var(--muted);
+      transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cloud-config-btn:hover {
+      color: var(--text);
+      background: var(--border);
+      border-color: var(--muted);
+    }
+
+    /* GitHub Modal overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .github-modal-content {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      overflow: hidden;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .github-modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .github-modal-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .github-modal-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 16px;
+      transition: color 0.15s;
+    }
+
+    .github-modal-close:hover {
+      color: var(--text);
+    }
+
+    .github-modal-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .github-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .github-form-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    .github-form-input {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      padding: 8px 12px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .github-form-input:focus {
+      border-color: var(--yellow);
+    }
+
+    .github-save-btn {
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+      font-family: 'Teko', sans-serif;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.15s;
+      margin-top: 8px;
+    }
+
+    .github-save-btn:hover {
+      background: #e5b615;
+    }
+
+    /* Mobile Responsive styling override */
+    @media (max-width: 768px) {
+      body {
+        align-items: stretch;
+        padding-bottom: 60px;
+      }
+
+      .header {
+        padding: 10px 12px;
+      }
+
+      .header-title {
+        font-size: 20px;
+      }
+
+      .header-btns {
+        gap: 4px;
+      }
+
+      .header-btn {
+        font-size: 11px;
+        padding: 5px 7px;
+        letter-spacing: 0.5px;
+      }
+
+      .main {
+        padding: 12px;
+        gap: 12px;
+      }
+
+      .stats-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .stat-card {
+        padding: 12px;
+      }
+
+      .stat-value {
+        font-size: 24px;
+      }
+
+      .controls-row {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px;
+        gap: 10px;
+      }
+
+      .search-input-wrapper {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .filters-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .filter-select {
+        min-width: 0;
+        width: 100%;
+        font-size: 13px;
+        padding: 9px 10px;
+      }
+
+      .clear-all-btn, .ai-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Hide less important table columns on mobile */
+      .versions-table th:nth-child(3), .versions-table td:nth-child(3), /* Package Name */
+      .versions-table th:nth-child(6), .versions-table td:nth-child(6)  /* Date */ {
+        display: none;
+      }
+
+      /* Disable sticky headers on mobile */
+      .versions-table th {
+        position: static;
+        box-shadow: none;
+      }
+
+      .versions-table th, .versions-table td {
+        padding: 10px 10px;
+      }
+
+      .wf-thumb {
+        width: 36px;
+        height: 36px;
+      }
+
+      .wf-title {
+        font-size: 13px;
+      }
+
+      .version-badge {
+        font-size: 11px;
+        padding: 3px 6px;
+      }
+
+      /* Mobile bottom sheet transformation */
+      #details-panel {
+        width: 100%;
+        height: 88vh;
+        right: 0 !important;
+        bottom: -88vh;
+        top: auto;
+        border-left: none;
+        border-top: 2px solid #7C3AED;
+        border-radius: 16px 16px 0 0;
+        transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      #details-panel.open {
+        bottom: 0;
+      }
+
+      .mobile-handle {
+        width: 40px;
+        height: 4px;
+        background: var(--border);
+        border-radius: 2px;
+        margin: 8px auto 0;
+        display: block;
+      }
+    }
+
+    /* Extra small screens */
+    @media (max-width: 420px) {
+      .header-btn {
+        font-size: 10px;
+        padding: 4px 6px;
+      }
+
+      .stats-container {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .filters-group {
+        grid-template-columns: 1fr;
+      }
+
+      /* Only show name and companion/wear columns on very small screens */
+      .versions-table th:nth-child(5), .versions-table td:nth-child(5) /* Rollout */ {
+        display: none;
+      }
+    }
+
+    /* Toast Notification styles */
+    .toast-notification {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translate(-50%, 40px);
+      background: rgba(25, 25, 30, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 9999;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+    }
+    .toast-notification.show {
+      transform: translate(-50%, 0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .toast-notification.success {
+      border-color: var(--green);
+    }
+    .toast-notification.error {
+      border-color: var(--red);
+    }
+    .toast-notification svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Clickable Stat Cards */
+    .clickable-card {
+      cursor: pointer;
+      transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .clickable-card:hover {
+      border-color: var(--yellow);
+      background: var(--surface-hover);
+      transform: translateY(-2px);
+    }
+    .clickable-card:active {
+      transform: translateY(0);
+    }
+    .clickable-card.active-filter {
+      border-color: var(--yellow);
+      background: rgba(245, 197, 24, 0.05);
+      box-shadow: 0 0 10px rgba(245, 197, 24, 0.15);
+    }
+
+    /* Price Badges */
+    .price-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: 1px solid transparent;
+      text-align: center;
+      min-width: 60px;
+    }
+    .price-badge.free {
+      background: rgba(76, 175, 80, 0.1);
+      color: #81c784;
+      border-color: rgba(76, 175, 80, 0.2);
+    }
+    .price-badge.paid {
+      background: rgba(33, 150, 243, 0.1);
+      color: #90caf9;
+      border-color: rgba(33, 150, 243, 0.2);
+    }
+
+    /* Copier Bars */
+    .copier-bar {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 4px 8px;
+      transition: background 0.2s ease, border-color 0.2s ease;
+      user-select: none;
+    }
+    .copier-bar:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--yellow);
+    }
+    .copier-bar:active {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  
+    /* Slide-out Menu (Desktop Only) */
+    .app-slide-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 6000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .app-slide-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .app-slide-menu {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 280px;
+      height: 100%;
+      background: var(--bg-color, var(--black, #141414));
+      border-right: 1px solid var(--border-color, var(--border, #3a3a3a));
+      z-index: 6001;
+      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-slide-menu.open {
+      left: 0;
+    }
+
+    .app-slide-header {
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--border-color, var(--border, #3a3a3a));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .app-slide-links {
+      padding: 16px 0;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .app-slide-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 24px;
+      color: var(--text-primary, var(--text, #f0f0f0));
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .app-slide-link:hover, .app-slide-link.active {
+      background: rgba(255, 255, 255, 0.05);
+      border-left-color: var(--primary, var(--yellow, #f5c518));
+      color: var(--primary, var(--yellow, #f5c518));
+    }
+    
+    .btn-app-menu {
+      background: none;
+      border: none;
+      color: var(--text-primary, var(--text, #f0f0f0));
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      font-family: 'Teko', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-app-menu:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--primary, var(--yellow, #f5c518));
+    }
+
+    @media (max-width: 768px) {
+      .app-slide-menu, .app-slide-overlay, .btn-app-menu {
+        display: none !important;
+      }
+    }
+
+</style>
+</head>
+
+<body>
+
+  <!-- Slide-Out Apps Menu -->
+  <div id="app-slide-overlay" class="app-slide-overlay" onclick="closeAppMenu()"></div>
+  <div id="app-slide-menu" class="app-slide-menu">
+    <div class="app-slide-header">
+      <div style="display: flex; flex-direction: column; line-height: 0.9; font-family: 'Teko', sans-serif;">
+        <span style="font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 1px; text-transform: none;">Creation<span style="color: var(--primary, var(--yellow, #f5c518));">Cue</span>™</span>
+        <span style="font-size: 9px; font-weight: 600; color: var(--text-muted, var(--muted, #888)); letter-spacing: 2.2px; text-transform: uppercase; margin-top: 1px;">App Suite</span>
+      </div>
+      <button onclick="closeAppMenu()" style="background: none; border: none; color: var(--text-muted, var(--muted, #888)); cursor: pointer; padding: 4px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="app-slide-links">
+      <a href="https://cue-earnings.sotsor.workers.dev/" class="app-slide-link" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        Earnings
+      </a>
+      <a href="https://cue-earnings.sotsor.workers.dev/analytics" class="app-slide-link" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        Analytics
+      </a>
+      <a href="manage-coupons.html" class="app-slide-link ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+        Coupons
+      </a>
+      <a href="social-generator.html" class="app-slide-link ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        Socials
+      </a>
+      <a href="month-planner.html" class="app-slide-link ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        Planner
+      </a>
+      <a href="play-versions.html" class="app-slide-link active">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        Versions
+      </a>
+      <a href="play-deploy.html" class="app-slide-link ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        Deploy
+      </a>
+    </div>
+  </div>
+
+  <!-- Loading overlay -->
+  <div id="loading-overlay">
+    <div class="loader"></div>
+    <div style="color:var(--muted); font-size:14px;">Loading Version Dashboard...</div>
+  </div>
+
+  <!-- Google Sign-In Gate Overlay -->
+  <div id="login-overlay" style="display: none;">
+    <div class="login-card">
+      <div class="login-logo">Creation<span>Cue</span></div>
+      <div class="login-desc">
+        This is an administrator developer dashboard. Please sign in with your authorized Google Account.
+      </div>
+      <button class="google-btn" id="btn-google-login">
+        <div class="google-icon-wrapper">
+          <svg class="google-icon" viewBox="0 0 24 24">
+            <path fill="#EA4335" d="M12 5.04c1.67 0 3.17.58 4.35 1.71l3.25-3.25C17.65 1.58 15.02 1 12 1 7.37 1 3.42 3.66 1.5 7.55l3.9 3.03C6.33 7.66 8.95 5.04 12 5.04z" />
+            <path fill="#4285F4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.36H12v4.51h6.46c-.29 1.48-1.14 2.73-2.4 3.58l3.73 2.89c2.18-2.01 3.7-4.99 3.7-8.62z" />
+            <path fill="#FBBC05" d="M5.4 10.58c-.24-.73-.38-1.51-.38-2.33s.14-1.6.38-2.33L1.5 2.9C.54 4.83 0 7.02 0 9.33c0 2.31.54 4.5 1.5 6.43l3.9-3.18z" />
+            <path fill="#34A853" d="M12 23c3.24 0 5.97-1.07 7.96-2.91l-3.73-2.89c-1.03.69-2.36 1.1-3.96 1.1-3.05 0-5.67-2.62-6.6-5.59l-3.9 3.03C3.42 19.34 7.37 23 12 23z" />
+          </svg>
+        </div>
+        <span class="google-btn-text">Sign in with Google</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header"><script>if(location.hostname.includes("firebaseapp.com")){location.replace(location.href.replace(location.hostname,"creationcue.web.app"));}</script>
+    
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <button class="btn-app-menu" onclick="toggleAppMenu()" title="Apps Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      <a href="index.html" class="header-left">
+      <div class="header-title">Creation<span>Cue</span></div>
+    </a>
+    </div>
+    <div class="header-btns">
+      <a href="manage-coupons.html" class="header-btn">Coupons</a>
+      <a href="social-generator.html" class="header-btn">Socials</a>
+      <a href="month-planner.html" class="header-btn">Planner</a>
+      <a href="play-versions.html" class="header-btn active-btn">Versions</a>
+      
+      <!-- Notification Bell -->
+      <button class="header-btn" style="position: relative; display: flex; align-items: center; justify-content: center; padding: 0 12px; transition: color 0.2s;" onclick="openReviewsPanel()" title="Unreplied Reviews" id="reviews-bell-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        <span id="reviews-badge" class="pulse-badge" style="display: none; position: absolute; top: -2px; right: -2px; background: var(--danger); color: white; font-size: 11px; font-weight: bold; border-radius: 50%; min-width: 18px; height: 18px; align-items: center; justify-content: center; border: 2px solid var(--dark);">0</span>
+      </button>
+
+      <span style="font-size: 10px; font-weight: 700; color: var(--yellow); background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.3); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.9;">v1.9</span>
+      <button onclick="handleLogout()" class="header-btn">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Body -->
+  <div class="main">
+    <!-- Backup Reminder Banner -->
+    <div id="github-sync-reminder" style="background: rgba(245, 197, 24, 0.08); border: 1px solid rgba(245, 197, 24, 0.2); border-radius: 4px; padding: 10px 14px; margin-bottom: 20px; display: none; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); line-height: 1.4;">
+      <span>💡</span>
+      <span><strong>Developer Reminder:</strong> You only need to upload <code>play-versions.html</code> to your GitHub repository when new design/features are added to the code (not when watch face version numbers or notes change). Make sure to upload this current file now to back up our latest dashboard changes!</span>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-container">
+      <div class="stat-card">
+        <div class="stat-label">Total Watch Faces</div>
+        <div class="stat-value" id="stat-total">0</div>
+      </div>
+      <div class="stat-card" style="display: flex; flex-direction: column; gap: 8px; padding: 12px 16px;">
+        <div class="stat-label" style="margin-bottom: 2px;">Quick Copier</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 11px; flex: 1; justify-content: center;">
+          <div class="copier-bar" onclick="copyText('https://creationcue.web.app/privacy.html', this.querySelector('.header-btn'))" title="Click to copy Privacy Policy Link">
+            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); max-width: 140px;">Privacy Link</span>
+            <button class="header-btn" style="padding: 2px 8px; font-size: 10px; margin: 0; line-height: 1.2; pointer-events: none;">Copy</button>
+          </div>
+          <div class="copier-bar" onclick="copyText('This Watch Face shows real-time activity data (BPM and Steps) sourced from Wear OS sensors.', this.querySelector('.header-btn'))" title="Click to copy Sensor Disclosure Statement">
+            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); max-width: 140px;">Sensor Disclosure</span>
+            <button class="header-btn" style="padding: 2px 8px; font-size: 10px; margin: 0; line-height: 1.2; pointer-events: none;">Copy</button>
+          </div>
+          <div class="copier-bar" onclick="copyText('creationcuespace@gmail.com', this.querySelector('.header-btn'))" title="Click to copy Contact Email Address">
+            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); max-width: 140px;">Contact Email</span>
+            <button class="header-btn" style="padding: 2px 8px; font-size: 10px; margin: 0; line-height: 1.2; pointer-events: none;">Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="stat-card clickable-card" id="card-errors" title="Click to filter by API Errors only">
+        <div class="stat-label">API Configuration Errors</div>
+        <div class="stat-value" id="stat-errors" style="color: var(--yellow);">0</div>
+      </div>
+      <div class="stat-card clickable-card" id="card-rollouts" title="Click to filter by Staged Rollouts (<100%) only">
+        <div class="stat-label">Staged Rollouts (&lt;100%)</div>
+        <div class="stat-value" id="stat-rollouts" style="color: var(--yellow);">0</div>
+      </div>
+      <div class="stat-card" style="display: flex; flex-direction: column;">
+        <div class="stat-label">Last Dashboard Update</div>
+        <div class="stat-value" id="stat-scan-date" style="font-size: 16px; flex: 1;">N/A</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; width: 100%;">
+          <div style="display: flex; gap: 6px; align-items: center; width: 100%;">
+            <button id="btn-cloud-update" class="cloud-update-btn" style="flex: 1;">☁️ Update All</button>
+            <button id="btn-cloud-config" class="cloud-config-btn" title="Configure GitHub Integration">⚙️</button>
+          </div>
+          <button id="btn-cloud-update-selected" class="cloud-update-btn" style="display: none; width: 100%; background: rgba(245, 197, 24, 0.1); border-color: rgba(245, 197, 24, 0.3); color: var(--yellow);">☁️ Sync Selected (0)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls Row -->
+    <div class="controls-row">
+      <div class="search-input-wrapper">
+        <input class="search-input" id="search-box" type="text" placeholder="Search by ID, Title, Package Name or Notes...">
+        <button id="search-clear-btn" class="search-clear-btn" title="Clear Search">✕</button>
+      </div>
+      <div class="filters-group">
+        <select class="filter-select" id="filter-notes">
+          <option value="all">All Notes Status</option>
+          <option value="has-notes">Has Notes</option>
+          <option value="no-notes">Needs Notes</option>
+        </select>
+        <select class="filter-select" id="filter-price">
+          <option value="all">All Pricing</option>
+          <option value="free">Free Watch Faces</option>
+          <option value="paid">Paid Watch Faces</option>
+        </select>
+        <select class="filter-select" id="filter-rollout">
+          <option value="all">All Rollout Status</option>
+          <option value="staged">Staged Rollouts (<100%)</option>
+          <option value="completed">Completed (100%)</option>
+        </select>
+        <select class="filter-select" id="filter-api">
+          <option value="all">All API Status</option>
+          <option value="ok">API Normal</option>
+          <option value="error">API Error</option>
+        </select>
+        <button id="btn-clear-all" class="clear-all-btn">Reset Filters</button>
+        <button id="btn-ai-query" class="ai-btn">💡 Ask AI</button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      <table class="versions-table">
+        <thead>
+          <tr>
+            <th id="th-select" style="width:36px; padding: 12px 8px; text-align:center;">
+              <input type="checkbox" id="select-all-cb" title="Select / Deselect all visible" style="width:15px;height:15px;accent-color:#7C3AED;cursor:pointer;">
+            </th>
+            <th class="sortable-th" data-sort="title-asc" data-sort-asc="title-asc" data-sort-desc="title-desc" title="Click to sort by Watch Face name">Watch Face <span class="sort-indicator" id="sort-ind-title"></span></th>
+            <th class="sortable-th" data-sort="id-asc" data-sort-asc="id-asc" data-sort-desc="id-desc" title="Click to sort by ID">Package ID <span class="sort-indicator" id="sort-ind-id"></span></th>
+            <th class="sortable-th" data-sort="companion-desc" data-sort-asc="companion-asc" data-sort-desc="companion-desc" title="Click to sort by Companion App version">Companion App <span class="sort-indicator" id="sort-ind-companion"></span></th>
+            <th class="sortable-th" data-sort="wear-desc" data-sort-asc="wear-asc" data-sort-desc="wear-desc" title="Click to sort by Wear OS version">Wear OS App <span class="sort-indicator" id="sort-ind-wear"></span></th>
+            <th class="sortable-th" data-sort="date-desc" data-sort-asc="date-asc" data-sort-desc="date-desc" title="Click to sort by Last Store Update">Last Store Update <span class="sort-indicator" id="sort-ind-date"></span></th>
+            <th class="sortable-th" data-sort="price-desc" data-sort-asc="price-asc" data-sort-desc="price-desc" title="Click to sort by Pricing">Pricing <span class="sort-indicator" id="sort-ind-price"></span></th>
+            <th>Developer Notes</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- Dynamically filled -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Details Panel Sidebar / Mobile Bottom Sheet -->
+  <div id="details-backdrop" onclick="closeDetailsPanel()"></div>
+  <div id="details-panel">
+    <div class="mobile-handle"></div>
+    <div class="details-header">
+      <div class="details-header-title" id="details-title">Watch Face Details</div>
+      <button class="details-close-btn" onclick="closeDetailsPanel()" title="Close Details">✕</button>
+    </div>
+    <div class="details-body">
+      <!-- Mockup Preview -->
+      <div class="details-preview-container">
+        <img src="" alt="Watch Face Preview" class="details-preview-img" id="details-img">
+      </div>
+
+      <!-- Badges -->
+      <div class="details-badges-row" id="details-badges">
+        <!-- Filled dynamically -->
+      </div>
+
+      <!-- Info Grid (Versions & Date) -->
+      <div class="details-info-grid">
+        <div class="details-info-box">
+          <div class="details-info-label">Companion Version</div>
+          <div class="details-info-val" id="details-companion-ver">N/A</div>
+        </div>
+        <div class="details-info-box">
+          <div class="details-info-label">Wear OS Version</div>
+          <div class="details-info-val" id="details-wear-ver">N/A</div>
+        </div>
+        <div class="details-info-box" style="grid-column: span 2;">
+          <div class="details-info-label">Last Store Update</div>
+          <div class="details-info-val" id="details-store-date">N/A</div>
+        </div>
+      </div>
+
+      <!-- Package ID -->
+      <div class="details-section">
+        <div class="details-section-title">Package Name</div>
+        <div class="pkg-container" style="margin-top:0;">
+          <span class="pkg-name" id="details-pkg-name">com.creation.example</span>
+          <button class="copy-btn" id="details-pkg-copy" title="Copy Package Name">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- English Description -->
+      <div class="details-section" id="details-desc-en-section">
+        <div class="details-section-title">Description (English)</div>
+        <div class="details-desc-text" id="details-desc-en">No description available.</div>
+      </div>
+
+      <!-- German Description -->
+      <div class="details-section" id="details-desc-de-section">
+        <div class="details-section-title">Description (German)</div>
+        <div class="details-desc-text" id="details-desc-de">No description available.</div>
+      </div>
+
+      <!-- Developer Notes & Logs -->
+      <div class="details-section">
+        <div class="details-section-title">Developer Logs & Notes</div>
+        <textarea class="details-textarea" id="details-notes-textarea" placeholder="Add developer logs, milestones, or version remarks..."></textarea>
+      </div>
+
+      <!-- Watch Face Properties Section -->
+      <div class="details-section">
+        <div class="details-section-title">Watch Face Catalog Properties</div>
+        <div class="details-properties-grid">
+          <div class="property-item">
+            <span class="property-label">Style Type:</span>
+            <span class="property-value" id="details-type">N/A</span>
+          </div>
+          <div class="property-item">
+            <span class="property-label">Pricing:</span>
+            <span class="property-value" id="details-pricing">N/A</span>
+          </div>
+          <div class="property-item" style="grid-column: span 2;">
+            <span class="property-label">Mockup Link:</span>
+            <div class="property-link-wrapper">
+              <input type="text" readonly id="details-mockup-url" class="property-copy-input">
+              <button onclick="copyToClipboard('details-mockup-url')" class="property-copy-btn">Copy</button>
+            </div>
+          </div>
+          <div class="property-item" style="grid-column: span 2;">
+            <span class="property-label">Web Store Link:</span>
+            <div class="property-link-wrapper">
+              <input type="text" readonly id="details-web-url" class="property-copy-input">
+              <a href="#" target="_blank" id="details-web-link" class="property-open-btn">Open</a>
+            </div>
+          </div>
+          <div class="property-item" style="grid-column: span 2;">
+            <span class="property-label">Market URL:</span>
+            <div class="property-link-wrapper">
+              <input type="text" readonly id="details-market-url" class="property-copy-input">
+              <button onclick="copyToClipboard('details-market-url')" class="property-copy-btn">Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cloud Release Status Section -->
+      <div class="details-section">
+        <div class="details-section-title">Cloud Release Status (Google Play)</div>
+        <div class="details-release-grid">
+          <div class="release-track-box">
+            <div class="track-title">Companion App</div>
+            <div class="track-row"><span class="track-label">Status:</span><span id="details-companion-status" class="track-val">N/A</span></div>
+            <div class="track-row"><span class="track-label">Rollout:</span><span id="details-companion-rollout" class="track-val">N/A</span></div>
+            <div class="track-notes-box">
+              <div class="track-notes-title">What's New:</div>
+              <div id="details-companion-notes" class="track-notes-content">N/A</div>
+            </div>
+          </div>
+          <div class="release-track-box">
+            <div class="track-title">Wear OS App</div>
+            <div class="track-row"><span class="track-label">Status:</span><span id="details-wear-status" class="track-val">N/A</span></div>
+            <div class="track-row"><span class="track-label">Rollout:</span><span id="details-wear-rollout" class="track-val">N/A</span></div>
+            <div class="track-notes-box">
+              <div class="track-notes-title">What's New:</div>
+              <div id="details-wear-notes" class="track-notes-content">N/A</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Open in Other Tools -->
+      <div class="details-section">
+        <div class="details-section-title">Quick Open in Other Tools</div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;">
+          <a id="details-open-coupons" href="#" target="_blank"
+            style="flex:1; min-width:120px; display:flex; align-items:center; justify-content:center; gap:6px;
+                   background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.35);
+                   color: #a78bfa; font-size:12px; font-weight:600; padding:9px 12px;
+                   border-radius:6px; text-decoration:none; transition: background 0.15s, border-color 0.15s;
+                   letter-spacing:0.3px;"
+            onmouseover="this.style.background='rgba(124,58,237,0.22)';this.style.borderColor='rgba(124,58,237,0.6)'"
+            onmouseout="this.style.background='rgba(124,58,237,0.12)';this.style.borderColor='rgba(124,58,237,0.35)'">
+            🎟️ Open in Coupons
+          </a>
+          <a id="details-open-social" href="#" target="_blank"
+            style="flex:1; min-width:120px; display:flex; align-items:center; justify-content:center; gap:6px;
+                   background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.25);
+                   color: var(--yellow); font-size:12px; font-weight:600; padding:9px 12px;
+                   border-radius:6px; text-decoration:none; transition: background 0.15s, border-color 0.15s;
+                   letter-spacing:0.3px;"
+            onmouseover="this.style.background='rgba(245,197,24,0.16)';this.style.borderColor='rgba(245,197,24,0.5)'"
+            onmouseout="this.style.background='rgba(245,197,24,0.08)';this.style.borderColor='rgba(245,197,24,0.25)'">
+            📣 Open in Socials
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating selection toolbar -->
+  <div id="selection-toolbar">
+    <span class="toolbar-count" id="toolbar-count">0 selected</span>
+    <div class="toolbar-divider"></div>
+    <button class="toolbar-btn-create" onclick="openTaskModal()">📅 Create Planner Tasks</button>
+    <button class="toolbar-btn-clear" onclick="clearSelection()" title="Clear selection">✕</button>
+  </div>
+
+  <!-- Task creation modal -->
+  <div id="task-modal-overlay" style="display:none;">
+    <div id="task-modal">
+      <div class="task-modal-title" id="task-modal-heading">Create Tasks</div>
+
+      <div class="task-modal-field">
+        <div class="task-modal-label">Task Title Template</div>
+        <select class="task-modal-select" id="task-template-select" onchange="onTemplateChange()">
+          <option value="combined">Update [ID] (companion + Wear OS)</option>
+          <option value="companion">Update [ID] — companion app</option>
+          <option value="wear">Update [ID] — Wear OS app</option>
+          <option value="review">Review [ID] versions</option>
+          <option value="custom">✏️ Custom prefix...</option>
+        </select>
+      </div>
+
+      <div class="task-modal-field" id="task-custom-field" style="display:none;">
+        <div class="task-modal-label">Custom Title (use [ID] or [TITLE] as placeholder)</div>
+        <input type="text" class="task-modal-input" id="task-custom-input" placeholder="e.g. Submit [ID] to review">
+      </div>
+
+      <div class="task-modal-field">
+        <div class="task-modal-label">Preview (first selected face)</div>
+        <div id="task-preview" style="font-size:12px; color:var(--muted); background:var(--dark); border:1px solid var(--border); border-radius:5px; padding:8px 12px; font-style:italic;">—</div>
+      </div>
+
+      <div class="task-modal-field">
+        <div class="task-modal-label">Start Date</div>
+        <input type="text" class="task-modal-input" id="task-start-date" placeholder="DD/MM/YYYY" style="text-align: center; cursor: pointer;" readonly>
+      </div>
+
+      <div class="task-modal-field">
+        <div class="task-modal-label">Priority</div>
+        <div class="task-modal-priority-row">
+          <button class="priority-pill" id="pill-low" onclick="setPriority('low')">LOW</button>
+          <button class="priority-pill active-medium" id="pill-medium" onclick="setPriority('medium')">MEDIUM</button>
+          <button class="priority-pill" id="pill-high" onclick="setPriority('high')">HIGH</button>
+        </div>
+      </div>
+
+      <div class="task-modal-field" id="spread-field" style="display:none;">
+        <div class="task-modal-label">Spread tasks across days</div>
+        <label style="display:flex;align-items:center;gap:6px;">
+          <input type="checkbox" id="spread-toggle" />
+          <span>2 tasks per day (like the Planner)</span>
+        </label>
+      </div>
+      <div class="task-modal-footer">
+        <button class="task-modal-btn-confirm" id="task-confirm-btn" onclick="confirmCreateTasks()">Create Tasks</button>
+        <button class="task-modal-btn-cancel" onclick="closeTaskModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GitHub Configuration Modal -->
+
+  <div id="github-modal" class="modal-overlay" style="display: none;">
+    <div class="github-modal-content">
+      <div class="github-modal-header">
+        <div class="github-modal-title">GitHub Integration Settings</div>
+        <button class="github-modal-close" onclick="closeGithubModal()">✕</button>
+      </div>
+      <div class="github-modal-body">
+        <p style="font-size: 11px; color: var(--muted); line-height: 1.4; margin-bottom: 8px;">
+          Enter your GitHub details to trigger automatic dashboard updates. This config is saved securely in your private Firebase database.
+        </p>
+        <div class="github-form-group">
+          <label class="github-form-label">GitHub Username/Repository</label>
+          <input type="text" id="gh-repo" class="github-form-input" placeholder="e.g., username/repo-name">
+        </div>
+        <div class="github-form-group">
+          <label class="github-form-label">Workflow Branch</label>
+          <input type="text" id="gh-branch" class="github-form-input" placeholder="e.g., main" value="main">
+        </div>
+        <div class="github-form-group">
+          <label class="github-form-label">GitHub Personal Access Token (PAT)</label>
+          <input type="password" id="gh-token" class="github-form-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxx">
+          <div style="font-size: 10px; color: var(--muted); margin-top: 4px;">
+            Required scopes: <strong>repo</strong> or <strong>actions:write</strong>.
+          </div>
+        </div>
+        <button id="btn-save-github" class="github-save-btn">Save Settings</button>
+      </div>
+    </div>
+
+    <!-- Reviews Panel (Hidden by default) -->
+    <div id="reviews-panel">
+      <div class="drawer-header" style="justify-content: space-between;">
+        <h3 class="drawer-title" style="display: flex; align-items: center; gap: 8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          Unreplied Reviews
+        </h3>
+        <button class="drawer-close" onclick="closeReviewsPanel()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="drawer-content" id="reviews-content" style="padding: 16px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; height: calc(100vh - 60px);">
+        <!-- Reviews will be injected here -->
+        <div style="color: var(--text-muted); text-align: center; margin-top: 40px; font-size: 14px;">Loading reviews...</div>
+      </div>
+    </div>
+  <script>
+    // Firebase Config
+    var firebaseConfig = {
+      apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+      authDomain: "creation-cue-manage.firebaseapp.com",
+      databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "creation-cue-manage",
+      storageBucket: "creation-cue-manage.firebasestorage.app",
+      messagingSenderId: "186324516022",
+      appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Force HTTP long-polling on mobile devices to bypass blocked WebSocket connections
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+      try {
+        firebase.database().INTERNAL.forceLongPolling(true);
+        console.log("Mobile device detected: forced Firebase long polling on instance.");
+      } catch (e1) {
+        try {
+          firebase.database.INTERNAL.forceLongPolling(true);
+          console.log("Mobile device detected: forced Firebase long polling on constructor.");
+        } catch (e2) {
+          console.warn("Failed to force long polling on both instance and constructor:", e1, e2);
+        }
+      }
+    }
+
+    var db = firebase.database();
+    var auth = firebase.auth();
+    var currentUser = null;
+    var taskModalStartDate = '';
+
+
+    // Data containers
+    var managerData = [];
+    var versionsData = {};
+    var notesData = {};
+    var combinedData = [];
+    var unrepliedReviews = [];
+
+    // Auth state handler
+    auth.onAuthStateChanged(function (user) {
+      if (user && (user.email === 'sotsor@gmail.com' || user.uid === 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || user.uid === 'JKq9NWxPshRbCEXjV2eTUVV6A992')) {
+        currentUser = user;
+        document.getElementById('login-overlay').style.display = 'none';
+        initDashboard();
+      } else {
+        document.getElementById('login-overlay').style.display = 'flex';
+        document.getElementById('loading-overlay').style.display = 'none';
+        if (user) {
+          alert("Unauthorized account. Only the administrator can access this dashboard.");
+          auth.signOut();
+        }
+      }
+    });
+
+    document.getElementById('btn-google-login').addEventListener('click', () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider).catch(err => alert("Authentication failed: " + err.message));
+    });
+
+    function handleLogout() {
+      auth.signOut().then(() => {
+        window.location.reload();
+      });
+    }
+
+    async function initDashboard() {
+      try {
+        // Load manager.json
+        const managerRes = await fetch('manager.json?t=' + Date.now());
+        const managerJson = await managerRes.json();
+        managerData = managerJson.watch_faces || [];
+
+        // Load versions-data.json
+        try {
+          const versionsRes = await fetch('versions-data.json?t=' + Date.now());
+          const versionsResponse = await versionsRes.json();
+          
+          if (versionsResponse.lastUpdated) {
+            window.lastScanDateStr = versionsResponse.lastUpdated;
+          }
+          
+          const versionsList = versionsResponse.results || [];
+          versionsList.forEach(item => {
+            versionsData[item.packageName] = item;
+          });
+        } catch (e) {
+          console.warn("Could not load versions-data.json, showing local placeholders", e);
+        }
+
+        // Load reviews-data.json
+        try {
+          const reviewsRes = await fetch('reviews-data.json?t=' + Date.now());
+          const reviewsResponse = await reviewsRes.json();
+          unrepliedReviews = reviewsResponse.reviews || [];
+          
+          const badge = document.getElementById('reviews-badge');
+          const bellBtn = document.getElementById('reviews-bell-btn');
+          if (badge) {
+            if (unrepliedReviews.length > 0) {
+              badge.textContent = unrepliedReviews.length;
+              badge.style.display = 'flex';
+              if (bellBtn) bellBtn.style.color = 'var(--danger)';
+            } else {
+              badge.style.display = 'none';
+              if (bellBtn) bellBtn.style.color = '';
+            }
+          }
+          renderReviews();
+        } catch (e) {
+          console.warn("Could not load reviews-data.json", e);
+        }
+
+        // Set a timeout of 5 seconds to load from cache/placeholders if Firebase hangs
+        let dbLoaded = false;
+        const dbTimeout = setTimeout(() => {
+          if (!dbLoaded) {
+            console.warn("Firebase connection timed out. Loading dashboard from local files.");
+            try {
+              notesData = {};
+              buildCombinedData();
+              renderDashboard();
+            } catch (e) {
+              console.error("Error rendering dashboard on timeout path:", e);
+            } finally {
+              const overlay = document.getElementById('loading-overlay');
+              if (overlay) overlay.style.display = 'none';
+            }
+          }
+        }, 5000);
+
+        // Connect to Realtime Database to load Notes
+        db.ref('watch_face_notes').once('value').then(function(snapshot) {
+          dbLoaded = true;
+          clearTimeout(dbTimeout);
+          try {
+            notesData = snapshot.val() || {};
+            buildCombinedData();
+            renderDashboard();
+          } catch (e) {
+            console.error("Error rendering dashboard:", e);
+          } finally {
+            const overlay = document.getElementById('loading-overlay');
+            if (overlay) overlay.style.display = 'none';
+          }
+        }).catch(function(err) {
+          dbLoaded = true;
+          clearTimeout(dbTimeout);
+          console.warn("Could not load notes from database (rules might block it):", err);
+          try {
+            notesData = {};
+            buildCombinedData();
+            renderDashboard();
+          } catch (e) {
+            console.error("Error rendering dashboard on error path:", e);
+          } finally {
+            const overlay = document.getElementById('loading-overlay');
+            if (overlay) overlay.style.display = 'none';
+          }
+
+          // Show a warning banner that notes are read-only until database rules are updated
+          if (!document.getElementById('db-rules-warning')) {
+            const warning = document.createElement('div');
+            warning.id = 'db-rules-warning';
+            warning.style.cssText = 'background: rgba(232, 40, 30, 0.15); border: 1px solid rgba(232, 40, 30, 0.3); color: #fff; padding: 12px; text-align: center; font-size: 13px; font-weight: 500; border-radius: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 16px;';
+            warning.innerHTML = `⚠️ <span>Database read permission denied for "watch_face_notes". Notes will not save until you update your Firebase Database rules to allow read/write access under this node. Dashboard loaded in read-only mode.</span>`;
+            const mainBody = document.querySelector('.main');
+            if (mainBody) mainBody.prepend(warning);
+          }
+        });
+
+        // Load GitHub Config
+        loadGithubConfig();
+
+      } catch (err) {
+        console.error("Dashboard initialization error:", err);
+        document.getElementById('loading-overlay').innerHTML = `<div style="color:var(--red); font-weight:bold; padding:20px;">Failed to initialize: ${err.message}</div>`;
+      }
+    }
+
+    function getPackageName(urlStr) {
+      if (!urlStr) return null;
+      try {
+        let checkUrl = urlStr.trim();
+        if (checkUrl.startsWith('market://')) {
+          checkUrl = checkUrl.replace('market://', 'https://play.google.com/');
+        }
+        const parsed = new URL(checkUrl);
+        return parsed.searchParams.get('id');
+      } catch (e) {
+        const match = urlStr.match(/[?&]id=([^&]+)/);
+        return match ? match[1] : null;
+      }
+    }
+
+    function getOptimizedImageUrl(url, width = 84) {
+      if (!url) return 'https://via.placeholder.com/150';
+      if (url.startsWith('data:')) return url;
+      
+      let finalUrl = url;
+      if (url.startsWith('images/')) {
+        finalUrl = window.location.origin + '/' + url;
+      }
+      
+      if (finalUrl.startsWith('http') && !finalUrl.includes('wsrv.nl')) {
+        return `https://wsrv.nl/?url=${encodeURIComponent(finalUrl)}&w=${width}&output=webp&q=80`;
+      }
+      return finalUrl;
+    }
+
+    function buildCombinedData() {
+      combinedData = managerData.map(wf => {
+        const packageName = getPackageName(wf.play_store_url) || '';
+        const playInfo = versionsData[packageName] || {};
+        
+        let localImageUrl = wf.image_url || 'https://via.placeholder.com/150';
+        if (localImageUrl.includes('/images/')) {
+          let filename = localImageUrl.split('/images/')[1];
+          if (filename === 'cue152.png') filename = 'CUE152.png';
+          if (filename === 'cue158.png') filename = 'CUE158.png';
+          localImageUrl = 'images/' + filename;
+        }
+
+        return {
+          id: wf.id || '',
+          title: wf.title || wf.id || 'Unknown',
+          imageUrl: localImageUrl,
+          packageName: packageName,
+          companionVersion: playInfo.companionVersion || 'N/A',
+          companionStatus: playInfo.companionStatus || 'N/A',
+          companionRollout: playInfo.companionRollout || '100%',
+          companionNotes: playInfo.companionNotes || 'None',
+          wearVersion: playInfo.wearVersion || 'N/A',
+          wearStatus: playInfo.wearStatus || 'N/A',
+          wearRollout: playInfo.wearRollout || '100%',
+          wearNotes: playInfo.wearNotes || 'None',
+          lastUpdatedDate: playInfo.lastUpdatedDate || 'N/A',
+          playStoreTitle: playInfo.playStoreTitle || '',
+          isFree: wf.is_free || false,
+          note: notesData[wf.id] || ''
+        };
+      });
+    }
+
+    function renderDashboard() {
+      const searchBoxEl = document.getElementById('search-box');
+      const searchVal = searchBoxEl ? searchBoxEl.value.toLowerCase().trim() : '';
+
+      const notesFilterEl = document.getElementById('filter-notes');
+      const notesFilter = notesFilterEl ? notesFilterEl.value : 'all';
+
+      const priceFilterEl = document.getElementById('filter-price');
+      const priceFilter = priceFilterEl ? priceFilterEl.value : 'all';
+
+      const rolloutFilterEl = document.getElementById('filter-rollout');
+      const rolloutFilter = rolloutFilterEl ? rolloutFilterEl.value : 'all';
+
+      const apiFilterEl = document.getElementById('filter-api');
+      const apiFilter = apiFilterEl ? apiFilterEl.value : 'all';
+
+      // Highlight active filters on the stat cards
+      const cardErrors = document.getElementById('card-errors');
+      if (cardErrors) {
+        cardErrors.classList.toggle('active-filter', apiFilter === 'error');
+      }
+      const cardRollouts = document.getElementById('card-rollouts');
+      if (cardRollouts) {
+        cardRollouts.classList.toggle('active-filter', rolloutFilter === 'staged');
+      }
+
+      const sortVal = window.currentSort || 'id-asc';
+
+      // Filter
+      let filtered = combinedData.filter(wf => {
+        // Search filter
+        const matchSearch = wf.id.toLowerCase().includes(searchVal) || 
+                            wf.title.toLowerCase().includes(searchVal) || 
+                            wf.packageName.toLowerCase().includes(searchVal) ||
+                            wf.note.toLowerCase().includes(searchVal);
+
+        // Notes filter
+        let matchNotes = true;
+        if (notesFilter === 'has-notes') matchNotes = wf.note !== '';
+        if (notesFilter === 'no-notes') matchNotes = wf.note === '';
+
+        // Price filter
+        let matchPrice = true;
+        if (priceFilter === 'free') matchPrice = wf.isFree === true;
+        if (priceFilter === 'paid') matchPrice = wf.isFree === false;
+
+        // Rollout filter
+        let matchRollout = true;
+        if (rolloutFilter === 'staged') {
+          const companionStaged = wf.companionRollout && wf.companionRollout !== '100%' && wf.companionRollout !== 'N/A';
+          const wearStaged = wf.wearRollout && wf.wearRollout !== '100%' && wf.wearRollout !== 'N/A';
+          matchRollout = companionStaged || wearStaged;
+        } else if (rolloutFilter === 'completed') {
+          const companionCompleted = wf.companionRollout === '100%' || wf.companionRollout === 'N/A';
+          const wearCompleted = wf.wearRollout === '100%' || wf.wearRollout === 'N/A';
+          matchRollout = companionCompleted && wearCompleted;
+        }
+
+        // API filter
+        let matchApi = true;
+        const hasApiError = wf.wearVersion.includes('API Error') || wf.companionVersion.includes('API Error');
+        if (apiFilter === 'ok') matchApi = !hasApiError && wf.wearVersion !== 'N/A';
+        if (apiFilter === 'error') matchApi = hasApiError;
+
+        return matchSearch && matchNotes && matchPrice && matchRollout && matchApi;
+      });
+
+      // Sort
+      filtered.sort((a, b) => {
+        if (sortVal === 'id-asc') return a.id.localeCompare(b.id, undefined, { numeric: true, sensitivity: 'base' });
+        if (sortVal === 'id-desc') return b.id.localeCompare(a.id, undefined, { numeric: true, sensitivity: 'base' });
+        if (sortVal === 'title-asc') return a.title.localeCompare(b.title);
+        if (sortVal === 'title-desc') return b.title.localeCompare(a.title);
+        
+        if (sortVal === 'companion-desc') {
+          const vA = parseInt(a.companionVersion) || 0;
+          const vB = parseInt(b.companionVersion) || 0;
+          return vB - vA;
+        }
+        if (sortVal === 'companion-asc') {
+          const vA = parseInt(a.companionVersion) || 0;
+          const vB = parseInt(b.companionVersion) || 0;
+          return vA - vB;
+        }
+
+        if (sortVal === 'wear-desc') {
+          const vA = parseInt(a.wearVersion) || 0;
+          const vB = parseInt(b.wearVersion) || 0;
+          return vB - vA;
+        }
+        if (sortVal === 'wear-asc') {
+          const vA = parseInt(a.wearVersion) || 0;
+          const vB = parseInt(b.wearVersion) || 0;
+          return vA - vB;
+        }
+        
+        if (sortVal === 'date-desc') {
+          const dA = new Date(a.lastUpdatedDate).getTime() || 0;
+          const dB = new Date(b.lastUpdatedDate).getTime() || 0;
+          return dB - dA;
+        }
+        
+        if (sortVal === 'date-asc') {
+          const dA = new Date(a.lastUpdatedDate).getTime() || Infinity;
+          const dB = new Date(b.lastUpdatedDate).getTime() || Infinity;
+          return dA - dB;
+        }
+        
+        if (sortVal === 'price-desc') {
+          return (a.isFree === b.isFree) ? 0 : a.isFree ? 1 : -1;
+        }
+        if (sortVal === 'price-asc') {
+          return (a.isFree === b.isFree) ? 0 : a.isFree ? -1 : 1;
+        }
+        return 0;
+      });
+
+      // Render stats
+      const totalCount = combinedData.length;
+      const filteredCount = filtered.length;
+      if (filteredCount === totalCount) {
+        document.getElementById('stat-total').textContent = totalCount;
+      } else {
+        document.getElementById('stat-total').textContent = `${filteredCount} of ${totalCount}`;
+      }
+      
+
+
+      // Count API errors
+      const errorCount = combinedData.filter(wf => 
+        wf.wearVersion.includes('API Error') || wf.companionVersion.includes('API Error')
+      ).length;
+      document.getElementById('stat-errors').textContent = errorCount;
+      document.getElementById('stat-errors').style.color = errorCount > 0 ? 'var(--red)' : 'var(--green)';
+
+      // Count staged rollouts (<100%)
+      const stagedCount = combinedData.filter(wf => {
+        const companionStaged = wf.companionRollout && wf.companionRollout !== '100%' && wf.companionRollout !== 'N/A';
+        const wearStaged = wf.wearRollout && wf.wearRollout !== '100%' && wf.wearRollout !== 'N/A';
+        return companionStaged || wearStaged;
+      }).length;
+      const statRolloutsEl = document.getElementById('stat-rollouts');
+      if (statRolloutsEl) {
+        statRolloutsEl.textContent = stagedCount;
+        statRolloutsEl.style.color = stagedCount > 0 ? 'var(--yellow)' : 'var(--green)';
+      }
+
+      // Set last scan date and time
+      if (window.lastScanDateStr) {
+        const scanDate = new Date(window.lastScanDateStr);
+        if (!isNaN(scanDate.getTime())) {
+          document.getElementById('stat-scan-date').textContent = scanDate.toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric', 
+            year: 'numeric'
+          }) + ' ' + scanDate.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+        } else {
+          document.getElementById('stat-scan-date').textContent = 'N/A';
+        }
+      } else {
+        document.getElementById('stat-scan-date').textContent = 'N/A';
+      }
+
+      // Render table rows
+      const tbody = document.getElementById('table-body');
+      tbody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--muted); padding:30px;">No watch faces found matching criteria.</td></tr>`;
+        return;
+      }
+
+      // Update select-all checkbox state based on current selection
+      const selectAllCb = document.getElementById('select-all-cb');
+      if (selectAllCb) {
+        selectAllCb.checked = false;
+        selectAllCb.indeterminate = false;
+      }
+
+      // Ensure toolbar reflects current selection after rendering rows
+      updateSelectionToolbar();
+      filtered.forEach((wf, rowIndex) => {
+        const tr = document.createElement('tr');
+        if (selectedFaceIds.has(wf.id)) tr.classList.add('row-selected');
+        tr.dataset.rowIndex = rowIndex;
+        
+        // Checkbox cell
+        const cbTd = document.createElement('td');
+        cbTd.style.cssText = 'width:36px; padding:12px 8px; text-align:center; vertical-align:middle;';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.style.cssText = 'width:15px;height:15px;accent-color:#7C3AED;cursor:pointer;';
+        cb.checked = selectedFaceIds.has(wf.id);
+
+        cb.addEventListener('click', (e) => {
+          e.stopPropagation();
+
+          // Shift+Click on checkbox: range-select all rows between anchor and this one
+          if (e.shiftKey && lastClickedRowIndex >= 0) {
+            e.preventDefault(); // prevent the checkbox from toggling on its own
+            const start = Math.min(lastClickedRowIndex, rowIndex);
+            const end   = Math.max(lastClickedRowIndex, rowIndex);
+            for (let i = start; i <= end; i++) {
+              const targetWf = filtered[i];
+              if (!targetWf) continue;
+              selectedFaceIds.add(targetWf.id);
+              const domRow = tbody.querySelector(`tr[data-row-index="${i}"]`);
+              if (domRow) {
+                domRow.classList.add('row-selected');
+                const cbEl = domRow.querySelector('input[type="checkbox"]');
+                if (cbEl) cbEl.checked = true;
+              }
+            }
+            updateSelectionToolbar();
+            return;
+          }
+
+          // Normal checkbox click: toggle this row
+          if (cb.checked) {
+            selectedFaceIds.add(wf.id);
+            tr.classList.add('row-selected');
+          } else {
+            selectedFaceIds.delete(wf.id);
+            tr.classList.remove('row-selected');
+          }
+          lastClickedRowIndex = rowIndex;
+          updateSelectionToolbar();
+        });
+
+        cbTd.appendChild(cb);
+        tr.appendChild(cbTd);
+
+        // Handle Shift+Click and Ctrl+Click on mousedown to beat browser text selection
+        tr.addEventListener('mousedown', (e) => {
+          if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.closest('.copy-btn') || e.target.tagName === 'A' || e.target.closest('a')) {
+            return;
+          }
+
+          // Ctrl/Cmd+Click: toggle single row without opening panel
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            if (selectedFaceIds.has(wf.id)) {
+              selectedFaceIds.delete(wf.id);
+              tr.classList.remove('row-selected');
+              const cbEl = tr.querySelector('input[type="checkbox"]');
+              if (cbEl) cbEl.checked = false;
+            } else {
+              selectedFaceIds.add(wf.id);
+              tr.classList.add('row-selected');
+              const cbEl = tr.querySelector('input[type="checkbox"]');
+              if (cbEl) cbEl.checked = true;
+            }
+            lastClickedRowIndex = rowIndex;
+            updateSelectionToolbar();
+            return;
+          }
+
+          // Shift+Click: range selection from last anchor
+          if (e.shiftKey) {
+            e.preventDefault(); // stops text highlight
+            window.getSelection && window.getSelection().removeAllRanges();
+            const anchorIndex = lastClickedRowIndex >= 0 ? lastClickedRowIndex : rowIndex;
+            const start = Math.min(anchorIndex, rowIndex);
+            const end   = Math.max(anchorIndex, rowIndex);
+            for (let i = start; i <= end; i++) {
+              const targetWf = filtered[i];
+              if (!targetWf) continue;
+              selectedFaceIds.add(targetWf.id);
+              const domRow = tbody.querySelector(`tr[data-row-index="${i}"]`);
+              if (domRow) {
+                domRow.classList.add('row-selected');
+                const cbEl = domRow.querySelector('input[type="checkbox"]');
+                if (cbEl) cbEl.checked = true;
+              }
+            }
+            updateSelectionToolbar();
+            return;
+          }
+        });
+
+        // Normal click: set anchor and open panel
+        tr.addEventListener('click', (e) => {
+          if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.closest('.copy-btn') || e.target.tagName === 'A' || e.target.closest('a')) {
+            return;
+          }
+          if (e.shiftKey || e.ctrlKey || e.metaKey) return; // handled in mousedown
+          lastClickedRowIndex = rowIndex;
+          openDetailsPanel(wf.id);
+        });
+        
+        const hasWearError = String(wf.wearVersion || '').includes('API Error');
+        const hasCompanionError = String(wf.companionVersion || '').includes('API Error');
+
+        const wearBadgeClass = hasWearError ? 'version-badge error' : (wf.wearVersion === 'N/A' ? 'version-badge error' : 'version-badge wear');
+        const companionBadgeClass = hasCompanionError ? 'version-badge error' : (wf.companionVersion === 'N/A' ? 'version-badge error' : 'version-badge companion');
+
+        const wearText = hasWearError ? 'Error' : wf.wearVersion;
+        // Show full companion version number (e.g. "2.6.0.6 (3.1)")
+        let companionText = hasCompanionError ? 'Error' : (wf.companionVersion || 'N/A');
+
+        // Calculate outdated status (Google Play Target SDK warning indicator)
+        let isOutdated = false;
+        if (wf.lastUpdatedDate && wf.lastUpdatedDate !== 'N/A' && wf.lastUpdatedDate !== 'Fetch Failed') {
+          const scanDate = new Date(wf.lastUpdatedDate);
+          if (!isNaN(scanDate.getTime())) {
+            const now = new Date();
+            const diffTime = Math.abs(now - scanDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            if (diffDays > 365) {
+              isOutdated = true;
+            }
+          }
+        }
+        const watchFaceName = wf.playStoreTitle || wf.title;
+        const companionVal = getVersionCode(wf.companionVersion, false);
+        const wearVal = getVersionCode(wf.wearVersion, true);
+        const maxVal = Math.max(companionVal, wearVal);
+
+        const contentHtml = `
+          <td>
+            <div class="wf-thumb-wrapper">
+              <img class="wf-thumb" src="${getOptimizedImageUrl(wf.imageUrl, 84)}" alt="${wf.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/150'">
+              <div class="wf-details">
+                <span class="wf-title">${watchFaceName}</span>
+                <span class="wf-id">${wf.id}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+              <div style="display: flex; flex-direction: column; gap: 4px; overflow: hidden; max-width: 170px;">
+                <!-- Watch Face Name -->
+                <div style="font-weight: 600; color: #fff; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${watchFaceName}">
+                  ${watchFaceName}
+                </div>
+                <!-- Package Name -->
+                <div style="font-size: 11px; opacity: 0.7; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${wf.packageName ? wf.packageName : 'No package'}">
+                  ${wf.packageName ? wf.packageName : 'No package'}
+                </div>
+              </div>
+              <!-- Combined Copy Button -->
+              ${wf.packageName ? `
+                <button class="copy-btn" onclick="copyCombinedData('${watchFaceName.replace(/'/g, "\\'")}', '${wf.packageName}', ${maxVal}, this)" title="Copy Name, Package, and Version" style="flex-shrink: 0; padding: 6px; border-radius: 4px; background: rgba(255,255,255,0.03); border: 1px solid var(--border);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+              ` : ''}
+            </div>
+          </td>
+          <td><span class="${companionBadgeClass}">${companionText}</span></td>
+          <td><span class="${wearBadgeClass}">${wearText}</span></td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
+              <span class="date-badge">${wf.lastUpdatedDate}</span>
+              ${isOutdated ? `<span class="sdk-warning-badge" title="Has not been updated in over 1 year.">⚠️ Outdated</span>` : ''}
+            </div>
+          </td>
+          <td>
+            <span class="price-badge ${wf.isFree ? 'free' : 'paid'}">${wf.isFree ? 'Free' : 'Paid'}</span>
+          </td>
+          <td class="note-cell">
+            <textarea class="note-textarea" data-wf-id="${wf.id}" onblur="saveNote('${wf.id}', this.value, this)" placeholder="Add developer logs or notes...">${wf.note}</textarea>
+            <div class="save-indicator">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Saved</span>
+            </div>
+          </td>
+        `;
+        tr.insertAdjacentHTML('beforeend', contentHtml);
+        tbody.appendChild(tr);
+      });
+
+      // Wire up select-all checkbox
+      if (selectAllCb) {
+        const visibleIds = filtered.map(w => w.id);
+        const allSelected = visibleIds.length > 0 && visibleIds.every(id => selectedFaceIds.has(id));
+        const someSelected = visibleIds.some(id => selectedFaceIds.has(id));
+        selectAllCb.checked = allSelected;
+        selectAllCb.indeterminate = !allSelected && someSelected;
+
+        selectAllCb.onchange = () => {
+          if (selectAllCb.checked) {
+            visibleIds.forEach(id => selectedFaceIds.add(id));
+          } else {
+            visibleIds.forEach(id => selectedFaceIds.delete(id));
+          }
+          renderDashboard(); // re-render to update row highlights + toolbar
+        };
+      }
+    }
+
+    // Toast Notification helper
+    function showToast(message, type = 'success') {
+      const oldToast = document.querySelector('.toast-notification');
+      if (oldToast) oldToast.remove();
+
+      const toast = document.createElement('div');
+      toast.className = `toast-notification ${type}`;
+      
+      let iconSvg = '';
+      if (type === 'success') {
+        iconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+      } else if (type === 'error') {
+        iconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`;
+      } else {
+        iconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
+      }
+
+      toast.innerHTML = `${iconSvg} <span>${message}</span>`;
+      document.body.appendChild(toast);
+
+      toast.offsetHeight; // trigger reflow
+      toast.classList.add('show');
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+          toast.remove();
+        }, 300);
+      }, 2500);
+    }
+
+    // Helper to get version code number from version string (outside parenthesis, taking last 3 digits for Wear OS)
+    function getVersionCode(versionStr, isWear = false) {
+      if (!versionStr) return 0;
+      if (versionStr.includes('API Error') || versionStr === 'N/A') return 0;
+      const match = versionStr.match(/^([^(]+)/);
+      if (!match) return 0;
+      const val = parseInt(match[1].trim(), 10);
+      if (isNaN(val)) return 0;
+      return isWear ? (val % 1000) : val;
+    }
+
+    // Helper to copy Name, Package, and Version together (separated by newlines for Excel vertical pasting)
+    function copyCombinedData(name, packageName, version, btn) {
+      const versionSuffix = (version && version > 0) ? `\n${version}` : '';
+      const text = `${name}\n${packageName}${versionSuffix}`;
+      copyText(text, btn);
+    }
+
+    // Copy to clipboard helper (with plain text & clean HTML table for Excel macro compatibility)
+    function copyText(text, btn) {
+      const rows = text.split('\n').map(line => `<tr><td>${line}</td></tr>`).join('');
+      const htmlText = `<table>${rows}</table>`;
+
+      const blobText = new Blob([text], { type: 'text/plain' });
+      const blobHtml = new Blob([htmlText], { type: 'text/html' });
+
+      if (navigator.clipboard && window.ClipboardItem) {
+        const data = [new ClipboardItem({
+          'text/plain': blobText,
+          'text/html': blobHtml
+        })];
+        navigator.clipboard.write(data).then(() => {
+          showCopiedState(btn);
+        }).catch(err => {
+          fallbackCopyText(text, btn);
+        });
+      } else {
+        fallbackCopyText(text, btn);
+      }
+    }
+
+    function showCopiedState(btn) {
+      const origHtml = btn.innerHTML;
+      btn.innerHTML = `<span style="color:var(--green); font-size:10px; font-weight:bold;">Copied!</span>`;
+      setTimeout(() => { btn.innerHTML = origHtml; }, 1500);
+    }
+
+    function fallbackCopyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        showCopiedState(btn);
+      });
+    }
+
+    // Save notes to Firebase Realtime Database
+    function saveNote(id, noteText, textarea) {
+      const cell = textarea.closest('.note-cell');
+      const indicator = cell.querySelector('.save-indicator');
+      
+      // Trim note
+      noteText = noteText.trim();
+      
+      // Update cache
+      notesData[id] = noteText;
+      combinedData.forEach(item => {
+        if (item.id === id) item.note = noteText;
+      });
+
+      // Show saving spinner
+      indicator.querySelector('span').textContent = 'Saving...';
+      indicator.querySelector('svg').style.display = 'none';
+      indicator.className = 'save-indicator saving';
+
+      db.ref('watch_face_notes/' + id).set(noteText)
+        .then(() => {
+          // Show saved animation
+          indicator.querySelector('span').textContent = 'Saved';
+          indicator.querySelector('svg').style.display = 'inline-block';
+          indicator.className = 'save-indicator saved';
+          setTimeout(() => {
+            indicator.className = 'save-indicator';
+          }, 1500);
+          showToast('Comment saved successfully!');
+        })
+        .catch(err => {
+          console.error("Save error:", err);
+          indicator.querySelector('span').textContent = 'Failed';
+          indicator.className = 'save-indicator saving';
+          indicator.style.color = 'var(--red)';
+          showToast('Failed to save comment: ' + err.message, 'error');
+        });
+    }
+
+    var activeDetailsWfId = null;
+
+    function openDetailsPanel(id) {
+      const wf = combinedData.find(item => item.id === id);
+      if (!wf) return;
+
+      activeDetailsWfId = id;
+
+      // Find catalog info (from managerData)
+      const rawWf = managerData.find(item => item.id === id) || {};
+
+      // Fill basic details
+      document.getElementById('details-title').textContent = wf.title;
+      document.getElementById('details-img').src = getOptimizedImageUrl(wf.imageUrl, 240);
+      document.getElementById('details-companion-ver').textContent = wf.companionVersion;
+      document.getElementById('details-wear-ver').textContent = wf.wearVersion;
+      document.getElementById('details-store-date').textContent = wf.lastUpdatedDate;
+      document.getElementById('details-pkg-name').textContent = wf.packageName || 'N/A';
+
+      // Setup copy button for package name
+      const copyBtn = document.getElementById('details-pkg-copy');
+      if (wf.packageName) {
+        copyBtn.style.display = 'inline-flex';
+        copyBtn.onclick = (e) => {
+          e.stopPropagation();
+          copyText(wf.packageName, copyBtn);
+        };
+      } else {
+        copyBtn.style.display = 'none';
+      }
+
+      // Badges
+      const badgeContainer = document.getElementById('details-badges');
+      badgeContainer.innerHTML = '';
+
+      // Add Category / type badges
+      if (rawWf.filters && Array.isArray(rawWf.filters)) {
+        rawWf.filters.forEach(filter => {
+          const b = document.createElement('span');
+          b.className = 'details-badge';
+          b.textContent = filter;
+          badgeContainer.appendChild(b);
+        });
+      }
+
+      // Add FREE / HOT badges
+      if (rawWf.is_free) {
+        const b = document.createElement('span');
+        b.className = 'details-badge free-badge';
+        b.textContent = 'FREE';
+        badgeContainer.appendChild(b);
+      }
+      if (rawWf.badge_text) {
+        const b = document.createElement('span');
+        b.className = 'details-badge primary-badge';
+        b.textContent = rawWf.badge_text;
+        badgeContainer.appendChild(b);
+      }
+
+      // Descriptions
+      const descEn = rawWf.description_en || 'No description available.';
+      const descDe = rawWf.description_de || 'No description available.';
+      document.getElementById('details-desc-en').textContent = descEn;
+      document.getElementById('details-desc-de').textContent = descDe;
+
+      // Sync Notes
+      const notesTextarea = document.getElementById('details-notes-textarea');
+      notesTextarea.value = wf.note;
+      
+      // Notes listener on change
+      notesTextarea.onblur = function() {
+        const noteVal = notesTextarea.value.trim();
+        
+        // Find corresponding textarea in main table and call saveNote
+        const mainTextarea = document.querySelector(`.note-textarea[data-wf-id="${id}"]`);
+        if (mainTextarea) {
+          mainTextarea.value = noteVal;
+          saveNote(id, noteVal, mainTextarea);
+        } else {
+          // If row is filtered out or doesn't exist, save directly to db
+          db.ref('watch_face_notes/' + id).set(noteVal).then(() => {
+            notesData[id] = noteVal;
+            combinedData.forEach(item => {
+              if (item.id === id) item.note = noteVal;
+            });
+            showToast('Comment saved successfully!');
+          }).catch(err => {
+            console.error("Save error:", err);
+            showToast('Failed to save comment: ' + err.message, 'error');
+          });
+        }
+      };
+
+      // Populate Watch Face Catalog Properties
+      document.getElementById('details-type').textContent = rawWf.type || 'N/A';
+      document.getElementById('details-pricing').textContent = rawWf.is_free ? 'Free' : 'Paid';
+      
+      const mockupUrl = rawWf.image_url || '';
+      document.getElementById('details-mockup-url').value = mockupUrl;
+      
+      const webUrl = wf.packageName ? `https://play.google.com/store/apps/details?id=${wf.packageName}` : '';
+      document.getElementById('details-web-url').value = webUrl;
+      document.getElementById('details-web-link').href = webUrl || '#';
+      if (webUrl) {
+        document.getElementById('details-web-link').style.display = 'inline-flex';
+      } else {
+        document.getElementById('details-web-link').style.display = 'none';
+      }
+      
+      document.getElementById('details-market-url').value = rawWf.play_store_url || '';
+
+      // Quick Open buttons — pre-select this face in other tools
+      const base = 'https://creationcue.web.app/';
+      document.getElementById('details-open-coupons').href = `${base}manage-coupons.html?face=${encodeURIComponent(id)}`;
+      document.getElementById('details-open-social').href   = `${base}social-generator.html?face=${encodeURIComponent(id)}`;
+
+      // Populate Cloud Release Status (Google Play)
+      document.getElementById('details-companion-status').textContent = wf.companionStatus || 'N/A';
+      document.getElementById('details-companion-rollout').textContent = wf.companionRollout || '100%';
+      document.getElementById('details-companion-notes').textContent = wf.companionNotes || 'None';
+
+      document.getElementById('details-wear-status').textContent = wf.wearStatus || 'N/A';
+      document.getElementById('details-wear-rollout').textContent = wf.wearRollout || '100%';
+      document.getElementById('details-wear-notes').textContent = wf.wearNotes || 'None';
+
+      // Open drawer & backdrop
+      document.getElementById('details-panel').classList.add('open');
+      document.getElementById('details-backdrop').classList.add('open');
+    }
+
+    function closeDetailsPanel() {
+      activeDetailsWfId = null;
+      document.getElementById('details-panel').classList.remove('open');
+      document.getElementById('details-backdrop').classList.remove('open');
+    }
+
+    // Copy input field contents to clipboard helper
+    window.copyToClipboard = function(elementId) {
+      const input = document.getElementById(elementId);
+      if (!input || !input.value) return;
+      navigator.clipboard.writeText(input.value).then(() => {
+        // Temporary success message inside the button if possible, else alert
+        alert("Copied to clipboard: " + input.value);
+      });
+    };
+
+    // Compile AI analytical prompt from active catalog data
+    function compileAiPrompt() {
+      const totalCount = combinedData.length;
+      const searchVal = document.getElementById('search-box').value.trim();
+      const notesFilter = document.getElementById('filter-notes').value;
+      const priceFilter = document.getElementById('filter-price').value;
+      const rolloutFilter = document.getElementById('filter-rollout').value;
+      const apiFilter = document.getElementById('filter-api').value;
+
+      // Filter exactly like renderDashboard
+      let activeItems = combinedData.filter(wf => {
+        const matchSearch = !searchVal || wf.id.toLowerCase().includes(searchVal.toLowerCase()) || 
+                            wf.title.toLowerCase().includes(searchVal.toLowerCase()) || 
+                            wf.packageName.toLowerCase().includes(searchVal.toLowerCase()) ||
+                            wf.note.toLowerCase().includes(searchVal.toLowerCase());
+        
+        let matchNotes = true;
+        if (notesFilter === 'has-notes') matchNotes = wf.note !== '';
+        if (notesFilter === 'no-notes') matchNotes = wf.note === '';
+
+        let matchPrice = true;
+        if (priceFilter === 'free') matchPrice = wf.isFree === true;
+        if (priceFilter === 'paid') matchPrice = wf.isFree === false;
+
+        let matchRollout = true;
+        if (rolloutFilter === 'staged') {
+          const companionStaged = wf.companionRollout && wf.companionRollout !== '100%' && wf.companionRollout !== 'N/A';
+          const wearStaged = wf.wearRollout && wf.wearRollout !== '100%' && wf.wearRollout !== 'N/A';
+          matchRollout = companionStaged || wearStaged;
+        } else if (rolloutFilter === 'completed') {
+          const companionCompleted = wf.companionRollout === '100%' || wf.companionRollout === 'N/A';
+          const wearCompleted = wf.wearRollout === '100%' || wf.wearRollout === 'N/A';
+          matchRollout = companionCompleted && wearCompleted;
+        }
+
+        let matchApi = true;
+        const hasApiError = wf.wearVersion.includes('API Error') || wf.companionVersion.includes('API Error');
+        if (apiFilter === 'ok') matchApi = !hasApiError && wf.wearVersion !== 'N/A';
+        if (apiFilter === 'error') matchApi = hasApiError;
+
+        return matchSearch && matchNotes && matchPrice && matchRollout && matchApi;
+      });
+
+      const errorCount = activeItems.filter(wf => 
+        wf.wearVersion.includes('API Error') || wf.companionVersion.includes('API Error')
+      ).length;
+      
+      const stagedCount = activeItems.filter(wf => {
+        const companionStaged = wf.companionRollout && wf.companionRollout !== '100%' && wf.companionRollout !== 'N/A';
+        const wearStaged = wf.wearRollout && wf.wearRollout !== '100%' && wf.wearRollout !== 'N/A';
+        return companionStaged || wearStaged;
+      }).length;
+
+      let prompt = `Hi Antigravity! Please analyze my watch face catalog and give me a detailed release report. Here is my current dashboard data:\n\n`;
+      prompt += `### OVERALL DASHBOARD SUMMARY\n`;
+      prompt += `- Watch Faces Listed: ${activeItems.length} of ${totalCount}\n`;
+      prompt += `- Active Staged Rollouts: ${stagedCount}\n`;
+      prompt += `- API Sync Errors: ${errorCount}\n`;
+      prompt += `- Active Filters:\n`;
+      if (searchVal) prompt += `  * Search term: "${searchVal}"\n`;
+      if (notesFilter !== 'all') prompt += `  * Notes status: ${notesFilter}\n`;
+      if (priceFilter !== 'all') prompt += `  * Pricing: ${priceFilter}\n`;
+      if (rolloutFilter !== 'all') prompt += `  * Rollout status: ${rolloutFilter}\n`;
+      if (apiFilter !== 'all') prompt += `  * API status: ${apiFilter}\n`;
+      prompt += `\n`;
+      
+      prompt += `### ACTIVE WATCH FACE CATALOG DATA\n`;
+      prompt += `| ID | Title | Companion Ver | Companion Rollout | Wear OS Ver | Wear OS Rollout | Last Scrape Update | Notes |\n`;
+      prompt += `| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n`;
+      
+      activeItems.forEach(wf => {
+        const noteText = wf.note ? wf.note.replace(/\n/g, ' ') : 'None';
+        prompt += `| ${wf.id} | ${wf.title} | ${wf.companionVersion} | ${wf.companionRollout} (${wf.companionStatus}) | ${wf.wearVersion} | ${wf.wearRollout} (${wf.wearStatus}) | ${wf.lastUpdatedDate} | ${noteText} |\n`;
+      });
+      
+      prompt += `\n`;
+      prompt += `Please provide me with:\n`;
+      prompt += `1. An executive summary of my catalog version alignment and release health.\n`;
+      prompt += `2. Actionable recommendations on which specific watch faces need updates, bug fixes, or should have their staged rollouts promoted to 100%.\n`;
+      prompt += `3. Insights or categorizations on developer logs/milestones based on the notes I've written.`;
+
+      return prompt;
+    }
+
+
+
+    var githubConfig = null;
+    var checkIntervalId = null;
+
+    const CURRENT_PAGE_VERSION = "1.0.8";
+
+    // Load GitHub Config from Database
+    function loadGithubConfig() {
+      db.ref('github_config').once('value').then(snapshot => {
+        githubConfig = snapshot.val();
+        checkGithubSyncStatus();
+      }).catch(err => {
+        console.warn("Could not load github_config:", err);
+      });
+    }
+
+    // Query GitHub REST API to see if the repo's play-versions.html matches CURRENT_PAGE_VERSION
+    function checkGithubSyncStatus() {
+      console.log("[GitHub Sync] Starting check...");
+      const banner = document.getElementById('github-sync-reminder');
+      if (!banner) {
+        console.warn("[GitHub Sync] Banner element not found in DOM");
+        return;
+      }
+
+      if (!githubConfig) {
+        console.log("[GitHub Sync] No githubConfig found, hiding banner");
+        banner.style.display = 'none';
+        return;
+      }
+
+      if (!githubConfig.repo || !githubConfig.token) {
+        console.log("[GitHub Sync] GitHub repo or token missing in config, hiding banner");
+        banner.style.display = 'none';
+        return;
+      }
+
+      const parts = githubConfig.repo.split('/');
+      if (parts.length < 2) {
+        console.warn("[GitHub Sync] Repo path must be in 'owner/repo' format. Got:", githubConfig.repo);
+        banner.style.display = 'none';
+        return;
+      }
+
+      const owner = parts[0];
+      const repo = parts[1];
+      const branch = githubConfig.branch || 'main';
+      const url = `https://api.github.com/repos/${owner}/${repo}/contents/play-versions.html?ref=${branch}`;
+
+      console.log("[GitHub Sync] Querying GitHub API at:", url);
+
+      fetch(url, {
+        headers: {
+          'Authorization': 'Bearer ' + githubConfig.token,
+          'Accept': 'application/vnd.github+json'
+        }
+      })
+      .then(res => {
+        console.log("[GitHub Sync] HTTP Response Status:", res.status);
+        if (!res.ok) throw new Error("GitHub API responded with status " + res.status);
+        return res.json();
+      })
+      .then(data => {
+        if (!data || !data.content) {
+          throw new Error("No file content returned from GitHub");
+        }
+
+        // Decode base64 contents safely
+        let githubHtml = '';
+        try {
+          const rawBin = atob(data.content.replace(/\s/g, ''));
+          githubHtml = decodeURIComponent(escape(rawBin));
+        } catch (e) {
+          console.warn("[GitHub Sync] UTF-8 Base64 decoding failed, trying direct text parse:", e);
+          try {
+            githubHtml = atob(data.content.replace(/\s/g, ''));
+          } catch (err2) {
+            throw new Error("Base64 decoding failed: " + err2.message);
+          }
+        }
+
+        console.log("[GitHub Sync] File loaded successfully. Local Target Version:", CURRENT_PAGE_VERSION);
+        const searchPattern = `CURRENT_PAGE_VERSION = "${CURRENT_PAGE_VERSION}"`;
+
+        if (githubHtml.includes(searchPattern)) {
+          console.log("[GitHub Sync] Success! File on GitHub is in sync. Hiding banner.");
+          banner.style.display = 'none';
+        } else {
+          console.log("[GitHub Sync] Out of sync! File on GitHub is older/different. Showing banner.");
+          banner.style.display = 'flex';
+        }
+      })
+      .catch(err => {
+        console.error("[GitHub Sync] Sync status check failed:", err);
+        // On error, default to showing the banner to be safe
+        banner.style.display = 'flex';
+      });
+    }
+
+    function openGithubModal() {
+      if (githubConfig) {
+        document.getElementById('gh-repo').value = githubConfig.repo || '';
+        document.getElementById('gh-branch').value = githubConfig.branch || 'main';
+        document.getElementById('gh-token').value = githubConfig.token || '';
+      } else {
+        document.getElementById('gh-repo').value = '';
+        document.getElementById('gh-branch').value = 'main';
+        document.getElementById('gh-token').value = '';
+      }
+      document.getElementById('github-modal').style.display = 'flex';
+    }
+
+    function closeGithubModal() {
+      document.getElementById('github-modal').style.display = 'none';
+    }
+
+    // Save GitHub Config
+    document.getElementById('btn-save-github').addEventListener('click', () => {
+      const repo = document.getElementById('gh-repo').value.trim();
+      const branch = document.getElementById('gh-branch').value.trim() || 'main';
+      const token = document.getElementById('gh-token').value.trim();
+
+      if (!repo || !token) {
+        alert("Please enter both repository name and GitHub Personal Access Token.");
+        return;
+      }
+
+      const config = { repo, branch, token };
+      db.ref('github_config').set(config).then(() => {
+        githubConfig = config;
+        closeGithubModal();
+        alert("GitHub Integration Settings Saved successfully!");
+      }).catch(err => {
+        alert("Failed to save settings: " + err.message);
+      });
+    });
+
+    // Cloud Update Trigger (All)
+    document.getElementById('btn-cloud-update').addEventListener('click', () => {
+      if (!githubConfig || !githubConfig.token || !githubConfig.repo) {
+        openGithubModal();
+        return;
+      }
+
+      const btn = document.getElementById('btn-cloud-update');
+      if (btn.classList.contains('running')) return;
+
+      triggerGithubWorkflow();
+    });
+
+    // Cloud Update Trigger (Selected only)
+    document.getElementById('btn-cloud-update-selected').addEventListener('click', () => {
+      if (!githubConfig || !githubConfig.token || !githubConfig.repo) {
+        openGithubModal();
+        return;
+      }
+
+      const btn = document.getElementById('btn-cloud-update-selected');
+      if (btn.classList.contains('running')) return;
+
+      const pkgs = [...selectedFaceIds]
+        .map(id => {
+          const wf = combinedData.find(item => item.id === id);
+          return wf ? wf.packageName : null;
+        })
+        .filter(Boolean);
+
+      if (pkgs.length === 0) return;
+
+      triggerGithubWorkflow(pkgs.join(','));
+    });
+
+    document.getElementById('btn-cloud-config').addEventListener('click', openGithubModal);
+
+    function triggerGithubWorkflow(packagesList = null) {
+      const btnId = packagesList ? 'btn-cloud-update-selected' : 'btn-cloud-update';
+      const otherBtnId = packagesList ? 'btn-cloud-update' : 'btn-cloud-update-selected';
+      
+      const btn = document.getElementById(btnId);
+      const otherBtn = document.getElementById(otherBtnId);
+      const originalText = packagesList ? '☁️ Sync Selected' : '☁️ Update All';
+
+      btn.textContent = '☁️ Triggering...';
+      btn.className = 'cloud-update-btn running';
+      if (otherBtn) otherBtn.style.pointerEvents = 'none';
+
+      const [owner, repo] = githubConfig.repo.split('/');
+      if (!owner || !repo) {
+        btn.textContent = '☁️ Config Error';
+        btn.className = 'cloud-update-btn error';
+        if (otherBtn) otherBtn.style.pointerEvents = 'auto';
+        alert("Invalid repository format. Must be 'owner/repository'. Click the gear to fix.");
+        return;
+      }
+
+      const url = `https://api.github.com/repos/${owner}/${repo}/actions/workflows/play-versions-update.yml/dispatches`;
+
+      const requestBody = {
+        ref: githubConfig.branch || 'main'
+      };
+      if (packagesList) {
+        requestBody.inputs = {
+          packages: packagesList
+        };
+      }
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + githubConfig.token,
+          'Accept': 'application/vnd.github+json',
+          'X-GitHub-Api-Version': '2022-11-28',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+      }).then(res => {
+        if (res.status === 204) {
+          btn.textContent = '☁️ Running... (0m)';
+          pollWorkflowStatus(owner, repo, btnId);
+        } else {
+          res.json().then(data => {
+            btn.textContent = '☁️ Failed';
+            btn.className = 'cloud-update-btn error';
+            if (otherBtn) otherBtn.style.pointerEvents = 'auto';
+            alert("Failed to trigger update: " + (data.message || res.statusText));
+            setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = originalText; }, 4000);
+          }).catch(() => {
+            btn.textContent = '☁️ Failed';
+            btn.className = 'cloud-update-btn error';
+            if (otherBtn) otherBtn.style.pointerEvents = 'auto';
+            alert("Failed to trigger update. HTTP Status: " + res.status);
+            setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = originalText; }, 4000);
+          });
+        }
+      }).catch(err => {
+        btn.textContent = '☁️ Failed';
+        btn.className = 'cloud-update-btn error';
+        if (otherBtn) otherBtn.style.pointerEvents = 'auto';
+        alert("Connection error: " + err.message);
+        setTimeout(() => { btn.className = 'cloud-update-btn'; btn.textContent = originalText; }, 4000);
+      });
+    }
+    var pollStartTime = 0;
+    function pollWorkflowStatus(owner, repo, btnId = 'btn-cloud-update') {
+      pollStartTime = Date.now();
+      if (checkIntervalId) clearInterval(checkIntervalId);
+
+      // Check status every 15 seconds
+      checkIntervalId = setInterval(() => {
+        const elapsedMins = Math.floor((Date.now() - pollStartTime) / 60000);
+        const elapsedSecs = Math.floor(((Date.now() - pollStartTime) % 60000) / 1000);
+        const btn = document.getElementById(btnId);
+        if (btn) {
+          btn.textContent = `☁️ Running... (${elapsedMins}m ${elapsedSecs}s)`;
+        }
+
+        // Query runs for play-versions-update.yml
+        const url = `https://api.github.com/repos/${owner}/${repo}/actions/runs?workflow_id=play-versions-update.yml&per_page=1`;
+        
+        fetch(url, {
+          headers: {
+            'Authorization': 'Bearer ' + githubConfig.token,
+            'Accept': 'application/vnd.github+json'
+          }
+        }).then(res => res.json()).then(data => {
+          if (data.workflow_runs && data.workflow_runs.length > 0) {
+            const latestRun = data.workflow_runs[0];
+            const runTime = new Date(latestRun.created_at).getTime();
+            
+            // Make sure the run started *after* we triggered it (allow 30s buffer)
+            if (runTime > pollStartTime - 30000) {
+              const status = latestRun.status; // queued, in_progress, completed
+              const conclusion = latestRun.conclusion; // success, failure, cancelled, skipped
+
+              if (status === 'completed') {
+                clearInterval(checkIntervalId);
+                const activeBtn = document.getElementById(btnId);
+                const originalText = btnId === 'btn-cloud-update-selected' ? '☁️ Sync Selected' : '☁️ Update All';
+                
+                // Re-enable other button
+                const otherBtnId = btnId === 'btn-cloud-update-selected' ? 'btn-cloud-update' : 'btn-cloud-update-selected';
+                const otherBtn = document.getElementById(otherBtnId);
+                if (otherBtn) otherBtn.style.pointerEvents = 'auto';
+
+                if (conclusion === 'success') {
+                  if (activeBtn) {
+                    activeBtn.textContent = '☁️ Success!';
+                    activeBtn.className = 'cloud-update-btn success';
+                  }
+                  // Refresh versions-data.json after a 5s delay (allowing firebase release to finalize)
+                  setTimeout(() => {
+                    initDashboard();
+                    setTimeout(() => { 
+                      if (activeBtn) {
+                        activeBtn.className = 'cloud-update-btn'; 
+                        activeBtn.textContent = originalText;
+                        updateSelectionToolbar();
+                      }
+                    }, 3000);
+                  }, 5000);
+                } else {
+                  if (activeBtn) {
+                    activeBtn.textContent = '☁️ Failed';
+                    activeBtn.className = 'cloud-update-btn error';
+                  }
+                  alert(`GitHub Actions run completed with status: ${conclusion || 'unknown'}`);
+                  setTimeout(() => { 
+                    if (activeBtn) {
+                      activeBtn.className = 'cloud-update-btn'; 
+                      activeBtn.textContent = originalText; 
+                    }
+                  }, 5000);
+                }
+              }
+            }
+          }
+        }).catch(err => {
+          console.warn("Polling error:", err);
+        });
+
+        // Timeout polling after 5 minutes
+        if (Date.now() - pollStartTime > 300000) {
+          clearInterval(checkIntervalId);
+          const activeBtn = document.getElementById(btnId);
+          const originalText = btnId === 'btn-cloud-update-selected' ? '☁️ Sync Selected' : '☁️ Update All';
+          
+          // Re-enable other button
+          const otherBtnId = btnId === 'btn-cloud-update-selected' ? 'btn-cloud-update' : 'btn-cloud-update-selected';
+          const otherBtn = document.getElementById(otherBtnId);
+          if (otherBtn) otherBtn.style.pointerEvents = 'auto';
+
+          if (activeBtn) {
+            activeBtn.textContent = '☁️ Timeout';
+            activeBtn.className = 'cloud-update-btn error';
+            setTimeout(() => { 
+              activeBtn.className = 'cloud-update-btn'; 
+              activeBtn.textContent = originalText; 
+            }, 5000);
+          }
+        }
+
+      }, 15000);
+    }
+
+    // Event listeners safely wrapped for cache protection
+    const filterPriceEl = document.getElementById('filter-price');
+    if (filterPriceEl) filterPriceEl.addEventListener('change', renderDashboard);
+
+    const searchBox = document.getElementById('search-box');
+    const searchClear = document.getElementById('search-clear-btn');
+
+    if (searchBox) {
+      searchBox.addEventListener('input', () => {
+        if (searchClear) searchClear.style.display = searchBox.value.length > 0 ? 'flex' : 'none';
+        renderDashboard();
+      });
+    }
+
+    if (searchClear) {
+      searchClear.addEventListener('click', () => {
+        if (searchBox) {
+          searchBox.value = '';
+          searchBox.focus();
+        }
+        searchClear.style.display = 'none';
+        renderDashboard();
+      });
+    }
+
+    const filterNotesEl = document.getElementById('filter-notes');
+    if (filterNotesEl) filterNotesEl.addEventListener('change', renderDashboard);
+
+    const filterRolloutEl = document.getElementById('filter-rollout');
+    if (filterRolloutEl) filterRolloutEl.addEventListener('change', renderDashboard);
+
+    const filterApiEl = document.getElementById('filter-api');
+    if (filterApiEl) filterApiEl.addEventListener('change', renderDashboard);
+
+    // Click handlers for stats cards to filter the dashboard
+    const cardErrors = document.getElementById('card-errors');
+    if (cardErrors) {
+      cardErrors.addEventListener('click', () => {
+        const filterApiEl = document.getElementById('filter-api');
+        if (filterApiEl) {
+          filterApiEl.value = filterApiEl.value === 'error' ? 'all' : 'error';
+          renderDashboard();
+        }
+      });
+    }
+
+    const cardRollouts = document.getElementById('card-rollouts');
+    if (cardRollouts) {
+      cardRollouts.addEventListener('click', () => {
+        const filterRolloutEl = document.getElementById('filter-rollout');
+        if (filterRolloutEl) {
+          filterRolloutEl.value = filterRolloutEl.value === 'staged' ? 'all' : 'staged';
+          renderDashboard();
+        }
+      });
+    }
+
+    // Header column sort — state variable tracks current sort
+    // ─── Multi-select & Batch Task Creation ───────────────────────────────────
+    const selectedFaceIds = new Set();
+    let lastClickedRowIndex = -1;
+    let taskModalPriority = 'medium';
+
+    function updateSelectionToolbar() {
+      const count = selectedFaceIds.size;
+      const toolbar = document.getElementById('selection-toolbar');
+      const label   = document.getElementById('toolbar-count');
+      if (!toolbar || !label) return;
+      label.textContent = `${count} face${count !== 1 ? 's' : ''} selected`;
+      toolbar.classList.toggle('visible', count > 0);
+
+      const selBtn = document.getElementById('btn-cloud-update-selected');
+      if (selBtn) {
+        if (count > 0) {
+          selBtn.style.display = 'block';
+          selBtn.textContent = `☁️ Sync Selected (${count})`;
+        } else {
+          selBtn.style.display = 'none';
+        }
+      }
+    }
+
+    function clearSelection() {
+      selectedFaceIds.clear();
+      updateSelectionToolbar();
+      renderDashboard();
+    }
+
+    function buildTaskTitle(template, wf) {
+      if (template === 'combined')  return `Update ${wf.id} (companion + Wear OS)`;
+      if (template === 'companion') return `Update ${wf.id} — companion app`;
+      if (template === 'wear')      return `Update ${wf.id} — Wear OS app`;
+      if (template === 'review')    return `Review ${wf.id} versions`;
+      if (template === 'custom') {
+        const custom = (document.getElementById('task-custom-input').value.trim()) || 'Update [ID]';
+        return custom.replace(/\[ID\]/g, wf.id).replace(/\[TITLE\]/g, wf.title);
+      }
+      return `Update ${wf.id}`;
+    }
+
+    function updateTaskPreview() {
+      const template = document.getElementById('task-template-select').value;
+      const previewEl = document.getElementById('task-preview');
+      if (!previewEl) return;
+      const firstId = [...selectedFaceIds][0];
+      const firstWf = firstId ? combinedData.find(w => w.id === firstId) : null;
+      if (firstWf) {
+        previewEl.textContent = buildTaskTitle(template, firstWf);
+      } else {
+        previewEl.textContent = '—';
+      }
+    }
+
+    function onTemplateChange() {
+      const template = document.getElementById('task-template-select').value;
+      const customField = document.getElementById('task-custom-field');
+      if (customField) customField.style.display = template === 'custom' ? 'flex' : 'none';
+      updateTaskPreview();
+    }
+
+    function setPriority(p) {
+      taskModalPriority = p;
+      ['low','medium','high'].forEach(lvl => {
+        const el = document.getElementById('pill-' + lvl);
+        if (el) el.className = 'priority-pill' + (lvl === p ? ` active-${lvl}` : '');
+      });
+    }
+
+    function openTaskModal() {
+      if (selectedFaceIds.size === 0) return;
+      // Set default date to today in YYYY-MM-DD format (required by type="date")
+      const today = new Date();
+      const yyyy = String(today.getFullYear());
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const dd = String(today.getDate()).padStart(2, '0');
+      const isoDate = `${yyyy}-${mm}-${dd}`;
+      taskModalStartDate = isoDate;
+      const dateEl = document.getElementById('task-start-date');
+      if (dateEl) dateEl.value = isoDate;
+      // Reset confirm button state
+      const confirmBtn = document.getElementById('task-confirm-btn');
+      if (confirmBtn) {
+        confirmBtn.textContent = 'Create Tasks';
+        confirmBtn.disabled = false;
+      }
+      // Reset priority
+      setPriority('medium');
+      // Update heading
+      const heading = document.getElementById('task-modal-heading');
+      if (heading) heading.textContent = `Create ${selectedFaceIds.size} Task${selectedFaceIds.size !== 1 ? 's' : ''}`;
+      // Reset template
+      const tmplEl = document.getElementById('task-template-select');
+      if (tmplEl) tmplEl.value = 'combined';
+      const customField = document.getElementById('task-custom-field');
+      if (customField) customField.style.display = 'none';
+      // Show/hide spread option (only useful when >2 tasks)
+      const spreadField = document.getElementById('spread-field');
+      if (spreadField) spreadField.style.display = selectedFaceIds.size > 2 ? 'block' : 'none';
+      // Reset spread toggle
+      const spreadToggle = document.getElementById('spread-toggle');
+      if (spreadToggle) spreadToggle.checked = false;
+      updateTaskPreview();
+      // Show modal
+      document.getElementById('task-modal-overlay').style.display = 'flex';
+    }
+
+    function closeTaskModal() {
+      document.getElementById('task-modal-overlay').style.display = 'none';
+    }
+
+    // Wire custom input preview update and initialize Flatpickr date picker
+    document.addEventListener('DOMContentLoaded', () => {
+      const customIn = document.getElementById('task-custom-input');
+      if (customIn) customIn.addEventListener('input', updateTaskPreview);
+      
+      const dateEl = document.getElementById('task-start-date');
+      if (dateEl && typeof flatpickr !== 'undefined') {
+        flatpickr(dateEl, {
+          dateFormat: 'Y-m-d',        // internal value stored (YYYY-MM-DD for Firebase)
+          altInput: true,              // show a separate display input
+          altFormat: 'd/m/Y',         // display format: DD/MM/YYYY
+          defaultDate: 'today',
+          disableMobile: false,
+          onChange: (selectedDates, dateStr) => {
+            taskModalStartDate = dateStr; // YYYY-MM-DD
+          }
+        });
+      }
+    });
+
+    async function confirmCreateTasks() {
+      if (!currentUser) {
+        alert('You must be logged in to create planner tasks.');
+        return;
+      }
+      const template  = document.getElementById('task-template-select').value;
+      const startDate = taskModalStartDate || document.getElementById('task-start-date').value || new Date().toISOString().split('T')[0];
+      const priority  = taskModalPriority;
+      const confirmBtn = document.getElementById('task-confirm-btn');
+
+      const selectedWfs = [...selectedFaceIds]
+        .map(id => combinedData.find(w => w.id === id))
+        .filter(Boolean);
+
+      if (selectedWfs.length === 0) { closeTaskModal(); return; }
+
+      confirmBtn.textContent = 'Saving...';
+      confirmBtn.disabled = true;
+
+      try {
+        const snap = await db.ref('work_planner/' + currentUser.uid).once('value');
+        const data = snap.val() || {};
+        const existing = Array.isArray(data.customTasks) ? data.customTasks : [];
+
+        const customHolidays = Array.isArray(data.customHolidays) ? data.customHolidays : [];
+
+        // Helper to parse date string resiliantly across different formats/locales
+        function parseDateToYmd(dateStr) {
+          if (!dateStr) return new Date();
+          dateStr = dateStr.trim();
+          
+          var matchYmd = dateStr.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+          if (matchYmd) {
+            return new Date(parseInt(matchYmd[1], 10), parseInt(matchYmd[2], 10) - 1, parseInt(matchYmd[3], 10));
+          }
+          
+          var matchSlashes = dateStr.match(/^(\d{1,2})[\/\.-](\d{1,2})[\/\.-](\d{4})$/);
+          if (matchSlashes) {
+            var day = parseInt(matchSlashes[1], 10);
+            var month = parseInt(matchSlashes[2], 10);
+            var y = parseInt(matchSlashes[3], 10);
+            return new Date(y, month - 1, day);
+          }
+          
+          var parsed = new Date(dateStr);
+          if (!isNaN(parsed.getTime())) return parsed;
+          return new Date();
+        }
+
+        // Helper to calculate working date with offset, skipping Sundays and custom holidays
+        function getWorkingDateWithOffset(startDateObj, offset) {
+          var current = new Date(startDateObj.getTime());
+          var workingDaysFound = 0;
+          
+          while (workingDaysFound < offset) {
+            current.setDate(current.getDate() + 1);
+            var y = current.getFullYear();
+            var m = String(current.getMonth() + 1).padStart(2, '0');
+            var day = String(current.getDate()).padStart(2, '0');
+            var checkStr = `${y}-${m}-${day}`;
+            
+            var isSunday = (current.getDay() === 0);
+            var isHoliday = customHolidays.includes(checkStr);
+            if (!isSunday && !isHoliday) {
+              workingDaysFound++;
+            }
+          }
+          var y = current.getFullYear();
+          var m = String(current.getMonth() + 1).padStart(2, '0');
+          var day = String(current.getDate()).padStart(2, '0');
+          return `${y}-${m}-${day}`;
+        }
+
+        const spreadEnabled = document.getElementById('spread-toggle')?.checked;
+        const parsedStartDate = parseDateToYmd(startDate);
+
+        const newTasks = selectedWfs.map((wf, i) => {
+          let taskDate;
+          if (spreadEnabled) {
+            var workingDaysOffset = Math.floor(i / 2);
+            taskDate = getWorkingDateWithOffset(parsedStartDate, workingDaysOffset);
+          } else {
+            taskDate = parsedStartDate.getFullYear() + '-' +
+              String(parsedStartDate.getMonth() + 1).padStart(2, '0') + '-' +
+              String(parsedStartDate.getDate()).padStart(2, '0');
+          }
+          return {
+            id: 'task_' + Date.now() + '_' + i + '_' + Math.random().toString(36).substr(2, 4),
+            title: buildTaskTitle(template, wf),
+            priority: priority,
+            duration: 1.0,
+            startDate: taskDate,
+            createdAt: Date.now()
+          };
+        });
+
+        data.customTasks = [...existing, ...newTasks];
+        data._writtenBy = 'dashboard_' + Math.random().toString(36).substr(2, 9);
+        await db.ref('work_planner/' + currentUser.uid).set(data);
+
+
+        closeTaskModal();
+        clearSelection();
+
+        // Reset button state
+        confirmBtn.textContent = 'Create Tasks';
+        confirmBtn.disabled = false;
+
+        // Toast success
+        const toast = document.createElement('div');
+        toast.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1e1b2e;border:1px solid rgba(52,211,153,0.4);color:#34D399;font-size:13px;font-weight:600;padding:10px 20px;border-radius:999px;z-index:99999;box-shadow:0 4px 20px rgba(0,0,0,0.4);';
+        toast.textContent = `✅ ${newTasks.length} task${newTasks.length !== 1 ? 's' : ''} added to Planner!`;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3500);
+
+      } catch (err) {
+        console.error('Failed creating planner tasks:', err);
+        alert('Error creating tasks: ' + err.message);
+        confirmBtn.textContent = 'Create Tasks';
+        confirmBtn.disabled = false;
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Reviews Panel Logic
+    // ─────────────────────────────────────────────────────────────────────────
+    function openReviewsPanel() {
+      document.getElementById('reviews-panel').classList.add('open');
+      renderReviews();
+    }
+
+    function closeReviewsPanel() {
+      document.getElementById('reviews-panel').classList.remove('open');
+    }
+
+    function renderReviews() {
+      const content = document.getElementById('reviews-content');
+      if (!content) return;
+
+      if (!unrepliedReviews || unrepliedReviews.length === 0) {
+        content.innerHTML = `<div style="color: var(--text-muted); text-align: center; margin-top: 40px; font-size: 14px;">No unreplied reviews! 🎉</div>`;
+        return;
+      }
+
+      let html = '';
+      unrepliedReviews.forEach(r => {
+        const dateStr = new Date(r.lastModified).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+        
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+          starsHtml += `<span style="color: ${i <= r.starRating ? 'var(--yellow)' : '#444'}; font-size: 14px;">★</span>`;
+        }
+
+        html += `
+          <div class="card" style="padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+              <div>
+                <div style="font-size: 13px; font-weight: bold; color: var(--primary); margin-bottom: 2px;">${r.title}</div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  ${starsHtml}
+                  <span style="font-size: 10px; color: var(--text-muted);">${dateStr}</span>
+                </div>
+              </div>
+              <a href="https://play.google.com/console/developers/reviews?packageName=${r.packageName}" target="_blank" style="font-size: 11px; padding: 4px 8px; background: var(--primary); color: #000; border-radius: 4px; text-decoration: none; font-weight: bold;">Reply</a>
+            </div>
+            <div style="font-size: 13px; color: #eee; line-height: 1.4; margin-bottom: 8px;">
+              "${r.text || 'No text'}"
+            </div>
+            <div style="font-size: 11px; color: var(--text-muted); display: flex; gap: 10px;">
+              <span>📱 ${r.deviceMetadata}</span>
+              <span>🌐 ${r.reviewerLanguage}</span>
+            </div>
+          </div>
+        `;
+      });
+      content.innerHTML = html;
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+
+    window.currentSort = 'date-desc';
+
+    function updateSortIndicators(activeSort) {
+      const cols = [
+        { id: 'sort-ind-title',     asc: 'title-asc',     desc: 'title-desc',     thSort: 'title-asc' },
+        { id: 'sort-ind-id',        asc: 'id-asc',        desc: 'id-desc',        thSort: 'id-asc' },
+        { id: 'sort-ind-companion', asc: 'companion-asc', desc: 'companion-desc', thSort: 'companion-desc' },
+        { id: 'sort-ind-wear',      asc: 'wear-asc',      desc: 'wear-desc',      thSort: 'wear-desc' },
+        { id: 'sort-ind-date',      asc: 'date-asc',      desc: 'date-desc',      thSort: 'date-desc' },
+        { id: 'sort-ind-price',     asc: 'price-asc',     desc: 'price-desc',     thSort: 'price-desc' },
+      ];
+      cols.forEach(col => {
+        const ind = document.getElementById(col.id);
+        const th = ind ? ind.closest('th') : null;
+        if (!ind || !th) return;
+        const isActive = activeSort === col.asc || activeSort === col.desc;
+        th.classList.toggle('active-sort', isActive);
+        if (!isActive) { ind.textContent = '▲'; ind.style.opacity = '0.2'; return; }
+        ind.textContent = activeSort === col.asc ? '▲' : '▼';
+        ind.style.opacity = '';
+      });
+    }
+
+    document.querySelectorAll('.sortable-th').forEach(th => {
+      th.addEventListener('click', () => {
+        const ascVal  = th.dataset.sortAsc;
+        const descVal = th.dataset.sortDesc;
+        // Toggle: if already on this column flip direction, else default to desc
+        if (window.currentSort === descVal) {
+          window.currentSort = ascVal;
+        } else {
+          window.currentSort = descVal;
+        }
+        updateSortIndicators(window.currentSort);
+        renderDashboard();
+      });
+    });
+
+    updateSortIndicators(window.currentSort);
+
+    const btnClearAllEl = document.getElementById('btn-clear-all');
+    if (btnClearAllEl) {
+      btnClearAllEl.addEventListener('click', () => {
+        if (searchBox) searchBox.value = '';
+        if (searchClear) searchClear.style.display = 'none';
+        if (filterNotesEl) filterNotesEl.value = 'all';
+        if (filterPriceEl) filterPriceEl.value = 'all';
+        if (filterRolloutEl) filterRolloutEl.value = 'all';
+        if (filterApiEl) filterApiEl.value = 'all';
+        window.currentSort = 'date-desc';
+        updateSortIndicators(window.currentSort);
+        renderDashboard();
+      });
+    }
+
+    const btnAiQueryEl = document.getElementById('btn-ai-query');
+    if (btnAiQueryEl) {
+      btnAiQueryEl.addEventListener('click', () => {
+        try {
+          const promptText = compileAiPrompt();
+          navigator.clipboard.writeText(promptText).then(() => {
+            const origHtml = btnAiQueryEl.innerHTML;
+            btnAiQueryEl.innerHTML = '✓ Copied! Opening Gemini...';
+            btnAiQueryEl.style.background = '#81c784';
+            btnAiQueryEl.style.color = '#141414';
+            btnAiQueryEl.style.borderColor = '#81c784';
+            
+            // Open Gemini in a new tab
+            window.open('https://gemini.google.com/', '_blank');
+            
+            setTimeout(() => {
+              btnAiQueryEl.innerHTML = origHtml;
+              btnAiQueryEl.style.background = 'rgba(245, 197, 24, 0.12)';
+              btnAiQueryEl.style.color = 'var(--yellow)';
+              btnAiQueryEl.style.borderColor = 'var(--yellow)';
+            }, 3000);
+          }).catch(err => {
+            alert("Failed to copy prompt to clipboard: " + err.message);
+          });
+        } catch (err) {
+          alert("Failed to compile AI data: " + err.message);
+        }
+      });
+    }
+
+  </script>
+
+  <script>
+    // App Suite Slide-out Menu functions
+    function toggleAppMenu() {
+      var menu = document.getElementById('app-slide-menu');
+      var overlay = document.getElementById('app-slide-overlay');
+      if (menu && overlay) {
+        menu.classList.toggle('open');
+        overlay.classList.toggle('active');
+      }
+    }
+    
+    function closeAppMenu() {
+      var menu = document.getElementById('app-slide-menu');
+      var overlay = document.getElementById('app-slide-overlay');
+      if (menu && overlay) {
+        menu.classList.remove('open');
+        overlay.classList.remove('active');
+      }
+    }
+  </script>
+
+</body>
+
+</html>

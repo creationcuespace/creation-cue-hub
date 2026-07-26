@@ -596,6 +596,7 @@
       <a href="month-planner.html" class="header-btn">Planner</a>
       <a href="play-versions.html" class="header-btn">Versions</a>
       <a href="https://cue-earnings.sotsor.workers.dev/" class="header-btn">Earnings</a>
+      <button class="header-btn" onclick="initDetails()" style="background:var(--blue); border:none; color:white; cursor:pointer;">Refresh Data</button>
     </div>
   </div>
 
@@ -944,7 +945,7 @@
       }
 
       // Load promo metadata listener
-      db.ref('promotions/' + promoId + '/public').on('value', function(snapshot) {
+      db.ref('promotions/' + promoId + '/public').once('value').then(function(snapshot) {
         promoData = snapshot.val();
         if (!promoData) {
           document.getElementById('loading-state').style.display = 'flex';
@@ -958,13 +959,13 @@
         document.getElementById('dashboard-content').style.display = 'block';
 
         renderPromoDetails();
-      }, function(err) {
+      }).catch(function(err) {
         console.error(err);
         document.getElementById('loading-msg').textContent = "Database read error: " + err.message;
       });
 
       // Load promo codes listener
-      db.ref('promotion_codes/' + promoId).on('value', function(codesSnap) {
+      db.ref('promotion_codes/' + promoId).once('value').then(function(codesSnap) {
         window.promoCodesCache = codesSnap.val() || {};
         
         // Update unclaimed codes textarea if the form is not being edited
@@ -1288,7 +1289,7 @@
 
     // One-Time Tokens management
     function loadOneTimeLinks() {
-      db.ref('one_time_tokens').orderByChild('promoId').equalTo(promoId).on('value', function(snapshot) {
+      db.ref('one_time_tokens').orderByChild('promoId').equalTo(promoId).once('value').then(function(snapshot) {
         var container = document.getElementById('one-time-links-container');
         var tokens = snapshot.val();
         
@@ -1406,7 +1407,7 @@
 
     // Claims Logs History loader
     function loadClaimsHistory() {
-      db.ref('promotion_claims/' + promoId).on('value', function(snapshot) {
+      db.ref('promotion_claims/' + promoId).once('value').then(function(snapshot) {
         window.rawClaimsCache = snapshot.val();
         renderClaimsHistory();
       });

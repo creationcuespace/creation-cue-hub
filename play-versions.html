@@ -2680,7 +2680,7 @@
         }, 5000);
 
           // Connect to Realtime Database to load Notes
-          db.ref('watch_face_notes').on('value', function(snapshot) {
+          db.ref('watch_face_notes').once('value').then(function(snapshot) {
             dbLoaded = true;
             clearTimeout(dbTimeout);
             try {
@@ -2693,7 +2693,7 @@
               const overlay = document.getElementById('loading-overlay');
               if (overlay) overlay.style.display = 'none';
             }
-          }, function(err) {
+          }).catch(function(err) {
             dbLoaded = true;
             clearTimeout(dbTimeout);
             console.warn("Could not load notes from database (rules might block it):", err);
@@ -2720,7 +2720,7 @@
           });
 
             // Connect to Realtime Database to load Companion Release Notes
-            db.ref('companion_release_notes').on('value', function(snapshot) {
+            db.ref('companion_release_notes').once('value').then(function(snapshot) {
               const rawData = snapshot.val() || {};
               const decodedNotes = {};
               for (const k in rawData) {
@@ -2737,7 +2737,7 @@
               if (modal && modal.style.display === 'flex') {
                 renderReleaseNotesModal();
               }
-          }, function(err) {
+          }).catch(function(err) {
             console.warn("Could not load companion release notes:", err);
             companionReleaseNotes = {};
           });

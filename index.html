@@ -2677,7 +2677,7 @@
         window.allSubscribers = {};
 
         function startSubscribersListener() {
-            db.ref('newsletter_subscribers').on('value', function(snapshot) {
+            db.ref('newsletter_subscribers').once('value').then(function(snapshot) {
                 window.allSubscribers = snapshot.val() || {};
                 const count = Object.keys(window.allSubscribers).length;
                 
@@ -2690,8 +2690,8 @@
                 if (modal && modal.style.display !== 'none') {
                     renderSubscribersList(window.allSubscribers);
                 }
-            }, function(err) {
-                console.warn("Could not listen to subscribers:", err);
+            }).catch(function(err) {
+                console.warn("Could not load subscribers:", err);
             });
         }
 
@@ -2727,7 +2727,7 @@
         window.activeVisitors = {};
 
         function startActiveVisitorsListener() {
-            db.ref('active_visitors').on('value', function(snapshot) {
+            db.ref('active_visitors').once('value').then(function(snapshot) {
                 window.activeVisitors = snapshot.val() || {};
                 const count = Object.keys(window.activeVisitors).length;
                 
@@ -2740,8 +2740,8 @@
                 if (modal && modal.style.display !== 'none') {
                     renderLiveVisitorsList(window.activeVisitors);
                 }
-            }, function(err) {
-                console.warn("Could not listen to active visitors:", err);
+            }).catch(function(err) {
+                console.warn("Could not load active visitors:", err);
             });
         }
 
@@ -4089,7 +4089,7 @@
         };
 
         function startSupportListener() {
-            db.ref('support_requests').on('value', function(snapshot) {
+            db.ref('support_requests').once('value').then(function(snapshot) {
                 window.allSupportRequests = snapshot.val() || {};
                 const keys = Object.keys(window.allSupportRequests);
                 const pendingCount = keys.filter(key => window.allSupportRequests[key].status === 'Pending').length;
@@ -4107,8 +4107,8 @@
                         badge.style.display = 'none';
                     }
                 }
-            }, function(err) {
-                console.warn("Could not listen to support requests:", err);
+            }).catch(function(err) {
+                console.warn("Could not load support requests:", err);
             });
         }
 
