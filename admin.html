@@ -265,8 +265,12 @@
                 <div id="post-editor" style="background: rgba(0,0,0,0.3); color: #fff; min-height: 400px;"></div>
             </div>
             <div class="form-group" style="display:flex; align-items:center; gap:8px; margin-bottom:15px;">
-                <input type="checkbox" id="post-pinned" style="width:auto; margin:0; cursor:pointer;">
-                <label for="post-pinned" style="margin:0; cursor:pointer; font-weight:normal; font-size:13px; color:#ddd; display:inline-block;">📌 Pin this article to the sidebar</label>
+                <label for="post-pin-style" style="margin:0; font-weight:normal; font-size:13px; color:#ddd;">📌 Pin Style:</label>
+                <select id="post-pin-style" style="width:auto; padding:4px 8px; border-radius:4px; background:rgba(0,0,0,0.5); border:1px solid var(--border); color:#fff; font-size:13px;">
+                    <option value="">Not Pinned</option>
+                    <option value="large">Pinned (Large Card)</option>
+                    <option value="small">Pinned (Small Grid)</option>
+                </select>
             </div>
             <div style="display:flex; gap:12px;">
                 <button class="btn" style="flex:1;" onclick="publishPost()">Publish Live</button>
@@ -857,7 +861,7 @@
                     window.hasAutoEdited = true;
                     const post = posts.find(p => p.slug === editSlug);
                     if (post) {
-                        editPost(post.slug, post.title, post.excerpt, post.thumbnail, post.draft === true, !!post.pinned);
+                        editPost(post.slug, post.title, post.excerpt, post.thumbnail, post.draft === true, !!post.pinned, post.pinStyle || 'large');
                     }
                 }
             } catch(e) { 
@@ -876,7 +880,8 @@
             var safeExcerpt = (p.excerpt || '').replace(/'/g, "\\'");
             var safeThumb = (p.thumbnail || '');
             var pinnedVal = !!p.pinned;
-            var editBtn = '<button class="btn-edit" onclick="editPost(\'' + p.slug + '\',\'' + safeTitle + '\',\'' + safeExcerpt + '\',\'' + safeThumb + '\',' + isDraft + ',' + pinnedVal + ')">Edit</button>';
+            var pinStyleVal = p.pinStyle || 'large';
+            var editBtn = '<button class="btn-edit" onclick="editPost(\'' + p.slug + '\',\'' + safeTitle + '\',\'' + safeExcerpt + '\',\'' + safeThumb + '\',' + isDraft + ',' + pinnedVal + ',\'' + pinStyleVal + '\')">Edit</button>';
             var delBtn = '<button class="btn-delete" onclick="deletePost(\'' + p.slug + '\', ' + isDraft + ')">' + (isDraft ? 'Discard' : 'Delete') + '</button>';
             var postUrl = isDraft ? '#' : 'blog/post.html?id=' + p.slug;
             var linkTarget = isDraft ? '' : ' target="_blank"';
@@ -889,7 +894,7 @@
             return item;
         }
 
-        async function editPost(slug, title, excerpt, thumbnail, isDraft, pinned) {
+        async function editPost(slug, title, excerpt, thumbnail, isDraft, pinned, pinStyle) {
             showStatus('Loading article content from GitHub...', 'Fetching Markdown...');
             try {
                 const folder = 'posts';
@@ -902,7 +907,11 @@
                 document.getElementById('post-title').value = title;
                 document.getElementById('post-excerpt').value = excerpt;
                 syncFaceDropdown(thumbnail);
-                document.getElementById('post-pinned').checked = !!pinned;
+                if (pinned) {
+                    document.getElementById('post-pin-style').value = pinStyle || 'large';
+                } else {
+                    document.getElementById('post-pin-style').value = '';
+                }
                 
                 marked.setOptions({ breaks: true });
                 const isHtml = /<[a-z][\s\S]*>/i.test(content) && !content.includes('**');
@@ -927,7 +936,7 @@
             document.getElementById('post-title').value = '';
             document.getElementById('post-excerpt').value = '';
             syncFaceDropdown('');
-            document.getElementById('post-pinned').checked = false;
+            document.getElementById('post-pin-style').value = '';
             quillEditor.root.innerHTML = '';
             document.getElementById('editor-panel-title').textContent = 'Create Custom Article';
             document.getElementById('btn-cancel-edit').style.display = 'none';
@@ -939,7 +948,7 @@
             var title = document.getElementById('post-title').value.trim();
             var excerpt = document.getElementById('post-excerpt').value.trim();
             var thumbnail = document.getElementById('post-face-select').value;
-            var pinned = document.getElementById('post-pinned').checked;
+            var pinStyle = document.getElementById('post-pin-style').value;
             var content = quillEditor.root.innerHTML.trim();
             if (!title || !excerpt || !content) { await window.customAlert('Please fill out all fields before publishing!'); return; }
             
@@ -998,7 +1007,10 @@
                     thumbnail: thumbnail,
                     timestamp: (isUpdate && !oldDraft) ? (oldTimestamp || timeStr) : timeStr
                 };
-                if(pinned) newEntry.pinned = true;
+                if(pinStyle === 'large' || pinStyle === 'small') {
+                    newEntry.pinned = true;
+                    newEntry.pinStyle = pinStyle;
+                }
 
                 // Insert at top
                 posts.unshift(newEntry);

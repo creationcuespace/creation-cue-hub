@@ -175,6 +175,55 @@
             margin: 0 auto;
         }
 
+        /* Pinned Small Grid */
+        .pinned-small-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .article-card-small {
+            background: var(--glass-bg);
+            border: 1px solid rgba(241, 179, 28, 0.3);
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .article-card-small:hover {
+            border-color: rgba(241, 179, 28, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .article-card-small .article-thumb-container {
+            width: 100%;
+            height: 110px;
+            min-height: auto;
+        }
+
+        .article-card-small .article-details {
+            padding: 12px;
+            flex: 1;
+            justify-content: flex-start;
+        }
+
+        .article-card-small .article-title {
+            font-size: 13px;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .article-card-small .article-meta {
+            font-size: 10px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+
         /* Article Grid */
         .article-grid {
             display: grid;
@@ -782,14 +831,52 @@
                     return;
                 }
 
-                // Sort posts by pinned status first, then date (newest first)
-                const sortedPosts = [...publicPosts].sort((a, b) => {
+                // Separate small pinned posts from the rest
+                const smallPinnedPosts = publicPosts.filter(p => p.pinned && p.pinStyle === 'small');
+                const regularPosts = publicPosts.filter(p => !(p.pinned && p.pinStyle === 'small'));
+
+                // Sort regular posts by pinned status (large) first, then date (newest first)
+                const sortedPosts = [...regularPosts].sort((a, b) => {
                     if (a.pinned && !b.pinned) return -1;
                     if (!a.pinned && b.pinned) return 1;
                     return new Date(b.date) - new Date(a.date);
                 });
 
                 container.innerHTML = '';
+                
+                // Render small pinned grid if any
+                if (smallPinnedPosts.length > 0) {
+                    const smallGrid = document.createElement('div');
+                    smallGrid.className = 'pinned-small-grid';
+                    smallPinnedPosts.forEach(post => {
+                        const thumbImg = post.thumbnail 
+                            ? `https://wsrv.nl/?url=${encodeURIComponent(post.thumbnail)}&w=300&h=160&fit=cover&output=webp&q=80`
+                            : 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp';
+
+                        const card = document.createElement('a');
+                        card.className = 'article-card-small';
+                        card.href = `blog/post.html?id=${post.slug}`;
+                        card.innerHTML = `
+                            <div class="article-thumb-container">
+                                <img class="article-thumb" src="${thumbImg}" alt="${post.title}" loading="lazy">
+                            </div>
+                            <div class="article-details">
+                                <div class="article-meta">
+                                    <span style="background:rgba(241,179,28,0.2); color:var(--primary); padding:2px 6px; border-radius:8px; border:1px solid rgba(241,179,28,0.5);">📌 PINNED</span>
+                                    <span>${post.date}</span>
+                                </div>
+                                <h2 class="article-title">${post.title}</h2>
+                            </div>
+                        `;
+                        smallGrid.appendChild(card);
+                    });
+                    container.appendChild(smallGrid);
+                }
+
+                // Create regular article grid
+                const articleGrid = document.createElement('div');
+                articleGrid.className = 'article-grid';
+                container.appendChild(articleGrid);
                 
                 const ITEMS_PER_PAGE = 6;
                 let currentIndex = 0;
@@ -829,9 +916,9 @@
                         `;
                         
                         if (loadMoreBtn.parentNode) {
-                            container.insertBefore(card, loadMoreBtn);
+                            articleGrid.insertBefore(card, loadMoreBtn);
                         } else {
-                            container.appendChild(card);
+                            articleGrid.appendChild(card);
                         }
                     });
                     
@@ -841,14 +928,15 @@
                         if (loadMoreBtn.parentNode) {
                             loadMoreBtn.parentNode.removeChild(loadMoreBtn);
                         }
-                    } else if (!loadMoreBtn.parentNode) {
-                        container.appendChild(loadMoreBtn);
+                    } else {
+                        if (!loadMoreBtn.parentNode) {
+                            articleGrid.appendChild(loadMoreBtn);
+                        }
                     }
                 }
 
-                loadMoreBtn.addEventListener('click', renderNextBatch);
                 renderNextBatch();
-
+                loadMoreBtn.onclick = renderNextBatch;
             } catch (err) {
                 console.warn('Error loading blog posts:', err);
                 container.innerHTML = '<div class="empty-blog">No articles published yet. Check back soon!</div>';
