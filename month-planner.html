@@ -3318,7 +3318,25 @@
     // -------------------------------------------------------------
     // App Initialization
     // -------------------------------------------------------------
+    function setupAutoRefresh() {
+      // Check every 60 seconds if it's 7:30 AM local time
+      setInterval(() => {
+        const now = new Date();
+        if (now.getHours() === 7 && now.getMinutes() === 30) {
+          const lastRefreshDate = localStorage.getItem('last_auto_refresh_date');
+          const todayDateString = now.toDateString();
+          
+          if (lastRefreshDate !== todayDateString) {
+            localStorage.setItem('last_auto_refresh_date', todayDateString);
+            console.log("Auto-refreshing page for morning sync...");
+            window.location.reload();
+          }
+        }
+      }, 60000);
+    }
+
     async function initApp() {
+      setupAutoRefresh();
       isInitializing = true;
 
       // 1. Initialize active day and load local state immediately for instant render
