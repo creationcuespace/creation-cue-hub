@@ -2527,6 +2527,23 @@
     var notesData = {};
     var companionReleaseNotes = {};
 
+    function setupAutoRefresh() {
+      // Check every 60 seconds if it's 7:30 AM local time
+      setInterval(() => {
+        const now = new Date();
+        if (now.getHours() === 7 && now.getMinutes() === 30) {
+          const lastRefreshDate = localStorage.getItem('last_auto_refresh_date');
+          const todayDateString = now.toDateString();
+          
+          if (lastRefreshDate !== todayDateString) {
+            localStorage.setItem('last_auto_refresh_date', todayDateString);
+            console.log("Auto-refreshing page for morning sync...");
+            window.location.reload();
+          }
+        }
+      }, 60000);
+    }
+
     // Auth state handler
     auth.onAuthStateChanged(function (user) {
       if (user && (user.email === 'sotsor@gmail.com' || user.uid === 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || user.uid === 'JKq9NWxPshRbCEXjV2eTUVV6A992')) {
@@ -2582,6 +2599,7 @@
     }
 
     async function initDashboard() {
+      setupAutoRefresh();
       try {
         // Load GitHub Config first so fetchLiveData can use the API immediately
         loadGithubConfig();
@@ -2603,41 +2621,42 @@
             versionsData[item.packageName] = item;
           });
         } catch (e) {
-          console.warn("Could not load versions-data.json, showing local placeholders", e);
+          console.warn("Could not load versions-data.json", e);
         }
 
         // Load reviews-data.json
         try {
           const reviewsResponse = await fetchLiveData('reviews-data.json');
-          unrepliedReviews = reviewsResponse.reviews || [];
+          let rawReviews = reviewsResponse.reviews || [];
           
-          const badge = document.getElementById('reviews-badge');
-          const bellBtn = document.getElementById('reviews-bell-btn');
-          if (badge) {
-            if (unrepliedReviews.length > 0) {
-              badge.textContent = unrepliedReviews.length;
-              badge.style.display = 'flex';
-              if (bellBtn) {
-                bellBtn.style.background = 'rgba(239, 68, 68, 0.15)';
-                bellBtn.style.color = 'var(--danger)';
-                bellBtn.style.borderRadius = '6px';
-                bellBtn.classList.remove('pulse-badge');
-                const bellIcon = document.getElementById('reviews-bell-icon');
-                if (bellIcon) bellIcon.classList.add('ringing');
-              }
+          // Filter out ignored reviews from localStorage
+          let ignoredReviewIds = [];
+          try {
+            ignoredReviewIds = JSON.parse(localStorage.getItem('ignored_reviews') || '[]');
+          } catch(e) {}
+          
+          rawReviews = rawReviews.filter(r => !ignoredReviewIds.includes(r.reviewId));
+
+          // Deduplicate by author (r.title) and packageName, taking the most recently modified
+          const reviewMap = new Map();
+          rawReviews.forEach(r => {
+            const key = `${r.packageName}_${r.title}`;
+            if (!reviewMap.has(key)) {
+              reviewMap.set(key, r);
             } else {
-              badge.style.display = 'none';
-              if (bellBtn) {
-                bellBtn.style.background = 'transparent';
-                bellBtn.style.color = '';
-                bellBtn.style.borderRadius = '';
-                bellBtn.classList.remove('pulse-badge');
-                const bellIcon = document.getElementById('reviews-bell-icon');
-                if (bellIcon) bellIcon.classList.remove('ringing');
+              const existing = reviewMap.get(key);
+              const rDate = new Date(r.lastModified).getTime() || 0;
+              const eDate = new Date(existing.lastModified).getTime() || 0;
+              if (rDate > eDate) {
+                reviewMap.set(key, r);
               }
             }
-          }
-          renderReviews();
+          });
+          
+          unrepliedReviews = Array.from(reviewMap.values());
+          unrepliedReviews.sort((a, b) => new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime());
+          
+          updateReviewsBadgeCount();
         } catch (e) {
           console.warn("Could not load reviews-data.json", e);
         }
@@ -4231,6 +4250,51 @@
       }
     }
 
+    function updateReviewsBadgeCount() {
+      const badge = document.getElementById('reviews-badge');
+      const bellBtn = document.getElementById('reviews-bell-btn');
+      if (badge) {
+        if (unrepliedReviews.length > 0) {
+          badge.textContent = unrepliedReviews.length;
+          badge.style.display = 'flex';
+          if (bellBtn) {
+            bellBtn.style.background = 'rgba(239, 68, 68, 0.15)';
+            bellBtn.style.color = 'var(--danger)';
+            bellBtn.style.borderRadius = '6px';
+            bellBtn.classList.remove('pulse-badge');
+            const bellIcon = document.getElementById('reviews-bell-icon');
+            if (bellIcon) bellIcon.classList.add('ringing');
+          }
+        } else {
+          badge.style.display = 'none';
+          if (bellBtn) {
+            bellBtn.style.background = 'transparent';
+            bellBtn.style.color = '';
+            bellBtn.style.borderRadius = '';
+            bellBtn.classList.add('pulse-badge');
+            const bellIcon = document.getElementById('reviews-bell-icon');
+            if (bellIcon) bellIcon.classList.remove('ringing');
+          }
+        }
+      }
+      renderReviews();
+    }
+
+    function ignoreReview(reviewId) {
+      if (!confirm("Are you sure you want to remove this review from the list?")) return;
+      let ignoredReviewIds = [];
+      try {
+        ignoredReviewIds = JSON.parse(localStorage.getItem('ignored_reviews') || '[]');
+      } catch(e) {}
+      if (!ignoredReviewIds.includes(reviewId)) {
+        ignoredReviewIds.push(reviewId);
+        if (ignoredReviewIds.length > 200) ignoredReviewIds = ignoredReviewIds.slice(-200);
+        localStorage.setItem('ignored_reviews', JSON.stringify(ignoredReviewIds));
+      }
+      unrepliedReviews = unrepliedReviews.filter(r => r.reviewId !== reviewId);
+      updateReviewsBadgeCount();
+    }
+
     function renderReviews() {
       try {
         const content = document.getElementById('reviews-content');
@@ -4242,6 +4306,17 @@
         }
 
         let html = '';
+
+        function getAvatarColor(name) {
+          const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#ff9800', '#ff5722', '#795548'];
+          if (!name) return colors[0];
+          let hash = 0;
+          for (let i = 0; i < name.length; i++) {
+            hash = name.charCodeAt(i) + ((hash << 5) - hash);
+          }
+          return colors[Math.abs(hash) % colors.length];
+        }
+
         unrepliedReviews.forEach(r => {
           let dateStr = 'Unknown Date';
           try {
@@ -4258,31 +4333,50 @@
             const match = managerData.find(w => w.id === r.wfId);
             if (match) iconUrl = match.image_url;
           }
-          const iconImgHtml = iconUrl ? `<img src="${getOptimizedImageUrl(iconUrl, 48)}" style="width: 32px; height: 32px; border-radius: 6px; margin-right: 12px; object-fit: cover;" alt="icon">` : '';
+          const iconImgHtml = iconUrl ? `<img src="${getOptimizedImageUrl(iconUrl, 32)}" style="width: 18px; height: 18px; border-radius: 4px; object-fit: cover;" alt="icon">` : '';
 
           const canned1 = "Thank you so much! Glad you like it! 😊";
           const canned2 = "Thanks for the review! Let me know if you have any feature requests!";
           const canned3 = "I appreciate your feedback! Have a great day!";
+          
+          const authorName = r.authorName || 'Google User';
+          const avatarInitial = authorName.charAt(0).toUpperCase();
 
           html += `
             <div class="card" style="padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <div style="display: flex; align-items: center;">
-                  ${iconImgHtml}
-                  <div>
-                    <div style="font-size: 13px; font-weight: bold; color: var(--primary); margin-bottom: 2px;">${r.title}</div>
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                      ${starsHtml}
-                      <span style="font-size: 10px; color: var(--text-muted);">${dateStr}</span>
-                    </div>
+              
+              <!-- Top Row: Author & Actions -->
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div style="width: 34px; height: 34px; border-radius: 50%; background: ${getAvatarColor(authorName)}; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                    ${avatarInitial}
+                  </div>
+                  <div style="display: flex; flex-direction: column; line-height: 1.2;">
+                    <span style="font-weight: bold; font-size: 13px; color: #fff;">${authorName}</span>
+                    <span style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">${dateStr}</span>
                   </div>
                 </div>
-                <button onclick="toggleReplyBox('${r.reviewId}')" style="font-size: 11px; padding: 4px 8px; background: var(--primary); color: #ffffff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;">Reply</button>
+                
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <button onclick="ignoreReview('${r.reviewId}')" style="font-size: 11px; padding: 4px 8px; background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border-color); border-radius: 4px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" title="Delete from list">✕</button>
+                  <button onclick="toggleReplyBox('${r.reviewId}')" style="font-size: 11px; padding: 4px 8px; background: var(--primary); color: #000; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; white-space: nowrap; box-shadow: 0 2px 4px rgba(245,197,24,0.2);">Reply</button>
+                </div>
               </div>
-              <div style="font-size: 13px; color: #eee; line-height: 1.4; margin-bottom: 8px;">
-                "${r.text || 'No text'}"
+
+              <!-- Stars & Text -->
+              <div style="margin-bottom: 12px;">
+                <div style="margin-bottom: 4px; display: flex; align-items: center;">${starsHtml}</div>
+                <div style="font-size: 13px; color: #eee; line-height: 1.45;">
+                  "${r.text || 'No text'}"
+                </div>
               </div>
-              <div style="font-size: 11px; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center;">
+
+              <!-- Bottom Row: App & Meta -->
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 11px; color: var(--text-muted);">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  ${iconImgHtml}
+                  <span style="color: var(--primary); font-weight: bold; letter-spacing: 0.5px;">${r.title}</span>
+                </div>
                 <div style="display: flex; gap: 10px;">
                   <span>📱 ${r.deviceMetadata}</span>
                   <span>🌐 ${r.reviewerLanguage}</span>

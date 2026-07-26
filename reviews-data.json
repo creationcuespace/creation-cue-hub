@@ -1,22 +1,12 @@
 {
-  "lastUpdated": "2026-07-26T03:43:45.550Z",
+  "lastUpdated": "2026-07-26T06:41:44.408Z",
   "reviews": [
-    {
-      "reviewId": "7be58777-3497-4f01-a2a6-16ae6ed4c717",
-      "packageName": "com.watchfacestudio.crc035",
-      "title": "Info Watch Face crc035",
-      "wfId": "crc035",
-      "starRating": 4,
-      "reviewerLanguage": "en",
-      "deviceMetadata": "Unknown",
-      "text": "\tHi. I like the app, but the color depiucted (white hour and red minutes) is not present. Not from my mobile nor my Samsung Ultra. Any ideas? Thanks!",
-      "lastModified": "2026-07-26T00:50:57.000Z"
-    },
     {
       "reviewId": "8f38d7a1-95cf-4d67-b837-32ef47854687",
       "packageName": "com.creation.cue132watchface",
       "title": "Analog Watch Face CUE132",
       "wfId": "cue132",
+      "authorName": "MIKLÓS Okolitsny-Szabó",
       "starRating": 5,
       "reviewerLanguage": "hu",
       "deviceMetadata": "wise8us (Galaxy Watch8 Classic)",

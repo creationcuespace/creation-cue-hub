@@ -183,6 +183,7 @@ async function main() {
               packageName,
               title: playStoreTitle || wf.title,
               wfId: wf.id,
+              authorName: review.authorName || 'Google User',
               starRating: c.starRating,
               reviewerLanguage: c.reviewerLanguage,
               deviceMetadata: c.deviceMetadata ? c.deviceMetadata.productName : 'Unknown',
