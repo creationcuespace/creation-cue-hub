@@ -1170,6 +1170,24 @@
                 </div>
             </div>
         </details>
+
+        <details class="booking-details" id="medical-prescription">
+            <summary><i class="fa-solid fa-notes-medical"></i> Ιατρική Συνταγή (Για Αεροδρόμιο)</summary>
+            <div class="booking-content" style="display: flex; flex-direction: column; gap: 20px;">
+                <p><strong>Συνταγή Παιδιάτρου (Αλλεργική Ρινίτιδα)</strong><br>
+                Ηλεκτρονική Συνταγή #2607220230634<br>
+                Φάρμακα: DEXAMETHASONE (Σταγόνες), LEVOCETIRIZINE (Σιρόπι)<br>
+                <em style="color: var(--accent);">Χρήσιμο για τον έλεγχο χειραποσκευών στο αεροδρόμιο (υγρή μορφή φαρμάκων άνω των 100ml).</em></p>
+                <div class="booking-grid">
+                    <div>
+                        <a href="medical_prescription.pdf" target="_blank" style="display: block; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); padding: 20px; border-radius: 8px; text-align: center; color: white; font-weight: bold; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+                            <i class="fa-solid fa-file-pdf" style="font-size: 4rem; color: #ef4444; margin-bottom: 15px;"></i><br>
+                            Προβολή Συνταγής (PDF)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </details>
         </div>
         </details>
 
@@ -1447,7 +1465,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 37; // Bump this on future updates
+            const SITE_VERSION = 38; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
