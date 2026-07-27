@@ -1,6 +1,42 @@
 {
-  "lastUpdated": "2026-07-26T06:41:44.408Z",
+  "lastUpdated": "2026-07-27T03:53:13.720Z",
   "reviews": [
+    {
+      "reviewId": "aac13981-1745-46f0-8d22-5b9bae34209a",
+      "packageName": "com.watchfacestudio.crc041",
+      "title": "Digital Watch Face CRC041",
+      "wfId": "crc041",
+      "authorName": "강백호",
+      "starRating": 5,
+      "reviewerLanguage": "ko",
+      "deviceMetadata": "pa2q (Galaxy S25+)",
+      "text": "\t심플하니 이쁩니다.",
+      "lastModified": "2026-07-26T10:45:19.000Z"
+    },
+    {
+      "reviewId": "c1b7260f-4c3d-4594-91c3-77d6599aa6ee",
+      "packageName": "com.creation.cue160watchface",
+      "title": "Watch Face CUE160",
+      "wfId": "cue160",
+      "authorName": "Emanuel Bruno Rocha Dias",
+      "starRating": 5,
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "d2x (Galaxy Note10+ 5G)",
+      "text": "\tNice Watchface",
+      "lastModified": "2026-07-26T07:12:43.000Z"
+    },
+    {
+      "reviewId": "4ac5be63-7eae-42ae-bfb0-1eb4cd1e5c69",
+      "packageName": "com.creation.cue177watchface",
+      "title": "Analog Watch Face CUE177",
+      "wfId": "cue177",
+      "authorName": "Emanuel Bruno Rocha Dias",
+      "starRating": 5,
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "d2x (Galaxy Note10+ 5G)",
+      "text": "\tVery Nice watchface",
+      "lastModified": "2026-07-26T07:12:05.000Z"
+    },
     {
       "reviewId": "8f38d7a1-95cf-4d67-b837-32ef47854687",
       "packageName": "com.creation.cue132watchface",
