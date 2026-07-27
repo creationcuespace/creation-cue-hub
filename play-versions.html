@@ -4338,6 +4338,7 @@
           const canned1 = "Thank you so much! Glad you like it! 😊";
           const canned2 = "Thanks for the review! Let me know if you have any feature requests!";
           const canned3 = "I appreciate your feedback! Have a great day!";
+          const canned4 = "Thank you! 👍";
           
           const authorName = r.authorName || 'Google User';
           const avatarInitial = authorName.charAt(0).toUpperCase();
@@ -4386,7 +4387,8 @@
               <!-- Hidden Reply Box -->
               <div id="reply-box-${r.reviewId}" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">
                 <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px;">
-                  <button onclick="document.getElementById('reply-text-${r.reviewId}').value = '${canned1}'" style="background: rgba(255,255,255,0.1); border: none; color: #ccc; padding: 3px 8px; border-radius: 12px; font-size: 10px; cursor: pointer;">"Thank you!"</button>
+                  <button onclick="document.getElementById('reply-text-${r.reviewId}').value = '${canned1}'" style="background: rgba(255,255,255,0.1); border: none; color: #ccc; padding: 3px 8px; border-radius: 12px; font-size: 10px; cursor: pointer;">"Thank you! 😊"</button>
+                  <button onclick="document.getElementById('reply-text-${r.reviewId}').value = '${canned4}'" style="background: rgba(255,255,255,0.1); border: none; color: #ccc; padding: 3px 8px; border-radius: 12px; font-size: 10px; cursor: pointer;">"Thank you! 👍"</button>
                   <button onclick="document.getElementById('reply-text-${r.reviewId}').value = '${canned2}'" style="background: rgba(255,255,255,0.1); border: none; color: #ccc; padding: 3px 8px; border-radius: 12px; font-size: 10px; cursor: pointer;">"Feature requests"</button>
                   <button onclick="document.getElementById('reply-text-${r.reviewId}').value = '${canned3}'" style="background: rgba(255,255,255,0.1); border: none; color: #ccc; padding: 3px 8px; border-radius: 12px; font-size: 10px; cursor: pointer;">"Appreciate feedback"</button>
                 </div>
