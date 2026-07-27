@@ -2,18 +2,6 @@
   "lastUpdated": "2026-07-27T03:53:13.720Z",
   "reviews": [
     {
-      "reviewId": "aac13981-1745-46f0-8d22-5b9bae34209a",
-      "packageName": "com.watchfacestudio.crc041",
-      "title": "Digital Watch Face CRC041",
-      "wfId": "crc041",
-      "authorName": "강백호",
-      "starRating": 5,
-      "reviewerLanguage": "ko",
-      "deviceMetadata": "pa2q (Galaxy S25+)",
-      "text": "\t심플하니 이쁩니다.",
-      "lastModified": "2026-07-26T10:45:19.000Z"
-    },
-    {
       "reviewId": "c1b7260f-4c3d-4594-91c3-77d6599aa6ee",
       "packageName": "com.creation.cue160watchface",
       "title": "Watch Face CUE160",
