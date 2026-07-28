@@ -1,18 +1,6 @@
 {
-  "lastUpdated": "2026-07-27T03:53:13.720Z",
+  "lastUpdated": "2026-07-28T03:23:55.406Z",
   "reviews": [
-    {
-      "reviewId": "c1b7260f-4c3d-4594-91c3-77d6599aa6ee",
-      "packageName": "com.creation.cue160watchface",
-      "title": "Watch Face CUE160",
-      "wfId": "cue160",
-      "authorName": "Emanuel Bruno Rocha Dias",
-      "starRating": 5,
-      "reviewerLanguage": "pt",
-      "deviceMetadata": "d2x (Galaxy Note10+ 5G)",
-      "text": "\tNice Watchface",
-      "lastModified": "2026-07-26T07:12:43.000Z"
-    },
     {
       "reviewId": "8f38d7a1-95cf-4d67-b837-32ef47854687",
       "packageName": "com.creation.cue132watchface",
