@@ -50,5 +50,5 @@ jobs:
           git config --local user.name "GitHub Action"
           git add reviews-data.json
           git commit -m "chore: remove replied review from dashboard" || echo "No changes to commit"
-          git pull --rebase
+          git pull --rebase --autostash
           git push
