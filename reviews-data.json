@@ -2,18 +2,6 @@
   "lastUpdated": "2026-07-29T03:25:38.216Z",
   "reviews": [
     {
-      "reviewId": "fb4abbb5-77d3-4064-85af-fc777f51ed39",
-      "packageName": "com.creationcue.crc068watchface",
-      "title": "Digital Watch Face CRC068",
-      "wfId": "crc068",
-      "authorName": "Christian Klingenberg",
-      "starRating": 5,
-      "reviewerLanguage": "de",
-      "deviceMetadata": "a55x (Galaxy A55 5G)",
-      "text": "\tSchönes, schlichtes aber modernes Watchface. Hochgradig anpassbar über sieben Kurzzugriffe. Trotz, dass die AOD Einstellungen auf der Samsung Galaxy Watch 5 pro keine Unterschiede bewirken, gebe ich volle fünf Sterne. Wenn das noch angepasst wird wäre es wunderbar.",
-      "lastModified": "2026-07-28T11:34:36.000Z"
-    },
-    {
       "reviewId": "8f38d7a1-95cf-4d67-b837-32ef47854687",
       "packageName": "com.creation.cue132watchface",
       "title": "Analog Watch Face CUE132",
