@@ -2,18 +2,6 @@
   "lastUpdated": "2026-07-30T03:13:32.197Z",
   "reviews": [
     {
-      "reviewId": "b3a85a81-08df-404f-b7d0-22a1eb4f2c11",
-      "packageName": "com.creation.cueinduswatchface",
-      "title": "Watch Face CUE Indus",
-      "wfId": "cueindus",
-      "authorName": "Павел Слепнёв",
-      "starRating": 5,
-      "reviewerLanguage": "ru",
-      "deviceMetadata": "OP595DL1 (OnePlus 12)",
-      "text": "\tПонравилось что циферблат хорошо настраивается с точки зрения привязки приложений скачанных с маркета, ЯМ вывел на экран.",
-      "lastModified": "2026-07-29T12:04:30.000Z"
-    },
-    {
       "reviewId": "8f38d7a1-95cf-4d67-b837-32ef47854687",
       "packageName": "com.creation.cue132watchface",
       "title": "Analog Watch Face CUE132",
