@@ -2,18 +2,6 @@
   "lastUpdated": "2026-07-31T03:40:49.449Z",
   "reviews": [
     {
-      "reviewId": "f52ac9db-5c72-4656-a7bb-1ed3aee96dd3",
-      "packageName": "com.creation.cue166watchface",
-      "title": "Hybrid Watch Face CUE166",
-      "wfId": "cue166",
-      "authorName": "Juan Carlos Alvarez C.",
-      "starRating": 4,
-      "reviewerLanguage": "es",
-      "deviceMetadata": "Unknown",
-      "text": "\tEs bonita pero estaria mejor si la luna apareciera en el reloj no solo un dia cuando es luna llena.....El resto de los dias solo aparece un porcentaje. Una pena porque es mas bonito con la luna y no con un numero.",
-      "lastModified": "2026-07-30T08:36:05.000Z"
-    },
-    {
       "reviewId": "0e0465d8-4a1a-41e8-adea-289527f8f635",
       "packageName": "com.creation.cue136watchface",
       "title": "Analog Watch Face CUE136",
