@@ -43,12 +43,3 @@ jobs:
           REVIEW_ID: ${{ github.event.inputs.reviewId }}
           REPLY_TEXT: ${{ github.event.inputs.replyText }}
         run: node reply-to-review.js
-
-      - name: Commit and push updated reviews
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add reviews-data.json
-          git commit -m "chore: remove replied review from dashboard" || echo "No changes to commit"
-          git pull --rebase --autostash
-          git push
