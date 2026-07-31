@@ -741,12 +741,16 @@
         <h2 class="section-title">Χρήσιμες Πληροφορίες</h2>
         
         <!-- Weather Widget -->
-        <div class="glass" style="margin-bottom: 30px; padding: 20px; border-radius: 12px;">
-            <h3 style="margin-bottom: 15px; color: var(--accent);"><i class="fa-solid fa-cloud-sun"></i> Καιρός Βιέννης</h3>
-            <a class="weatherwidget-io" href="https://forecast7.com/el/48d2116d37/vienna/" data-label_1="ΒΙΕΝΝΗ" data-label_2="ΚΑΙΡΟΣ" data-theme="dark" data-basecolor="rgba(0,0,0,0.1)" data-textcolor="#ffffff" data-accent="rgba(255,255,255,0.1)">ΒΙΕΝΝΗ ΚΑΙΡΟΣ</a>
-            <script>
-            !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-            </script>
+        <div class="glass" style="margin-bottom: 30px; padding: 20px; border-radius: 12px; position: relative; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <h3 style="margin-bottom: 15px; color: var(--accent);"><i class="fa-solid fa-cloud-sun"></i> Καιρός Βιέννης <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-muted);">(Πατήστε για αναλυτικό ανά ώρα)</span></h3>
+            
+            <a href="https://www.accuweather.com/el/at/vienna/31868/hourly-weather-forecast/31868" target="_blank" style="display: block; position: relative; cursor: pointer;">
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 10;"></div>
+                <a class="weatherwidget-io" href="https://forecast7.com/el/48d2116d37/vienna/" data-label_1="ΒΙΕΝΝΗ" data-label_2="ΚΑΙΡΟΣ" data-theme="dark" data-basecolor="rgba(0,0,0,0.1)" data-textcolor="#ffffff" data-accent="rgba(255,255,255,0.1)">ΒΙΕΝΝΗ ΚΑΙΡΟΣ</a>
+                <script>
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                </script>
+            </a>
         </div>
 
         <div class="checklist-grid" style="margin-bottom: 40px;">
@@ -1489,7 +1493,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 39; // Bump this on future updates
+            const SITE_VERSION = 40; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
