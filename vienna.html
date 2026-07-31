@@ -321,6 +321,34 @@
             100% { background-color: transparent; }
         }
 
+        .current-event-highlight {
+            border: 2px solid var(--accent) !important;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4) !important;
+            animation: currentEventPulse 2.5s infinite;
+            position: relative;
+        }
+
+        .current-event-highlight::before {
+            content: "ΤΩΡΑ";
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 5;
+        }
+
+        @keyframes currentEventPulse {
+            0% { box-shadow: 0 0 10px rgba(56, 189, 248, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(56, 189, 248, 0.7); }
+            100% { box-shadow: 0 0 10px rgba(56, 189, 248, 0.3); }
+        }
+
         .add-to-cal-btn {
             background: rgba(56, 189, 248, 0.15);
             border: 1px solid var(--accent);
@@ -1493,7 +1521,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 40; // Bump this on future updates
+            const SITE_VERSION = 41; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
