@@ -1,6 +1,42 @@
 {
-  "lastUpdated": "2026-07-30T03:13:32.197Z",
+  "lastUpdated": "2026-07-31T03:40:49.449Z",
   "reviews": [
+    {
+      "reviewId": "f52ac9db-5c72-4656-a7bb-1ed3aee96dd3",
+      "packageName": "com.creation.cue166watchface",
+      "title": "Hybrid Watch Face CUE166",
+      "wfId": "cue166",
+      "authorName": "Juan Carlos Alvarez C.",
+      "starRating": 4,
+      "reviewerLanguage": "es",
+      "deviceMetadata": "Unknown",
+      "text": "\tEs bonita pero estaria mejor si la luna apareciera en el reloj no solo un dia cuando es luna llena.....El resto de los dias solo aparece un porcentaje. Una pena porque es mas bonito con la luna y no con un numero.",
+      "lastModified": "2026-07-30T08:36:05.000Z"
+    },
+    {
+      "reviewId": "0e0465d8-4a1a-41e8-adea-289527f8f635",
+      "packageName": "com.creation.cue136watchface",
+      "title": "Analog Watch Face CUE136",
+      "wfId": "cue136",
+      "authorName": "Sum Yin WONG",
+      "starRating": 5,
+      "reviewerLanguage": "zh-Hant",
+      "deviceMetadata": "b5q (Galaxy Z Flip5)",
+      "text": "\t錶面清晰,很多顏色配搭選擇，色彩鮮豔，給五星！",
+      "lastModified": "2026-07-30T03:45:27.000Z"
+    },
+    {
+      "reviewId": "458bf760-b14b-4a3b-ad6b-da1a34c744c4",
+      "packageName": "com.watchfacestudio.cc010",
+      "title": "Watch face CRC010",
+      "wfId": "cc010",
+      "authorName": "Thomas Fischer",
+      "starRating": 5,
+      "reviewerLanguage": "de",
+      "deviceMetadata": "a54x (Galaxy A54 5G)",
+      "text": "\tEndlich mal was ganz Anderes, herrlich unaufgeräumt und durcheinander. Danach gesucht! Danke dafür, klasse inspirierent!",
+      "lastModified": "2026-07-30T03:43:08.000Z"
+    },
     {
       "reviewId": "8f38d7a1-95cf-4d67-b837-32ef47854687",
       "packageName": "com.creation.cue132watchface",
