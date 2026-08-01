@@ -1,17 +1,29 @@
 {
-  "lastUpdated": "2026-07-31T03:40:49.449Z",
+  "lastUpdated": "2026-08-01T03:40:27.278Z",
   "reviews": [
     {
-      "reviewId": "0e0465d8-4a1a-41e8-adea-289527f8f635",
+      "reviewId": "08b328d9-cd0f-451a-8b89-07a013c7f195",
       "packageName": "com.creation.cue136watchface",
       "title": "Analog Watch Face CUE136",
       "wfId": "cue136",
-      "authorName": "Sum Yin WONG",
+      "authorName": "Mixalis Moiraliotis",
       "starRating": 5,
-      "reviewerLanguage": "zh-Hant",
-      "deviceMetadata": "b5q (Galaxy Z Flip5)",
-      "text": "\t錶面清晰,很多顏色配搭選擇，色彩鮮豔，給五星！",
-      "lastModified": "2026-07-30T03:45:27.000Z"
+      "reviewerLanguage": "el",
+      "deviceMetadata": "p3s (Galaxy S21 Ultra 5G)",
+      "text": "\tΚαλό",
+      "lastModified": "2026-07-31T19:09:56.000Z"
+    },
+    {
+      "reviewId": "b36b2214-31f4-4220-ade3-48b27d812753",
+      "packageName": "com.creation.cue104watchface",
+      "title": "Digital Watch Face CUE104",
+      "wfId": "cue104",
+      "authorName": "Melody Katchmar",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "r8q (Galaxy S20 FE 5G)",
+      "text": "\tUnique look easy to read. Fun",
+      "lastModified": "2026-07-31T17:10:00.000Z"
     },
     {
       "reviewId": "8f38d7a1-95cf-4d67-b837-32ef47854687",

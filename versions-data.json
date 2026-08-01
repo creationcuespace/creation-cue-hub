@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-31T03:40:49.445Z",
+  "lastUpdated": "2026-08-01T03:40:27.276Z",
   "results": [
     {
       "id": "cue178",
@@ -889,7 +889,7 @@
       "playStoreTitle": "Digital Watch Face CRC039",
       "packageName": "com.watchfacestudio.crc039",
       "companionVersion": "Android 16 API Update (v20)",
-      "wearVersion": "10000011 (2.2.1)",
+      "wearVersion": "10000022 (2.2.1)",
       "lastUpdatedDate": "Jul 22, 2026"
     },
     {
@@ -970,7 +970,7 @@
       "playStoreTitle": "Digital Watch Face CUE024",
       "packageName": "com.creation.cue024watchface",
       "companionVersion": "Android 16 API Update (v20)",
-      "wearVersion": "Wear OS SDK 35 Update (v10000007)",
+      "wearVersion": "10000009 (1.5.4)",
       "lastUpdatedDate": "Jul 29, 2026"
     },
     {
@@ -1015,7 +1015,7 @@
       "playStoreTitle": "Watch face CRC05 Plane Roll",
       "packageName": "com.watchfacestudio.CC005",
       "companionVersion": "Android 16 API Update (v32)",
-      "wearVersion": "10000027 (3.0.0)",
+      "wearVersion": "10000033 (3.0.0)",
       "lastUpdatedDate": "Jul 22, 2026"
     },
     {
