@@ -153,11 +153,19 @@
             0%, 100% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-5px) rotate(-5deg); }
         }
-        @media (max-width: 600px) {
-            .time-val { font-size: 1.7rem; }
-            .time-box { min-width: 66px; padding: 10px 12px; }
-            .countdown-timer { gap: 10px; }
-            .countdown-title { font-size: 0.95rem; }
+        @media (max-width: 650px) {
+            .countdown-container { padding: 16px 10px; max-width: 100%; width: 100%; box-sizing: border-box; }
+            .countdown-timer { flex-wrap: nowrap !important; gap: 6px; width: 100%; justify-content: space-between; }
+            .time-box { min-width: 0; flex: 1 1 0; padding: 10px 3px; border-radius: 10px; }
+            .time-val { font-size: 1.45rem; letter-spacing: 0; }
+            .time-lbl { font-size: 0.62rem; letter-spacing: 0; margin-top: 4px; }
+            .countdown-title { font-size: 0.9rem; letter-spacing: 0.5px; margin-bottom: 12px; }
+        }
+        @media (max-width: 380px) {
+            .countdown-timer { gap: 4px; }
+            .time-box { padding: 8px 2px; }
+            .time-val { font-size: 1.2rem; }
+            .time-lbl { font-size: 0.55rem; }
         }
 
         .hero-bg {
@@ -1648,7 +1656,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 44; // Bump this on future updates
+            const SITE_VERSION = 45; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
