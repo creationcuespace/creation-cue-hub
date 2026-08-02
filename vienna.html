@@ -764,17 +764,6 @@
             letter-spacing: 0.3px;
             white-space: nowrap;
         }
-        
-        .quick-item.hotel-btn {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
-            border: 1px solid rgba(255,255,255,0.25);
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
-            padding: 8px 20px;
-        }
-        .quick-item.hotel-btn:hover {
-            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-            box-shadow: 0 6px 18px rgba(56, 189, 248, 0.6);
-        }
 
         @media (max-width: 768px) {
             body {
@@ -812,10 +801,6 @@
                 text-overflow: ellipsis;
                 overflow: hidden;
             }
-            .quick-item.hotel-btn {
-                padding: 6px 6px;
-                border-radius: 16px;
-            }
         }
         @media (max-width: 380px) {
             .quick-item i { font-size: 1.15rem; }
@@ -843,8 +828,8 @@
             <i class="fa-solid fa-ice-cream" style="color: #f472b6;"></i>
             <span>Παγωτό</span>
         </a>
-        <a href="https://www.google.com/maps/dir/?api=1&destination=ARCOTEL+Donauzentrum+Wien,+Wagramer+Strasse+83-85,+Vienna" target="_blank" class="quick-item hotel-btn" title="Οδηγίες επιστροφής στο ξενοδοχείο ARCOTEL">
-            <i class="fa-solid fa-hotel" style="color: #fff;"></i>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=ARCOTEL+Donauzentrum+Wien,+Wagramer+Strasse+83-85,+Vienna" target="_blank" class="quick-item" title="Οδηγίες επιστροφής στο ξενοδοχείο ARCOTEL">
+            <i class="fa-solid fa-hotel" style="color: #fbbf24;"></i>
             <span>Ξενοδοχείο</span>
         </a>
     </nav>    <header class="hero">
@@ -1761,7 +1746,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 46; // Bump this on future updates
+            const SITE_VERSION = 47; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
