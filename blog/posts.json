@@ -1,14 +1,5 @@
 [
   {
-    "slug": "your-wear-os-your-way-the-power-of-custom-watch-faces",
-    "title": "Your Wear OS, Your Way: The Power of Custom Watch Faces",
-    "date": "Jul 30, 2026",
-    "readTime": "2 min",
-    "excerpt": "Wear OS users demand personalization and practical features from their watch faces. We see a strong trend towards designs that are both stylish and incredibly useful.",
-    "thumbnail": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue136_plus.png",
-    "draft": true
-  },
-  {
     "slug": "weather-complications",
     "title": "Weather complications",
     "excerpt": "Simple Weather app",
