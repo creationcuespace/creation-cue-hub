@@ -708,26 +708,28 @@
             #auth-container { padding: 20px !important; }
         }
 
-        /* --- BOTTOM QUICK NAVIGATION BAR --- */
+        /* --- QUICK NAVIGATION BAR (SIDE ON DESKTOP, BOTTOM ON MOBILE) --- */
         .quick-bar {
             position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 50%;
+            right: 25px;
+            bottom: auto;
+            left: auto;
+            transform: translateY(-50%);
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.22);
-            border-radius: 40px;
-            padding: 8px 18px;
+            border-radius: 35px;
+            padding: 16px 10px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 14px;
+            gap: 12px;
             box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), 0 0 25px rgba(14, 165, 233, 0.3);
             z-index: 10000;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            max-width: 96%;
         }
         .quick-bar:hover {
             box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(14, 165, 233, 0.45);
@@ -740,26 +742,28 @@
             justify-content: center;
             color: white;
             text-decoration: none;
-            padding: 8px 14px;
-            border-radius: 25px;
+            padding: 10px 12px;
+            border-radius: 22px;
             transition: all 0.25s ease;
             position: relative;
+            width: 68px;
+            box-sizing: border-box;
         }
         .quick-item:hover {
             background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-3px);
+            transform: translateX(-5px);
             color: white;
         }
         .quick-item i {
             font-size: 1.4rem;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             transition: transform 0.2s ease;
         }
         .quick-item:hover i {
             transform: scale(1.2);
         }
         .quick-item span {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.3px;
             white-space: nowrap;
@@ -770,12 +774,15 @@
                 padding-bottom: 95px;
             }
             .quick-bar {
+                top: auto;
                 left: 0;
                 right: 0;
                 bottom: 0;
                 transform: none;
+                flex-direction: row;
                 width: 100%;
                 border-radius: 24px 24px 0 0;
+                border: 1px solid rgba(255, 255, 255, 0.22);
                 border-bottom: none;
                 border-left: none;
                 border-right: none;
@@ -787,9 +794,13 @@
                 box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.75);
             }
             .quick-item {
+                width: auto;
                 padding: 6px 4px;
                 flex: 1;
                 min-width: 0;
+            }
+            .quick-item:hover {
+                transform: translateY(-3px);
             }
             .quick-item i {
                 font-size: 1.25rem;
@@ -1746,7 +1757,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const SITE_VERSION = 47; // Bump this on future updates
+            const SITE_VERSION = 48; // Bump this on future updates
             const checkboxes = document.querySelectorAll('.task-checkbox');
             const toastContainer = document.getElementById('toast-container');
             let isInitialLoad = true;
