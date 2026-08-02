@@ -1761,7 +1761,7 @@
     </div>
     <div class="header-btns">
       <!-- Version badge -->
-      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.54</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.55</span>
       <!-- Firebase connection indicator dot & text -->
       <div id="header-sync-badge" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; flex-shrink: 0;">
         <span id="header-sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
@@ -2328,14 +2328,20 @@
   <div id="backlog-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 5000; align-items: center; justify-content: center; padding: 20px; flex-direction: column;">
     <div style="width: 100%; max-width: 800px; max-height: 90vh; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: var(--border-radius-lg); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,0.6);">
       <!-- Modal Header -->
-      <div style="padding: 16px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: var(--glass-bg);">
+      <div style="padding: 16px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: var(--glass-bg); flex-wrap: wrap; gap: 12px;">
         <h2 style="margin: 0; font-family: var(--font-display); font-size: 20px; color: var(--text-primary); display: flex; align-items: center; gap: 12px;">
           <span>Expanded Task Backlog</span>
           <span style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 10px; color: var(--text-secondary); font-family: var(--font-main);" id="modal-backlog-count">0</span>
         </h2>
-        <button onclick="closeBacklogModal()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button type="button" onclick="toggleSelectAllBacklog()" class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Select All</button>
+          <button type="button" id="btn-delete-selected-backlog" onclick="deleteSelectedBacklogTasks()" class="btn-secondary" style="padding: 6px 12px; font-size: 12px; border-color: rgba(232, 40, 30, 0.3); color: var(--danger); background: rgba(232, 40, 30, 0.05); opacity: 0.5; cursor: not-allowed;" disabled>
+            🗑️ Delete Selected (<span id="backlog-selected-count">0</span>)
+          </button>
+          <button onclick="closeBacklogModal()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; margin-left: 8px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
       </div>
       <!-- Modal Body -->
       <div style="padding: 24px; overflow-y: auto; flex: 1;">
@@ -3894,22 +3900,130 @@
         listEl.appendChild(item);
         
         if (modalListEl) {
-          var modalItem = item.cloneNode(true);
-          // Attach same event listeners to modal item
+          var modalItem = document.createElement('div');
+          modalItem.className = 'backlog-item';
+          modalItem.setAttribute('draggable', 'true');
+          modalItem.setAttribute('data-id', task.id);
           modalItem.addEventListener('dragstart', handleDragStart);
           modalItem.addEventListener('dragover', handleDragOver);
           modalItem.addEventListener('dragleave', handleDragLeave);
           modalItem.addEventListener('dragend', handleDragEnd);
           modalItem.addEventListener('drop', handleDrop);
+          
+          var checkboxHtml = `<input type="checkbox" class="backlog-item-chk" data-id="${task.id}" ${task.groupId ? `data-group-id="${task.groupId}"` : ''} onchange="updateBacklogSelectionUI()" style="width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; flex-shrink: 0;">`;
+          
+          modalItem.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1;">
+              ${checkboxHtml}
+              <div class="backlog-item-info" style="min-width: 0;">
+                <div class="backlog-item-title" title="${escapedTitle}">${linkify(task.title)}</div>
+                <div class="backlog-item-meta" style="flex-wrap: wrap; gap: 4px;">
+                  <span class="priority-badge ${badgeClass}">${task.priority}</span>
+                  <span>⌛ ${formattedDuration}</span>
+                  <span style="font-size: 9px; opacity: 0.75; background: rgba(255,255,255,0.04); padding: 1px 4px; border-radius: 3px;">📅 Start: ${formattedStart}</span>
+                  ${scheduleBadge}
+                  ${fixedBadge}
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 4px; flex-shrink: 0;">
+              <button onclick="editCustomTask('${task.id}')" class="btn-secondary" style="padding: 4px; border-radius: 4px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1);" title="Edit Task">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+              </button>
+              <button onclick="deleteCustomTask('${task.id}')" class="btn-delete" style="width: 28px; height: 28px; padding: 4px;" title="Delete Task">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              </button>
+            </div>
+          `;
           modalListEl.appendChild(modalItem);
         }
       });
+      
+      if (typeof updateBacklogSelectionUI === 'function') {
+        updateBacklogSelectionUI();
+      }
+    }
+
+    function updateBacklogSelectionUI() {
+      var checkboxes = document.querySelectorAll('#modal-backlog-list .backlog-item-chk');
+      var checkedCount = 0;
+      checkboxes.forEach(chk => { if (chk.checked) checkedCount++; });
+      
+      var countEl = document.getElementById('backlog-selected-count');
+      var btnDelete = document.getElementById('btn-delete-selected-backlog');
+      if (countEl) countEl.textContent = checkedCount;
+      if (btnDelete) {
+        if (checkedCount > 0) {
+          btnDelete.disabled = false;
+          btnDelete.style.opacity = '1';
+          btnDelete.style.cursor = 'pointer';
+        } else {
+          btnDelete.disabled = true;
+          btnDelete.style.opacity = '0.5';
+          btnDelete.style.cursor = 'not-allowed';
+        }
+      }
+    }
+
+    function toggleSelectAllBacklog() {
+      var checkboxes = document.querySelectorAll('#modal-backlog-list .backlog-item-chk');
+      var allChecked = true;
+      if (checkboxes.length === 0) return;
+      checkboxes.forEach(chk => {
+        if (!chk.checked) allChecked = false;
+      });
+      
+      checkboxes.forEach(chk => {
+        chk.checked = !allChecked;
+      });
+      updateBacklogSelectionUI();
+    }
+
+    function deleteSelectedBacklogTasks() {
+      var selected = document.querySelectorAll('#modal-backlog-list .backlog-item-chk:checked');
+      if (selected.length === 0) return;
+      
+      var idsToDelete = new Set();
+      var groupIdsToDelete = new Set();
+      
+      selected.forEach(chk => {
+        var id = chk.getAttribute('data-id');
+        var groupId = chk.getAttribute('data-group-id');
+        if (groupId) {
+          groupIdsToDelete.add(groupId);
+        } else if (id) {
+          idsToDelete.add(id);
+        }
+      });
+      
+      var totalCount = selected.length;
+      if (confirm(`Are you sure you want to delete the ${totalCount} selected item(s)? (This will also remove any occurrences of recurring tasks and future schedule allocations)`)) {
+        pushStateToHistory();
+        
+        appState.customTasks = appState.customTasks.filter(t => {
+          if (t.groupId && groupIdsToDelete.has(t.groupId)) return false;
+          if (idsToDelete.has(t.id)) return false;
+          return true;
+        });
+        
+        saveState();
+        renderBacklog();
+        scheduleFutureTasks();
+        renderCalendar();
+        if (document.getElementById('day-view-container').style.display !== 'none') {
+          renderDayView();
+        }
+        showToast(`${totalCount} item(s) deleted from backlog`, true);
+      }
     }
 
     function openBacklogModal(e) {
       if (e) e.preventDefault();
       var modal = document.getElementById('backlog-modal');
-      if (modal) modal.style.display = 'flex';
+      if (modal) {
+        modal.style.display = 'flex';
+        updateBacklogSelectionUI();
+      }
     }
 
     function closeBacklogModal() {
