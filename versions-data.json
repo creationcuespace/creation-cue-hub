@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-02T03:40:14.252Z",
+  "lastUpdated": "2026-08-03T03:42:25.335Z",
   "results": [
     {
       "id": "cue178",
@@ -890,7 +890,7 @@
       "packageName": "com.watchfacestudio.crc039",
       "companionVersion": "Android 16 API Update (v20)",
       "wearVersion": "10000022 (2.2.1)",
-      "lastUpdatedDate": "Jul 22, 2026"
+      "lastUpdatedDate": "Jul 31, 2026"
     },
     {
       "id": "crc036",
@@ -971,7 +971,7 @@
       "packageName": "com.creation.cue024watchface",
       "companionVersion": "Android 16 API Update (v20)",
       "wearVersion": "10000009 (1.5.4)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Jul 31, 2026"
     },
     {
       "id": "crc023",
@@ -1016,7 +1016,7 @@
       "packageName": "com.watchfacestudio.CC005",
       "companionVersion": "Android 16 API Update (v32)",
       "wearVersion": "10000033 (3.0.0)",
-      "lastUpdatedDate": "Jul 22, 2026"
+      "lastUpdatedDate": "Jul 31, 2026"
     },
     {
       "id": "cueindus",

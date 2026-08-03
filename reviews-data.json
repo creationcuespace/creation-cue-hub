@@ -1,4 +1,17 @@
 {
-  "lastUpdated": "2026-08-02T03:40:14.253Z",
-  "reviews": []
+  "lastUpdated": "2026-08-03T03:42:25.337Z",
+  "reviews": [
+    {
+      "reviewId": "6cc3b3c1-4bf7-452b-ae4e-4c03a32eb31e",
+      "packageName": "com.creationcue.crc071watchface",
+      "title": "Digital Watch Face CRC071",
+      "wfId": "crc071",
+      "authorName": "Marc Allen",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "r0s (Galaxy S22)",
+      "text": "\tSporty look and polished graphics 👍",
+      "lastModified": "2026-08-02T17:13:53.000Z"
+    }
+  ]
 }
