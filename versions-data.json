@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-03T03:42:25.335Z",
+  "lastUpdated": "2026-08-04T03:27:32.980Z",
   "results": [
     {
       "id": "cue178",
@@ -15,9 +15,9 @@
       "title": "CUE003",
       "playStoreTitle": "Digital Watch Face CUE003",
       "packageName": "com.creation.cue003watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "10000009 (6.1.0)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 3, 2026"
     },
     {
       "id": "cue177",
@@ -890,7 +890,7 @@
       "packageName": "com.watchfacestudio.crc039",
       "companionVersion": "Android 16 API Update (v20)",
       "wearVersion": "10000022 (2.2.1)",
-      "lastUpdatedDate": "Jul 31, 2026"
+      "lastUpdatedDate": "Jul 30, 2026"
     },
     {
       "id": "crc036",
