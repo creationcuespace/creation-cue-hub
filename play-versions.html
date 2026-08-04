@@ -4280,8 +4280,8 @@
       renderReviews();
     }
 
-    function ignoreReview(reviewId) {
-      if (!confirm("Are you sure you want to remove this review from the list?")) return;
+    function ignoreReview(reviewId, skipConfirm = false) {
+      if (!skipConfirm && !confirm("Are you sure you want to remove this review from the list?")) return;
       let ignoredReviewIds = [];
       try {
         ignoredReviewIds = JSON.parse(localStorage.getItem('ignored_reviews') || '[]');
@@ -4293,6 +4293,14 @@
       }
       unrepliedReviews = unrepliedReviews.filter(r => r.reviewId !== reviewId);
       updateReviewsBadgeCount();
+      if (unrepliedReviews.length === 0) {
+        setTimeout(() => {
+          const panel = document.getElementById('reviews-panel');
+          if (panel && panel.classList.contains('open')) {
+            closeReviewsPanel();
+          }
+        }, 800);
+      }
     }
 
     function renderReviews() {
@@ -4471,27 +4479,8 @@
           btn.innerText = 'Sent!';
           btn.style.background = 'var(--green)';
           setTimeout(() => {
-            toggleReplyBox(reviewId);
-            const card = document.getElementById(`reply-box-${reviewId}`).parentElement;
-            if (card) card.style.display = 'none';
-            const badge = document.getElementById('reviews-badge');
-            if (badge) {
-              const count = parseInt(badge.textContent) || 0;
-              if (count > 1) badge.textContent = count - 1;
-              else { 
-                badge.style.display = 'none'; 
-                const bellBtn = document.getElementById('reviews-bell-btn');
-                if (bellBtn) {
-                  bellBtn.style.background = 'transparent';
-                  bellBtn.style.color = 'var(--text-muted)';
-                  bellBtn.style.borderRadius = '';
-                  bellBtn.classList.remove('pulse-badge');
-                  const bellIcon = document.getElementById('reviews-bell-icon');
-                  if (bellIcon) bellIcon.classList.remove('ringing');
-                }
-              }
-            }
-          }, 1500);
+            ignoreReview(reviewId, true);
+          }, 1200);
         } else {
           const errData = await response.json().catch(() => ({}));
           console.error(errData);
