@@ -1,14 +1,14 @@
 {
-  "lastUpdated": "2026-08-04T03:27:32.980Z",
+  "lastUpdated": "2026-08-05T03:22:17.228Z",
   "results": [
     {
       "id": "cue178",
       "title": "CUE178",
       "playStoreTitle": "Digital Watch Face CUE178",
       "packageName": "com.creation.cue178watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue003",
@@ -24,358 +24,358 @@
       "title": "CUE177",
       "playStoreTitle": "Analog Watch Face CUE177",
       "packageName": "com.creation.cue177watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue176",
       "title": "CUE176",
       "playStoreTitle": "Hybrid Watch Face CUE176",
       "packageName": "com.creation.cue176watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue175",
       "title": "CUE175",
       "playStoreTitle": "Digital Watch Face CUE175",
       "packageName": "com.creation.cue175watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue174",
       "title": "CUE174",
       "playStoreTitle": "Digital Watch Face CUE174",
       "packageName": "com.creation.cue174watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue173",
       "title": "CUE173",
       "playStoreTitle": "Watch Face CUE173",
       "packageName": "com.creation.cue173watchface",
-      "companionVersion": "Android 16 API Update (v22)",
+      "companionVersion": "Android 16 API & Design Update (v10000025)",
       "wearVersion": "Wear OS SDK 35 Update (v10000024)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue172",
       "title": "CUE172",
       "playStoreTitle": "Watch Face CUE172",
       "packageName": "com.creation.cue172watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000016)",
       "wearVersion": "Wear OS SDK 35 Update (v10000015)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue171",
       "title": "CUE171",
       "playStoreTitle": "Watch Face CUE171",
       "packageName": "com.creation.cue171watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue170",
       "title": "CUE170",
       "playStoreTitle": "Watch Face CUE170",
       "packageName": "com.creation.cue170watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue169",
       "title": "CUE169",
       "playStoreTitle": "Watch Face CUE169",
       "packageName": "com.creation.cue169watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000015)",
       "wearVersion": "Wear OS SDK 35 Update (v10000014)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue168",
       "title": "CUE168",
       "playStoreTitle": "Watch Face CUE168",
       "packageName": "com.creation.cue168watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue167",
       "title": "CUE167",
       "playStoreTitle": "Watch Face CUE167",
       "packageName": "com.creation.cue167watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue166",
       "title": "CUE166",
       "playStoreTitle": "Hybrid Watch Face CUE166",
       "packageName": "com.creation.cue166watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue165",
       "title": "CUE165",
       "playStoreTitle": "Watch Face CUE165",
       "packageName": "com.creation.cue165watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue164",
       "title": "CUE164",
       "playStoreTitle": "Watch Face CUE164",
       "packageName": "com.creation.cue164watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue163",
       "title": "CUE163",
       "playStoreTitle": "Watch Face CUE163",
       "packageName": "com.creation.cue163watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue162",
       "title": "CUE162",
       "playStoreTitle": "Watch Face CUE162",
       "packageName": "com.creation.cue162watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue161",
       "title": "CUE161",
       "playStoreTitle": "Watch Face CUE161",
       "packageName": "com.creation.cue161watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue160",
       "title": "CUE160",
       "playStoreTitle": "Watch Face CUE160",
       "packageName": "com.creation.cue160watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue159",
       "title": "CUE159",
       "playStoreTitle": "Watch Face CUE159",
       "packageName": "com.creation.cue159watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue158",
       "title": "CUE158",
       "playStoreTitle": "Watch Face CUE158",
       "packageName": "com.creation.cue158watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue157",
       "title": "CUE157",
       "playStoreTitle": "Watch Face CUE157",
       "packageName": "com.creation.cue157watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue156",
       "title": "CUE156",
       "playStoreTitle": "Watch Face CUE156",
       "packageName": "com.creation.cue156watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue155",
       "title": "CUE155",
       "playStoreTitle": "Watch Face CUE155",
       "packageName": "com.creation.cue155watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue154",
       "title": "CUE154",
       "playStoreTitle": "Watch Face CUE154",
       "packageName": "com.creation.cue154watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue153",
       "title": "CUE153",
       "playStoreTitle": "Watch Face CUE153",
       "packageName": "com.creation.cue153watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000015)",
       "wearVersion": "Wear OS SDK 35 Update (v10000014)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue152",
       "title": "CUE152",
       "playStoreTitle": "Watch Face CUE152",
       "packageName": "com.creation.cue152watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue151",
       "title": "CUE151",
       "playStoreTitle": "Watch Face CUE151",
       "packageName": "com.creation.cue151watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue150",
       "title": "CUE150",
       "playStoreTitle": "Watch Face CUE150",
       "packageName": "com.creation.cue150watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue149",
       "title": "CUE149",
       "playStoreTitle": "Watch Face CUE149",
       "packageName": "com.creation.cue149watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue148",
       "title": "CUE148",
       "playStoreTitle": "Watch Face CUE148",
       "packageName": "com.creation.cue148watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue147",
       "title": "CUE147",
       "playStoreTitle": "Watch Face CUE147",
       "packageName": "com.creation.cue147watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue146",
       "title": "CUE146",
       "playStoreTitle": "Watch Face CUE146",
       "packageName": "com.creation.cue146watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue145",
       "title": "CUE145",
       "playStoreTitle": "Watch Face CUE145",
       "packageName": "com.creation.cue145watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue144",
       "title": "CUE144",
       "playStoreTitle": "Watch Face CUE144",
       "packageName": "com.creation.cue144watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue143",
       "title": "CUE143",
       "playStoreTitle": "Watch Face CUE143",
       "packageName": "com.creation.cue143watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue142",
       "title": "CUE142",
       "playStoreTitle": "Watch Face CUE142",
       "packageName": "com.creation.cue142watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue141",
       "title": "CUE141",
       "playStoreTitle": "Watch Face CUE141",
       "packageName": "com.creation.cue141watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue140",
       "title": "CUE140",
       "playStoreTitle": "Hybrid Watch Face CUE140",
       "packageName": "com.creation.cue140watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue139",
       "title": "CUE139",
       "playStoreTitle": "Watch Face CUE139",
       "packageName": "com.creation.cue139watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue138",
       "title": "CUE138",
       "playStoreTitle": "CUE138",
       "packageName": "com.creation.cue138watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Fetch Failed"
     },
@@ -384,657 +384,657 @@
       "title": "CUE137",
       "playStoreTitle": "Analog Watch Face CUE137",
       "packageName": "com.creation.cue137watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue136",
       "title": "CUE136",
       "playStoreTitle": "Analog Watch Face CUE136",
       "packageName": "com.creation.cue136watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue136_plus",
       "title": "CUE136PLUS",
       "playStoreTitle": "Analog Watch Face CUE136PLUS",
       "packageName": "com.creation.cue136PLUSwatchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue135",
       "title": "CUE135",
       "playStoreTitle": "Hybrid Watch Face CUE135",
       "packageName": "com.creation.cue135watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000014)",
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue134",
       "title": "CUE134",
       "playStoreTitle": "Hybrid Watch Face CUE134",
       "packageName": "com.creation.cue134watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue133",
       "title": "CUE133",
       "playStoreTitle": "Watch Face CUE133",
       "packageName": "com.creation.cue133watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue132",
       "title": "CUE132",
       "playStoreTitle": "Analog Watch Face CUE132",
       "packageName": "com.creation.cue132watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue131",
       "title": "CUE131",
       "playStoreTitle": "Digital Watch Face CUE131",
       "packageName": "com.creation.cue131watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue130",
       "title": "CUE130",
       "playStoreTitle": "Watch Face CUE130",
       "packageName": "com.creation.cue130watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue129",
       "title": "CUE129",
       "playStoreTitle": "Fusion Watch Face CUE129",
       "packageName": "com.creation.cue129watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue128",
       "title": "CUE128",
       "playStoreTitle": "Analog Watch Face cue128",
       "packageName": "com.creation.cue128watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000016)",
       "wearVersion": "Wear OS SDK 35 Update (v10000015)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue127",
       "title": "CUE127",
       "playStoreTitle": "Digital Watch Face cue127",
       "packageName": "com.creation.cue127watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue126",
       "title": "CUE126",
       "playStoreTitle": "Digital Watch Face cue126",
       "packageName": "com.creation.cue126watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue125",
       "title": "CUE125",
       "playStoreTitle": "Digital Watch Face CUE125",
       "packageName": "com.creation.cue125watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue124",
       "title": "CUE124",
       "playStoreTitle": "Digital Watch Face CUE124",
       "packageName": "com.creation.cue124",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue123",
       "title": "CUE123",
       "playStoreTitle": "Digital Watch Face CUE123",
       "packageName": "com.creation.cue123watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue122",
       "title": "CUE122",
       "playStoreTitle": "Digital Watch Face CUE122",
       "packageName": "com.creation.cue122watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000014)",
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue116",
       "title": "CUE116",
       "playStoreTitle": "Digital Watch Face CUE116",
       "packageName": "com.creation.cue116watchface",
-      "companionVersion": "Android 16 API Update (v22)",
+      "companionVersion": "Android 16 API & Design Update (v10000019)",
       "wearVersion": "Wear OS SDK 35 Update (v10000018)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue115",
       "title": "CUE115",
       "playStoreTitle": "Digital Watch Face CUE115",
       "packageName": "com.creation.cue115watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue114",
       "title": "CUE114",
       "playStoreTitle": "Digital Watch Face CUE114",
       "packageName": "com.creation.cue114watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue111",
       "title": "CUE111",
       "playStoreTitle": "Digital Watch Face CUE111",
       "packageName": "com.creation.cue111watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000020)",
       "wearVersion": "Wear OS SDK 35 Update (v10000019)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue110",
       "title": "CUE110",
       "playStoreTitle": "Digital Watch Face CUE110",
       "packageName": "com.creation.cue110watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000018)",
       "wearVersion": "Wear OS SDK 35 Update (v10000017)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue109",
       "title": "CUE109",
       "playStoreTitle": "Digital Watch Face CUE109",
       "packageName": "com.creation.cue109watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue107",
       "title": "CUE107",
       "playStoreTitle": "Digital Watch Face CUE107",
       "packageName": "com.creation.cue107watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue106",
       "title": "CUE106",
       "playStoreTitle": "Digital Watch Face CUE106",
       "packageName": "com.creation.cue106watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue105",
       "title": "CUE105",
       "playStoreTitle": "Digital Watch Face CUE105",
       "packageName": "com.creation.cue105watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue104",
       "title": "CUE104",
       "playStoreTitle": "Digital Watch Face CUE104",
       "packageName": "com.creation.cue104watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue103",
       "title": "CUE103",
       "playStoreTitle": "Digital Watch Face CUE103",
       "packageName": "com.creation.cue103watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000014)",
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue102",
       "title": "CUE102",
       "playStoreTitle": "Digital Watch Face CUE102",
       "packageName": "com.creation.cue102watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue101",
       "title": "CUE101",
       "playStoreTitle": "Digital Watch Face CUE101",
       "packageName": "com.creation.cue101watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000019)",
       "wearVersion": "Wear OS SDK 35 Update (v10000018)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue100",
       "title": "CUE100",
       "playStoreTitle": "Digital Watch Face CUE100",
       "packageName": "com.creation.cue100watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue099",
       "title": "CUE099",
       "playStoreTitle": "Digital Watch Face CUE099",
       "packageName": "com.creation.cue099watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue098",
       "title": "CUE098",
       "playStoreTitle": "Digital Watch Face CUE098",
       "packageName": "com.creation.cue098watchface",
-      "companionVersion": "Android 16 API Update (v46)",
+      "companionVersion": "Android 16 API & Design Update (v10000047)",
       "wearVersion": "Wear OS SDK 35 Update (v10000046)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue097",
       "title": "CUE097",
       "playStoreTitle": "Digital Watch Face CUE097",
       "packageName": "com.creation.cue097watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000015)",
       "wearVersion": "Wear OS SDK 35 Update (v10000014)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc094",
       "title": "CRC094",
       "playStoreTitle": "Digital Watch Face CRC094",
       "packageName": "com.creationcue.crc094watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc092",
       "title": "CRC092",
       "playStoreTitle": "Digital Watch Face CRC092",
       "packageName": "com.creationcue.crc092watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc091",
       "title": "CRC091",
       "playStoreTitle": "Radiant Glow Watch Face CRC091",
       "packageName": "com.creationcue.crc091watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc090",
       "title": "CRC090",
       "playStoreTitle": "Digital Watch Face CRC090",
       "packageName": "com.creationcue.crc090watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc087",
       "title": "CRC087",
       "playStoreTitle": "Digital Watch Face CRC087",
       "packageName": "com.creationcue.crc087watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000017)",
       "wearVersion": "Wear OS SDK 35 Update (v10000016)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc082",
       "title": "CRC082",
       "playStoreTitle": "Analogue Watch Face CRC082",
       "packageName": "com.creationcue.crc082watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc081",
       "title": "CRC081",
       "playStoreTitle": "Digital Watch Face CRC081",
       "packageName": "com.creationcue.crc081watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc080",
       "title": "CRC080",
       "playStoreTitle": "Digital Watch Face CRC080",
       "packageName": "com.creationscue.crc080watchface",
-      "companionVersion": "Android 16 API Update (v24)",
+      "companionVersion": "Android 16 API & Design Update (v10000025)",
       "wearVersion": "Wear OS SDK 35 Update (v10000024)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc079",
       "title": "CRC079",
       "playStoreTitle": "Digital Watch Face CRC079",
       "packageName": "com.creationcue.crc079watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc072",
       "title": "CRC072",
       "playStoreTitle": "Hybrid Watch Face CRC072",
       "packageName": "com.creationcue.crc072watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc071",
       "title": "CRC071",
       "playStoreTitle": "Digital Watch Face CRC071",
       "packageName": "com.creationcue.crc071watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000014)",
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc069",
       "title": "CRC069",
       "playStoreTitle": "Digital Watch Face CRC069",
       "packageName": "com.creationcue.crc069watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc068",
       "title": "CRC068",
       "playStoreTitle": "Digital Watch Face CRC068",
       "packageName": "com.creationcue.crc068watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc066",
       "title": "CRC066",
       "playStoreTitle": "Digital Watch Face CRC066",
       "packageName": "com.creationcue.crc066watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc065",
       "title": "CRC065",
       "playStoreTitle": "Hybrid Watch Face CRC065",
       "packageName": "com.creationcue.crc065",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000019)",
       "wearVersion": "Wear OS SDK 35 Update (v10000018)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc057",
       "title": "CRC057",
       "playStoreTitle": "Digital Watch Face CRC057",
       "packageName": "com.creationcue.crc057watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc050",
       "title": "CRC050",
       "playStoreTitle": "Wear OS watch face CRC050",
       "packageName": "com.watchfacestudio.crc050",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000015)",
       "wearVersion": "Wear OS SDK 35 Update (v10000014)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc046",
       "title": "CRC046",
       "playStoreTitle": "Analog watch face CRC046",
       "packageName": "com.creationcue.crc046",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000020)",
       "wearVersion": "Wear OS SDK 35 Update (v10000019)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc044",
       "title": "CRC044",
       "playStoreTitle": "Digital Watch Face CRC044",
       "packageName": "com.creationcue.crc044",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc043",
       "title": "CRC043",
       "playStoreTitle": "Digital Watch Face CRC043",
       "packageName": "com.creationcue.crc043",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000017)",
       "wearVersion": "Wear OS SDK 35 Update (v10000016)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc042",
       "title": "CRC042",
       "playStoreTitle": "Digital Watch Face CRC042",
       "packageName": "com.watchfacestudio.crc042",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000014)",
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc041",
       "title": "CRC041",
       "playStoreTitle": "Digital Watch Face CRC041",
       "packageName": "com.watchfacestudio.crc041",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc039",
       "title": "CRC039",
       "playStoreTitle": "Digital Watch Face CRC039",
       "packageName": "com.watchfacestudio.crc039",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000023)",
       "wearVersion": "10000022 (2.2.1)",
-      "lastUpdatedDate": "Jul 30, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc036",
       "title": "CRC036",
       "playStoreTitle": "Commander Watch Face crc036",
       "packageName": "com.watchfacestudio.crc036",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc035",
       "title": "CRC035",
       "playStoreTitle": "Info Watch Face crc035",
       "packageName": "com.watchfacestudio.crc035",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000023)",
       "wearVersion": "10000022 (4.0.1)",
-      "lastUpdatedDate": "Jul 27, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc034",
       "title": "CRC034",
       "playStoreTitle": "Info Watch Face crc034",
       "packageName": "com.watchfacestudio.crc034",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000018)",
       "wearVersion": "Wear OS SDK 35 Update (v10000017)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc032",
       "title": "CRC032",
       "playStoreTitle": "Cosmic Watch Face crc032",
       "packageName": "com.watchfacestudio.crc032",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc031",
       "title": "CRC031",
       "playStoreTitle": "Word Watch face crc031",
       "packageName": "com.watchfacestudio.crc031",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc030",
       "title": "CRC030",
       "playStoreTitle": "Gothic Watch face CRC030",
       "packageName": "com.watchfacestudio.crc030",
-      "companionVersion": "Android 16 API Update (v23)",
+      "companionVersion": "Android 16 API & Design Update (v10000024)",
       "wearVersion": "Wear OS SDK 35 Update (v10000023)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc028",
       "title": "CRC028",
       "playStoreTitle": "Fitness SkullWatch crc028",
       "packageName": "com.watchfacestudio.crc028",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc027",
       "title": "CRC027",
       "playStoreTitle": "Japan Fusion Watch Face CRC027",
       "packageName": "com.watchfacestudio.crc027",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue024",
       "title": "CUE024",
       "playStoreTitle": "Digital Watch Face CUE024",
       "packageName": "com.creation.cue024watchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "10000009 (1.5.4)",
-      "lastUpdatedDate": "Jul 31, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "crc023",
       "title": "CRC023",
       "playStoreTitle": "Streamline Watch Face crc023",
       "packageName": "com.watchfacestudio.crc023",
-      "companionVersion": "Android 16 API Update (v25)",
+      "companionVersion": "Android 16 API & Design Update (v10000020)",
       "wearVersion": "Wear OS SDK 35 Update (v10000019)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "ccwf022",
       "title": "CCWF022",
       "playStoreTitle": "Ccwf022 Digital Watch Face",
       "packageName": "com.watchfacestudio.ccwf022",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000016)",
       "wearVersion": "Wear OS SDK 35 Update (v10000015)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cc014",
       "title": "CRC014",
       "playStoreTitle": "Watch face CRC014",
       "packageName": "com.watchfacestudio.cc014",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000014)",
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cc010",
       "title": "CRC010",
       "playStoreTitle": "Watch face CRC010",
       "packageName": "com.watchfacestudio.cc010",
-      "companionVersion": "Android 16 API Update (v25)",
+      "companionVersion": "Android 16 API & Design Update (v10000023)",
       "wearVersion": "Wear OS SDK 35 Update (v10000022)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cc005",
       "title": "CRC05",
       "playStoreTitle": "Watch face CRC05 Plane Roll",
       "packageName": "com.watchfacestudio.CC005",
-      "companionVersion": "Android 16 API Update (v32)",
+      "companionVersion": "Android 16 API & Design Update (v10000034)",
       "wearVersion": "10000033 (3.0.0)",
-      "lastUpdatedDate": "Jul 31, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cueindus",
       "title": "Cue Indus",
       "playStoreTitle": "Watch Face CUE Indus",
       "packageName": "com.creation.cueinduswatchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cueindus_pro",
       "title": "Cue Indus Pro",
       "playStoreTitle": "Watch Face CUE Indus Pro",
       "packageName": "com.creation.cueindusprowatchface",
-      "companionVersion": "Android 16 API Update (v20)",
+      "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Jul 29, 2026"
+      "lastUpdatedDate": "Aug 4, 2026"
     }
   ]
 }
