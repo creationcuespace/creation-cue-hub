@@ -1,17 +1,17 @@
 {
-  "lastUpdated": "2026-08-04T03:27:32.982Z",
+  "lastUpdated": "2026-08-06T03:25:48.490Z",
   "reviews": [
     {
-      "reviewId": "c52d3a67-7366-449c-9184-0a8de703f021",
-      "packageName": "com.watchfacestudio.crc041",
-      "title": "Digital Watch Face CRC041",
-      "wfId": "crc041",
-      "authorName": "Jan Burda Jan Burda",
+      "reviewId": "e32bcb20-750e-4633-8db1-a27667fc9761",
+      "packageName": "com.creation.cue166watchface",
+      "title": "Hybrid Watch Face CUE166",
+      "wfId": "cue166",
+      "authorName": "Richard Childs",
       "starRating": 5,
-      "reviewerLanguage": "cs",
-      "deviceMetadata": "wise8us (Galaxy Watch8 Classic)",
-      "text": "\tOk",
-      "lastModified": "2026-08-03T05:48:12.000Z"
+      "reviewerLanguage": "en",
+      "deviceMetadata": "Unknown",
+      "text": "\tI can't believe the amount of info you can get from this watch face and great customer service too...highly recommended!! Samsung Galaxy 8 Watch face cue 166 Complications 1 right-recorder 2 upper right-phone 3 left-Timer 4 mid-weather 5 bottom-outlook mail n calendar battery built in steps buiilt in gemini built in heart rate built in",
+      "lastModified": "2026-08-05T16:49:43.000Z"
     }
   ]
 }

@@ -1,5 +1,14 @@
 [
   {
+    "slug": "making-your-wear-os-watch-truly-yours",
+    "title": "Making Your Wear OS Watch Truly Yours",
+    "date": "Aug 6, 2026",
+    "readTime": "1 min",
+    "excerpt": "Wear OS users love to personalize their smartwatches. We see a clear demand for watch faces that offer both style and practical information.",
+    "thumbnail": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue162.png",
+    "draft": true
+  },
+  {
     "slug": "weather-complications",
     "title": "Weather complications",
     "excerpt": "Simple Weather app",
