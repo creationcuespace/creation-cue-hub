@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-06T03:25:48.488Z",
+  "lastUpdated": "2026-08-07T03:11:06.931Z",
   "results": [
     {
       "id": "cue178",
@@ -256,11 +256,11 @@
     {
       "id": "cue151",
       "title": "CUE151",
-      "playStoreTitle": "CUE151",
+      "playStoreTitle": "Watch Face CUE151",
       "packageName": "com.creation.cue151watchface",
       "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
-      "lastUpdatedDate": "Fetch Failed"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue150",
