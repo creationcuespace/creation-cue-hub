@@ -1,4 +1,17 @@
 {
-  "lastUpdated": "2026-08-08T02:08:05.218Z",
-  "reviews": []
+  "lastUpdated": "2026-08-09T02:20:33.370Z",
+  "reviews": [
+    {
+      "reviewId": "fe46d05c-e698-42e8-bcd2-ffd6ad16db8e",
+      "packageName": "com.creation.cue116watchface",
+      "title": "Digital Watch Face CUE116",
+      "wfId": "cue116",
+      "authorName": "Janine",
+      "starRating": 4,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
+      "text": "\tNice watch face. 30 preset colour combinations. Good colour combinations too. Suitable for everyone and every season. I would prefer to just have steps without the km/m option. Also I'd prefer to turn off the seconds feature too. So half a star off for each of those things.",
+      "lastModified": "2026-08-08T13:04:08.000Z"
+    }
+  ]
 }
