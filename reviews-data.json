@@ -1,6 +1,18 @@
 {
-  "lastUpdated": "2026-08-09T02:20:33.370Z",
+  "lastUpdated": "2026-08-10T02:25:06.473Z",
   "reviews": [
+    {
+      "reviewId": "01942302-adb3-48ec-8e2c-665b1d494d65",
+      "packageName": "com.creation.cue153watchface",
+      "title": "Watch Face CUE153",
+      "wfId": "cue153",
+      "authorName": "Craig",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
+      "text": "\tJust purchased this and this looks awesome! Amazing work mate! I love it!",
+      "lastModified": "2026-08-09T03:11:27.000Z"
+    },
     {
       "reviewId": "fe46d05c-e698-42e8-bcd2-ffd6ad16db8e",
       "packageName": "com.creation.cue116watchface",
