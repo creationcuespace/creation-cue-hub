@@ -1,6 +1,30 @@
 {
-  "lastUpdated": "2026-08-12T02:33:44.786Z",
+  "lastUpdated": "2026-08-13T02:35:29.089Z",
   "reviews": [
+    {
+      "reviewId": "c6a7dc97-4ded-4418-a4b4-f62b81541705",
+      "packageName": "com.creation.cue155watchface",
+      "title": "Watch Face CUE155",
+      "wfId": "cue155",
+      "authorName": "Dimitrios Kamposioris",
+      "starRating": 5,
+      "reviewerLanguage": "el",
+      "deviceMetadata": "pa2q (Galaxy S25+)",
+      "text": "\tΤέλειο",
+      "lastModified": "2026-08-12T18:18:01.000Z"
+    },
+    {
+      "reviewId": "763642e3-2914-4ffd-a47a-ad13a2f24341",
+      "packageName": "com.creation.cueinduswatchface",
+      "title": "Watch Face CUE Indus",
+      "wfId": "cueindus",
+      "authorName": "Wilson S Araújo",
+      "starRating": 5,
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "b0q (Galaxy S22 Ultra)",
+      "text": "\tBom de mais",
+      "lastModified": "2026-08-12T12:10:46.000Z"
+    },
     {
       "reviewId": "4567dff7-bfd2-42bd-b9f5-7668418c0f16",
       "packageName": "com.creationcue.crc046",
