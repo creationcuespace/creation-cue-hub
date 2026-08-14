@@ -1,6 +1,18 @@
 {
-  "lastUpdated": "2026-08-13T02:35:29.089Z",
+  "lastUpdated": "2026-08-14T02:33:34.962Z",
   "reviews": [
+    {
+      "reviewId": "d2146a68-986a-4f2a-86b6-c8cd3b77fde1",
+      "packageName": "com.creation.cueinduswatchface",
+      "title": "Watch Face CUE Indus",
+      "wfId": "cueindus",
+      "authorName": "TSR B (TSRB)",
+      "starRating": 2,
+      "reviewerLanguage": "de",
+      "deviceMetadata": "lapis (REDMI Note 15 Pro 5G)",
+      "text": "\tFantasielos.... Optisch okay, aber Komplikationen fix. Dass jemand statt Schritte/Distanz z.B. Blutsauerstoff oder Regenwahrscheinlichkeit sehen möchte entgeht 9 von 10 \"Designern\".",
+      "lastModified": "2026-08-13T05:28:14.000Z"
+    },
     {
       "reviewId": "c6a7dc97-4ded-4418-a4b4-f62b81541705",
       "packageName": "com.creation.cue155watchface",
