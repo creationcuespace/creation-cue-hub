@@ -1,6 +1,30 @@
 {
-  "lastUpdated": "2026-08-14T02:33:34.962Z",
+  "lastUpdated": "2026-08-15T01:43:21.203Z",
   "reviews": [
+    {
+      "reviewId": "042d7885-02ce-4a55-8bb5-3596594673a5",
+      "packageName": "com.creation.cue097watchface",
+      "title": "Digital Watch Face CUE097",
+      "wfId": "cue097",
+      "authorName": "Tony Whaley",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
+      "text": "\tvery cool design, the workmanship is off the chain. the clarity and quality looks phenomenal. all the information I need is available. abundant amount of color choices. superb job",
+      "lastModified": "2026-08-14T19:54:34.000Z"
+    },
+    {
+      "reviewId": "a1dec0b3-f8b6-4a61-be3b-3b3573bc4114",
+      "packageName": "com.creation.cue149watchface",
+      "title": "Watch Face CUE149",
+      "wfId": "cue149",
+      "authorName": "eric shen",
+      "starRating": 5,
+      "reviewerLanguage": "zh-Hant",
+      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
+      "text": "\tGreat 👍",
+      "lastModified": "2026-08-14T13:55:05.000Z"
+    },
     {
       "reviewId": "d2146a68-986a-4f2a-86b6-c8cd3b77fde1",
       "packageName": "com.creation.cueinduswatchface",
