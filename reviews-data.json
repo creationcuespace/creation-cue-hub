@@ -1,6 +1,30 @@
 {
-  "lastUpdated": "2026-08-16T01:50:11.164Z",
+  "lastUpdated": "2026-08-17T01:48:01.221Z",
   "reviews": [
+    {
+      "reviewId": "33377c65-de4b-45f0-bd22-f8bf4b67a1a6",
+      "packageName": "com.creation.cue105watchface",
+      "title": "Digital Watch Face CUE105",
+      "wfId": "cue105",
+      "authorName": "Juan Carlos Alvarez C.",
+      "starRating": 5,
+      "reviewerLanguage": "es",
+      "deviceMetadata": "b7s (Galaxy Z Flip7)",
+      "text": "\tMuy bonita y completa. Los numeros que mas se consultan en tamaño mas grande (hora, dia, temperatura...) y tambien tiene imagen de la luna con porcentaje. el modo AOD muy bonito y practico.",
+      "lastModified": "2026-08-16T22:42:54.000Z"
+    },
+    {
+      "reviewId": "45de7f10-a50a-47ac-8595-93283fafb691",
+      "packageName": "com.creation.cue146watchface",
+      "title": "Watch Face CUE146",
+      "wfId": "cue146",
+      "authorName": "GMA Barb",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "Unknown",
+      "text": "\tlove the customization. Weather looks nice. and of course, my favorite thing, the battery alerts!",
+      "lastModified": "2026-08-16T02:53:39.000Z"
+    },
     {
       "reviewId": "6aa3e269-c00c-4e7a-9165-1025542e88b6",
       "packageName": "com.creation.cue146watchface",
@@ -132,18 +156,6 @@
       "deviceMetadata": "d2x (Galaxy Note10+ 5G)",
       "text": "\tNice watchface",
       "lastModified": "2026-08-10T11:43:47.000Z"
-    },
-    {
-      "reviewId": "01942302-adb3-48ec-8e2c-665b1d494d65",
-      "packageName": "com.creation.cue153watchface",
-      "title": "Watch Face CUE153",
-      "wfId": "cue153",
-      "authorName": "Craig",
-      "starRating": 5,
-      "reviewerLanguage": "en",
-      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
-      "text": "\tJust purchased this and this looks awesome! Amazing work mate! I love it!",
-      "lastModified": "2026-08-09T03:11:27.000Z"
     }
   ]
 }
