@@ -1,6 +1,30 @@
 {
-  "lastUpdated": "2026-08-17T01:48:01.221Z",
+  "lastUpdated": "2026-08-18T01:42:58.417Z",
   "reviews": [
+    {
+      "reviewId": "6d26dcd4-db2b-4c5b-a791-eb5ff7a8ee7f",
+      "packageName": "com.creation.cue136watchface",
+      "title": "Analog Watch Face CUE136",
+      "wfId": "cue136",
+      "authorName": "אילן אברמוביץ",
+      "starRating": 5,
+      "reviewerLanguage": "iw",
+      "deviceMetadata": "pa3q (Galaxy S25 Ultra)",
+      "text": "\tממש יפה",
+      "lastModified": "2026-08-17T14:59:30.000Z"
+    },
+    {
+      "reviewId": "c2ffc234-6613-498f-8ae3-369a6a02069a",
+      "packageName": "com.creation.cueinduswatchface",
+      "title": "Watch Face CUE Indus",
+      "wfId": "cueindus",
+      "authorName": "Rafael Vargas",
+      "starRating": 5,
+      "reviewerLanguage": "es",
+      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
+      "text": "\tBello.",
+      "lastModified": "2026-08-17T04:13:54.000Z"
+    },
     {
       "reviewId": "33377c65-de4b-45f0-bd22-f8bf4b67a1a6",
       "packageName": "com.creation.cue105watchface",
@@ -120,42 +144,6 @@
       "deviceMetadata": "b0q (Galaxy S22 Ultra)",
       "text": "\tBom de mais",
       "lastModified": "2026-08-12T12:10:46.000Z"
-    },
-    {
-      "reviewId": "4567dff7-bfd2-42bd-b9f5-7668418c0f16",
-      "packageName": "com.creationcue.crc046",
-      "title": "Analog watch face CRC046",
-      "wfId": "crc046",
-      "authorName": "Rahul Shakya",
-      "starRating": 5,
-      "reviewerLanguage": "en",
-      "deviceMetadata": "a36xq (Galaxy A36 5G)",
-      "text": "\tvery good",
-      "lastModified": "2026-08-10T18:43:52.000Z"
-    },
-    {
-      "reviewId": "d59cf181-3258-4fb7-8620-80e5e0abeea2",
-      "packageName": "com.creation.cue116watchface",
-      "title": "Digital Watch Face CUE116",
-      "wfId": "cue116",
-      "authorName": "Emanuel Bruno Rocha Dias",
-      "starRating": 5,
-      "reviewerLanguage": "pt",
-      "deviceMetadata": "d2x (Galaxy Note10+ 5G)",
-      "text": "\tUnique Face",
-      "lastModified": "2026-08-10T11:44:10.000Z"
-    },
-    {
-      "reviewId": "fb64cb41-86dd-4eb5-8619-3959eeb30314",
-      "packageName": "com.creation.cue176watchface",
-      "title": "Hybrid Watch Face CUE176",
-      "wfId": "cue176",
-      "authorName": "Emanuel Bruno Rocha Dias",
-      "starRating": 5,
-      "reviewerLanguage": "pt",
-      "deviceMetadata": "d2x (Galaxy Note10+ 5G)",
-      "text": "\tNice watchface",
-      "lastModified": "2026-08-10T11:43:47.000Z"
     }
   ]
 }
