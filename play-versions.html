@@ -2654,7 +2654,7 @@
           });
           
           unrepliedReviews = Array.from(reviewMap.values());
-          unrepliedReviews.sort((a, b) => new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime());
+          unrepliedReviews.sort((a, b) => new Date(a.lastModified).getTime() - new Date(b.lastModified).getTime());
           
           updateReviewsBadgeCount();
         } catch (e) {
