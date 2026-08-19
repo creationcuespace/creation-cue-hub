@@ -1766,7 +1766,7 @@
     </div>
     <div class="header-btns">
       <!-- Version badge -->
-      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.59</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.60</span>
       <!-- Firebase connection indicator dot & text -->
       <div id="header-sync-badge" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; flex-shrink: 0;">
         <span id="header-sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
@@ -2165,7 +2165,7 @@
 
   <!-- Footer -->
   <footer style="text-align: center; padding: 24px; font-size: 10px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: auto; font-family: var(--font-body); letter-spacing: 0.5px; opacity: 0.6;">
-    CreationCue™ Planner &bull; v2.59
+    CreationCue™ Planner &bull; v2.60
   </footer>
 
   <!-- Inline Override Dialog -->
@@ -5134,24 +5134,25 @@
         if (a.isHoliday) return -1;
         if (b.isHoliday) return 1;
         
-        // 1. Group by Watch Face ID first to visually cluster them
+        var weightA = a.isFallback ? 0 : (priorityWeights[a.priority || 'medium'] || 1);
+        var weightB = b.isFallback ? 0 : (priorityWeights[b.priority || 'medium'] || 1);
+        
+        // 1. Sort by Priority FIRST (High -> Medium -> Low -> Fallback)
+        if (weightA !== weightB) {
+          return weightB - weightA;
+        }
+        
+        // 2. Move rolled-over tasks to the bottom of their respective priority tier
+        if (a.isRolledOver !== b.isRolledOver) {
+          return a.isRolledOver ? 1 : -1;
+        }
+
+        // 3. Group by Watch Face ID to visually cluster related tasks within the same priority
         if (a.extractedFaceId && b.extractedFaceId && a.extractedFaceId !== b.extractedFaceId) {
           return a.extractedFaceId.localeCompare(b.extractedFaceId);
         }
         if (a.extractedFaceId && !b.extractedFaceId) return -1;
         if (!a.extractedFaceId && b.extractedFaceId) return 1;
-        
-        var weightA = a.isFallback ? 0 : (priorityWeights[a.priority || 'medium'] || 1);
-        var weightB = b.isFallback ? 0 : (priorityWeights[b.priority || 'medium'] || 1);
-        
-        // Move rolled-over tasks to the bottom
-        if (a.isRolledOver !== b.isRolledOver) {
-          return a.isRolledOver ? 1 : -1;
-        }
-        
-        if (weightA !== weightB) {
-          return weightB - weightA;
-        }
         
         return a.slotIndices[0] - b.slotIndices[0];
       });
