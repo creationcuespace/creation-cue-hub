@@ -1786,9 +1786,11 @@
                                 <div class="result-box-wrapper">
                                     <textarea class="result-box comment-textarea" id="res-dm-comment-instagram"></textarea>
                                 </div>
-                                <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
-                                    <button class="header-btn primary-btn" onclick="copyDmCommentText()">Copy DM Comment</button>
-                                </div>
+                                <div class="result-actions" style="margin-top: 8px; display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap;">
+                                     <button class="header-btn" onclick="window.open('https://app.linkdm.com/posts', '_blank')" style="border-color: hsla(290, 70%, 60%, 0.3); color: hsl(290, 80%, 75%);">🔗 Open LinkDM</button>
+                                     <button class="header-btn" onclick="copyPlayStoreLink()" style="border-color: var(--primary); color: var(--primary);">📋 Copy Play Store Link</button>
+                                     <button class="header-btn primary-btn" onclick="copyDmCommentText()">Copy DM Comment</button>
+                                 </div>
                             </div>
                         </div>
                         
@@ -2459,6 +2461,21 @@
             });
         }
 
+        function copyPlayStoreLink() {
+            const linkInput = document.getElementById('watch-link');
+            if (!linkInput) return;
+            const text = linkInput.value.trim();
+            if (!text) {
+                showToast("No Play Store Link entered!");
+                return;
+            }
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Play Store Link copied!");
+            }).catch(() => {
+                alert("Failed to copy. Please manually select and copy text.");
+            });
+        }
+
         function updateCommentsUI() {
             const nameInput = document.getElementById('watch-name');
             const linkInput = document.getElementById('watch-link');
@@ -2502,17 +2519,7 @@
             // Update DM comment for Instagram
             const dmCommentInstagram = document.getElementById('res-dm-comment-instagram');
             if (dmCommentInstagram) {
-                let faceCode = 'CUE';
-                const nameVal = nameInput.value.trim();
-                const matchCue = nameVal.match(/(cue\s*\d+|cue\s*[a-z0-9_]+)/i);
-                if (matchCue) {
-                    faceCode = matchCue[1].toUpperCase().replace(/\s+/g, '');
-                } else if (currentFaceId) {
-                    faceCode = currentFaceId.toUpperCase().replace(/\s+/g, '');
-                } else if (nameVal) {
-                    faceCode = nameVal.split(' ')[0].toUpperCase();
-                }
-                dmCommentInstagram.value = `Comment "${faceCode}" to get the direct link.`;
+                dmCommentInstagram.value = 'Comment "CUE" to get the direct link.';
             }
         }
 
@@ -2747,7 +2754,7 @@
                 instagramText = `🎫 FREE coupons available for a limited time! 🎟️✨\n\nUpgrade your smartwatch style today for FREE! Grab your free coupon for the sleek ${name} watch face on Wear OS now.\n\n💬 Click the link in the pinned comment to claim yours! 👇\n\n#SamsungWatchFace #GalaxyWatch8 #SamsungGalaxyWatch #WatchFaces #WearOS #Smartwatch #WatchFaceDesign #freecoupons #freebie #giveaway #watchfacegiveaway #coupon #promo #Samsung #AndroidWear`;
 
                 // Shorts Title
-                shortsTitleText = `🎫 FREE coupons for ${(document.getElementById('is-new-face') && document.getElementById('is-new-face').checked) ? 'the new ' : ''}${name} on Wear OS! 🎟️`;
+                shortsTitleText = `🎫 FREE coupons for ${(document.getElementById('is-new-face') && document.getElementById('is-new-face').checked) ? 'the new ' : ''}${name} on Wear OS! 🎟️ #wearos #watch #watchfaceoftheday #watchfacedesign #watchface`;
 
                 // Shorts Description
                 shortsText = `🎫 FREE coupons available for a limited time! 🎟️\n\nGrab a free coupon code for the ${name} watch face on Wear OS smartwatches!\n\nClaim your free coupon here:\n🔗 ${cLink}\n\nPlay Store:\n🔗 ${link}\n\n🔍Explore more watch faces here:\nhttps://is.gd/NxAEME\n\n#Shorts #SamsungWatchFace #WearOS #freecoupons #freebie #coupon #promo`;
@@ -2762,7 +2769,7 @@
                 instagramText = `📸 ${captionIntro} for Wear OS! ⌚✨\n\n${hook}\n\nUpgrade your wrist style today. \n\n🔗 Find the Google Play Store link in our bio!\n\n#SamsungWatchFace #GalaxyWatch8 #SamsungGalaxyWatch #WatchFaces #Samsung #WearOS #Smartwatch #WatchFaceDesign #SamsungWatch #AndroidWear`;
 
                 // Shorts Title
-                shortsTitleText = `Get ${(document.getElementById('is-new-face') && document.getElementById('is-new-face').checked) ? 'the new ' : ''}${name} on Wear OS! ⌚`;
+                shortsTitleText = `Get ${(document.getElementById('is-new-face') && document.getElementById('is-new-face').checked) ? 'the new ' : ''}${name} on Wear OS! ⌚ #wearos #watch #watchfaceoftheday #watchfacedesign #watchface`;
 
                 // Shorts Description
                 shortsText = `Check out the ${name} watch face for Wear OS smartwatches!\n\n${hook}\n\n📥 Download on the Google Play Store:\n🔗 ${link}\n\n🔍Explore more watch faces here:\nhttps://is.gd/NxAEME\n\n#Shorts #SamsungWatchFace #GalaxyWatch #WearOS`;
