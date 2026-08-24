@@ -2498,19 +2498,16 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
-    // Force HTTP long-polling on mobile devices to bypass blocked WebSocket connections
-    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    if (isMobile) {
+    // Force HTTP long-polling on ALL devices to bypass strict firewalls/antiviruses blocking WebSockets
+    try {
+      firebase.database().INTERNAL.forceLongPolling(true);
+      console.log("Forced Firebase long polling on instance.");
+    } catch (e1) {
       try {
-        firebase.database().INTERNAL.forceLongPolling(true);
-        console.log("Mobile device detected: forced Firebase long polling on instance.");
-      } catch (e1) {
-        try {
-          firebase.database.INTERNAL.forceLongPolling(true);
-          console.log("Mobile device detected: forced Firebase long polling on constructor.");
-        } catch (e2) {
-          console.warn("Failed to force long polling on both instance and constructor:", e1, e2);
-        }
+        firebase.database.INTERNAL.forceLongPolling(true);
+        console.log("Forced Firebase long polling on constructor.");
+      } catch (e2) {
+        console.warn("Failed to force long polling on both instance and constructor:", e1, e2);
       }
     }
 
