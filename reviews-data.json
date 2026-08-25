@@ -1,4 +1,29 @@
 {
-  "lastUpdated": "2026-08-24T01:49:59.203Z",
-  "reviews": []
+  "lastUpdated": "2026-08-25T01:44:17.055Z",
+  "reviews": [
+    {
+      "reviewId": "08780e1f-7596-42e7-b045-edc5d4c3d1e4",
+      "packageName": "com.creation.cue104watchface",
+      "title": "Digital Watch Face CUE104",
+      "wfId": "cue104",
+      "authorName": "Ryszard Kucharczyk",
+      "starRating": 5,
+      "reviewerLanguage": "pl",
+      "deviceMetadata": "b7r (Galaxy Z Flip7 FE)",
+      "text": "\tŁadna i funkcjonalna. Polecam.",
+      "lastModified": "2026-08-24T07:57:48.000Z"
+    },
+    {
+      "reviewId": "a17addc2-b481-4884-96d2-851db93c5c4c",
+      "packageName": "com.creation.cue145watchface",
+      "title": "Watch Face CUE145",
+      "wfId": "cue145",
+      "authorName": "Cristian",
+      "starRating": 5,
+      "reviewerLanguage": "ro",
+      "deviceMetadata": "a17 (Galaxy A17)",
+      "text": "\tcool",
+      "lastModified": "2026-08-24T07:48:59.000Z"
+    }
+  ]
 }
