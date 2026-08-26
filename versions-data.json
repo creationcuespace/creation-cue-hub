@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-25T01:44:17.053Z",
+  "lastUpdated": "2026-08-26T01:49:28.683Z",
   "results": [
     {
       "id": "cue178",
@@ -16,7 +16,7 @@
       "playStoreTitle": "Digital Watch Face CUE003",
       "packageName": "com.creation.cue003watchface",
       "companionVersion": "10000009 (6.1.0)",
-      "wearVersion": "Wear OS SDK 35 Update (v10000006)",
+      "wearVersion": "10999999 (1.5.0)",
       "lastUpdatedDate": "Aug 3, 2026"
     },
     {
@@ -682,7 +682,7 @@
       "playStoreTitle": "Digital Watch Face CUE097",
       "packageName": "com.creation.cue097watchface",
       "companionVersion": "Android 16 API & Design Update (v10000015)",
-      "wearVersion": "Wear OS SDK 35 Update (v10000014)",
+      "wearVersion": "10000016 (4.0.1)",
       "lastUpdatedDate": "Aug 4, 2026"
     },
     {
@@ -691,7 +691,7 @@
       "playStoreTitle": "Digital Watch Face CRC094",
       "packageName": "com.creationcue.crc094watchface",
       "companionVersion": "Android 16 API & Design Update (v10000013)",
-      "wearVersion": "Wear OS SDK 35 Update (v10000012)",
+      "wearVersion": "10999999 (6.0.1)",
       "lastUpdatedDate": "Aug 4, 2026"
     },
     {
@@ -799,7 +799,7 @@
       "playStoreTitle": "Digital Watch Face CRC068",
       "packageName": "com.creationcue.crc068watchface",
       "companionVersion": "Android 16 API & Design Update (v10000010)",
-      "wearVersion": "Wear OS SDK 35 Update (v10000009)",
+      "wearVersion": "10999999 (4.0.1)",
       "lastUpdatedDate": "Aug 4, 2026"
     },
     {
