@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-27T06:20:49.726Z",
+  "lastUpdated": "2026-08-27T09:20:16.323Z",
   "results": [
     {
       "id": "cue178",
@@ -790,7 +790,7 @@
       "playStoreTitle": "Digital Watch Face CRC069",
       "packageName": "com.creationcue.crc069watchface",
       "companionVersion": "Android 16 API & Design Update (v10000010)",
-      "wearVersion": "Wear OS SDK 35 Update (v10000009)",
+      "wearVersion": "10000011 (2.5.0)",
       "lastUpdatedDate": "Aug 4, 2026"
     },
     {
