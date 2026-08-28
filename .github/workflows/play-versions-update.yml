@@ -2,8 +2,8 @@ name: Nightly Google Play Versions Update
 
 on:
   schedule:
-    # Run every day at 3:00 AM Local Time (12:00 AM UTC)
-    - cron: '0 0 * * *'
+    # Run every day at 2:43 AM Local Time (23:43 UTC) using an odd minute to avoid GitHub Actions queue delays
+    - cron: '43 23 * * *'
   workflow_dispatch:
     inputs:
       packages:
