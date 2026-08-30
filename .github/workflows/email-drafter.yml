@@ -1,0 +1,36 @@
+name: Daily Email Drafter
+
+on:
+  schedule:
+    # Run every day at 7:00 AM UTC (adjust as needed for your timezone)
+    - cron: '0 7 * * *'
+  workflow_dispatch: # Allows you to run it manually from the GitHub website
+
+jobs:
+  draft-emails:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Create token.json file from secret
+        run: |
+          echo '${{ secrets.GMAIL_TOKEN_JSON }}' > token.json
+
+      - name: Run Auto Drafter
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python auto_drafter.py
+
+      - name: Cleanup token file
+        run: rm -f token.json
