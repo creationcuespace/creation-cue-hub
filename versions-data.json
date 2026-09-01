@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-31T01:37:17.911Z",
+  "lastUpdated": "2026-09-01T02:03:56.987Z",
   "results": [
     {
       "id": "cue178",
@@ -17,7 +17,7 @@
       "packageName": "com.creation.cue003watchface",
       "companionVersion": "10000009 (6.1.0)",
       "wearVersion": "10999999 (1.5.0)",
-      "lastUpdatedDate": "Aug 3, 2026"
+      "lastUpdatedDate": "Aug 25, 2026"
     },
     {
       "id": "cue177",
@@ -364,11 +364,11 @@
     {
       "id": "cue139",
       "title": "CUE139",
-      "playStoreTitle": "Watch Face CUE139",
+      "playStoreTitle": "Error 500 (Server Error)!!1",
       "packageName": "com.creation.cue139watchface",
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Aug 4, 2026"
+      "lastUpdatedDate": "N/A"
     },
     {
       "id": "cue138",
@@ -683,7 +683,7 @@
       "packageName": "com.creation.cue097watchface",
       "companionVersion": "Android 16 API & Design Update (v10000015)",
       "wearVersion": "10000016 (4.0.1)",
-      "lastUpdatedDate": "Aug 4, 2026"
+      "lastUpdatedDate": "Aug 25, 2026"
     },
     {
       "id": "crc094",
@@ -692,7 +692,7 @@
       "packageName": "com.creationcue.crc094watchface",
       "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "10999999 (6.0.1)",
-      "lastUpdatedDate": "Aug 4, 2026"
+      "lastUpdatedDate": "Aug 25, 2026"
     },
     {
       "id": "crc092",
@@ -800,7 +800,7 @@
       "packageName": "com.creationcue.crc068watchface",
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "10999999 (4.0.1)",
-      "lastUpdatedDate": "Aug 4, 2026"
+      "lastUpdatedDate": "Aug 25, 2026"
     },
     {
       "id": "crc066",

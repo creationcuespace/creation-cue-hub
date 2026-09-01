@@ -1,17 +1,17 @@
 {
-  "lastUpdated": "2026-08-31T01:37:17.912Z",
+  "lastUpdated": "2026-09-01T02:03:56.988Z",
   "reviews": [
     {
-      "reviewId": "6da79189-45f8-48cd-b7cd-7c5956df0cde",
-      "packageName": "com.creationcue.crc046",
-      "title": "Analog watch face CRC046",
-      "wfId": "crc046",
-      "authorName": "Andreas Timpe",
+      "reviewId": "7fe13a57-9d06-4fd8-b205-d4b9b91c1f53",
+      "packageName": "com.creationscue.crc080watchface",
+      "title": "Digital Watch Face CRC080",
+      "wfId": "crc080",
+      "authorName": "VIKTOR PUZANOV",
       "starRating": 5,
-      "reviewerLanguage": "de",
-      "deviceMetadata": "h8q (Galaxy Z Fold8)",
-      "text": "\tschönes schlichtes Ziffernblatt",
-      "lastModified": "2026-08-30T18:03:43.000Z"
+      "reviewerLanguage": "ru",
+      "deviceMetadata": "r8q (Galaxy S20 FE 5G)",
+      "text": "\tКлассные и стильные часы! Спасибо большое !👍",
+      "lastModified": "2026-08-31T13:48:26.000Z"
     }
   ]
 }
