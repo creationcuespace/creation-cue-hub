@@ -165,7 +165,7 @@
         /* Main Container Layout */
         .app-container {
             width: 100%;
-            max-width: 1280px;
+            max-width: 1536px;
             margin: 0 auto;
             padding: 24px;
             display: grid;
@@ -401,6 +401,19 @@
             min-width: 0;
         }
 
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 24px;
+        }
+        .col-left { display: flex; flex-direction: column; gap: 12px; }
+        .col-right { display: flex; flex-direction: column; gap: 12px; }
+        @media (max-width: 900px) {
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
         /* Platform Tabs */
         .tabs-header {
             display: flex;
@@ -1678,33 +1691,37 @@
 
                     <!-- TikTok Tab Content -->
                     <div class="tab-content active" id="content-tiktok">
-                        <div class="result-container">
-                            <div class="posting-tips-badge">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                <span><strong>Ideal Times (Local):</strong> Mon, Wed, Fri | 7-9 AM, 12-1 PM, 7-11 PM</span>
-                            </div>
-                            <div class="result-box-wrapper">
-                                <textarea class="result-box caption-textarea" id="res-text-tiktok"></textarea>
-                            </div>
-                            <div class="result-actions">
-                                <div class="char-counter-wrapper">
-                                    <svg class="char-progress-ring" id="ring-tiktok">
-                                        <circle class="bg-ring" cx="8" cy="8" r="7"></circle>
-                                        <circle class="active-ring" id="ring-active-tiktok" cx="8" cy="8" r="7"></circle>
-                                    </svg>
-                                    <span id="char-count-tiktok">0 / 2200</span>
+                        <div class="result-container result-grid">
+                            <div class="col-left">
+                                <div class="posting-tips-badge">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    <span><strong>Ideal Times (Local):</strong> Mon, Wed, Fri | 7-9 AM, 12-1 PM, 7-11 PM</span>
                                 </div>
-                                <button class="header-btn primary-btn" onclick="copyResultText('tiktok')">Copy Caption</button>
+                                <div class="result-box-wrapper">
+                                    <textarea class="result-box caption-textarea" id="res-text-tiktok"></textarea>
+                                </div>
+                                <div class="result-actions">
+                                    <div class="char-counter-wrapper">
+                                        <svg class="char-progress-ring" id="ring-tiktok">
+                                            <circle class="bg-ring" cx="8" cy="8" r="7"></circle>
+                                            <circle class="active-ring" id="ring-active-tiktok" cx="8" cy="8" r="7"></circle>
+                                        </svg>
+                                        <span id="char-count-tiktok">0 / 2200</span>
+                                    </div>
+                                    <button class="header-btn primary-btn" onclick="copyResultText('tiktok')">Copy Caption</button>
+                                </div>
                             </div>
                             
-                            <!-- Comment Result Box -->
-                            <div style="margin-top: 20px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
-                                <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
-                                <div class="result-box-wrapper">
-                                    <textarea class="result-box comment-textarea" id="res-comment-tiktok"></textarea>
-                                </div>
-                                <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
-                                    <button class="header-btn primary-btn" onclick="copyCommentText('tiktok')">Copy Comment</button>
+                            <div class="col-right">
+                                <!-- Comment Result Box -->
+                                <div>
+                                    <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
+                                    <div class="result-box-wrapper">
+                                        <textarea class="result-box comment-textarea" id="res-comment-tiktok"></textarea>
+                                    </div>
+                                    <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
+                                        <button class="header-btn primary-btn" onclick="copyCommentText('tiktok')">Copy Comment</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1750,47 +1767,51 @@
 
                     <!-- Instagram Tab Content -->
                     <div class="tab-content" id="content-instagram">
-                        <div class="result-container">
-                            <div class="posting-tips-badge">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                <span><strong>Ideal Times (Local):</strong> Tue, Wed, Thu | 11 AM - 1 PM, 6-9 PM</span>
-                            </div>
-                            <div class="result-box-wrapper">
-                                <textarea class="result-box caption-textarea" id="res-text-instagram"></textarea>
-                            </div>
-                            <div class="result-actions">
-                                <div class="char-counter-wrapper">
-                                    <svg class="char-progress-ring" id="ring-instagram">
-                                        <circle class="bg-ring" cx="8" cy="8" r="7"></circle>
-                                        <circle class="active-ring" id="ring-active-instagram" cx="8" cy="8" r="7"></circle>
-                                    </svg>
-                                    <span id="char-count-instagram">0 / 2200</span>
+                        <div class="result-container result-grid">
+                            <div class="col-left">
+                                <div class="posting-tips-badge">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    <span><strong>Ideal Times (Local):</strong> Tue, Wed, Thu | 11 AM - 1 PM, 6-9 PM</span>
                                 </div>
-                                <button class="header-btn primary-btn" onclick="copyResultText('instagram')">Copy Caption</button>
+                                <div class="result-box-wrapper">
+                                    <textarea class="result-box caption-textarea" id="res-text-instagram"></textarea>
+                                </div>
+                                <div class="result-actions">
+                                    <div class="char-counter-wrapper">
+                                        <svg class="char-progress-ring" id="ring-instagram">
+                                            <circle class="bg-ring" cx="8" cy="8" r="7"></circle>
+                                            <circle class="active-ring" id="ring-active-instagram" cx="8" cy="8" r="7"></circle>
+                                        </svg>
+                                        <span id="char-count-instagram">0 / 2200</span>
+                                    </div>
+                                    <button class="header-btn primary-btn" onclick="copyResultText('instagram')">Copy Caption</button>
+                                </div>
                             </div>
                             
-                            <!-- Comment Result Box -->
-                            <div style="margin-top: 20px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
-                                <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
-                                <div class="result-box-wrapper">
-                                    <textarea class="result-box comment-textarea" id="res-comment-instagram"></textarea>
+                            <div class="col-right">
+                                <!-- Comment Result Box -->
+                                <div>
+                                    <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
+                                    <div class="result-box-wrapper">
+                                        <textarea class="result-box comment-textarea" id="res-comment-instagram"></textarea>
+                                    </div>
+                                    <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
+                                        <button class="header-btn primary-btn" onclick="copyCommentText('instagram')">Copy Comment</button>
+                                    </div>
                                 </div>
-                                <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
-                                    <button class="header-btn primary-btn" onclick="copyCommentText('instagram')">Copy Comment</button>
+    
+                                <!-- DM Trigger Comment Result Box -->
+                                <div style="margin-top: 16px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
+                                    <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">DM Trigger Comment</label>
+                                    <div class="result-box-wrapper">
+                                        <textarea class="result-box comment-textarea" id="res-dm-comment-instagram"></textarea>
+                                    </div>
+                                    <div class="result-actions" style="margin-top: 8px; display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap;">
+                                         <button class="header-btn" onclick="window.open('https://app.linkdm.com/posts', '_blank')" style="border-color: hsla(290, 70%, 60%, 0.3); color: hsl(290, 80%, 75%);">🔗 Open LinkDM</button>
+                                         <button class="header-btn" onclick="copyPlayStoreLink()" style="border-color: var(--primary); color: var(--primary);">📋 Copy Play Store Link</button>
+                                         <button class="header-btn primary-btn" onclick="copyDmCommentText()">Copy DM Comment</button>
+                                     </div>
                                 </div>
-                            </div>
-
-                            <!-- DM Trigger Comment Result Box -->
-                            <div style="margin-top: 16px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
-                                <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">DM Trigger Comment</label>
-                                <div class="result-box-wrapper">
-                                    <textarea class="result-box comment-textarea" id="res-dm-comment-instagram"></textarea>
-                                </div>
-                                <div class="result-actions" style="margin-top: 8px; display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap;">
-                                     <button class="header-btn" onclick="window.open('https://app.linkdm.com/posts', '_blank')" style="border-color: hsla(290, 70%, 60%, 0.3); color: hsl(290, 80%, 75%);">🔗 Open LinkDM</button>
-                                     <button class="header-btn" onclick="copyPlayStoreLink()" style="border-color: var(--primary); color: var(--primary);">📋 Copy Play Store Link</button>
-                                     <button class="header-btn primary-btn" onclick="copyDmCommentText()">Copy DM Comment</button>
-                                 </div>
                             </div>
                         </div>
                         
@@ -1826,39 +1847,43 @@
 
                     <!-- YouTube Shorts Tab Content -->
                     <div class="tab-content" id="content-shorts">
-                        <div class="result-container" style="gap:20px;">
-                            <div class="posting-tips-badge">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                <span><strong>Ideal Times (Local):</strong> Thu - Sun | 2-4 PM, 8-10 PM (Upload 2 hrs early)</span>
-                            </div>
-                            <!-- Shorts Title box -->
-                            <div class="form-group">
-                                <label style="font-weight: 700; color: var(--primary);">Video Title (Max 100 chars)</label>
-                                <div style="display:flex; gap:10px;">
-                                    <input class="input-text" id="res-title-shorts" style="font-family: var(--font-display); font-weight:700;">
-                                    <button class="header-btn primary-btn" onclick="copyShortsTitle()">Copy Title</button>
+                        <div class="result-container result-grid" style="gap:20px;">
+                            <div class="col-left">
+                                <div class="posting-tips-badge">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    <span><strong>Ideal Times (Local):</strong> Thu - Sun | 2-4 PM, 8-10 PM (Upload 2 hrs early)</span>
+                                </div>
+                                <!-- Shorts Title box -->
+                                <div class="form-group">
+                                    <label style="font-weight: 700; color: var(--primary);">Video Title (Max 100 chars)</label>
+                                    <div style="display:flex; gap:10px;">
+                                        <input class="input-text" id="res-title-shorts" style="font-family: var(--font-display); font-weight:700;">
+                                        <button class="header-btn primary-btn" onclick="copyShortsTitle()">Copy Title</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Shorts Description Box -->
+                                <div class="result-container">
+                                    <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">Shorts Description</label>
+                                    <div class="result-box-wrapper">
+                                        <textarea class="result-box caption-textarea" id="res-text-shorts"></textarea>
+                                    </div>
+                                    <div class="result-actions">
+                                        <div class="char-counter-wrapper">
+                                            <svg class="char-progress-ring" id="ring-shorts">
+                                                <circle class="bg-ring" cx="8" cy="8" r="7"></circle>
+                                                <circle class="active-ring" id="ring-active-shorts" cx="8" cy="8" r="7"></circle>
+                                            </svg>
+                                            <span id="char-count-shorts">0 / 5000</span>
+                                        </div>
+                                        <button class="header-btn primary-btn" onclick="copyResultText('shorts')">Copy Description</button>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <!-- Shorts Description Box -->
-                            <div class="result-container">
-                                <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">Shorts Description</label>
-                                <div class="result-box-wrapper">
-                                    <textarea class="result-box caption-textarea" id="res-text-shorts"></textarea>
-                                </div>
-                                <div class="result-actions">
-                                    <div class="char-counter-wrapper">
-                                        <svg class="char-progress-ring" id="ring-shorts">
-                                            <circle class="bg-ring" cx="8" cy="8" r="7"></circle>
-                                            <circle class="active-ring" id="ring-active-shorts" cx="8" cy="8" r="7"></circle>
-                                        </svg>
-                                        <span id="char-count-shorts">0 / 5000</span>
-                                    </div>
-                                    <button class="header-btn primary-btn" onclick="copyResultText('shorts')">Copy Description</button>
-                                </div>
-                                
+                            <div class="col-right">
                                 <!-- Comment Result Box -->
-                                <div style="margin-top: 20px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
+                                <div>
                                     <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
                                     <div class="result-box-wrapper">
                                         <textarea class="result-box comment-textarea" id="res-comment-shorts"></textarea>
@@ -1914,33 +1939,37 @@
 
                     <!-- Facebook Reels Tab Content -->
                     <div class="tab-content" id="content-reels">
-                        <div class="result-container">
-                            <div class="posting-tips-badge">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                <span><strong>Ideal Times (Local):</strong> Mon, Wed, Thu | 9-11 AM, 12-2 PM</span>
-                            </div>
-                            <div class="result-box-wrapper">
-                                <textarea class="result-box caption-textarea" id="res-text-reels"></textarea>
-                            </div>
-                            <div class="result-actions">
-                                <div class="char-counter-wrapper">
-                                    <svg class="char-progress-ring" id="ring-reels">
-                                        <circle class="bg-ring" cx="8" cy="8" r="7"></circle>
-                                        <circle class="active-ring" id="ring-active-reels" cx="8" cy="8" r="7"></circle>
-                                    </svg>
-                                    <span id="char-count-reels">0 / 2000</span>
+                        <div class="result-container result-grid">
+                            <div class="col-left">
+                                <div class="posting-tips-badge">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    <span><strong>Ideal Times (Local):</strong> Mon, Wed, Thu | 9-11 AM, 12-2 PM</span>
                                 </div>
-                                <button class="header-btn primary-btn" onclick="copyResultText('reels')">Copy Caption</button>
+                                <div class="result-box-wrapper">
+                                    <textarea class="result-box caption-textarea" id="res-text-reels"></textarea>
+                                </div>
+                                <div class="result-actions">
+                                    <div class="char-counter-wrapper">
+                                        <svg class="char-progress-ring" id="ring-reels">
+                                            <circle class="bg-ring" cx="8" cy="8" r="7"></circle>
+                                            <circle class="active-ring" id="ring-active-reels" cx="8" cy="8" r="7"></circle>
+                                        </svg>
+                                        <span id="char-count-reels">0 / 2000</span>
+                                    </div>
+                                    <button class="header-btn primary-btn" onclick="copyResultText('reels')">Copy Caption</button>
+                                </div>
                             </div>
                             
-                            <!-- Comment Result Box -->
-                            <div style="margin-top: 20px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
-                                <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
-                                <div class="result-box-wrapper">
-                                    <textarea class="result-box comment-textarea" id="res-comment-reels"></textarea>
-                                </div>
-                                <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
-                                    <button class="header-btn primary-btn" onclick="copyCommentText('reels')">Copy Comment</button>
+                            <div class="col-right">
+                                <!-- Comment Result Box -->
+                                <div>
+                                    <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">Pin Comment Text</label>
+                                    <div class="result-box-wrapper">
+                                        <textarea class="result-box comment-textarea" id="res-comment-reels"></textarea>
+                                    </div>
+                                    <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
+                                        <button class="header-btn primary-btn" onclick="copyCommentText('reels')">Copy Comment</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
