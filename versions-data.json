@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-01T02:03:56.987Z",
+  "lastUpdated": "2026-09-02T01:25:10.589Z",
   "results": [
     {
       "id": "cue178",
@@ -364,11 +364,11 @@
     {
       "id": "cue139",
       "title": "CUE139",
-      "playStoreTitle": "Error 500 (Server Error)!!1",
+      "playStoreTitle": "Watch Face CUE139",
       "packageName": "com.creation.cue139watchface",
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "N/A"
+      "lastUpdatedDate": "Aug 4, 2026"
     },
     {
       "id": "cue138",
