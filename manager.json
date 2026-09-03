@@ -507,20 +507,6 @@
       "badge_text": "🌤️ WEATHER"
     },
     {
-      "id": "cue138",
-      "title": "CUE138",
-      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue138.png",
-      "play_store_url": "market://details?id=com.creation.cue138watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue138",
-      "description_en": "This is WEAR OS Watch face CUE138. Works exclusively with Samsung Watches running API 34+.",
-      "description_de": "CUE138 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
-      "filters": [
-        "🌤️ WEATHER"
-      ],
-      "type": "digital",
-      "is_free": false,
-      "badge_text": "🌤️ WEATHER"
-    },
-    {
       "id": "cue137",
       "title": "CUE137",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue137.png",
