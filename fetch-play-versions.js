@@ -86,6 +86,7 @@ async function main() {
     let wearVersion = 'N/A';
     let lastUpdatedDate = 'N/A';
     let playStoreTitle = wf.title;
+    let downloads = 'N/A';
 
     try {
       const edit = await play.edits.insert({
@@ -157,6 +158,13 @@ async function main() {
           playStoreTitle = parsedTitle;
         }
       }
+
+      const downloadsRegex = />([^<]+)<\/div><div[^>]*>Downloads<\/div>/i;
+      const downloadsMatch = html.match(downloadsRegex);
+      if (downloadsMatch) {
+        downloads = downloadsMatch[1].trim();
+      }
+
     } catch (scrapeError) {
       lastUpdatedDate = 'Fetch Failed';
     }
@@ -206,6 +214,7 @@ async function main() {
       companionVersion,
       wearVersion,
       lastUpdatedDate,
+      downloads,
     });
   }
 
