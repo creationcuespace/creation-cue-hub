@@ -1911,132 +1911,38 @@
                 order: 2;
             }
 
-            .mobile-watch-case {
+            .mobile-watch-container {
                 position: relative;
-                width: 264px;
-                height: 264px;
-                border-radius: 28%; /* Samsung Galaxy Watch Ultra Cushion Squircle */
-                background: linear-gradient(145deg, #252830, #14161b);
-                box-shadow: 
-                    0 14px 35px rgba(0, 0, 0, 0.8),
-                    0 0 0 2px rgba(255, 255, 255, 0.08),
-                    inset 0 2px 4px rgba(255, 255, 255, 0.14),
-                    inset 0 -3px 8px rgba(0, 0, 0, 0.9);
+                width: 275px;
+                height: 295px;
+                margin: 0 auto;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-            }
-
-            /* Left Flank Marine Orange Acoustic Slit */
-            .mobile-watch-left-slit {
-                position: absolute;
-                left: -4px;
-                top: 32%;
-                width: 4px;
-                height: 38px;
-                background: #f95724;
-                border-radius: 2px;
-                box-shadow: 0 0 8px rgba(249, 87, 36, 0.6);
-            }
-
-            /* Right Flank Controls (Samsung Galaxy Watch Ultra) */
-            /* 1) Top Home Pusher */
-            .mobile-watch-btn-top {
-                position: absolute;
-                right: -7px;
-                top: 26%;
-                transform: translateY(-50%);
-                width: 7px;
-                height: 22px;
-                background: #24262d;
-                border-right: 2px solid #d4d9e2;
-                border-radius: 3px;
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
-            }
-
-            /* 2) Center Quick Button with Signature Marine Orange Accent Collar */
-            .mobile-watch-btn-quick {
-                position: absolute;
-                right: -9px;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 10px;
-                height: 22px;
-                background: #141519;
-                border: 2px solid #f95724;
-                border-radius: 5px;
-                box-shadow: 0 0 8px rgba(249, 87, 36, 0.5), 0 2px 6px rgba(0, 0, 0, 0.8);
-            }
-
-            /* 3) Bottom Back Pusher */
-            .mobile-watch-btn-bottom {
-                position: absolute;
-                right: -7px;
-                top: 74%;
-                transform: translateY(-50%);
-                width: 7px;
-                height: 22px;
-                background: #24262d;
-                border-right: 2px solid #d4d9e2;
-                border-radius: 3px;
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
-            }
-
-            .mobile-watch-bezel {
-                position: absolute;
-                inset: 12px;
-                border-radius: 50%;
-                border: 8px solid #272a32;
-                background: #0b0c0f;
-                box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.9);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                pointer-events: none;
-            }
-
-            /* 12 O'Clock Marine Orange Notch */
-            .mobile-watch-bezel::before {
-                content: '';
-                position: absolute;
-                top: 1px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 0;
-                height: 0;
-                border-left: 5px solid transparent;
-                border-right: 5px solid transparent;
-                border-top: 7px solid #f95724;
-                z-index: 5;
-            }
-
-            .mobile-strap-stub {
-                position: absolute;
-                width: 130px;
-                height: 26px;
-                background: #111215;
-                border-radius: 6px;
-                z-index: -1;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            }
-            .mobile-strap-top {
-                top: -15px;
-                border-bottom: 2px solid #1c1d22;
-            }
-            .mobile-strap-bottom {
-                bottom: -15px;
-                border-top: 2px solid #1c1d22;
+                filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.85));
             }
 
             .mobile-watch-face-img {
-                width: 224px;
-                height: 224px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 155px;
+                height: 155px;
                 border-radius: 50%;
                 object-fit: contain;
-                padding: 2px;
-                box-sizing: border-box;
-                display: block;
+                z-index: 1;
                 transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+            }
+
+            .mobile-watch-frame-img {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                pointer-events: none;
+                z-index: 2;
             }
 
             .hero-story-container {
@@ -2660,16 +2566,9 @@
 
                         <!-- Mobile Lightweight Rugged Smartwatch Display -->
                         <div class="mobile-watch-display" id="mobile-watch-display">
-                            <div class="mobile-watch-case">
-                                <div class="mobile-strap-stub mobile-strap-top"></div>
-                                <div class="mobile-strap-stub mobile-strap-bottom"></div>
-                                <div class="mobile-watch-left-slit"></div>
-                                <div class="mobile-watch-btn-top"></div>
-                                <div class="mobile-watch-btn-quick"></div>
-                                <div class="mobile-watch-btn-bottom"></div>
-                                <div class="mobile-watch-bezel">
-                                    <img id="mobile-watch-face-img" class="mobile-watch-face-img" src="images/cue178.png" alt="Featured Watch Face">
-                                </div>
+                            <div class="mobile-watch-container">
+                                <img id="mobile-watch-face-img" class="mobile-watch-face-img" src="images/cue178.png" alt="Featured Watch Face">
+                                <img class="mobile-watch-frame-img" src="images/samsung_ultra_frame.png" alt="Samsung Galaxy Watch Ultra">
                             </div>
                         </div>
 
@@ -3900,17 +3799,17 @@
             // Motion targets & state (calibrated so screen faces camera directly)
             targetPosX: 0,
             targetPosY: 0,
-            targetRotX: 1.38,
-            targetRotY: -0.22,
+            targetRotX: 0.05,
+            targetRotY: -0.15,
             targetRotZ: 0,
-            targetScale: 1.15,
+            targetScale: 1.05,
             
             currentPosX: 1.45,
             currentPosY: 0,
-            currentRotX: 1.38,
-            currentRotY: -0.22,
+            currentRotX: 0.05,
+            currentRotY: -0.15,
             currentRotZ: 0,
-            currentScale: 1.15,
+            currentScale: 1.05,
             
             pointerX: 0,
             pointerY: 0,
@@ -4141,186 +4040,6 @@
                 roughness: 0.30
             });
 
-            // 1. Iconic Samsung Galaxy Watch Ultra Cushion Case ("Squircle" Superellipse)
-            // Rugged 47.4mm proportions: broad muscular shoulders and deep side profile
-            const caseShape = new THREE.Shape();
-            const cw = 2.62, ch = 2.62, cr = 0.88;
-            caseShape.moveTo(-cw + cr, -ch);
-            caseShape.lineTo(cw - cr, -ch);
-            caseShape.quadraticCurveTo(cw, -ch, cw, -ch + cr);
-            caseShape.lineTo(cw, ch - cr);
-            caseShape.quadraticCurveTo(cw, ch, cw - cr, ch);
-            caseShape.lineTo(-cw + cr, ch);
-            caseShape.quadraticCurveTo(-cw, ch, -cw, ch - cr);
-            caseShape.lineTo(-cw, -ch + cr);
-            caseShape.quadraticCurveTo(-cw, -ch, -cw + cr, -ch);
-
-            // Circular cutout aperture so the chassis is an authentic hollow watch frame for dial & bezel
-            const caseHole = new THREE.Path();
-            caseHole.absarc(0, 0, 2.30, 0, Math.PI * 2, true);
-            caseShape.holes.push(caseHole);
-
-            const caseExtrudeSettings = {
-                depth: 0.82,
-                bevelEnabled: true,
-                bevelSegments: 4,
-                steps: 1,
-                bevelSize: 0.14,
-                bevelThickness: 0.10
-            };
-            const caseGeo = new THREE.ExtrudeGeometry(caseShape, caseExtrudeSettings);
-            const caseMesh = new THREE.Mesh(caseGeo, darkTitaniumMat);
-            caseMesh.rotation.x = Math.PI / 2;
-            caseMesh.position.y = -0.04;
-            watch3D.watchGroup.add(caseMesh);
-
-            // 2. Circular Raised Outer Bezel (Sits proud on the cushion case, perfectly clearing dial)
-            const bezelGeo = new THREE.RingGeometry(2.30, 2.56, 64);
-            const bezelMesh = new THREE.Mesh(bezelGeo, bezelTitaniumMat);
-            bezelMesh.rotation.x = -Math.PI / 2;
-            bezelMesh.position.y = 0.150;
-            watch3D.watchGroup.add(bezelMesh);
-
-            // Outer Bezel Chamfer Ring
-            const chamferGeo = new THREE.TorusGeometry(2.54, 0.052, 16, 64);
-            const chamferMesh = new THREE.Mesh(chamferGeo, darkTitaniumMat);
-            chamferMesh.rotation.x = Math.PI / 2;
-            chamferMesh.position.y = 0.138;
-            watch3D.watchGroup.add(chamferMesh);
-
-            // Inner Accent Ring
-            const innerRingGeo = new THREE.TorusGeometry(2.30, 0.016, 16, 64);
-            const innerRingMesh = new THREE.Mesh(innerRingGeo, innerAccentMat);
-            innerRingMesh.rotation.x = Math.PI / 2;
-            innerRingMesh.position.y = 0.150;
-            watch3D.watchGroup.add(innerRingMesh);
-
-            // 12 O'Clock Signature Marine Orange Triangle Indicator
-            const notchShape = new THREE.Shape();
-            notchShape.moveTo(-0.08, 0.07);
-            notchShape.lineTo(0.08, 0.07);
-            notchShape.lineTo(0, -0.07);
-            notchShape.closePath();
-            const notchGeo = new THREE.ShapeGeometry(notchShape);
-            const notchMesh = new THREE.Mesh(notchGeo, marineOrangeMat);
-            notchMesh.rotation.x = -Math.PI / 2;
-            notchMesh.position.set(0, 0.154, -2.44);
-            watch3D.watchGroup.add(notchMesh);
-
-            // Laser-Etched Bezel Indices at hour positions
-            const tickGeo = new THREE.BoxGeometry(0.035, 0.016, 0.10);
-            for (let i = 1; i < 12; i++) {
-                const angle = (i * Math.PI) / 6;
-                const tx = Math.sin(angle) * 2.44;
-                const tz = -Math.cos(angle) * 2.44;
-                const tick = new THREE.Mesh(tickGeo, tickSteelMat);
-                tick.position.set(tx, 0.152, tz);
-                tick.rotation.y = -angle;
-                watch3D.watchGroup.add(tick);
-            }
-
-            // 3. Samsung Galaxy Watch Ultra Right Flank Controls & Crown Guard Bolster
-            // Side bolster / crown protection island
-            const guardBolsterGeo = new THREE.BoxGeometry(0.24, 0.44, 2.70);
-            const guardBolsterMesh = new THREE.Mesh(guardBolsterGeo, darkTitaniumMat);
-            guardBolsterMesh.position.set(2.54, -0.45, 0);
-            watch3D.watchGroup.add(guardBolsterMesh);
-
-            // Upper crown guard bumper
-            const upperGuardGeo = new THREE.BoxGeometry(0.22, 0.38, 0.32);
-            const upperGuardMesh = new THREE.Mesh(upperGuardGeo, darkTitaniumMat);
-            upperGuardMesh.position.set(2.64, -0.45, -0.56);
-            watch3D.watchGroup.add(upperGuardMesh);
-
-            // Lower crown guard bumper
-            const lowerGuardGeo = new THREE.BoxGeometry(0.22, 0.38, 0.32);
-            const lowerGuardMesh = new THREE.Mesh(lowerGuardGeo, darkTitaniumMat);
-            lowerGuardMesh.position.set(2.64, -0.45, 0.56);
-            watch3D.watchGroup.add(lowerGuardMesh);
-
-            // 1) TOP BUTTON: Home / Power Pusher (at ~2 o'clock, z = -1.18)
-            const topBtnBaseGeo = new THREE.BoxGeometry(0.22, 0.28, 0.74);
-            const topBtnBase = new THREE.Mesh(topBtnBaseGeo, buttonPusherMat);
-            topBtnBase.position.set(2.66, -0.45, -1.18);
-            watch3D.watchGroup.add(topBtnBase);
-
-            const topBtnCapGeo = new THREE.BoxGeometry(0.06, 0.22, 0.66);
-            const topBtnCap = new THREE.Mesh(topBtnCapGeo, chromeBevelMat);
-            topBtnCap.position.set(2.77, -0.45, -1.18);
-            watch3D.watchGroup.add(topBtnCap);
-
-            // 2) CENTER BUTTON: The Iconic Quick Button with Signature Marine Orange Accent Ring (at 3 o'clock, z = 0)
-            const quickBtnBaseGeo = new THREE.CylinderGeometry(0.28, 0.28, 0.34, 32);
-            const quickBtnBase = new THREE.Mesh(quickBtnBaseGeo, buttonPusherMat);
-            quickBtnBase.rotation.z = Math.PI / 2;
-            quickBtnBase.position.set(2.68, -0.45, 0);
-            watch3D.watchGroup.add(quickBtnBase);
-
-            const orangeRingGeo = new THREE.TorusGeometry(0.24, 0.052, 16, 32);
-            const orangeRing = new THREE.Mesh(orangeRingGeo, marineOrangeMat);
-            orangeRing.rotation.y = Math.PI / 2;
-            orangeRing.position.set(2.80, -0.45, 0);
-            watch3D.watchGroup.add(orangeRing);
-
-            const quickBtnCapGeo = new THREE.CylinderGeometry(0.19, 0.19, 0.08, 32);
-            const quickBtnCap = new THREE.Mesh(quickBtnCapGeo, darkTitaniumMat);
-            quickBtnCap.rotation.z = Math.PI / 2;
-            quickBtnCap.position.set(2.85, -0.45, 0);
-            watch3D.watchGroup.add(quickBtnCap);
-
-            // 3) BOTTOM BUTTON: Back Navigation Pusher (at ~4 o'clock, z = +1.18)
-            const bottomBtnBaseGeo = new THREE.BoxGeometry(0.22, 0.28, 0.74);
-            const bottomBtnBase = new THREE.Mesh(bottomBtnBaseGeo, buttonPusherMat);
-            bottomBtnBase.position.set(2.66, -0.45, 1.18);
-            watch3D.watchGroup.add(bottomBtnBase);
-
-            const bottomBtnCapGeo = new THREE.BoxGeometry(0.06, 0.22, 0.66);
-            const bottomBtnCap = new THREE.Mesh(bottomBtnCapGeo, chromeBevelMat);
-            bottomBtnCap.position.set(2.77, -0.45, 1.18);
-            watch3D.watchGroup.add(bottomBtnCap);
-
-            // 4. Left-Flank Speaker Housing & Signature Marine Orange Acoustic Slit
-            const leftHousingGeo = new THREE.BoxGeometry(0.18, 0.40, 1.45);
-            const leftHousingMesh = new THREE.Mesh(leftHousingGeo, darkTitaniumMat);
-            leftHousingMesh.position.set(-2.57, -0.45, -0.65);
-            watch3D.watchGroup.add(leftHousingMesh);
-
-            const leftOrangeGeo = new THREE.BoxGeometry(0.08, 0.18, 1.05);
-            const leftOrangeMesh = new THREE.Mesh(leftOrangeGeo, marineOrangeMat);
-            leftOrangeMesh.position.set(-2.64, -0.45, -0.65);
-            watch3D.watchGroup.add(leftOrangeMesh);
-
-            const micGeo = new THREE.CylinderGeometry(0.05, 0.05, 0.12, 16);
-            const micMesh = new THREE.Mesh(micGeo, darkTitaniumMat);
-            micMesh.rotation.z = Math.PI / 2;
-            micMesh.position.set(-2.62, -0.45, 0.65);
-            watch3D.watchGroup.add(micMesh);
-
-            // Solid Backing Plate underneath dial
-            const backingGeo = new THREE.CircleGeometry(2.30, 64);
-            const backingMesh = new THREE.Mesh(backingGeo, new THREE.MeshBasicMaterial({ color: 0x050508 }));
-            backingMesh.rotation.x = -Math.PI / 2;
-            backingMesh.position.y = 0.156;
-            watch3D.watchGroup.add(backingMesh);
-
-            // Bottom BioActive Sensor Cluster
-            const sensorGeo = new THREE.CylinderGeometry(2.1, 1.8, 0.32, 32);
-            const sensorMat = new THREE.MeshStandardMaterial({ color: 0x08080a, roughness: 0.2, metalness: 0.5 });
-            const sensorMesh = new THREE.Mesh(sensorGeo, sensorMat);
-            sensorMesh.position.y = -0.96;
-            watch3D.watchGroup.add(sensorMesh);
-
-            // Optical Sensor LEDs
-            const ledGeo = new THREE.CircleGeometry(0.18, 16);
-            const ledMat = new THREE.MeshBasicMaterial({ color: 0x00ff88 });
-            const led1 = new THREE.Mesh(ledGeo, ledMat);
-            led1.rotation.x = Math.PI / 2;
-            led1.position.set(0.35, -1.12, 0);
-            const led2 = led1.clone();
-            led2.position.set(-0.35, -1.12, 0);
-            watch3D.watchGroup.add(led1);
-            watch3D.watchGroup.add(led2);
-
             // High-Performance Offscreen Canvas for Guaranteed Watch Face Rendering
             const dialCanvas = document.createElement('canvas');
             dialCanvas.width = 512;
@@ -4331,8 +4050,7 @@
 
             function drawFaceImage(img) {
                 dialCtx.clearRect(0, 0, 512, 512);
-                // Draw with 6px safe margin so 100% of outer ticks, numbers, and indices are completely inside the circular dial
-                dialCtx.drawImage(img, 6, 6, 500, 500);
+                dialCtx.drawImage(img, 0, 0, 512, 512);
                 screenTexture.needsUpdate = true;
             }
             watch3D.drawFaceImage = drawFaceImage;
@@ -4351,18 +4069,89 @@
             screenTexture.generateMipmaps = false;
             watch3D.screenTexture = screenTexture;
 
-            // Screen Mesh displaying the watch face (elevated comfortably at y = 0.162 with high renderOrder)
-            const screenGeo = new THREE.CircleGeometry(2.28, 64);
+            // 1. High-Precision Screen Mesh (Displays the live watch face inside the dial aperture)
+            const screenGeo = new THREE.CircleGeometry(2.26, 64);
             watch3D.screenMaterial = new THREE.MeshBasicMaterial({
                 map: screenTexture,
                 transparent: false,
                 side: THREE.DoubleSide
             });
             watch3D.screenMesh = new THREE.Mesh(screenGeo, watch3D.screenMaterial);
-            watch3D.screenMesh.rotation.x = -Math.PI / 2;
-            watch3D.screenMesh.position.y = 0.162;
-            watch3D.screenMesh.renderOrder = 20;
+            watch3D.screenMesh.position.set(0, 0, 0.00);
+            watch3D.screenMesh.renderOrder = 2;
             watch3D.watchGroup.add(watch3D.screenMesh);
+
+            // Official Samsung Galaxy Watch Ultra Studio Render Texture
+            const textureLoader = new THREE.TextureLoader();
+            const frameTexture = textureLoader.load('images/samsung_ultra_frame.png', () => {
+                if (watch3D.renderer && watch3D.scene) {
+                    watch3D.renderer.render(watch3D.scene, watch3D.camera);
+                }
+            });
+            frameTexture.colorSpace = THREE.SRGBColorSpace;
+
+            // 2. Photorealistic Official Samsung Galaxy Watch Ultra Front Frame
+            // Exact titanium bezel, 12 o'clock orange notch, engraved numerals, 3 right buttons & strap
+            const frameGeo = new THREE.PlaneGeometry(8.02, 8.62);
+            const frameMat = new THREE.MeshBasicMaterial({
+                map: frameTexture,
+                transparent: true,
+                alphaTest: 0.01,
+                side: THREE.DoubleSide,
+                depthWrite: false
+            });
+            const frameMesh = new THREE.Mesh(frameGeo, frameMat);
+            frameMesh.position.set(0, 0, 0.02);
+            frameMesh.renderOrder = 5;
+            watch3D.watchGroup.add(frameMesh);
+
+            // 3. Subtle Sapphire Crystal Sheen Highlight
+            const glassGeo = new THREE.CircleGeometry(2.26, 64);
+            const glassMat = new THREE.MeshPhysicalMaterial({
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.04,
+                roughness: 0.08,
+                metalness: 0.1,
+                transmission: 0.95
+            });
+            const glassMesh = new THREE.Mesh(glassGeo, glassMat);
+            glassMesh.position.set(0, 0, 0.025);
+            glassMesh.renderOrder = 8;
+            watch3D.watchGroup.add(glassMesh);
+
+            // 4. 3D Dark Titanium Cushion Chassis behind the frame (gives physical thickness when tilted in perspective)
+            const caseShape = new THREE.Shape();
+            const cw = 2.44, ch = 2.44, cr = 0.82;
+            caseShape.moveTo(-cw + cr, -ch);
+            caseShape.lineTo(cw - cr, -ch);
+            caseShape.quadraticCurveTo(cw, -ch, cw, -ch + cr);
+            caseShape.lineTo(cw, ch - cr);
+            caseShape.quadraticCurveTo(cw, ch, cw - cr, ch);
+            caseShape.lineTo(-cw + cr, ch);
+            caseShape.quadraticCurveTo(-cw, ch, -cw, ch - cr);
+            caseShape.lineTo(-cw, -ch + cr);
+            caseShape.quadraticCurveTo(-cw, -ch, -cw + cr, -ch);
+
+            const caseExtrudeSettings = {
+                depth: 0.45,
+                bevelEnabled: true,
+                bevelSegments: 3,
+                steps: 1,
+                bevelSize: 0.08,
+                bevelThickness: 0.06
+            };
+            const caseGeo = new THREE.ExtrudeGeometry(caseShape, caseExtrudeSettings);
+            const caseMesh = new THREE.Mesh(caseGeo, darkTitaniumMat);
+            caseMesh.position.set(0, 0, -0.48);
+            watch3D.watchGroup.add(caseMesh);
+
+            // BioActive sensor cluster at the back
+            const sensorGeo = new THREE.CylinderGeometry(1.8, 1.5, 0.20, 32);
+            const sensorMesh = new THREE.Mesh(sensorGeo, new THREE.MeshStandardMaterial({ color: 0x08080a, roughness: 0.2, metalness: 0.5 }));
+            sensorMesh.rotation.x = Math.PI / 2;
+            sensorMesh.position.set(0, 0, -0.58);
+            watch3D.watchGroup.add(sensorMesh);
 
             // Robust Watch Face Painter (Draws image directly to canvas or falls back to CDN)
             function paintFaceToCanvas(imgSrc, callback) {
@@ -4391,73 +4180,6 @@
             // Load initial CUE178 watch face
             paintFaceToCanvas('images/cue178.png', () => {
                 watch3D.loadedTextures[0] = screenTexture;
-            });
-
-            // 5. Samsung Galaxy Watch Ultra Integrated Dynamic Lugs
-            const lugGeo = new THREE.BoxGeometry(0.56, 0.44, 0.50);
-            const lugPositions = [
-                { x: 1.40, z: -2.68 },
-                { x: -1.40, z: -2.68 },
-                { x: 1.40, z: 2.68 },
-                { x: -1.40, z: 2.68 }
-            ];
-            lugPositions.forEach(pos => {
-                const lug = new THREE.Mesh(lugGeo, darkTitaniumMat);
-                lug.position.set(pos.x, -0.45, pos.z);
-                watch3D.watchGroup.add(lug);
-            });
-
-            // 6. Galaxy Watch Ultra Marine Ripple Band (Wide Textured Dark Silicone)
-            function createUltraStrap(isTop) {
-                const points = [];
-                const sign = isTop ? -1 : 1;
-                const length = 5.4;
-                const segments = 18;
-                for (let i = 0; i <= segments; i++) {
-                    const t = i / segments;
-                    const z = (2.42 + t * length) * sign;
-                    const y = -Math.pow(t, 1.8) * 1.65 - 0.45;
-                    points.push(new THREE.Vector3(0, y, z));
-                }
-                const curve = new THREE.CatmullRomCurve3(points);
-                const shape = new THREE.Shape();
-                const strapWidth = 1.40;
-                const strapThick = 0.16;
-                shape.moveTo(-strapWidth, -strapThick);
-                shape.lineTo(strapWidth, -strapThick);
-                shape.lineTo(strapWidth * 0.96, strapThick);
-                shape.lineTo(-strapWidth * 0.96, strapThick);
-                shape.closePath();
-
-                const extrudeSettings = {
-                    steps: segments * 2,
-                    bevelEnabled: true,
-                    bevelThickness: 0.04,
-                    bevelSize: 0.04,
-                    bevelSegments: 3,
-                    extrudePath: curve
-                };
-                const strapGeo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-                return new THREE.Mesh(strapGeo, matteStrapMat);
-            }
-
-            const topStrap = createUltraStrap(true);
-            const bottomStrap = createUltraStrap(false);
-            watch3D.watchGroup.add(topStrap);
-            watch3D.watchGroup.add(bottomStrap);
-
-            // Galaxy Ultra Signature Marine Wave Ribs
-            const ribGeo = new THREE.BoxGeometry(2.56, 0.07, 0.15);
-            const ribMat = new THREE.MeshStandardMaterial({ color: 0x090a0d, roughness: 0.98, metalness: 0.02 });
-            [-1, 1].forEach(sign => {
-                [3.1, 3.8, 4.5, 5.2, 5.9, 6.6].forEach(dist => {
-                    const rib = new THREE.Mesh(ribGeo, ribMat);
-                    const t = (dist - 2.42) / 5.4;
-                    const y = -Math.pow(t, 1.8) * 1.65 - 0.36;
-                    rib.position.set(0, y, dist * sign);
-                    rib.rotation.x = sign * t * 0.40;
-                    watch3D.watchGroup.add(rib);
-                });
             });
 
             watch3D.scene.add(watch3D.watchGroup);
@@ -4648,33 +4370,33 @@
 
             if (p < 0.35) {
                 const subP = p / 0.35;
-                watch3D.targetRotX = 1.38 - subP * 0.15;
-                watch3D.targetRotY = -0.22 - subP * 0.45;
-                watch3D.targetRotZ = subP * 0.05;
+                watch3D.targetRotX = 0.05 - subP * 0.04;
+                watch3D.targetRotY = -0.15 - subP * 0.15;
+                watch3D.targetRotZ = subP * 0.02;
                 watch3D.targetPosY = -subP * 0.20;
-                watch3D.targetScale = 1.15 + subP * 0.08;
+                watch3D.targetScale = 1.05 + subP * 0.05;
                 setStorySlideActive(0);
                 if (!watch3D.customFaceLocked && watch3D.currentFaceIndex !== 0) {
                     set3DWatchFaceInternal(0);
                 }
             } else if (p < 0.70) {
                 const subP = (p - 0.35) / 0.35;
-                watch3D.targetRotX = 1.23 + subP * 0.20;
-                watch3D.targetRotY = -0.67 + subP * 0.85;
-                watch3D.targetRotZ = 0.05 - subP * 0.05;
+                watch3D.targetRotX = 0.01 + subP * 0.06;
+                watch3D.targetRotY = -0.30 + subP * 0.52;
+                watch3D.targetRotZ = 0.02 - subP * 0.02;
                 watch3D.targetPosY = -0.20 + subP * 0.30;
-                watch3D.targetScale = 1.23 + subP * 0.07;
+                watch3D.targetScale = 1.10 + subP * 0.05;
                 setStorySlideActive(1);
                 if (!watch3D.customFaceLocked && watch3D.currentFaceIndex !== 1) {
                     set3DWatchFaceInternal(1);
                 }
             } else {
                 const subP = (p - 0.70) / 0.30;
-                watch3D.targetRotX = 1.43 - subP * 0.08;
-                watch3D.targetRotY = 0.18 - subP * 0.18;
+                watch3D.targetRotX = 0.07 - subP * 0.05;
+                watch3D.targetRotY = 0.22 - subP * 0.22;
                 watch3D.targetRotZ = 0;
                 watch3D.targetPosY = 0.10 - subP * 0.80;
-                watch3D.targetScale = 1.30 - subP * 0.15;
+                watch3D.targetScale = 1.15 - subP * 0.08;
                 setStorySlideActive(2);
                 if (!watch3D.customFaceLocked && watch3D.currentFaceIndex !== 2) {
                     set3DWatchFaceInternal(2);
