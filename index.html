@@ -1927,16 +1927,31 @@
                 justify-content: center;
             }
 
-            /* Galaxy Ultra Right Quick Button Accent */
+            /* Upper Right Button with Chrome Trim */
+            .mobile-watch-case::before {
+                content: '';
+                position: absolute;
+                right: -8px;
+                top: 28%;
+                transform: translateY(-50%);
+                width: 8px;
+                height: 22px;
+                background: #24262d;
+                border-right: 2px solid #d4d9e2;
+                border-radius: 4px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+            }
+
+            /* Lower Right Round Button with Marine Orange Ring */
             .mobile-watch-case::after {
                 content: '';
                 position: absolute;
                 right: -9px;
-                top: 50%;
+                top: 64%;
                 transform: translateY(-50%);
-                width: 9px;
-                height: 26px;
-                background: #1c1e23;
+                width: 10px;
+                height: 22px;
+                background: #141519;
                 border: 2px solid #f95724;
                 border-radius: 5px;
                 box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
@@ -4059,58 +4074,65 @@
             // Build Smartwatch Model
             watch3D.watchGroup = new THREE.Group();
 
-            // Samsung Galaxy Watch Ultra Materials
-            // Grade-4 Dark Titanium Case
+            // Samsung Galaxy Watch Ultra Materials (Strictly matching photo colors)
+            // Deep Stealth Matte Dark Titanium
             const darkTitaniumMat = new THREE.MeshStandardMaterial({
-                color: 0x1c1e23,
-                metalness: 0.88,
-                roughness: 0.36
+                color: 0x141519,
+                metalness: 0.86,
+                roughness: 0.38
             });
 
-            // Precision Dark Bezel Metal
+            // Gunmetal Bezel Metal
             const bezelTitaniumMat = new THREE.MeshStandardMaterial({
-                color: 0x272a32,
-                metalness: 0.90,
-                roughness: 0.28
+                color: 0x22242b,
+                metalness: 0.88,
+                roughness: 0.30
             });
 
             // Tactical Inner Accent Ring
             const innerAccentMat = new THREE.MeshStandardMaterial({
-                color: 0x1f2127,
+                color: 0x16171b,
                 metalness: 0.82,
                 roughness: 0.40
             });
 
-            // Iconic Samsung Ultra Marine Orange (Quick Button Ring, 12 o'clock marker)
+            // Signature Marine Orange (12 o'clock notch, lower button ring, left accent strip)
             const marineOrangeMat = new THREE.MeshStandardMaterial({
                 color: 0xf95724,
-                metalness: 0.15,
-                roughness: 0.30,
-                emissive: 0x3d1200
+                metalness: 0.20,
+                roughness: 0.32,
+                emissive: 0x441200
             });
 
-            // Dark Tactile Pushers
+            // Polished Chrome Rim for Upper Button
+            const chromeBevelMat = new THREE.MeshStandardMaterial({
+                color: 0xd4d9e2,
+                metalness: 0.96,
+                roughness: 0.18
+            });
+
+            // Dark Button Pusher Material
             const buttonPusherMat = new THREE.MeshStandardMaterial({
-                color: 0x2b2e35,
-                metalness: 0.92,
-                roughness: 0.25
+                color: 0x24262d,
+                metalness: 0.90,
+                roughness: 0.26
             });
 
             // Matte Fluororubber Marine Strap
             const matteStrapMat = new THREE.MeshStandardMaterial({
-                color: 0x111215,
-                roughness: 0.95,
-                metalness: 0.03
+                color: 0x0e0f12,
+                roughness: 0.96,
+                metalness: 0.02
             });
 
-            // Left Flank Speaker Grille Material
-            const grilleMat = new THREE.MeshStandardMaterial({
-                color: 0x0a0b0d,
-                roughness: 0.92,
-                metalness: 0.20
+            // Laser-Etched Bezel Tick Steel
+            const tickSteelMat = new THREE.MeshStandardMaterial({
+                color: 0x5e6573,
+                metalness: 0.82,
+                roughness: 0.30
             });
 
-            // 1. Iconic Samsung Galaxy Watch Ultra Cushion Case ("Squircle" Superellipse)
+            // 1. Iconic Cushion Case ("Squircle" Superellipse)
             const caseShape = new THREE.Shape();
             const cw = 2.38, ch = 2.38, cr = 0.72;
             caseShape.moveTo(-cw + cr, -ch);
@@ -4137,7 +4159,7 @@
             caseMesh.position.y = 0.08;
             watch3D.watchGroup.add(caseMesh);
 
-            // 2. Circular Raised Outer Bezel (Sits atop the cushion case, perfectly clearing the dial)
+            // 2. Circular Raised Outer Bezel (Sits atop the cushion case, clearing the dial)
             const bezelGeo = new THREE.RingGeometry(2.30, 2.48, 64);
             const bezelMesh = new THREE.Mesh(bezelGeo, bezelTitaniumMat);
             bezelMesh.rotation.x = -Math.PI / 2;
@@ -4151,14 +4173,14 @@
             chamferMesh.position.y = 0.120;
             watch3D.watchGroup.add(chamferMesh);
 
-            // Inner Accent Ring (Positioned safely outside dial edge)
+            // Inner Accent Ring
             const innerRingGeo = new THREE.TorusGeometry(2.30, 0.015, 16, 64);
             const innerRingMesh = new THREE.Mesh(innerRingGeo, innerAccentMat);
             innerRingMesh.rotation.x = Math.PI / 2;
             innerRingMesh.position.y = 0.130;
             watch3D.watchGroup.add(innerRingMesh);
 
-            // 12 O'Clock Marine Orange Triangle Indicator (Distinctive Ultra Marker)
+            // 12 O'Clock Marine Orange Triangle Indicator
             const notchShape = new THREE.Shape();
             notchShape.moveTo(-0.07, 0.06);
             notchShape.lineTo(0.07, 0.06);
@@ -4170,54 +4192,54 @@
             notchMesh.position.set(0, 0.134, -2.38);
             watch3D.watchGroup.add(notchMesh);
 
-            // 3. Right-Flank Galaxy Watch Ultra Controls (Triple Button Assembly)
-            // Center Quick Button with Signature Marine Orange Accent Ring
-            const quickBtnGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.26, 32);
-            const quickBtn = new THREE.Mesh(quickBtnGeo, buttonPusherMat);
-            quickBtn.rotation.z = Math.PI / 2;
-            quickBtn.position.set(2.54, -0.15, 0);
-            watch3D.watchGroup.add(quickBtn);
+            // Laser-Etched Bezel Indices at hour positions
+            const tickGeo = new THREE.BoxGeometry(0.03, 0.015, 0.09);
+            for (let i = 1; i < 12; i++) {
+                const angle = (i * Math.PI) / 6;
+                const tx = Math.sin(angle) * 2.39;
+                const tz = -Math.cos(angle) * 2.39;
+                const tick = new THREE.Mesh(tickGeo, tickSteelMat);
+                tick.position.set(tx, 0.133, tz);
+                tick.rotation.y = -angle;
+                watch3D.watchGroup.add(tick);
+            }
 
-            const orangeRingGeo = new THREE.TorusGeometry(0.21, 0.038, 16, 32);
-            const orangeRing = new THREE.Mesh(orangeRingGeo, marineOrangeMat);
-            orangeRing.rotation.y = Math.PI / 2;
-            orangeRing.position.set(2.60, -0.15, 0);
-            watch3D.watchGroup.add(orangeRing);
+            // 3. EXACTLY 2 BUTTONS ON THE RIGHT SIDE (Matching uploaded photo):
+            // BUTTON 1: Upper Right Tactile Pusher (at ~2 o'clock, z = -1.15) with Chrome Trim
+            const upperBtnBaseGeo = new THREE.BoxGeometry(0.16, 0.22, 0.68);
+            const upperBtnBase = new THREE.Mesh(upperBtnBaseGeo, buttonPusherMat);
+            upperBtnBase.position.set(2.48, -0.14, -1.15);
+            watch3D.watchGroup.add(upperBtnBase);
 
-            const capGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.05, 32);
-            const capMesh = new THREE.Mesh(capGeo, darkTitaniumMat);
-            capMesh.rotation.z = Math.PI / 2;
-            capMesh.position.set(2.68, -0.15, 0);
-            watch3D.watchGroup.add(capMesh);
+            const upperBtnCapGeo = new THREE.BoxGeometry(0.04, 0.18, 0.60);
+            const upperBtnCap = new THREE.Mesh(upperBtnCapGeo, chromeBevelMat);
+            upperBtnCap.position.set(2.57, -0.14, -1.15);
+            watch3D.watchGroup.add(upperBtnCap);
 
-            // Crown Guards
-            const guardGeo = new THREE.BoxGeometry(0.20, 0.28, 0.22);
-            [-0.42, 0.42].forEach(offZ => {
-                const guard = new THREE.Mesh(guardGeo, darkTitaniumMat);
-                guard.position.set(2.42, -0.15, offZ);
-                watch3D.watchGroup.add(guard);
-            });
+            // BUTTON 2: Lower Right Round Button (at ~4 o'clock, z = 0.55) with Marine Orange Accent Ring
+            const lowerBtnBaseGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.26, 32);
+            const lowerBtnBase = new THREE.Mesh(lowerBtnBaseGeo, buttonPusherMat);
+            lowerBtnBase.rotation.z = Math.PI / 2;
+            lowerBtnBase.position.set(2.50, -0.14, 0.55);
+            watch3D.watchGroup.add(lowerBtnBase);
 
-            // Top & Bottom Tactical Pushers
-            const pusherGeo = new THREE.BoxGeometry(0.14, 0.20, 0.65);
-            [-1.15, 1.15].forEach(offZ => {
-                const pusher = new THREE.Mesh(pusherGeo, buttonPusherMat);
-                pusher.position.set(2.46, -0.15, offZ);
-                watch3D.watchGroup.add(pusher);
-            });
+            const lowerOrangeRingGeo = new THREE.TorusGeometry(0.20, 0.038, 16, 32);
+            const lowerOrangeRing = new THREE.Mesh(lowerOrangeRingGeo, marineOrangeMat);
+            lowerOrangeRing.rotation.y = Math.PI / 2;
+            lowerOrangeRing.position.set(2.57, -0.14, 0.55);
+            watch3D.watchGroup.add(lowerOrangeRing);
 
-            // 4. Left-Flank Speaker Grille & Marine Orange Acoustic Slits
-            const grilleGeo = new THREE.BoxGeometry(0.10, 0.14, 0.90);
-            const grilleMesh = new THREE.Mesh(grilleGeo, grilleMat);
-            grilleMesh.position.set(-2.44, -0.15, 0);
-            watch3D.watchGroup.add(grilleMesh);
+            const lowerCapGeo = new THREE.CylinderGeometry(0.16, 0.16, 0.05, 32);
+            const lowerCap = new THREE.Mesh(lowerCapGeo, darkTitaniumMat);
+            lowerCap.rotation.z = Math.PI / 2;
+            lowerCap.position.set(2.64, -0.14, 0.55);
+            watch3D.watchGroup.add(lowerCap);
 
-            const slitGeo = new THREE.BoxGeometry(0.06, 0.04, 0.30);
-            [-0.22, 0.22].forEach(offZ => {
-                const slit = new THREE.Mesh(slitGeo, marineOrangeMat);
-                slit.position.set(-2.47, -0.15, offZ);
-                watch3D.watchGroup.add(slit);
-            });
+            // 4. Left-Flank Vibrant Orange Accent Strip (between 9 and 10 o'clock, matching photo)
+            const leftOrangeGeo = new THREE.BoxGeometry(0.06, 0.14, 0.95);
+            const leftOrangeMesh = new THREE.Mesh(leftOrangeGeo, marineOrangeMat);
+            leftOrangeMesh.position.set(-2.48, -0.14, -0.75);
+            watch3D.watchGroup.add(leftOrangeMesh);
 
             // Solid Backing Plate underneath dial
             const backingGeo = new THREE.CircleGeometry(2.28, 64);
