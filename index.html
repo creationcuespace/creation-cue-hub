@@ -1619,27 +1619,34 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            padding: 40px 60px;
-            max-width: 1400px;
+            padding: 40px 48px;
+            max-width: 1520px;
             margin: 0 auto;
         }
 
         .hero-story-slide {
             position: absolute;
-            max-width: 520px;
+            max-width: 440px;
+            left: 48px;
             text-align: left;
             opacity: 0;
             transform: translateY(24px) scale(0.96);
             transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
             will-change: opacity, transform;
-            background: rgba(10, 10, 14, 0.55);
-            padding: 28px 32px;
-            border-radius: 24px;
+            background: rgba(10, 10, 14, 0.65);
+            padding: 24px 28px;
+            border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        @media (min-width: 1600px) {
+            .hero-story-slide {
+                left: calc((100% - 1520px) / 2 + 48px);
+            }
         }
 
         .hero-story-slide.active {
@@ -1993,6 +2000,7 @@
 
             .hero-story-slide {
                 position: relative !important;
+                left: auto !important;
                 opacity: 1 !important;
                 transform: none !important;
                 pointer-events: auto !important;
@@ -3839,16 +3847,18 @@
             clockInterval: null,
             
             // Motion targets & state (calibrated so screen faces camera directly)
+            targetPosX: 0,
+            targetPosY: 0,
             targetRotX: 1.38,
             targetRotY: -0.22,
             targetRotZ: 0,
-            targetPosY: 0,
             targetScale: 1.0,
             
+            currentPosX: 1.45,
+            currentPosY: 0,
             currentRotX: 1.38,
             currentRotY: -0.22,
             currentRotZ: 0,
-            currentPosY: 0,
             currentScale: 1.0,
             
             pointerX: 0,
@@ -4388,6 +4398,8 @@
             const floatRotZ = watch3D.isReducedMotion ? 0 : Math.cos(t * 1.1) * 0.015;
 
             const lerpSpeed = 0.075;
+            const basePosX = (window.innerWidth > 1200) ? 1.45 : (window.innerWidth > 900 ? 1.10 : (window.innerWidth > 768 ? 0.75 : 0));
+            watch3D.currentPosX += (watch3D.targetPosX + basePosX - watch3D.currentPosX) * lerpSpeed;
             watch3D.currentRotX += (watch3D.targetRotX + watch3D.pointerY + watch3D.dragRotX - watch3D.currentRotX) * lerpSpeed;
             watch3D.currentRotY += (watch3D.targetRotY + watch3D.pointerX + watch3D.dragRotY - watch3D.currentRotY) * lerpSpeed;
             watch3D.currentRotZ += (watch3D.targetRotZ + floatRotZ - watch3D.currentRotZ) * lerpSpeed;
@@ -4397,12 +4409,13 @@
             watch3D.watchGroup.rotation.x = watch3D.currentRotX;
             watch3D.watchGroup.rotation.y = watch3D.currentRotY;
             watch3D.watchGroup.rotation.z = watch3D.currentRotZ;
+            watch3D.watchGroup.position.x = watch3D.currentPosX;
             watch3D.watchGroup.position.y = watch3D.currentPosY;
             watch3D.watchGroup.scale.setScalar(watch3D.currentScale);
 
             const glowEl = document.getElementById('watch-glow-fx');
             if (glowEl) {
-                const shiftX = Math.sin(watch3D.currentRotY) * 55;
+                const shiftX = Math.sin(watch3D.currentRotY) * 55 + (watch3D.currentPosX * 45);
                 const shiftY = -Math.sin(watch3D.currentRotX) * 35;
                 glowEl.style.transform = `translate(${shiftX}px, ${shiftY}px)`;
             }
