@@ -3,7 +3,7 @@
 <head><script>if(location.hostname.includes("firebaseapp.com")){location.replace(location.href.replace(location.hostname,"creationcue.web.app"));}</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://cdn.jsdelivr.net https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.jsdelivr.net https://creationcue.space https://via.placeholder.com https://wsrv.nl https://*.googleusercontent.com https://raw.githubusercontent.com https://*.githubusercontent.com; connect-src 'self' https://raw.githubusercontent.com wss://*.firebasedatabase.app wss://*.europe-west1.firebasedatabase.app https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.google.com/recaptcha/ https://ntfy.sh https://corsproxy.io https://api.allorigins.win https://script.google.com https://script.googleusercontent.com; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://*.firebaseapp.com https://accounts.google.com https://content-firebaseauth.googleapis.com https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://www.google.com/recaptcha/ https://recaptcha.net/;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://cdn.jsdelivr.net https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://*.firebaseio.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.jsdelivr.net https://creationcue.space https://via.placeholder.com https://wsrv.nl https://*.googleusercontent.com https://raw.githubusercontent.com https://*.githubusercontent.com; connect-src 'self' https://raw.githubusercontent.com wss://*.firebasedatabase.app wss://*.europe-west1.firebasedatabase.app https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app wss://*.firebaseio.com https://*.firebaseio.com https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.google.com/recaptcha/ https://ntfy.sh https://corsproxy.io https://api.allorigins.win https://script.google.com https://script.googleusercontent.com; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://*.firebaseapp.com https://accounts.google.com https://content-firebaseauth.googleapis.com https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://*.firebaseio.com https://www.google.com/recaptcha/ https://recaptcha.net/;">
     <title>CreationCue™ | Wear OS Watch Face Manager</title>
     <meta name="description" content="Manage and browse premium Wear OS watch faces by CreationCue. Explore catalog, customize filters, add to favorites, and contact support.">
     <meta name="robots" content="index, follow">
@@ -27,7 +27,10 @@
     <!-- Performance: Early connection to image CDN & Preloads -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link rel="preload" href="images/ccBanner1.webp" as="image" fetchpriority="high">
+    <link rel="preload" href="images/cue178.png" as="image" fetchpriority="high">
+    <link rel="preload" href="images/cue003.png" as="image">
+    <link rel="preload" href="images/cue177.png" as="image">
+    <link rel="preload" href="images/ccBanner1.webp" as="image">
     
     <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,6 +38,9 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
     
+    <!-- Three.js 3D WebGL Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
     <style>
         :root {
             /* HSL tailored color palette */
@@ -452,6 +458,38 @@
             border-color: var(--primary);
             background: var(--surface-hover);
             box-shadow: 0 12px 30px rgba(0,0,0,0.6), 0 0 20px var(--primary-glow);
+        }
+
+        /* Card 3D Preview Button */
+        .card-preview-3d-btn {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(12, 12, 16, 0.85);
+            border: 1px solid rgba(241, 179, 28, 0.4);
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s ease;
+            z-index: 6;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-preview-3d-btn:hover {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+            transform: scale(1.08);
+            box-shadow: 0 4px 14px rgba(241, 179, 28, 0.5);
         }
 
         /* Card Badges */
@@ -1485,100 +1523,375 @@
         }
 
 
-        /* Hero Section & Background Parallax from index_backup.html */
-        .hero-section {
+        /* 3D Scroll Hero Section */
+        .hero-section.hero-3d-section {
             position: relative;
-            height: 70vh;
-            min-height: 500px;
+            height: 175vh; /* Ample scroll track for the 3D cinematic rotation */
+            min-height: 850px;
+            display: block;
+            padding: 0;
+            margin: -24px -24px 24px -24px;
+            border-bottom: 1px solid var(--border-color);
+            background: radial-gradient(circle at 50% 30%, rgba(241, 179, 28, 0.08) 0%, rgba(12, 12, 16, 0.7) 50%, var(--bg-color) 95%);
+        }
+
+        @media (min-width: 769px) {
+            .hero-section.hero-3d-section {
+                margin: -32px -40px 24px -40px;
+                height: 195vh;
+            }
+        }
+
+        .hero-3d-sticky-frame {
+            position: sticky;
+            top: 64px;
+            height: calc(100vh - 64px);
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            padding: 60px 20px;
-            margin: -24px -24px 24px -24px;
-            border-bottom: 1px solid var(--border-color);
         }
 
-        @media (min-width: 769px) {
-            .hero-section {
-                margin: -32px -40px 24px -40px;
-                height: 80vh;
-            }
+        body.admin-mode .hero-3d-sticky-frame {
+            top: 104px;
+            height: calc(100vh - 104px);
         }
 
-        .parallax-bg {
+        .watch-canvas-container {
             position: absolute;
-            top: -10%;
-            left: 0;
-            width: 100%;
-            height: 120%;
-            background-size: cover;
-            background-position: center;
-            z-index: 0;
-            will-change: transform, opacity;
-        }
-
-        .bg-1 {
-            background-image: url('images/ccBanner1.webp');
-            z-index: 0;
-        }
-
-        .bg-2 {
-            background-image: url('images/ccBanner2.webp');
-            opacity: 0;
-            z-index: 0;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom,
-                    rgba(5, 5, 5, 0.4) 0%,
-                    rgba(5, 5, 5, 0) 40%,
-                    rgba(5, 5, 5, 0.8) 85%,
-                    rgba(5, 5, 5, 1) 100%);
             z-index: 1;
+            pointer-events: auto;
+            cursor: grab;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .hero-content {
-            position: relative;
+        .watch-canvas-container:active {
+            cursor: grabbing;
+        }
+
+        #watch-3d-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            touch-action: pan-y;
+        }
+
+        .watch-glow-fx {
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(241, 179, 28, 0.16) 0%, rgba(241, 179, 28, 0.02) 65%, transparent 80%);
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(40px);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-ambient-fx {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            background-position: center center;
+            mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 75%);
+            -webkit-mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 75%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Storytelling Layer */
+        .hero-story-container {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
             z-index: 2;
-            max-width: 800px;
-            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
-            text-align: center;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 40px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .logo {
-            max-width: 90px;
-            margin-bottom: 16px;
-            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+        .hero-story-slide {
+            position: absolute;
+            max-width: 520px;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(24px) scale(0.96);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            will-change: opacity, transform;
+            background: rgba(10, 10, 14, 0.55);
+            padding: 28px 32px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
         }
 
-        .hero-content h1 {
-            font-size: clamp(2rem, 8vw, 3.5rem);
+        .hero-story-slide.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(241, 179, 28, 0.12);
+            border: 1px solid rgba(241, 179, 28, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 18px;
+            backdrop-filter: blur(8px);
+        }
+
+        .hero-badge .badge-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--primary);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 6vw, 3.8rem);
             font-weight: 800;
             margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+            line-height: 1.1;
+            letter-spacing: 1px;
             font-family: var(--font-display);
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
         }
 
-        .hero-content h1 span {
+        .hero-gold-text {
+            background: linear-gradient(135deg, #fff 10%, #f1b31c 60%, #e5a408 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-tagline {
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
+            color: rgba(255, 255, 255, 0.85);
+            margin: 16px 0 28px 0;
+            line-height: 1.6;
+            max-width: 580px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .hero-btn-catalog {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(241, 179, 28, 0.35);
+            transition: all 0.25s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-btn-catalog:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(241, 179, 28, 0.5);
+            background: #f7be2d;
+        }
+
+        .hero-btn-switch {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.25s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-btn-switch:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Bottom Floating Bar in 3D Hero */
+        .hero-bottom-controls {
+            position: absolute;
+            bottom: 24px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 32px;
+            z-index: 3;
+            pointer-events: auto;
+        }
+
+        .hero-face-chips {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 15, 20, 0.7);
+            border: 1px solid var(--border-color);
+            padding: 4px 10px;
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+        }
+
+        .chips-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: 4px;
+        }
+
+        .face-chip {
+            background: none;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .face-chip:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .face-chip.active {
+            background: rgba(241, 179, 28, 0.15);
+            border-color: rgba(241, 179, 28, 0.4);
             color: var(--primary);
         }
 
-        .tagline {
-            color: #eee;
-            font-size: 1.05rem;
-            margin-top: 15px;
-            font-weight: 400;
-            line-height: 1.6;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
+        .hero-scroll-hint {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .hero-scroll-hint:hover {
+            color: var(--primary);
+        }
+
+        .scroll-mouse {
+            width: 18px;
+            height: 28px;
+            border: 2px solid currentColor;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .scroll-mouse .scroll-wheel {
+            width: 2px;
+            height: 6px;
+            background: currentColor;
+            border-radius: 2px;
+            position: absolute;
+            top: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scroll-bob 1.6s infinite;
+        }
+
+        @keyframes scroll-bob {
+            0% { top: 4px; opacity: 1; }
+            100% { top: 14px; opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-story-container {
+                justify-content: center;
+                align-items: flex-end;
+                padding: 16px;
+                padding-bottom: 90px;
+            }
+            .hero-story-slide {
+                max-width: 100%;
+                text-align: center;
+                padding: 18px 20px;
+                border-radius: 18px;
+            }
+            .hero-tagline {
+                margin: 10px auto 16px auto;
+                font-size: 0.9rem;
+            }
+            .hero-actions {
+                justify-content: center;
+            }
+            .hero-bottom-controls {
+                flex-direction: column;
+                gap: 12px;
+                bottom: 16px;
+                padding: 0 16px;
+            }
+            .hero-scroll-hint {
+                display: none;
+            }
+            .hero-face-chips {
+                overflow-x: auto;
+                max-width: 100%;
+            }
         }
 
         /* Stats Container from index_backup.html */
@@ -2100,15 +2413,95 @@
 
             <!-- Catalog Panel -->
             <section id="tab-catalog" class="tab-panel active">
-                <!-- Parallax Hero Banner -->
-                <header class="hero-section"><script>if(location.hostname.includes("firebaseapp.com")){location.replace(location.href.replace(location.hostname,"creationcue.web.app"));}</script>
-                    <div class="parallax-bg bg-1" id="parallax-bg-1"></div>
-                    <div class="parallax-bg bg-2" id="parallax-bg-2"></div>
-                    <div class="hero-overlay"></div>
-                    <div class="hero-content">
-                        <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=180&output=webp" width="90" height="90" alt="Creation Cue" class="logo">
-                        <h1>CREATION<span>CUE™</span></h1>
-                        <p class="tagline">Browse our collection of 111+ Wear OS watch faces for Pixel Watch, Samsung Galaxy Watch, and all Wear OS devices.<br> Crafted by CreationCue™ a Huawei partner and top-rated developer on Google Play with over 300,000 downloads.</p>
+                <!-- 3D Interactive Watch Hero Banner -->
+                <header class="hero-section hero-3d-section" id="hero-3d-section">
+                    <div class="hero-3d-sticky-frame">
+                        <!-- Ambient FX -->
+                        <div class="hero-ambient-fx"></div>
+
+                        <!-- 3D Watch WebGL Canvas -->
+                        <div id="watch-canvas-container" class="watch-canvas-container">
+                            <canvas id="watch-3d-canvas"></canvas>
+                            <div class="watch-glow-fx" id="watch-glow-fx"></div>
+                        </div>
+
+                        <!-- Floating Storytelling Layer -->
+                        <div class="hero-story-container" id="hero-story-container">
+                            <!-- Story Slide 0: CUE178 -->
+                            <div class="hero-story-slide active" id="hero-slide-0" data-slide="0">
+                                <div class="hero-badge">
+                                    <span class="badge-dot"></span>
+                                    <span>NEW RELEASE • CUE178</span>
+                                </div>
+                                <h1 class="hero-title">
+                                    TIME, CRAFTED TO <br><span class="hero-gold-text">PERFECTION</span>
+                                </h1>
+                                <p class="hero-tagline">
+                                    Featuring the all-new CUE178 and 111+ precision-engineered watch faces for Samsung Galaxy Watch, Google Pixel Watch & all Wear OS smartwatches.
+                                </p>
+                                <div class="hero-actions">
+                                    <button class="hero-btn-catalog" onclick="scrollToCatalog()">
+                                        <span>Explore Catalog</span>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                                    </button>
+                                    <button class="hero-btn-switch" onclick="switch3DWatchFace()" title="Switch watch face on 3D watch">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                                        <span id="hero-current-face-label">CUE178</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Story Slide 1: CUE003 -->
+                            <div class="hero-story-slide" id="hero-slide-1" data-slide="1">
+                                <div class="hero-badge">FLAGSHIP DESIGN • CUE003</div>
+                                <h2 class="hero-title">
+                                    PURE <span class="hero-gold-text">AMOLED</span> DEPTH
+                                </h2>
+                                <p class="hero-tagline">
+                                    Ultra battery-friendly aesthetics with deep contrast, custom indices, and high-readability typography powered by CUE003.
+                                </p>
+                                <div class="hero-actions">
+                                    <button class="hero-btn-catalog" onclick="scrollToCatalog()">
+                                        <span>Explore Catalog</span>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Story Slide 2: CUE177 -->
+                            <div class="hero-story-slide" id="hero-slide-2" data-slide="2">
+                                <div class="hero-badge">DYNAMIC COMPLICATIONS • CUE177</div>
+                                <h2 class="hero-title">
+                                    INTELLIGENCE <span class="hero-gold-text">ON YOUR WRIST</span>
+                                </h2>
+                                <p class="hero-tagline">
+                                    Live weather, heart rate, step progress, battery monitor, and calendar events customized to fit your unique lifestyle on CUE177.
+                                </p>
+                                <div class="hero-actions">
+                                    <button class="hero-btn-catalog" onclick="scrollToCatalog()">
+                                        <span>Explore Catalog</span>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Controls: Style Chips & Scroll Hint -->
+                        <div class="hero-bottom-controls">
+                            <div class="hero-face-chips">
+                                <span class="chips-label">Faces:</span>
+                                <button class="face-chip active" id="face-chip-0" onclick="set3DWatchFace(0)">CUE178</button>
+                                <button class="face-chip" id="face-chip-1" onclick="set3DWatchFace(1)">CUE003</button>
+                                <button class="face-chip" id="face-chip-2" onclick="set3DWatchFace(2)">CUE177</button>
+                                <button class="face-chip" id="face-chip-3" onclick="set3DWatchFace(3)">CUE176</button>
+                                <button class="face-chip" id="face-chip-4" onclick="set3DWatchFace(4)">CUE175</button>
+                                <button class="face-chip" id="face-chip-5" onclick="set3DWatchFace(5)">CUE174</button>
+                            </div>
+                            <div class="hero-scroll-hint" onclick="scrollToCatalog()">
+                                <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+                                <span>Scroll to explore</span>
+                            </div>
+                        </div>
                     </div>
                 </header>
 
@@ -2365,6 +2758,10 @@
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></svg>
                         GET IT ON GOOGLE PLAY
                     </a>
+                    <button id="detail-preview-3d-btn" class="detail-btn-preview-3d" onclick="previewCurrentFaceOn3D()" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:11px 16px; margin-top:8px; border-radius:12px; background:rgba(241,179,28,0.12); border:1px solid rgba(241,179,28,0.35); color:var(--primary); font-weight:700; font-size:13px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.background='rgba(241,179,28,0.22)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='rgba(241,179,28,0.12)'; this.style.transform='none';">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 15"></polyline></svg>
+                        PREVIEW ON 3D WATCH
+                    </button>
                 </div>
 
                 <div class="detail-shortcuts">
@@ -2554,7 +2951,8 @@
             const adminEmailDisplay = document.getElementById('admin-user-email');
             const loginLink = document.getElementById('admin-login-link-container');
             
-            if (user && (user.email === 'sotsor@gmail.com' || user.uid === 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || user.uid === 'JKq9NWxPshRbCEXjV2eTUVV6A992')) {
+            const userEmail = (user && user.email) ? user.email.toLowerCase() : '';
+            if (user && (userEmail === 'sotsor@gmail.com' || user.uid === 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || user.uid === 'JKq9NWxPshRbCEXjV2eTUVV6A992')) {
                 document.body.classList.add('admin-mode');
                 if (adminBar) adminBar.style.display = 'flex';
                 if (adminEmailDisplay) adminEmailDisplay.textContent = user.email || 'Admin';
@@ -2680,22 +3078,63 @@
         // Subscribers Modal Operations
         window.allSubscribers = {};
 
-        function startSubscribersListener() {
-            db.ref('newsletter_subscribers').once('value').then(function(snapshot) {
-                window.allSubscribers = snapshot.val() || {};
-                const count = Object.keys(window.allSubscribers).length;
-                
-                // Update Admin Bar count
+        window.fetchSubscribersDirect = async function() {
+            try {
+                if (!auth.currentUser) return null;
+                const token = await auth.currentUser.getIdToken();
+                const url = 'https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app/newsletter_subscribers.json?auth=' + token;
+                const res = await fetch(url);
+                if (!res.ok) {
+                    const errText = await res.text();
+                    throw new Error('HTTP ' + res.status + ': ' + errText);
+                }
+                const data = await res.json();
+                window.allSubscribers = data || {};
+                const keys = Object.keys(window.allSubscribers).filter(k => window.allSubscribers[k] && window.allSubscribers[k].email);
+                const count = keys.length;
                 const countDisplay = document.getElementById('admin-subscribers-count');
-                if (countDisplay) countDisplay.textContent = count;
-                
-                // If modal is currently open, refresh the view
+                if (countDisplay) {
+                    countDisplay.textContent = count;
+                    countDisplay.title = count + ' subscribers';
+                }
                 const modal = document.getElementById('subscribers-modal');
                 if (modal && modal.style.display !== 'none') {
                     renderSubscribersList(window.allSubscribers);
                 }
-            }).catch(function(err) {
-                console.warn("Could not load subscribers:", err);
+                return window.allSubscribers;
+            } catch (err) {
+                console.error("fetchSubscribersDirect error:", err);
+                throw err;
+            }
+        };
+
+        function startSubscribersListener() {
+            // Immediate REST fetch ensures count is populated instantly without WebSocket delays
+            window.fetchSubscribersDirect().catch(function(err) {
+                console.warn("Initial REST fetch error:", err);
+            });
+
+            // Maintain real-time updates via WebSocket listener
+            db.ref('newsletter_subscribers').on('value', function(snapshot) {
+                window.allSubscribers = snapshot.val() || {};
+                const keys = Object.keys(window.allSubscribers).filter(key => {
+                    const sub = window.allSubscribers[key];
+                    return sub && sub.email;
+                });
+                const count = keys.length;
+                
+                const countDisplay = document.getElementById('admin-subscribers-count');
+                if (countDisplay) {
+                    countDisplay.textContent = count;
+                    countDisplay.title = count + ' subscribers';
+                }
+                
+                const modal = document.getElementById('subscribers-modal');
+                if (modal && modal.style.display !== 'none') {
+                    renderSubscribersList(window.allSubscribers);
+                }
+            }, function(err) {
+                console.warn("Could not listen to subscribers:", err);
             });
         }
 
@@ -2709,7 +3148,28 @@
                 card.style.transform = 'scale(1)';
             }
             window.history.pushState({ modalSubscribers: true }, '');
-            renderSubscribersList(window.allSubscribers);
+            
+            const body = document.getElementById('subscribers-modal-body');
+            const hasSubscribers = window.allSubscribers && Object.keys(window.allSubscribers).length > 0;
+            if (hasSubscribers) {
+                renderSubscribersList(window.allSubscribers);
+            } else if (body) {
+                body.innerHTML = '<div style="text-align:center; padding:30px; color:var(--text-muted);"><div class="spinner" style="margin:0 auto 10px auto;"></div>Loading subscribers...</div>';
+            }
+            
+            // Immediate fetch via REST (with WebSocket fallback)
+            window.fetchSubscribersDirect().then(function(subs) {
+                renderSubscribersList(subs || {});
+            }).catch(function(err) {
+                db.ref('newsletter_subscribers').once('value').then(function(snapshot) {
+                    window.allSubscribers = snapshot.val() || {};
+                    renderSubscribersList(window.allSubscribers);
+                }).catch(function(wsErr) {
+                    if (body && (!window.allSubscribers || Object.keys(window.allSubscribers).length === 0)) {
+                        body.innerHTML = '<div style="text-align:center; padding:30px; color:#f44336; font-family:\'Inter\',sans-serif;"><strong>Error loading subscribers:</strong><br>' + (err.message || wsErr.message || wsErr) + '</div>';
+                    }
+                });
+            });
         };
 
         window.closeSubscribersModal = function(isPopState) {
@@ -2731,7 +3191,7 @@
         window.activeVisitors = {};
 
         function startActiveVisitorsListener() {
-            db.ref('active_visitors').once('value').then(function(snapshot) {
+            db.ref('active_visitors').on('value', function(snapshot) {
                 window.activeVisitors = snapshot.val() || {};
                 const count = Object.keys(window.activeVisitors).length;
                 
@@ -2744,8 +3204,8 @@
                 if (modal && modal.style.display !== 'none') {
                     renderLiveVisitorsList(window.activeVisitors);
                 }
-            }).catch(function(err) {
-                console.warn("Could not load active visitors:", err);
+            }, function(err) {
+                console.warn("Could not listen to active visitors:", err);
             });
         }
 
@@ -2823,7 +3283,7 @@
         function renderSubscribersList(subscribers) {
             const body = document.getElementById('subscribers-modal-body');
             const countBadge = document.getElementById('subscribers-count-badge');
-            const keys = Object.keys(subscribers);
+            const keys = Object.keys(subscribers).filter(k => subscribers[k] && subscribers[k].email);
             
             if (countBadge) countBadge.textContent = keys.length;
             
@@ -3162,44 +3622,696 @@
             }
             setupFaqAccordions();
             fetchData();
+            init3DWatchHero();
         });
 
+        // ==========================================
+        // 3D Smartwatch Interactive Hero (Three.js)
+        // ==========================================
+        let watch3D = {
+            scene: null,
+            camera: null,
+            renderer: null,
+            watchGroup: null,
+            screenMesh: null,
+            screenMaterial: null,
+            proceduralTexture: null,
+            drawProceduralDial: null,
+            loadedTextures: [],
+            currentFaceIndex: 0,
+            activeSlideIndex: 0,
+            isVisible: true,
+            isReducedMotion: false,
+            animFrameId: null,
+            clockInterval: null,
+            
+            // Motion targets & state (calibrated so screen faces camera directly)
+            targetRotX: 1.38,
+            targetRotY: -0.22,
+            targetRotZ: 0,
+            targetPosY: 0,
+            targetScale: 1.0,
+            
+            currentRotX: 1.38,
+            currentRotY: -0.22,
+            currentRotZ: 0,
+            currentPosY: 0,
+            currentScale: 1.0,
+            
+            pointerX: 0,
+            pointerY: 0,
+            isDragging: false,
+            dragStartX: 0,
+            dragStartY: 0,
+            dragRotX: 0,
+            dragRotY: 0
+        };
 
+        const FEATURED_WATCH_FACES = [
+            { name: 'CUE178', file: 'images/cue178.png' },
+            { name: 'CUE003', file: 'images/cue003.png' },
+            { name: 'CUE177', file: 'images/cue177.png' },
+            { name: 'CUE176', file: 'images/cue176.png' },
+            { name: 'CUE175', file: 'images/cue175.png' },
+            { name: 'CUE174', file: 'images/cue174.png' }
+        ];
 
-        // Parallax and Transition Logic
-        let hasTransitioned = false;
+        // Procedural Fallback Clock Dial (512x512 Canvas with live time)
+        function createProceduralDialCanvas() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+
+            function drawDial() {
+                ctx.clearRect(0, 0, 512, 512);
+
+                // AMOLED Black Background
+                const bgGrad = ctx.createRadialGradient(256, 256, 120, 256, 256, 256);
+                bgGrad.addColorStop(0, '#0e0f14');
+                bgGrad.addColorStop(0.85, '#050608');
+                bgGrad.addColorStop(1, '#000000');
+                ctx.fillStyle = bgGrad;
+                ctx.beginPath();
+                ctx.arc(256, 256, 250, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Outer Ticks Ring
+                for (let i = 0; i < 60; i++) {
+                    const angle = (i * Math.PI) / 30;
+                    const r1 = i % 5 === 0 ? 228 : 238;
+                    const r2 = 246;
+                    ctx.strokeStyle = i % 5 === 0 ? '#f1b31c' : 'rgba(255, 255, 255, 0.2)';
+                    ctx.lineWidth = i % 5 === 0 ? 3 : 1.5;
+                    ctx.beginPath();
+                    ctx.moveTo(256 + Math.cos(angle) * r1, 256 + Math.sin(angle) * r1);
+                    ctx.lineTo(256 + Math.cos(angle) * r2, 256 + Math.sin(angle) * r2);
+                    ctx.stroke();
+                }
+
+                // Outer Progress Arc (Gold Steps Progress)
+                ctx.strokeStyle = '#f1b31c';
+                ctx.lineWidth = 6;
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                ctx.arc(256, 256, 214, -Math.PI / 2, (Math.PI * 2 * 0.78) - Math.PI / 2);
+                ctx.stroke();
+
+                // Brand Headline
+                ctx.fillStyle = '#f1b31c';
+                ctx.font = 'bold 18px "Outfit", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('CREATIONCUE', 256, 155);
+
+                // Live Time
+                const now = new Date();
+                const hrs = String(now.getHours()).padStart(2, '0');
+                const mins = String(now.getMinutes()).padStart(2, '0');
+                const secs = String(now.getSeconds()).padStart(2, '0');
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 82px "Outfit", sans-serif';
+                ctx.fillText(`${hrs}:${mins}`, 256, 265);
+
+                ctx.fillStyle = '#f1b31c';
+                ctx.font = 'bold 22px "Inter", sans-serif';
+                ctx.fillText(`:${secs}`, 370, 238);
+
+                const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+                const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+                const dateStr = `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]}`;
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+                ctx.font = '600 16px "Inter", sans-serif';
+                ctx.fillText(dateStr, 256, 310);
+
+                // Complication Pills
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+                ctx.beginPath();
+                if (ctx.roundRect) ctx.roundRect(165, 345, 85, 32, 16);
+                else ctx.rect(165, 345, 85, 32);
+                ctx.fill();
+                ctx.fillStyle = '#ff4757';
+                ctx.font = 'bold 13px "Inter", sans-serif';
+                ctx.fillText('♥ 74 BPM', 207, 366);
+
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+                ctx.beginPath();
+                if (ctx.roundRect) ctx.roundRect(262, 345, 85, 32, 16);
+                else ctx.rect(262, 345, 85, 32);
+                ctx.fill();
+                ctx.fillStyle = '#2ed573';
+                ctx.font = 'bold 13px "Inter", sans-serif';
+                ctx.fillText('⚡ 88%', 304, 366);
+            }
+
+            drawDial();
+            return { canvas, drawDial };
+        }
+
+        function init3DWatchHero() {
+            const canvas = document.getElementById('watch-3d-canvas');
+            const container = document.getElementById('watch-canvas-container');
+            const heroSection = document.getElementById('hero-3d-section');
+            if (!canvas || !container || typeof THREE === 'undefined') return;
+
+            watch3D.isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            const width = container.clientWidth || window.innerWidth;
+            const height = container.clientHeight || (window.innerHeight - 64);
+
+            // Scene & Camera
+            watch3D.scene = new THREE.Scene();
+            watch3D.camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+            watch3D.camera.position.set(0, 0, 9.5);
+
+            // Renderer
+            watch3D.renderer = new THREE.WebGLRenderer({
+                canvas: canvas,
+                antialias: true,
+                alpha: true,
+                powerPreference: 'high-performance'
+            });
+            watch3D.renderer.setSize(width, height);
+            watch3D.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            watch3D.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            watch3D.renderer.toneMappingExposure = 1.25;
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1.6);
+            watch3D.scene.add(ambientLight);
+
+            const keyLight = new THREE.DirectionalLight(0xffffff, 2.8);
+            keyLight.position.set(-5, 6, 6);
+            watch3D.scene.add(keyLight);
+
+            const goldRimLight = new THREE.DirectionalLight(0xf1b31c, 2.5);
+            goldRimLight.position.set(6, -2, -4);
+            watch3D.scene.add(goldRimLight);
+
+            const fillLight = new THREE.PointLight(0x38bdf8, 1.5, 25);
+            fillLight.position.set(5, 5, 4);
+            watch3D.scene.add(fillLight);
+
+            // Build Smartwatch Model
+            watch3D.watchGroup = new THREE.Group();
+
+            const darkTitaniumMat = new THREE.MeshStandardMaterial({
+                color: 0x1c1d22,
+                metalness: 0.92,
+                roughness: 0.28
+            });
+
+            const polishedBezelMat = new THREE.MeshStandardMaterial({
+                color: 0x3d3f4a,
+                metalness: 0.96,
+                roughness: 0.14
+            });
+
+            const goldAccentMat = new THREE.MeshStandardMaterial({
+                color: 0xf1b31c,
+                metalness: 0.95,
+                roughness: 0.18
+            });
+
+            const matteStrapMat = new THREE.MeshStandardMaterial({
+                color: 0x131316,
+                roughness: 0.92,
+                metalness: 0.04
+            });
+
+            // Outer Bezel: hollow chamfered ring framing the screen
+            const bezelGeo = new THREE.RingGeometry(2.23, 2.38, 64);
+            const bezelMesh = new THREE.Mesh(bezelGeo, darkTitaniumMat);
+            bezelMesh.rotation.x = -Math.PI / 2;
+            bezelMesh.position.y = 0.138;
+            watch3D.watchGroup.add(bezelMesh);
+
+            // Polished Outer Chamfer Ring
+            const chamferGeo = new THREE.TorusGeometry(2.36, 0.055, 16, 64);
+            const chamferMesh = new THREE.Mesh(chamferGeo, polishedBezelMat);
+            chamferMesh.rotation.x = Math.PI / 2;
+            chamferMesh.position.y = 0.12;
+            watch3D.watchGroup.add(chamferMesh);
+
+            // Inner Gold Accent Ring
+            const innerRingGeo = new THREE.TorusGeometry(2.24, 0.035, 16, 64);
+            const innerRingMesh = new THREE.Mesh(innerRingGeo, goldAccentMat);
+            innerRingMesh.rotation.x = Math.PI / 2;
+            innerRingMesh.position.y = 0.138;
+            watch3D.watchGroup.add(innerRingMesh);
+
+            // Case Body (underneath)
+            const caseBodyGeo = new THREE.CylinderGeometry(2.30, 2.12, 0.65, 64);
+            const caseBodyMesh = new THREE.Mesh(caseBodyGeo, darkTitaniumMat);
+            caseBodyMesh.position.y = -0.18;
+            watch3D.watchGroup.add(caseBodyMesh);
+
+            // Bottom Sensor
+            const sensorGeo = new THREE.CylinderGeometry(1.9, 1.6, 0.22, 32);
+            const sensorMat = new THREE.MeshStandardMaterial({ color: 0x08080a, roughness: 0.2, metalness: 0.5 });
+            const sensorMesh = new THREE.Mesh(sensorGeo, sensorMat);
+            sensorMesh.position.y = -0.52;
+            watch3D.watchGroup.add(sensorMesh);
+
+            // Optical Sensor LEDs
+            const ledGeo = new THREE.CircleGeometry(0.18, 16);
+            const ledMat = new THREE.MeshBasicMaterial({ color: 0x00ff88 });
+            const led1 = new THREE.Mesh(ledGeo, ledMat);
+            led1.rotation.x = Math.PI / 2;
+            led1.position.set(0.35, -0.64, 0);
+            const led2 = led1.clone();
+            led2.position.set(-0.35, -0.64, 0);
+            watch3D.watchGroup.add(led1);
+            watch3D.watchGroup.add(led2);
+
+            // Solid AMOLED Black Backing Disc
+            const backingGeo = new THREE.CircleGeometry(2.25, 64);
+            const backingMat = new THREE.MeshBasicMaterial({ color: 0x050608 });
+            const backingMesh = new THREE.Mesh(backingGeo, backingMat);
+            backingMesh.rotation.x = -Math.PI / 2;
+            backingMesh.position.y = 0.130;
+            watch3D.watchGroup.add(backingMesh);
+
+            // Screen Mesh displaying the actual watch face
+            const screenGeo = new THREE.CircleGeometry(2.24, 64);
+            watch3D.screenMaterial = new THREE.MeshBasicMaterial({
+                color: 0xffffff,
+                transparent: true,
+                side: THREE.DoubleSide
+            });
+            watch3D.screenMesh = new THREE.Mesh(screenGeo, watch3D.screenMaterial);
+            watch3D.screenMesh.rotation.x = -Math.PI / 2;
+            watch3D.screenMesh.position.y = 0.136;
+            watch3D.watchGroup.add(watch3D.screenMesh);
+
+            // Robust Watch Face Texture Loader (Direct Image + CDN Fallback)
+            function loadWatchFaceTexture(url, onLoaded) {
+                const img = new Image();
+                img.onload = () => {
+                    const tex = new THREE.Texture(img);
+                    tex.colorSpace = THREE.SRGBColorSpace;
+                    tex.minFilter = THREE.LinearFilter;
+                    tex.magFilter = THREE.LinearFilter;
+                    tex.generateMipmaps = true;
+                    tex.needsUpdate = true;
+                    if (onLoaded) onLoaded(tex);
+                };
+                img.onerror = () => {
+                    // Fallback to jsDelivr CDN
+                    const cdnImg = new Image();
+                    cdnImg.crossOrigin = 'anonymous';
+                    cdnImg.onload = () => {
+                        const tex = new THREE.Texture(cdnImg);
+                        tex.colorSpace = THREE.SRGBColorSpace;
+                        tex.minFilter = THREE.LinearFilter;
+                        tex.magFilter = THREE.LinearFilter;
+                        tex.generateMipmaps = true;
+                        tex.needsUpdate = true;
+                        if (onLoaded) onLoaded(tex);
+                    };
+                    cdnImg.src = 'https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/' + url.replace(/^\.?\//, '');
+                };
+                img.src = url;
+                if (img.complete && img.naturalWidth > 0) {
+                    img.onload();
+                }
+            }
+            watch3D.loadTexture = loadWatchFaceTexture;
+
+            // Load initial CUE178 watch face
+            loadWatchFaceTexture('images/cue178.png', (tex) => {
+                watch3D.loadedTextures[0] = tex;
+                if (watch3D.screenMaterial) {
+                    watch3D.screenMaterial.map = tex;
+                    watch3D.screenMaterial.needsUpdate = true;
+                }
+            });
+
+            // Digital Crown at 3 o'clock
+            const crownGroup = new THREE.Group();
+            crownGroup.position.set(2.40, 0, 0);
+
+            const crownStemGeo = new THREE.CylinderGeometry(0.20, 0.20, 0.20, 16);
+            const crownStem = new THREE.Mesh(crownStemGeo, darkTitaniumMat);
+            crownStem.rotation.z = Math.PI / 2;
+            crownGroup.add(crownStem);
+
+            const crownHeadGeo = new THREE.CylinderGeometry(0.38, 0.38, 0.28, 32);
+            const crownHead = new THREE.Mesh(crownHeadGeo, darkTitaniumMat);
+            crownHead.rotation.z = Math.PI / 2;
+            crownHead.position.x = 0.14;
+            crownGroup.add(crownHead);
+
+            const crownRingGeo = new THREE.TorusGeometry(0.38, 0.035, 16, 32);
+            const crownRing = new THREE.Mesh(crownRingGeo, goldAccentMat);
+            crownRing.rotation.y = Math.PI / 2;
+            crownRing.position.x = 0.20;
+            crownGroup.add(crownRing);
+
+            watch3D.watchGroup.add(crownGroup);
+
+            // Secondary Pusher at 4 o'clock
+            const pusherGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.18, 16);
+            const pusher = new THREE.Mesh(pusherGeo, darkTitaniumMat);
+            pusher.rotation.z = Math.PI / 2;
+            pusher.position.set(2.26, 0, 0.82);
+            watch3D.watchGroup.add(pusher);
+
+            // 4 Corner Lugs
+            const lugGeo = new THREE.BoxGeometry(0.42, 0.38, 0.65);
+            const lugPositions = [
+                { x: 1.38, z: -2.32 },
+                { x: -1.38, z: -2.32 },
+                { x: 1.38, z: 2.32 },
+                { x: -1.38, z: 2.32 }
+            ];
+            lugPositions.forEach(pos => {
+                const lug = new THREE.Mesh(lugGeo, darkTitaniumMat);
+                lug.position.set(pos.x, -0.05, pos.z);
+                watch3D.watchGroup.add(lug);
+            });
+
+            // Silicone Curved Sport Straps
+            function createStrapMesh(isTop) {
+                const points = [];
+                const sign = isTop ? -1 : 1;
+                const length = 5.2;
+                const segments = 18;
+                for (let i = 0; i <= segments; i++) {
+                    const t = i / segments;
+                    const z = (2.2 + t * length) * sign;
+                    const y = -Math.pow(t, 1.8) * 1.6;
+                    points.push(new THREE.Vector3(0, y, z));
+                }
+                const curve = new THREE.CatmullRomCurve3(points);
+                const shape = new THREE.Shape();
+                const strapWidth = 1.15;
+                const strapThick = 0.12;
+                shape.moveTo(-strapWidth, -strapThick);
+                shape.lineTo(strapWidth, -strapThick);
+                shape.lineTo(strapWidth * 0.95, strapThick);
+                shape.lineTo(-strapWidth * 0.95, strapThick);
+                shape.closePath();
+
+                const extrudeSettings = {
+                    steps: segments * 2,
+                    bevelEnabled: true,
+                    bevelThickness: 0.04,
+                    bevelSize: 0.04,
+                    bevelSegments: 3,
+                    extrudePath: curve
+                };
+                const strapGeo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+                return new THREE.Mesh(strapGeo, matteStrapMat);
+            }
+
+            const topStrap = createStrapMesh(true);
+            const bottomStrap = createStrapMesh(false);
+            watch3D.watchGroup.add(topStrap);
+            watch3D.watchGroup.add(bottomStrap);
+
+            watch3D.scene.add(watch3D.watchGroup);
+
+            // Preload Featured Watch Faces using robust loader
+            FEATURED_WATCH_FACES.forEach((item, idx) => {
+                loadWatchFaceTexture(item.file, (tex) => {
+                    watch3D.loadedTextures[idx] = tex;
+                    if (watch3D.currentFaceIndex === idx && watch3D.screenMaterial) {
+                        watch3D.screenMaterial.map = tex;
+                        watch3D.screenMaterial.needsUpdate = true;
+                    }
+                });
+            });
+
+            // Interactive Drag / Pointer Listeners
+            container.addEventListener('pointerdown', (e) => {
+                watch3D.isDragging = true;
+                watch3D.dragStartX = e.clientX;
+                watch3D.dragStartY = e.clientY;
+            });
+
+            window.addEventListener('pointermove', (e) => {
+                const rect = container.getBoundingClientRect();
+                if (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                    const normX = (e.clientX - rect.left) / rect.width;
+                    const normY = (e.clientY - rect.top) / rect.height;
+                    watch3D.pointerX = (normX - 0.5) * 0.45;
+                    watch3D.pointerY = (normY - 0.5) * 0.45;
+                }
+
+                if (watch3D.isDragging) {
+                    const deltaX = e.clientX - watch3D.dragStartX;
+                    const deltaY = e.clientY - watch3D.dragStartY;
+                    watch3D.dragRotY += deltaX * 0.005;
+                    watch3D.dragRotX += deltaY * 0.005;
+                    watch3D.dragStartX = e.clientX;
+                    watch3D.dragStartY = e.clientY;
+                }
+            });
+
+            window.addEventListener('pointerup', () => {
+                watch3D.isDragging = false;
+            });
+
+            // Touch events
+            container.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    watch3D.isDragging = true;
+                    watch3D.dragStartX = e.touches[0].clientX;
+                    watch3D.dragStartY = e.touches[0].clientY;
+                }
+            }, { passive: true });
+
+            window.addEventListener('touchmove', (e) => {
+                if (watch3D.isDragging && e.touches.length === 1) {
+                    const deltaX = e.touches[0].clientX - watch3D.dragStartX;
+                    const deltaY = e.touches[0].clientY - watch3D.dragStartY;
+                    watch3D.dragRotY += deltaX * 0.004;
+                    watch3D.dragRotX += deltaY * 0.004;
+                    watch3D.dragStartX = e.touches[0].clientX;
+                    watch3D.dragStartY = e.touches[0].clientY;
+                }
+            }, { passive: true });
+
+            window.addEventListener('touchend', () => {
+                watch3D.isDragging = false;
+            });
+
+            window.addEventListener('resize', onWindowResize);
+
+            // Intersection Observer to save power
+            if ('IntersectionObserver' in window && heroSection) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        watch3D.isVisible = entry.isIntersecting;
+                    });
+                }, { threshold: 0 });
+                observer.observe(heroSection);
+            }
+
+            // Clock interval for procedural dial
+            watch3D.clockInterval = setInterval(() => {
+                if (watch3D.drawProceduralDial && watch3D.screenMaterial && watch3D.screenMaterial.map === watch3D.proceduralTexture) {
+                    watch3D.drawProceduralDial();
+                    watch3D.proceduralTexture.needsUpdate = true;
+                }
+            }, 1000);
+
+            // Kick off animation loop
+            animate3DWatch(0);
+        }
+
+        function animate3DWatch(time) {
+            watch3D.animFrameId = requestAnimationFrame(animate3DWatch);
+
+            if (!watch3D.isVisible || !watch3D.watchGroup || !watch3D.renderer) return;
+
+            const t = time * 0.001;
+
+            if (!watch3D.isDragging) {
+                watch3D.dragRotX *= 0.95;
+                watch3D.dragRotY *= 0.95;
+            }
+
+            const floatY = watch3D.isReducedMotion ? 0 : Math.sin(t * 1.4) * 0.08;
+            const floatRotZ = watch3D.isReducedMotion ? 0 : Math.cos(t * 1.1) * 0.015;
+
+            const lerpSpeed = 0.075;
+            watch3D.currentRotX += (watch3D.targetRotX + watch3D.pointerY + watch3D.dragRotX - watch3D.currentRotX) * lerpSpeed;
+            watch3D.currentRotY += (watch3D.targetRotY + watch3D.pointerX + watch3D.dragRotY - watch3D.currentRotY) * lerpSpeed;
+            watch3D.currentRotZ += (watch3D.targetRotZ + floatRotZ - watch3D.currentRotZ) * lerpSpeed;
+            watch3D.currentPosY += (watch3D.targetPosY + floatY - watch3D.currentPosY) * lerpSpeed;
+            watch3D.currentScale += (watch3D.targetScale - watch3D.currentScale) * lerpSpeed;
+
+            watch3D.watchGroup.rotation.x = watch3D.currentRotX;
+            watch3D.watchGroup.rotation.y = watch3D.currentRotY;
+            watch3D.watchGroup.rotation.z = watch3D.currentRotZ;
+            watch3D.watchGroup.position.y = watch3D.currentPosY;
+            watch3D.watchGroup.scale.setScalar(watch3D.currentScale);
+
+            const glowEl = document.getElementById('watch-glow-fx');
+            if (glowEl) {
+                const shiftX = Math.sin(watch3D.currentRotY) * 55;
+                const shiftY = -Math.sin(watch3D.currentRotX) * 35;
+                glowEl.style.transform = `translate(${shiftX}px, ${shiftY}px)`;
+            }
+
+            watch3D.renderer.render(watch3D.scene, watch3D.camera);
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('watch-canvas-container');
+            if (!container || !watch3D.camera || !watch3D.renderer) return;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            watch3D.camera.aspect = width / height;
+            watch3D.camera.updateProjectionMatrix();
+            watch3D.renderer.setSize(width, height);
+        }
+
+        function update3DWatchScroll(scrolled) {
+            const hero = document.getElementById('hero-3d-section');
+            if (!hero) return;
+
+            const rect = hero.getBoundingClientRect();
+            const heroTrack = hero.offsetHeight - window.innerHeight;
+            if (heroTrack <= 0) return;
+
+            // Scroll progress within 3D Hero track: 0.0 to 1.0
+            const p = Math.max(0, Math.min(1, -rect.top / heroTrack));
+
+            if (p < 0.35) {
+                const subP = p / 0.35;
+                watch3D.targetRotX = 1.38 - subP * 0.15;
+                watch3D.targetRotY = -0.22 - subP * 0.45;
+                watch3D.targetRotZ = subP * 0.05;
+                watch3D.targetPosY = -subP * 0.20;
+                watch3D.targetScale = 1.0 + subP * 0.08;
+                setStorySlideActive(0);
+                if (!watch3D.customFaceLocked && watch3D.currentFaceIndex !== 0) {
+                    set3DWatchFaceInternal(0);
+                }
+            } else if (p < 0.70) {
+                const subP = (p - 0.35) / 0.35;
+                watch3D.targetRotX = 1.23 + subP * 0.20;
+                watch3D.targetRotY = -0.67 + subP * 0.85;
+                watch3D.targetRotZ = 0.05 - subP * 0.05;
+                watch3D.targetPosY = -0.20 + subP * 0.30;
+                watch3D.targetScale = 1.08 + subP * 0.12;
+                setStorySlideActive(1);
+                if (!watch3D.customFaceLocked && watch3D.currentFaceIndex !== 1) {
+                    set3DWatchFaceInternal(1);
+                }
+            } else {
+                const subP = (p - 0.70) / 0.30;
+                watch3D.targetRotX = 1.43 - subP * 0.08;
+                watch3D.targetRotY = 0.18 - subP * 0.18;
+                watch3D.targetRotZ = 0;
+                watch3D.targetPosY = 0.10 - subP * 0.80;
+                watch3D.targetScale = 1.20 - subP * 0.20;
+                setStorySlideActive(2);
+                if (!watch3D.customFaceLocked && watch3D.currentFaceIndex !== 2) {
+                    set3DWatchFaceInternal(2);
+                }
+            }
+        }
+
+        function setStorySlideActive(idx) {
+            if (watch3D.activeSlideIndex === idx) return;
+            watch3D.activeSlideIndex = idx;
+            document.querySelectorAll('.hero-story-slide').forEach((slide, i) => {
+                slide.classList.toggle('active', i === idx);
+            });
+        }
+
+        window.scrollToCatalog = function() {
+            const target = document.getElementById('stats-container') || document.querySelector('.search-filter-row');
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+        function set3DWatchFaceInternal(idx) {
+            if (idx < 0 || idx >= FEATURED_WATCH_FACES.length) return;
+            watch3D.currentFaceIndex = idx;
+
+            document.querySelectorAll('.face-chip').forEach((chip, i) => {
+                chip.classList.toggle('active', i === idx);
+            });
+
+            const label = document.getElementById('hero-current-face-label');
+            if (label && FEATURED_WATCH_FACES[idx]) {
+                label.textContent = FEATURED_WATCH_FACES[idx].name;
+            }
+
+            if (watch3D.loadedTextures[idx] && watch3D.screenMaterial) {
+                watch3D.screenMaterial.map = watch3D.loadedTextures[idx];
+                watch3D.screenMaterial.needsUpdate = true;
+            }
+        }
+
+        window.set3DWatchFace = function(idx) {
+            if (idx < 0 || idx >= FEATURED_WATCH_FACES.length) return;
+            watch3D.customFaceLocked = true;
+            set3DWatchFaceInternal(idx);
+            watch3D.currentScale *= 1.06;
+        };
+
+        window.switch3DWatchFace = function() {
+            watch3D.customFaceLocked = true;
+            const nextIdx = (watch3D.currentFaceIndex + 1) % FEATURED_WATCH_FACES.length;
+            window.set3DWatchFace(nextIdx);
+        };
+
+        window.previewFaceOn3DWatch = function(imageUrl, title) {
+            if (!imageUrl) return;
+            watch3D.customFaceLocked = true;
+            
+            // Smoothly scroll to 3D hero
+            const hero = document.getElementById('hero-3d-section');
+            if (hero) {
+                hero.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            // Close details modal if open
+            if (typeof closeDetailsModalVisuals === 'function') {
+                closeDetailsModalVisuals();
+            }
+            
+            if (watch3D.loadTexture) {
+                watch3D.loadTexture(imageUrl, (tex) => {
+                    if (watch3D.screenMaterial) {
+                        watch3D.screenMaterial.map = tex;
+                        watch3D.screenMaterial.needsUpdate = true;
+                        watch3D.currentScale = 1.15; // tactile zoom pulse
+                    }
+                    const label = document.getElementById('hero-current-face-label');
+                    if (label && title) {
+                        label.textContent = title;
+                    }
+                    document.querySelectorAll('.face-chip').forEach(c => c.classList.remove('active'));
+                });
+            }
+        };
+
+        window.previewCurrentFaceOn3D = function() {
+            if (!selectedFace) return;
+            const imgUrl = selectedFace.image_url || `images/${selectedFace.id}.png`;
+            window.previewFaceOn3DWatch(imgUrl, selectedFace.title);
+        };
+
+        // Scroll listener handling both 3D watch and sticky headers
         let scrollTicking = false;
 
         window.addEventListener('scroll', () => {
             if (!scrollTicking) {
                 window.requestAnimationFrame(() => {
                     const scrolled = window.pageYOffset || document.documentElement.scrollTop;
-                    const p1 = document.getElementById('parallax-bg-1');
-                    const p2 = document.getElementById('parallax-bg-2');
-                    
-                    // Move backgrounds at 40% of scroll speed using GPU-accelerated translate3d
-                    const transform = `translate3d(0, ${scrolled * 0.4}px, 0)`;
-                    if (p1) p1.style.transform = transform;
-                    if (p2) p2.style.transform = transform;
 
-                    // Start transition later (at 300px) and finish at 700px
-                    const fadeStart = 300;
-                    const fadeEnd = 700;
-                    
-                    if (!hasTransitioned) {
-                        let opacity = (scrolled - fadeStart) / (fadeEnd - fadeStart);
-                        opacity = Math.max(0, Math.min(1, opacity));
-                        
-                        if (p2) p2.style.opacity = opacity;
-                        
-                        // Once fully visible, make it permanent
-                        if (opacity >= 1) {
-                            hasTransitioned = true;
-                        }
-                    } else {
-                        // Keep the second banner visible even when scrolling back up
-                        if (p2) p2.style.opacity = 1;
-                    }
+                    // 3D Watch Scroll Updates
+                    update3DWatchScroll(scrolled);
 
                     // Sticky search/filter row state styling
                     const searchRow = document.querySelector('.search-filter-row');
@@ -3643,6 +4755,10 @@
             
             card.innerHTML = `
                 ${badgeHtml}
+                <button class="card-preview-3d-btn" onclick="event.stopPropagation(); previewFaceOn3DWatch('${face.image_url || `images/${face.id}.png`}', '${face.title}')" title="Preview ${face.title} on 3D Watch">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 15"></polyline></svg>
+                    <span>3D</span>
+                </button>
                 <div class="face-image-container">
                     <img class="face-card-img" src="${getOptimizedImageUrl(face.image_url)}" alt="${face.title}" ${loadingAttr} onerror="this.src='https://via.placeholder.com/300'">
                 </div>
@@ -4095,7 +5211,7 @@
         };
 
         function startSupportListener() {
-            db.ref('support_requests').once('value').then(function(snapshot) {
+            db.ref('support_requests').on('value', function(snapshot) {
                 window.allSupportRequests = snapshot.val() || {};
                 const keys = Object.keys(window.allSupportRequests);
                 const pendingCount = keys.filter(key => window.allSupportRequests[key].status === 'Pending').length;
@@ -4113,8 +5229,8 @@
                         badge.style.display = 'none';
                     }
                 }
-            }).catch(function(err) {
-                console.warn("Could not load support requests:", err);
+            }, function(err) {
+                console.warn("Could not listen to support requests:", err);
             });
         }
 
