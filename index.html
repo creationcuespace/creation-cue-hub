@@ -1587,7 +1587,7 @@
             width: 320px;
             height: 320px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(241, 179, 28, 0.16) 0%, rgba(241, 179, 28, 0.02) 65%, transparent 80%);
+            background: radial-gradient(circle, rgba(148, 163, 184, 0.12) 0%, rgba(51, 65, 85, 0.03) 65%, transparent 80%);
             pointer-events: none;
             z-index: 0;
             filter: blur(40px);
@@ -3705,7 +3705,7 @@
                     const angle = (i * Math.PI) / 30;
                     const r1 = i % 5 === 0 ? 228 : 238;
                     const r2 = 246;
-                    ctx.strokeStyle = i % 5 === 0 ? '#f1b31c' : 'rgba(255, 255, 255, 0.2)';
+                    ctx.strokeStyle = i % 5 === 0 ? '#94a3b8' : 'rgba(255, 255, 255, 0.15)';
                     ctx.lineWidth = i % 5 === 0 ? 3 : 1.5;
                     ctx.beginPath();
                     ctx.moveTo(256 + Math.cos(angle) * r1, 256 + Math.sin(angle) * r1);
@@ -3713,8 +3713,8 @@
                     ctx.stroke();
                 }
 
-                // Outer Progress Arc (Gold Steps Progress)
-                ctx.strokeStyle = '#f1b31c';
+                // Outer Progress Arc (Tactical Slate Progress)
+                ctx.strokeStyle = '#64748b';
                 ctx.lineWidth = 6;
                 ctx.lineCap = 'round';
                 ctx.beginPath();
@@ -3722,7 +3722,7 @@
                 ctx.stroke();
 
                 // Brand Headline
-                ctx.fillStyle = '#f1b31c';
+                ctx.fillStyle = '#cbd5e1';
                 ctx.font = 'bold 18px "Outfit", sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillText('CREATIONCUE', 256, 155);
@@ -3737,7 +3737,7 @@
                 ctx.font = 'bold 82px "Outfit", sans-serif';
                 ctx.fillText(`${hrs}:${mins}`, 256, 265);
 
-                ctx.fillStyle = '#f1b31c';
+                ctx.fillStyle = '#94a3b8';
                 ctx.font = 'bold 22px "Inter", sans-serif';
                 ctx.fillText(`:${secs}`, 370, 238);
 
@@ -3808,61 +3808,84 @@
             keyLight.position.set(-5, 6, 6);
             watch3D.scene.add(keyLight);
 
-            const goldRimLight = new THREE.DirectionalLight(0xf1b31c, 2.5);
-            goldRimLight.position.set(6, -2, -4);
-            watch3D.scene.add(goldRimLight);
+            // Tactical Rim Light (Crisp slate titanium edge highlight, no yellow)
+            const tacticalRimLight = new THREE.DirectionalLight(0x8ea2b8, 2.2);
+            tacticalRimLight.position.set(6, -2, -4);
+            watch3D.scene.add(tacticalRimLight);
 
-            const fillLight = new THREE.PointLight(0x38bdf8, 1.5, 25);
+            const fillLight = new THREE.PointLight(0x475569, 1.4, 25);
             fillLight.position.set(5, 5, 4);
             watch3D.scene.add(fillLight);
 
             // Build Smartwatch Model
             watch3D.watchGroup = new THREE.Group();
 
+            // Rugged Matte Black DLC (Diamond-Like Carbon) / Dark Titanium
             const darkTitaniumMat = new THREE.MeshStandardMaterial({
-                color: 0x1c1d22,
-                metalness: 0.92,
-                roughness: 0.28
+                color: 0x17181c,
+                metalness: 0.85,
+                roughness: 0.42
             });
 
-            const polishedBezelMat = new THREE.MeshStandardMaterial({
-                color: 0x3d3f4a,
-                metalness: 0.96,
-                roughness: 0.14
+            // Rugged Gunmetal Bezel
+            const ruggedBezelMat = new THREE.MeshStandardMaterial({
+                color: 0x2e3037,
+                metalness: 0.88,
+                roughness: 0.30
             });
 
-            const goldAccentMat = new THREE.MeshStandardMaterial({
-                color: 0xf1b31c,
-                metalness: 0.95,
-                roughness: 0.18
+            // Tactical Grayish-Black Inner Accent Ring (No Yellow)
+            const tacticalGrayMat = new THREE.MeshStandardMaterial({
+                color: 0x22242a,
+                metalness: 0.82,
+                roughness: 0.38
             });
 
+            // Heavy-Duty Tactical Matte Strap
             const matteStrapMat = new THREE.MeshStandardMaterial({
-                color: 0x131316,
-                roughness: 0.92,
+                color: 0x111215,
+                roughness: 0.94,
                 metalness: 0.04
             });
 
-            // Outer Bezel: sleek flush metallic bezel ring
-            const bezelGeo = new THREE.RingGeometry(2.26, 2.38, 64);
-            const bezelMesh = new THREE.Mesh(bezelGeo, darkTitaniumMat);
+            // Hardened Hex Bolt & Rivet Steel (Darkened Gunmetal)
+            const boltSteelMat = new THREE.MeshStandardMaterial({
+                color: 0x363942,
+                metalness: 0.94,
+                roughness: 0.22
+            });
+
+            // Outer Bezel: Rugged Gunmetal Bezel Ring
+            const bezelGeo = new THREE.RingGeometry(2.26, 2.42, 64);
+            const bezelMesh = new THREE.Mesh(bezelGeo, ruggedBezelMat);
             bezelMesh.rotation.x = -Math.PI / 2;
             bezelMesh.position.y = 0.134;
             watch3D.watchGroup.add(bezelMesh);
 
-            // Polished Outer Chamfer Ring
-            const chamferGeo = new THREE.TorusGeometry(2.36, 0.055, 16, 64);
-            const chamferMesh = new THREE.Mesh(chamferGeo, polishedBezelMat);
+            // Rugged Outer Chamfer Ring
+            const chamferGeo = new THREE.TorusGeometry(2.40, 0.055, 16, 64);
+            const chamferMesh = new THREE.Mesh(chamferGeo, darkTitaniumMat);
             chamferMesh.rotation.x = Math.PI / 2;
             chamferMesh.position.y = 0.12;
             watch3D.watchGroup.add(chamferMesh);
 
-            // Inner Gold Accent Ring
+            // Inner Accent Ring (Tactical Grayish/Black, No Yellow)
             const innerRingGeo = new THREE.TorusGeometry(2.26, 0.025, 16, 64);
-            const innerRingMesh = new THREE.Mesh(innerRingGeo, goldAccentMat);
+            const innerRingMesh = new THREE.Mesh(innerRingGeo, tacticalGrayMat);
             innerRingMesh.rotation.x = Math.PI / 2;
             innerRingMesh.position.y = 0.136;
             watch3D.watchGroup.add(innerRingMesh);
+
+            // 8 Tactical Industrial Bezel Rivets / Screws (Darkened Allen/Hex screw accents)
+            const rivetGeo = new THREE.CylinderGeometry(0.040, 0.040, 0.025, 6);
+            for (let i = 0; i < 8; i++) {
+                const angle = (i * Math.PI) / 4;
+                const rx = Math.cos(angle) * 2.34;
+                const rz = Math.sin(angle) * 2.34;
+                const rivet = new THREE.Mesh(rivetGeo, boltSteelMat);
+                rivet.position.set(rx, 0.136, rz);
+                watch3D.watchGroup.add(rivet);
+            }
 
             // Case Body (underneath - smooth minimalist round chassis without crown/buttons, open-ended so it never occludes dial)
             const caseBodyGeo = new THREE.CylinderGeometry(2.30, 2.12, 0.58, 64, 1, true);
@@ -3963,8 +3986,9 @@
                 watch3D.loadedTextures[0] = screenTexture;
             });
 
-            // 4 Corner Lugs
-            const lugGeo = new THREE.BoxGeometry(0.42, 0.38, 0.65);
+            // 4 Rugged Heavy-Duty Corner Lugs with Exposed Hex Pins
+            const lugGeo = new THREE.BoxGeometry(0.44, 0.40, 0.70);
+            const boltGeo = new THREE.CylinderGeometry(0.065, 0.065, 0.05, 6);
             const lugPositions = [
                 { x: 1.38, z: -2.32 },
                 { x: -1.38, z: -2.32 },
@@ -3975,6 +3999,12 @@
                 const lug = new THREE.Mesh(lugGeo, darkTitaniumMat);
                 lug.position.set(pos.x, -0.05, pos.z);
                 watch3D.watchGroup.add(lug);
+
+                // Exposed rugged hex bolt on outer flank
+                const bolt = new THREE.Mesh(boltGeo, boltSteelMat);
+                bolt.rotation.z = Math.PI / 2;
+                bolt.position.set(pos.x > 0 ? pos.x + 0.23 : pos.x - 0.23, -0.05, pos.z);
+                watch3D.watchGroup.add(bolt);
             });
 
             // Silicone Curved Sport Straps
@@ -4015,6 +4045,20 @@
             const bottomStrap = createStrapMesh(false);
             watch3D.watchGroup.add(topStrap);
             watch3D.watchGroup.add(bottomStrap);
+
+            // Tactical Ribbed Grip Grooves on Rugged Straps
+            const ribGeo = new THREE.BoxGeometry(2.18, 0.05, 0.12);
+            const ribMat = new THREE.MeshStandardMaterial({ color: 0x0c0d10, roughness: 0.98, metalness: 0.02 });
+            [-1, 1].forEach(sign => {
+                [3.0, 3.6, 4.2, 4.8, 5.4, 6.0].forEach(dist => {
+                    const rib = new THREE.Mesh(ribGeo, ribMat);
+                    const t = (dist - 2.2) / 5.2;
+                    const y = -Math.pow(t, 1.8) * 1.6 + 0.05;
+                    rib.position.set(0, y, dist * sign);
+                    rib.rotation.x = sign * t * 0.42;
+                    watch3D.watchGroup.add(rib);
+                });
+            });
 
             watch3D.scene.add(watch3D.watchGroup);
 
