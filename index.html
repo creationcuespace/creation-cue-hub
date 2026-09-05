@@ -37,9 +37,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
-    
-    <!-- Three.js 3D WebGL Engine -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 
     <style>
         :root {
@@ -1523,76 +1520,26 @@
         }
 
 
-        /* 3D Scroll Hero Section */
+        /* Photorealistic Flat Showcase Hero Section */
+        .hero-section.hero-flat-section,
         .hero-section.hero-3d-section {
             position: relative;
+            margin: -24px -24px 24px -24px;
+            padding: 44px 24px;
+            background: radial-gradient(circle at 65% 30%, rgba(148, 163, 184, 0.08) 0%, rgba(12, 12, 16, 0.92) 55%, var(--bg-color) 100%);
+            border-bottom: 1px solid var(--border-color);
+            overflow: hidden;
+            display: block;
             height: auto;
             min-height: auto;
-            display: block;
-            padding: 0;
-            margin: -24px -24px 24px -24px;
-            border-bottom: 1px solid var(--border-color);
-            background: radial-gradient(circle at 50% 30%, rgba(148, 163, 184, 0.06) 0%, rgba(12, 12, 16, 0.7) 50%, var(--bg-color) 95%);
         }
 
         @media (min-width: 769px) {
+            .hero-section.hero-flat-section,
             .hero-section.hero-3d-section {
                 margin: -32px -40px 24px -40px;
-                height: 195vh;
-                min-height: 850px;
+                padding: 56px 48px;
             }
-        }
-
-        .hero-3d-sticky-frame {
-            position: sticky;
-            top: 64px;
-            height: calc(100vh - 64px);
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        body.admin-mode .hero-3d-sticky-frame {
-            top: 104px;
-            height: calc(100vh - 104px);
-        }
-
-        .watch-canvas-container {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: auto;
-            cursor: grab;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .watch-canvas-container:active {
-            cursor: grabbing;
-        }
-
-        #watch-3d-canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-            touch-action: pan-y;
-        }
-
-        .watch-glow-fx {
-            position: absolute;
-            width: 320px;
-            height: 320px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(148, 163, 184, 0.12) 0%, rgba(51, 65, 85, 0.03) 65%, transparent 80%);
-            pointer-events: none;
-            z-index: 0;
-            filter: blur(40px);
-            transition: transform 0.3s ease;
         }
 
         .hero-ambient-fx {
@@ -1608,51 +1555,21 @@
             z-index: 0;
         }
 
-        /* Storytelling Layer */
-        .hero-story-container {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
+        .hero-content-wrapper {
+            max-width: 1240px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            padding: 40px 48px;
-            max-width: 1520px;
-            margin: 0 auto;
+            justify-content: space-between;
+            gap: 40px;
+            position: relative;
+            z-index: 2;
         }
 
-        .hero-story-slide {
-            position: absolute;
-            max-width: 440px;
-            left: 48px;
+        .hero-text-col {
+            flex: 1 1 58%;
+            max-width: 650px;
             text-align: left;
-            opacity: 0;
-            transform: translateY(24px) scale(0.96);
-            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            pointer-events: none;
-            will-change: opacity, transform;
-            background: rgba(10, 10, 14, 0.65);
-            padding: 24px 28px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-        }
-
-        @media (min-width: 1600px) {
-            .hero-story-slide {
-                left: calc((100% - 1520px) / 2 + 48px);
-            }
-        }
-
-        .hero-story-slide.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            pointer-events: auto;
         }
 
         .hero-badge {
@@ -1688,11 +1605,11 @@
         }
 
         .hero-title {
-            font-size: clamp(2rem, 6vw, 3.8rem);
+            font-size: clamp(2rem, 5vw, 3.4rem);
             font-weight: 800;
             margin: 0;
-            line-height: 1.1;
-            letter-spacing: 1px;
+            line-height: 1.12;
+            letter-spacing: 0.5px;
             font-family: var(--font-display);
             color: #fff;
             text-transform: uppercase;
@@ -1706,9 +1623,9 @@
         }
 
         .hero-tagline {
-            font-size: clamp(0.95rem, 2vw, 1.15rem);
+            font-size: clamp(0.95rem, 1.8vw, 1.12rem);
             color: rgba(255, 255, 255, 0.85);
-            margin: 16px 0 28px 0;
+            margin: 16px 0 24px 0;
             line-height: 1.6;
             max-width: 580px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
@@ -1769,29 +1686,12 @@
             transform: translateY(-2px);
         }
 
-        /* Bottom Floating Bar in 3D Hero */
-        .hero-bottom-controls {
-            position: absolute;
-            bottom: 24px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 32px;
-            z-index: 3;
-            pointer-events: auto;
-        }
-
-        .hero-face-chips {
+        .hero-face-chips-container {
+            margin-top: 24px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(15, 15, 20, 0.7);
-            border: 1px solid var(--border-color);
-            padding: 4px 10px;
-            border-radius: 20px;
-            backdrop-filter: blur(12px);
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .chips-label {
@@ -1800,7 +1700,19 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-right: 4px;
+            margin-right: 2px;
+        }
+
+        .hero-face-chips {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(15, 15, 20, 0.7);
+            border: 1px solid var(--border-color);
+            padding: 4px 8px;
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            flex-wrap: wrap;
         }
 
         .face-chip {
@@ -1809,7 +1721,7 @@
             color: var(--text-muted);
             font-size: 11px;
             font-weight: 600;
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -1827,209 +1739,122 @@
             color: var(--primary);
         }
 
-        .hero-scroll-hint {
+        /* Right Column: Flat Samsung Galaxy Watch Ultra Showcase */
+        .hero-watch-col {
+            flex: 1 1 42%;
             display: flex;
             align-items: center;
-            gap: 10px;
-            color: var(--text-muted);
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-
-        .hero-scroll-hint:hover {
-            color: var(--primary);
-        }
-
-        .scroll-mouse {
-            width: 18px;
-            height: 28px;
-            border: 2px solid currentColor;
-            border-radius: 12px;
+            justify-content: center;
             position: relative;
         }
 
-        .scroll-mouse .scroll-wheel {
-            width: 2px;
-            height: 6px;
-            background: currentColor;
-            border-radius: 2px;
+        .hero-watch-mockup {
+            position: relative;
+            width: 100%;
+            max-width: 380px;
+            aspect-ratio: 1024 / 1100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.9));
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero-watch-mockup:hover {
+            transform: scale(1.02);
+        }
+
+        .hero-watch-glow {
             position: absolute;
-            top: 4px;
+            width: 75%;
+            height: 75%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(241, 179, 28, 0.12) 0%, rgba(148, 163, 184, 0.04) 50%, transparent 75%);
+            filter: blur(35px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero-watch-face-img {
+            position: absolute;
+            top: 49.86%;
             left: 50%;
-            transform: translateX(-50%);
-            animation: scroll-bob 1.6s infinite;
+            transform: translate(-50%, -50%);
+            width: 56.6%;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            clip-path: circle(50% at 50% 50%);
+            -webkit-clip-path: circle(50% at 50% 50%);
+            object-fit: cover;
+            background-color: #000;
+            z-index: 1;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+            transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        @keyframes scroll-bob {
-            0% { top: 4px; opacity: 1; }
-            100% { top: 14px; opacity: 0; }
+        .hero-watch-frame-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+            z-index: 2;
         }
 
-        /* Mobile Lightweight Rugged Watch Display */
-        .mobile-watch-display {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .hero-section.hero-3d-section {
-                position: relative;
-                height: auto !important;
-                min-height: auto !important;
-                margin: -16px -16px 20px -16px !important;
-                padding: 0 !important;
-                border-bottom: 1px solid var(--border-color);
-                background: radial-gradient(circle at 50% 20%, rgba(148, 163, 184, 0.08) 0%, rgba(12, 12, 16, 0.85) 60%, var(--bg-color) 100%);
+        @media (max-width: 880px) {
+            .hero-content-wrapper {
+                flex-direction: column;
+                text-align: center;
+                gap: 28px;
             }
 
-            .hero-3d-sticky-frame {
-                position: relative !important;
-                top: auto !important;
-                height: auto !important;
-                min-height: auto !important;
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                justify-content: flex-start !important;
-                padding: 24px 16px 24px 16px !important;
-                overflow: visible !important;
-            }
-
-            .watch-canvas-container {
-                display: none !important;
-            }
-
-            .mobile-watch-display {
-                display: flex !important;
+            .hero-text-col {
+                display: flex;
                 flex-direction: column;
                 align-items: center;
-                justify-content: center;
-                margin: 16px auto 14px auto;
-                position: relative;
-                z-index: 2;
-                order: 2;
-            }
-
-            .mobile-watch-container {
-                position: relative;
-                width: 275px;
-                height: 295px;
-                margin: 0 auto;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.85));
-            }
-
-            .mobile-watch-face-img {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 155px;
-                height: 155px;
-                border-radius: 50%;
-                object-fit: contain;
-                z-index: 1;
-                transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
-            }
-
-            .mobile-watch-frame-img {
-                position: absolute;
-                inset: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-                pointer-events: none;
-                z-index: 2;
-            }
-
-            .hero-story-container {
-                position: relative !important;
-                inset: auto !important;
-                width: 100% !important;
-                max-width: 500px !important;
-                padding: 0 !important;
-                margin: 0 auto !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: center !important;
-                align-items: center !important;
-                order: 1;
-            }
-
-            .hero-story-slide {
-                position: relative !important;
-                left: auto !important;
-                opacity: 1 !important;
-                transform: none !important;
-                pointer-events: auto !important;
-                max-width: 100% !important;
-                padding: 0 !important;
-                background: transparent !important;
-                border: none !important;
-                box-shadow: none !important;
-                backdrop-filter: none !important;
-                text-align: center !important;
-            }
-
-            #hero-slide-1, #hero-slide-2 {
-                display: none !important;
+                text-align: center;
+                max-width: 100%;
             }
 
             .hero-title {
-                font-size: 1.85rem !important;
-                line-height: 1.2 !important;
-                margin: 10px 0 !important;
+                font-size: clamp(1.85rem, 6vw, 2.5rem);
             }
 
             .hero-tagline {
-                margin: 0 auto 14px auto !important;
-                font-size: 0.88rem !important;
-                line-height: 1.5 !important;
-                color: var(--text-muted) !important;
+                margin: 10px auto 18px auto;
+                font-size: 0.92rem;
             }
 
             .hero-actions {
-                justify-content: center !important;
-                gap: 10px !important;
-                margin-top: 14px !important;
+                justify-content: center;
+                gap: 10px;
             }
 
             .hero-btn-catalog, .hero-btn-switch {
-                padding: 10px 18px !important;
-                font-size: 13px !important;
+                padding: 10px 20px;
+                font-size: 13px;
             }
 
-            .hero-bottom-controls {
-                position: relative !important;
-                inset: auto !important;
-                width: 100% !important;
-                padding: 0 !important;
-                margin-top: 6px !important;
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                gap: 10px !important;
-                order: 3;
-            }
-
-            .hero-scroll-hint {
-                display: none !important;
-            }
-
-            .hero-face-chips {
-                overflow-x: auto;
-                max-width: 100%;
+            .hero-face-chips-container {
                 justify-content: center;
-                gap: 6px;
-                padding: 4px 8px;
+                margin-top: 18px;
             }
 
-            .face-chip {
-                padding: 6px 12px;
-                font-size: 12px;
+            .hero-watch-mockup {
+                max-width: 275px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section.hero-flat-section,
+            .hero-section.hero-3d-section {
+                margin: -16px -16px 20px -16px;
+                padding: 32px 16px;
+            }
+
+            .hero-watch-mockup {
+                max-width: 240px;
             }
         }
 
@@ -2552,101 +2377,57 @@
 
             <!-- Catalog Panel -->
             <section id="tab-catalog" class="tab-panel active">
-                <!-- 3D Interactive Watch Hero Banner -->
-                <header class="hero-section hero-3d-section" id="hero-3d-section">
-                    <div class="hero-3d-sticky-frame">
-                        <!-- Ambient FX -->
-                        <div class="hero-ambient-fx"></div>
+                <!-- Interactive Watch Hero Banner -->
+                <header class="hero-section hero-flat-section" id="hero-3d-section">
+                    <!-- Ambient FX -->
+                    <div class="hero-ambient-fx"></div>
 
-                        <!-- 3D Watch WebGL Canvas (Desktop) -->
-                        <div id="watch-canvas-container" class="watch-canvas-container">
-                            <canvas id="watch-3d-canvas"></canvas>
-                            <div class="watch-glow-fx" id="watch-glow-fx"></div>
-                        </div>
-
-                        <!-- Mobile Lightweight Rugged Smartwatch Display -->
-                        <div class="mobile-watch-display" id="mobile-watch-display">
-                            <div class="mobile-watch-container">
-                                <img id="mobile-watch-face-img" class="mobile-watch-face-img" src="images/cue178.png" alt="Featured Watch Face">
-                                <img class="mobile-watch-frame-img" src="images/samsung_ultra_frame.png" alt="Samsung Galaxy Watch Ultra">
+                    <div class="hero-content-wrapper">
+                        <!-- Left Column: Copy & Actions -->
+                        <div class="hero-text-col">
+                            <div class="hero-badge">
+                                <span class="badge-dot"></span>
+                                <span id="hero-badge-text">NEW RELEASE • CUE178</span>
                             </div>
-                        </div>
+                            <h1 class="hero-title" id="hero-main-title">
+                                TIME, CRAFTED TO <br><span class="hero-gold-text">PERFECTION</span>
+                            </h1>
+                            <p class="hero-tagline" id="hero-main-tagline">
+                                Featuring the all-new CUE178 and 111+ precision-engineered watch faces for Samsung Galaxy Watch, Google Pixel Watch & all Wear OS smartwatches.
+                            </p>
 
-                        <!-- Floating Storytelling Layer -->
-                        <div class="hero-story-container" id="hero-story-container">
-                            <!-- Story Slide 0: CUE178 -->
-                            <div class="hero-story-slide active" id="hero-slide-0" data-slide="0">
-                                <div class="hero-badge">
-                                    <span class="badge-dot"></span>
-                                    <span>NEW RELEASE • CUE178</span>
-                                </div>
-                                <h1 class="hero-title">
-                                    TIME, CRAFTED TO <br><span class="hero-gold-text">PERFECTION</span>
-                                </h1>
-                                <p class="hero-tagline">
-                                    Featuring the all-new CUE178 and 111+ precision-engineered watch faces for Samsung Galaxy Watch, Google Pixel Watch & all Wear OS smartwatches.
-                                </p>
-                                <div class="hero-actions">
-                                    <button class="hero-btn-catalog" onclick="scrollToCatalog()">
-                                        <span>Explore Catalog</span>
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
-                                    </button>
-                                    <button class="hero-btn-switch" onclick="switch3DWatchFace()" title="Switch watch face on 3D watch">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-                                        <span id="hero-current-face-label">CUE178</span>
-                                    </button>
-                                </div>
+                            <div class="hero-actions">
+                                <button class="hero-btn-catalog" onclick="scrollToCatalog()">
+                                    <span>Explore Catalog</span>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                                </button>
+                                <button class="hero-btn-switch" onclick="switch3DWatchFace()" title="Switch watch face on watch">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                                    <span id="hero-current-face-label">CUE178</span>
+                                </button>
                             </div>
 
-                            <!-- Story Slide 1: CUE003 -->
-                            <div class="hero-story-slide" id="hero-slide-1" data-slide="1">
-                                <div class="hero-badge">FLAGSHIP DESIGN • CUE003</div>
-                                <h2 class="hero-title">
-                                    PURE <span class="hero-gold-text">AMOLED</span> DEPTH
-                                </h2>
-                                <p class="hero-tagline">
-                                    Ultra battery-friendly aesthetics with deep contrast, custom indices, and high-readability typography powered by CUE003.
-                                </p>
-                                <div class="hero-actions">
-                                    <button class="hero-btn-catalog" onclick="scrollToCatalog()">
-                                        <span>Explore Catalog</span>
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Story Slide 2: CUE177 -->
-                            <div class="hero-story-slide" id="hero-slide-2" data-slide="2">
-                                <div class="hero-badge">DYNAMIC COMPLICATIONS • CUE177</div>
-                                <h2 class="hero-title">
-                                    INTELLIGENCE <span class="hero-gold-text">ON YOUR WRIST</span>
-                                </h2>
-                                <p class="hero-tagline">
-                                    Live weather, heart rate, step progress, battery monitor, and calendar events customized to fit your unique lifestyle on CUE177.
-                                </p>
-                                <div class="hero-actions">
-                                    <button class="hero-btn-catalog" onclick="scrollToCatalog()">
-                                        <span>Explore Catalog</span>
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
-                                    </button>
+                            <div class="hero-face-chips-container">
+                                <span class="chips-label">Popular Faces:</span>
+                                <div class="hero-face-chips">
+                                    <button class="face-chip active" id="face-chip-0" onclick="set3DWatchFace(0)">CUE178</button>
+                                    <button class="face-chip" id="face-chip-1" onclick="set3DWatchFace(1)">CUE003</button>
+                                    <button class="face-chip" id="face-chip-2" onclick="set3DWatchFace(2)">CUE177</button>
+                                    <button class="face-chip" id="face-chip-3" onclick="set3DWatchFace(3)">CUE176</button>
+                                    <button class="face-chip" id="face-chip-4" onclick="set3DWatchFace(4)">CUE175</button>
+                                    <button class="face-chip" id="face-chip-5" onclick="set3DWatchFace(5)">CUE174</button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Bottom Controls: Style Chips & Scroll Hint -->
-                        <div class="hero-bottom-controls">
-                            <div class="hero-face-chips">
-                                <span class="chips-label">Faces:</span>
-                                <button class="face-chip active" id="face-chip-0" onclick="set3DWatchFace(0)">CUE178</button>
-                                <button class="face-chip" id="face-chip-1" onclick="set3DWatchFace(1)">CUE003</button>
-                                <button class="face-chip" id="face-chip-2" onclick="set3DWatchFace(2)">CUE177</button>
-                                <button class="face-chip" id="face-chip-3" onclick="set3DWatchFace(3)">CUE176</button>
-                                <button class="face-chip" id="face-chip-4" onclick="set3DWatchFace(4)">CUE175</button>
-                                <button class="face-chip" id="face-chip-5" onclick="set3DWatchFace(5)">CUE174</button>
-                            </div>
-                            <div class="hero-scroll-hint" onclick="scrollToCatalog()">
-                                <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
-                                <span>Scroll to explore</span>
+                        <!-- Right Column: Photorealistic Flat Samsung Galaxy Watch Ultra Showcase -->
+                        <div class="hero-watch-col">
+                            <div class="hero-watch-mockup" id="hero-watch-mockup">
+                                <div class="hero-watch-glow"></div>
+                                <!-- Watch Face circular image (Underneath the frame, precisely inside the dial aperture) -->
+                                <img id="hero-watch-face-img" class="hero-watch-face-img" src="images/cue178.png" alt="Featured Watch Face">
+                                <!-- Official Samsung Galaxy Watch Ultra Titanium Bezel Frame -->
+                                <img class="hero-watch-frame-img" src="images/samsung_ultra_frame.png" alt="Samsung Galaxy Watch Ultra">
                             </div>
                         </div>
                     </div>
@@ -2907,7 +2688,7 @@
                     </a>
                     <button id="detail-preview-3d-btn" class="detail-btn-preview-3d" onclick="previewCurrentFaceOn3D()" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:11px 16px; margin-top:8px; border-radius:12px; background:rgba(241,179,28,0.12); border:1px solid rgba(241,179,28,0.35); color:var(--primary); font-weight:700; font-size:13px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.background='rgba(241,179,28,0.22)'; this.style.transform='translateY(-1px)';" onmouseout="this.style.background='rgba(241,179,28,0.12)'; this.style.transform='none';">
                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 15"></polyline></svg>
-                        PREVIEW ON 3D WATCH
+                        PREVIEW ON WATCH
                     </button>
                 </div>
 
@@ -3769,647 +3550,61 @@
             }
             setupFaqAccordions();
             fetchData();
-            init3DWatchHero();
+            initHeroWatch();
         });
 
         // ==========================================
-        // 3D Smartwatch Interactive Hero (Three.js)
+        // Photorealistic Flat Smartwatch Showcase Controller
         // ==========================================
-        let watch3D = {
-            scene: null,
-            camera: null,
-            renderer: null,
-            watchGroup: null,
-            screenMesh: null,
-            screenMaterial: null,
-            proceduralTexture: null,
-            drawProceduralDial: null,
-            dialCanvas: null,
-            dialCtx: null,
-            screenTexture: null,
-            loadedTextures: [],
-            loadedImages: [],
-            currentFaceIndex: 0,
-            activeSlideIndex: 0,
-            isVisible: true,
-            isReducedMotion: false,
-            animFrameId: null,
-            clockInterval: null,
-            
-            // Motion targets & state (calibrated so screen faces camera directly)
-            targetPosX: 0,
-            targetPosY: 0,
-            targetRotX: 0.05,
-            targetRotY: -0.15,
-            targetRotZ: 0,
-            targetScale: 1.05,
-            
-            currentPosX: 1.45,
-            currentPosY: 0,
-            currentRotX: 0.05,
-            currentRotY: -0.15,
-            currentRotZ: 0,
-            currentScale: 1.05,
-            
-            pointerX: 0,
-            pointerY: 0,
-            isDragging: false,
-            dragStartX: 0,
-            dragStartY: 0,
-            dragRotX: 0,
-            dragRotY: 0
-        };
-
         const FEATURED_WATCH_FACES = [
-            { name: 'CUE178', file: 'images/cue178.png' },
-            { name: 'CUE003', file: 'images/cue003.png' },
-            { name: 'CUE177', file: 'images/cue177.png' },
-            { name: 'CUE176', file: 'images/cue176.png' },
-            { name: 'CUE175', file: 'images/cue175.png' },
-            { name: 'CUE174', file: 'images/cue174.png' }
+            {
+                name: 'CUE178',
+                file: 'images/cue178.png',
+                badge: 'NEW RELEASE • CUE178',
+                title: 'TIME, CRAFTED TO <br><span class="hero-gold-text">PERFECTION</span>',
+                tagline: 'Featuring the all-new CUE178 and 111+ precision-engineered watch faces for Samsung Galaxy Watch, Google Pixel Watch & all Wear OS smartwatches.'
+            },
+            {
+                name: 'CUE003',
+                file: 'images/cue003.png',
+                badge: 'FLAGSHIP DESIGN • CUE003',
+                title: 'PURE <span class="hero-gold-text">AMOLED</span> DEPTH',
+                tagline: 'Ultra battery-friendly aesthetics with deep contrast, custom indices, and high-readability typography powered by CUE003.'
+            },
+            {
+                name: 'CUE177',
+                file: 'images/cue177.png',
+                badge: 'DYNAMIC COMPLICATIONS • CUE177',
+                title: 'INTELLIGENCE <span class="hero-gold-text">ON YOUR WRIST</span>',
+                tagline: 'Live weather, heart rate, step progress, battery monitor, and calendar events customized to fit your unique lifestyle on CUE177.'
+            },
+            {
+                name: 'CUE176',
+                file: 'images/cue176.png',
+                badge: 'TACTICAL CHRONO • CUE176',
+                title: 'RUGGED <span class="hero-gold-text">PRECISION</span>',
+                tagline: 'Multi-ring chronometer layout engineered for extreme outdoor adventures and fitness tracking on CUE176.'
+            },
+            {
+                name: 'CUE175',
+                file: 'images/cue175.png',
+                badge: 'MINIMAL ELEGANCE • CUE175',
+                title: 'REFINED <span class="hero-gold-text">SIMPLICITY</span>',
+                tagline: 'Clean geometry and modern aesthetics with subtle ambient always-on display styling on CUE175.'
+            },
+            {
+                name: 'CUE174',
+                file: 'images/cue174.png',
+                badge: 'HYBRID MASTERPIECE • CUE174',
+                title: 'TIMELESS <span class="hero-gold-text">UTILITY</span>',
+                tagline: 'Blending classic analog mechanical hands with next-gen digital smartwatch complications on CUE174.'
+            }
         ];
 
-        // Procedural Fallback Clock Dial (512x512 Canvas with live time)
-        function createProceduralDialCanvas() {
-            const canvas = document.createElement('canvas');
-            canvas.width = 512;
-            canvas.height = 512;
-            const ctx = canvas.getContext('2d');
+        let currentHeroFaceIndex = 0;
 
-            function drawDial() {
-                ctx.clearRect(0, 0, 512, 512);
-
-                // AMOLED Black Background
-                const bgGrad = ctx.createRadialGradient(256, 256, 120, 256, 256, 256);
-                bgGrad.addColorStop(0, '#0e0f14');
-                bgGrad.addColorStop(0.85, '#050608');
-                bgGrad.addColorStop(1, '#000000');
-                ctx.fillStyle = bgGrad;
-                ctx.beginPath();
-                ctx.arc(256, 256, 250, 0, Math.PI * 2);
-                ctx.fill();
-
-                // Outer Ticks Ring
-                for (let i = 0; i < 60; i++) {
-                    const angle = (i * Math.PI) / 30;
-                    const r1 = i % 5 === 0 ? 228 : 238;
-                    const r2 = 246;
-                    ctx.strokeStyle = i % 5 === 0 ? '#94a3b8' : 'rgba(255, 255, 255, 0.15)';
-                    ctx.lineWidth = i % 5 === 0 ? 3 : 1.5;
-                    ctx.beginPath();
-                    ctx.moveTo(256 + Math.cos(angle) * r1, 256 + Math.sin(angle) * r1);
-                    ctx.lineTo(256 + Math.cos(angle) * r2, 256 + Math.sin(angle) * r2);
-                    ctx.stroke();
-                }
-
-                // Outer Progress Arc (Tactical Slate Progress)
-                ctx.strokeStyle = '#64748b';
-                ctx.lineWidth = 6;
-                ctx.lineCap = 'round';
-                ctx.beginPath();
-                ctx.arc(256, 256, 214, -Math.PI / 2, (Math.PI * 2 * 0.78) - Math.PI / 2);
-                ctx.stroke();
-
-                // Brand Headline
-                ctx.fillStyle = '#cbd5e1';
-                ctx.font = 'bold 18px "Outfit", sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('CREATIONCUE', 256, 155);
-
-                // Live Time
-                const now = new Date();
-                const hrs = String(now.getHours()).padStart(2, '0');
-                const mins = String(now.getMinutes()).padStart(2, '0');
-                const secs = String(now.getSeconds()).padStart(2, '0');
-
-                ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 82px "Outfit", sans-serif';
-                ctx.fillText(`${hrs}:${mins}`, 256, 265);
-
-                ctx.fillStyle = '#94a3b8';
-                ctx.font = 'bold 22px "Inter", sans-serif';
-                ctx.fillText(`:${secs}`, 370, 238);
-
-                const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-                const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-                const dateStr = `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]}`;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
-                ctx.font = '600 16px "Inter", sans-serif';
-                ctx.fillText(dateStr, 256, 310);
-
-                // Complication Pills
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                ctx.beginPath();
-                if (ctx.roundRect) ctx.roundRect(165, 345, 85, 32, 16);
-                else ctx.rect(165, 345, 85, 32);
-                ctx.fill();
-                ctx.fillStyle = '#ff4757';
-                ctx.font = 'bold 13px "Inter", sans-serif';
-                ctx.fillText('♥ 74 BPM', 207, 366);
-
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                ctx.beginPath();
-                if (ctx.roundRect) ctx.roundRect(262, 345, 85, 32, 16);
-                else ctx.rect(262, 345, 85, 32);
-                ctx.fill();
-                ctx.fillStyle = '#2ed573';
-                ctx.font = 'bold 13px "Inter", sans-serif';
-                ctx.fillText('⚡ 88%', 304, 366);
-            }
-
-            drawDial();
-            return { canvas, drawDial };
-        }
-
-        function initMobileWatchView() {
-            const mobileImg = document.getElementById('mobile-watch-face-img');
-            if (mobileImg && FEATURED_WATCH_FACES[watch3D.currentFaceIndex]) {
-                mobileImg.src = FEATURED_WATCH_FACES[watch3D.currentFaceIndex].file;
-            }
-        }
-
-        function init3DWatchHero() {
-            // On mobile devices (<= 768px), use the lightweight native DOM showcase (no heavy WebGL loop)
-            if (window.innerWidth <= 768) {
-                initMobileWatchView();
-                return;
-            }
-
-            const canvas = document.getElementById('watch-3d-canvas');
-            const container = document.getElementById('watch-canvas-container');
-            const heroSection = document.getElementById('hero-3d-section');
-            if (!canvas || !container || typeof THREE === 'undefined') return;
-
-            watch3D.isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-            const width = container.clientWidth || window.innerWidth;
-            const height = container.clientHeight || (window.innerHeight - 64);
-
-            // Scene & Camera
-            watch3D.scene = new THREE.Scene();
-            watch3D.camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
-            watch3D.camera.position.set(0, 0, 9.5);
-
-            // Renderer
-            watch3D.renderer = new THREE.WebGLRenderer({
-                canvas: canvas,
-                antialias: true,
-                alpha: true,
-                powerPreference: 'high-performance'
-            });
-            watch3D.renderer.setSize(width, height);
-            watch3D.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            watch3D.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-            watch3D.renderer.toneMappingExposure = 1.25;
-
-            // Lights
-            const ambientLight = new THREE.AmbientLight(0xffffff, 1.6);
-            watch3D.scene.add(ambientLight);
-
-            const keyLight = new THREE.DirectionalLight(0xffffff, 2.8);
-            keyLight.position.set(-5, 6, 6);
-            watch3D.scene.add(keyLight);
-
-            // Tactical Rim Light (Crisp slate titanium edge highlight, no yellow)
-            const tacticalRimLight = new THREE.DirectionalLight(0x8ea2b8, 2.2);
-            tacticalRimLight.position.set(6, -2, -4);
-            watch3D.scene.add(tacticalRimLight);
-
-            const fillLight = new THREE.PointLight(0x475569, 1.4, 25);
-            fillLight.position.set(5, 5, 4);
-            watch3D.scene.add(fillLight);
-
-            // Build Smartwatch Model
-            watch3D.watchGroup = new THREE.Group();
-
-            // Samsung Galaxy Watch Ultra Materials (Strictly matching photo colors)
-            // Deep Stealth Matte Dark Titanium
-            const darkTitaniumMat = new THREE.MeshStandardMaterial({
-                color: 0x141519,
-                metalness: 0.86,
-                roughness: 0.38
-            });
-
-            // Gunmetal Bezel Metal
-            const bezelTitaniumMat = new THREE.MeshStandardMaterial({
-                color: 0x22242b,
-                metalness: 0.88,
-                roughness: 0.30
-            });
-
-            // Tactical Inner Accent Ring
-            const innerAccentMat = new THREE.MeshStandardMaterial({
-                color: 0x16171b,
-                metalness: 0.82,
-                roughness: 0.40
-            });
-
-            // Signature Marine Orange (12 o'clock notch, lower button ring, left accent strip)
-            const marineOrangeMat = new THREE.MeshStandardMaterial({
-                color: 0xf95724,
-                metalness: 0.20,
-                roughness: 0.32,
-                emissive: 0x441200
-            });
-
-            // Polished Chrome Rim for Upper Button
-            const chromeBevelMat = new THREE.MeshStandardMaterial({
-                color: 0xd4d9e2,
-                metalness: 0.96,
-                roughness: 0.18
-            });
-
-            // Dark Button Pusher Material
-            const buttonPusherMat = new THREE.MeshStandardMaterial({
-                color: 0x24262d,
-                metalness: 0.90,
-                roughness: 0.26
-            });
-
-            // Matte Fluororubber Marine Strap
-            const matteStrapMat = new THREE.MeshStandardMaterial({
-                color: 0x0e0f12,
-                roughness: 0.96,
-                metalness: 0.02
-            });
-
-            // Laser-Etched Bezel Tick Steel
-            const tickSteelMat = new THREE.MeshStandardMaterial({
-                color: 0x5e6573,
-                metalness: 0.82,
-                roughness: 0.30
-            });
-
-            // High-Performance Offscreen Canvas for Guaranteed Watch Face Rendering
-            const dialCanvas = document.createElement('canvas');
-            dialCanvas.width = 512;
-            dialCanvas.height = 512;
-            const dialCtx = dialCanvas.getContext('2d');
-            watch3D.dialCanvas = dialCanvas;
-            watch3D.dialCtx = dialCtx;
-
-            function drawFaceImage(img) {
-                dialCtx.clearRect(0, 0, 512, 512);
-                dialCtx.drawImage(img, 0, 0, 512, 512);
-                screenTexture.needsUpdate = true;
-            }
-            watch3D.drawFaceImage = drawFaceImage;
-
-            // Draw initial procedural dial immediately so screen is NEVER black even for 1 frame
-            const proceduralDial = createProceduralDialCanvas();
-            watch3D.drawProceduralDial = proceduralDial.drawDial;
-            proceduralDial.drawDial();
-            dialCtx.drawImage(proceduralDial.canvas, 0, 0);
-
-            // CanvasTexture binds 100% reliably in Three.js across all browser engines
-            const screenTexture = new THREE.CanvasTexture(dialCanvas);
-            screenTexture.colorSpace = THREE.SRGBColorSpace;
-            screenTexture.minFilter = THREE.LinearFilter;
-            screenTexture.magFilter = THREE.LinearFilter;
-            screenTexture.generateMipmaps = false;
-            watch3D.screenTexture = screenTexture;
-
-            // 1. High-Precision Screen Mesh (Displays the live watch face inside the dial aperture)
-            const screenGeo = new THREE.CircleGeometry(2.26, 64);
-            watch3D.screenMaterial = new THREE.MeshBasicMaterial({
-                map: screenTexture,
-                transparent: false,
-                side: THREE.DoubleSide
-            });
-            watch3D.screenMesh = new THREE.Mesh(screenGeo, watch3D.screenMaterial);
-            watch3D.screenMesh.position.set(0, 0, 0.00);
-            watch3D.screenMesh.renderOrder = 2;
-            watch3D.watchGroup.add(watch3D.screenMesh);
-
-            // Official Samsung Galaxy Watch Ultra Studio Render Texture
-            const textureLoader = new THREE.TextureLoader();
-            const frameTexture = textureLoader.load('images/samsung_ultra_frame.png', () => {
-                if (watch3D.renderer && watch3D.scene) {
-                    watch3D.renderer.render(watch3D.scene, watch3D.camera);
-                }
-            });
-            frameTexture.colorSpace = THREE.SRGBColorSpace;
-
-            // 2. Photorealistic Official Samsung Galaxy Watch Ultra Front Frame
-            // Exact titanium bezel, 12 o'clock orange notch, engraved numerals, 3 right buttons & strap
-            const frameGeo = new THREE.PlaneGeometry(8.02, 8.62);
-            const frameMat = new THREE.MeshBasicMaterial({
-                map: frameTexture,
-                transparent: true,
-                alphaTest: 0.01,
-                side: THREE.DoubleSide,
-                depthWrite: false
-            });
-            const frameMesh = new THREE.Mesh(frameGeo, frameMat);
-            frameMesh.position.set(0, 0, 0.02);
-            frameMesh.renderOrder = 5;
-            watch3D.watchGroup.add(frameMesh);
-
-            // 3. Subtle Sapphire Crystal Sheen Highlight
-            const glassGeo = new THREE.CircleGeometry(2.26, 64);
-            const glassMat = new THREE.MeshPhysicalMaterial({
-                color: 0xffffff,
-                transparent: true,
-                opacity: 0.04,
-                roughness: 0.08,
-                metalness: 0.1,
-                transmission: 0.95
-            });
-            const glassMesh = new THREE.Mesh(glassGeo, glassMat);
-            glassMesh.position.set(0, 0, 0.025);
-            glassMesh.renderOrder = 8;
-            watch3D.watchGroup.add(glassMesh);
-
-            // 4. 3D Dark Titanium Cushion Chassis behind the frame (gives physical thickness when tilted in perspective)
-            const caseShape = new THREE.Shape();
-            const cw = 2.44, ch = 2.44, cr = 0.82;
-            caseShape.moveTo(-cw + cr, -ch);
-            caseShape.lineTo(cw - cr, -ch);
-            caseShape.quadraticCurveTo(cw, -ch, cw, -ch + cr);
-            caseShape.lineTo(cw, ch - cr);
-            caseShape.quadraticCurveTo(cw, ch, cw - cr, ch);
-            caseShape.lineTo(-cw + cr, ch);
-            caseShape.quadraticCurveTo(-cw, ch, -cw, ch - cr);
-            caseShape.lineTo(-cw, -ch + cr);
-            caseShape.quadraticCurveTo(-cw, -ch, -cw + cr, -ch);
-
-            const caseExtrudeSettings = {
-                depth: 0.45,
-                bevelEnabled: true,
-                bevelSegments: 3,
-                steps: 1,
-                bevelSize: 0.08,
-                bevelThickness: 0.06
-            };
-            const caseGeo = new THREE.ExtrudeGeometry(caseShape, caseExtrudeSettings);
-            const caseMesh = new THREE.Mesh(caseGeo, darkTitaniumMat);
-            caseMesh.position.set(0, 0, -0.48);
-            watch3D.watchGroup.add(caseMesh);
-
-            // BioActive sensor cluster at the back
-            const sensorGeo = new THREE.CylinderGeometry(1.8, 1.5, 0.20, 32);
-            const sensorMesh = new THREE.Mesh(sensorGeo, new THREE.MeshStandardMaterial({ color: 0x08080a, roughness: 0.2, metalness: 0.5 }));
-            sensorMesh.rotation.x = Math.PI / 2;
-            sensorMesh.position.set(0, 0, -0.58);
-            watch3D.watchGroup.add(sensorMesh);
-
-            // Robust Watch Face Painter (Draws image directly to canvas or falls back to CDN)
-            function paintFaceToCanvas(imgSrc, callback) {
-                const img = new Image();
-                img.crossOrigin = 'anonymous';
-                img.onload = () => {
-                    drawFaceImage(img);
-                    if (callback) callback(screenTexture);
-                };
-                img.onerror = () => {
-                    const cdnImg = new Image();
-                    cdnImg.crossOrigin = 'anonymous';
-                    cdnImg.onload = () => {
-                        drawFaceImage(cdnImg);
-                        if (callback) callback(screenTexture);
-                    };
-                    cdnImg.src = 'https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/' + imgSrc.replace(/^\.?\//, '');
-                };
-                img.src = imgSrc;
-                if (img.complete && img.naturalWidth > 0) {
-                    img.onload();
-                }
-            }
-            watch3D.loadTexture = paintFaceToCanvas;
-
-            // Load initial CUE178 watch face
-            paintFaceToCanvas('images/cue178.png', () => {
-                watch3D.loadedTextures[0] = screenTexture;
-            });
-
-            watch3D.scene.add(watch3D.watchGroup);
-
-            // Preload Featured Watch Faces as Image objects
-            FEATURED_WATCH_FACES.forEach((item, idx) => {
-                const img = new Image();
-                img.onload = () => {
-                    watch3D.loadedImages[idx] = img;
-                    if (watch3D.currentFaceIndex === idx) {
-                        drawFaceImage(img);
-                    }
-                };
-                img.onerror = () => {
-                    const cdnImg = new Image();
-                    cdnImg.crossOrigin = 'anonymous';
-                    cdnImg.onload = () => {
-                        watch3D.loadedImages[idx] = cdnImg;
-                        if (watch3D.currentFaceIndex === idx) {
-                            drawFaceImage(cdnImg);
-                        }
-                    };
-                    cdnImg.src = 'https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/' + item.file.replace(/^\.?\//, '');
-                };
-                img.src = item.file;
-                if (img.complete && img.naturalWidth > 0) {
-                    img.onload();
-                }
-            });
-
-            // Interactive Drag / Pointer Listeners
-            container.addEventListener('pointerdown', (e) => {
-                watch3D.isDragging = true;
-                watch3D.dragStartX = e.clientX;
-                watch3D.dragStartY = e.clientY;
-            });
-
-            window.addEventListener('pointermove', (e) => {
-                const rect = container.getBoundingClientRect();
-                if (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
-                    const normX = (e.clientX - rect.left) / rect.width;
-                    const normY = (e.clientY - rect.top) / rect.height;
-                    watch3D.pointerX = (normX - 0.5) * 0.45;
-                    watch3D.pointerY = (normY - 0.5) * 0.45;
-                }
-
-                if (watch3D.isDragging) {
-                    const deltaX = e.clientX - watch3D.dragStartX;
-                    const deltaY = e.clientY - watch3D.dragStartY;
-                    watch3D.dragRotY += deltaX * 0.005;
-                    watch3D.dragRotX += deltaY * 0.005;
-                    watch3D.dragStartX = e.clientX;
-                    watch3D.dragStartY = e.clientY;
-                }
-            });
-
-            window.addEventListener('pointerup', () => {
-                watch3D.isDragging = false;
-            });
-
-            // Touch events
-            container.addEventListener('touchstart', (e) => {
-                if (e.touches.length === 1) {
-                    watch3D.isDragging = true;
-                    watch3D.dragStartX = e.touches[0].clientX;
-                    watch3D.dragStartY = e.touches[0].clientY;
-                }
-            }, { passive: true });
-
-            window.addEventListener('touchmove', (e) => {
-                if (watch3D.isDragging && e.touches.length === 1) {
-                    const deltaX = e.touches[0].clientX - watch3D.dragStartX;
-                    const deltaY = e.touches[0].clientY - watch3D.dragStartY;
-                    watch3D.dragRotY += deltaX * 0.004;
-                    watch3D.dragRotX += deltaY * 0.004;
-                    watch3D.dragStartX = e.touches[0].clientX;
-                    watch3D.dragStartY = e.touches[0].clientY;
-                }
-            }, { passive: true });
-
-            window.addEventListener('touchend', () => {
-                watch3D.isDragging = false;
-            });
-
-            window.addEventListener('resize', onWindowResize);
-
-            // Intersection Observer to save power
-            if ('IntersectionObserver' in window && heroSection) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        watch3D.isVisible = entry.isIntersecting;
-                    });
-                }, { threshold: 0 });
-                observer.observe(heroSection);
-            }
-
-            // Clock interval for procedural dial
-            watch3D.clockInterval = setInterval(() => {
-                if (watch3D.drawProceduralDial && watch3D.screenMaterial && watch3D.screenMaterial.map === watch3D.proceduralTexture) {
-                    watch3D.drawProceduralDial();
-                    watch3D.proceduralTexture.needsUpdate = true;
-                }
-            }, 1000);
-
-            // Kick off animation loop
-            animate3DWatch(0);
-        }
-
-        function animate3DWatch(time) {
-            watch3D.animFrameId = requestAnimationFrame(animate3DWatch);
-
-            if (!watch3D.isVisible || !watch3D.watchGroup || !watch3D.renderer) return;
-
-            const t = time * 0.001;
-
-            if (!watch3D.isDragging) {
-                watch3D.dragRotX *= 0.95;
-                watch3D.dragRotY *= 0.95;
-            }
-
-            const floatY = watch3D.isReducedMotion ? 0 : Math.sin(t * 1.4) * 0.08;
-            const floatRotZ = watch3D.isReducedMotion ? 0 : Math.cos(t * 1.1) * 0.015;
-
-            const lerpSpeed = 0.075;
-            const basePosX = (window.innerWidth > 1200) ? 1.45 : (window.innerWidth > 900 ? 1.10 : (window.innerWidth > 768 ? 0.75 : 0));
-            watch3D.currentPosX += (watch3D.targetPosX + basePosX - watch3D.currentPosX) * lerpSpeed;
-            watch3D.currentRotX += (watch3D.targetRotX + watch3D.pointerY + watch3D.dragRotX - watch3D.currentRotX) * lerpSpeed;
-            watch3D.currentRotY += (watch3D.targetRotY + watch3D.pointerX + watch3D.dragRotY - watch3D.currentRotY) * lerpSpeed;
-            watch3D.currentRotZ += (watch3D.targetRotZ + floatRotZ - watch3D.currentRotZ) * lerpSpeed;
-            watch3D.currentPosY += (watch3D.targetPosY + floatY - watch3D.currentPosY) * lerpSpeed;
-            watch3D.currentScale += (watch3D.targetScale - watch3D.currentScale) * lerpSpeed;
-
-            watch3D.watchGroup.rotation.x = watch3D.currentRotX;
-            watch3D.watchGroup.rotation.y = watch3D.currentRotY;
-            watch3D.watchGroup.rotation.z = watch3D.currentRotZ;
-            watch3D.watchGroup.position.x = watch3D.currentPosX;
-            watch3D.watchGroup.position.y = watch3D.currentPosY;
-            watch3D.watchGroup.scale.setScalar(watch3D.currentScale);
-
-            const glowEl = document.getElementById('watch-glow-fx');
-            if (glowEl) {
-                const shiftX = Math.sin(watch3D.currentRotY) * 55 + (watch3D.currentPosX * 45);
-                const shiftY = -Math.sin(watch3D.currentRotX) * 35;
-                glowEl.style.transform = `translate(${shiftX}px, ${shiftY}px)`;
-            }
-
-            watch3D.renderer.render(watch3D.scene, watch3D.camera);
-        }
-
-        function onWindowResize() {
-            if (window.innerWidth <= 768) {
-                if (watch3D.animFrameId) {
-                    cancelAnimationFrame(watch3D.animFrameId);
-                    watch3D.animFrameId = null;
-                }
-                initMobileWatchView();
-                return;
-            }
-            if (!watch3D.scene) {
-                init3DWatchHero();
-                return;
-            }
-            const container = document.getElementById('watch-canvas-container');
-            if (!container || !watch3D.camera || !watch3D.renderer) return;
-            const width = container.clientWidth;
-            const height = container.clientHeight;
-            watch3D.camera.aspect = width / height;
-            watch3D.camera.updateProjectionMatrix();
-            watch3D.renderer.setSize(width, height);
-            if (!watch3D.animFrameId) {
-                animate3DWatch(0);
-            }
-        }
-
-        function update3DWatchScroll(scrolled) {
-            // Disabled on mobile: scrolling naturally moves down without trapping or switching faces
-            if (window.innerWidth <= 768) return;
-
-            const hero = document.getElementById('hero-3d-section');
-            if (!hero) return;
-
-            const rect = hero.getBoundingClientRect();
-            const heroTrack = hero.offsetHeight - window.innerHeight;
-            if (heroTrack <= 0) return;
-
-            // Scroll progress within 3D Hero track: 0.0 to 1.0
-            const p = Math.max(0, Math.min(1, -rect.top / heroTrack));
-
-            if (p < 0.35) {
-                const subP = p / 0.35;
-                watch3D.targetRotX = 0.05 - subP * 0.04;
-                watch3D.targetRotY = -0.15 - subP * 0.15;
-                watch3D.targetRotZ = subP * 0.02;
-                watch3D.targetPosY = -subP * 0.20;
-                watch3D.targetScale = 1.05 + subP * 0.05;
-                setStorySlideActive(0);
-                if (!watch3D.customFaceLocked && watch3D.currentFaceIndex !== 0) {
-                    set3DWatchFaceInternal(0);
-                }
-            } else if (p < 0.70) {
-                const subP = (p - 0.35) / 0.35;
-                watch3D.targetRotX = 0.01 + subP * 0.06;
-                watch3D.targetRotY = -0.30 + subP * 0.52;
-                watch3D.targetRotZ = 0.02 - subP * 0.02;
-                watch3D.targetPosY = -0.20 + subP * 0.30;
-                watch3D.targetScale = 1.10 + subP * 0.05;
-                setStorySlideActive(1);
-                if (!watch3D.customFaceLocked && watch3D.currentFaceIndex !== 1) {
-                    set3DWatchFaceInternal(1);
-                }
-            } else {
-                const subP = (p - 0.70) / 0.30;
-                watch3D.targetRotX = 0.07 - subP * 0.05;
-                watch3D.targetRotY = 0.22 - subP * 0.22;
-                watch3D.targetRotZ = 0;
-                watch3D.targetPosY = 0.10 - subP * 0.80;
-                watch3D.targetScale = 1.15 - subP * 0.08;
-                setStorySlideActive(2);
-                if (!watch3D.customFaceLocked && watch3D.currentFaceIndex !== 2) {
-                    set3DWatchFaceInternal(2);
-                }
-            }
-        }
-
-        function setStorySlideActive(idx) {
-            if (watch3D.activeSlideIndex === idx) return;
-            watch3D.activeSlideIndex = idx;
-            document.querySelectorAll('.hero-story-slide').forEach((slide, i) => {
-                slide.classList.toggle('active', i === idx);
-            });
+        function initHeroWatch() {
+            setHeroWatchFace(0);
         }
 
         window.scrollToCatalog = function() {
@@ -4419,97 +3614,85 @@
             }
         };
 
-        function set3DWatchFaceInternal(idx) {
+        function setHeroWatchFace(idx) {
             if (idx < 0 || idx >= FEATURED_WATCH_FACES.length) return;
-            watch3D.currentFaceIndex = idx;
+            currentHeroFaceIndex = idx;
+            const data = FEATURED_WATCH_FACES[idx];
+
+            const faceImg = document.getElementById('hero-watch-face-img');
+            if (faceImg) {
+                faceImg.style.opacity = '0.4';
+                faceImg.style.transform = 'translate(-50%, -50%) scale(0.96)';
+                faceImg.src = data.file;
+                setTimeout(() => {
+                    faceImg.style.opacity = '1';
+                    faceImg.style.transform = 'translate(-50%, -50%) scale(1)';
+                }, 100);
+            }
+
+            const label = document.getElementById('hero-current-face-label');
+            if (label) label.textContent = data.name;
+
+            const badge = document.getElementById('hero-badge-text');
+            if (badge && data.badge) badge.textContent = data.badge;
+
+            const title = document.getElementById('hero-main-title');
+            if (title && data.title) title.innerHTML = data.title;
+
+            const tagline = document.getElementById('hero-main-tagline');
+            if (tagline && data.tagline) tagline.textContent = data.tagline;
 
             document.querySelectorAll('.face-chip').forEach((chip, i) => {
                 chip.classList.toggle('active', i === idx);
             });
-
-            const label = document.getElementById('hero-current-face-label');
-            if (label && FEATURED_WATCH_FACES[idx]) {
-                label.textContent = FEATURED_WATCH_FACES[idx].name;
-            }
-
-            // Smoothly update lightweight mobile watch face image
-            const mobileImg = document.getElementById('mobile-watch-face-img');
-            if (mobileImg && FEATURED_WATCH_FACES[idx]) {
-                mobileImg.style.transform = 'scale(0.96)';
-                mobileImg.src = FEATURED_WATCH_FACES[idx].file;
-                setTimeout(() => {
-                    if (mobileImg) mobileImg.style.transform = 'scale(1)';
-                }, 120);
-            }
-
-            if (watch3D.dialCtx && watch3D.screenTexture) {
-                if (watch3D.loadedImages[idx]) {
-                    if (watch3D.drawFaceImage) {
-                        watch3D.drawFaceImage(watch3D.loadedImages[idx]);
-                    } else {
-                        watch3D.dialCtx.clearRect(0, 0, 512, 512);
-                        watch3D.dialCtx.drawImage(watch3D.loadedImages[idx], 6, 6, 500, 500);
-                        watch3D.screenTexture.needsUpdate = true;
-                    }
-                } else if (watch3D.loadTexture) {
-                    watch3D.loadTexture(FEATURED_WATCH_FACES[idx].file);
-                }
-            }
         }
 
+        function switchHeroWatchFace() {
+            const nextIdx = (currentHeroFaceIndex + 1) % FEATURED_WATCH_FACES.length;
+            setHeroWatchFace(nextIdx);
+        }
+
+        // Backward-compatible bindings for existing buttons & catalog card previews
         window.set3DWatchFace = function(idx) {
-            if (idx < 0 || idx >= FEATURED_WATCH_FACES.length) return;
-            watch3D.customFaceLocked = true;
-            set3DWatchFaceInternal(idx);
-            watch3D.currentScale *= 1.06;
+            setHeroWatchFace(idx);
         };
 
         window.switch3DWatchFace = function() {
-            watch3D.customFaceLocked = true;
-            const nextIdx = (watch3D.currentFaceIndex + 1) % FEATURED_WATCH_FACES.length;
-            window.set3DWatchFace(nextIdx);
+            switchHeroWatchFace();
         };
 
         window.previewFaceOn3DWatch = function(imageUrl, title) {
             if (!imageUrl) return;
-            watch3D.customFaceLocked = true;
-            
-            // Smoothly scroll to 3D hero
-            const hero = document.getElementById('hero-3d-section');
+
+            const hero = document.getElementById('hero-3d-section') || document.getElementById('hero-section');
             if (hero) {
                 hero.scrollIntoView({ behavior: 'smooth' });
             } else {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-            
-            // Close details modal if open
+
             if (typeof closeDetailsModalVisuals === 'function') {
                 closeDetailsModalVisuals();
             }
 
-            // Update mobile watch image if present
-            const mobileImg = document.getElementById('mobile-watch-face-img');
-            if (mobileImg) {
-                mobileImg.style.transform = 'scale(0.96)';
-                mobileImg.src = imageUrl;
+            const faceImg = document.getElementById('hero-watch-face-img');
+            if (faceImg) {
+                faceImg.style.opacity = '0.4';
+                faceImg.style.transform = 'translate(-50%, -50%) scale(0.96)';
+                faceImg.src = imageUrl;
                 setTimeout(() => {
-                    if (mobileImg) mobileImg.style.transform = 'scale(1)';
+                    faceImg.style.opacity = '1';
+                    faceImg.style.transform = 'translate(-50%, -50%) scale(1)';
                 }, 120);
-                const label = document.getElementById('hero-current-face-label');
-                if (label && title) label.textContent = title;
-                document.querySelectorAll('.face-chip').forEach(c => c.classList.remove('active'));
             }
-            
-            if (watch3D.loadTexture) {
-                watch3D.loadTexture(imageUrl, () => {
-                    watch3D.currentScale = 1.15; // tactile zoom pulse
-                    const label = document.getElementById('hero-current-face-label');
-                    if (label && title) {
-                        label.textContent = title;
-                    }
-                    document.querySelectorAll('.face-chip').forEach(c => c.classList.remove('active'));
-                });
-            }
+
+            const label = document.getElementById('hero-current-face-label');
+            if (label && title) label.textContent = title;
+
+            const badge = document.getElementById('hero-badge-text');
+            if (badge && title) badge.textContent = `PREVIEW • ${title.toUpperCase()}`;
+
+            document.querySelectorAll('.face-chip').forEach(c => c.classList.remove('active'));
         };
 
         window.previewCurrentFaceOn3D = function() {
@@ -4518,16 +3701,13 @@
             window.previewFaceOn3DWatch(imgUrl, selectedFace.title);
         };
 
-        // Scroll listener handling both 3D watch and sticky headers
+        // Scroll listener handling sticky search filter row
         let scrollTicking = false;
 
         window.addEventListener('scroll', () => {
             if (!scrollTicking) {
                 window.requestAnimationFrame(() => {
                     const scrolled = window.pageYOffset || document.documentElement.scrollTop;
-
-                    // 3D Watch Scroll Updates
-                    update3DWatchScroll(scrolled);
 
                     // Sticky search/filter row state styling
                     const searchRow = document.querySelector('.search-filter-row');
@@ -4541,7 +3721,7 @@
                             searchRow.classList.remove('stuck');
                         }
                     }
-                    
+
                     scrollTicking = false;
                 });
                 scrollTicking = true;
@@ -4971,9 +4151,9 @@
             
             card.innerHTML = `
                 ${badgeHtml}
-                <button class="card-preview-3d-btn" onclick="event.stopPropagation(); previewFaceOn3DWatch('${face.image_url || `images/${face.id}.png`}', '${face.title}')" title="Preview ${face.title} on 3D Watch">
+                <button class="card-preview-3d-btn" onclick="event.stopPropagation(); previewFaceOn3DWatch('${face.image_url || `images/${face.id}.png`}', '${face.title}')" title="Preview ${face.title} on Watch">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 15"></polyline></svg>
-                    <span>3D</span>
+                    <span>Watch</span>
                 </button>
                 <div class="face-image-container">
                     <img class="face-card-img" src="${getOptimizedImageUrl(face.image_url)}" alt="${face.title}" ${loadingAttr} onerror="this.src='https://via.placeholder.com/300'">
