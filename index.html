@@ -3858,17 +3858,24 @@
             watch3D.watchGroup.add(chamferMesh);
 
             // Inner Gold Accent Ring
-            const innerRingGeo = new THREE.TorusGeometry(2.26, 0.030, 16, 64);
+            const innerRingGeo = new THREE.TorusGeometry(2.26, 0.025, 16, 64);
             const innerRingMesh = new THREE.Mesh(innerRingGeo, goldAccentMat);
             innerRingMesh.rotation.x = Math.PI / 2;
-            innerRingMesh.position.y = 0.135;
+            innerRingMesh.position.y = 0.136;
             watch3D.watchGroup.add(innerRingMesh);
 
-            // Case Body (underneath - smooth minimalist round chassis without crown/buttons)
-            const caseBodyGeo = new THREE.CylinderGeometry(2.30, 2.12, 0.65, 64);
+            // Case Body (underneath - smooth minimalist round chassis without crown/buttons, open-ended so it never occludes dial)
+            const caseBodyGeo = new THREE.CylinderGeometry(2.30, 2.12, 0.58, 64, 1, true);
             const caseBodyMesh = new THREE.Mesh(caseBodyGeo, darkTitaniumMat);
             caseBodyMesh.position.y = -0.18;
             watch3D.watchGroup.add(caseBodyMesh);
+
+            // Solid Backing Plate underneath dial
+            const backingGeo = new THREE.CircleGeometry(2.26, 64);
+            const backingMesh = new THREE.Mesh(backingGeo, new THREE.MeshBasicMaterial({ color: 0x050508 }));
+            backingMesh.rotation.x = -Math.PI / 2;
+            backingMesh.position.y = 0.138;
+            watch3D.watchGroup.add(backingMesh);
 
             // Bottom Sensor
             const sensorGeo = new THREE.CylinderGeometry(1.9, 1.6, 0.22, 32);
@@ -3907,10 +3914,10 @@
             screenTexture.colorSpace = THREE.SRGBColorSpace;
             screenTexture.minFilter = THREE.LinearFilter;
             screenTexture.magFilter = THREE.LinearFilter;
-            screenTexture.generateMipmaps = true;
+            screenTexture.generateMipmaps = false;
             watch3D.screenTexture = screenTexture;
 
-            // Screen Mesh displaying the watch face (elevated comfortably at y = 0.138)
+            // Screen Mesh displaying the watch face (comfortably elevated at y = 0.142 so nothing ever occludes it)
             const screenGeo = new THREE.CircleGeometry(2.25, 64);
             watch3D.screenMaterial = new THREE.MeshBasicMaterial({
                 map: screenTexture,
@@ -3919,12 +3926,14 @@
             });
             watch3D.screenMesh = new THREE.Mesh(screenGeo, watch3D.screenMaterial);
             watch3D.screenMesh.rotation.x = -Math.PI / 2;
-            watch3D.screenMesh.position.y = 0.138;
+            watch3D.screenMesh.position.y = 0.142;
+            watch3D.screenMesh.renderOrder = 10;
             watch3D.watchGroup.add(watch3D.screenMesh);
 
             // Robust Watch Face Painter (Draws image directly to canvas or falls back to CDN)
             function paintFaceToCanvas(imgSrc, callback) {
                 const img = new Image();
+                img.crossOrigin = 'anonymous';
                 img.onload = () => {
                     dialCtx.clearRect(0, 0, 512, 512);
                     dialCtx.drawImage(img, 0, 0, 512, 512);
