@@ -1759,12 +1759,51 @@
             align-items: center;
             justify-content: center;
             filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.9));
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
             margin: 0 auto;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .hero-watch-mockup:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
+            filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 25px rgba(241, 179, 28, 0.25));
+        }
+
+        .hero-watch-mockup:active {
+            transform: scale(0.97);
+        }
+
+        .hero-watch-play-pill {
+            position: absolute;
+            bottom: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(12, 12, 16, 0.94);
+            border: 1px solid rgba(241, 179, 28, 0.45);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.75), 0 0 14px rgba(241, 179, 28, 0.2);
+            z-index: 10;
+            white-space: nowrap;
+            pointer-events: none;
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+        }
+
+        .hero-watch-mockup:hover .hero-watch-play-pill {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 8px 25px rgba(241, 179, 28, 0.55);
+            transform: translateX(-50%) translateY(-2px);
         }
 
         .hero-watch-glow {
@@ -2461,13 +2500,18 @@
 
                         <!-- Right Column: Photorealistic Flat Samsung Galaxy Watch Ultra Showcase -->
                         <div class="hero-watch-col">
-                            <div class="hero-watch-mockup" id="hero-watch-mockup">
+                            <div class="hero-watch-mockup" id="hero-watch-mockup" onclick="openActiveHeroWatchFaceStore()" title="Tap to open on Google Play" role="button" tabindex="0">
                                 <div class="hero-watch-glow"></div>
                                 <div class="hero-watch-dial-bg"></div>
                                 <!-- Watch Face circular image (Scaled with breathing room so nothing is cut off) -->
                                 <img id="hero-watch-face-img" class="hero-watch-face-img" src="images/cue178.png" alt="Featured Watch Face">
                                 <!-- Official Samsung Galaxy Watch Ultra Titanium Bezel Frame -->
                                 <img class="hero-watch-frame-img" src="images/samsung_ultra_frame.png" alt="Samsung Galaxy Watch Ultra">
+                                <!-- Interactive Google Play Pill -->
+                                <div class="hero-watch-play-pill">
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></svg>
+                                    <span>Get on Google Play</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -3602,49 +3646,67 @@
                 file: 'images/cue178.png',
                 badge: 'NEW RELEASE • CUE178',
                 title: 'TIME, CRAFTED TO <br><span class="hero-gold-text">PERFECTION</span>',
-                tagline: 'Featuring the all-new CUE178 and 111+ precision-engineered watch faces for Samsung Galaxy Watch, Google Pixel Watch & all Wear OS smartwatches.'
+                tagline: 'Featuring the all-new CUE178 and 111+ precision-engineered watch faces for Samsung Galaxy Watch, Google Pixel Watch & all Wear OS smartwatches.',
+                play_store_url: 'market://details?id=com.creation.cue178watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue178'
             },
             {
                 name: 'CUE003',
                 file: 'images/cue003.png',
                 badge: 'FLAGSHIP DESIGN • CUE003',
                 title: 'PURE <span class="hero-gold-text">AMOLED</span> DEPTH',
-                tagline: 'Ultra battery-friendly aesthetics with deep contrast, custom indices, and high-readability typography powered by CUE003.'
+                tagline: 'Ultra battery-friendly aesthetics with deep contrast, custom indices, and high-readability typography powered by CUE003.',
+                play_store_url: 'market://details?id=com.creation.cue003watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue003'
             },
             {
                 name: 'CUE177',
                 file: 'images/cue177.png',
                 badge: 'DYNAMIC COMPLICATIONS • CUE177',
                 title: 'INTELLIGENCE <span class="hero-gold-text">ON YOUR WRIST</span>',
-                tagline: 'Live weather, heart rate, step progress, battery monitor, and calendar events customized to fit your unique lifestyle on CUE177.'
+                tagline: 'Live weather, heart rate, step progress, battery monitor, and calendar events customized to fit your unique lifestyle on CUE177.',
+                play_store_url: 'market://details?id=com.creation.cue177watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue177'
             },
             {
                 name: 'CUE176',
                 file: 'images/cue176.png',
                 badge: 'TACTICAL CHRONO • CUE176',
                 title: 'RUGGED <span class="hero-gold-text">PRECISION</span>',
-                tagline: 'Multi-ring chronometer layout engineered for extreme outdoor adventures and fitness tracking on CUE176.'
+                tagline: 'Multi-ring chronometer layout engineered for extreme outdoor adventures and fitness tracking on CUE176.',
+                play_store_url: 'market://details?id=com.creation.cue176watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue176'
             },
             {
                 name: 'CUE175',
                 file: 'images/cue175.png',
                 badge: 'MINIMAL ELEGANCE • CUE175',
                 title: 'REFINED <span class="hero-gold-text">SIMPLICITY</span>',
-                tagline: 'Clean geometry and modern aesthetics with subtle ambient always-on display styling on CUE175.'
+                tagline: 'Clean geometry and modern aesthetics with subtle ambient always-on display styling on CUE175.',
+                play_store_url: 'market://details?id=com.creation.cue175watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue175'
             },
             {
                 name: 'CUE174',
                 file: 'images/cue174.png',
                 badge: 'HYBRID MASTERPIECE • CUE174',
                 title: 'TIMELESS <span class="hero-gold-text">UTILITY</span>',
-                tagline: 'Blending classic analog mechanical hands with next-gen digital smartwatch complications on CUE174.'
+                tagline: 'Blending classic analog mechanical hands with next-gen digital smartwatch complications on CUE174.',
+                play_store_url: 'market://details?id=com.creation.cue174watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue174'
             }
         ];
 
         let currentHeroFaceIndex = 0;
+        let currentHeroPlayStoreUrl = FEATURED_WATCH_FACES[0].play_store_url;
 
         function initHeroWatch() {
             setHeroWatchFace(0);
+            
+            // Enable keyboard navigation (Enter or Space) on the hero watch mockup
+            const watchMockupEl = document.getElementById('hero-watch-mockup');
+            if (watchMockupEl) {
+                watchMockupEl.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        window.openActiveHeroWatchFaceStore();
+                    }
+                });
+            }
         }
 
         window.scrollToCatalog = function() {
@@ -3654,10 +3716,19 @@
             }
         };
 
+        window.openActiveHeroWatchFaceStore = function() {
+            const rawUrl = currentHeroPlayStoreUrl || FEATURED_WATCH_FACES[currentHeroFaceIndex]?.play_store_url || 'https://play.google.com/store/apps/dev?id=7870949364955700816';
+            const targetUrl = typeof getPlayStoreLink === 'function' ? getPlayStoreLink(rawUrl) : rawUrl;
+            window.open(targetUrl, '_blank', 'noopener,noreferrer');
+        };
+
         function setHeroWatchFace(idx) {
             if (idx < 0 || idx >= FEATURED_WATCH_FACES.length) return;
             currentHeroFaceIndex = idx;
             const data = FEATURED_WATCH_FACES[idx];
+            if (data.play_store_url) {
+                currentHeroPlayStoreUrl = data.play_store_url;
+            }
 
             const faceImg = document.getElementById('hero-watch-face-img');
             if (faceImg) {
@@ -3704,6 +3775,18 @@
         window.previewFaceOn3DWatch = function(imageUrl, title) {
             if (!imageUrl) return;
 
+            // Attempt to match and update currentHeroPlayStoreUrl from globally loaded watchFaces
+            if (typeof watchFaces !== 'undefined' && Array.isArray(watchFaces)) {
+                const match = watchFaces.find(f => 
+                    (title && f.title && f.title.toLowerCase() === title.toLowerCase()) ||
+                    (imageUrl && f.image_url && f.image_url === imageUrl) ||
+                    (f.id && imageUrl && imageUrl.toLowerCase().includes(f.id.toLowerCase()))
+                );
+                if (match && match.play_store_url) {
+                    currentHeroPlayStoreUrl = match.play_store_url;
+                }
+            }
+
             const hero = document.getElementById('hero-3d-section') || document.getElementById('hero-section');
             if (hero) {
                 hero.scrollIntoView({ behavior: 'smooth' });
@@ -3737,6 +3820,9 @@
 
         window.previewCurrentFaceOn3D = function() {
             if (!selectedFace) return;
+            if (selectedFace.play_store_url) {
+                currentHeroPlayStoreUrl = selectedFace.play_store_url;
+            }
             const imgUrl = selectedFace.image_url || `images/${selectedFace.id}.png`;
             window.previewFaceOn3DWatch(imgUrl, selectedFace.title);
         };
