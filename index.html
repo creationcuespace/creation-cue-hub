@@ -4155,6 +4155,11 @@
             caseShape.lineTo(-cw, -ch + cr);
             caseShape.quadraticCurveTo(-cw, -ch, -cw + cr, -ch);
 
+            // Circular cutout aperture so the chassis is an authentic hollow watch frame for dial & bezel
+            const caseHole = new THREE.Path();
+            caseHole.absarc(0, 0, 2.30, 0, Math.PI * 2, true);
+            caseShape.holes.push(caseHole);
+
             const caseExtrudeSettings = {
                 depth: 0.82,
                 bevelEnabled: true,
@@ -4166,28 +4171,28 @@
             const caseGeo = new THREE.ExtrudeGeometry(caseShape, caseExtrudeSettings);
             const caseMesh = new THREE.Mesh(caseGeo, darkTitaniumMat);
             caseMesh.rotation.x = Math.PI / 2;
-            caseMesh.position.y = 0.10;
+            caseMesh.position.y = -0.04;
             watch3D.watchGroup.add(caseMesh);
 
             // 2. Circular Raised Outer Bezel (Sits proud on the cushion case, perfectly clearing dial)
-            const bezelGeo = new THREE.RingGeometry(2.32, 2.56, 64);
+            const bezelGeo = new THREE.RingGeometry(2.30, 2.56, 64);
             const bezelMesh = new THREE.Mesh(bezelGeo, bezelTitaniumMat);
             bezelMesh.rotation.x = -Math.PI / 2;
-            bezelMesh.position.y = 0.138;
+            bezelMesh.position.y = 0.150;
             watch3D.watchGroup.add(bezelMesh);
 
             // Outer Bezel Chamfer Ring
             const chamferGeo = new THREE.TorusGeometry(2.54, 0.052, 16, 64);
             const chamferMesh = new THREE.Mesh(chamferGeo, darkTitaniumMat);
             chamferMesh.rotation.x = Math.PI / 2;
-            chamferMesh.position.y = 0.126;
+            chamferMesh.position.y = 0.138;
             watch3D.watchGroup.add(chamferMesh);
 
             // Inner Accent Ring
-            const innerRingGeo = new THREE.TorusGeometry(2.32, 0.016, 16, 64);
+            const innerRingGeo = new THREE.TorusGeometry(2.30, 0.016, 16, 64);
             const innerRingMesh = new THREE.Mesh(innerRingGeo, innerAccentMat);
             innerRingMesh.rotation.x = Math.PI / 2;
-            innerRingMesh.position.y = 0.138;
+            innerRingMesh.position.y = 0.150;
             watch3D.watchGroup.add(innerRingMesh);
 
             // 12 O'Clock Signature Marine Orange Triangle Indicator
@@ -4199,7 +4204,7 @@
             const notchGeo = new THREE.ShapeGeometry(notchShape);
             const notchMesh = new THREE.Mesh(notchGeo, marineOrangeMat);
             notchMesh.rotation.x = -Math.PI / 2;
-            notchMesh.position.set(0, 0.142, -2.44);
+            notchMesh.position.set(0, 0.154, -2.44);
             watch3D.watchGroup.add(notchMesh);
 
             // Laser-Etched Bezel Indices at hour positions
@@ -4209,7 +4214,7 @@
                 const tx = Math.sin(angle) * 2.44;
                 const tz = -Math.cos(angle) * 2.44;
                 const tick = new THREE.Mesh(tickGeo, tickSteelMat);
-                tick.position.set(tx, 0.140, tz);
+                tick.position.set(tx, 0.152, tz);
                 tick.rotation.y = -angle;
                 watch3D.watchGroup.add(tick);
             }
@@ -4218,91 +4223,91 @@
             // Side bolster / crown protection island
             const guardBolsterGeo = new THREE.BoxGeometry(0.24, 0.44, 2.70);
             const guardBolsterMesh = new THREE.Mesh(guardBolsterGeo, darkTitaniumMat);
-            guardBolsterMesh.position.set(2.54, -0.36, 0);
+            guardBolsterMesh.position.set(2.54, -0.45, 0);
             watch3D.watchGroup.add(guardBolsterMesh);
 
             // Upper crown guard bumper
             const upperGuardGeo = new THREE.BoxGeometry(0.22, 0.38, 0.32);
             const upperGuardMesh = new THREE.Mesh(upperGuardGeo, darkTitaniumMat);
-            upperGuardMesh.position.set(2.64, -0.36, -0.56);
+            upperGuardMesh.position.set(2.64, -0.45, -0.56);
             watch3D.watchGroup.add(upperGuardMesh);
 
             // Lower crown guard bumper
             const lowerGuardGeo = new THREE.BoxGeometry(0.22, 0.38, 0.32);
             const lowerGuardMesh = new THREE.Mesh(lowerGuardGeo, darkTitaniumMat);
-            lowerGuardMesh.position.set(2.64, -0.36, 0.56);
+            lowerGuardMesh.position.set(2.64, -0.45, 0.56);
             watch3D.watchGroup.add(lowerGuardMesh);
 
             // 1) TOP BUTTON: Home / Power Pusher (at ~2 o'clock, z = -1.18)
             const topBtnBaseGeo = new THREE.BoxGeometry(0.22, 0.28, 0.74);
             const topBtnBase = new THREE.Mesh(topBtnBaseGeo, buttonPusherMat);
-            topBtnBase.position.set(2.66, -0.36, -1.18);
+            topBtnBase.position.set(2.66, -0.45, -1.18);
             watch3D.watchGroup.add(topBtnBase);
 
             const topBtnCapGeo = new THREE.BoxGeometry(0.06, 0.22, 0.66);
             const topBtnCap = new THREE.Mesh(topBtnCapGeo, chromeBevelMat);
-            topBtnCap.position.set(2.77, -0.36, -1.18);
+            topBtnCap.position.set(2.77, -0.45, -1.18);
             watch3D.watchGroup.add(topBtnCap);
 
             // 2) CENTER BUTTON: The Iconic Quick Button with Signature Marine Orange Accent Ring (at 3 o'clock, z = 0)
             const quickBtnBaseGeo = new THREE.CylinderGeometry(0.28, 0.28, 0.34, 32);
             const quickBtnBase = new THREE.Mesh(quickBtnBaseGeo, buttonPusherMat);
             quickBtnBase.rotation.z = Math.PI / 2;
-            quickBtnBase.position.set(2.68, -0.36, 0);
+            quickBtnBase.position.set(2.68, -0.45, 0);
             watch3D.watchGroup.add(quickBtnBase);
 
             const orangeRingGeo = new THREE.TorusGeometry(0.24, 0.052, 16, 32);
             const orangeRing = new THREE.Mesh(orangeRingGeo, marineOrangeMat);
             orangeRing.rotation.y = Math.PI / 2;
-            orangeRing.position.set(2.80, -0.36, 0);
+            orangeRing.position.set(2.80, -0.45, 0);
             watch3D.watchGroup.add(orangeRing);
 
             const quickBtnCapGeo = new THREE.CylinderGeometry(0.19, 0.19, 0.08, 32);
             const quickBtnCap = new THREE.Mesh(quickBtnCapGeo, darkTitaniumMat);
             quickBtnCap.rotation.z = Math.PI / 2;
-            quickBtnCap.position.set(2.85, -0.36, 0);
+            quickBtnCap.position.set(2.85, -0.45, 0);
             watch3D.watchGroup.add(quickBtnCap);
 
             // 3) BOTTOM BUTTON: Back Navigation Pusher (at ~4 o'clock, z = +1.18)
             const bottomBtnBaseGeo = new THREE.BoxGeometry(0.22, 0.28, 0.74);
             const bottomBtnBase = new THREE.Mesh(bottomBtnBaseGeo, buttonPusherMat);
-            bottomBtnBase.position.set(2.66, -0.36, 1.18);
+            bottomBtnBase.position.set(2.66, -0.45, 1.18);
             watch3D.watchGroup.add(bottomBtnBase);
 
             const bottomBtnCapGeo = new THREE.BoxGeometry(0.06, 0.22, 0.66);
             const bottomBtnCap = new THREE.Mesh(bottomBtnCapGeo, chromeBevelMat);
-            bottomBtnCap.position.set(2.77, -0.36, 1.18);
+            bottomBtnCap.position.set(2.77, -0.45, 1.18);
             watch3D.watchGroup.add(bottomBtnCap);
 
             // 4. Left-Flank Speaker Housing & Signature Marine Orange Acoustic Slit
             const leftHousingGeo = new THREE.BoxGeometry(0.18, 0.40, 1.45);
             const leftHousingMesh = new THREE.Mesh(leftHousingGeo, darkTitaniumMat);
-            leftHousingMesh.position.set(-2.57, -0.36, -0.65);
+            leftHousingMesh.position.set(-2.57, -0.45, -0.65);
             watch3D.watchGroup.add(leftHousingMesh);
 
             const leftOrangeGeo = new THREE.BoxGeometry(0.08, 0.18, 1.05);
             const leftOrangeMesh = new THREE.Mesh(leftOrangeGeo, marineOrangeMat);
-            leftOrangeMesh.position.set(-2.64, -0.36, -0.65);
+            leftOrangeMesh.position.set(-2.64, -0.45, -0.65);
             watch3D.watchGroup.add(leftOrangeMesh);
 
             const micGeo = new THREE.CylinderGeometry(0.05, 0.05, 0.12, 16);
             const micMesh = new THREE.Mesh(micGeo, darkTitaniumMat);
             micMesh.rotation.z = Math.PI / 2;
-            micMesh.position.set(-2.62, -0.36, 0.65);
+            micMesh.position.set(-2.62, -0.45, 0.65);
             watch3D.watchGroup.add(micMesh);
 
             // Solid Backing Plate underneath dial
             const backingGeo = new THREE.CircleGeometry(2.30, 64);
             const backingMesh = new THREE.Mesh(backingGeo, new THREE.MeshBasicMaterial({ color: 0x050508 }));
             backingMesh.rotation.x = -Math.PI / 2;
-            backingMesh.position.y = 0.144;
+            backingMesh.position.y = 0.156;
             watch3D.watchGroup.add(backingMesh);
 
             // Bottom BioActive Sensor Cluster
             const sensorGeo = new THREE.CylinderGeometry(2.1, 1.8, 0.32, 32);
             const sensorMat = new THREE.MeshStandardMaterial({ color: 0x08080a, roughness: 0.2, metalness: 0.5 });
             const sensorMesh = new THREE.Mesh(sensorGeo, sensorMat);
-            sensorMesh.position.y = -0.84;
+            sensorMesh.position.y = -0.96;
             watch3D.watchGroup.add(sensorMesh);
 
             // Optical Sensor LEDs
@@ -4310,9 +4315,9 @@
             const ledMat = new THREE.MeshBasicMaterial({ color: 0x00ff88 });
             const led1 = new THREE.Mesh(ledGeo, ledMat);
             led1.rotation.x = Math.PI / 2;
-            led1.position.set(0.35, -1.00, 0);
+            led1.position.set(0.35, -1.12, 0);
             const led2 = led1.clone();
-            led2.position.set(-0.35, -1.00, 0);
+            led2.position.set(-0.35, -1.12, 0);
             watch3D.watchGroup.add(led1);
             watch3D.watchGroup.add(led2);
 
@@ -4346,7 +4351,7 @@
             screenTexture.generateMipmaps = false;
             watch3D.screenTexture = screenTexture;
 
-            // Screen Mesh displaying the watch face (elevated comfortably at y = 0.150 so frame never occludes the edge)
+            // Screen Mesh displaying the watch face (elevated comfortably at y = 0.162 with high renderOrder)
             const screenGeo = new THREE.CircleGeometry(2.28, 64);
             watch3D.screenMaterial = new THREE.MeshBasicMaterial({
                 map: screenTexture,
@@ -4355,8 +4360,8 @@
             });
             watch3D.screenMesh = new THREE.Mesh(screenGeo, watch3D.screenMaterial);
             watch3D.screenMesh.rotation.x = -Math.PI / 2;
-            watch3D.screenMesh.position.y = 0.150;
-            watch3D.screenMesh.renderOrder = 10;
+            watch3D.screenMesh.position.y = 0.162;
+            watch3D.screenMesh.renderOrder = 20;
             watch3D.watchGroup.add(watch3D.screenMesh);
 
             // Robust Watch Face Painter (Draws image directly to canvas or falls back to CDN)
@@ -4398,7 +4403,7 @@
             ];
             lugPositions.forEach(pos => {
                 const lug = new THREE.Mesh(lugGeo, darkTitaniumMat);
-                lug.position.set(pos.x, -0.36, pos.z);
+                lug.position.set(pos.x, -0.45, pos.z);
                 watch3D.watchGroup.add(lug);
             });
 
@@ -4411,7 +4416,7 @@
                 for (let i = 0; i <= segments; i++) {
                     const t = i / segments;
                     const z = (2.42 + t * length) * sign;
-                    const y = -Math.pow(t, 1.8) * 1.65 - 0.36;
+                    const y = -Math.pow(t, 1.8) * 1.65 - 0.45;
                     points.push(new THREE.Vector3(0, y, z));
                 }
                 const curve = new THREE.CatmullRomCurve3(points);
@@ -4448,7 +4453,7 @@
                 [3.1, 3.8, 4.5, 5.2, 5.9, 6.6].forEach(dist => {
                     const rib = new THREE.Mesh(ribGeo, ribMat);
                     const t = (dist - 2.42) / 5.4;
-                    const y = -Math.pow(t, 1.8) * 1.65 - 0.27;
+                    const y = -Math.pow(t, 1.8) * 1.65 - 0.36;
                     rib.position.set(0, y, dist * sign);
                     rib.rotation.x = sign * t * 0.40;
                     watch3D.watchGroup.add(rib);
