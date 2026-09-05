@@ -3637,7 +3637,11 @@
             screenMaterial: null,
             proceduralTexture: null,
             drawProceduralDial: null,
+            dialCanvas: null,
+            dialCtx: null,
+            screenTexture: null,
             loadedTextures: [],
+            loadedImages: [],
             currentFaceIndex: 0,
             activeSlideIndex: 0,
             isVisible: true,
@@ -3839,11 +3843,11 @@
                 metalness: 0.04
             });
 
-            // Outer Bezel: hollow chamfered ring framing the screen
-            const bezelGeo = new THREE.RingGeometry(2.23, 2.38, 64);
+            // Outer Bezel: sleek flush metallic bezel ring
+            const bezelGeo = new THREE.RingGeometry(2.26, 2.38, 64);
             const bezelMesh = new THREE.Mesh(bezelGeo, darkTitaniumMat);
             bezelMesh.rotation.x = -Math.PI / 2;
-            bezelMesh.position.y = 0.138;
+            bezelMesh.position.y = 0.134;
             watch3D.watchGroup.add(bezelMesh);
 
             // Polished Outer Chamfer Ring
@@ -3854,13 +3858,13 @@
             watch3D.watchGroup.add(chamferMesh);
 
             // Inner Gold Accent Ring
-            const innerRingGeo = new THREE.TorusGeometry(2.24, 0.035, 16, 64);
+            const innerRingGeo = new THREE.TorusGeometry(2.26, 0.030, 16, 64);
             const innerRingMesh = new THREE.Mesh(innerRingGeo, goldAccentMat);
             innerRingMesh.rotation.x = Math.PI / 2;
-            innerRingMesh.position.y = 0.138;
+            innerRingMesh.position.y = 0.135;
             watch3D.watchGroup.add(innerRingMesh);
 
-            // Case Body (underneath)
+            // Case Body (underneath - smooth minimalist round chassis without crown/buttons)
             const caseBodyGeo = new THREE.CylinderGeometry(2.30, 2.12, 0.65, 64);
             const caseBodyMesh = new THREE.Mesh(caseBodyGeo, darkTitaniumMat);
             caseBodyMesh.position.y = -0.18;
@@ -3884,98 +3888,71 @@
             watch3D.watchGroup.add(led1);
             watch3D.watchGroup.add(led2);
 
-            // Solid AMOLED Black Backing Disc
-            const backingGeo = new THREE.CircleGeometry(2.25, 64);
-            const backingMat = new THREE.MeshBasicMaterial({ color: 0x050608 });
-            const backingMesh = new THREE.Mesh(backingGeo, backingMat);
-            backingMesh.rotation.x = -Math.PI / 2;
-            backingMesh.position.y = 0.130;
-            watch3D.watchGroup.add(backingMesh);
+            // High-Performance Offscreen Canvas for Guaranteed Watch Face Rendering
+            const dialCanvas = document.createElement('canvas');
+            dialCanvas.width = 512;
+            dialCanvas.height = 512;
+            const dialCtx = dialCanvas.getContext('2d');
+            watch3D.dialCanvas = dialCanvas;
+            watch3D.dialCtx = dialCtx;
 
-            // Screen Mesh displaying the actual watch face
-            const screenGeo = new THREE.CircleGeometry(2.24, 64);
+            // Draw initial procedural dial immediately so screen is NEVER black even for 1 frame
+            const proceduralDial = createProceduralDialCanvas();
+            watch3D.drawProceduralDial = proceduralDial.drawDial;
+            proceduralDial.drawDial();
+            dialCtx.drawImage(proceduralDial.canvas, 0, 0);
+
+            // CanvasTexture binds 100% reliably in Three.js across all browser engines
+            const screenTexture = new THREE.CanvasTexture(dialCanvas);
+            screenTexture.colorSpace = THREE.SRGBColorSpace;
+            screenTexture.minFilter = THREE.LinearFilter;
+            screenTexture.magFilter = THREE.LinearFilter;
+            screenTexture.generateMipmaps = true;
+            watch3D.screenTexture = screenTexture;
+
+            // Screen Mesh displaying the watch face (elevated comfortably at y = 0.138)
+            const screenGeo = new THREE.CircleGeometry(2.25, 64);
             watch3D.screenMaterial = new THREE.MeshBasicMaterial({
-                color: 0xffffff,
-                transparent: true,
+                map: screenTexture,
+                transparent: false,
                 side: THREE.DoubleSide
             });
             watch3D.screenMesh = new THREE.Mesh(screenGeo, watch3D.screenMaterial);
             watch3D.screenMesh.rotation.x = -Math.PI / 2;
-            watch3D.screenMesh.position.y = 0.136;
+            watch3D.screenMesh.position.y = 0.138;
             watch3D.watchGroup.add(watch3D.screenMesh);
 
-            // Robust Watch Face Texture Loader (Direct Image + CDN Fallback)
-            function loadWatchFaceTexture(url, onLoaded) {
+            // Robust Watch Face Painter (Draws image directly to canvas or falls back to CDN)
+            function paintFaceToCanvas(imgSrc, callback) {
                 const img = new Image();
                 img.onload = () => {
-                    const tex = new THREE.Texture(img);
-                    tex.colorSpace = THREE.SRGBColorSpace;
-                    tex.minFilter = THREE.LinearFilter;
-                    tex.magFilter = THREE.LinearFilter;
-                    tex.generateMipmaps = true;
-                    tex.needsUpdate = true;
-                    if (onLoaded) onLoaded(tex);
+                    dialCtx.clearRect(0, 0, 512, 512);
+                    dialCtx.drawImage(img, 0, 0, 512, 512);
+                    screenTexture.needsUpdate = true;
+                    if (callback) callback(screenTexture);
                 };
                 img.onerror = () => {
-                    // Fallback to jsDelivr CDN
                     const cdnImg = new Image();
                     cdnImg.crossOrigin = 'anonymous';
                     cdnImg.onload = () => {
-                        const tex = new THREE.Texture(cdnImg);
-                        tex.colorSpace = THREE.SRGBColorSpace;
-                        tex.minFilter = THREE.LinearFilter;
-                        tex.magFilter = THREE.LinearFilter;
-                        tex.generateMipmaps = true;
-                        tex.needsUpdate = true;
-                        if (onLoaded) onLoaded(tex);
+                        dialCtx.clearRect(0, 0, 512, 512);
+                        dialCtx.drawImage(cdnImg, 0, 0, 512, 512);
+                        screenTexture.needsUpdate = true;
+                        if (callback) callback(screenTexture);
                     };
-                    cdnImg.src = 'https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/' + url.replace(/^\.?\//, '');
+                    cdnImg.src = 'https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/' + imgSrc.replace(/^\.?\//, '');
                 };
-                img.src = url;
+                img.src = imgSrc;
                 if (img.complete && img.naturalWidth > 0) {
                     img.onload();
                 }
             }
-            watch3D.loadTexture = loadWatchFaceTexture;
+            watch3D.loadTexture = paintFaceToCanvas;
 
             // Load initial CUE178 watch face
-            loadWatchFaceTexture('images/cue178.png', (tex) => {
-                watch3D.loadedTextures[0] = tex;
-                if (watch3D.screenMaterial) {
-                    watch3D.screenMaterial.map = tex;
-                    watch3D.screenMaterial.needsUpdate = true;
-                }
+            paintFaceToCanvas('images/cue178.png', () => {
+                watch3D.loadedTextures[0] = screenTexture;
             });
-
-            // Digital Crown at 3 o'clock
-            const crownGroup = new THREE.Group();
-            crownGroup.position.set(2.40, 0, 0);
-
-            const crownStemGeo = new THREE.CylinderGeometry(0.20, 0.20, 0.20, 16);
-            const crownStem = new THREE.Mesh(crownStemGeo, darkTitaniumMat);
-            crownStem.rotation.z = Math.PI / 2;
-            crownGroup.add(crownStem);
-
-            const crownHeadGeo = new THREE.CylinderGeometry(0.38, 0.38, 0.28, 32);
-            const crownHead = new THREE.Mesh(crownHeadGeo, darkTitaniumMat);
-            crownHead.rotation.z = Math.PI / 2;
-            crownHead.position.x = 0.14;
-            crownGroup.add(crownHead);
-
-            const crownRingGeo = new THREE.TorusGeometry(0.38, 0.035, 16, 32);
-            const crownRing = new THREE.Mesh(crownRingGeo, goldAccentMat);
-            crownRing.rotation.y = Math.PI / 2;
-            crownRing.position.x = 0.20;
-            crownGroup.add(crownRing);
-
-            watch3D.watchGroup.add(crownGroup);
-
-            // Secondary Pusher at 4 o'clock
-            const pusherGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.18, 16);
-            const pusher = new THREE.Mesh(pusherGeo, darkTitaniumMat);
-            pusher.rotation.z = Math.PI / 2;
-            pusher.position.set(2.26, 0, 0.82);
-            watch3D.watchGroup.add(pusher);
 
             // 4 Corner Lugs
             const lugGeo = new THREE.BoxGeometry(0.42, 0.38, 0.65);
@@ -4032,15 +4009,34 @@
 
             watch3D.scene.add(watch3D.watchGroup);
 
-            // Preload Featured Watch Faces using robust loader
+            // Preload Featured Watch Faces as Image objects
             FEATURED_WATCH_FACES.forEach((item, idx) => {
-                loadWatchFaceTexture(item.file, (tex) => {
-                    watch3D.loadedTextures[idx] = tex;
-                    if (watch3D.currentFaceIndex === idx && watch3D.screenMaterial) {
-                        watch3D.screenMaterial.map = tex;
-                        watch3D.screenMaterial.needsUpdate = true;
+                const img = new Image();
+                img.onload = () => {
+                    watch3D.loadedImages[idx] = img;
+                    if (watch3D.currentFaceIndex === idx) {
+                        dialCtx.clearRect(0, 0, 512, 512);
+                        dialCtx.drawImage(img, 0, 0, 512, 512);
+                        screenTexture.needsUpdate = true;
                     }
-                });
+                };
+                img.onerror = () => {
+                    const cdnImg = new Image();
+                    cdnImg.crossOrigin = 'anonymous';
+                    cdnImg.onload = () => {
+                        watch3D.loadedImages[idx] = cdnImg;
+                        if (watch3D.currentFaceIndex === idx) {
+                            dialCtx.clearRect(0, 0, 512, 512);
+                            dialCtx.drawImage(cdnImg, 0, 0, 512, 512);
+                            screenTexture.needsUpdate = true;
+                        }
+                    };
+                    cdnImg.src = 'https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/' + item.file.replace(/^\.?\//, '');
+                };
+                img.src = item.file;
+                if (img.complete && img.naturalWidth > 0) {
+                    img.onload();
+                }
             });
 
             // Interactive Drag / Pointer Listeners
@@ -4244,9 +4240,14 @@
                 label.textContent = FEATURED_WATCH_FACES[idx].name;
             }
 
-            if (watch3D.loadedTextures[idx] && watch3D.screenMaterial) {
-                watch3D.screenMaterial.map = watch3D.loadedTextures[idx];
-                watch3D.screenMaterial.needsUpdate = true;
+            if (watch3D.dialCtx && watch3D.screenTexture) {
+                if (watch3D.loadedImages[idx]) {
+                    watch3D.dialCtx.clearRect(0, 0, 512, 512);
+                    watch3D.dialCtx.drawImage(watch3D.loadedImages[idx], 0, 0, 512, 512);
+                    watch3D.screenTexture.needsUpdate = true;
+                } else if (watch3D.loadTexture) {
+                    watch3D.loadTexture(FEATURED_WATCH_FACES[idx].file);
+                }
             }
         }
 
@@ -4281,12 +4282,8 @@
             }
             
             if (watch3D.loadTexture) {
-                watch3D.loadTexture(imageUrl, (tex) => {
-                    if (watch3D.screenMaterial) {
-                        watch3D.screenMaterial.map = tex;
-                        watch3D.screenMaterial.needsUpdate = true;
-                        watch3D.currentScale = 1.15; // tactile zoom pulse
-                    }
+                watch3D.loadTexture(imageUrl, () => {
+                    watch3D.currentScale = 1.15; // tactile zoom pulse
                     const label = document.getElementById('hero-current-face-label');
                     if (label && title) {
                         label.textContent = title;
