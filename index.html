@@ -1526,19 +1526,20 @@
         /* 3D Scroll Hero Section */
         .hero-section.hero-3d-section {
             position: relative;
-            height: 175vh; /* Ample scroll track for the 3D cinematic rotation */
-            min-height: 850px;
+            height: auto;
+            min-height: auto;
             display: block;
             padding: 0;
             margin: -24px -24px 24px -24px;
             border-bottom: 1px solid var(--border-color);
-            background: radial-gradient(circle at 50% 30%, rgba(241, 179, 28, 0.08) 0%, rgba(12, 12, 16, 0.7) 50%, var(--bg-color) 95%);
+            background: radial-gradient(circle at 50% 30%, rgba(148, 163, 184, 0.06) 0%, rgba(12, 12, 16, 0.7) 50%, var(--bg-color) 95%);
         }
 
         @media (min-width: 769px) {
             .hero-section.hero-3d-section {
                 margin: -32px -40px 24px -40px;
                 height: 195vh;
+                min-height: 850px;
             }
         }
 
@@ -1859,38 +1860,207 @@
             100% { top: 14px; opacity: 0; }
         }
 
+        /* Mobile Lightweight Rugged Watch Display */
+        .mobile-watch-display {
+            display: none;
+        }
+
         @media (max-width: 768px) {
-            .hero-story-container {
-                justify-content: center;
-                align-items: flex-end;
-                padding: 16px;
-                padding-bottom: 90px;
+            .hero-section.hero-3d-section {
+                position: relative;
+                height: auto !important;
+                min-height: auto !important;
+                margin: -16px -16px 20px -16px !important;
+                padding: 0 !important;
+                border-bottom: 1px solid var(--border-color);
+                background: radial-gradient(circle at 50% 20%, rgba(148, 163, 184, 0.08) 0%, rgba(12, 12, 16, 0.85) 60%, var(--bg-color) 100%);
             }
-            .hero-story-slide {
-                max-width: 100%;
-                text-align: center;
-                padding: 18px 20px;
-                border-radius: 18px;
+
+            .hero-3d-sticky-frame {
+                position: relative !important;
+                top: auto !important;
+                height: auto !important;
+                min-height: auto !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: flex-start !important;
+                padding: 24px 16px 24px 16px !important;
+                overflow: visible !important;
             }
-            .hero-tagline {
-                margin: 10px auto 16px auto;
-                font-size: 0.9rem;
+
+            .watch-canvas-container {
+                display: none !important;
             }
-            .hero-actions {
-                justify-content: center;
-            }
-            .hero-bottom-controls {
+
+            .mobile-watch-display {
+                display: flex !important;
                 flex-direction: column;
-                gap: 12px;
-                bottom: 16px;
-                padding: 0 16px;
+                align-items: center;
+                justify-content: center;
+                margin: 16px auto 14px auto;
+                position: relative;
+                z-index: 2;
+                order: 2;
             }
+
+            .mobile-watch-case {
+                position: relative;
+                width: 240px;
+                height: 240px;
+                border-radius: 50%;
+                background: linear-gradient(145deg, #282a32, #131418);
+                box-shadow: 
+                    0 12px 30px rgba(0, 0, 0, 0.7),
+                    0 0 0 2px rgba(255, 255, 255, 0.06),
+                    inset 0 2px 4px rgba(255, 255, 255, 0.12),
+                    inset 0 -2px 6px rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .mobile-watch-bezel {
+                position: absolute;
+                inset: 8px;
+                border-radius: 50%;
+                border: 4px solid #23252c;
+                background: #0f1013;
+                box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .mobile-bezel-rivet {
+                position: absolute;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #363942;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            }
+            .mobile-bezel-rivet:nth-child(1) { top: 3px; left: 50%; transform: translateX(-50%); }
+            .mobile-bezel-rivet:nth-child(2) { bottom: 3px; left: 50%; transform: translateX(-50%); }
+            .mobile-bezel-rivet:nth-child(3) { left: 3px; top: 50%; transform: translateY(-50%); }
+            .mobile-bezel-rivet:nth-child(4) { right: 3px; top: 50%; transform: translateY(-50%); }
+            .mobile-bezel-rivet:nth-child(5) { top: 18%; left: 18%; }
+            .mobile-bezel-rivet:nth-child(6) { top: 18%; right: 18%; }
+            .mobile-bezel-rivet:nth-child(7) { bottom: 18%; left: 18%; }
+            .mobile-bezel-rivet:nth-child(8) { bottom: 18%; right: 18%; }
+
+            .mobile-strap-stub {
+                position: absolute;
+                width: 125px;
+                height: 24px;
+                background: #111215;
+                border-radius: 6px;
+                z-index: -1;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            }
+            .mobile-strap-top {
+                top: -14px;
+                border-bottom: 2px solid #1c1d22;
+            }
+            .mobile-strap-bottom {
+                bottom: -14px;
+                border-top: 2px solid #1c1d22;
+            }
+
+            .mobile-watch-face-img {
+                width: 198px;
+                height: 198px;
+                border-radius: 50%;
+                object-fit: cover;
+                display: block;
+                box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+                transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+            }
+
+            .hero-story-container {
+                position: relative !important;
+                inset: auto !important;
+                width: 100% !important;
+                max-width: 500px !important;
+                padding: 0 !important;
+                margin: 0 auto !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+                order: 1;
+            }
+
+            .hero-story-slide {
+                position: relative !important;
+                opacity: 1 !important;
+                transform: none !important;
+                pointer-events: auto !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+                text-align: center !important;
+            }
+
+            #hero-slide-1, #hero-slide-2 {
+                display: none !important;
+            }
+
+            .hero-title {
+                font-size: 1.85rem !important;
+                line-height: 1.2 !important;
+                margin: 10px 0 !important;
+            }
+
+            .hero-tagline {
+                margin: 0 auto 14px auto !important;
+                font-size: 0.88rem !important;
+                line-height: 1.5 !important;
+                color: var(--text-muted) !important;
+            }
+
+            .hero-actions {
+                justify-content: center !important;
+                gap: 10px !important;
+                margin-top: 14px !important;
+            }
+
+            .hero-btn-catalog, .hero-btn-switch {
+                padding: 10px 18px !important;
+                font-size: 13px !important;
+            }
+
+            .hero-bottom-controls {
+                position: relative !important;
+                inset: auto !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin-top: 6px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 10px !important;
+                order: 3;
+            }
+
             .hero-scroll-hint {
-                display: none;
+                display: none !important;
             }
+
             .hero-face-chips {
                 overflow-x: auto;
                 max-width: 100%;
+                justify-content: center;
+                gap: 6px;
+                padding: 4px 8px;
+            }
+
+            .face-chip {
+                padding: 6px 12px;
+                font-size: 12px;
             }
         }
 
@@ -2419,10 +2589,29 @@
                         <!-- Ambient FX -->
                         <div class="hero-ambient-fx"></div>
 
-                        <!-- 3D Watch WebGL Canvas -->
+                        <!-- 3D Watch WebGL Canvas (Desktop) -->
                         <div id="watch-canvas-container" class="watch-canvas-container">
                             <canvas id="watch-3d-canvas"></canvas>
                             <div class="watch-glow-fx" id="watch-glow-fx"></div>
+                        </div>
+
+                        <!-- Mobile Lightweight Rugged Smartwatch Display -->
+                        <div class="mobile-watch-display" id="mobile-watch-display">
+                            <div class="mobile-watch-case">
+                                <div class="mobile-strap-stub mobile-strap-top"></div>
+                                <div class="mobile-strap-stub mobile-strap-bottom"></div>
+                                <div class="mobile-watch-bezel">
+                                    <div class="mobile-bezel-rivet"></div>
+                                    <div class="mobile-bezel-rivet"></div>
+                                    <div class="mobile-bezel-rivet"></div>
+                                    <div class="mobile-bezel-rivet"></div>
+                                    <div class="mobile-bezel-rivet"></div>
+                                    <div class="mobile-bezel-rivet"></div>
+                                    <div class="mobile-bezel-rivet"></div>
+                                    <div class="mobile-bezel-rivet"></div>
+                                    <img id="mobile-watch-face-img" class="mobile-watch-face-img" src="images/cue178.png" alt="Featured Watch Face">
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Floating Storytelling Layer -->
@@ -3772,7 +3961,20 @@
             return { canvas, drawDial };
         }
 
+        function initMobileWatchView() {
+            const mobileImg = document.getElementById('mobile-watch-face-img');
+            if (mobileImg && FEATURED_WATCH_FACES[watch3D.currentFaceIndex]) {
+                mobileImg.src = FEATURED_WATCH_FACES[watch3D.currentFaceIndex].file;
+            }
+        }
+
         function init3DWatchHero() {
+            // On mobile devices (<= 768px), use the lightweight native DOM showcase (no heavy WebGL loop)
+            if (window.innerWidth <= 768) {
+                initMobileWatchView();
+                return;
+            }
+
             const canvas = document.getElementById('watch-3d-canvas');
             const container = document.getElementById('watch-canvas-container');
             const heroSection = document.getElementById('hero-3d-section');
@@ -4209,6 +4411,18 @@
         }
 
         function onWindowResize() {
+            if (window.innerWidth <= 768) {
+                if (watch3D.animFrameId) {
+                    cancelAnimationFrame(watch3D.animFrameId);
+                    watch3D.animFrameId = null;
+                }
+                initMobileWatchView();
+                return;
+            }
+            if (!watch3D.scene) {
+                init3DWatchHero();
+                return;
+            }
             const container = document.getElementById('watch-canvas-container');
             if (!container || !watch3D.camera || !watch3D.renderer) return;
             const width = container.clientWidth;
@@ -4216,9 +4430,15 @@
             watch3D.camera.aspect = width / height;
             watch3D.camera.updateProjectionMatrix();
             watch3D.renderer.setSize(width, height);
+            if (!watch3D.animFrameId) {
+                animate3DWatch(0);
+            }
         }
 
         function update3DWatchScroll(scrolled) {
+            // Disabled on mobile: scrolling naturally moves down without trapping or switching faces
+            if (window.innerWidth <= 768) return;
+
             const hero = document.getElementById('hero-3d-section');
             if (!hero) return;
 
@@ -4293,6 +4513,16 @@
                 label.textContent = FEATURED_WATCH_FACES[idx].name;
             }
 
+            // Smoothly update lightweight mobile watch face image
+            const mobileImg = document.getElementById('mobile-watch-face-img');
+            if (mobileImg && FEATURED_WATCH_FACES[idx]) {
+                mobileImg.style.transform = 'scale(0.96)';
+                mobileImg.src = FEATURED_WATCH_FACES[idx].file;
+                setTimeout(() => {
+                    if (mobileImg) mobileImg.style.transform = 'scale(1)';
+                }, 120);
+            }
+
             if (watch3D.dialCtx && watch3D.screenTexture) {
                 if (watch3D.loadedImages[idx]) {
                     watch3D.dialCtx.clearRect(0, 0, 512, 512);
@@ -4332,6 +4562,19 @@
             // Close details modal if open
             if (typeof closeDetailsModalVisuals === 'function') {
                 closeDetailsModalVisuals();
+            }
+
+            // Update mobile watch image if present
+            const mobileImg = document.getElementById('mobile-watch-face-img');
+            if (mobileImg) {
+                mobileImg.style.transform = 'scale(0.96)';
+                mobileImg.src = imageUrl;
+                setTimeout(() => {
+                    if (mobileImg) mobileImg.style.transform = 'scale(1)';
+                }, 120);
+                const label = document.getElementById('hero-current-face-label');
+                if (label && title) label.textContent = title;
+                document.querySelectorAll('.face-chip').forEach(c => c.classList.remove('active'));
             }
             
             if (watch3D.loadTexture) {
