@@ -1739,14 +1739,71 @@
             color: var(--primary);
         }
 
-        /* Right Column: Flat Samsung Galaxy Watch Ultra Showcase */
+        /* Right Column: Multi-Model Wear OS Smartwatch Showcase */
         .hero-watch-col {
             flex: 1 1 42%;
             width: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             position: relative;
+        }
+
+        .hero-watch-model-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+            z-index: 10;
+        }
+
+        .model-pill {
+            background: rgba(18, 18, 24, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.72);
+            padding: 6px 13px;
+            border-radius: 20px;
+            font-size: 11.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            white-space: nowrap;
+            user-select: none;
+            font-family: 'Inter', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .model-pill:hover {
+            color: #fff;
+            border-color: rgba(241, 179, 28, 0.45);
+            background: rgba(28, 28, 36, 0.95);
+            transform: translateY(-1px);
+        }
+
+        .model-pill.active {
+            background: rgba(241, 179, 28, 0.16);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 4px 16px rgba(241, 179, 28, 0.22);
+            font-weight: 700;
+        }
+
+        @media (max-width: 600px) {
+            .hero-watch-model-selector {
+                gap: 5px;
+                margin-bottom: 10px;
+            }
+            .model-pill {
+                padding: 4px 10px;
+                font-size: 10.5px;
+            }
         }
 
         .hero-watch-mockup {
@@ -2562,14 +2619,30 @@
                             </div>
                         </div>
 
-                        <!-- Right Column: Photorealistic Flat Samsung Galaxy Watch Ultra Showcase -->
+                        <!-- Right Column: Multi-Model Wear OS Smartwatch Showcase -->
                         <div class="hero-watch-col">
+                            <!-- Watch Model Switcher Pills -->
+                            <div class="hero-watch-model-selector" role="tablist" aria-label="Select Watch Model">
+                                <button type="button" class="model-pill active" data-model="samsung" onclick="setHeroWatchModel('samsung')" role="tab" aria-selected="true">
+                                    <span>Galaxy Ultra</span>
+                                </button>
+                                <button type="button" class="model-pill" data-model="ticwatch" onclick="setHeroWatchModel('ticwatch')" role="tab" aria-selected="false">
+                                    <span>TicWatch Pro 5</span>
+                                </button>
+                                <button type="button" class="model-pill" data-model="xiaomi" onclick="setHeroWatchModel('xiaomi')" role="tab" aria-selected="false">
+                                    <span>Xiaomi Watch 2</span>
+                                </button>
+                                <button type="button" class="model-pill" data-model="pixel" onclick="setHeroWatchModel('pixel')" role="tab" aria-selected="false">
+                                    <span>Pixel Watch 3</span>
+                                </button>
+                            </div>
+
                             <div class="hero-watch-mockup" id="hero-watch-mockup" onclick="openActiveHeroWatchFaceStore()" title="Tap to open on Google Play • Swipe left/right to change faces" role="button" tabindex="0">
                                 <div class="hero-watch-dial-bg"></div>
                                 <!-- Watch Face circular image (Scaled with breathing room so nothing is cut off) -->
                                 <img id="hero-watch-face-img" class="hero-watch-face-img" src="images/cue178.png" alt="Featured Watch Face">
-                                <!-- Official Samsung Galaxy Watch Ultra Titanium Bezel Frame -->
-                                <img class="hero-watch-frame-img" src="images/samsung_ultra_frame.png" alt="Samsung Galaxy Watch Ultra">
+                                <!-- Official Wear OS Watch Frame Image -->
+                                <img id="hero-watch-frame-img" class="hero-watch-frame-img" src="images/watch_frame_samsung.png" alt="Samsung Galaxy Watch Ultra">
 
                                 <!-- Quick Previous / Next Navigation Arrows -->
                                 <button type="button" class="hero-watch-arrow hero-watch-arrow-prev" onclick="event.stopPropagation(); switchHeroWatchFaceByOffset(-1);" title="Previous watch face" aria-label="Previous watch face">
@@ -3812,8 +3885,71 @@
             }
         }
 
+        const WATCH_MODELS = {
+            samsung: {
+                id: 'samsung',
+                name: 'Samsung Galaxy Watch Ultra',
+                frame: 'images/watch_frame_samsung.png'
+            },
+            ticwatch: {
+                id: 'ticwatch',
+                name: 'TicWatch Pro 5 Enduro',
+                frame: 'images/watch_frame_ticwatch.png'
+            },
+            xiaomi: {
+                id: 'xiaomi',
+                name: 'Xiaomi Watch 2 Pro',
+                frame: 'images/watch_frame_xiaomi.png'
+            },
+            pixel: {
+                id: 'pixel',
+                name: 'Google Pixel Watch 3',
+                frame: 'images/watch_frame_pixel.png'
+            }
+        };
+
+        let currentWatchModel = 'samsung';
+
+        window.setHeroWatchModel = function(modelKey) {
+            if (!WATCH_MODELS[modelKey]) return;
+            currentWatchModel = modelKey;
+            const model = WATCH_MODELS[modelKey];
+
+            const frameImg = document.getElementById('hero-watch-frame-img');
+            if (frameImg) {
+                frameImg.style.transition = 'opacity 0.2s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)';
+                frameImg.style.opacity = '0.35';
+                frameImg.style.transform = 'scale(0.97)';
+                
+                setTimeout(() => {
+                    frameImg.src = model.frame;
+                    frameImg.alt = model.name;
+                    frameImg.style.opacity = '1';
+                    frameImg.style.transform = 'scale(1)';
+                }, 120);
+            }
+
+            document.querySelectorAll('.model-pill').forEach(pill => {
+                const isMatch = pill.getAttribute('data-model') === modelKey;
+                pill.classList.toggle('active', isMatch);
+                pill.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+            });
+
+            try {
+                localStorage.setItem('cc_selected_watch_model', modelKey);
+            } catch(e) {}
+        };
+
         function initHeroWatch() {
             setHeroWatchFace(0);
+
+            // Restore saved watch model preference
+            try {
+                const savedModel = localStorage.getItem('cc_selected_watch_model');
+                if (savedModel && WATCH_MODELS[savedModel]) {
+                    setHeroWatchModel(savedModel);
+                }
+            } catch(e) {}
             
             const watchMockupEl = document.getElementById('hero-watch-mockup');
             if (!watchMockupEl) return;
