@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+  <script>if(location.hostname.includes("firebaseapp.com")){location.replace(location.href.replace(location.hostname,"creationcue.web.app"));}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Update Command Hub | Creation Cue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #121216;
+      --card-bg: #1a1a22;
+      --border: #2e2e3e;
+      --accent: #f5c518;
+      --purple: #8b5cf6;
+      --blue: #3b82f6;
+      --green: #10b981;
+      --red: #ef4444;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --code-bg: #0f0f15;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: #181820;
+      border-bottom: 2px solid var(--accent);
+      padding: 18px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent), #f59e0b);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #000;
+      font-weight: 800;
+      font-size: 16px;
+    }
+    .brand-title {
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      margin-left: 20px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .container {
+      max-width: 1100px;
+      margin: 36px auto;
+      padding: 0 20px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(245, 197, 24, 0.05));
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 32px;
+    }
+    .hero h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; color: #fff; }
+    .hero p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    /* Configuration Panel */
+    .config-panel {
+      background: #181822;
+      border: 1px solid var(--purple);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 32px;
+      box-shadow: 0 8px 30px rgba(139, 92, 246, 0.15);
+    }
+    .config-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .config-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .input-group label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .input-field {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-field:focus {
+      border-color: var(--accent);
+    }
+    textarea.input-field {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--border);
+    }
+    .card.step-1::before { background: var(--blue); }
+    .card.step-2::before { background: var(--purple); }
+    .card.step-3::before { background: var(--accent); }
+    .card.step-4::before { background: var(--green); }
+
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .step-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.06);
+    }
+    .step-1 .step-tag { color: var(--blue); }
+    .step-2 .step-tag { color: var(--purple); }
+    .step-3 .step-tag { color: var(--accent); }
+    .step-4 .step-tag { color: var(--green); }
+
+    .card-title { font-size: 18px; font-weight: 600; color: #fff; }
+    .card-desc { font-size: 13px; color: var(--muted); margin-top: 6px; margin-bottom: 16px; line-height: 1.5; }
+
+    .cmd-box {
+      background: var(--code-bg);
+      border: 1px solid #262636;
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .cmd-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #7dd3fc;
+      font-weight: 500;
+      word-break: break-all;
+      padding-right: 12px;
+    }
+    .btn-copy {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .btn-copy:hover {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
+    .notes {
+      font-size: 12px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.03);
+      padding: 10px 14px;
+      border-radius: 6px;
+      border-left: 3px solid var(--border);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--green);
+      color: #000;
+      font-weight: 700;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-logo">CC</div>
+      <div class="brand-title">API Update Command Hub</div>
+    </div>
+    <div class="nav-links">
+      <a href="play-versions.html">Versions Dashboard</a>
+      <a href="month-planner.html">Month Planner</a>
+      <a href="index.html">Main Site</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="hero">
+      <h1>🚀 Play Console Annual API Target SDK Updater</h1>
+      <p>Use the settings panel below to configure your Target SDK level and custom "What's New" release notes for both Companion Apps and Wear OS watch faces. The command boxes below will update automatically!</p>
+    </div>
+
+    <!-- CONFIGURATION PANEL -->
+    <div class="config-panel">
+      <div class="config-title">⚙️ Update Parameters Configuration</div>
+      <div class="config-grid">
+        
+        <div class="input-group">
+          <label>Wear OS Target SDK Version</label>
+          <input type="number" id="wearSdkInput" class="input-field" value="35" oninput="updateCommands()">
+        </div>
+
+        <div class="input-group">
+          <label>Companion App Target SDK Version</label>
+          <input type="number" id="companionSdkInput" class="input-field" value="35" oninput="updateCommands()">
+        </div>
+
+        <div class="input-group" style="grid-column: 1 / -1;">
+          <label>Wear OS Release Notes ("What's New")</label>
+          <textarea id="wearNotesInput" class="input-field" oninput="updateCommands()">Updated for Wear OS target SDK 35 compatibility, performance improvements, and bug fixes.</textarea>
+        </div>
+
+        <div class="input-group" style="grid-column: 1 / -1;">
+          <label>Companion App Release Notes ("What's New")</label>
+          <textarea id="companionNotesInput" class="input-field" oninput="updateCommands()">Updated for Target SDK 35 compatibility and performance enhancements.</textarea>
+        </div>
+
+      </div>
+    <!-- DOCUMENTATION PANEL -->
+    <div class="config-panel" style="margin-bottom: 32px; background: #12121a; border-color: #2e2e3e;">
+      <div class="config-title" style="color: var(--blue);">📁 Folder Structure & Script Reference</div>
+      <div style="font-size: 13px; color: var(--muted); line-height: 1.6;">
+        <p style="margin-bottom: 8px;"><strong>Source AABs:</strong> Original unpatched files are loaded from <code>D:\complicationBEST\watchface_aabs</code> or <code>D:\MEGA\wear os aab\</code>.</p>
+        <p style="margin-bottom: 8px;"><strong>Patched & Ready AABs:</strong> The patcher saves the final, ready-to-upload AABs here: <code style="color:var(--accent)">D:\MEGA\live now wear os aabs\</code></p>
+        <p style="margin-bottom: 8px;"><strong>Data JSONs:</strong> Play console statuses and whitelists are in <code>D:\complicationBEST\live_wear_os_status.json</code> and <code>versions-data.json</code>.</p>
+        <p style="margin-bottom: 8px;"><strong>Python Scripts:</strong> Active scripts run from <code>C:\Users\smash\.gemini\antigravity\scratch\play_store_updater\</code>. Backups are versioned in <code>D:\AntiGravity\github creation cue page\play_store_updater_scripts\</code>.</p>
+        <div style="margin-top: 12px; padding: 10px; background: rgba(59, 130, 246, 0.1); border-left: 3px solid var(--blue); border-radius: 4px;">
+          <strong>Note to Antigravity (For Next Year):</strong> When it's time to bump the SDK again, first run the companion app generator script to build the phone apps. Next, run the patcher script to safely inject the new SDK level into the Wear OS watch face AABs and save them to the "live now" folder. Then, run the upload script to batch-upload both the Wear OS and Companion apps via the Play Developer API. All scripts are pre-configured in your backups.
+        </div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-bottom: 24px;">
+      <!-- INITIALIZATION STEP -->
+      <div class="card" style="border-color: var(--primary); box-shadow: 0 4px 15px rgba(59,130,246,0.1);">
+        <div class="step-header">
+          <span class="step-tag" style="background: var(--primary); color: #fff;">System Initialization</span>
+          <span style="font-size:12px; color:var(--muted)">Context Prompt</span>
+        </div>
+        <div class="card-title">Feed Context to Antigravity</div>
+        <div class="card-desc">Start your AI session by pasting this prompt. It gives Antigravity the full history, folder structures, and script locations so it knows exactly how the batch system works before taking commands.</div>
+        <div class="cmd-box">
+          <span class="cmd-text" id="cmd-init"></span>
+          <button class="btn-copy" onclick="copyById('cmd-init')" style="background: var(--primary); color: #fff; border: none;">Copy Context</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- STEP 0 -->
+      <div class="card step-0">
+        <div class="step-header">
+          <span class="step-tag" style="color: #f43f5e; background: rgba(244, 63, 94, 0.1);">Step 0 — Companion Apps</span>
+          <span style="font-size:12px; color:var(--muted)">Generate Phone Apps</span>
+        </div>
+        <div class="card-title">Generate All Companion Apps</div>
+        <div class="card-desc">Instructs Antigravity to run the Python script that copies the <code>creation.V6</code> template, updates the <code>build.gradle</code>/strings, compiles via gradlew, and signs ALL Companion AABs!</div>
+        <div class="cmd-box">
+          <span class="cmd-text" id="cmd-companion"></span>
+          <button class="btn-copy" onclick="copyById('cmd-companion')">Copy Prompt</button>
+        </div>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="card step-1">
+        <div class="step-header">
+          <span class="step-tag">Step 1 — Query</span>
+          <span style="font-size:12px; color:var(--muted)">Check Live Status</span>
+        </div>
+        <div class="card-title">Query Live Play Console Data</div>
+        <div class="card-desc">Asks Antigravity to fetch the live version codes on both Wear OS and Phone tracks so we don't upload conflicting versions.</div>
+        <div class="cmd-box">
+          <span class="cmd-text" id="cmd-query"></span>
+          <button class="btn-copy" onclick="copyById('cmd-query')">Copy Prompt</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="card step-2">
+        <div class="step-header">
+          <span class="step-tag">Step 2 — Patch</span>
+          <span style="font-size:12px; color:var(--muted)">In-Place Binary Patching</span>
+        </div>
+        <div class="card-title">Patch & Sign Wear OS AABs</div>
+        <div class="card-desc">Instructs Antigravity to run our Python patcher that safely edits the compiled binary integer tags for the target SDK.</div>
+        <div class="cmd-box">
+          <span class="cmd-text" id="cmd-patch"></span>
+          <button class="btn-copy" onclick="copyById('cmd-patch')">Copy Prompt</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="card step-3">
+        <div class="step-header">
+          <span class="step-tag">Step 3 — Single Test</span>
+          <span style="font-size:12px; color:var(--muted)">Safety Test</span>
+        </div>
+        <div class="card-title">Upload Single Test Watch Face</div>
+        <div class="card-desc">Tells Antigravity to upload just 1 app so you can manually verify the new Target SDK and Release Notes on the Play Console.</div>
+        <div class="cmd-box">
+          <span class="cmd-text" id="cmd-test"></span>
+          <button class="btn-copy" onclick="copyById('cmd-test')">Copy Prompt</button>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="card step-4">
+        <div class="step-header">
+          <span class="step-tag">Step 4 — Bulk Upload</span>
+          <span style="font-size:12px; color:var(--muted)">Production Rollout</span>
+        </div>
+        <div class="card-title">Upload Batch / All Remaining</div>
+        <div class="card-desc">Instructs Antigravity to do the massive bulk upload automatically in chunks.</div>
+        <div class="cmd-box">
+          <span class="cmd-text" id="cmd-batch"></span>
+          <button class="btn-copy" onclick="copyById('cmd-batch')">Copy Batch Prompt</button>
+        </div>
+        <div class="cmd-box">
+          <span class="cmd-text" id="cmd-all"></span>
+          <button class="btn-copy" onclick="copyById('cmd-all')">Copy "Do The Rest" Prompt</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copied to clipboard!</div>
+
+  <script>
+    function updateCommands() {
+      const wearSdk = document.getElementById('wearSdkInput').value || '35';
+      const companionSdk = document.getElementById('companionSdkInput').value || '35';
+      const wearNotes = document.getElementById('wearNotesInput').value.trim() || 'Updated for Wear OS target SDK 35 compatibility.';
+      const companionNotes = document.getElementById('companionNotesInput').value.trim() || 'Updated for Target SDK 35 compatibility.';
+
+      document.getElementById('cmd-init').innerText = `@antigravity READ THIS CAREFULLY TO INITIALIZE OUR SESSION: 
+1. We are doing batch updates for ALL our Wear OS watch faces and their companion apps.
+2. The original watch face AABs are in 'D:\\complicationBEST\\watchface_aabs' and 'D:\\MEGA\\wear os aab'. 
+3. The companion app template is 'creation.V6' and future mobile AABs go to 'D:\\MEGA\\CompanionLive_aab'.
+4. The final patched and ready-to-upload Wear OS AABs are saved to 'D:\\MEGA\\live now wear os aabs'.
+5. All our automation Python scripts (patcher, companion app generator, uploader) are located in 'D:\\AntiGravity\\github creation cue page\\play_store_updater_scripts\\'.
+6. To know what apps are live and their current version codes, check 'D:\\AntiGravity\\github creation cue page\\versions-data.json'.
+Please confirm you understand this architecture and wait for my next command. Do not take any actions yet.`;
+
+      document.getElementById('cmd-companion').innerText = `@antigravity Please run the companion app generator script at 'C:\\Users\\smash\\.gemini\\antigravity\\scratch\\play_store_updater\\update_companion_apps.py'. It needs to compile and sign ALL companion AABs using the 'creation.V6' template.`;
+      
+      document.getElementById('cmd-query').innerText = `@antigravity Please run the Play Console query script we built previously to fetch the live version codes and save them to D:\\complicationBEST\\live_wear_os_status.json.`;
+      
+      document.getElementById('cmd-patch').innerText = `@antigravity Please run our watch face patcher script located at 'C:\\Users\\smash\\.gemini\\antigravity\\scratch\\play_store_updater\\smart_patch_watchfaces.py'. It needs to bump the targetSdkVersion to ${wearSdk}. Ensure it handles both the XML text and the compiled protobuf integer tags so Google Play doesn't reject it!`;
+      
+      document.getElementById('cmd-test').innerText = `@antigravity Please run the upload script 'C:\\Users\\smash\\.gemini\\antigravity\\scratch\\play_store_updater\\upload_watchfaces.py' for just one test package (com.watchfacestudio.cc010). Please include the release notes: "${wearNotes}". Stop after one so I can verify it!`;
+      
+      document.getElementById('cmd-batch').innerText = `@antigravity Please run the upload script 'C:\\Users\\smash\\.gemini\\antigravity\\scratch\\play_store_updater\\upload_watchfaces.py' with --all and --limit 20 to process a batch of 20. Include the release notes: "${wearNotes}". Use your background timer tool to let it finish!`;
+      
+      document.getElementById('cmd-all').innerText = `@antigravity Please run the upload script 'C:\\Users\\smash\\.gemini\\antigravity\\scratch\\play_store_updater\\upload_watchfaces.py' with --all to process all remaining apps. Please use batches/offsets in the background and let me know when it's totally done! The release notes are: "${wearNotes}".`;
+    }
+
+    function copyById(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const toast = document.getElementById('toast');
+        toast.innerText = 'Copied prompt to clipboard!';
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+      });
+    }
+
+    // Initialize on load
+    updateCommands();
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+Allow: /blog
+Allow: /blog/*
+Allow: /privacy.html
+Allow: /privacy_manager.html
+Disallow: /admin.html
+Disallow: /batchUpdates.html
+Disallow: /manage-coupons.html
+Disallow: /play-deploy.html
+Disallow: /play-versions.html
+Disallow: /month-planner.html
+Disallow: /social-generator.html
+Disallow: /live.html
+Disallow: /vienna.html
+Disallow: /raw.html
+Disallow: /claim.html
+Disallow: /promo-details.html
+Disallow: /flags-instructions.html
+Disallow: /*.json$
+Disallow: /*backup*
+
+Sitemap: https://creationcue.web.app/sitemap.xml

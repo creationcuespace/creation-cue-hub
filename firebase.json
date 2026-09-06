@@ -5,6 +5,8 @@
   "hosting": {
     "site": "creationcue",
     "public": ".",
+    "cleanUrls": true,
+    "trailingSlash": false,
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -21,7 +23,9 @@
       "**/*.sh",
       "tracker/**",
       "docs/**",
-      "blog/images/**"
+      "blog/images/**",
+      "scratch/**",
+      "*backup*"
     ],
     "maxReleases": 5,
     "headers": [
