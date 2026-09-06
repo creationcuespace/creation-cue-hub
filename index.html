@@ -1946,6 +1946,7 @@
             border-radius: 50%;
             background-color: #000000;
             z-index: 1;
+            transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1), height 0.28s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .hero-watch-face-img {
@@ -1965,7 +1966,7 @@
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
             display: block;
             pointer-events: none;
-            transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.28s cubic-bezier(0.16, 1, 0.3, 1), height 0.28s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .hero-watch-frame-img {
@@ -3889,22 +3890,30 @@
             samsung: {
                 id: 'samsung',
                 name: 'Samsung Galaxy Watch Ultra',
-                frame: 'images/watch_frame_samsung.png'
+                frame: 'images/watch_frame_samsung.png',
+                faceSize: '52.8%',
+                bgSize: '57.0%'
             },
             ticwatch: {
                 id: 'ticwatch',
                 name: 'TicWatch Pro 5 Enduro',
-                frame: 'images/watch_frame_ticwatch.png'
+                frame: 'images/watch_frame_ticwatch.png',
+                faceSize: '57.1%',
+                bgSize: '58.5%'
             },
             xiaomi: {
                 id: 'xiaomi',
                 name: 'Xiaomi Watch 2 Pro',
-                frame: 'images/watch_frame_xiaomi.png'
+                frame: 'images/watch_frame_xiaomi.png',
+                faceSize: '61.0%',
+                bgSize: '62.5%'
             },
             pixel: {
                 id: 'pixel',
                 name: 'Google Pixel Watch 3',
-                frame: 'images/watch_frame_pixel.png'
+                frame: 'images/watch_frame_pixel.png',
+                faceSize: '57.6%',
+                bgSize: '59.0%'
             }
         };
 
@@ -3916,6 +3925,9 @@
             const model = WATCH_MODELS[modelKey];
 
             const frameImg = document.getElementById('hero-watch-frame-img');
+            const faceImg = document.getElementById('hero-watch-face-img');
+            const dialBg = document.querySelector('.hero-watch-dial-bg');
+
             if (frameImg) {
                 frameImg.style.transition = 'opacity 0.2s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)';
                 frameImg.style.opacity = '0.35';
@@ -3927,6 +3939,16 @@
                     frameImg.style.opacity = '1';
                     frameImg.style.transform = 'scale(1)';
                 }, 120);
+            }
+
+            if (faceImg && model.faceSize) {
+                faceImg.style.width = model.faceSize;
+                faceImg.style.height = model.faceSize;
+            }
+
+            if (dialBg && model.bgSize) {
+                dialBg.style.width = model.bgSize;
+                dialBg.style.height = model.bgSize;
             }
 
             document.querySelectorAll('.model-pill').forEach(pill => {
