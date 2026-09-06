@@ -1751,58 +1751,102 @@
         }
 
         .hero-watch-model-selector {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 14px;
+            gap: 4px;
+            background: rgba(16, 16, 22, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 4px;
+            margin-bottom: 16px;
             z-index: 10;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            max-width: 100%;
         }
 
         .model-pill {
-            background: rgba(18, 18, 24, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: rgba(255, 255, 255, 0.72);
-            padding: 6px 13px;
-            border-radius: 20px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: rgba(255, 255, 255, 0.68);
+            padding: 6px 14px;
+            border-radius: 24px;
             font-size: 11.5px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
             white-space: nowrap;
             user-select: none;
+            -webkit-user-select: none;
             font-family: 'Inter', sans-serif;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 5px;
+            letter-spacing: 0.2px;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .model-pill:hover {
             color: #fff;
-            border-color: rgba(241, 179, 28, 0.45);
-            background: rgba(28, 28, 36, 0.95);
-            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.06);
         }
 
         .model-pill.active {
-            background: rgba(241, 179, 28, 0.16);
-            border-color: var(--primary);
-            color: var(--primary);
-            box-shadow: 0 4px 16px rgba(241, 179, 28, 0.22);
+            background: linear-gradient(135deg, rgba(241, 179, 28, 0.22), rgba(241, 179, 28, 0.1));
+            border-color: rgba(241, 179, 28, 0.7);
+            color: #ffd15c;
+            box-shadow: 0 2px 10px rgba(241, 179, 28, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.12);
             font-weight: 700;
         }
 
-        @media (max-width: 600px) {
+        .model-name-short {
+            display: none;
+        }
+
+        .model-name-full {
+            display: inline;
+        }
+
+        @media (max-width: 640px) {
             .hero-watch-model-selector {
-                gap: 5px;
-                margin-bottom: 10px;
+                display: flex;
+                width: calc(100% - 16px);
+                max-width: 360px;
+                gap: 2px;
+                padding: 3px;
+                margin-bottom: 14px;
+                border-radius: 24px;
             }
+
             .model-pill {
-                padding: 4px 10px;
+                flex: 1 1 0;
+                min-width: 0;
+                padding: 7px 2px;
                 font-size: 10.5px;
+                border-radius: 20px;
+                text-align: center;
+            }
+
+            .model-name-full {
+                display: none;
+            }
+
+            .model-name-short {
+                display: inline;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .hero-watch-model-selector {
+                max-width: 310px;
+            }
+
+            .model-pill {
+                font-size: 9.5px;
+                padding: 6px 1px;
             }
         }
 
@@ -2626,16 +2670,20 @@
                             <!-- Watch Model Switcher Pills -->
                             <div class="hero-watch-model-selector" role="tablist" aria-label="Select Watch Model">
                                 <button type="button" class="model-pill active" data-model="samsung" onclick="setHeroWatchModel('samsung')" role="tab" aria-selected="true">
-                                    <span>Galaxy Ultra</span>
+                                    <span class="model-name-full">Galaxy Ultra</span>
+                                    <span class="model-name-short">Galaxy</span>
                                 </button>
                                 <button type="button" class="model-pill" data-model="ticwatch" onclick="setHeroWatchModel('ticwatch')" role="tab" aria-selected="false">
-                                    <span>TicWatch Pro 5</span>
+                                    <span class="model-name-full">TicWatch Pro 5</span>
+                                    <span class="model-name-short">TicWatch</span>
                                 </button>
                                 <button type="button" class="model-pill" data-model="xiaomi" onclick="setHeroWatchModel('xiaomi')" role="tab" aria-selected="false">
-                                    <span>Xiaomi Watch 2</span>
+                                    <span class="model-name-full">Xiaomi Watch 2</span>
+                                    <span class="model-name-short">Xiaomi</span>
                                 </button>
                                 <button type="button" class="model-pill" data-model="pixel" onclick="setHeroWatchModel('pixel')" role="tab" aria-selected="false">
-                                    <span>Pixel Watch 3</span>
+                                    <span class="model-name-full">Pixel Watch 3</span>
+                                    <span class="model-name-short">Pixel</span>
                                 </button>
                             </div>
 
