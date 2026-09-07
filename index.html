@@ -27,9 +27,9 @@
     <!-- Performance: Early connection to image CDN & Preloads -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link rel="preload" href="images/cue178.png" as="image" fetchpriority="high">
+    <link rel="preload" href="images/cue177.png" as="image" fetchpriority="high">
+    <link rel="preload" href="images/cue178.png" as="image">
     <link rel="preload" href="images/cue003.png" as="image">
-    <link rel="preload" href="images/cue177.png" as="image">
     <link rel="preload" href="images/ccBanner1.webp" as="image">
     
     <!-- Premium Fonts -->
@@ -2631,13 +2631,13 @@
                         <div class="hero-text-col">
                             <div class="hero-badge">
                                 <span class="badge-dot"></span>
-                                <span id="hero-badge-text">NEW RELEASE • CUE178</span>
+                                <span id="hero-badge-text">DYNAMIC COMPLICATIONS • CUE177</span>
                             </div>
                             <h1 class="hero-title" id="hero-main-title">
-                                TIME, CRAFTED TO <br><span class="hero-gold-text">PERFECTION</span>
+                                INTELLIGENCE <span class="hero-gold-text">ON YOUR WRIST</span>
                             </h1>
                             <p class="hero-tagline" id="hero-main-tagline">
-                                Featuring the all-new CUE178 and 111+ precision-engineered watch faces for Samsung Galaxy Watch, Google Pixel Watch & all Wear OS smartwatches.
+                                Live weather, heart rate, step progress, battery monitor, and calendar events customized to fit your unique lifestyle on CUE177.
                             </p>
 
                             <div class="hero-actions">
@@ -2647,7 +2647,7 @@
                                 </button>
                                 <button class="hero-btn-switch" onclick="switch3DWatchFace()" title="Switch watch face on watch">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-                                    <span id="hero-current-face-label">CUE178</span>
+                                    <span id="hero-current-face-label">CUE177</span>
                                     <span id="hero-face-counter" class="hero-face-counter">1 / 6</span>
                                 </button>
                             </div>
@@ -2655,9 +2655,9 @@
                             <div class="hero-face-chips-container">
                                 <span class="chips-label">Popular Faces:</span>
                                 <div class="hero-face-chips">
-                                    <button class="face-chip active" id="face-chip-0" onclick="set3DWatchFace(0)">CUE178</button>
-                                    <button class="face-chip" id="face-chip-1" onclick="set3DWatchFace(1)">CUE003</button>
-                                    <button class="face-chip" id="face-chip-2" onclick="set3DWatchFace(2)">CUE177</button>
+                                    <button class="face-chip active" id="face-chip-0" onclick="set3DWatchFace(0)">CUE177</button>
+                                    <button class="face-chip" id="face-chip-1" onclick="set3DWatchFace(1)">CUE178</button>
+                                    <button class="face-chip" id="face-chip-2" onclick="set3DWatchFace(2)">CUE003</button>
                                     <button class="face-chip" id="face-chip-3" onclick="set3DWatchFace(3)">CUE176</button>
                                     <button class="face-chip" id="face-chip-4" onclick="set3DWatchFace(4)">CUE175</button>
                                     <button class="face-chip" id="face-chip-5" onclick="set3DWatchFace(5)">CUE174</button>
@@ -2690,7 +2690,7 @@
                             <div class="hero-watch-mockup" id="hero-watch-mockup" onclick="openActiveHeroWatchFaceStore()" title="Tap to open on Google Play • Swipe left/right to change faces" role="button" tabindex="0">
                                 <div class="hero-watch-dial-bg"></div>
                                 <!-- Watch Face circular image (Scaled with breathing room so nothing is cut off) -->
-                                <img id="hero-watch-face-img" class="hero-watch-face-img" src="images/cue178.png" alt="Featured Watch Face">
+                                <img id="hero-watch-face-img" class="hero-watch-face-img" src="images/cue177.png" alt="Featured Watch Face">
                                 <!-- Official Wear OS Watch Frame Image -->
                                 <img id="hero-watch-frame-img" class="hero-watch-frame-img" src="images/watch_frame_samsung.png" alt="Samsung Galaxy Watch Ultra">
 
@@ -3837,6 +3837,15 @@
         // ==========================================
         const FEATURED_WATCH_FACES = [
             {
+                id: 'cue177',
+                name: 'CUE177',
+                file: 'images/cue177.png',
+                badge: 'DYNAMIC COMPLICATIONS • CUE177',
+                title: 'INTELLIGENCE <span class="hero-gold-text">ON YOUR WRIST</span>',
+                tagline: 'Live weather, heart rate, step progress, battery monitor, and calendar events customized to fit your unique lifestyle on CUE177.',
+                play_store_url: 'market://details?id=com.creation.cue177watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue177'
+            },
+            {
                 id: 'cue178',
                 name: 'CUE178',
                 file: 'images/cue178.png',
@@ -3853,15 +3862,6 @@
                 title: 'PURE <span class="hero-gold-text">AMOLED</span> DEPTH',
                 tagline: 'Ultra battery-friendly aesthetics with deep contrast, custom indices, and high-readability typography powered by CUE003.',
                 play_store_url: 'market://details?id=com.creation.cue003watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue003'
-            },
-            {
-                id: 'cue177',
-                name: 'CUE177',
-                file: 'images/cue177.png',
-                badge: 'DYNAMIC COMPLICATIONS • CUE177',
-                title: 'INTELLIGENCE <span class="hero-gold-text">ON YOUR WRIST</span>',
-                tagline: 'Live weather, heart rate, step progress, battery monitor, and calendar events customized to fit your unique lifestyle on CUE177.',
-                play_store_url: 'market://details?id=com.creation.cue177watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue177'
             },
             {
                 id: 'cue176',
