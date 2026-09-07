@@ -3906,7 +3906,7 @@
                 curatedMap[f.id.toLowerCase()] = f;
             });
 
-            heroWatchFacesList = catalogFaces.map(face => {
+            const mappedCatalog = catalogFaces.map(face => {
                 const idLower = (face.id || '').toLowerCase();
                 if (curatedMap[idLower]) {
                     return curatedMap[idLower];
@@ -3925,7 +3925,13 @@
                 };
             });
 
+            const featuredIds = new Set(FEATURED_WATCH_FACES.map(f => f.id.toLowerCase()));
+            const remainingCatalog = mappedCatalog.filter(f => !featuredIds.has((f.id || '').toLowerCase()));
+            
+            heroWatchFacesList = [...FEATURED_WATCH_FACES, ...remainingCatalog];
+
             updateHeroWatchCounter();
+            setHeroWatchFace(currentHeroFaceIndex, 1);
         }
 
         function updateHeroWatchCounter() {
