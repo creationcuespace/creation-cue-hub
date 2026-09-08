@@ -956,7 +956,7 @@
                     </div>
                     <div class="form-group">
                         <label for="package-num">Watch Face Number</label>
-                        <input type="number" id="package-num" class="input-text" placeholder="e.g. 178" min="1" step="1">
+                        <input type="number" id="package-num" class="input-text" placeholder="e.g. 178" min="1" step="1" oninput="saveDeployState(); if(typeof updatePackageId === 'function') updatePackageId();">
                     </div>
                 </div>
 
@@ -1334,7 +1334,9 @@
                 checklistSteps: window.currentChecklistSteps || [],
                 checklistStates: window.currentChecklistStates || [],
                 features: [],
-                shortDescOptions: []
+                shortDescOptions: [],
+                imgBase64: uploadedFileBase64,
+                imgMime: uploadedFileMime
             };
             const listDiv = document.getElementById('features-list-div');
             const rows = listDiv.querySelectorAll('.feature-row');
@@ -1353,7 +1355,14 @@
             optBtns.forEach(btn => {
                 data.shortDescOptions.push(btn.textContent.replace(/^Option \d+: /, ''));
             });
-            localStorage.setItem('cc_deploy_state', JSON.stringify(data));
+            try {
+                localStorage.setItem('cc_deploy_state', JSON.stringify(data));
+            } catch (e) {
+                console.warn("Storage quota exceeded (probably large image). Saving without image.");
+                data.imgBase64 = null;
+                data.imgMime = null;
+                localStorage.setItem('cc_deploy_state', JSON.stringify(data));
+            }
         }
 
         function initializePage() {
@@ -1453,6 +1462,18 @@
             const outHealth = document.getElementById('out-health-decl');
             if (outHealth && savedState.healthDecl !== undefined) {
                 outHealth.value = savedState.healthDecl;
+            }
+
+            if (savedState.imgBase64 && savedState.imgMime) {
+                uploadedFileBase64 = savedState.imgBase64;
+                uploadedFileMime = savedState.imgMime;
+                const previewContainer = document.getElementById('preview-container');
+                const previewImg = document.getElementById('img-preview');
+                previewImg.src = `data:${uploadedFileMime};base64,${uploadedFileBase64}`;
+                document.getElementById('upload-zone').style.display = 'none';
+                previewContainer.style.display = 'flex';
+                const btnGen = document.getElementById('btn-generate-short');
+                if (btnGen) btnGen.disabled = false;
             }
 
             setupImageDragAndDrop();
