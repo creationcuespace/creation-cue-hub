@@ -1457,7 +1457,11 @@
 
             const outPolicy = document.getElementById('out-policy-link');
             if (outPolicy && savedState.policyLink !== undefined) {
-                outPolicy.value = savedState.policyLink;
+                if (savedState.policyLink === 'https://creationcue.web.app/privacy.html') {
+                    outPolicy.value = 'https://creationcue.web.app/privacy';
+                } else {
+                    outPolicy.value = savedState.policyLink;
+                }
             }
             const outHealth = document.getElementById('out-health-decl');
             if (outHealth && savedState.healthDecl !== undefined) {
