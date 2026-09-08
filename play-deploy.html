@@ -1457,7 +1457,7 @@
 
             const outPolicy = document.getElementById('out-policy-link');
             if (outPolicy && savedState.policyLink !== undefined) {
-                if (savedState.policyLink === 'https://creationcue.web.app/privacy.html') {
+                if (savedState.policyLink.includes('privacy.html') || savedState.policyLink.includes('github.io')) {
                     outPolicy.value = 'https://creationcue.web.app/privacy';
                 } else {
                     outPolicy.value = savedState.policyLink;
