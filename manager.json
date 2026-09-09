@@ -23,8 +23,8 @@
       "id": "cue179",
       "title": "CUE179",
       "subtitle": "Futuristic Cyber Digital Watch Face",
-      "description": "Futuristic circuit board design featuring dual-color bold typography, real-time speed, weather forecast, heart rate monitor, custom progress arcs, and dynamic Wear OS complications.",
-      "description_en": "Futuristic circuit board design featuring dual-color bold typography, real-time speed, weather forecast, heart rate monitor, custom progress arcs, and dynamic Wear OS complications.",
+      "description": "Futuristic circuit board design featuring dual-color bold typography, real-time speed, 2 short text and 1 long text custom complications, heart rate monitor, and custom progress arcs.",
+      "description_en": "Futuristic circuit board design featuring dual-color bold typography, real-time speed, 2 short text and 1 long text custom complications, heart rate monitor, and custom progress arcs.",
       "image_url": "images/cue179.png",
       "play_store_url": "https://play.google.com/store/apps/details?id=com.creation.cue179watchface",
       "package_name": "com.creation.cue179watchface",
@@ -37,7 +37,7 @@
         "Circuit",
         "Futuristic",
         "Battery",
-        "Weather"
+        "Complications"
       ],
       "price": "Free",
       "downloads": "Coming Soon",
@@ -50,7 +50,7 @@
         "Circuit",
         "Futuristic",
         "Battery",
-        "Weather"
+        "Complications"
       ]
     },
     {
