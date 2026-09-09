@@ -1106,7 +1106,7 @@
       var claimUrl = claimBaseUrl + '?p=' + btoa(promoId).replace(/=/g, '');
       var urlLabel = document.getElementById('lbl-public-url');
       
-      if (promoData.shortUrl) {
+      if (promoData.shortUrl && !promoData.shortUrl.includes('shrtr.top')) {
         urlLabel.textContent = promoData.shortUrl;
         urlLabel.href = promoData.shortUrl;
       } else {
@@ -1311,9 +1311,10 @@
         tokenKeys.forEach(function(tokenId) {
           var token = tokens[tokenId];
           var claimUrl = claimBaseUrl + '?t=' + tokenId;
-          var displayUrl = token.shortUrl || claimUrl;
+          var hasValidShortUrl = token.shortUrl && !token.shortUrl.includes('shrtr.top');
+          var displayUrl = hasValidShortUrl ? token.shortUrl : claimUrl;
           
-          if (!token.shortUrl && !token.claimed) {
+          if (!hasValidShortUrl && !token.claimed) {
             if (!shortenerQueue.some(function(q) { return q.id === tokenId; })) {
               shortenerQueue.push({ type: 'token', id: tokenId, longUrl: claimUrl });
               processShortenerQueue();
