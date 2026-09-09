@@ -516,6 +516,11 @@
             color: var(--bg-color);
         }
 
+        .card-badge.coming-soon {
+            background-color: var(--orange);
+            color: #000;
+        }
+
         .face-image-container {
             width: 100%;
             aspect-ratio: 1/1;
@@ -1210,6 +1215,11 @@
             background: var(--surface-variant);
             color: var(--text-secondary);
             border: 1px solid var(--border-color);
+        }
+        .detail-badge.price.coming-soon {
+            background: rgba(255, 152, 0, 0.15);
+            color: var(--orange);
+            border: 1px solid rgba(255, 152, 0, 0.4);
         }
 
         .detail-badge.type {
@@ -3857,10 +3867,10 @@
                 id: 'cue179',
                 name: 'CUE179',
                 file: 'images/cue179.png',
-                badge: 'NEW RELEASE • CUE179',
+                badge: 'COMING SOON • CUE179',
                 title: 'FUTURISTIC <span class="hero-gold-text">CYBER POWER</span>',
-                tagline: 'Bold dual-color digital display, circuit board styling, live weather, speed gauge, and battery arc powered by CUE179.',
-                play_store_url: 'market://details?id=com.creation.cue179watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue179'
+                tagline: 'Bold dual-color digital display, circuit board styling, live weather, speed gauge, and battery arc powered by CUE179. Coming soon to Google Play!',
+                play_store_url: 'https://play.google.com/store/apps/details?id=com.creation.cue179watchface'
             },
             {
                 id: 'cue178',
@@ -4808,6 +4818,7 @@
                 let badgeClass = 'card-badge';
                 if (isFree) badgeClass += ' free';
                 else if (isHot) badgeClass += ' hot';
+                else if (badgeText.toUpperCase().includes('COMING SOON')) badgeClass += ' coming-soon';
                 badgeHtml = `<span class="${badgeClass}">${badgeText}</span>`;
             }
             
@@ -4890,7 +4901,11 @@
             
             // Badges
             const isFree = face.is_free || (face.badge_text && face.badge_text.toUpperCase().includes('FREE'));
-            if (isFree) {
+            const isComingSoon = face.is_coming_soon || (face.badge_text && face.badge_text.toUpperCase().includes('COMING SOON'));
+            if (isComingSoon) {
+                price.textContent = 'COMING SOON';
+                price.className = 'detail-badge price coming-soon';
+            } else if (isFree) {
                 price.textContent = 'FREE';
                 price.className = 'detail-badge price';
             } else {
@@ -4901,6 +4916,17 @@
             // Install link dynamically optimized for Android vs Web clients
             const rawLink = face.play_store_url || '';
             storeBtn.href = getPlayStoreLink(rawLink);
+            if (isComingSoon) {
+                storeBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></svg>
+                    <span>Coming Soon to Google Play</span>
+                `;
+            } else {
+                storeBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></svg>
+                    <span>Get on Google Play</span>
+                `;
+            }
             
             // Update Fav button
             if (isFavorite(pkg)) {
