@@ -1614,6 +1614,9 @@
             color: #fff;
             text-transform: uppercase;
             text-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
+            min-height: 2.25em;
+            display: flex;
+            align-items: flex-end;
         }
 
         .hero-gold-text {
@@ -1629,6 +1632,9 @@
             line-height: 1.6;
             max-width: 580px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+            min-height: 3.2em;
+            display: flex;
+            align-items: flex-start;
         }
 
         .hero-actions {
@@ -1859,8 +1865,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.9));
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+            filter: drop-shadow(0 22px 48px rgba(0, 0, 0, 0.92));
+            transform: translateZ(0);
+            will-change: transform;
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
             margin: 0 auto;
             cursor: pointer;
             user-select: none;
@@ -1870,12 +1878,11 @@
         }
 
         .hero-watch-mockup:hover {
-            transform: scale(1.03);
-            filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.95));
+            transform: scale(1.03) translateZ(0);
         }
 
         .hero-watch-mockup:active {
-            transform: scale(0.97);
+            transform: scale(0.97) translateZ(0);
         }
 
         .hero-watch-arrow {
