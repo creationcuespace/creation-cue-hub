@@ -1,4 +1,17 @@
 {
-  "lastUpdated": "2026-09-08T01:24:35.179Z",
-  "reviews": []
+  "lastUpdated": "2026-09-09T01:33:06.040Z",
+  "reviews": [
+    {
+      "reviewId": "e83f9518-5561-44f2-bbfc-6010fe13a870",
+      "packageName": "com.creation.cueinduswatchface",
+      "title": "Watch Face CUE Indus",
+      "wfId": "cueindus",
+      "authorName": "Jhon Doe",
+      "starRating": 4,
+      "reviewerLanguage": "es",
+      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
+      "text": "\tme gusta, pero porfavor, añadan más opciones de colores, para una calificación 5/5",
+      "lastModified": "2026-09-08T03:51:41.000Z"
+    }
+  ]
 }
