@@ -4614,12 +4614,14 @@
             watchFaces.forEach(f => {
                 // Types
                 if (f.type) uniqueFilters.add(f.type.toUpperCase());
-                // Filters Array
-                if (f.filters && Array.isArray(f.filters)) {
-                    f.filters.forEach(tag => {
-                        if (tag && tag.trim() !== '') uniqueFilters.add(tag.trim().toUpperCase());
-                    });
-                }
+                if (f.category) uniqueFilters.add(f.category.toUpperCase());
+                const allTags = [
+                    ...(Array.isArray(f.filters) ? f.filters : []),
+                    ...(Array.isArray(f.tags) ? f.tags : [])
+                ];
+                allTags.forEach(tag => {
+                    if (tag && typeof tag === 'string' && tag.trim() !== '') uniqueFilters.add(tag.trim().toUpperCase());
+                });
                 // Check boolean flags
                 if (f.is_free || (f.badge_text && f.badge_text.toUpperCase().includes('FREE'))) uniqueFilters.add('FREE');
                 if (f.is_new || (f.badge_text && f.badge_text.toUpperCase().includes('NEW'))) uniqueFilters.add('NEW');
@@ -4777,8 +4779,11 @@
                 if (currentFilter.equalsIgnoreCase('All')) return true;
                 
                 const badge = (f.badge_text || '').toUpperCase();
-                const type = (f.type || '').toUpperCase();
-                const tags = f.filters ? f.filters.map(t => t.toUpperCase()) : [];
+                const type = (f.type || f.category || '').toUpperCase();
+                const tags = [
+                    ...(Array.isArray(f.filters) ? f.filters : []),
+                    ...(Array.isArray(f.tags) ? f.tags : [])
+                ].map(t => (typeof t === 'string' ? t.toUpperCase() : ''));
                 
                 const isFree = f.is_free || badge.includes('FREE');
                 const isNew = f.is_new || badge.includes('NEW');

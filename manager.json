@@ -32,18 +32,26 @@
       "badge_text": "COMING SOON",
       "category": "Digital",
       "tags": [
-        "digital",
-        "cyber",
-        "circuit",
-        "futuristic",
-        "battery",
-        "weather",
-        "new"
+        "Digital",
+        "Cyber",
+        "Circuit",
+        "Futuristic",
+        "Battery",
+        "Weather"
       ],
       "price": "Free",
       "downloads": "Coming Soon",
       "rating": 5.0,
-      "is_coming_soon": true
+      "is_coming_soon": true,
+      "type": "Digital",
+      "filters": [
+        "Digital",
+        "Cyber",
+        "Circuit",
+        "Futuristic",
+        "Battery",
+        "Weather"
+      ]
     },
     {
       "id": "cue178",
