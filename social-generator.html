@@ -1800,19 +1800,6 @@
                                         <button class="header-btn primary-btn" onclick="copyCommentText('instagram')">Copy Comment</button>
                                     </div>
                                 </div>
-    
-                                <!-- DM Trigger Comment Result Box -->
-                                <div style="margin-top: 16px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
-                                    <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">DM Trigger Comment</label>
-                                    <div class="result-box-wrapper">
-                                        <textarea class="result-box comment-textarea" id="res-dm-comment-instagram"></textarea>
-                                    </div>
-                                    <div class="result-actions" style="margin-top: 8px; display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap;">
-                                         <button class="header-btn" onclick="window.open('https://app.linkdm.com/posts', '_blank')" style="border-color: hsla(290, 70%, 60%, 0.3); color: hsl(290, 80%, 75%);">🔗 Open LinkDM</button>
-                                         <button class="header-btn" onclick="copyPlayStoreLink()" style="border-color: var(--primary); color: var(--primary);">📋 Copy Play Store Link</button>
-                                         <button class="header-btn primary-btn" onclick="copyDmCommentText()">Copy DM Comment</button>
-                                     </div>
-                                </div>
                             </div>
                         </div>
                         
@@ -2442,9 +2429,6 @@
             setTimeout(() => {
                 autoExpand(document.getElementById('res-text-' + platform));
                 autoExpand(document.getElementById('res-comment-' + platform));
-                if (platform === 'instagram') {
-                    autoExpand(document.getElementById('res-dm-comment-instagram'));
-                }
             }, 0);
         }
 
@@ -2474,18 +2458,6 @@
             if (!text) return;
             navigator.clipboard.writeText(text).then(() => {
                 showToast("Comment copied!");
-            }).catch(() => {
-                alert("Failed to copy. Please manually select and copy text.");
-            });
-        }
-
-        function copyDmCommentText() {
-            const commentBox = document.getElementById('res-dm-comment-instagram');
-            if (!commentBox) return;
-            const text = commentBox.value;
-            if (!text) return;
-            navigator.clipboard.writeText(text).then(() => {
-                showToast("DM Comment copied!");
             }).catch(() => {
                 alert("Failed to copy. Please manually select and copy text.");
             });
@@ -2545,12 +2517,6 @@
             if (commentInstagram) commentInstagram.value = bioComment;
             if (commentShorts) commentShorts.value = linkComment;
             if (commentReels) commentReels.value = linkComment;
-
-            // Update DM comment for Instagram
-            const dmCommentInstagram = document.getElementById('res-dm-comment-instagram');
-            if (dmCommentInstagram) {
-                dmCommentInstagram.value = 'Comment "CUE" to get the direct link sent to your DMs automatically! 📩';
-            }
         }
 
         function copyShortsTitle() {
@@ -2796,7 +2762,7 @@
                 tiktokText = `✨ ${captionIntro} for Wear OS! ⌚\n\n${hook}\n\n🔗 Get it via the link in our bio!\n\n#SamsungWatchFace #GalaxyWatchUltra #WearOS #TechTok #WatchFace`;
 
                 // Instagram Caption
-                instagramText = `📸 ${captionIntro} for Wear OS! ⌚✨\n\n${hook}\n\nUpgrade your wrist style today. \n\n🔗 Find the Google Play Store link in our bio!\n\n#SamsungWatchFace #GalaxyWatch8 #SamsungGalaxyWatch #WatchFaces #Samsung #WearOS #Smartwatch #WatchFaceDesign #SamsungWatch #AndroidWear`;
+                instagramText = `📸 ${captionIntro} for Wear OS! ⌚✨\n\n${hook}\n\nUpgrade your wrist style today. \n\n🔗 Comment "CUE" to get the direct link sent to your DMs automatically! 📩\n\n#SamsungWatchFace #GalaxyWatch8 #SamsungGalaxyWatch #WatchFaces #Samsung #WearOS #Smartwatch #WatchFaceDesign #SamsungWatch #AndroidWear`;
 
                 // Shorts Title
                 shortsTitleText = `Get ${(document.getElementById('is-new-face') && document.getElementById('is-new-face').checked) ? 'the new ' : ''}${name} on Wear OS! ⌚ #wearos #watch #watchfaceoftheday #watchfacedesign #watchface`;
@@ -2844,9 +2810,7 @@
             // Auto-expand visible textareas
             autoExpand(document.getElementById('res-text-' + currentSocialTab));
             autoExpand(document.getElementById('res-comment-' + currentSocialTab));
-            if (currentSocialTab === 'instagram') {
-                autoExpand(document.getElementById('res-dm-comment-instagram'));
-            }        }
+        }
     </script>
 
   <script>
