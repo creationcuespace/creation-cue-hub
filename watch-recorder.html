@@ -579,7 +579,11 @@
           body: JSON.stringify({ target, code })
         });
         const data = await res.json();
-        alert('Pairing Result:\n' + data.output);
+        if (data.success) {
+          alert('✅ Successfully Paired!\n\nOutput: ' + data.output + '\n\nNow enter your Wireless Debugging IP & Port into "Connect IP" above and click Connect.');
+        } else {
+          alert('Pairing Output:\n' + (data.output || data.error));
+        }
         refreshStatus();
       } catch (err) {
         alert('Failed to send pairing request: ' + err.message);

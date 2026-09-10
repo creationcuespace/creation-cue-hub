@@ -106,8 +106,20 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
             code = data.get("code", "").strip()
             if not target or not code:
                 return self._send_json({"error": "Missing IP/Port target or pairing code"}, 400)
-            res = subprocess.run([ADB_PATH, "pair", target, code], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-            output = (res.stdout + res.stderr).strip()
+            
+            # Send pairing code via STDIN (required by standard adb pair)
+            try:
+                p = subprocess.Popen([ADB_PATH, "pair", target], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                out, err = p.communicate(input=f"{code}\n", timeout=12)
+                output = (out + err).strip()
+            except Exception as e:
+                output = str(e)
+            
+            # Fallback for adb versions accepting positional arguments
+            if "usage: adb pair" in output.lower():
+                res = subprocess.run([ADB_PATH, "pair", target, code], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                output = (res.stdout + res.stderr).strip()
+
             paired = "successfully paired" in output.lower() or "paired to" in output.lower()
             return self._send_json({"success": paired, "output": output})
 
