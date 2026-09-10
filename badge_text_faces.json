@@ -16,17 +16,18 @@
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue136_plus.png",
       "play_store_url": "market://details?id=com.creation.cue136PLUSwatchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue136_plus"
     },
-	  {
+    {
       "id": "cue136",
       "title": "CUE136 (AD)",
       "badge_text": "🎀 FREE",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue136.png",
       "play_store_url": "market://details?id=com.creation.cue136watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue136_free"
     },
-	     {
+    {
       "id": "cue178",
       "title": "CUE178 (AD)",
       "badge_text": "NEW",
+      "release_date": "2026-07-06",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue178.png",
       "play_store_url": "market://details?id=com.creation.cue178watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue178"
     },
@@ -34,49 +35,50 @@
       "id": "cue179",
       "title": "CUE179 (AD)",
       "badge_text": "NEW",
+      "release_date": "2026-09-10",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue179.png",
       "play_store_url": "market://details?id=com.creation.cue179watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue179"
     },
-	  {
+    {
       "id": "cue003",
       "title": "CUE003 (AD)",
       "badge_text": "NEW",
+      "release_date": "2026-08-01",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue003.png",
       "play_store_url": "market://details?id=com.creation.cue003watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue003"
     },
-	     {
+    {
       "id": "cue177",
       "title": "CUE177 (AD)",
-      "badge_text": "NEW",
+      "release_date": "2026-05-18",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue177.png",
       "play_store_url": "market://details?id=com.creation.cue177watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue177"
     },
-
-	  {
+    {
       "id": "CUE116",
       "title": "CUE116 (AD)",
-	  "badge_text": "HOT",
+      "badge_text": "HOT",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue116.png",
       "play_store_url": "market://details?id=com.creation.cue116watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3DCUE116"
     },
-   {
+    {
       "id": "cue176",
       "title": "CUE176 (AD)",
-      "badge_text": "NEW",
+      "release_date": "2026-05-01",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue176.png",
       "play_store_url": "market://details?id=com.creation.cue176watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue176"
     },
-	  {
+    {
       "id": "cue174",
       "title": "CUE174 (AD)",
-      "badge_text": "NEW",
+      "release_date": "2026-04-15",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue174.png",
       "play_store_url": "market://details?id=com.creation.cue174watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue174"
     },
     {
       "id": "cue175",
       "title": "CUE175 (AD)",
-      "badge_text": "NEW",
+      "release_date": "2026-04-10",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue175.png",
       "play_store_url": "market://details?id=com.creation.cue175watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue175"
     },
