@@ -4464,7 +4464,7 @@
             }
 
             // Load from cache first
-            const cachedData = localStorage.getItem('cc_catalog_cache');
+            const cachedData = localStorage.getItem('cc_catalog_cache_v2');
             if (cachedData) {
                 try {
                     const data = JSON.parse(cachedData);
@@ -4490,7 +4490,7 @@
                 const data = await response.json();
                 
                 // Save to cache
-                localStorage.setItem('cc_catalog_cache', JSON.stringify(data));
+                localStorage.setItem('cc_catalog_cache_v2', JSON.stringify(data));
                 
                 watchFaces = data.watch_faces || data.faces || [];
                 populateHeroWatchFacesFromCatalog(watchFaces);
