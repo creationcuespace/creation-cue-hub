@@ -580,7 +580,12 @@
         });
         const data = await res.json();
         if (data.success) {
-          alert('✅ Successfully Paired!\n\nOutput: ' + data.output + '\n\nNow enter your Wireless Debugging IP & Port into "Connect IP" above and click Connect.');
+          // Extract IP from target e.g. 192.168.8.59 from 192.168.8.59:45597
+          const ipOnly = target.split(':')[0];
+          document.getElementById('ipInput').value = `${ipOnly}:`;
+          document.getElementById('ipInput').focus();
+          
+          alert('🎉 PAIRING SUCCESSFUL!\n\n1. Go back 1 screen on your watch to the main "Wireless Debugging" screen.\n2. Look at the "IP address & Port" shown there (e.g. ' + ipOnly + ':37379).\n3. Type that port into the "Connect IP" box above and click "Connect IP"!');
         } else {
           alert('Pairing Output:\n' + (data.output || data.error));
         }
