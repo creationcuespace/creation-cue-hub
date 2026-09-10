@@ -1,17 +1,29 @@
 {
-  "lastUpdated": "2026-09-09T01:33:06.040Z",
+  "lastUpdated": "2026-09-10T01:28:47.161Z",
   "reviews": [
     {
-      "reviewId": "e83f9518-5561-44f2-bbfc-6010fe13a870",
-      "packageName": "com.creation.cueinduswatchface",
-      "title": "Watch Face CUE Indus",
-      "wfId": "cueindus",
-      "authorName": "Jhon Doe",
-      "starRating": 4,
-      "reviewerLanguage": "es",
-      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
-      "text": "\tme gusta, pero porfavor, añadan más opciones de colores, para una calificación 5/5",
-      "lastModified": "2026-09-08T03:51:41.000Z"
+      "reviewId": "3157b4ef-9229-4ce9-bca4-4b17105fd339",
+      "packageName": "com.creation.cue003watchface",
+      "title": "Digital Watch Face CUE003",
+      "wfId": "cue003",
+      "authorName": "Miquel Anglarill",
+      "starRating": 3,
+      "reviewerLanguage": "ca",
+      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
+      "text": "\tGood, but moon phase doesn't work.",
+      "lastModified": "2026-09-09T14:25:42.000Z"
+    },
+    {
+      "reviewId": "4123a34e-43df-4821-9b5d-3024e4d72d70",
+      "packageName": "com.creation.cue166watchface",
+      "title": "Hybrid Watch Face CUE166",
+      "wfId": "cue166",
+      "authorName": "Miquel Anglarill",
+      "starRating": 3,
+      "reviewerLanguage": "ca",
+      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
+      "text": "\tGood, but you can't change moon phase and steps counter for anything else.",
+      "lastModified": "2026-09-09T14:24:37.000Z"
     }
   ]
 }

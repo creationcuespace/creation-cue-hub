@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-09T01:33:06.039Z",
+  "lastUpdated": "2026-09-10T01:28:47.159Z",
   "results": [
     {
       "id": "cue178",
@@ -394,12 +394,12 @@
     {
       "id": "cue140",
       "title": "CUE140",
-      "playStoreTitle": "Hybrid Watch Face CUE140",
+      "playStoreTitle": "CUE140",
       "packageName": "com.creation.cue140watchface",
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "cue139",
@@ -694,12 +694,12 @@
     {
       "id": "cue102",
       "title": "CUE102",
-      "playStoreTitle": "Digital Watch Face CUE102",
+      "playStoreTitle": "CUE102",
       "packageName": "com.creation.cue102watchface",
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "cue101",
@@ -1084,12 +1084,12 @@
     {
       "id": "ccwf022",
       "title": "CCWF022",
-      "playStoreTitle": "Ccwf022 Digital Watch Face",
+      "playStoreTitle": "CCWF022",
       "packageName": "com.watchfacestudio.ccwf022",
       "companionVersion": "Android 16 API & Design Update (v10000016)",
       "wearVersion": "Wear OS SDK 35 Update (v10000015)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "cc014",
@@ -1140,6 +1140,16 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+"
+    },
+    {
+      "id": "cue179",
+      "title": "CUE179",
+      "playStoreTitle": "CUE179",
+      "packageName": "com.creation.cue179watchface",
+      "companionVersion": "2 (6.1.0)",
+      "wearVersion": "10000001 (1.0.0)",
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     }
   ]
 }
