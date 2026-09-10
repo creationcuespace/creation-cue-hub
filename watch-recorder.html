@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <script>
+    if (location.hostname.includes("firebaseapp.com")) {
+      location.replace(location.href.replace(location.hostname, "creationcue.web.app"));
+    }
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Creation Cue | Watch Screen Recorder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Teko:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Crect width='24' height='24' rx='6' fill='%23e8281e'/%3E%3Ccircle cx='12' cy='12' r='6' fill='white'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23e8281e'/%3E%3C/svg%3E">
+
+  <style>
+    :root {
+      --red: #e8281e;
+      --blue: #1a3a6b;
+      --yellow: #f5c518;
+      --black: #141414;
+      --dark: #1e1e1e;
+      --mid: #2a2a2a;
+      --border: #3a3a3a;
+      --text: #f0f0f0;
+      --muted: #888;
+      --green: #4caf50;
+      --orange: #ff9800;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      width: 100%;
+      background: var(--dark);
+      border-bottom: 2px solid var(--yellow);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-mark {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+    }
+
+    .logo-mark span {
+      display: block;
+      width: 7px;
+      height: 22px;
+      border-radius: 1px;
+    }
+
+    .logo-mark .r { background: var(--red); }
+    .logo-mark .b { background: var(--blue); }
+    .logo-mark .y { background: var(--yellow); }
+
+    .header-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .header-title span { color: var(--yellow); }
+
+    .nav-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--yellow);
+    }
+
+    /* Main Layout */
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Connection Status Badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--muted);
+    }
+
+    .status-badge.online {
+      background: rgba(76, 175, 80, 0.15);
+      border-color: rgba(76, 175, 80, 0.4);
+      color: var(--green);
+    }
+
+    .status-badge.online .status-dot {
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    .status-badge.connecting {
+      background: rgba(255, 152, 0, 0.15);
+      border-color: rgba(255, 152, 0, 0.4);
+      color: var(--orange);
+    }
+
+    .status-badge.connecting .status-dot {
+      background: var(--orange);
+      animation: pulse 1s infinite;
+    }
+
+    .status-badge.offline {
+      background: rgba(232, 40, 30, 0.15);
+      border-color: rgba(232, 40, 30, 0.4);
+      color: var(--red);
+    }
+
+    .status-badge.offline .status-dot {
+      background: var(--red);
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+
+    /* Device Connection Row */
+    .connect-bar {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .input-field {
+      flex: 1;
+      min-width: 220px;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .input-field:focus {
+      border-color: var(--yellow);
+    }
+
+    select.input-field {
+      cursor: pointer;
+    }
+
+    .btn {
+      background: var(--mid);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn:hover:not(:disabled) {
+      background: #333;
+      border-color: var(--yellow);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-yellow {
+      background: var(--yellow);
+      color: var(--black);
+      border: none;
+    }
+
+    .btn-yellow:hover:not(:disabled) {
+      background: #e5b60e;
+      color: var(--black);
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: white;
+      border: none;
+    }
+
+    .btn-red:hover:not(:disabled) {
+      background: #c81f16;
+    }
+
+    /* Recording Control Area */
+    .recorder-hero {
+      text-align: center;
+      padding: 30px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .rec-btn-big {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 6px solid var(--mid);
+      background: var(--red);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 0 30px rgba(232, 40, 30, 0.4);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .rec-btn-big:hover:not(:disabled) {
+      transform: scale(1.06);
+      box-shadow: 0 0 45px rgba(232, 40, 30, 0.7);
+    }
+
+    .rec-btn-big.recording {
+      background: #111;
+      border-color: var(--red);
+      box-shadow: 0 0 40px rgba(232, 40, 30, 0.9);
+      animation: pulse-ring 1.5s infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(232, 40, 30, 0.7); }
+      70% { box-shadow: 0 0 0 25px rgba(232, 40, 30, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(232, 40, 30, 0); }
+    }
+
+    .rec-timer {
+      font-family: 'Teko', sans-serif;
+      font-size: 42px;
+      letter-spacing: 2px;
+      color: var(--muted);
+    }
+
+    .rec-timer.active {
+      color: var(--red);
+    }
+
+    .bridge-warning {
+      background: rgba(232, 40, 30, 0.1);
+      border: 1px solid var(--red);
+      padding: 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .bridge-warning code {
+      background: var(--mid);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--yellow);
+    }
+
+    /* Video Preview */
+    .video-card {
+      display: none;
+    }
+
+    .video-player {
+      width: 100%;
+      max-height: 400px;
+      background: black;
+      border-radius: 8px;
+      margin-top: 12px;
+    }
+
+    .actions-bar {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      justify-content: flex-end;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <a href="/" class="header-left">
+      <div class="logo-mark">
+        <span class="r"></span>
+        <span class="b"></span>
+        <span class="y"></span>
+      </div>
+      <div class="header-title">Creation <span>Cue</span></div>
+    </a>
+    <div style="display: flex; gap: 16px; align-items: center;">
+      <a href="/manage-coupons" class="nav-link">Manage Coupons</a>
+      <a href="/" class="nav-link">Home</a>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Connection Card -->
+    <div class="card">
+      <div class="card-title">
+        <span>Smartwatch Connection</span>
+        <div id="statusBadge" class="status-badge offline">
+          <span class="status-dot"></span>
+          <span id="statusText">Checking Bridge...</span>
+        </div>
+      </div>
+
+      <p style="font-size: 14px; color: var(--muted);">Connect your Galaxy Watch or Wear OS device via Wi-Fi ADB or USB to start recording.</p>
+
+      <div class="connect-bar">
+        <select id="deviceSelect" class="input-field">
+          <option value="">Searching for connected watches...</option>
+        </select>
+        <input type="text" id="ipInput" class="input-field" placeholder="192.168.2.36:37379" value="192.168.2.36:37379">
+        <button id="connectBtn" class="btn" onclick="connectDevice()">Connect IP</button>
+        <button class="btn" onclick="refreshStatus()">🔄 Refresh</button>
+      </div>
+
+      <!-- Warning if bridge is offline -->
+      <div id="bridgeNotice" class="bridge-warning" style="display: none; margin-top: 16px;">
+        ⚠️ <strong>Local Bridge Offline:</strong> To enable wireless ADB recording, double-click <code>Start Watch Bridge.bat</code> on your PC.
+      </div>
+    </div>
+
+    <!-- Recorder Card -->
+    <div class="card">
+      <div class="card-title">Watch Screen Recording</div>
+
+      <div class="recorder-hero">
+        <div id="timerDisplay" class="rec-timer">00:00</div>
+
+        <button id="recBtn" class="rec-btn-big" onclick="toggleRecording()" disabled>
+          <span id="recIcon" style="font-size: 28px;">🔴</span>
+          <span id="recLabel">REC</span>
+        </button>
+
+        <p id="recHint" style="font-size: 13px; color: var(--muted);">Connect watch to enable recording</p>
+      </div>
+    </div>
+
+    <!-- Output Video Card -->
+    <div id="videoCard" class="card video-card">
+      <div class="card-title">
+        <span>Recorded Video Preview</span>
+        <span id="videoFilename" style="font-size: 14px; color: var(--muted); font-weight: normal;"></span>
+      </div>
+
+      <video id="videoElement" class="video-player" controls></video>
+
+      <div class="actions-bar">
+        <button class="btn" onclick="openPCFolder()">📁 Open Folder on PC</button>
+        <a id="downloadBtn" href="#" download class="btn btn-yellow">⬇️ Download MP4</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const BRIDGE_API = 'http://localhost:37380';
+    let isRecording = false;
+    let timerInterval = null;
+    let startTime = 0;
+    let connectedDevices = [];
+
+    // Start auto polling bridge status
+    setInterval(refreshStatus, 2500);
+    refreshStatus();
+
+    async function refreshStatus() {
+      try {
+        const res = await fetch(`${BRIDGE_API}/api/status`, { method: 'GET' });
+        const data = await res.json();
+        
+        document.getElementById('bridgeNotice').style.display = 'none';
+        connectedDevices = data.devices || [];
+
+        // Update Device Selector
+        const select = document.getElementById('deviceSelect');
+        const currentVal = select.value;
+        select.innerHTML = '';
+
+        if (connectedDevices.length === 0) {
+          select.innerHTML = '<option value="">No watches connected</option>';
+          updateStatusBadge('connecting', 'Bridge Active - Waiting for Watch');
+          document.getElementById('recBtn').disabled = !data.recording.active;
+          document.getElementById('recHint').innerText = 'Please connect your watch via Wi-Fi IP or USB';
+        } else {
+          connectedDevices.forEach(dev => {
+            const opt = document.createElement('option');
+            opt.value = dev.id;
+            opt.innerText = `⌚ ${dev.model} (${dev.id})`;
+            select.appendChild(opt);
+          });
+          if (currentVal && connectedDevices.some(d => d.id === currentVal)) {
+            select.value = currentVal;
+          }
+          
+          const activeDev = select.value || connectedDevices[0].id;
+          updateStatusBadge('online', `Connected: ${activeDev}`);
+          document.getElementById('recBtn').disabled = false;
+          if (!isRecording) {
+            document.getElementById('recHint').innerText = 'Click big RED button to start recording watch screen';
+          }
+        }
+
+        // Sync recording state from bridge
+        if (data.recording && data.recording.active && !isRecording) {
+          setRecordingUI(true, data.recording.start_time);
+        } else if ((!data.recording || !data.recording.active) && isRecording) {
+          setRecordingUI(false);
+        }
+
+      } catch (err) {
+        document.getElementById('bridgeNotice').style.display = 'block';
+        updateStatusBadge('offline', 'Bridge Disconnected');
+        document.getElementById('recBtn').disabled = true;
+        document.getElementById('recHint').innerText = 'Run Start Watch Bridge.bat on your PC to connect';
+      }
+    }
+
+    function updateStatusBadge(state, text) {
+      const badge = document.getElementById('statusBadge');
+      const textElem = document.getElementById('statusText');
+      badge.className = `status-badge ${state}`;
+      textElem.innerText = text;
+    }
+
+    async function connectDevice() {
+      const ip = document.getElementById('ipInput').value.trim();
+      if (!ip) return alert('Please enter an IP address & Port (e.g. 192.168.2.36:37379)');
+
+      const btn = document.getElementById('connectBtn');
+      btn.disabled = true;
+      btn.innerText = 'Connecting...';
+
+      try {
+        const res = await fetch(`${BRIDGE_API}/api/connect`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ target: ip })
+        });
+        const data = await res.json();
+        alert(data.output);
+        refreshStatus();
+      } catch (err) {
+        alert('Could not connect to bridge: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Connect IP';
+      }
+    }
+
+    async function toggleRecording() {
+      if (!isRecording) {
+        // Start Recording
+        const selectedDevice = document.getElementById('deviceSelect').value;
+        try {
+          const res = await fetch(`${BRIDGE_API}/api/record/start`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ device_id: selectedDevice })
+          });
+          const data = await res.json();
+          if (data.success) {
+            setRecordingUI(true);
+          } else {
+            alert('Recording Error: ' + (data.error || 'Failed to start'));
+          }
+        } catch (err) {
+          alert('Failed to send start command: ' + err.message);
+        }
+      } else {
+        // Stop Recording
+        document.getElementById('recLabel').innerText = 'STOPPING...';
+        document.getElementById('recBtn').disabled = true;
+        
+        try {
+          const res = await fetch(`${BRIDGE_API}/api/record/stop`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+          });
+          const data = await res.json();
+          setRecordingUI(false);
+
+          if (data.success) {
+            showVideoResult(data.download_url, data.filename);
+          } else {
+            alert('Stop Error: Video file could not be pulled from watch.');
+          }
+        } catch (err) {
+          alert('Failed to stop recording: ' + err.message);
+          setRecordingUI(false);
+        }
+      }
+    }
+
+    function setRecordingUI(active, serverStartTime = null) {
+      isRecording = active;
+      const recBtn = document.getElementById('recBtn');
+      const recIcon = document.getElementById('recIcon');
+      const recLabel = document.getElementById('recLabel');
+      const recHint = document.getElementById('recHint');
+      const timerDisplay = document.getElementById('timerDisplay');
+
+      recBtn.disabled = false;
+
+      if (active) {
+        recBtn.classList.add('recording');
+        recIcon.innerText = '⏹️';
+        recLabel.innerText = 'STOP';
+        recHint.innerText = 'Recording in progress... Click STOP when done';
+        timerDisplay.classList.add('active');
+
+        startTime = serverStartTime ? (serverStartTime * 1000) : Date.now();
+        clearInterval(timerInterval);
+        timerInterval = setInterval(updateTimer, 500);
+      } else {
+        recBtn.classList.remove('recording');
+        recIcon.innerText = '🔴';
+        recLabel.innerText = 'REC';
+        recHint.innerText = 'Click big RED button to start recording watch screen';
+        timerDisplay.classList.remove('active');
+        timerDisplay.innerText = '00:00';
+        clearInterval(timerInterval);
+      }
+    }
+
+    function updateTimer() {
+      const elapsedSec = Math.floor((Date.now() - startTime) / 1000);
+      const mins = String(Math.floor(elapsedSec / 60)).padStart(2, '0');
+      const secs = String(elapsedSec % 60).padStart(2, '0');
+      document.getElementById('timerDisplay').innerText = `${mins}:${secs}`;
+    }
+
+    function showVideoResult(videoUrl, filename) {
+      const card = document.getElementById('videoCard');
+      const video = document.getElementById('videoElement');
+      const downloadBtn = document.getElementById('downloadBtn');
+      document.getElementById('videoFilename').innerText = filename;
+
+      video.src = videoUrl;
+      downloadBtn.href = videoUrl;
+      downloadBtn.download = filename;
+
+      card.style.display = 'block';
+      card.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    async function openPCFolder() {
+      try {
+        await fetch(`${BRIDGE_API}/api/open-folder`, { method: 'POST' });
+      } catch (e) {
+        alert('Could not open folder');
+      }
+    }
+  </script>
+</body>
+
+</html>
