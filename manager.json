@@ -9,15 +9,16 @@
       "id": "cue179",
       "title": "CUE179",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue179.png",
-      "play_store_url": "market://details?id=com.creation.cue179watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue179",
+      "play_store_url": "https://play.google.com/store/apps/details?id=com.creation.cue179watchface",
       "description_en": "This is Wear OS watch face CUE179\nBold dual-color digital display, circuit board styling • Steps only or Steps + Distance (km/mi) or off • HR display on/off • 2 short custom complications and 1 long text complication • Multiple color themes • Power flow animation (on/off).",
       "description_de": "",
       "filters": [
-        "NEW"
+        "COMING SOON"
       ],
       "type": "digital",
       "is_free": false,
-      "badge_text": "NEW"
+      "is_coming_soon": true,
+      "badge_text": "COMING SOON"
     },
     {
       "id": "cue177",
