@@ -411,6 +411,24 @@
         <button class="btn" onclick="refreshStatus()">🔄 Refresh</button>
       </div>
 
+      <!-- Wireless Pairing Section -->
+      <div style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px;">
+        <div style="font-weight: 600; font-size: 14px; color: var(--yellow); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+          <span>🔑 Need Wireless Pairing? (Wear OS 3+)</span>
+          <button style="background: none; border: none; color: var(--muted); cursor: pointer; font-size: 13px;" onclick="togglePairingHelp()">ℹ️ How to pair?</button>
+        </div>
+        <div id="pairingHelp" style="display: none; background: var(--mid); padding: 12px; border-radius: 8px; font-size: 13px; color: #ccc; margin-bottom: 12px; line-height: 1.5;">
+          1. On your watch, go to <strong>Settings &gt; Developer options &gt; Wireless debugging</strong>.<br>
+          2. Tap <strong>"Pair new device"</strong>.<br>
+          3. Enter the <strong>Pairing IP &amp; Port</strong> and <strong>6-digit Pairing Code</strong> shown on your watch screen below, then click <strong>Pair Watch</strong>.
+        </div>
+        <div class="connect-bar">
+          <input type="text" id="pairIpInput" class="input-field" placeholder="Pairing IP:Port (e.g. 192.168.2.36:38139)">
+          <input type="text" id="pairCodeInput" class="input-field" placeholder="6-Digit Code (e.g. 123456)" style="max-width: 200px;">
+          <button id="pairBtn" class="btn btn-yellow" onclick="pairDevice()">🔑 Pair Watch</button>
+        </div>
+      </div>
+
       <!-- Warning if bridge is offline -->
       <div id="bridgeNotice" class="bridge-warning" style="display: none; margin-top: 16px;">
         ⚠️ <strong>Local Bridge Offline:</strong> To enable wireless ADB recording, double-click <code>Start Watch Bridge.bat</code> on your PC.
@@ -543,6 +561,37 @@
         btn.disabled = false;
         btn.innerText = 'Connect IP';
       }
+    }
+
+    async function pairDevice() {
+      const target = document.getElementById('pairIpInput').value.trim();
+      const code = document.getElementById('pairCodeInput').value.trim();
+      if (!target || !code) return alert('Please enter both the Pairing IP:Port and 6-digit Pairing Code from your watch.');
+
+      const btn = document.getElementById('pairBtn');
+      btn.disabled = true;
+      btn.innerText = 'Pairing...';
+
+      try {
+        const res = await fetch(`${BRIDGE_API}/api/pair`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ target, code })
+        });
+        const data = await res.json();
+        alert('Pairing Result:\n' + data.output);
+        refreshStatus();
+      } catch (err) {
+        alert('Failed to send pairing request: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '🔑 Pair Watch';
+      }
+    }
+
+    function togglePairingHelp() {
+      const elem = document.getElementById('pairingHelp');
+      elem.style.display = elem.style.display === 'none' ? 'block' : 'none';
     }
 
     async function toggleRecording() {

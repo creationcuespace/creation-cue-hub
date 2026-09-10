@@ -101,7 +101,17 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
         parsed = urlparse(self.path)
         path = parsed.path
 
-        if path == "/api/connect":
+        if path == "/api/pair":
+            target = data.get("target", "").strip()
+            code = data.get("code", "").strip()
+            if not target or not code:
+                return self._send_json({"error": "Missing IP/Port target or pairing code"}, 400)
+            res = subprocess.run([ADB_PATH, "pair", target, code], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            output = (res.stdout + res.stderr).strip()
+            paired = "successfully paired" in output.lower() or "paired to" in output.lower()
+            return self._send_json({"success": paired, "output": output})
+
+        elif path == "/api/connect":
             target = data.get("target", "").strip()
             if not target:
                 return self._send_json({"error": "Missing IP/Address target"}, 400)
