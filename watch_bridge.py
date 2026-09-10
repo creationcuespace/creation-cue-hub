@@ -190,29 +190,43 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
             local_file = CURRENT_RECORDING["local_file"]
             filename = CURRENT_RECORDING["filename"]
 
-            # Stop screenrecord on device gracefully using pkill
-            cmd_kill = [ADB_PATH]
+            # Step 1: Find PIDs of screenrecord on the watch
+            cmd_pid = [ADB_PATH]
             if device_id:
-                cmd_kill.extend(["-s", device_id])
-            cmd_kill.extend(["shell", "pkill", "-2", "screenrecord"])
-            subprocess.run(cmd_kill, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                cmd_pid.extend(["-s", device_id])
+            cmd_pid.extend(["shell", "pidof", "screenrecord"])
+            res_pid = subprocess.run(cmd_pid, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            pids = res_pid.stdout.strip().split()
 
+            # Step 2: Send SIGINT (kill -2) to screenrecord PID on watch
+            for pid in pids:
+                if pid.isdigit():
+                    cmd_kill = [ADB_PATH]
+                    if device_id:
+                        cmd_kill.extend(["-s", device_id])
+                    cmd_kill.extend(["shell", "kill", "-2", pid])
+                    subprocess.run(cmd_kill, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+            # Step 3: Wait gracefully for screenrecord process & local adb to flush moov atom
             if RECORDING_PROCESS:
                 try:
-                    RECORDING_PROCESS.terminate()
+                    RECORDING_PROCESS.wait(timeout=6)
                 except Exception:
-                    pass
+                    try:
+                        RECORDING_PROCESS.terminate()
+                    except Exception:
+                        pass
 
-            time.sleep(1.5) # Wait for file write completion on device
+            time.sleep(1.0)
 
-            # Pull recorded file to local machine
+            # Step 4: Pull recorded MP4 file
             cmd_pull = [ADB_PATH]
             if device_id:
                 cmd_pull.extend(["-s", device_id])
             cmd_pull.extend(["pull", remote_file, local_file])
             res_pull = subprocess.run(cmd_pull, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-            # Cleanup file from watch /sdcard
+            # Step 5: Clean up file on watch
             cmd_rm = [ADB_PATH]
             if device_id:
                 cmd_rm.extend(["-s", device_id])
