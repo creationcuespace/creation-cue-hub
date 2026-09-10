@@ -6,6 +6,20 @@
   },
   "watch_faces": [
     {
+      "id": "cue179",
+      "title": "CUE179",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue179.png",
+      "play_store_url": "market://details?id=com.creation.cue179watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue179",
+      "description_en": "This is Wear OS watch face CUE179\nBold dual-color digital display, circuit board styling • Steps only or Steps + Distance (km/mi) or off • HR display on/off • 2 short custom complications and 1 long text complication • Multiple color themes • Power flow animation (on/off).",
+      "description_de": "",
+      "filters": [
+        "NEW"
+      ],
+      "type": "digital",
+      "is_free": false,
+      "badge_text": "NEW"
+    },
+    {
       "id": "cue177",
       "title": "CUE177",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue177.png",
@@ -18,40 +32,6 @@
       "type": "analog",
       "is_free": false,
       "badge_text": "NEW"
-    },
-    {
-      "id": "cue179",
-      "title": "CUE179",
-      "subtitle": "Futuristic Cyber Digital Watch Face",
-      "description": "Futuristic circuit board design featuring dual-color bold typography, 2 short text and 1 long text custom complications, heart rate monitor, and custom progress arcs.",
-      "description_en": "Futuristic circuit board design featuring dual-color bold typography, 2 short text and 1 long text custom complications, heart rate monitor, and custom progress arcs.",
-      "image_url": "images/cue179.png",
-      "play_store_url": "https://play.google.com/store/apps/details?id=com.creation.cue179watchface",
-      "package_name": "com.creation.cue179watchface",
-      "is_new": false,
-      "badge_text": "COMING SOON",
-      "category": "Digital",
-      "tags": [
-        "Digital",
-        "Cyber",
-        "Circuit",
-        "Futuristic",
-        "Battery",
-        "Complications"
-      ],
-      "price": "Free",
-      "downloads": "Coming Soon",
-      "rating": 5.0,
-      "is_coming_soon": true,
-      "type": "Digital",
-      "filters": [
-        "Digital",
-        "Cyber",
-        "Circuit",
-        "Futuristic",
-        "Battery",
-        "Complications"
-      ]
     },
     {
       "id": "cue178",
