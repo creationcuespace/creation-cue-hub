@@ -1331,7 +1331,10 @@
           html += `
             <div class="claim-row" style="padding:10px; border-bottom:1px solid var(--border);">
               <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
-                <span class="claim-time" style="font-size:12px;">Token: <span style="font-family:monospace; color:var(--text); font-weight:600;">${tokenId.substring(0, 8)}...</span></span>
+                <span class="claim-time" style="font-size:12px;">
+                  Token: <span style="font-family:monospace; color:var(--text); font-weight:600;">${tokenId.substring(0, 8)}...</span>
+                  <span style="color:var(--muted); margin-left:6px;">(${token.createdAt ? formatDateTime(token.createdAt, true) : 'Unknown date'})</span>
+                </span>
                 <span style="font-size:11px;">${statusHtml}</span>
               </div>
               <div style="display:flex; gap:6px; margin-top:6px; align-items:center;">
