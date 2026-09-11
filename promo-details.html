@@ -1368,6 +1368,7 @@
       }
       db.ref('one_time_tokens/' + tokenId).remove().then(function() {
         showToast("Link deleted.");
+        loadOneTimeLinks();
       });
     };
 
@@ -1389,6 +1390,7 @@
         createdAt: firebase.database.ServerValue.TIMESTAMP
       }).then(function() {
         showToast("One-time link generated!");
+        loadOneTimeLinks();
       });
     });
 
@@ -1404,6 +1406,7 @@
       }
       db.ref().update(updates).then(function() {
         showToast("5 Bulk one-time links created!");
+        loadOneTimeLinks();
       });
     });
 
