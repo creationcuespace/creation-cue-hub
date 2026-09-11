@@ -349,24 +349,91 @@
       color: var(--yellow);
     }
 
-    /* Video Preview */
-    .video-card {
-      display: none;
-    }
-
-    .video-player {
-      width: 100%;
-      max-height: 400px;
-      background: black;
-      border-radius: 8px;
-      margin-top: 12px;
-    }
-
-    .actions-bar {
+    /* Toast Popups */
+    .toast-container {
+      position: fixed;
+      top: 80px;
+      right: 24px;
+      z-index: 9999;
       display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: #222;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
       gap: 12px;
-      margin-top: 16px;
-      justify-content: flex-end;
+      pointer-events: auto;
+      animation: slideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: opacity 0.4s, transform 0.4s;
+    }
+
+    .toast.toast-success { border-left: 4px solid var(--green); }
+    .toast.toast-error { border-left: 4px solid var(--red); }
+    .toast.toast-info { border-left: 4px solid var(--yellow); }
+
+    .toast.fade-out {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Segmented IP Input */
+    .ip-box-group {
+      display: inline-flex;
+      align-items: center;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 4px 10px;
+      gap: 4px;
+      flex-wrap: nowrap;
+    }
+
+    .ip-box-group:focus-within {
+      border-color: var(--yellow);
+    }
+
+    .ip-box {
+      width: 40px;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
+    }
+
+    .ip-dot {
+      color: var(--muted);
+      font-weight: bold;
+      user-select: none;
+    }
+
+    .port-box {
+      width: 68px;
+      background: transparent;
+      border: none;
+      color: var(--yellow);
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
     }
   </style>
 </head>
@@ -403,10 +470,22 @@
       <p style="font-size: 14px; color: var(--muted);">Connect your Galaxy Watch or Wear OS device via Wi-Fi ADB or USB to start recording.</p>
 
       <div class="connect-bar">
-        <select id="deviceSelect" class="input-field">
+        <select id="deviceSelect" class="input-field" style="max-width: 260px;">
           <option value="">Searching for connected watches...</option>
         </select>
-        <input type="text" id="ipInput" class="input-field" placeholder="192.168.2.36:37379" value="192.168.2.36:37379">
+        
+        <div class="ip-box-group" id="connGroup">
+          <input type="text" maxlength="3" class="ip-box" id="conn1" value="192" placeholder="192" oninput="handleIpInput(this, 'conn2', '')" onpaste="handleIpPaste(event, 'conn')">
+          <span class="ip-dot">.</span>
+          <input type="text" maxlength="3" class="ip-box" id="conn2" value="168" placeholder="168" oninput="handleIpInput(this, 'conn3', 'conn1')" onpaste="handleIpPaste(event, 'conn')">
+          <span class="ip-dot">.</span>
+          <input type="text" maxlength="3" class="ip-box" id="conn3" value="8" placeholder="8" oninput="handleIpInput(this, 'conn4', 'conn2')" onpaste="handleIpPaste(event, 'conn')">
+          <span class="ip-dot">.</span>
+          <input type="text" maxlength="3" class="ip-box" id="conn4" value="59" placeholder="59" oninput="handleIpInput(this, 'connPort', 'conn3')" onpaste="handleIpPaste(event, 'conn')">
+          <span class="ip-dot">:</span>
+          <input type="text" maxlength="5" class="port-box" id="connPort" placeholder="37673" onpaste="handleIpPaste(event, 'conn')">
+        </div>
+
         <button id="connectBtn" class="btn" onclick="connectDevice()">Connect IP</button>
         <button class="btn" onclick="disconnectDevice()">🔌 Disconnect</button>
         <button class="btn" onclick="refreshStatus()">🔄 Refresh</button>
@@ -424,8 +503,18 @@
           3. Enter the <strong>Pairing IP &amp; Port</strong> and <strong>6-digit Pairing Code</strong> shown on your watch screen below, then click <strong>Pair Watch</strong>.
         </div>
         <div class="connect-bar">
-          <input type="text" id="pairIpInput" class="input-field" placeholder="Pairing IP:Port (e.g. 192.168.2.36:38139)">
-          <input type="text" id="pairCodeInput" class="input-field" placeholder="6-Digit Code (e.g. 123456)" style="max-width: 200px;">
+          <div class="ip-box-group" id="pairGroup">
+            <input type="text" maxlength="3" class="ip-box" id="pair1" value="192" placeholder="192" oninput="handleIpInput(this, 'pair2', '')" onpaste="handleIpPaste(event, 'pair')">
+            <span class="ip-dot">.</span>
+            <input type="text" maxlength="3" class="ip-box" id="pair2" value="168" placeholder="168" oninput="handleIpInput(this, 'pair3', 'pair1')" onpaste="handleIpPaste(event, 'pair')">
+            <span class="ip-dot">.</span>
+            <input type="text" maxlength="3" class="ip-box" id="pair3" value="8" placeholder="8" oninput="handleIpInput(this, 'pair4', 'pair2')" onpaste="handleIpPaste(event, 'pair')">
+            <span class="ip-dot">.</span>
+            <input type="text" maxlength="3" class="ip-box" id="pair4" value="59" placeholder="59" oninput="handleIpInput(this, 'pairPort', 'pair3')" onpaste="handleIpPaste(event, 'pair')">
+            <span class="ip-dot">:</span>
+            <input type="text" maxlength="5" class="port-box" id="pairPort" placeholder="45597" onpaste="handleIpPaste(event, 'pair')">
+          </div>
+          <input type="text" id="pairCodeInput" class="input-field" placeholder="6-Digit Code (123456)" style="max-width: 170px;">
           <button id="pairBtn" class="btn btn-yellow" onclick="pairDevice()">🔑 Pair Watch</button>
         </div>
       </div>
@@ -475,6 +564,64 @@
     let timerInterval = null;
     let startTime = 0;
     let connectedDevices = [];
+
+    function showToast(message, type = 'info', duration = 3500) {
+      let container = document.getElementById('toastContainer');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+      }
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.innerHTML = `<span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.add('fade-out');
+        setTimeout(() => toast.remove(), 400);
+      }, duration);
+    }
+
+    function getIpValue(prefix) {
+      const o1 = document.getElementById(`${prefix}1`).value.trim();
+      const o2 = document.getElementById(`${prefix}2`).value.trim();
+      const o3 = document.getElementById(`${prefix}3`).value.trim();
+      const o4 = document.getElementById(`${prefix}4`).value.trim();
+      const port = document.getElementById(`${prefix}Port`).value.trim();
+      if (!o1 || !o2 || !o3 || !o4 || !port) return '';
+      return `${o1}.${o2}.${o3}.${o4}:${port}`;
+    }
+
+    function setIpValue(prefix, fullIpStr) {
+      if (!fullIpStr) return;
+      const parts = fullIpStr.split(':');
+      const ipParts = parts[0].split('.');
+      if (ipParts[0]) document.getElementById(`${prefix}1`).value = ipParts[0];
+      if (ipParts[1]) document.getElementById(`${prefix}2`).value = ipParts[1];
+      if (ipParts[2]) document.getElementById(`${prefix}3`).value = ipParts[2];
+      if (ipParts[3]) document.getElementById(`${prefix}4`).value = ipParts[3];
+      if (parts[1]) document.getElementById(`${prefix}Port`).value = parts[1];
+    }
+
+    function handleIpInput(elem, nextId, prevId) {
+      if (elem.value.includes('.') || elem.value.includes(':')) {
+        elem.value = elem.value.replace(/[\.\:]/g, '');
+        if (nextId) document.getElementById(nextId).focus();
+        return;
+      }
+      elem.value = elem.value.replace(/\D/g, '');
+      if (elem.value.length >= 3 && nextId) {
+        document.getElementById(nextId).focus();
+      }
+    }
+
+    function handleIpPaste(event, prefix) {
+      event.preventDefault();
+      const pasted = (event.clipboardData || window.clipboardData).getData('text').trim();
+      setIpValue(prefix, pasted);
+    }
 
     // Start auto polling bridge status
     setInterval(refreshStatus, 2500);
@@ -540,8 +687,8 @@
     }
 
     async function connectDevice() {
-      const ip = document.getElementById('ipInput').value.trim();
-      if (!ip) return alert('Please enter an IP address & Port (e.g. 192.168.2.36:37379)');
+      const ip = getIpValue('conn');
+      if (!ip) return showToast('Please enter all 4 IP numbers and the Port', 'error');
 
       const btn = document.getElementById('connectBtn');
       btn.disabled = true;
@@ -554,10 +701,11 @@
           body: JSON.stringify({ target: ip })
         });
         const data = await res.json();
-        alert(data.output);
+        const connected = data.success || (data.output && (data.output.includes('connected to') || data.output.includes('already connected')));
+        showToast(data.output, connected ? 'success' : 'error', 4000);
         refreshStatus();
       } catch (err) {
-        alert('Could not connect to bridge: ' + err.message);
+        showToast('Could not connect to bridge: ' + err.message, 'error');
       } finally {
         btn.disabled = false;
         btn.innerText = 'Connect IP';
@@ -572,16 +720,17 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ target: selectedDevice || '' })
         });
+        showToast('Disconnected device', 'info');
         refreshStatus();
       } catch (err) {
-        alert('Could not disconnect: ' + err.message);
+        showToast('Could not disconnect: ' + err.message, 'error');
       }
     }
 
     async function pairDevice() {
-      const target = document.getElementById('pairIpInput').value.trim();
+      const target = getIpValue('pair');
       const code = document.getElementById('pairCodeInput').value.trim();
-      if (!target || !code) return alert('Please enter both the Pairing IP:Port and 6-digit Pairing Code from your watch.');
+      if (!target || !code) return showToast('Please enter the 4 IP numbers, Port, and 6-digit Code from your watch', 'error');
 
       const btn = document.getElementById('pairBtn');
       btn.disabled = true;
@@ -595,18 +744,16 @@
         });
         const data = await res.json();
         if (data.success) {
-          // Extract IP from target e.g. 192.168.8.59 from 192.168.8.59:45597
           const ipOnly = target.split(':')[0];
-          document.getElementById('ipInput').value = `${ipOnly}:`;
-          document.getElementById('ipInput').focus();
-          
-          alert('🎉 PAIRING SUCCESSFUL!\n\n1. Go back 1 screen on your watch to the main "Wireless Debugging" screen.\n2. Look at the "IP address & Port" shown there (e.g. ' + ipOnly + ':37379).\n3. Type that port into the "Connect IP" box above and click "Connect IP"!');
+          setIpValue('conn', `${ipOnly}:`);
+          document.getElementById('connPort').focus();
+          showToast(`🎉 PAIRING SUCCESSFUL! Now enter your Connection Port in the yellow box above and click Connect IP`, 'success', 6000);
         } else {
-          alert('Pairing Output:\n' + (data.output || data.error));
+          showToast('Pairing Error: ' + (data.output || data.error), 'error', 5000);
         }
         refreshStatus();
       } catch (err) {
-        alert('Failed to send pairing request: ' + err.message);
+        showToast('Failed to send pairing request: ' + err.message, 'error');
       } finally {
         btn.disabled = false;
         btn.innerText = '🔑 Pair Watch';
@@ -631,11 +778,12 @@
           const data = await res.json();
           if (data.success) {
             setRecordingUI(true);
+            showToast('🔴 Recording started!', 'success');
           } else {
-            alert('Recording Error: ' + (data.error || 'Failed to start'));
+            showToast('Recording Error: ' + (data.error || 'Failed to start'), 'error');
           }
         } catch (err) {
-          alert('Failed to send start command: ' + err.message);
+          showToast('Failed to send start command: ' + err.message, 'error');
         }
       } else {
         // Stop Recording
@@ -652,11 +800,12 @@
 
           if (data.success) {
             showVideoResult(data.download_url, data.filename);
+            showToast('✅ Video saved and ready!', 'success');
           } else {
-            alert('Stop Error: Video file could not be pulled from watch.');
+            showToast('Stop Error: Video file could not be pulled from watch.', 'error');
           }
         } catch (err) {
-          alert('Failed to stop recording: ' + err.message);
+          showToast('Failed to stop recording: ' + err.message, 'error');
           setRecordingUI(false);
         }
       }
