@@ -37,7 +37,7 @@ def find_adb():
     return "adb"
 
 ADB_PATH = find_adb()
-TEMP_DIR = os.path.join(os.path.expanduser("~"), "WatchRecordings")
+TEMP_DIR = os.path.join(os.path.expanduser("~"), "Downloads")
 os.makedirs(TEMP_DIR, exist_ok=True)
 
 class ADBBridgeHandler(BaseHTTPRequestHandler):

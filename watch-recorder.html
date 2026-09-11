@@ -572,9 +572,8 @@
 
       <video id="videoElement" class="video-player" controls></video>
 
-      <div class="actions-bar">
-        <button class="btn" onclick="openPCFolder()">📁 Open Folder on PC</button>
-        <a id="downloadBtn" href="#" download class="btn btn-yellow">⬇️ Download MP4</a>
+      <div class="actions-bar" style="justify-content: center;">
+        <button class="btn btn-yellow" onclick="openPCFolder()">📁 Open Downloads Folder on PC</button>
       </div>
     </div>
 
@@ -874,12 +873,9 @@
     function showVideoResult(videoUrl, filename) {
       const card = document.getElementById('videoCard');
       const video = document.getElementById('videoElement');
-      const downloadBtn = document.getElementById('downloadBtn');
       document.getElementById('videoFilename').innerText = filename;
 
       video.src = videoUrl;
-      downloadBtn.href = videoUrl;
-      downloadBtn.download = filename;
 
       card.style.display = 'block';
       card.scrollIntoView({ behavior: 'smooth' });
