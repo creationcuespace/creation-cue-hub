@@ -273,6 +273,17 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
                 parts = line.split()
                 if len(parts) >= 2 and parts[1] == "device":
                     dev_id = parts[0]
+
+                    # Verify active responsiveness to auto-prune stale cached connections
+                    try:
+                        ping_res = subprocess.run([ADB_PATH, "-s", dev_id, "shell", "echo", "1"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=1.5)
+                        if ping_res.returncode != 0 or "closed" in ping_res.stderr.lower():
+                            subprocess.run([ADB_PATH, "disconnect", dev_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                            continue
+                    except Exception:
+                        subprocess.run([ADB_PATH, "disconnect", dev_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                        continue
+
                     model = "Smartwatch"
                     for p in parts[2:]:
                         if p.startswith("model:"):

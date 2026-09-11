@@ -408,6 +408,7 @@
         </select>
         <input type="text" id="ipInput" class="input-field" placeholder="192.168.2.36:37379" value="192.168.2.36:37379">
         <button id="connectBtn" class="btn" onclick="connectDevice()">Connect IP</button>
+        <button class="btn" onclick="disconnectDevice()">🔌 Disconnect</button>
         <button class="btn" onclick="refreshStatus()">🔄 Refresh</button>
       </div>
 
@@ -560,6 +561,20 @@
       } finally {
         btn.disabled = false;
         btn.innerText = 'Connect IP';
+      }
+    }
+
+    async function disconnectDevice() {
+      try {
+        const selectedDevice = document.getElementById('deviceSelect').value;
+        const res = await fetch(`${BRIDGE_API}/api/disconnect`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ target: selectedDevice || '' })
+        });
+        refreshStatus();
+      } catch (err) {
+        alert('Could not disconnect: ' + err.message);
       }
     }
 
