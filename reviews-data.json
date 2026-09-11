@@ -1,29 +1,29 @@
 {
-  "lastUpdated": "2026-09-10T01:28:47.161Z",
+  "lastUpdated": "2026-09-11T01:29:22.461Z",
   "reviews": [
     {
-      "reviewId": "3157b4ef-9229-4ce9-bca4-4b17105fd339",
-      "packageName": "com.creation.cue003watchface",
-      "title": "Digital Watch Face CUE003",
-      "wfId": "cue003",
-      "authorName": "Miquel Anglarill",
-      "starRating": 3,
-      "reviewerLanguage": "ca",
-      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
-      "text": "\tGood, but moon phase doesn't work.",
-      "lastModified": "2026-09-09T14:25:42.000Z"
+      "reviewId": "c633050d-4313-4b54-baa6-62464ea07f97",
+      "packageName": "com.creation.cue179watchface",
+      "title": "Watch Face CUE179",
+      "wfId": "cue179",
+      "authorName": "Emanuel Bruno Rocha Dias",
+      "starRating": 5,
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "d2x (Galaxy Note10+ 5G)",
+      "text": "\tBeautifull watch face",
+      "lastModified": "2026-09-10T20:22:17.000Z"
     },
     {
-      "reviewId": "4123a34e-43df-4821-9b5d-3024e4d72d70",
-      "packageName": "com.creation.cue166watchface",
-      "title": "Hybrid Watch Face CUE166",
-      "wfId": "cue166",
-      "authorName": "Miquel Anglarill",
-      "starRating": 3,
-      "reviewerLanguage": "ca",
-      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
-      "text": "\tGood, but you can't change moon phase and steps counter for anything else.",
-      "lastModified": "2026-09-09T14:24:37.000Z"
+      "reviewId": "93615983-e96b-4d8a-99c2-00c6a8c854b6",
+      "packageName": "com.creation.cue174watchface",
+      "title": "Digital Watch Face CUE174",
+      "wfId": "cue174",
+      "authorName": "Emanuel Bruno Rocha Dias",
+      "starRating": 5,
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "d2x (Galaxy Note10+ 5G)",
+      "text": "\tNice watchface",
+      "lastModified": "2026-09-10T20:21:42.000Z"
     }
   ]
 }
