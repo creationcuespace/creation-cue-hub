@@ -1195,6 +1195,7 @@
 
         db.ref().update(updates).then(function() {
           showToast("Configuration saved!");
+          setTimeout(function() { window.location.reload(); }, 600);
         }).catch(function(err) {
           alert("Save failed: " + err.message);
         });

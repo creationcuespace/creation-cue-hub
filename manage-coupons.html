@@ -1424,6 +1424,7 @@ AAAA-BBBB-CCCC"></textarea>
           document.getElementById('promo-expiry-text').value = '';
           // Collapse the form after creation
           if (typeof toggleCreateForm === 'function') toggleCreateForm(false);
+          loadPromotions();
         }).catch(function(err) {
           console.error(err);
           alert("Error creating promotion. Make sure your database rules are deployed. Error: " + err.message);
