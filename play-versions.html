@@ -4137,15 +4137,19 @@
       const searchBox = document.getElementById('dash-filter-box');
       if (searchBox) {
         searchBox.setAttribute('name', 'search_' + Math.random().toString(36).substring(2, 10));
-        setInterval(() => {
+        
+        // Trap Chrome autofill, but shut down the trap after 3 seconds to save memory
+        const autofillTrap = setInterval(() => {
           if (searchBox.value.includes('creationcuespace/creation-cue-hub')) {
             searchBox.value = '';
             if (typeof renderDashboard === 'function') renderDashboard();
           }
         }, 100);
+
         setTimeout(() => {
+          clearInterval(autofillTrap);
           searchBox.removeAttribute('readonly');
-        }, 100);
+        }, 3000);
       }
 
       const customIn = document.getElementById('task-custom-input');
