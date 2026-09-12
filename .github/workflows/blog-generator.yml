@@ -2,7 +2,7 @@ name: Automated Blog Post Draft Generator
 
 on:
   schedule:
-    # Run twice a week: Tuesdays and Thursdays at 7:00 AM UTC (10:00 AM Greece/EEST)
+    # Run Thursdays at 7:00 AM UTC (10:00 AM Greece/EEST)
     - cron: '0 7 * * 4'
   workflow_dispatch: {}
 
@@ -23,12 +23,26 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Check bi-weekly schedule
+        id: check_schedule
+        run: |
+          WEEK_NUM=$(date +%V)
+          if [ $((10#$WEEK_NUM % 2)) -ne 0 ] && [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+            echo "Skipping generation: Week number $WEEK_NUM is odd (runs bi-weekly on even weeks)."
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "Proceeding: Week number $WEEK_NUM is even."
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Run blog generation script
+        if: steps.check_schedule.outputs.skip != 'true'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: node scripts/blog-generate.js
 
       - name: Commit and Push Draft to Main
+        if: steps.check_schedule.outputs.skip != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_TERMINAL_PROMPT: 0
