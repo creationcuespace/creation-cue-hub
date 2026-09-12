@@ -2214,6 +2214,45 @@
       <button class="details-close-btn" onclick="closeDetailsPanel()" title="Close Details">✕</button>
     </div>
     <div class="details-body">
+      <!-- Play Store Link -->
+      <a id="details-open-playstore" href="#" target="_blank"
+         style="display:flex; align-items:center; justify-content:center; gap:6px;
+                background: rgba(33,150,243,0.12); border: 1px solid rgba(33,150,243,0.35);
+                color: #64b5f6; font-size:14px; font-weight:700; padding:12px;
+                border-radius:8px; text-decoration:none; transition: background 0.15s, border-color 0.15s;
+                letter-spacing:0.5px; width: 100%; margin-bottom: 2px;"
+         onmouseover="this.style.background='rgba(33,150,243,0.22)';this.style.borderColor='rgba(33,150,243,0.6)'"
+         onmouseout="this.style.background='rgba(33,150,243,0.12)';this.style.borderColor='rgba(33,150,243,0.35)'">
+        ▶️ Open in Google Play Store
+      </a>
+      
+      <!-- Quick Open in Other Tools -->
+      <div class="details-section" style="margin-top: 0; padding-top: 0;">
+        <div class="details-section-title">Quick Open in Other Tools</div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; margin-bottom: 8px;">
+          <a id="details-open-coupons" href="#" target="_blank"
+            style="flex:1; min-width:120px; display:flex; align-items:center; justify-content:center; gap:6px;
+                   background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.35);
+                   color: #a78bfa; font-size:12px; font-weight:600; padding:9px 12px;
+                   border-radius:6px; text-decoration:none; transition: background 0.15s, border-color 0.15s;
+                   letter-spacing:0.3px;"
+            onmouseover="this.style.background='rgba(124,58,237,0.22)';this.style.borderColor='rgba(124,58,237,0.6)'"
+            onmouseout="this.style.background='rgba(124,58,237,0.12)';this.style.borderColor='rgba(124,58,237,0.35)'">
+            🎟️ Open in Coupons
+          </a>
+          <a id="details-open-social" href="#" target="_blank"
+            style="flex:1; min-width:120px; display:flex; align-items:center; justify-content:center; gap:6px;
+                   background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.25);
+                   color: var(--yellow); font-size:12px; font-weight:600; padding:9px 12px;
+                   border-radius:6px; text-decoration:none; transition: background 0.15s, border-color 0.15s;
+                   letter-spacing:0.3px;"
+            onmouseover="this.style.background='rgba(245,197,24,0.16)';this.style.borderColor='rgba(245,197,24,0.5)'"
+            onmouseout="this.style.background='rgba(245,197,24,0.08)';this.style.borderColor='rgba(245,197,24,0.25)'">
+            📣 Open in Socials
+          </a>
+        </div>
+      </div>
+
       <!-- Mockup Preview -->
       <div class="details-preview-container">
         <img src="" alt="Watch Face Preview" class="details-preview-img" id="details-img" onclick="if(this.src && !this.src.endsWith('.html')) window.open(this.src.replace('s240-rw', 's0'), '_blank')" style="cursor: pointer;" title="Click to view full image">
@@ -2330,32 +2369,6 @@
         </div>
       </div>
 
-      <!-- Quick Open in Other Tools -->
-      <div class="details-section">
-        <div class="details-section-title">Quick Open in Other Tools</div>
-        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;">
-          <a id="details-open-coupons" href="#" target="_blank"
-            style="flex:1; min-width:120px; display:flex; align-items:center; justify-content:center; gap:6px;
-                   background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.35);
-                   color: #a78bfa; font-size:12px; font-weight:600; padding:9px 12px;
-                   border-radius:6px; text-decoration:none; transition: background 0.15s, border-color 0.15s;
-                   letter-spacing:0.3px;"
-            onmouseover="this.style.background='rgba(124,58,237,0.22)';this.style.borderColor='rgba(124,58,237,0.6)'"
-            onmouseout="this.style.background='rgba(124,58,237,0.12)';this.style.borderColor='rgba(124,58,237,0.35)'">
-            🎟️ Open in Coupons
-          </a>
-          <a id="details-open-social" href="#" target="_blank"
-            style="flex:1; min-width:120px; display:flex; align-items:center; justify-content:center; gap:6px;
-                   background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.25);
-                   color: var(--yellow); font-size:12px; font-weight:600; padding:9px 12px;
-                   border-radius:6px; text-decoration:none; transition: background 0.15s, border-color 0.15s;
-                   letter-spacing:0.3px;"
-            onmouseover="this.style.background='rgba(245,197,24,0.16)';this.style.borderColor='rgba(245,197,24,0.5)'"
-            onmouseout="this.style.background='rgba(245,197,24,0.08)';this.style.borderColor='rgba(245,197,24,0.25)'">
-            📣 Open in Socials
-          </a>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -3495,6 +3508,7 @@
 
       // Quick Open buttons — pre-select this face in other tools
       const base = 'https://creationcue.web.app/';
+      document.getElementById('details-open-playstore').href = rawWf.play_store_url || '#';
       document.getElementById('details-open-coupons').href = `${base}manage-coupons.html?face=${encodeURIComponent(id)}`;
       document.getElementById('details-open-social').href   = `${base}social-generator.html?face=${encodeURIComponent(id)}`;
 
