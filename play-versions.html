@@ -2140,7 +2140,10 @@
     <!-- Controls Row -->
     <div class="controls-row">
       <div class="search-input-wrapper">
-        <input class="search-input" id="wf-search-input" name="wf-search-input-no-autofill" type="search" autocomplete="off" data-1p-ignore="true" data-lpignore="true" data-bwignore="true" spellcheck="false" placeholder="Search by ID, Title, Package Name or Notes...">
+        <!-- Dummy inputs to absorb aggressive browser autofill -->
+        <input style="opacity: 0; position: absolute; z-index: -1; width: 1px; height: 1px;" type="text" tabindex="-1">
+        <input style="opacity: 0; position: absolute; z-index: -1; width: 1px; height: 1px;" type="password" tabindex="-1">
+        <input class="search-input" id="dash-filter-box" name="dash-filter-box-no-autofill" type="search" autocomplete="off" data-1p-ignore="true" data-lpignore="true" data-bwignore="true" spellcheck="false" placeholder="Search by ID, Title, Package Name or Notes...">
         <button id="search-clear-btn" class="search-clear-btn" title="Clear Search">✕</button>
       </div>
       <div class="filters-group">
@@ -2813,7 +2816,7 @@
     }
 
     function renderDashboard() {
-      const searchBoxEl = document.getElementById('wf-search-input');
+      const searchBoxEl = document.getElementById('dash-filter-box');
       const searchVal = searchBoxEl ? searchBoxEl.value.toLowerCase().trim() : '';
 
       const notesFilterEl = document.getElementById('filter-notes');
@@ -3495,7 +3498,7 @@
     // Compile AI analytical prompt from active catalog data
     function compileAiPrompt() {
       const totalCount = combinedData.length;
-      const searchVal = document.getElementById('wf-search-input').value.trim();
+      const searchVal = document.getElementById('dash-filter-box').value.trim();
       const notesFilter = document.getElementById('filter-notes').value;
       const priceFilter = document.getElementById('filter-price').value;
       const rolloutFilter = document.getElementById('filter-rollout').value;
@@ -3929,7 +3932,7 @@
     const filterPriceEl = document.getElementById('filter-price');
     if (filterPriceEl) filterPriceEl.addEventListener('change', renderDashboard);
 
-    const searchBox = document.getElementById('wf-search-input');
+    const searchBox = document.getElementById('dash-filter-box');
     const searchClear = document.getElementById('search-clear-btn');
 
     if (searchBox) {
@@ -4098,9 +4101,15 @@
     // Wire custom input preview update and initialize Flatpickr date picker
     document.addEventListener('DOMContentLoaded', async () => {
       // Randomize search box name to defeat aggressive browser autofill
-      const searchBox = document.getElementById('wf-search-input');
+      const searchBox = document.getElementById('dash-filter-box');
       if (searchBox) {
         searchBox.setAttribute('name', 'search_' + Math.random().toString(36).substring(2, 10));
+        setTimeout(() => {
+          if (searchBox.value.includes('creationcuespace/creation-cue-hub')) {
+            searchBox.value = '';
+            if (typeof renderDashboard === 'function') renderDashboard();
+          }
+        }, 500);
       }
 
       const customIn = document.getElementById('task-custom-input');
