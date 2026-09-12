@@ -1,29 +1,53 @@
 {
-  "lastUpdated": "2026-09-11T01:29:22.461Z",
+  "lastUpdated": "2026-09-12T01:34:01.982Z",
   "reviews": [
     {
-      "reviewId": "c633050d-4313-4b54-baa6-62464ea07f97",
+      "reviewId": "75d9a547-2a9a-40b6-815a-0cf939a3c2f4",
+      "packageName": "com.creation.cue165watchface",
+      "title": "Watch Face CUE165",
+      "wfId": "cue165",
+      "authorName": "Etienne Willemse",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "r13s (Galaxy S25 FE)",
+      "text": "\tAwesome colours and everything u need in a watch face. excellent job . thank you. 10 star design.",
+      "lastModified": "2026-09-11T15:51:01.000Z"
+    },
+    {
+      "reviewId": "260ffcf4-b310-4ef9-bc68-d50ef73a28be",
       "packageName": "com.creation.cue179watchface",
       "title": "Watch Face CUE179",
       "wfId": "cue179",
-      "authorName": "Emanuel Bruno Rocha Dias",
+      "authorName": "Etienne Willemse",
       "starRating": 5,
-      "reviewerLanguage": "pt",
-      "deviceMetadata": "d2x (Galaxy Note10+ 5G)",
-      "text": "\tBeautifull watch face",
-      "lastModified": "2026-09-10T20:22:17.000Z"
+      "reviewerLanguage": "en",
+      "deviceMetadata": "r13s (Galaxy S25 FE)",
+      "text": "\tOh WOW really beautiful watch face . Really top class design. Love it. Thank you so much",
+      "lastModified": "2026-09-11T15:30:48.000Z"
     },
     {
-      "reviewId": "93615983-e96b-4d8a-99c2-00c6a8c854b6",
-      "packageName": "com.creation.cue174watchface",
-      "title": "Digital Watch Face CUE174",
-      "wfId": "cue174",
+      "reviewId": "40b9bf6e-f941-4473-92a6-52d4cf9da65d",
+      "packageName": "com.watchfacestudio.cc014",
+      "title": "Watch face CRC014",
+      "wfId": "cc014",
       "authorName": "Emanuel Bruno Rocha Dias",
       "starRating": 5,
       "reviewerLanguage": "pt",
       "deviceMetadata": "d2x (Galaxy Note10+ 5G)",
-      "text": "\tNice watchface",
-      "lastModified": "2026-09-10T20:21:42.000Z"
+      "text": "\tNice Watchface",
+      "lastModified": "2026-09-11T08:12:56.000Z"
+    },
+    {
+      "reviewId": "9b4ae1bd-4180-4e27-9ac3-d8e2ade83a7e",
+      "packageName": "com.creation.cue178watchface",
+      "title": "Digital Watch Face CUE178",
+      "wfId": "cue178",
+      "authorName": "Emanuel Bruno Rocha Dias",
+      "starRating": 5,
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "d2x (Galaxy Note10+ 5G)",
+      "text": "\tSimple and Stylish",
+      "lastModified": "2026-09-11T08:11:35.000Z"
     }
   ]
 }
