@@ -2140,7 +2140,7 @@
     <!-- Controls Row -->
     <div class="controls-row">
       <div class="search-input-wrapper">
-        <input class="search-input" id="wf-search-input" name="wf-search-input-no-autofill" type="search" autocomplete="new-password" spellcheck="false" placeholder="Search by ID, Title, Package Name or Notes...">
+        <input class="search-input" id="wf-search-input" name="wf-search-input-no-autofill" type="search" autocomplete="off" data-1p-ignore="true" data-lpignore="true" data-bwignore="true" spellcheck="false" placeholder="Search by ID, Title, Package Name or Notes...">
         <button id="search-clear-btn" class="search-clear-btn" title="Clear Search">✕</button>
       </div>
       <div class="filters-group">
@@ -4096,7 +4096,13 @@
     }
 
     // Wire custom input preview update and initialize Flatpickr date picker
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Randomize search box name to defeat aggressive browser autofill
+      const searchBox = document.getElementById('wf-search-input');
+      if (searchBox) {
+        searchBox.setAttribute('name', 'search_' + Math.random().toString(36).substring(2, 10));
+      }
+
       const customIn = document.getElementById('task-custom-input');
       if (customIn) customIn.addEventListener('input', updateTaskPreview);
       
