@@ -2147,8 +2147,10 @@
     <div class="controls-row">
       <div class="search-input-wrapper">
         <!-- Dummy inputs to absorb aggressive browser autofill -->
-        <input style="opacity: 0; position: absolute; z-index: -1; width: 1px; height: 1px;" type="text" tabindex="-1">
-        <input style="opacity: 0; position: absolute; z-index: -1; width: 1px; height: 1px;" type="password" tabindex="-1">
+        <div style="position: absolute; width: 0; height: 0; overflow: hidden; opacity: 0;">
+          <input type="text" id="username" name="username" autocomplete="username">
+          <input type="password" id="password" name="password" autocomplete="current-password">
+        </div>
         <input class="search-input" id="dash-filter-box" name="dash-filter-box-no-autofill" type="search" readonly onfocus="this.removeAttribute('readonly');" autocomplete="off" data-1p-ignore="true" data-lpignore="true" data-bwignore="true" spellcheck="false" placeholder="Search by ID, Title, Package Name or Notes...">
         <button id="search-clear-btn" class="search-clear-btn" title="Clear Search">✕</button>
       </div>
@@ -4135,13 +4137,15 @@
       const searchBox = document.getElementById('dash-filter-box');
       if (searchBox) {
         searchBox.setAttribute('name', 'search_' + Math.random().toString(36).substring(2, 10));
-        setTimeout(() => {
+        setInterval(() => {
           if (searchBox.value.includes('creationcuespace/creation-cue-hub')) {
             searchBox.value = '';
             if (typeof renderDashboard === 'function') renderDashboard();
           }
+        }, 100);
+        setTimeout(() => {
           searchBox.removeAttribute('readonly');
-        }, 1500);
+        }, 100);
       }
 
       const customIn = document.getElementById('task-custom-input');
