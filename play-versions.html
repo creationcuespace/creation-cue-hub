@@ -3508,7 +3508,15 @@
 
       // Quick Open buttons — pre-select this face in other tools
       const base = 'https://creationcue.web.app/';
-      document.getElementById('details-open-playstore').href = rawWf.play_store_url || '#';
+      
+      const playBtn = document.getElementById('details-open-playstore');
+      if (wf.packageName) {
+        playBtn.href = `https://play.google.com/store/apps/details?id=${wf.packageName}`;
+        playBtn.style.display = 'flex';
+      } else {
+        playBtn.href = '#';
+        playBtn.style.display = 'none';
+      }
       document.getElementById('details-open-coupons').href = `${base}manage-coupons.html?face=${encodeURIComponent(id)}`;
       document.getElementById('details-open-social').href   = `${base}social-generator.html?face=${encodeURIComponent(id)}`;
 
