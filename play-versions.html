@@ -2095,9 +2095,15 @@
 
     <!-- Stats Cards -->
     <div class="stats-container">
-      <div class="stat-card">
-        <div class="stat-label">Total Watch Faces</div>
-        <div class="stat-value" id="stat-total">0</div>
+      <div class="stat-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div class="stat-label">Total Watch Faces</div>
+          <div class="stat-value" id="stat-total">0</div>
+        </div>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">
+          <div class="stat-label">Total Downloads</div>
+          <div class="stat-value" id="stat-downloads" style="font-size: 22px; color: #81c784;">0</div>
+        </div>
       </div>
       <div class="stat-card" style="display: flex; flex-direction: column; gap: 8px; padding: 12px 16px;">
         <div class="stat-label" style="margin-bottom: 2px;">Quick Copier</div>
@@ -2950,6 +2956,31 @@
       // Render stats
       const totalCount = combinedData.length;
       const filteredCount = filtered.length;
+      
+      let totalDownloads = 0;
+      filtered.forEach(wf => {
+        let val = wf.downloads;
+        if (val && val !== 'N/A') {
+          let numStr = val.replace(/\+/g, '').replace(/,/g, '').trim();
+          let multiplier = 1;
+          if (numStr.endsWith('K')) { multiplier = 1000; numStr = numStr.slice(0, -1); }
+          else if (numStr.endsWith('M')) { multiplier = 1000000; numStr = numStr.slice(0, -1); }
+          else if (numStr.endsWith('B')) { multiplier = 1000000000; numStr = numStr.slice(0, -1); }
+          totalDownloads += (parseFloat(numStr) || 0) * multiplier;
+        }
+      });
+      
+      function formatDownloads(num) {
+        if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M+';
+        if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K+';
+        return num.toLocaleString() + '+';
+      }
+
+      const statDownloadsEl = document.getElementById('stat-downloads');
+      if (statDownloadsEl) {
+        statDownloadsEl.textContent = formatDownloads(totalDownloads);
+      }
+
       if (filteredCount === totalCount) {
         document.getElementById('stat-total').textContent = totalCount;
       } else {
