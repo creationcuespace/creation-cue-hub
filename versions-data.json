@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-12T01:34:01.981Z",
+  "lastUpdated": "2026-09-13T01:25:35.179Z",
   "results": [
     {
       "id": "cue178",
@@ -244,12 +244,12 @@
     {
       "id": "cue155",
       "title": "CUE155",
-      "playStoreTitle": "Watch Face CUE155",
+      "playStoreTitle": "CUE155",
       "packageName": "com.creation.cue155watchface",
       "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "cue154",
@@ -714,12 +714,12 @@
     {
       "id": "cue100",
       "title": "CUE100",
-      "playStoreTitle": "Digital Watch Face CUE100",
+      "playStoreTitle": "CUE100",
       "packageName": "com.creation.cue100watchface",
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "cue099",
@@ -774,12 +774,12 @@
     {
       "id": "crc091",
       "title": "CRC091",
-      "playStoreTitle": "Radiant Glow Watch Face CRC091",
+      "playStoreTitle": "CRC091",
       "packageName": "com.creationcue.crc091watchface",
       "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "crc090",
@@ -868,7 +868,7 @@
       "packageName": "com.creationcue.crc069watchface",
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "10000011 (2.5.0)",
-      "lastUpdatedDate": "Aug 26, 2026",
+      "lastUpdatedDate": "Aug 27, 2026",
       "downloads": "10K+"
     },
     {
@@ -1104,12 +1104,12 @@
     {
       "id": "cc010",
       "title": "CRC010",
-      "playStoreTitle": "Watch face CRC010",
+      "playStoreTitle": "CRC010",
       "packageName": "com.watchfacestudio.cc010",
       "companionVersion": "Android 16 API & Design Update (v10000023)",
       "wearVersion": "Wear OS SDK 35 Update (v10000022)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "cc005",
