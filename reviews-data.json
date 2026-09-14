@@ -1,6 +1,18 @@
 {
-  "lastUpdated": "2026-09-13T01:25:35.180Z",
+  "lastUpdated": "2026-09-14T01:40:56.837Z",
   "reviews": [
+    {
+      "reviewId": "05fa1446-2a00-47bf-9fed-537725686cc9",
+      "packageName": "com.creation.cue116watchface",
+      "title": "Digital Watch Face CUE116",
+      "wfId": "cue116",
+      "authorName": "Sergio L. L. Junior",
+      "starRating": 2,
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "dm1q (Galaxy S23)",
+      "text": "\tSempre achei incrível, as no Watch ultra 2 não funciona os batimentos cardíacos",
+      "lastModified": "2026-09-13T03:42:49.000Z"
+    },
     {
       "reviewId": "c18b47b8-053e-4a56-af6c-dd869a24158d",
       "packageName": "com.creation.cue152watchface",
