@@ -1019,6 +1019,24 @@
       visibility: visible;
     }
 
+    #reviews-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    #reviews-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
     #details-panel {
       position: fixed;
       top: 0;
@@ -2471,7 +2489,8 @@
   </div>
 
   <!-- Reviews Panel (Hidden by default) -->
-    <div id="reviews-panel">
+  <div id="reviews-backdrop" onclick="closeReviewsPanel()"></div>
+  <div id="reviews-panel">
       <div class="mobile-handle"></div>
       <div class="details-header" style="justify-content: space-between;">
         <div class="details-header-title" style="display: flex; align-items: center; gap: 8px;">
@@ -4322,8 +4341,10 @@
       console.log('Bell clicked');
       try {
         const panel = document.getElementById('reviews-panel');
+        const backdrop = document.getElementById('reviews-backdrop');
         if (panel) {
           panel.classList.add('open');
+          if (backdrop) backdrop.classList.add('open');
         } else {
           alert('Panel not found in DOM!');
         }
@@ -4336,12 +4357,16 @@
 
     function closeReviewsPanel() {
       const panel = document.getElementById('reviews-panel');
+      const backdrop = document.getElementById('reviews-backdrop');
       if (panel) {
         panel.classList.remove('open');
         panel.style.right = '';
         panel.style.visibility = '';
         panel.style.display = '';
         panel.style.zIndex = '';
+      }
+      if (backdrop) {
+        backdrop.classList.remove('open');
       }
     }
 
