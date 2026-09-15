@@ -1,29 +1,29 @@
 {
-  "lastUpdated": "2026-09-14T01:40:56.837Z",
+  "lastUpdated": "2026-09-15T01:54:28.108Z",
   "reviews": [
     {
-      "reviewId": "05fa1446-2a00-47bf-9fed-537725686cc9",
-      "packageName": "com.creation.cue116watchface",
-      "title": "Digital Watch Face CUE116",
-      "wfId": "cue116",
-      "authorName": "Sergio L. L. Junior",
-      "starRating": 2,
-      "reviewerLanguage": "pt",
-      "deviceMetadata": "dm1q (Galaxy S23)",
-      "text": "\tSempre achei incrível, as no Watch ultra 2 não funciona os batimentos cardíacos",
-      "lastModified": "2026-09-13T03:42:49.000Z"
+      "reviewId": "7dcd0ab3-d636-4825-9e3e-4e0318d95951",
+      "packageName": "com.creation.cue179watchface",
+      "title": "Watch Face CUE179",
+      "wfId": "cue179",
+      "authorName": "Jos van Merode",
+      "starRating": 5,
+      "reviewerLanguage": "nl",
+      "deviceMetadata": "pa3q (Galaxy S25 Ultra)",
+      "text": "\terg mooie heldere wijzerplaat",
+      "lastModified": "2026-09-14T19:57:08.000Z"
     },
     {
-      "reviewId": "c18b47b8-053e-4a56-af6c-dd869a24158d",
-      "packageName": "com.creation.cue152watchface",
-      "title": "Watch Face CUE152",
-      "wfId": "cue152",
-      "authorName": "Alberto Renzi",
-      "starRating": 4,
-      "reviewerLanguage": "it",
-      "deviceMetadata": "pa1q (Galaxy S25)",
-      "text": "\tveramente molto bella e raramente faccio recensioni. metto 5 stelle se si riuscisse ad aggiungere qualche altra combinazione di colori. Grazie!",
-      "lastModified": "2026-09-12T22:03:06.000Z"
+      "reviewId": "491ceae3-69c7-4f59-b73c-8eb2cad40a65",
+      "packageName": "com.creation.cue142watchface",
+      "title": "Watch Face CUE142",
+      "wfId": "cue142",
+      "authorName": "Jeffrey Bernard",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "pa3q (Galaxy S25 Ultra)",
+      "text": "\tI dig it!! 😎",
+      "lastModified": "2026-09-14T02:17:29.000Z"
     }
   ]
 }
