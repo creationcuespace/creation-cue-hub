@@ -22,16 +22,25 @@ MY_EMAIL = 'creationcuespace@gmail.com'
 
 # Configure the AI
 genai.configure(api_key=GEMINI_API_KEY)
-# We use the standard gemini model
-model = genai.GenerativeModel('gemini-2.5-flash')
+# We use the standard gemini model with Google Search enabled
+model = genai.GenerativeModel('gemini-2.5-flash', tools='google_search_retrieval')
 
 AI_INSTRUCTIONS = """
-You are an email assistant for the app 'Creation Cue'.
+You are an expert email support assistant for the app developer 'Creation Cue'.
 Read the following email. 
 First, determine if it is a human user asking for support, reporting a bug, or asking a question.
 If it is a system notification (like Google Play), a newsletter, or spam, respond ONLY with the word "IGNORE".
 If it IS a human support request, write a draft response. 
-Style Rules: Keep it casual, friendly, and DO NOT repeat or quote their words. Answer directly. End with "Cheers, Creation Cue Team".
+
+RESEARCH REQUIREMENT:
+Before drafting your response, if the user mentions a specific watch face, app, complication, or feature, you MUST use your Google Search tool to search for the Creation Cue app on the Google Play Store (e.g., search "Creation Cue [Watch Face Name] Google Play"). 
+Read the 'About this app' section and any instructions or FAQs on the store page to ensure your answer is completely accurate based on how the app actually works.
+
+Style Rules: 
+- Keep the response VERY short and straight to the point. Do not ramble.
+- Keep it casual and friendly.
+- DO NOT repeat or quote their words. Answer directly. 
+- End with "Cheers, Creation Cue Team".
 """
 
 def create_draft(service, to, subject, body_text):
