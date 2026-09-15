@@ -4240,8 +4240,10 @@
       confirmBtn.disabled = true;
 
       try {
-        const snap = await db.ref('work_planner/' + currentUser.uid).once('value');
-        const data = snap.val() || {};
+        const snapPromise = db.ref('work_planner/' + currentUser.uid).once('value');
+        const snapTimeout = new Promise(resolve => setTimeout(() => resolve(null), 3000));
+        const snap = await Promise.race([snapPromise, snapTimeout]);
+        const data = (snap && typeof snap.val === 'function' && snap.val()) ? snap.val() : {};
         const existing = Array.isArray(data.customTasks) ? data.customTasks : [];
 
         const customHolidays = Array.isArray(data.customHolidays) ? data.customHolidays : [];
@@ -4318,7 +4320,11 @@
 
         data.customTasks = [...existing, ...newTasks];
         data._writtenBy = 'dashboard_' + Math.random().toString(36).substr(2, 9);
-        await db.ref('work_planner/' + currentUser.uid).set(data);
+        
+        // Save with 2s safety timeout fallback so UI never freezes if network ACK delays
+        const savePromise = db.ref('work_planner/' + currentUser.uid).set(data);
+        const saveTimeout = new Promise(resolve => setTimeout(resolve, 2000));
+        await Promise.race([savePromise, saveTimeout]);
 
 
         closeTaskModal();
