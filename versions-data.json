@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-14T01:40:56.835Z",
+  "lastUpdated": "2026-09-15T01:54:28.107Z",
   "results": [
     {
       "id": "cue178",
@@ -9,7 +9,7 @@
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "downloads": "100+"
     },
     {
       "id": "cue003",
@@ -849,7 +849,7 @@
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "1K+"
     },
     {
       "id": "crc071",
