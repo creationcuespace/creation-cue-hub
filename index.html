@@ -4613,9 +4613,9 @@
             return '';
         }
 
-        // Convert raw github image URLs to jsDelivr CDN URLs for much faster load times
-        function getOptimizedImageUrl(url) {
-            if (!url) return 'https://via.placeholder.com/300';
+        // Convert raw image URLs using wsrv.nl CDN for fast loading and compression
+        function getOptimizedImageUrl(url, faceId = '') {
+            if (!url) return faceId ? `images/${faceId}.png` : 'images/placeholder.png';
             
             // Check if it's a Google Play image, use Google's native resizing
             if (url.includes('play-lh.googleusercontent.com') || url.includes('ggpht.com')) {
@@ -4624,20 +4624,13 @@
                 }
                 return url;
             }
-
-            let finalUrl = url;
-            if (url.includes('raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/')) {
-                finalUrl = url.replace('raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/', 'cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/');
-            } else if (url.includes('raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/')) {
-                finalUrl = url.replace('raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/', 'cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/');
+            
+            // Use wsrv.nl (Images.weserv.nl) to resize and compress images to 300px WebP directly from raw GitHub
+            if (url.startsWith('http') && !url.includes('wsrv.nl')) {
+                return `https://wsrv.nl/?url=${encodeURIComponent(url)}&w=300&output=webp&q=80`;
             }
             
-            // Use wsrv.nl (Images.weserv.nl) to resize and compress images to 300px WebP
-            if (finalUrl.startsWith('http') && !finalUrl.includes('wsrv.nl')) {
-                return `https://wsrv.nl/?url=${encodeURIComponent(finalUrl)}&w=300&output=webp&q=80`;
-            }
-            
-            return finalUrl;
+            return url;
         }
 
         // Generates the best link format based on user device platform (Android native vs Web client)
@@ -4898,7 +4891,7 @@
                     <span>Watch</span>
                 </button>
                 <div class="face-image-container">
-                    <img class="face-card-img" src="${getOptimizedImageUrl(face.image_url)}" alt="${face.title}" ${loadingAttr} onerror="this.src='https://via.placeholder.com/300'">
+                    <img class="face-card-img" src="${getOptimizedImageUrl(face.image_url, face.id)}" alt="${face.title}" ${loadingAttr} onerror="if(!this.dataset.retried){this.dataset.retried='true';this.src='images/${face.id}.png';}">
                 </div>
                 <h2 class="face-card-title">${face.title}</h2>
                 <button class="card-cta-btn">Details</button>
@@ -5145,7 +5138,7 @@
                     openDetailsModal(face);
                 };
                 card.innerHTML = `
-                    <img class="related-card-img" src="${getOptimizedImageUrl(face.image_url)}" alt="${face.title}" loading="lazy">
+                    <img class="related-card-img" src="${getOptimizedImageUrl(face.image_url, face.id)}" alt="${face.title}" loading="lazy" onerror="if(!this.dataset.retried){this.dataset.retried='true';this.src='images/${face.id}.png';}">
                     <div class="related-card-title">${face.title}</div>
                 `;
                 container.appendChild(card);
