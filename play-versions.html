@@ -2410,13 +2410,15 @@
           <option value="companion">Update [ID] — companion app</option>
           <option value="wear">Update [ID] — Wear OS app</option>
           <option value="review">Review [ID] versions</option>
+          <option value="with_note">Update [ID] — [NOTE]</option>
+          <option value="note_only">[ID]: [NOTE]</option>
           <option value="custom">✏️ Custom prefix...</option>
         </select>
       </div>
 
       <div class="task-modal-field" id="task-custom-field" style="display:none;">
-        <div class="task-modal-label">Custom Title (use [ID] or [TITLE] as placeholder)</div>
-        <input type="text" class="task-modal-input" id="task-custom-input" placeholder="e.g. Submit [ID] to review">
+        <div class="task-modal-label">Custom Title (use [ID], [TITLE], or [NOTE] as placeholder)</div>
+        <input type="text" class="task-modal-input" id="task-custom-input" placeholder="e.g. Submit [ID] - [NOTE] to review">
       </div>
 
       <div class="task-modal-field">
@@ -4091,13 +4093,20 @@
     }
 
     function buildTaskTitle(template, wf) {
+      const cleanNote = (wf.note || '').replace(/[\r\n]+/g, ' ').trim();
       if (template === 'combined')  return `Update ${wf.id} (companion + Wear OS)`;
       if (template === 'companion') return `Update ${wf.id} — companion app`;
       if (template === 'wear')      return `Update ${wf.id} — Wear OS app`;
       if (template === 'review')    return `Review ${wf.id} versions`;
+      if (template === 'with_note') return cleanNote ? `Update ${wf.id} — ${cleanNote}` : `Update ${wf.id}`;
+      if (template === 'note_only') return cleanNote ? `${wf.id}: ${cleanNote}` : `Update ${wf.id}`;
       if (template === 'custom') {
         const custom = (document.getElementById('task-custom-input').value.trim()) || 'Update [ID]';
-        return custom.replace(/\[ID\]/g, wf.id).replace(/\[TITLE\]/g, wf.title);
+        return custom
+          .replace(/\[ID\]/gi, wf.id)
+          .replace(/\[TITLE\]/gi, wf.title)
+          .replace(/\[NOTE\]/gi, cleanNote)
+          .replace(/\[NOTES\]/gi, cleanNote);
       }
       return `Update ${wf.id}`;
     }
