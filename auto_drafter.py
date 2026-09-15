@@ -44,7 +44,7 @@ Style Rules:
 - End with "Cheers, Creation Cue Team".
 """
 
-def create_draft(service, to, subject, body_text):
+def create_draft(service, to, subject, body_text, thread_id=None, message_id=None):
     message = EmailMessage()
     message.set_content(body_text)
     message['To'] = to
@@ -55,8 +55,15 @@ def create_draft(service, to, subject, body_text):
         subject = "Re: " + subject
     message['Subject'] = subject
 
+    if message_id:
+        message['In-Reply-To'] = message_id
+        message['References'] = message_id
+
     encoded_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
     create_message = {'message': {'raw': encoded_message}}
+    
+    if thread_id:
+        create_message['message']['threadId'] = thread_id
     
     draft = service.users().drafts().create(userId="me", body=create_message).execute()
     return draft['id']
@@ -79,6 +86,8 @@ def main_logic():
         headers = msg['payload']['headers']
         subject = next((header['value'] for header in headers if header['name'] == 'Subject'), 'No Subject')
         sender = next((header['value'] for header in headers if header['name'] == 'From'), 'Unknown Sender')
+        message_id = next((header['value'] for header in headers if header['name'].lower() == 'message-id'), None)
+        thread_id = msg['threadId']
         
         body = "No text body available"
         parts = [msg['payload']]
@@ -109,7 +118,7 @@ def main_logic():
                 email_match = re.search(r'<([^>]+)>', sender)
                 to_address = email_match.group(1) if email_match else sender
                 
-                draft_id = create_draft(service, to_address, subject, ai_reply)
+                draft_id = create_draft(service, to_address, subject, ai_reply, thread_id, message_id)
                 print(f"-> Draft created successfully! (ID: {draft_id})")
                 
         except Exception as e:
