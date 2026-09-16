@@ -1,29 +1,29 @@
 {
-  "lastUpdated": "2026-09-15T01:54:28.108Z",
+  "lastUpdated": "2026-09-16T01:40:29.611Z",
   "reviews": [
     {
-      "reviewId": "7dcd0ab3-d636-4825-9e3e-4e0318d95951",
-      "packageName": "com.creation.cue179watchface",
-      "title": "Watch Face CUE179",
-      "wfId": "cue179",
-      "authorName": "Jos van Merode",
-      "starRating": 5,
-      "reviewerLanguage": "nl",
-      "deviceMetadata": "pa3q (Galaxy S25 Ultra)",
-      "text": "\terg mooie heldere wijzerplaat",
-      "lastModified": "2026-09-14T19:57:08.000Z"
-    },
-    {
-      "reviewId": "491ceae3-69c7-4f59-b73c-8eb2cad40a65",
-      "packageName": "com.creation.cue142watchface",
-      "title": "Watch Face CUE142",
-      "wfId": "cue142",
-      "authorName": "Jeffrey Bernard",
+      "reviewId": "2e1b9920-9263-4ad9-85fd-9790aa1e58c7",
+      "packageName": "com.creation.cue177watchface",
+      "title": "Analog Watch Face CUE177",
+      "wfId": "cue177",
+      "authorName": "Ryan C (Weird.Wacky.UAP.Phenomena)",
       "starRating": 5,
       "reviewerLanguage": "en",
-      "deviceMetadata": "pa3q (Galaxy S25 Ultra)",
-      "text": "\tI dig it!! 😎",
-      "lastModified": "2026-09-14T02:17:29.000Z"
+      "deviceMetadata": "q8q (Galaxy Z Fold8 Ultra)",
+      "text": "\tamazing design and colors",
+      "lastModified": "2026-09-15T19:56:50.000Z"
+    },
+    {
+      "reviewId": "e9842f52-10c8-469f-b87f-bfc484f96f6d",
+      "packageName": "com.creation.cue154watchface",
+      "title": "Watch Face CUE154",
+      "wfId": "cue154",
+      "authorName": "Péter Kovács",
+      "starRating": 5,
+      "reviewerLanguage": "hu",
+      "deviceMetadata": "q7q (心系天下 三星 W26)",
+      "text": "\thasználom már évek óta ezt az óralapot. testre szabható és minden hasznos infót kijelzi amit kell",
+      "lastModified": "2026-09-15T08:50:27.000Z"
     }
   ]
 }
