@@ -1622,8 +1622,17 @@ Format this report with a professional tone in clean, beautiful Markdown with st
         var shortUrl = await shortenUrl(item.longUrl);
         if (item.type === 'public') {
           await db.ref('promotions/' + promoId + '/public/shortUrl').set(shortUrl);
+          var pubLbl = document.getElementById('lbl-public-url');
+          if (pubLbl) {
+            pubLbl.textContent = shortUrl;
+            pubLbl.href = shortUrl;
+          }
         } else if (item.type === 'token') {
           await db.ref('one_time_tokens/' + item.id + '/shortUrl').set(shortUrl);
+          var tokenInput = document.getElementById('token-input-' + item.id);
+          if (tokenInput) {
+            tokenInput.value = shortUrl;
+          }
         }
         shortenerQueue.shift(); // Success
       } catch (err) {
