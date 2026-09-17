@@ -1,29 +1,29 @@
 {
-  "lastUpdated": "2026-09-16T01:40:29.611Z",
+  "lastUpdated": "2026-09-17T01:42:43.225Z",
   "reviews": [
     {
-      "reviewId": "2e1b9920-9263-4ad9-85fd-9790aa1e58c7",
-      "packageName": "com.creation.cue177watchface",
-      "title": "Analog Watch Face CUE177",
-      "wfId": "cue177",
-      "authorName": "Ryan C (Weird.Wacky.UAP.Phenomena)",
+      "reviewId": "84d047c6-2910-491a-bf78-0d17d0b0cb0c",
+      "packageName": "com.creation.cue116watchface",
+      "title": "Digital Watch Face CUE116",
+      "wfId": "cue116",
+      "authorName": "Sergio L. L. Junior",
       "starRating": 5,
-      "reviewerLanguage": "en",
-      "deviceMetadata": "q8q (Galaxy Z Fold8 Ultra)",
-      "text": "\tamazing design and colors",
-      "lastModified": "2026-09-15T19:56:50.000Z"
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "projectv2ul (Galaxy Watch Ultra2)",
+      "text": "\tExcelente",
+      "lastModified": "2026-09-16T03:40:07.000Z"
     },
     {
-      "reviewId": "e9842f52-10c8-469f-b87f-bfc484f96f6d",
-      "packageName": "com.creation.cue154watchface",
-      "title": "Watch Face CUE154",
-      "wfId": "cue154",
-      "authorName": "Péter Kovács",
+      "reviewId": "e8be1003-36f3-4a7b-b1cc-64de9a2b637a",
+      "packageName": "com.creation.cue116watchface",
+      "title": "Digital Watch Face CUE116",
+      "wfId": "cue116",
+      "authorName": "Sergio L. L. Junior",
       "starRating": 5,
-      "reviewerLanguage": "hu",
-      "deviceMetadata": "q7q (心系天下 三星 W26)",
-      "text": "\thasználom már évek óta ezt az óralapot. testre szabható és minden hasznos infót kijelzi amit kell",
-      "lastModified": "2026-09-15T08:50:27.000Z"
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "dm1q (Galaxy S23)",
+      "text": "\tExcelente, recomendo. Não estava funcionando os batimentos cardíacos no watch ultra 2 , desinstalei e instalei novamente e deu certo.",
+      "lastModified": "2026-09-16T03:38:15.000Z"
     }
   ]
 }
