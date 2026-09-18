@@ -1804,8 +1804,7 @@
                                 <!-- LinkDM Shortcuts -->
                                 <div style="margin-top: 16px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
                                     <div class="result-actions" style="display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap;">
-                                         <button class="header-btn" onclick="window.open('https://app.linkdm.com/posts', '_blank')" style="border-color: hsla(290, 70%, 60%, 0.3); color: hsl(290, 80%, 75%);">🔗 Open LinkDM</button>
-                                         <button class="header-btn" onclick="copyPlayStoreLink()" style="border-color: var(--primary); color: var(--primary);">📋 Copy Play Store Link</button>
+                                         <button class="header-btn" onclick="copyAndOpenLinkDM()" style="border-color: var(--primary); color: var(--primary);">🚀 Copy Link & Open LinkDM</button>
                                      </div>
                                 </div>
                             </div>
@@ -2471,7 +2470,7 @@
             });
         }
 
-        function copyPlayStoreLink() {
+        function copyAndOpenLinkDM() {
             const linkInput = document.getElementById('watch-link');
             if (!linkInput) return;
             const text = linkInput.value.trim();
@@ -2479,10 +2478,13 @@
                 showToast("No Play Store Link entered!");
                 return;
             }
+            // Open window synchronously to avoid popup blockers
+            const linkDmWindow = window.open('https://app.linkdm.com/posts', '_blank');
+            // Then copy to clipboard
             navigator.clipboard.writeText(text).then(() => {
-                showToast("Play Store Link copied!");
+                showToast("Link Copied! Paste it in LinkDM.");
             }).catch(() => {
-                alert("Failed to copy. Please manually select and copy text.");
+                alert("Failed to copy link. Please manually copy it.");
             });
         }
 
