@@ -1,29 +1,4 @@
 {
-  "lastUpdated": "2026-09-17T01:42:43.225Z",
-  "reviews": [
-    {
-      "reviewId": "84d047c6-2910-491a-bf78-0d17d0b0cb0c",
-      "packageName": "com.creation.cue116watchface",
-      "title": "Digital Watch Face CUE116",
-      "wfId": "cue116",
-      "authorName": "Sergio L. L. Junior",
-      "starRating": 5,
-      "reviewerLanguage": "pt",
-      "deviceMetadata": "projectv2ul (Galaxy Watch Ultra2)",
-      "text": "\tExcelente",
-      "lastModified": "2026-09-16T03:40:07.000Z"
-    },
-    {
-      "reviewId": "e8be1003-36f3-4a7b-b1cc-64de9a2b637a",
-      "packageName": "com.creation.cue116watchface",
-      "title": "Digital Watch Face CUE116",
-      "wfId": "cue116",
-      "authorName": "Sergio L. L. Junior",
-      "starRating": 5,
-      "reviewerLanguage": "pt",
-      "deviceMetadata": "dm1q (Galaxy S23)",
-      "text": "\tExcelente, recomendo. Não estava funcionando os batimentos cardíacos no watch ultra 2 , desinstalei e instalei novamente e deu certo.",
-      "lastModified": "2026-09-16T03:38:15.000Z"
-    }
-  ]
+  "lastUpdated": "2026-09-18T01:31:05.099Z",
+  "reviews": []
 }

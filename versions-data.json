@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-17T01:42:43.223Z",
+  "lastUpdated": "2026-09-18T01:31:05.098Z",
   "results": [
     {
       "id": "cue178",
@@ -564,12 +564,12 @@
     {
       "id": "cue123",
       "title": "CUE123",
-      "playStoreTitle": "CUE123",
+      "playStoreTitle": "Digital Watch Face CUE123",
       "packageName": "com.creation.cue123watchface",
       "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
-      "lastUpdatedDate": "Fetch Failed",
-      "downloads": "N/A"
+      "lastUpdatedDate": "Aug 4, 2026",
+      "downloads": "50+"
     },
     {
       "id": "cue122",
@@ -879,7 +879,7 @@
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "10999999 (4.0.1)",
       "lastUpdatedDate": "Aug 25, 2026",
-      "downloads": "5K+"
+      "downloads": "10K+"
     },
     {
       "id": "crc066",
@@ -1124,12 +1124,12 @@
     {
       "id": "cueindus",
       "title": "Cue Indus",
-      "playStoreTitle": "Watch Face CUE Indus",
+      "playStoreTitle": "Cue Indus",
       "packageName": "com.creation.cueinduswatchface",
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "10K+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "cueindus_pro",
@@ -1149,7 +1149,7 @@
       "companionVersion": "2 (6.1.0)",
       "wearVersion": "10000001 (1.0.0)",
       "lastUpdatedDate": "Sep 8, 2026",
-      "downloads": "0+"
+      "downloads": "10+"
     }
   ]
 }
