@@ -72,16 +72,33 @@ def main_logic():
     creds = Credentials.from_authorized_user_file('token.json', SCOPES)
     service = build('gmail', 'v1', credentials=creds)
 
-    print("Fetching the latest unread emails...")
-    results = service.users().messages().list(userId='me', labelIds=['INBOX', 'UNREAD'], maxResults=10).execute()
+    print("Fetching recent inbox emails...")
+    results = service.users().messages().list(userId='me', q="in:inbox newer_than:2d", maxResults=15).execute()
     messages = results.get('messages', [])
 
     if not messages:
-        print("No new unread messages found.")
+        print("No recent messages found.")
         return
 
     for message in messages:
-        msg = service.users().messages().get(userId='me', id=message['id'], format='full').execute()
+        # Fetch the full thread to see the message history
+        thread = service.users().threads().get(userId='me', id=message['threadId']).execute()
+        thread_messages = thread.get('messages', [])
+        
+        if not thread_messages:
+            continue
+            
+        # Check the absolute latest message in the thread
+        last_message = thread_messages[-1]
+        last_labels = last_message.get('labelIds', [])
+        
+        # If the latest message in the thread is already a DRAFT or was SENT by us, skip it!
+        # This prevents duplicating drafts or replying if you already replied manually.
+        if 'DRAFT' in last_labels or 'SENT' in last_labels:
+            continue
+            
+        # We need to evaluate this latest message!
+        msg = last_message
         
         headers = msg['payload']['headers']
         subject = next((header['value'] for header in headers if header['name'] == 'Subject'), 'No Subject')
