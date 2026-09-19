@@ -4525,7 +4525,7 @@
             }
 
             // Load from cache first
-            const cachedData = localStorage.getItem('cc_catalog_cache_v2');
+            const cachedData = localStorage.getItem('cc_catalog_cache_v3');
             if (cachedData) {
                 try {
                     const data = JSON.parse(cachedData);
@@ -4544,14 +4544,14 @@
             }
 
             try {
-                const url = 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/manager.json?v=' + Date.now();
+                const url = 'manager.json?v=' + Date.now();
                 const response = await fetch(url);
                 if (!response.ok) throw new Error('Network response error');
                 
                 const data = await response.json();
                 
                 // Save to cache
-                localStorage.setItem('cc_catalog_cache_v2', JSON.stringify(data));
+                localStorage.setItem('cc_catalog_cache_v3', JSON.stringify(data));
                 
                 watchFaces = data.watch_faces || data.faces || [];
                 populateHeroWatchFacesFromCatalog(watchFaces);
