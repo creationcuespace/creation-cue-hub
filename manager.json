@@ -13,12 +13,7 @@
       "description_en": "This is Wear OS watch face CUE179\nBold dual-color digital display, circuit board styling • Steps only or Steps + Distance (km/mi) or off • HR display on/off • 2 short custom complications and 1 long text complication • Multiple color themes • Power flow animation (on/off).",
       "description_de": "",
       "filters": [
-        "Digital",
-        "Cyber",
-        "Circuit",
-        "Futuristic",
-        "Battery",
-        "Complications"
+        "Digital"
       ],
       "type": "digital",
       "is_free": false,
@@ -26,12 +21,7 @@
       "badge_text": "NEW RELEASE",
       "is_new": true,
       "tags": [
-        "Digital",
-        "Cyber",
-        "Circuit",
-        "Futuristic",
-        "Battery",
-        "Complications"
+        "Digital"
       ],
       "release_date": "2026-09-10"
     },
@@ -1088,7 +1078,7 @@
       "title": "CRC066",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc066.png",
       "play_store_url": "market://details?id=com.creationcue.crc066watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc066",
-      "description_en": "Updated WEAR OS Watch face CRC066.\n❖ more color themes ❖ kcal can now be replaced with a custom complication. ❖ new AOD dark/light switch. ❖ inner shadow effect, which can be toggled off....",
+      "description_en": "This is CRC066 Wear OS watch face. HR and battery with warning backgrounds • Distance (km/mi) • 4 custom complications • AOD dark/light switch • Inner shadow (on/off) • Multiple color themes.",
       "description_de": "CRC066 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
       "filters": [],
       "type": "digital",
