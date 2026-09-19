@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-18T01:31:05.098Z",
+  "lastUpdated": "2026-09-19T01:37:19.876Z",
   "results": [
     {
       "id": "cue178",
@@ -888,7 +888,7 @@
       "packageName": "com.creationcue.crc066watchface",
       "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "10000014 (3.1.0)",
-      "lastUpdatedDate": "Aug 4, 2026",
+      "lastUpdatedDate": "Sep 15, 2026",
       "downloads": "100+"
     },
     {
@@ -1124,12 +1124,12 @@
     {
       "id": "cueindus",
       "title": "Cue Indus",
-      "playStoreTitle": "Cue Indus",
+      "playStoreTitle": "Watch Face CUE Indus",
       "packageName": "com.creation.cueinduswatchface",
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Fetch Failed",
-      "downloads": "N/A"
+      "lastUpdatedDate": "Aug 4, 2026",
+      "downloads": "10K+"
     },
     {
       "id": "cueindus_pro",
