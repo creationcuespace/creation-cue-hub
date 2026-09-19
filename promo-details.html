@@ -1201,7 +1201,7 @@
     // Copy public link
     document.getElementById('btn-copy-public-link').addEventListener('click', function() {
       var url = document.getElementById('lbl-public-url').textContent;
-      var text = "A few coupons are available here:\n" + url + "\n\nA review is appreciated!";
+      var text = "🎟️ A few coupons are available here:\n" + url + "\n\n⭐ A review is appreciated!";
       navigator.clipboard.writeText(text).then(function() {
         showToast("Public claim message copied!");
       });
