@@ -681,7 +681,7 @@
 
             <div class="flex-mobile-column" style="display:flex; gap:10px;">
               <div class="form-group" style="flex:1;">
-                <span class="form-label">Starts (Optional)</span>
+                <span class="form-label">Starts (GMT)</span>
                 <div style="display:flex; gap:6px;">
                   <input class="input-text" id="promo-starts-text" type="text" placeholder="e.g. 8 Jun 2027" oninput="parseStartsText()" style="font-size:12px; padding:8px 10px; flex:1;">
                   <div style="position:relative; width:36px; height:36px; flex:none;">
@@ -698,7 +698,7 @@
                 </div>
               </div>
               <div class="form-group" style="flex:1;">
-                <span class="form-label">Expires (Optional)</span>
+                <span class="form-label">Expires (GMT)</span>
                 <div style="display:flex; gap:6px;">
                   <input class="input-text" id="promo-expiry-text" type="text" placeholder="e.g. 8 Jun 2027" oninput="parseExpiryText()" style="font-size:12px; padding:8px 10px; flex:1;">
                   <div style="position:relative; width:36px; height:36px; flex:none;">
@@ -854,11 +854,11 @@
     function formatDateTime(ts, includeSeconds) {
       if (!ts) return '';
       var d = new Date(ts);
-      var day = String(d.getDate()).padStart(2, '0');
-      var month = String(d.getMonth() + 1).padStart(2, '0');
-      var year = d.getFullYear();
-      var hours = String(d.getHours()).padStart(2, '0');
-      var minutes = String(d.getMinutes()).padStart(2, '0');
+      var day = String(d.getUTCDate()).padStart(2, '0');
+      var month = String(d.getUTCMonth() + 1).padStart(2, '0');
+      var year = d.getUTCFullYear();
+      var hours = String(d.getUTCHours()).padStart(2, '0');
+      var minutes = String(d.getUTCMinutes()).padStart(2, '0');
       var str = day + '/' + month + '/' + year + ' ' + hours + ':' + minutes;
       if (includeSeconds) {
         var seconds = String(d.getSeconds()).padStart(2, '0');
@@ -869,11 +869,11 @@
 
     function formatHumanDate(d) {
       var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      var day = d.getDate();
-      var month = months[d.getMonth()];
-      var year = d.getFullYear();
-      var hours = String(d.getHours()).padStart(2, '0');
-      var minutes = String(d.getMinutes()).padStart(2, '0');
+      var day = d.getUTCDate();
+      var month = months[d.getUTCMonth()];
+      var year = d.getUTCFullYear();
+      var hours = String(d.getUTCHours()).padStart(2, '0');
+      var minutes = String(d.getUTCMinutes()).padStart(2, '0');
       if (hours === '00' && minutes === '00') {
         return day + ' ' + month + ' ' + year;
       }
@@ -884,10 +884,9 @@
       var textVal = document.getElementById('promo-starts-text').value.trim();
       var picker = document.getElementById('promo-starts');
       if (!textVal) { picker.value = ''; return; }
-      var d = new Date(textVal);
+      var d = new Date(textVal + " UTC");
       if (!isNaN(d.getTime())) {
-        var offset = d.getTimezoneOffset() * 60000;
-        picker.value = (new Date(d.getTime() - offset)).toISOString().slice(0, 16);
+        picker.value = d.toISOString().slice(0, 16);
       }
     };
 
@@ -895,17 +894,16 @@
       var pickerVal = document.getElementById('promo-starts').value;
       var textInput = document.getElementById('promo-starts-text');
       if (!pickerVal) { textInput.value = ''; return; }
-      textInput.value = formatHumanDate(new Date(pickerVal));
+      textInput.value = formatHumanDate(new Date(pickerVal + "Z"));
     };
 
     window.parseExpiryText = function() {
       var textVal = document.getElementById('promo-expiry-text').value.trim();
       var picker = document.getElementById('promo-expiry');
       if (!textVal) { picker.value = ''; return; }
-      var d = new Date(textVal);
+      var d = new Date(textVal + " UTC");
       if (!isNaN(d.getTime())) {
-        var offset = d.getTimezoneOffset() * 60000;
-        picker.value = (new Date(d.getTime() - offset)).toISOString().slice(0, 16);
+        picker.value = d.toISOString().slice(0, 16);
       }
     };
 
@@ -913,7 +911,7 @@
       var pickerVal = document.getElementById('promo-expiry').value;
       var textInput = document.getElementById('promo-expiry-text');
       if (!pickerVal) { textInput.value = ''; return; }
-      textInput.value = formatHumanDate(new Date(pickerVal));
+      textInput.value = formatHumanDate(new Date(pickerVal + "Z"));
     };
 
     // Google Sign-In Gate
@@ -1079,8 +1077,7 @@
       // Sync Dates UI
       if (promoData.startsAt) {
         var d = new Date(promoData.startsAt);
-        var offset = d.getTimezoneOffset() * 60000;
-        document.getElementById('promo-starts').value = (new Date(d.getTime() - offset)).toISOString().slice(0, 16);
+        document.getElementById('promo-starts').value = d.toISOString().slice(0, 16);
         document.getElementById('promo-starts-text').value = formatHumanDate(d);
       } else {
         document.getElementById('promo-starts').value = '';
@@ -1089,8 +1086,7 @@
 
       if (promoData.expiresAt) {
         var d = new Date(promoData.expiresAt);
-        var offset = d.getTimezoneOffset() * 60000;
-        document.getElementById('promo-expiry').value = (new Date(d.getTime() - offset)).toISOString().slice(0, 16);
+        document.getElementById('promo-expiry').value = d.toISOString().slice(0, 16);
         document.getElementById('promo-expiry-text').value = formatHumanDate(d);
       } else {
         document.getElementById('promo-expiry').value = '';
@@ -1152,9 +1148,9 @@
       var claimsCap = claimsCapVal ? parseInt(claimsCapVal, 10) : null;
       
       var startsVal = document.getElementById('promo-starts').value;
-      var startsAt = startsVal ? new Date(startsVal).getTime() : null;
+      var startsAt = startsVal ? new Date(startsVal + "Z").getTime() : null;
       var expiryVal = document.getElementById('promo-expiry').value;
-      var expiresAt = expiryVal ? new Date(expiryVal).getTime() : null;
+      var expiresAt = expiryVal ? new Date(expiryVal + "Z").getTime() : null;
 
       if (!name) { alert("Please enter a watch face name."); return; }
 
