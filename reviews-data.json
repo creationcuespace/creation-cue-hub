@@ -1,4 +1,29 @@
 {
-  "lastUpdated": "2026-09-19T01:37:19.877Z",
-  "reviews": []
+  "lastUpdated": "2026-09-20T01:40:15.052Z",
+  "reviews": [
+    {
+      "reviewId": "71b4cb2d-b105-4a81-bc44-0797f3675176",
+      "packageName": "com.creationcue.crc066watchface",
+      "title": "Digital Watch Face CRC066",
+      "wfId": "crc066",
+      "authorName": "Daniel Petti",
+      "starRating": 5,
+      "reviewerLanguage": "es",
+      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
+      "text": "\tMuy bueno",
+      "lastModified": "2026-09-19T14:53:18.000Z"
+    },
+    {
+      "reviewId": "024d29c2-975d-4b3b-8687-b502fee873c9",
+      "packageName": "com.creation.cue179watchface",
+      "title": "Watch Face CUE179",
+      "wfId": "cue179",
+      "authorName": "Dimitrios Kamposioris",
+      "starRating": 5,
+      "reviewerLanguage": "el",
+      "deviceMetadata": "pa2q (Galaxy S25+)",
+      "text": "\tΑπλώς τέλειο",
+      "lastModified": "2026-09-19T09:43:55.000Z"
+    }
+  ]
 }

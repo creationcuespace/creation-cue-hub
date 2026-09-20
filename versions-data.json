@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-19T01:37:19.876Z",
+  "lastUpdated": "2026-09-20T01:40:15.050Z",
   "results": [
     {
       "id": "cue178",
@@ -124,12 +124,12 @@
     {
       "id": "cue167",
       "title": "CUE167",
-      "playStoreTitle": "Watch Face CUE167",
+      "playStoreTitle": "CUE167",
       "packageName": "com.creation.cue167watchface",
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "cue166",
@@ -734,12 +734,12 @@
     {
       "id": "cue098",
       "title": "CUE098",
-      "playStoreTitle": "Digital Watch Face CUE098",
+      "playStoreTitle": "CUE098",
       "packageName": "com.creation.cue098watchface",
       "companionVersion": "Android 16 API & Design Update (v10000047)",
       "wearVersion": "Wear OS SDK 35 Update (v10000046)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "cue097",
@@ -914,12 +914,12 @@
     {
       "id": "crc050",
       "title": "CRC050",
-      "playStoreTitle": "Wear OS watch face CRC050",
+      "playStoreTitle": "CRC050",
       "packageName": "com.watchfacestudio.crc050",
       "companionVersion": "Android 16 API & Design Update (v10000015)",
       "wearVersion": "Wear OS SDK 35 Update (v10000014)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "crc046",
@@ -1034,22 +1034,22 @@
     {
       "id": "crc030",
       "title": "CRC030",
-      "playStoreTitle": "Gothic Watch face CRC030",
+      "playStoreTitle": "CRC030",
       "packageName": "com.watchfacestudio.crc030",
       "companionVersion": "Android 16 API & Design Update (v10000024)",
       "wearVersion": "Wear OS SDK 35 Update (v10000023)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "crc028",
       "title": "CRC028",
-      "playStoreTitle": "Fitness SkullWatch crc028",
+      "playStoreTitle": "CRC028",
       "packageName": "com.watchfacestudio.crc028",
       "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "crc027",
