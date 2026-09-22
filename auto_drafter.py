@@ -24,7 +24,7 @@ MY_EMAIL = 'creationcuespace@gmail.com'
 
 # Configure Gemini
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-2.5-flash', tools='google_search_retrieval')
+model = genai.GenerativeModel('gemini-2.5-flash', tools='google_search')
 
 AI_INSTRUCTIONS = """
 You are an expert email support assistant for the app developer 'Creation Cue'.
