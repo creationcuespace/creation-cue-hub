@@ -2232,17 +2232,29 @@
       <button class="details-close-btn" onclick="closeDetailsPanel()" title="Close Details">✕</button>
     </div>
     <div class="details-body">
-      <!-- Play Store Link -->
-      <a id="details-open-playstore" href="#" target="_blank"
-         style="display:flex; align-items:center; justify-content:center; gap:6px;
-                background: rgba(33,150,243,0.12); border: 1px solid rgba(33,150,243,0.35);
-                color: #64b5f6; font-size:14px; font-weight:700; padding:12px;
-                border-radius:8px; text-decoration:none; transition: background 0.15s, border-color 0.15s;
-                letter-spacing:0.5px; width: 100%; margin-bottom: 2px;"
-         onmouseover="this.style.background='rgba(33,150,243,0.22)';this.style.borderColor='rgba(33,150,243,0.6)'"
-         onmouseout="this.style.background='rgba(33,150,243,0.12)';this.style.borderColor='rgba(33,150,243,0.35)'">
-        ▶️ Open in Google Play Store
-      </a>
+      <!-- Play Store Link & Copy Review Request -->
+      <div style="display:flex; flex-direction:column; gap:6px; margin-bottom: 2px;">
+        <a id="details-open-playstore" href="#" target="_blank"
+           style="display:flex; align-items:center; justify-content:center; gap:6px;
+                  background: rgba(33,150,243,0.12); border: 1px solid rgba(33,150,243,0.35);
+                  color: #64b5f6; font-size:14px; font-weight:700; padding:10px 12px;
+                  border-radius:8px; text-decoration:none; transition: background 0.15s, border-color 0.15s;
+                  letter-spacing:0.5px; width: 100%;"
+           onmouseover="this.style.background='rgba(33,150,243,0.22)';this.style.borderColor='rgba(33,150,243,0.6)'"
+           onmouseout="this.style.background='rgba(33,150,243,0.12)';this.style.borderColor='rgba(33,150,243,0.35)'">
+          ▶️ Open in Google Play Store
+        </a>
+        <button id="details-copy-review-link" type="button"
+           style="display:flex; align-items:center; justify-content:center; gap:6px;
+                  background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.35);
+                  color: #34d399; font-size:13px; font-weight:700; padding:10px 12px;
+                  border-radius:8px; cursor:pointer; transition: background 0.15s, border-color 0.15s;
+                  letter-spacing:0.5px; width: 100%;"
+           onmouseover="this.style.background='rgba(16,185,129,0.22)';this.style.borderColor='rgba(16,185,129,0.6)'"
+           onmouseout="this.style.background='rgba(16,185,129,0.12)';this.style.borderColor='rgba(16,185,129,0.35)'">
+          ⭐ Copy Review Request Link
+        </button>
+      </div>
       
       <!-- Quick Open in Other Tools -->
       <div class="details-section" style="margin-top: 0; padding-top: 0;">
@@ -3531,12 +3543,23 @@
       const base = 'https://creationcue.web.app/';
       
       const playBtn = document.getElementById('details-open-playstore');
+      const copyReviewBtn = document.getElementById('details-copy-review-link');
       if (wf.packageName) {
-        playBtn.href = `https://play.google.com/store/apps/details?id=${wf.packageName}`;
+        const storeUrl = `https://play.google.com/store/apps/details?id=${wf.packageName}`;
+        playBtn.href = storeUrl;
         playBtn.style.display = 'flex';
+        if (copyReviewBtn) {
+          copyReviewBtn.style.display = 'flex';
+          const reviewMsg = `If you like watch face ${wf.title || wf.id}, a review is much appreciated! ${storeUrl}`;
+          copyReviewBtn.onclick = (e) => {
+            e.stopPropagation();
+            copyText(reviewMsg, copyReviewBtn);
+          };
+        }
       } else {
         playBtn.href = '#';
         playBtn.style.display = 'none';
+        if (copyReviewBtn) copyReviewBtn.style.display = 'none';
       }
       document.getElementById('details-open-coupons').href = `${base}manage-coupons.html?face=${encodeURIComponent(id)}`;
       document.getElementById('details-open-social').href   = `${base}social-generator.html?face=${encodeURIComponent(id)}`;
