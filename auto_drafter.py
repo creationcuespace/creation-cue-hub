@@ -153,7 +153,6 @@ def main():
                 to_address = email_match.group(1) if email_match else sender
                 
                 draft_msg = EmailMessage()
-                draft_msg.set_content(ai_reply)
                 draft_msg['To'] = to_address
                 draft_msg['From'] = MY_EMAIL
                 
@@ -164,6 +163,26 @@ def main():
                 if message_id:
                     draft_msg['In-Reply-To'] = message_id
                     draft_msg['References'] = message_id
+
+                # Create HTML content with the signature
+                ai_reply_html = ai_reply.replace('\n', '<br>')
+                html_body = f"""
+<html>
+  <body>
+    <div style="font-family: sans-serif; font-size: 14px;">
+      {ai_reply_html}
+    </div>
+    <br><br>
+    <div>
+      <a href="https://play.google.com/store/apps/dev?id=7609098870161748513">
+        <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/more.png" alt="Visit the Official Creation Cue Play Store" style="max-width: 400px; height: auto; border: 0;">
+      </a>
+    </div>
+  </body>
+</html>
+"""
+                draft_msg.set_content(ai_reply) # Plain text fallback
+                draft_msg.add_alternative(html_body, subtype='html')
 
                 # Append to Drafts folder
                 mail.select('"[Gmail]/Drafts"')
