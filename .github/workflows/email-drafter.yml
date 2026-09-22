@@ -23,14 +23,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Create token.json file from secret
-        run: |
-          echo '${{ secrets.GMAIL_TOKEN_JSON }}' > token.json
-
       - name: Run Auto Drafter
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         run: python auto_drafter.py
-
-      - name: Cleanup token file
-        run: rm -f token.json
