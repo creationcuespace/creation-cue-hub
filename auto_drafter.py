@@ -1,28 +1,29 @@
-import os.path
-import base64
+import os
+import email
 from email.message import EmailMessage
+import imaplib
+import time
+import base64
+import re
 import google.generativeai as genai
-
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
 
 # ==========================================
 # CONFIGURATION
 # ==========================================
-# We will pass this securely via GitHub Secrets!
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")
+
 if not GEMINI_API_KEY:
-    print("Error: GEMINI_API_KEY environment variable not set!")
+    print("Error: GEMINI_API_KEY not set!")
+    exit(1)
+if not GMAIL_APP_PASSWORD:
+    print("Error: GMAIL_APP_PASSWORD not set! Make sure you added it to GitHub Secrets.")
     exit(1)
 
-SCOPES = ['https://www.googleapis.com/auth/gmail.modify']
 MY_EMAIL = 'creationcuespace@gmail.com'
 
-# Configure the AI
+# Configure Gemini
 genai.configure(api_key=GEMINI_API_KEY)
-# We use the standard gemini model with Google Search enabled
 model = genai.GenerativeModel('gemini-2.5-flash', tools='google_search_retrieval')
 
 AI_INSTRUCTIONS = """
@@ -44,102 +45,135 @@ Style Rules:
 - End with "Cheers, Creation Cue Team".
 """
 
-def create_draft(service, to, subject, body_text, thread_id=None, message_id=None):
-    message = EmailMessage()
-    message.set_content(body_text)
-    message['To'] = to
-    message['From'] = MY_EMAIL
+def get_email_body(msg):
+    if msg.is_multipart():
+        for part in msg.walk():
+            content_type = part.get_content_type()
+            if content_type == 'text/plain':
+                return part.get_payload(decode=True).decode('utf-8', errors='ignore')
+    else:
+        return msg.get_payload(decode=True).decode('utf-8', errors='ignore')
+    return "No text body available"
+
+def main():
+    print("Connecting to Gmail via IMAP...")
+    mail = imaplib.IMAP4_SSL('imap.gmail.com')
+    mail.login(MY_EMAIL, GMAIL_APP_PASSWORD)
     
-    # If it doesn't already have 'Re:', add it so it groups in the thread
-    if not subject.lower().startswith("re:"):
-        subject = "Re: " + subject
-    message['Subject'] = subject
-
-    if message_id:
-        message['In-Reply-To'] = message_id
-        message['References'] = message_id
-
-    encoded_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
-    create_message = {'message': {'raw': encoded_message}}
+    # 1. Select the All Mail folder so we can search globally
+    mail.select('"[Gmail]/All Mail"')
     
-    if thread_id:
-        create_message['message']['threadId'] = thread_id
+    print("Searching for recent inbox emails...")
+    # Search for emails in the inbox from the last 2 days
+    status, response = mail.search(None, 'X-GM-RAW', '"in:inbox newer_than:2d"')
+    message_nums = response[0].split()
     
-    draft = service.users().drafts().create(userId="me", body=create_message).execute()
-    return draft['id']
-
-def main_logic():
-    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-    service = build('gmail', 'v1', credentials=creds)
-
-    print("Fetching recent inbox emails...")
-    results = service.users().messages().list(userId='me', q="in:inbox newer_than:2d", maxResults=15).execute()
-    messages = results.get('messages', [])
-
-    if not messages:
+    if not message_nums:
         print("No recent messages found.")
+        mail.logout()
         return
 
-    for message in messages:
-        # Fetch the full thread to see the message history
-        thread = service.users().threads().get(userId='me', id=message['threadId']).execute()
-        thread_messages = thread.get('messages', [])
+    processed_threads = set()
+
+    for num in message_nums:
+        # Fetch the thread ID and basic headers
+        status, data = mail.fetch(num, '(X-GM-THRID RFC822.HEADER)')
         
-        if not thread_messages:
-            continue
-            
-        # Check the absolute latest message in the thread
-        last_message = thread_messages[-1]
-        last_labels = last_message.get('labelIds', [])
-        
-        # If the latest message in the thread is already a DRAFT or was SENT by us, skip it!
-        # This prevents duplicating drafts or replying if you already replied manually.
-        if 'DRAFT' in last_labels or 'SENT' in last_labels:
-            continue
-            
-        # We need to evaluate this latest message!
-        msg = last_message
-        
-        headers = msg['payload']['headers']
-        subject = next((header['value'] for header in headers if header['name'] == 'Subject'), 'No Subject')
-        sender = next((header['value'] for header in headers if header['name'] == 'From'), 'Unknown Sender')
-        message_id = next((header['value'] for header in headers if header['name'].lower() == 'message-id'), None)
-        thread_id = msg['threadId']
-        
-        body = "No text body available"
-        parts = [msg['payload']]
-        while parts:
-            part = parts.pop(0)
-            if part.get('parts'):
-                parts.extend(part['parts'])
-            if part.get('mimeType') == 'text/plain':
-                data = part.get('body', {}).get('data', '')
-                if data:
-                    body = base64.urlsafe_b64decode(data).decode('utf-8')
+        thread_id = None
+        for item in data:
+            if isinstance(item, tuple):
+                # Extract thread ID
+                match = re.search(rb'X-GM-THRID (\d+)', item[0])
+                if match:
+                    thread_id = match.group(1).decode()
                     break
+                    
+        if not thread_id or thread_id in processed_threads:
+            continue
+            
+        processed_threads.add(thread_id)
+        
+        # Now, fetch all messages in this thread from All Mail to find the latest one
+        status, thread_resp = mail.search(None, 'X-GM-THRID', thread_id)
+        thread_nums = thread_resp[0].split()
+        
+        if not thread_nums:
+            continue
+            
+        # The last number in the thread is the latest message
+        latest_num = thread_nums[-1]
+        status, latest_data = mail.fetch(latest_num, '(RFC822)')
+        
+        latest_msg = None
+        for item in latest_data:
+            if isinstance(item, tuple):
+                latest_msg = email.message_from_bytes(item[1])
+                break
+                
+        if not latest_msg:
+            continue
+            
+        sender = latest_msg.get('From', '')
+        
+        # If the latest message in the thread is from US, it means we already replied!
+        if MY_EMAIL.lower() in sender.lower():
+            continue
+            
+        # 2. Check if a draft already exists for this thread
+        mail.select('"[Gmail]/Drafts"')
+        status, draft_resp = mail.search(None, 'X-GM-THRID', thread_id)
+        mail.select('"[Gmail]/All Mail"') # Switch back
+        
+        if draft_resp[0].split():
+            continue # We already have a draft for this thread!
+
+        # 3. We need to evaluate this email!
+        subject = latest_msg.get('Subject', 'No Subject')
+        body = get_email_body(latest_msg)
+        message_id = latest_msg.get('Message-ID', '')
         
         print(f"\nEvaluating email from: {sender}")
         
-        # Ask AI to evaluate and draft
         ai_prompt = f"{AI_INSTRUCTIONS}\n\nEMAIL SUBJECT: {subject}\nEMAIL BODY:\n{body}"
+        
         try:
             response = model.generate_content(ai_prompt)
             ai_reply = response.text.strip()
             
             if ai_reply == "IGNORE" or "IGNORE" in ai_reply[:10]:
-                print("-> AI decided to IGNORE this email (Not a support request).")
+                print("-> AI decided to IGNORE this email.")
             else:
                 print("-> AI generated a draft! Uploading to Gmail...")
-                # Extract email address from Sender string "Name <email@domain.com>"
-                import re
+                
+                # Extract email address
                 email_match = re.search(r'<([^>]+)>', sender)
                 to_address = email_match.group(1) if email_match else sender
                 
-                draft_id = create_draft(service, to_address, subject, ai_reply, thread_id, message_id)
-                print(f"-> Draft created successfully! (ID: {draft_id})")
+                draft_msg = EmailMessage()
+                draft_msg.set_content(ai_reply)
+                draft_msg['To'] = to_address
+                draft_msg['From'] = MY_EMAIL
+                
+                if not subject.lower().startswith("re:"):
+                    subject = "Re: " + subject
+                draft_msg['Subject'] = subject
+                
+                if message_id:
+                    draft_msg['In-Reply-To'] = message_id
+                    draft_msg['References'] = message_id
+
+                # Append to Drafts folder
+                mail.select('"[Gmail]/Drafts"')
+                # We can't directly set X-GM-THRID via append, but adding In-Reply-To forces Gmail to group it!
+                mail.append('"[Gmail]/Drafts"', '\\Draft', imaplib.Time2Internaldate(time.time()), draft_msg.as_bytes())
+                mail.select('"[Gmail]/All Mail"') # Switch back
+                
+                print("-> Draft created successfully!")
                 
         except Exception as e:
             print(f"Error calling AI: {e}")
 
+    mail.logout()
+
 if __name__ == '__main__':
-    main_logic()
+    main()
