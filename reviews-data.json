@@ -1,29 +1,29 @@
 {
-  "lastUpdated": "2026-09-21T01:41:55.514Z",
+  "lastUpdated": "2026-09-22T01:53:31.358Z",
   "reviews": [
     {
-      "reviewId": "71b4cb2d-b105-4a81-bc44-0797f3675176",
-      "packageName": "com.creationcue.crc066watchface",
-      "title": "Digital Watch Face CRC066",
-      "wfId": "crc066",
-      "authorName": "Daniel Petti",
+      "reviewId": "e831d77c-5a67-498d-8a40-5604eae8a69a",
+      "packageName": "com.creation.cue167watchface",
+      "title": "Watch Face CUE167",
+      "wfId": "cue167",
+      "authorName": "Roman Soukup",
       "starRating": 5,
-      "reviewerLanguage": "es",
-      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
-      "text": "\tMuy bueno",
-      "lastModified": "2026-09-19T14:53:18.000Z"
+      "reviewerLanguage": "cs",
+      "deviceMetadata": "OP516FL1 (OnePlus 10 Pro 5G)",
+      "text": "\tI have several of your watch faces and they are great, but this one is absolutely the best of all of them on the entire Google Store. It looks absolutely amazing on the OnePlus Watch 3.",
+      "lastModified": "2026-09-21T09:57:33.000Z"
     },
     {
-      "reviewId": "024d29c2-975d-4b3b-8687-b502fee873c9",
+      "reviewId": "36346efa-737e-4694-b3e1-b0ba0afae350",
       "packageName": "com.creation.cue179watchface",
       "title": "Watch Face CUE179",
       "wfId": "cue179",
       "authorName": "Dimitrios Kamposioris",
       "starRating": 5,
       "reviewerLanguage": "el",
-      "deviceMetadata": "pa2q (Galaxy S25+)",
-      "text": "\tΑπλώς τέλειο",
-      "lastModified": "2026-09-19T09:43:55.000Z"
+      "deviceMetadata": "gta11pwifi (Galaxy Tab A11+)",
+      "text": "\tΤέλειο",
+      "lastModified": "2026-09-21T06:04:50.000Z"
     }
   ]
 }
