@@ -5,7 +5,7 @@ import imaplib
 import time
 import base64
 import re
-import google.generativeai as genai
+from google import genai
 
 # ==========================================
 # CONFIGURATION
@@ -23,8 +23,7 @@ if not GMAIL_APP_PASSWORD:
 MY_EMAIL = 'creationcuespace@gmail.com'
 
 # Configure Gemini
-genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-2.5-flash', tools='google_search')
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 AI_INSTRUCTIONS = """
 You are an expert email support assistant for the app developer 'Creation Cue'.
@@ -137,7 +136,11 @@ def main():
         ai_prompt = f"{AI_INSTRUCTIONS}\n\nEMAIL SUBJECT: {subject}\nEMAIL BODY:\n{body}"
         
         try:
-            response = model.generate_content(ai_prompt)
+            response = client.models.generate_content(
+                model='gemini-2.5-flash',
+                contents=ai_prompt,
+                config={"tools": [{"google_search": {}}]}
+            )
             ai_reply = response.text.strip()
             
             if ai_reply == "IGNORE" or "IGNORE" in ai_reply[:10]:
