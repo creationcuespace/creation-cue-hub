@@ -1,4 +1,29 @@
 {
-  "lastUpdated": "2026-09-19T01:37:19.877Z",
-  "reviews": []
+  "lastUpdated": "2026-09-22T01:53:31.358Z",
+  "reviews": [
+    {
+      "reviewId": "e831d77c-5a67-498d-8a40-5604eae8a69a",
+      "packageName": "com.creation.cue167watchface",
+      "title": "Watch Face CUE167",
+      "wfId": "cue167",
+      "authorName": "Roman Soukup",
+      "starRating": 5,
+      "reviewerLanguage": "cs",
+      "deviceMetadata": "OP516FL1 (OnePlus 10 Pro 5G)",
+      "text": "\tI have several of your watch faces and they are great, but this one is absolutely the best of all of them on the entire Google Store. It looks absolutely amazing on the OnePlus Watch 3.",
+      "lastModified": "2026-09-21T09:57:33.000Z"
+    },
+    {
+      "reviewId": "36346efa-737e-4694-b3e1-b0ba0afae350",
+      "packageName": "com.creation.cue179watchface",
+      "title": "Watch Face CUE179",
+      "wfId": "cue179",
+      "authorName": "Dimitrios Kamposioris",
+      "starRating": 5,
+      "reviewerLanguage": "el",
+      "deviceMetadata": "gta11pwifi (Galaxy Tab A11+)",
+      "text": "\tΤέλειο",
+      "lastModified": "2026-09-21T06:04:50.000Z"
+    }
+  ]
 }
