@@ -468,7 +468,17 @@
             border-radius: 12px;
             font-weight: 700;
             font-size: 14px;
+        /* Brand Header Link */
+        .brand-header-link {
+            text-decoration: none;
+            color: inherit;
+            display: inline-block;
             cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .brand-header-link:hover, .brand-header-link:active {
+            transform: scale(1.03);
         }
     </style>
 </head>
@@ -478,10 +488,12 @@
         
         <!-- Sticky Fixed Top Header -->
         <header class="sticky-top-header">
-            <div class="brand-logo-container">
-                <img src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" alt="CreationCue Logo" class="brand-logo">
-            </div>
-            <h1 class="brand-title">Creation<span>Cue</span>™</h1>
+            <a href="https://creationcue.web.app" class="brand-header-link" title="Open CreationCue Main Website">
+                <div class="brand-logo-container">
+                    <img src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" alt="CreationCue Logo" class="brand-logo">
+                </div>
+                <h1 class="brand-title">Creation<span>Cue</span>™</h1>
+            </a>
         </header>
 
         <!-- Scrollable Middle Body -->
