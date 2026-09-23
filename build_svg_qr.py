@@ -1,6 +1,6 @@
 import qrcode
 
-def generate_styled_qr(url, filename_prefix, dark_mode=False, with_logo=True):
+def generate_styled_qr(url, filename_prefix, dark_mode=False, with_logo=True, pure_bw=False):
     qr = qrcode.QRCode(
         version=None,
         error_correction=qrcode.constants.ERROR_CORRECT_H if with_logo else qrcode.constants.ERROR_CORRECT_M,
@@ -12,10 +12,20 @@ def generate_styled_qr(url, filename_prefix, dark_mode=False, with_logo=True):
     matrix = qr.get_matrix()
     size = len(matrix)
     
-    bg_color = "#0F172A" if dark_mode else "#FFFFFF"
-    dot_color = "#F1B31C" if dark_mode else "#0F172A"
-    eye_pupil_color = "#FFFFFF" if dark_mode else "#0F172A"
-    card_border_color = "rgba(241, 179, 28, 0.3)" if dark_mode else "rgba(15, 23, 42, 0.1)"
+    if pure_bw:
+        bg_color = "#FFFFFF"
+        dot_color = "#000000"
+        eye_frame_fill = "#000000"
+        eye_inner_fill = "#FFFFFF"
+        eye_pupil_fill = "#000000"
+        card_border_color = "transparent"
+    else:
+        bg_color = "#0F172A" if dark_mode else "#FFFFFF"
+        dot_color = "#F1B31C" if dark_mode else "#0F172A"
+        eye_frame_fill = "url(#goldGrad)"
+        eye_inner_fill = bg_color
+        eye_pupil_fill = "#FFFFFF" if dark_mode else "#0F172A"
+        card_border_color = "rgba(241, 179, 28, 0.3)" if dark_mode else "rgba(15, 23, 42, 0.1)"
     
     cell_size = 20
     view_size = size * cell_size
@@ -41,18 +51,19 @@ def generate_styled_qr(url, filename_prefix, dark_mode=False, with_logo=True):
     svg_parts = []
     svg_parts.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {total_size} {total_size}" width="1000" height="1000">')
     
-    svg_parts.append('''
-      <defs>
-        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#FFD700" />
-          <stop offset="50%" stop-color="#F1B31C" />
-          <stop offset="100%" stop-color="#D99B0C" />
-        </linearGradient>
-        <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.15" />
-        </filter>
-      </defs>
-    ''')
+    if not pure_bw:
+        svg_parts.append('''
+          <defs>
+            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFD700" />
+              <stop offset="50%" stop-color="#F1B31C" />
+              <stop offset="100%" stop-color="#D99B0C" />
+            </linearGradient>
+            <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.15" />
+            </filter>
+          </defs>
+        ''')
     
     svg_parts.append(f'<rect width="{total_size}" height="{total_size}" rx="36" fill="{bg_color}" stroke="{card_border_color}" stroke-width="2" />')
     
@@ -77,13 +88,13 @@ def generate_styled_qr(url, filename_prefix, dark_mode=False, with_logo=True):
         w = 7 * cell_size
         
         eye_svg = []
-        eye_svg.append(f'<rect x="{x}" y="{y}" width="{w}" height="{w}" rx="24" fill="url(#goldGrad)" />')
+        eye_svg.append(f'<rect x="{x}" y="{y}" width="{w}" height="{w}" rx="24" fill="{eye_frame_fill}" />')
         inner_margin = cell_size
         inner_w = w - (2 * inner_margin)
-        eye_svg.append(f'<rect x="{x + inner_margin}" y="{y + inner_margin}" width="{inner_w}" height="{inner_w}" rx="16" fill="{bg_color}" />')
+        eye_svg.append(f'<rect x="{x + inner_margin}" y="{y + inner_margin}" width="{inner_w}" height="{inner_w}" rx="16" fill="{eye_inner_fill}" />')
         pupil_margin = cell_size * 2
         pupil_w = w - (2 * pupil_margin)
-        eye_svg.append(f'<rect x="{x + pupil_margin}" y="{y + pupil_margin}" width="{pupil_w}" height="{pupil_w}" rx="10" fill="{eye_pupil_color}" />')
+        eye_svg.append(f'<rect x="{x + pupil_margin}" y="{y + pupil_margin}" width="{pupil_w}" height="{pupil_w}" rx="10" fill="{eye_pupil_fill}" />')
         return "\n".join(eye_svg)
 
     svg_parts.append(draw_finder_eye(2, 2))
@@ -116,6 +127,6 @@ def generate_styled_qr(url, filename_prefix, dark_mode=False, with_logo=True):
         f.write(full_svg)
     print(f"Generated {out_filename}")
 
-generate_styled_qr("https://creationcue.web.app/go", "qrcode_go_light", dark_mode=False, with_logo=True)
-generate_styled_qr("https://creationcue.web.app/go", "qrcode_go_dark", dark_mode=True, with_logo=True)
-generate_styled_qr("https://creationcue.web.app/go", "qrcode_go_classic", dark_mode=False, with_logo=False)
+generate_styled_qr("https://creationcue.web.app/go", "qrcode_go_light", dark_mode=False, with_logo=True, pure_bw=False)
+generate_styled_qr("https://creationcue.web.app/go", "qrcode_go_dark", dark_mode=True, with_logo=True, pure_bw=False)
+generate_styled_qr("https://creationcue.web.app/go", "qrcode_go_classic", dark_mode=False, with_logo=False, pure_bw=True)
