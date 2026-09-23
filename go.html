@@ -498,7 +498,7 @@
                 <div class="person-name">Sotiris Liontos</div>
                 <div class="person-role">Digital design UI | UX</div>
                 
-                <a href="sotiris.vcf" class="discrete-vcard-btn" title="Save contact info to phone">
+                <a href="sotiris.vcf" onclick="saveContactNative(event)" class="discrete-vcard-btn" title="Save contact info to phone">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
                     <span>Save Contact to Phone (.vcf)</span>
                 </a>
@@ -586,8 +586,10 @@
             document.getElementById('huawei-modal').classList.remove('active');
         }
 
-        // Generate and download 1-click vCard (.vcf)
-        function downloadVCard() {
+        // Native OS Contact Import via Web Share API or direct inline location
+        async function saveContactNative(e) {
+            if (e) e.preventDefault();
+            
             const vCardData = [
                 'BEGIN:VCARD',
                 'VERSION:3.0',
@@ -601,18 +603,24 @@
                 'ADR;TYPE=WORK:;;Ioannina;;;Hellas',
                 'NOTE:CreationCue Watch Face Designer & Developer',
                 'END:VCARD'
-            ].join('\n');
+            ].join('\r\n');
 
-            const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = 'Sotiris_Liontos_CreationCue.vcf';
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
+            try {
+                const file = new File([vCardData], 'Sotiris_Liontos_CreationCue.vcf', { type: 'text/vcard;charset=utf-8' });
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({
+                        files: [file],
+                        title: 'Sotiris Liontos',
+                        text: 'Save Sotiris Liontos to contacts'
+                    });
+                    return;
+                }
+            } catch (err) {
+                if (err.name === 'AbortError') return; // User closed OS sheet
+            }
+
+            // Fallback inline location
+            window.location.href = 'sotiris.vcf';
         }
     </script>
 </body>
