@@ -34,6 +34,12 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent !important;
+        }
+
+        a, a:visited, a:hover, a:active, a:focus {
+            text-decoration: none;
+            outline: none;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -468,13 +474,22 @@
             border-radius: 12px;
             font-weight: 700;
             font-size: 14px;
-        /* Brand Header Link */
-        .brand-header-link {
-            text-decoration: none;
-            color: inherit;
+            cursor: pointer;
+        }
+
+        /* Brand Header Link (No Underline / No Purple Visited State) */
+        .brand-header-link,
+        .brand-header-link:visited,
+        .brand-header-link:active,
+        .brand-header-link:focus,
+        .brand-header-link:hover {
+            text-decoration: none !important;
+            border-bottom: none !important;
+            outline: none !important;
+            color: inherit !important;
             display: inline-block;
             cursor: pointer;
-            transition: transform 0.2s ease;
+            -webkit-tap-highlight-color: transparent !important;
         }
 
         .brand-header-link:hover, .brand-header-link:active {
