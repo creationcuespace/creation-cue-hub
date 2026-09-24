@@ -530,7 +530,7 @@
                 <div class="person-name">Sotiris Liontos</div>
                 <div class="person-role">Digital design UI | UX</div>
                 
-                <a href="sotiris.vcf" onclick="saveContactNative(event)" class="discrete-vcard-btn" title="Save contact info to phone">
+                <a href="sotiris.vcf" download="Sotiris_Liontos.vcf" class="discrete-vcard-btn" title="Save contact info to phone">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
                     <span>Save Contact to Phone (.vcf)</span>
                 </a>
@@ -616,53 +616,6 @@
 
         function closeHuaweiNotice() {
             document.getElementById('huawei-modal').classList.remove('active');
-        }
-
-        // Native Contact Share & Save Handler
-        async function saveContactNative(e) {
-            if (e) e.preventDefault();
-            
-            const vCardData = [
-                'BEGIN:VCARD',
-                'VERSION:3.0',
-                'N:Liontos;Sotiris;;;',
-                'FN:Sotiris Liontos',
-                'TITLE:Digital design UI | UX',
-                'ORG:CreationCue',
-                'TEL;TYPE=CELL,VOICE:+306936898029',
-                'EMAIL;TYPE=INTERNET,PREF:creationcuespace@gmail.com',
-                'URL:https://creationcue.web.app',
-                'ADR;TYPE=WORK:;;Ioannina;;;Hellas',
-                'NOTE:CreationCue Watch Face Designer & Developer',
-                'END:VCARD'
-            ].join('\r\n');
-
-            // 1. Try Native Web Share API first (Native OS Share Sheet)
-            if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: 'Sotiris Liontos - CreationCue™',
-                        text: 'Sotiris Liontos | Digital design UI | UX\nPhone: +30 693 689 8029\nEmail: creationcuespace@gmail.com',
-                        url: 'https://creationcue.web.app/go'
-                    });
-                    return;
-                } catch (err) {
-                    if (err.name === 'AbortError') return;
-                }
-            }
-
-            // 2. Dynamic blob fallback with unique timestamped filename so Chrome never says "download again"
-            const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `Sotiris_Liontos_${Date.now()}.vcf`;
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(() => {
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
-            }, 150);
         }
     </script>
 </body>
