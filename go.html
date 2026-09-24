@@ -621,45 +621,57 @@
             document.getElementById('huawei-modal').classList.remove('active');
         }
 
-        // Smart Contact Handler (iOS Direct Card Overlay & Android Native VCF File Intent)
-        async function saveContactNative(e) {
+        // Native Contact Save Handler
+        function saveContactNative(e) {
             if (e) e.preventDefault();
             
             const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+            const isAndroid = /Android/i.test(navigator.userAgent);
             
-            // 1. On iOS Safari: Direct location navigation opens native iOS Contact sheet modal!
+            // 1. Android: Direct OS Intent opens the native "Create Contact" screen with pre-filled fields
+            // ZERO file download, never asks "Download file again?", opens Contacts app directly!
+            if (isAndroid) {
+                const androidIntent = 'intent:#Intent;' +
+                    'action=android.intent.action.INSERT;' +
+                    'type=vnd.android.cursor.dir/contact;' +
+                    'S.name=' + encodeURIComponent('Sotiris Liontos') + ';' +
+                    'S.phone=' + encodeURIComponent('+306936898029') + ';' +
+                    'S.email=' + encodeURIComponent('creationcuespace@gmail.com') + ';' +
+                    'S.company=' + encodeURIComponent('CreationCue') + ';' +
+                    'S.job_title=' + encodeURIComponent('Digital design UI | UX') + ';' +
+                    'S.postal=' + encodeURIComponent('Ioannina, Hellas') + ';' +
+                    'S.notes=' + encodeURIComponent('CreationCue Watch Face Designer & Developer') + ';' +
+                    'end';
+                
+                window.location.href = androidIntent;
+                return;
+            }
+            
+            // 2. iOS Safari: Direct location navigation opens the native iOS Contact sheet modal
             if (isIOS) {
                 window.location.href = 'sotiris.vcf';
                 return;
             }
             
-            try {
-                const response = await fetch('sotiris.vcf');
-                const vCardText = await response.text();
-                
-                // 2. On Android & Modern Browsers: Native VCF File Share
-                // Passes text/vcard file intent directly to Android Contacts / Create Contact app
-                const file = new File([vCardText], 'Sotiris_Liontos.vcf', { type: 'text/vcard;charset=utf-8' });
-                if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                    await navigator.share({ files: [file] });
-                    return;
-                }
-                
-                // 3. Fallback for browsers without File Share support
-                const blob = new Blob([vCardText], { type: 'text/vcard;charset=utf-8' });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `Sotiris_Liontos_${Date.now()}.vcf`;
-                document.body.appendChild(a);
-                a.click();
-                setTimeout(() => {
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);
-                }, 250);
-            } catch (err) {
-                window.location.href = 'sotiris.vcf';
-            }
+            // 3. Desktop / Others: Download unique timestamped .vcf file
+            fetch('sotiris.vcf')
+                .then(res => res.text())
+                .then(vCardText => {
+                    const blob = new Blob([vCardText], { type: 'text/vcard;charset=utf-8' });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `Sotiris_Liontos_${Date.now()}.vcf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    setTimeout(() => {
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                    }, 250);
+                })
+                .catch(() => {
+                    window.location.href = 'sotiris.vcf';
+                });
         }
     </script>
 </body>
