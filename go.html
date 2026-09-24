@@ -660,29 +660,40 @@
         }
 
         // Native Contact Save Handler
-        function saveContactNative(e) {
+        async function saveContactNative(e) {
             if (e) e.preventDefault();
             
             const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
             
-            // 1. iOS Safari: Direct location navigation opens the native iOS Contact sheet modal
+            // 1. iOS Safari: Direct location navigation opens native iOS Contact sheet modal
             if (isIOS) {
                 window.location.href = 'sotiris.vcf';
                 return;
             }
             
-            // 2. Android & Desktop:
-            // Download with unique timestamp so Chrome NEVER asks "Download file again?"
-            const timestamp = Date.now();
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = `sotiris.vcf?t=${timestamp}`;
-            a.download = `Sotiris_Liontos_${timestamp}.vcf`;
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(() => {
-                document.body.removeChild(a);
-            }, 300);
+            // 2. Android & Desktop: In-memory Blob with millisecond timestamp
+            // Bypasses static server headers so Chrome NEVER prompts "Download file again?"
+            try {
+                const res = await fetch('sotiris.vcf');
+                const vcardData = await res.text();
+                const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8' });
+                const blobUrl = window.URL.createObjectURL(blob);
+                const timestamp = Date.now();
+                
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = blobUrl;
+                a.download = `Sotiris_Liontos_${timestamp}.vcf`;
+                document.body.appendChild(a);
+                a.click();
+                
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(blobUrl);
+                }, 1000);
+            } catch (err) {
+                window.location.href = 'sotiris.vcf';
+            }
 
             // 3. Show floating toast guiding the user to tap Chrome's "Open" button
             showContactToast();

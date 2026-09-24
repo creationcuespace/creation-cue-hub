@@ -56,7 +56,7 @@
           },
           {
             "key": "Content-Disposition",
-            "value": "inline; filename=\"Sotiris_Liontos_CreationCue.vcf\""
+            "value": "inline"
           }
         ]
       }
