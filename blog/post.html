@@ -1030,25 +1030,49 @@
             try {
                 // 2. Fetch metadata from posts.json to display date and read time
                 let postMeta = null;
+                let posts = [];
                 try {
                     const registryRes = await fetch('posts.json?v=' + Date.now());
                     if (registryRes.ok) {
-                        const posts = await registryRes.json();
-                        postMeta = posts.find(p => p.slug === postId);
-                        renderSidebar(posts, postId);
+                        posts = await registryRes.json();
                     }
-                } catch (e) {
-                    console.warn('Could not load posts.json registry:', e);
+                } catch (e) {}
+
+                // Fallback to raw GitHub in case Firebase Hosting deployment is still running
+                try {
+                    const rawRegistryRes = await fetch('https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/blog/posts.json?v=' + Date.now());
+                    if (rawRegistryRes.ok) {
+                        const rawPosts = await rawRegistryRes.json();
+                        if (rawPosts && Array.isArray(rawPosts) && rawPosts.length >= posts.length) {
+                            posts = rawPosts;
+                        }
+                    }
+                } catch (e) {}
+
+                if (posts && posts.length > 0) {
+                    postMeta = posts.find(p => p.slug === postId);
+                    renderSidebar(posts, postId);
                 }
 
-                // 3. Fetch the Markdown file
-                const markdownRes = await fetch(`posts/${postId}.md?v=` + Date.now());
-                if (!markdownRes.ok) {
-                    throw new Error('Markdown file not found.');
-                }
-                let markdownText = await markdownRes.text();
+                // 3. Fetch the Markdown file (with fallback to raw GitHub)
+                let markdownText = '';
+                try {
+                    const markdownRes = await fetch(`posts/${postId}.md?v=` + Date.now());
+                    if (markdownRes.ok) {
+                        markdownText = await markdownRes.text();
+                    }
+                } catch (e) {}
 
-                // 4. Parse title and clean metadata headers if Gemini formatted them in Markdown
+                if (!markdownText) {
+                    const rawMdRes = await fetch(`https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/blog/posts/${postId}.md?v=` + Date.now());
+                    if (rawMdRes.ok) {
+                        markdownText = await rawMdRes.text();
+                    } else {
+                        throw new Error('Markdown file not found.');
+                    }
+                }
+
+                // 4. Parse title and clean metadata headers
                 let title = 'Wear OS Blog Post';
                 
                 // If metadata was defined in the registry, use it
@@ -1056,6 +1080,14 @@
                     title = postMeta.title;
                     dateEl.textContent = 'Published: ' + postMeta.date;
                     readTimeEl.textContent = postMeta.readTime || '3 min Read';
+                } else {
+                    // Fallback so header never displays "Loading... • Loading..."
+                    dateEl.textContent = 'Published Article';
+                    
+                    const cleanText = markdownText.replace(/<[^>]*>/g, '').trim();
+                    const words = cleanText ? cleanText.split(/\s+/).filter(Boolean).length : 0;
+                    const estMin = Math.max(1, Math.ceil(words / 200));
+                    readTimeEl.textContent = estMin + ' min Read';
                 }
 
                 // Parse standard Markdown headers, removing the main # title from markdown body

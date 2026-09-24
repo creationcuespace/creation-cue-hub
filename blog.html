@@ -749,12 +749,29 @@
             if (!container) return;
 
             try {
-                // Fetch the posts.json registry
-                const response = await fetch('blog/posts.json?v=' + Date.now());
-                if (!response.ok) {
+                let posts = [];
+                // 1. Try local fetch first
+                try {
+                    const response = await fetch('blog/posts.json?v=' + Date.now());
+                    if (response.ok) {
+                        posts = await response.json();
+                    }
+                } catch(e) {}
+
+                // 2. Fallback to raw GitHub in case Firebase Hosting deployment is still running
+                try {
+                    const rawResponse = await fetch('https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/blog/posts.json?v=' + Date.now());
+                    if (rawResponse.ok) {
+                        const rawPosts = await rawResponse.json();
+                        if (rawPosts && Array.isArray(rawPosts) && rawPosts.length >= posts.length) {
+                            posts = rawPosts;
+                        }
+                    }
+                } catch(e) {}
+
+                if (!posts || posts.length === 0) {
                     throw new Error('No articles registry found.');
                 }
-                const posts = await response.json();
 
                 // Filter out draft posts
                 const publicPosts = posts.filter(p => p.draft !== true);
