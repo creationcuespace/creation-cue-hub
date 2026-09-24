@@ -485,6 +485,38 @@
             cursor: pointer;
         }
 
+        /* Floating Contact Toast Notification */
+        .contact-toast {
+            position: fixed;
+            bottom: 85px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(15, 23, 42, 0.96);
+            border: 1px solid var(--accent-gold);
+            color: #FFFFFF;
+            padding: 12px 20px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(241, 179, 28, 0.25);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .contact-toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
         /* Brand Header Link (No Underline / No Purple Visited State) */
         .brand-header-link,
         .brand-header-link:visited,
@@ -611,6 +643,12 @@
         </div>
     </div>
 
+    <!-- Floating Contact Download Guidance Toast -->
+    <div id="contact-toast" class="contact-toast">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        <span>Contact ready! Tap <strong>"Open"</strong> below to save to Contacts</span>
+    </div>
+
     <script>
         // Modal Handlers
         function openHuaweiNotice() {
@@ -626,52 +664,37 @@
             if (e) e.preventDefault();
             
             const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-            const isAndroid = /Android/i.test(navigator.userAgent);
             
-            // 1. Android: Direct OS Intent opens the native "Create Contact" screen with pre-filled fields
-            // ZERO file download, never asks "Download file again?", opens Contacts app directly!
-            if (isAndroid) {
-                const androidIntent = 'intent:#Intent;' +
-                    'action=android.intent.action.INSERT;' +
-                    'type=vnd.android.cursor.dir/contact;' +
-                    'S.name=' + encodeURIComponent('Sotiris Liontos') + ';' +
-                    'S.phone=' + encodeURIComponent('+306936898029') + ';' +
-                    'S.email=' + encodeURIComponent('creationcuespace@gmail.com') + ';' +
-                    'S.company=' + encodeURIComponent('CreationCue') + ';' +
-                    'S.job_title=' + encodeURIComponent('Digital design UI | UX') + ';' +
-                    'S.postal=' + encodeURIComponent('Ioannina, Hellas') + ';' +
-                    'S.notes=' + encodeURIComponent('CreationCue Watch Face Designer & Developer') + ';' +
-                    'end';
-                
-                window.location.href = androidIntent;
-                return;
-            }
-            
-            // 2. iOS Safari: Direct location navigation opens the native iOS Contact sheet modal
+            // 1. iOS Safari: Direct location navigation opens the native iOS Contact sheet modal
             if (isIOS) {
                 window.location.href = 'sotiris.vcf';
                 return;
             }
             
-            // 3. Desktop / Others: Download unique timestamped .vcf file
-            fetch('sotiris.vcf')
-                .then(res => res.text())
-                .then(vCardText => {
-                    const blob = new Blob([vCardText], { type: 'text/vcard;charset=utf-8' });
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `Sotiris_Liontos_${Date.now()}.vcf`;
-                    document.body.appendChild(a);
-                    a.click();
-                    setTimeout(() => {
-                        document.body.removeChild(a);
-                        window.URL.revokeObjectURL(url);
-                    }, 250);
-                })
-                .catch(() => {
-                    window.location.href = 'sotiris.vcf';
-                });
+            // 2. Android & Desktop:
+            // Download with unique timestamp so Chrome NEVER asks "Download file again?"
+            const timestamp = Date.now();
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = `sotiris.vcf?t=${timestamp}`;
+            a.download = `Sotiris_Liontos_${timestamp}.vcf`;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                document.body.removeChild(a);
+            }, 300);
+
+            // 3. Show floating toast guiding the user to tap Chrome's "Open" button
+            showContactToast();
+        }
+
+        function showContactToast() {
+            const toast = document.getElementById('contact-toast');
+            if (!toast) return;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4500);
         }
     </script>
 </body>
