@@ -257,12 +257,15 @@
             background: rgba(241, 179, 28, 0.08);
             border: 1px solid rgba(241, 179, 28, 0.3);
             color: var(--accent-gold);
+            font-family: inherit;
             font-size: 13px;
             font-weight: 600;
             padding: 8px 16px;
             border-radius: 30px;
             cursor: pointer;
+            outline: none;
             transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent !important;
         }
 
         .discrete-vcard-btn:hover, .discrete-vcard-btn:active {
@@ -530,10 +533,10 @@
                 <div class="person-name">Sotiris Liontos</div>
                 <div class="person-role">Digital design UI | UX</div>
                 
-                <a href="sotiris.vcf" onclick="saveContactNative(event)" class="discrete-vcard-btn" title="Save contact info to phone">
+                <button type="button" onclick="saveContactNative(event)" class="discrete-vcard-btn" title="Save contact info to phone">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
                     <span>Save Contact to Phone (.vcf)</span>
-                </a>
+                </button>
             </div>
 
             <!-- Direct Contact List -->
@@ -618,27 +621,25 @@
             document.getElementById('huawei-modal').classList.remove('active');
         }
 
-        // Native Contact Save Handler (Prevents "Download file again?" & Opens Contact Card)
+        // Native Contact Save Handler (No "Download file again?" - Direct Data URI Intent)
         async function saveContactNative(e) {
             if (e) e.preventDefault();
-            
-            const fileName = `Sotiris_Liontos_${Date.now()}.vcf`;
             
             try {
                 const response = await fetch('sotiris.vcf');
                 const vCardText = await response.text();
                 
-                // 1. Try Native File Share (Opens Contacts app directly on Android & iOS)
-                const file = new File([vCardText], fileName, { type: 'text/vcard;charset=utf-8' });
-                if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                    await navigator.share({
-                        files: [file],
-                        title: 'Sotiris Liontos Contact'
-                    });
+                const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                
+                // 1. On Mobile: Data URI triggers OS Contacts intent directly prefilled without downloading
+                if (isMobile) {
+                    const dataUri = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vCardText);
+                    window.location.href = dataUri;
                     return;
                 }
                 
-                // 2. Dynamic timestamped Blob fallback (avoids "download again" prompt)
+                // 2. Desktop Fallback: Dynamic Blob Download with unique timestamp filename
+                const fileName = `Sotiris_Liontos_${Date.now()}.vcf`;
                 const blob = new Blob([vCardText], { type: 'text/vcard;charset=utf-8' });
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
