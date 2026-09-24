@@ -191,28 +191,27 @@
 
         .profile-avatar-wrapper {
             position: relative;
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 12px;
+            width: 105px;
+            height: 117px;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .profile-avatar-img {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center 15%;
-            border: 2px solid var(--accent-gold);
-            box-shadow: 0 8px 24px rgba(241, 179, 28, 0.25), 0 4px 12px rgba(0, 0, 0, 0.5);
-            background: #0F172A;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.65));
         }
 
         .profile-logo-badge {
             position: absolute;
-            bottom: -2px;
-            right: -2px;
-            width: 30px;
-            height: 30px;
+            bottom: 2px;
+            right: 4px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: #0F172A;
             border: 1.5px solid var(--accent-gold);
@@ -220,6 +219,7 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+            z-index: 2;
         }
 
         .badge-logo-img {
@@ -517,7 +517,7 @@
             <!-- Person Info & Discrete vCard Save Button -->
             <div class="person-info-section">
                 <div class="profile-avatar-wrapper">
-                    <img src="images/sotiris.jpg" alt="Sotiris Liontos" class="profile-avatar-img">
+                    <img src="images/sotiris.png" alt="Sotiris Liontos" class="profile-avatar-img">
                     <div class="profile-logo-badge" title="CreationCue Designer">
                         <img src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" alt="Logo" class="badge-logo-img">
                     </div>
