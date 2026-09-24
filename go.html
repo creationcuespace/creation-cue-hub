@@ -530,7 +530,7 @@
                 <div class="person-name">Sotiris Liontos</div>
                 <div class="person-role">Digital design UI | UX</div>
                 
-                <a href="sotiris.vcf" download="Sotiris_Liontos.vcf" class="discrete-vcard-btn" title="Save contact info to phone">
+                <a href="sotiris.vcf" onclick="saveContactNative(event)" class="discrete-vcard-btn" title="Save contact info to phone">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
                     <span>Save Contact to Phone (.vcf)</span>
                 </a>
@@ -616,6 +616,43 @@
 
         function closeHuaweiNotice() {
             document.getElementById('huawei-modal').classList.remove('active');
+        }
+
+        // Native Contact Save Handler (Prevents "Download file again?" & Opens Contact Card)
+        async function saveContactNative(e) {
+            if (e) e.preventDefault();
+            
+            const fileName = `Sotiris_Liontos_${Date.now()}.vcf`;
+            
+            try {
+                const response = await fetch('sotiris.vcf');
+                const vCardText = await response.text();
+                
+                // 1. Try Native File Share (Opens Contacts app directly on Android & iOS)
+                const file = new File([vCardText], fileName, { type: 'text/vcard;charset=utf-8' });
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({
+                        files: [file],
+                        title: 'Sotiris Liontos Contact'
+                    });
+                    return;
+                }
+                
+                // 2. Dynamic timestamped Blob fallback (avoids "download again" prompt)
+                const blob = new Blob([vCardText], { type: 'text/vcard;charset=utf-8' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 250);
+            } catch (err) {
+                window.location.href = 'sotiris.vcf';
+            }
         }
     </script>
 </body>
