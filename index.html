@@ -1894,7 +1894,7 @@
             .hero-watch-model-selector {
                 display: flex;
                 width: calc(100% - 16px);
-                max-width: 360px;
+                max-width: 390px;
                 gap: 2px;
                 padding: 3px;
                 margin-bottom: 14px;
@@ -1904,8 +1904,8 @@
             .model-pill {
                 flex: 1 1 0;
                 min-width: 0;
-                padding: 7px 2px;
-                font-size: 10.5px;
+                padding: 7px 1px;
+                font-size: 10px;
                 border-radius: 20px;
                 text-align: center;
             }
@@ -1921,11 +1921,11 @@
 
         @media (max-width: 360px) {
             .hero-watch-model-selector {
-                max-width: 310px;
+                max-width: 330px;
             }
 
             .model-pill {
-                font-size: 9.5px;
+                font-size: 9px;
                 padding: 6px 1px;
             }
         }
@@ -2765,6 +2765,10 @@
                                 <button type="button" class="model-pill" data-model="pixel" onclick="setHeroWatchModel('pixel')" role="tab" aria-selected="false">
                                     <span class="model-name-full">Pixel Watch 3</span>
                                     <span class="model-name-short">Pixel</span>
+                                </button>
+                                <button type="button" class="model-pill" data-model="oneplus" onclick="setHeroWatchModel('oneplus')" role="tab" aria-selected="false">
+                                    <span class="model-name-full">OnePlus Watch 2</span>
+                                    <span class="model-name-short">OnePlus</span>
                                 </button>
                             </div>
 
@@ -4059,6 +4063,13 @@
                 frame: 'images/watch_frame_pixel.png',
                 faceSize: '49.8%',
                 bgSize: '53.0%'
+            },
+            oneplus: {
+                id: 'oneplus',
+                name: 'OnePlus Watch 2',
+                frame: 'images/watch_frame_oneplus.png',
+                faceSize: '48.5%',
+                bgSize: '51.5%'
             }
         };
 
@@ -4119,6 +4130,12 @@
                     setHeroWatchModel(savedModel);
                 }
             } catch(e) {}
+
+            // Preload all watch frames for instant model switching
+            Object.values(WATCH_MODELS).forEach(m => {
+                const img = new Image();
+                img.src = m.frame;
+            });
             
             const watchMockupEl = document.getElementById('hero-watch-mockup');
             if (!watchMockupEl) return;
