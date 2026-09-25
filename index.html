@@ -2060,6 +2060,17 @@
             box-shadow: 0 8px 25px rgba(241, 179, 28, 0.55);
             transform: translateX(-50%) translateY(-2px);
         }
+        .hero-watch-stage {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            transform: scale(var(--watch-scale, 0.96));
+            transform-origin: 50% 49.86%;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+            pointer-events: none;
+        }
 
         .hero-watch-dial-bg {
             position: absolute;
@@ -2773,11 +2784,14 @@
                             </div>
 
                             <div class="hero-watch-mockup" id="hero-watch-mockup" onclick="openActiveHeroWatchFaceStore()" title="Tap to open on Google Play • Swipe left/right to change faces" role="button" tabindex="0">
-                                <div class="hero-watch-dial-bg"></div>
-                                <!-- Watch Face circular image (Scaled with breathing room so nothing is cut off) -->
-                                <img id="hero-watch-face-img" class="hero-watch-face-img" src="images/cue177.png" alt="Featured Watch Face">
-                                <!-- Official Wear OS Watch Frame Image -->
-                                <img id="hero-watch-frame-img" class="hero-watch-frame-img" src="images/watch_frame_samsung.png" alt="Samsung Galaxy Watch Ultra">
+                                <!-- Proportional Watch Scaling Stage: scales watch case & face together in lockstep -->
+                                <div class="hero-watch-stage" id="hero-watch-stage">
+                                    <div class="hero-watch-dial-bg"></div>
+                                    <!-- Watch Face circular image (Scaled with breathing room so nothing is cut off) -->
+                                    <img id="hero-watch-face-img" class="hero-watch-face-img" src="images/cue177.png" alt="Featured Watch Face">
+                                    <!-- Official Wear OS Watch Frame Image -->
+                                    <img id="hero-watch-frame-img" class="hero-watch-frame-img" src="images/watch_frame_samsung.png" alt="Samsung Galaxy Watch Ultra">
+                                </div>
 
                                 <!-- Quick Previous / Next Navigation Arrows -->
                                 <button type="button" class="hero-watch-arrow hero-watch-arrow-prev" onclick="event.stopPropagation(); switchHeroWatchFaceByOffset(-1);" title="Previous watch face" aria-label="Previous watch face">
@@ -4041,35 +4055,40 @@
                 name: 'Samsung Galaxy Watch Ultra',
                 frame: 'images/watch_frame_samsung.png',
                 faceSize: '49.8%',
-                bgSize: '53.0%'
+                bgSize: '53.0%',
+                scale: 0.96
             },
             ticwatch: {
                 id: 'ticwatch',
                 name: 'TicWatch Pro 5 Enduro',
                 frame: 'images/watch_frame_ticwatch.png',
                 faceSize: '47.2%',
-                bgSize: '51.0%'
+                bgSize: '51.0%',
+                scale: 0.98
             },
             xiaomi: {
                 id: 'xiaomi',
                 name: 'Xiaomi Watch 5',
                 frame: 'images/watch_frame_xiaomi.png',
                 faceSize: '49.8%',
-                bgSize: '53.0%'
+                bgSize: '53.0%',
+                scale: 0.96
             },
             pixel: {
                 id: 'pixel',
                 name: 'Google Pixel Watch 3',
                 frame: 'images/watch_frame_pixel.png',
                 faceSize: '49.8%',
-                bgSize: '53.0%'
+                bgSize: '53.0%',
+                scale: 0.84
             },
             oneplus: {
                 id: 'oneplus',
                 name: 'OnePlus Watch 2',
                 frame: 'images/watch_frame_oneplus.png',
                 faceSize: '48.5%',
-                bgSize: '51.5%'
+                bgSize: '51.5%',
+                scale: 1.03
             }
         };
 
@@ -4080,9 +4099,14 @@
             currentWatchModel = modelKey;
             const model = WATCH_MODELS[modelKey];
 
+            const stage = document.getElementById('hero-watch-stage');
             const frameImg = document.getElementById('hero-watch-frame-img');
             const faceImg = document.getElementById('hero-watch-face-img');
             const dialBg = document.querySelector('.hero-watch-dial-bg');
+
+            if (stage && model.scale) {
+                stage.style.setProperty('--watch-scale', model.scale);
+            }
 
             if (frameImg) {
                 frameImg.style.transition = 'opacity 0.2s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)';
@@ -4128,8 +4152,12 @@
                 const savedModel = localStorage.getItem('cc_selected_watch_model');
                 if (savedModel && WATCH_MODELS[savedModel]) {
                     setHeroWatchModel(savedModel);
+                } else {
+                    setHeroWatchModel('samsung');
                 }
-            } catch(e) {}
+            } catch(e) {
+                setHeroWatchModel('samsung');
+            }
 
             // Preload all watch frames for instant model switching
             Object.values(WATCH_MODELS).forEach(m => {
