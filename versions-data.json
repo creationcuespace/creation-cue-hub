@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-27T01:48:53.181Z",
+  "lastUpdated": "2026-09-28T01:59:22.173Z",
   "results": [
     {
       "id": "cue178",
@@ -64,12 +64,12 @@
     {
       "id": "cue173",
       "title": "CUE173",
-      "playStoreTitle": "Watch Face CUE173",
+      "playStoreTitle": "CUE173",
       "packageName": "com.creation.cue173watchface",
       "companionVersion": "Android 16 API & Design Update (v10000025)",
       "wearVersion": "Wear OS SDK 35 Update (v10000024)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "cue172",
@@ -479,7 +479,7 @@
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "1K+"
+      "downloads": "5K+"
     },
     {
       "id": "cue131",
