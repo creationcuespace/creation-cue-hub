@@ -423,6 +423,172 @@
       transition: background-color 0.15s, color 0.15s, transform 0.15s;
     }
 
+    /* View Toggle Buttons */
+    .view-toggle-group {
+      display: inline-flex;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px;
+      gap: 2px;
+      align-items: center;
+    }
+    .view-toggle-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 12px;
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      line-height: 1.2;
+    }
+    .view-toggle-btn:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .view-toggle-btn.active {
+      background: var(--purple);
+      color: #ffffff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    /* Grid / Thumbnail Container */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 14px;
+      width: 100%;
+    }
+
+    @media (max-width: 1650px) {
+      .grid-container { grid-template-columns: repeat(8, 1fr); }
+    }
+    @media (max-width: 1350px) {
+      .grid-container { grid-template-columns: repeat(6, 1fr); }
+    }
+    @media (max-width: 1050px) {
+      .grid-container { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 650px) {
+      .grid-container { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* Thumbnail Card */
+    .grid-card {
+      position: relative;
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .grid-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: var(--purple);
+      box-shadow: 0 8px 24px rgba(124, 58, 237, 0.25);
+      z-index: 2;
+    }
+    .grid-card.card-selected {
+      border-color: var(--purple);
+      background: rgba(124, 58, 237, 0.08);
+      box-shadow: 0 0 0 2px var(--purple);
+    }
+    .grid-card-cb-wrapper {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 3;
+      background: rgba(15, 15, 20, 0.85);
+      backdrop-filter: blur(4px);
+      padding: 3px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .grid-card-cb {
+      width: 16px;
+      height: 16px;
+      accent-color: #7C3AED;
+      cursor: pointer;
+    }
+    .grid-card-img-wrapper {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #0d0d12;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .grid-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .grid-card:hover .grid-card-img {
+      transform: scale(1.05);
+    }
+    .grid-card-badge-top {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      letter-spacing: 0.5px;
+    }
+    .grid-card-info {
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: var(--dark);
+      flex: 1;
+    }
+    .grid-card-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+    .grid-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .grid-card-tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: var(--mid);
+      border: 1px solid var(--border);
+    }
+
     .ai-btn:hover {
       background: var(--yellow);
       color: var(--black);
@@ -2194,6 +2360,10 @@
         </select>
         <button id="btn-clear-all" class="clear-all-btn">Reset Filters</button>
         <button id="btn-ai-query" class="ai-btn">💡 Ask AI</button>
+        <div class="view-toggle-group">
+          <button id="view-mode-list" type="button" class="view-toggle-btn active" onclick="switchViewMode('list')" title="List View (Table)">☰ List</button>
+          <button id="view-mode-grid" type="button" class="view-toggle-btn" onclick="switchViewMode('grid')" title="Thumbnail View (10 per row)">⣿ Grid</button>
+        </div>
       </div>
     </div>
 
@@ -2219,6 +2389,11 @@
           <!-- Dynamically filled -->
         </tbody>
       </table>
+    </div>
+
+    <!-- Grid View Container -->
+    <div id="grid-container" class="grid-container" style="display: none;">
+      <!-- Dynamically filled with thumbnail cards -->
     </div>
   </div>
 
@@ -2868,6 +3043,14 @@
       });
     }
 
+    let currentViewMode = localStorage.getItem('cc_view_mode') || 'list';
+
+    function switchViewMode(mode) {
+      currentViewMode = mode;
+      localStorage.setItem('cc_view_mode', mode);
+      renderDashboard();
+    }
+
     function renderDashboard() {
       const searchBoxEl = document.getElementById('dash-filter-box');
       const searchVal = searchBoxEl ? searchBoxEl.value.toLowerCase().trim() : '';
@@ -3072,6 +3255,79 @@
         }
       } else {
         document.getElementById('stat-scan-date').textContent = 'N/A';
+      }
+
+      // View Mode Toggle (List vs Grid/Thumbnail)
+      const listBtn = document.getElementById('view-mode-list');
+      const gridBtn = document.getElementById('view-mode-grid');
+      if (listBtn) listBtn.classList.toggle('active', currentViewMode === 'list');
+      if (gridBtn) gridBtn.classList.toggle('active', currentViewMode === 'grid');
+
+      const tableContainer = document.querySelector('.table-container');
+      const gridContainer = document.getElementById('grid-container');
+
+      if (currentViewMode === 'grid') {
+        if (tableContainer) tableContainer.style.display = 'none';
+        if (gridContainer) {
+          gridContainer.style.display = 'grid';
+          gridContainer.innerHTML = '';
+
+          if (filtered.length === 0) {
+            gridContainer.innerHTML = `<div style="grid-column: 1 / -1; text-align:center; color:var(--muted); padding:40px;">No watch faces found matching criteria.</div>`;
+          } else {
+            filtered.forEach(wf => {
+              const card = document.createElement('div');
+              card.className = 'grid-card';
+              if (selectedFaceIds.has(wf.id)) card.classList.add('card-selected');
+
+              const isChecked = selectedFaceIds.has(wf.id) ? 'checked' : '';
+
+              card.innerHTML = `
+                <div class="grid-card-cb-wrapper" onclick="event.stopPropagation()">
+                  <input type="checkbox" class="grid-card-cb" data-wf-id="${wf.id}" ${isChecked}>
+                </div>
+                <div class="grid-card-img-wrapper">
+                  <img src="${getOptimizedImageUrl(wf.imageUrl, 240)}" alt="${wf.id}" class="grid-card-img" loading="lazy">
+                  <span class="grid-card-badge-top">${wf.id.toUpperCase()}</span>
+                </div>
+                <div class="grid-card-info">
+                  <div class="grid-card-title" title="${wf.title}">${wf.title}</div>
+                  <div class="grid-card-meta">
+                    <span class="grid-card-tag" style="color:var(--yellow);">${wf.downloads || '0+'}</span>
+                    <span style="font-size:10px; opacity:0.8;">v${wf.wearVersion || '1.0'}</span>
+                  </div>
+                </div>
+              `;
+
+              const cb = card.querySelector('.grid-card-cb');
+              if (cb) {
+                cb.addEventListener('change', (e) => {
+                  e.stopPropagation();
+                  if (cb.checked) {
+                    selectedFaceIds.add(wf.id);
+                    card.classList.add('card-selected');
+                  } else {
+                    selectedFaceIds.delete(wf.id);
+                    card.classList.remove('card-selected');
+                  }
+                  updateSelectionToolbar();
+                });
+              }
+
+              card.addEventListener('click', (e) => {
+                if (e.target.closest('.grid-card-cb-wrapper')) return;
+                openDetailsPanel(wf.id);
+              });
+
+              gridContainer.appendChild(card);
+            });
+          }
+        }
+        updateSelectionToolbar();
+        return;
+      } else {
+        if (tableContainer) tableContainer.style.display = 'block';
+        if (gridContainer) gridContainer.style.display = 'none';
       }
 
       // Render table rows
