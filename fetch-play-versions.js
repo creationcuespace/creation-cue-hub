@@ -72,6 +72,17 @@ async function main() {
   const results = [];
   const allReviews = [];
 
+  const existingMap = new Map();
+  const versionsDataPath = path.join(__dirname, 'versions-data.json');
+  if (fs.existsSync(versionsDataPath)) {
+    try {
+      const existingData = JSON.parse(fs.readFileSync(versionsDataPath, 'utf8'));
+      for (const res of (existingData.results || [])) {
+        if (res.packageName) existingMap.set(res.packageName, res);
+      }
+    } catch (e) {}
+  }
+
   console.log(`Found ${watchFaces.length} watch faces in manager.json.`);
   console.log(`Scanning ${targetWatchFaces.length} watch faces with concurrency level ${CONCURRENCY}...\n`);
 
@@ -88,12 +99,27 @@ async function main() {
     let playStoreTitle = wf.title;
     let downloads = 'N/A';
 
-    try {
-      const edit = await play.edits.insert({
-        packageName,
-      });
-      const editId = edit.data.id;
+    let editId = null;
+    let editSuccess = false;
+    let apiError = null;
 
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        const edit = await play.edits.insert({
+          packageName,
+        });
+        editId = edit.data.id;
+        editSuccess = true;
+        break;
+      } catch (err) {
+        apiError = err;
+        if (attempt < 2 && (err.code === 503 || err.code === 500 || err.code === 502 || err.code === 429)) {
+          await new Promise(r => setTimeout(r, 1500));
+        }
+      }
+    }
+
+    if (editSuccess && editId) {
       try {
         const track = await play.edits.tracks.get({
           packageName,
@@ -122,14 +148,22 @@ async function main() {
         }
       } catch (e) {}
 
-      await play.edits.delete({
-        packageName,
-        editId,
-      });
-
-    } catch (apiError) {
-      companionVersion = `API Error: ${apiError.code || apiError.message}`;
-      wearVersion = `API Error: ${apiError.code || apiError.message}`;
+      try {
+        await play.edits.delete({
+          packageName,
+          editId,
+        });
+      } catch (e) {}
+    } else if (apiError) {
+      const prev = existingMap.get(packageName);
+      if (prev && prev.companionVersion && !prev.companionVersion.includes('API Error')) {
+        console.warn(`[${index}/${total}] Transient API error for ${packageName} (${apiError.code || apiError.message}). Preserving previous version.`);
+        companionVersion = prev.companionVersion;
+        wearVersion = prev.wearVersion;
+      } else {
+        companionVersion = `API Error: ${apiError.code || apiError.message}`;
+        wearVersion = `API Error: ${apiError.code || apiError.message}`;
+      }
     }
 
     try {
