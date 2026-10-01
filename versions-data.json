@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-30T02:24:20.770Z",
+  "lastUpdated": "2026-10-01T02:26:37.718Z",
   "results": [
     {
       "id": "cue178",
@@ -596,8 +596,8 @@
       "title": "CUE115",
       "playStoreTitle": "Digital Watch Face CUE115",
       "packageName": "com.creation.cue115watchface",
-      "companionVersion": "Android 16 API & Design Update (v10000011)",
-      "wearVersion": "Wear OS SDK 35 Update (v10000010)",
+      "companionVersion": "API Error: 503",
+      "wearVersion": "API Error: 503",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+"
     },
