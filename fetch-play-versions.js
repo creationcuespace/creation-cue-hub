@@ -281,7 +281,6 @@ async function main() {
   console.log('\n================================================================\n');
 
   // Save and merge results to versions-data.json
-  const versionsDataPath = path.join(__dirname, 'versions-data.json');
   let finalResults = results;
   
   if (fs.existsSync(versionsDataPath)) {
