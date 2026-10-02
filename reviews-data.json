@@ -1,29 +1,4 @@
 {
-  "lastUpdated": "2026-10-01T02:26:37.719Z",
-  "reviews": [
-    {
-      "reviewId": "29a8a287-e56f-48ef-aa14-5e10d5c8b7a9",
-      "packageName": "com.creation.cue162watchface",
-      "title": "Watch Face CUE162",
-      "wfId": "cue162",
-      "authorName": "Tony Whaley",
-      "starRating": 5,
-      "reviewerLanguage": "en",
-      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
-      "text": "\tawesome design, very informative, beautiful color choices, astounding job!!!!",
-      "lastModified": "2026-09-30T15:51:41.000Z"
-    },
-    {
-      "reviewId": "0c23353b-9024-461d-a09a-eac8f10387d0",
-      "packageName": "com.creation.cue104watchface",
-      "title": "Digital Watch Face CUE104",
-      "wfId": "cue104",
-      "authorName": "Jaime Jaime",
-      "starRating": 5,
-      "reviewerLanguage": "es",
-      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
-      "text": "\tsuper 👍",
-      "lastModified": "2026-09-30T05:39:30.000Z"
-    }
-  ]
+  "lastUpdated": "2026-10-02T02:47:29.745Z",
+  "reviews": []
 }
