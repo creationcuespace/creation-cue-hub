@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-06T03:20:34.111Z",
+  "lastUpdated": "2026-10-07T02:41:58.386Z",
   "results": [
     {
       "id": "cue178",
@@ -27,7 +27,7 @@
       "playStoreTitle": "Analog Watch Face CUE177",
       "packageName": "com.creation.cue177watchface",
       "companionVersion": "Android 16 API & Design Update (v10000011)",
-      "wearVersion": "Wear OS SDK 35 Update (v10000010)",
+      "wearVersion": "10000012 (2.1.0)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+"
     },
