@@ -1600,7 +1600,7 @@
             position: relative;
             margin: -24px -24px 24px -24px;
             padding: 44px 24px;
-            background-color: var(--bg-color);
+            background: radial-gradient(circle at 65% 30%, rgba(148, 163, 184, 0.08) 0%, rgba(12, 12, 16, 0.92) 55%, var(--bg-color) 100%);
             border-bottom: 1px solid var(--border-color);
             overflow: hidden;
             display: block;
@@ -1616,52 +1616,17 @@
             }
         }
 
-        /* Parallax Background Images */
-        .parallax-bg {
-            position: absolute;
-            top: -20%;
-            left: 0;
-            width: 100%;
-            height: 140%;
-            background-size: cover;
-            background-position: center 25%;
-            z-index: 0;
-            will-change: transform, opacity;
-            pointer-events: none;
-            /* No transition on transform: prevents scroll rubberbanding / jumpiness */
-            transition: opacity 0.5s ease;
-        }
-
-        .parallax-bg.bg-1 {
-            background-image: url('images/ccBanner1.webp');
-            opacity: 0.55;
-        }
-
-        .parallax-bg.bg-2 {
-            background-image: url('images/ccBanner2.webp');
-            opacity: 0;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 65% 35%, rgba(12, 12, 16, 0.35) 0%, rgba(12, 12, 16, 0.85) 60%, var(--bg-color) 100%),
-                        linear-gradient(to bottom, rgba(12, 12, 16, 0.2) 0%, rgba(12, 12, 16, 0.95) 100%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
         .hero-ambient-fx {
             position: absolute;
             inset: 0;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
             background-size: 60px 60px;
             background-position: center center;
             mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 75%);
             -webkit-mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 75%);
             pointer-events: none;
-            z-index: 1;
+            z-index: 0;
         }
 
         .hero-content-wrapper {
@@ -1976,20 +1941,22 @@
             justify-content: center;
             filter: drop-shadow(0 22px 48px rgba(0, 0, 0, 0.92));
             transform: translateZ(0);
-            backface-visibility: hidden;
+            will-change: transform;
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
             margin: 0 auto;
             cursor: pointer;
             user-select: none;
             -webkit-user-select: none;
             touch-action: pan-y;
             -webkit-tap-highlight-color: transparent;
-            transition: filter 0.3s ease;
         }
 
-        @media (hover: hover) and (pointer: fine) {
-            .hero-watch-mockup:hover {
-                filter: drop-shadow(0 26px 52px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 20px rgba(241, 179, 28, 0.14));
-            }
+        .hero-watch-mockup:hover {
+            transform: scale(1.03) translateZ(0);
+        }
+
+        .hero-watch-mockup:active {
+            transform: scale(0.97) translateZ(0);
         }
 
         .hero-watch-arrow {
@@ -2306,11 +2273,11 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-image: 
-                linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255,255,255,0.015) 1px, transparent 1px);
+                linear-gradient(to right, rgba(255,255,255,0.01) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.01) 1px, transparent 1px);
             background-size: 40px 40px;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
         }
 
         /* Skeleton Loader Pulse Animation */
@@ -2748,11 +2715,7 @@
             <section id="tab-catalog" class="tab-panel active">
                 <!-- Interactive Watch Hero Banner -->
                 <header class="hero-section hero-flat-section" id="hero-3d-section">
-                    <!-- Parallax Background Banners -->
-                    <div class="parallax-bg bg-1" id="parallax-bg-1"></div>
-                    <div class="parallax-bg bg-2" id="parallax-bg-2"></div>
-                    <div class="hero-overlay"></div>
-                    <!-- Ambient Grid FX -->
+                    <!-- Ambient FX -->
                     <div class="hero-ambient-fx"></div>
 
                     <div class="hero-content-wrapper">
@@ -4240,8 +4203,8 @@
                 const dx = e.touches[0].clientX - touchStartX;
                 const dy = e.touches[0].clientY - touchStartY;
 
-                // Only intercept for deliberate, predominantly horizontal swipes (never vertical scrolling)
-                if (Math.abs(dx) > 28 && Math.abs(dx) > Math.abs(dy) * 1.8) {
+                // If horizontal movement exceeds vertical movement, prevent page scroll and preview drag
+                if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
                     if (e.cancelable) e.preventDefault();
                     const faceImg = document.getElementById('hero-watch-face-img');
                     if (faceImg) {
@@ -4519,53 +4482,24 @@
             window.previewFaceOn3DWatch(imgUrl, selectedFace.title);
         };
 
-        // Scroll listener handling parallax background and sticky search filter row
+        // Scroll listener handling sticky search filter row
         let scrollTicking = false;
-        let cachedSearchRow = null;
-        let cachedP1 = null;
-        let cachedP2 = null;
 
         window.addEventListener('scroll', () => {
             if (!scrollTicking) {
                 window.requestAnimationFrame(() => {
                     const scrolled = window.pageYOffset || document.documentElement.scrollTop;
 
-                    // Smooth Parallax Banner updates (100% fluid, zero transition conflict)
-                    if (!cachedP1) cachedP1 = document.getElementById('parallax-bg-1');
-                    if (!cachedP2) cachedP2 = document.getElementById('parallax-bg-2');
-                    if (cachedP1 || cachedP2) {
-                        const py = (scrolled * 0.22).toFixed(1);
-                        const pTransform = `translate3d(0, ${py}px, 0)`;
-                        if (cachedP1) cachedP1.style.transform = pTransform;
-                        if (cachedP2) {
-                            cachedP2.style.transform = pTransform;
-                            // Cross-fade to banner 2 as user scrolls down
-                            const fadeStart = 100;
-                            const fadeEnd = 450;
-                            let op = (scrolled - fadeStart) / (fadeEnd - fadeStart);
-                            op = Math.max(0, Math.min(0.55, op * 0.55));
-                            cachedP2.style.opacity = op;
-                        }
-                    }
-
                     // Sticky search/filter row state styling
-                    if (!cachedSearchRow) {
-                        cachedSearchRow = document.querySelector('.search-filter-row');
-                    }
-                    if (cachedSearchRow) {
-                        // Bypass layout measurement when near top (Hero section) to ensure 100% fluid scroll
-                        if (scrolled < 150) {
-                            if (cachedSearchRow.classList.contains('stuck')) {
-                                cachedSearchRow.classList.remove('stuck');
-                            }
+                    const searchRow = document.querySelector('.search-filter-row');
+                    if (searchRow) {
+                        const rect = searchRow.getBoundingClientRect();
+                        const isAdmin = document.body.classList.contains('admin-mode');
+                        const threshold = isAdmin ? 105 : 65;
+                        if (rect.top <= threshold) {
+                            searchRow.classList.add('stuck');
                         } else {
-                            const rect = cachedSearchRow.getBoundingClientRect();
-                            const isAdmin = document.body.classList.contains('admin-mode');
-                            const threshold = isAdmin ? 105 : 65;
-                            const isStuck = rect.top <= threshold;
-                            if (isStuck !== cachedSearchRow.classList.contains('stuck')) {
-                                cachedSearchRow.classList.toggle('stuck', isStuck);
-                            }
+                            searchRow.classList.remove('stuck');
                         }
                     }
 
@@ -4573,7 +4507,7 @@
                 });
                 scrollTicking = true;
             }
-        }, { passive: true });
+        });
 
         // Switch Active Tabs
         function switchTab(tabId, preserveSupportFace = false) {
