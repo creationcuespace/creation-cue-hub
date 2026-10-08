@@ -1600,14 +1600,12 @@
             position: relative;
             margin: -24px -24px 24px -24px;
             padding: 44px 24px;
-            background: radial-gradient(circle at 65% 30%, rgba(148, 163, 184, 0.08) 0%, rgba(12, 12, 16, 0.92) 55%, var(--bg-color) 100%);
+            background-color: var(--bg-color);
             border-bottom: 1px solid var(--border-color);
             overflow: hidden;
             display: block;
             height: auto;
             min-height: auto;
-            transform: translateZ(0);
-            backface-visibility: hidden;
         }
 
         @media (min-width: 769px) {
@@ -1618,19 +1616,52 @@
             }
         }
 
+        /* Parallax Background Images */
+        .parallax-bg {
+            position: absolute;
+            top: -20%;
+            left: 0;
+            width: 100%;
+            height: 140%;
+            background-size: cover;
+            background-position: center 25%;
+            z-index: 0;
+            will-change: transform, opacity;
+            pointer-events: none;
+            /* No transition on transform: prevents scroll rubberbanding / jumpiness */
+            transition: opacity 0.5s ease;
+        }
+
+        .parallax-bg.bg-1 {
+            background-image: url('images/ccBanner1.webp');
+            opacity: 0.55;
+        }
+
+        .parallax-bg.bg-2 {
+            background-image: url('images/ccBanner2.webp');
+            opacity: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 65% 35%, rgba(12, 12, 16, 0.35) 0%, rgba(12, 12, 16, 0.85) 60%, var(--bg-color) 100%),
+                        linear-gradient(to bottom, rgba(12, 12, 16, 0.2) 0%, rgba(12, 12, 16, 0.95) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
         .hero-ambient-fx {
             position: absolute;
             inset: 0;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
             background-size: 60px 60px;
             background-position: center center;
             mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 75%);
             -webkit-mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 75%);
             pointer-events: none;
-            z-index: 0;
-            transform: translateZ(0);
-            backface-visibility: hidden;
+            z-index: 1;
         }
 
         .hero-content-wrapper {
@@ -2275,13 +2306,11 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-image: 
-                linear-gradient(to right, rgba(255,255,255,0.01) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255,255,255,0.01) 1px, transparent 1px);
+                linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.015) 1px, transparent 1px);
             background-size: 40px 40px;
             pointer-events: none;
-            z-index: 1;
-            transform: translateZ(0);
-            backface-visibility: hidden;
+            z-index: 0;
         }
 
         /* Skeleton Loader Pulse Animation */
@@ -2719,7 +2748,11 @@
             <section id="tab-catalog" class="tab-panel active">
                 <!-- Interactive Watch Hero Banner -->
                 <header class="hero-section hero-flat-section" id="hero-3d-section">
-                    <!-- Ambient FX -->
+                    <!-- Parallax Background Banners -->
+                    <div class="parallax-bg bg-1" id="parallax-bg-1"></div>
+                    <div class="parallax-bg bg-2" id="parallax-bg-2"></div>
+                    <div class="hero-overlay"></div>
+                    <!-- Ambient Grid FX -->
                     <div class="hero-ambient-fx"></div>
 
                     <div class="hero-content-wrapper">
@@ -4486,15 +4519,36 @@
             window.previewFaceOn3DWatch(imgUrl, selectedFace.title);
         };
 
-        // Scroll listener handling sticky search filter row
+        // Scroll listener handling parallax background and sticky search filter row
         let scrollTicking = false;
         let cachedSearchRow = null;
+        let cachedP1 = null;
+        let cachedP2 = null;
 
         window.addEventListener('scroll', () => {
             if (!scrollTicking) {
                 window.requestAnimationFrame(() => {
                     const scrolled = window.pageYOffset || document.documentElement.scrollTop;
 
+                    // Smooth Parallax Banner updates (100% fluid, zero transition conflict)
+                    if (!cachedP1) cachedP1 = document.getElementById('parallax-bg-1');
+                    if (!cachedP2) cachedP2 = document.getElementById('parallax-bg-2');
+                    if (cachedP1 || cachedP2) {
+                        const py = (scrolled * 0.22).toFixed(1);
+                        const pTransform = `translate3d(0, ${py}px, 0)`;
+                        if (cachedP1) cachedP1.style.transform = pTransform;
+                        if (cachedP2) {
+                            cachedP2.style.transform = pTransform;
+                            // Cross-fade to banner 2 as user scrolls down
+                            const fadeStart = 100;
+                            const fadeEnd = 450;
+                            let op = (scrolled - fadeStart) / (fadeEnd - fadeStart);
+                            op = Math.max(0, Math.min(0.55, op * 0.55));
+                            cachedP2.style.opacity = op;
+                        }
+                    }
+
+                    // Sticky search/filter row state styling
                     if (!cachedSearchRow) {
                         cachedSearchRow = document.querySelector('.search-filter-row');
                     }
