@@ -4527,6 +4527,7 @@
 
         // Scroll listener handling parallax background and sticky search filter row
         let scrollTicking = false;
+        let hasTransitioned = false;
         let cachedSearchRow = null;
         let cachedP1 = null;
         let cachedP2 = null;
@@ -4545,12 +4546,23 @@
                         if (cachedP1) cachedP1.style.transform = pTransform;
                         if (cachedP2) {
                             cachedP2.style.transform = pTransform;
-                            // Cross-fade to banner 2 as user scrolls down
-                            const fadeStart = 100;
-                            const fadeEnd = 450;
-                            let op = (scrolled - fadeStart) / (fadeEnd - fadeStart);
-                            op = Math.max(0, Math.min(1, op));
-                            cachedP2.style.opacity = op;
+
+                            // Once transitioned, lock permanently onto 2nd banner until page refresh
+                            if (!hasTransitioned) {
+                                const fadeStart = 100;
+                                const fadeEnd = 450;
+                                let op = (scrolled - fadeStart) / (fadeEnd - fadeStart);
+                                op = Math.max(0, Math.min(1, op));
+                                cachedP2.style.opacity = op;
+                                if (op >= 1) {
+                                    hasTransitioned = true;
+                                }
+                            } else {
+                                // Keep the second banner visible even when scrolling back up
+                                if (cachedP2.style.opacity !== '1') {
+                                    cachedP2.style.opacity = '1';
+                                }
+                            }
                         }
                     }
 
