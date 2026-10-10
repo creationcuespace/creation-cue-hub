@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-09T03:05:12.359Z",
+  "lastUpdated": "2026-10-10T02:46:06.376Z",
   "results": [
     {
       "id": "cue178",
@@ -1067,7 +1067,7 @@
       "playStoreTitle": "Digital Watch Face CUE024",
       "packageName": "com.creation.cue024watchface",
       "companionVersion": "Android 16 API & Design Update (v10000010)",
-      "wearVersion": "10000011 (1.6.0)",
+      "wearVersion": "10000012 (1.6.0)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+"
     },
