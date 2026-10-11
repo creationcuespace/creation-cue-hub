@@ -1,4 +1,17 @@
 {
-  "lastUpdated": "2026-10-10T02:46:06.378Z",
-  "reviews": []
+  "lastUpdated": "2026-10-11T02:12:02.496Z",
+  "reviews": [
+    {
+      "reviewId": "f64d4b4e-2462-45f7-a48a-728387b8d652",
+      "packageName": "com.creation.cue157watchface",
+      "title": "Watch Face CUE157",
+      "wfId": "cue157",
+      "authorName": "Giuseppe Filograsso",
+      "starRating": 3,
+      "reviewerLanguage": "it",
+      "deviceMetadata": "grizzly (Pixel 11 Pro)",
+      "text": "\tpoche combinazioni di colori a disposizione, barre inferiori inutili così come sono (se ci metto qualcosa, debbo poterlo vedere) altrimenti meglio non averle... le complication un po' piccole... speriamo in un aggiornamento futuro",
+      "lastModified": "2026-10-10T14:38:23.000Z"
+    }
+  ]
 }
