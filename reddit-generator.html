@@ -354,6 +354,47 @@
       color: var(--yellow);
     }
 
+    .sort-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-light);
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+
+    .sort-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .sort-select {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--yellow);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 4px;
+      padding: 4px 8px;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .sort-select:hover, .sort-select:focus {
+      border-color: var(--yellow);
+      background: var(--dark);
+    }
+
     .promos-list {
       max-height: 520px;
       overflow-y: auto;
@@ -739,6 +780,20 @@
           <button class="filter-btn" onclick="setFilter('all-catalog', this)">All Faces</button>
         </div>
 
+        <!-- Sort Order Control -->
+        <div class="sort-bar">
+          <span class="sort-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M6 12h12M9 18h6"/></svg>
+            Sort:
+          </span>
+          <select id="promo-sort-select" class="sort-select" onchange="changeSort(this.value)">
+            <option value="ending-soon" selected>⏳ Date Ending Soon First</option>
+            <option value="coupons-desc">🎟️ Most Coupons Remaining</option>
+            <option value="newest">✨ Newest Created</option>
+            <option value="name-asc">🔤 Name (A-Z)</option>
+          </select>
+        </div>
+
         <!-- Promotions Container -->
         <div id="promos-container" class="promos-list">
           <div style="text-align:center; padding:30px 10px; color:var(--muted); font-size:13px;">
@@ -861,6 +916,7 @@ Links to claim your free code and the Play Store link are in the first comment b
     var promotionsData = {};
     var combinedList = [];
     var currentFilter = 'with-coupons';
+    var currentSort = 'ending-soon';
     var selectedItem = null;
 
     // Toast notification
@@ -869,6 +925,34 @@ Links to claim your free code and the Play Store link are in the first comment b
       t.textContent = msg;
       t.classList.add('show');
       setTimeout(function() { t.classList.remove('show'); }, 2200);
+    }
+
+    // Sort changer
+    function changeSort(val) {
+      currentSort = val;
+      renderPromotionsList();
+    }
+
+    // Expiration date time formatter
+    function formatTimeRemaining(expiresAt) {
+      if (!expiresAt) return null;
+      var now = Date.now();
+      var diff = expiresAt - now;
+      if (diff <= 0) return { text: 'Expired', isExpired: true, urgent: true };
+
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+      if (days > 1) {
+        return { text: 'Ends in ' + days + 'd ' + hours + 'h', isExpired: false, urgent: days <= 2 };
+      } else if (days === 1) {
+        return { text: 'Ends tomorrow (' + hours + 'h)', isExpired: false, urgent: true };
+      } else if (hours > 0) {
+        return { text: 'Ends in ' + hours + 'h ' + mins + 'm', isExpired: false, urgent: true };
+      } else {
+        return { text: 'Ends in ' + mins + 'm', isExpired: false, urgent: true };
+      }
     }
 
     // Toggle slide menu
@@ -950,6 +1034,9 @@ Links to claim your free code and the Play Store link are in the first comment b
           cap: cap,
           remaining: remaining,
           active: promo.active !== false && remaining > 0,
+          expiresAt: promo.expiresAt || null,
+          startsAt: promo.startsAt || null,
+          createdAt: promo.createdAt || null,
           imageUrl: imageUrl,
           playStoreUrl: pkgUrl,
           description: desc,
@@ -975,6 +1062,9 @@ Links to claim your free code and the Play Store link are in the first comment b
             cap: 0,
             remaining: 0,
             active: false,
+            expiresAt: null,
+            startsAt: null,
+            createdAt: null,
             imageUrl: f.image_url || '',
             playStoreUrl: f.play_store_url || '',
             description: f.description_en || '',
@@ -1027,10 +1117,44 @@ Links to claim your free code and the Play Store link are in the first comment b
         return true;
       });
 
-      // Sort: with remaining coupons first, then by name
+      // Sorting
+      var now = Date.now();
       filtered.sort(function(a, b) {
-        if (b.remaining !== a.remaining) return b.remaining - a.remaining;
-        return a.name.localeCompare(b.name);
+        if (currentSort === 'ending-soon') {
+          var aHasFutureExp = a.expiresAt && a.expiresAt > now;
+          var bHasFutureExp = b.expiresAt && b.expiresAt > now;
+
+          // If both have future expiration date, sort soonest expiration first
+          if (aHasFutureExp && bHasFutureExp) {
+            return a.expiresAt - b.expiresAt;
+          }
+          // Items with future expiration date come before items without expiration date
+          if (aHasFutureExp && !bHasFutureExp) return -1;
+          if (!aHasFutureExp && bHasFutureExp) return 1;
+
+          // If neither has future expiration, check if expired (expired should come last)
+          var aIsExpired = a.expiresAt && a.expiresAt <= now;
+          var bIsExpired = b.expiresAt && b.expiresAt <= now;
+          if (!aIsExpired && bIsExpired) return -1;
+          if (aIsExpired && !bIsExpired) return 1;
+
+          // Among active items with no set expiration, sort by remaining coupons descending
+          if (b.remaining !== a.remaining) {
+            return b.remaining - a.remaining;
+          }
+          return a.name.localeCompare(b.name);
+        } else if (currentSort === 'coupons-desc') {
+          if (b.remaining !== a.remaining) return b.remaining - a.remaining;
+          return a.name.localeCompare(b.name);
+        } else if (currentSort === 'newest') {
+          var aCreated = a.createdAt || 0;
+          var bCreated = b.createdAt || 0;
+          if (bCreated !== aCreated) return bCreated - aCreated;
+          return b.remaining - a.remaining;
+        } else if (currentSort === 'name-asc') {
+          return a.name.localeCompare(b.name);
+        }
+        return 0;
       });
 
       if (filtered.length === 0) {
@@ -1053,6 +1177,15 @@ Links to claim your free code and the Play Store link are in the first comment b
           badgeHtml = '<span class="coupons-count-badge badge-empty">Catalog</span>';
         }
 
+        var expiryHtml = '';
+        if (item.expiresAt) {
+          var timeInfo = formatTimeRemaining(item.expiresAt);
+          if (timeInfo) {
+            var colorStyle = timeInfo.isExpired ? 'color:var(--red);' : (timeInfo.urgent ? 'color:var(--yellow); font-weight:700;' : 'color:var(--muted);');
+            expiryHtml = `<div style="font-size:10.5px; ${colorStyle} margin-top:2px;">${timeInfo.isExpired ? '● Expired' : '⏳ ' + timeInfo.text}</div>`;
+          }
+        }
+
         var imgSrc = item.imageUrl || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%232a2a2a'/%3E%3C/svg%3E";
 
         el.innerHTML = `
@@ -1061,6 +1194,7 @@ Links to claim your free code and the Play Store link are in the first comment b
             <div class="promo-details">
               <div class="promo-name">${item.name}</div>
               <div class="promo-id-badge">${item.promoId}</div>
+              ${expiryHtml}
             </div>
           </div>
           <div>${badgeHtml}</div>
@@ -1077,7 +1211,15 @@ Links to claim your free code and the Play Store link are in the first comment b
 
       // Update Preview Card
       document.getElementById('selected-face-title').textContent = item.name + ' (' + (item.faceType || 'Wear OS') + ')';
-      document.getElementById('selected-face-meta').textContent = 'ID: ' + item.promoId + ' • ' + (item.remaining > 0 ? item.remaining + ' coupons ready' : 'No active coupon balance');
+      
+      var metaText = 'ID: ' + item.promoId + ' • ' + (item.remaining > 0 ? item.remaining + ' coupons ready' : 'No active coupon balance');
+      if (item.expiresAt) {
+        var tInfo = formatTimeRemaining(item.expiresAt);
+        if (tInfo) {
+          metaText += ' • ' + (tInfo.isExpired ? 'Expired' : tInfo.text);
+        }
+      }
+      document.getElementById('selected-face-meta').textContent = metaText;
       if (item.imageUrl) {
         document.getElementById('selected-face-img').src = item.imageUrl;
       }
