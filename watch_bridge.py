@@ -3,8 +3,11 @@ import sys
 import json
 import time
 import subprocess
-import threading
-from http.server import HTTPServer, BaseHTTPRequestHandler
+try:
+    from http.server import ThreadingHTTPServer as ServerClass
+except ImportError:
+    from http.server import HTTPServer as ServerClass
+from http.server import BaseHTTPRequestHandler
 from urllib.parse import parse_qs, urlparse
 
 PORT = 37380
@@ -55,13 +58,16 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def _send_json(self, data, code=200):
-        body = json.dumps(data).encode("utf-8")
-        self.send_response(code)
-        self.send_header("Content-Type", "application/json")
-        self.send_header("Content-Length", str(len(body)))
-        self._send_cors_headers()
-        self.end_headers()
-        self.wfile.write(body)
+        try:
+            body = json.dumps(data).encode("utf-8")
+            self.send_response(code)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self._send_cors_headers()
+            self.end_headers()
+            self.wfile.write(body)
+        except Exception:
+            pass
 
     def do_GET(self):
         parsed = urlparse(self.path)
@@ -316,15 +322,19 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
 
 def run_server():
     server_address = ('', PORT)
-    httpd = HTTPServer(server_address, ADBBridgeHandler)
-    print(f"=== Creation Cue Watch ADB Bridge running on http://localhost:{PORT} ===")
+    httpd = ServerClass(server_address, ADBBridgeHandler)
+    print(f"=== Creation Cue Watch ADB Bridge running on http://127.0.0.1:{PORT} ===")
     print(f"ADB Executable: {ADB_PATH}")
     print(f"Recordings Directory: {TEMP_DIR}")
-    try:
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        print("Stopping bridge server...")
-        httpd.server_close()
+    while True:
+        try:
+            httpd.serve_forever()
+        except KeyboardInterrupt:
+            print("Stopping bridge server...")
+            httpd.server_close()
+            break
+        except Exception:
+            time.sleep(0.5)
 
 if __name__ == '__main__':
     run_server()
