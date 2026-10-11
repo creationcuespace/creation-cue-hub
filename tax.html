@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreationCue™ | Tax & Financial Advisor</title>
+    <link rel="icon" href="/images/favicon-cue.png" type="image/png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #08090c;
+            --surface: #12151d;
+            --surface-hover: #1a1e2a;
+            --surface-variant: #1e2330;
+            --primary: #f1b31c;
+            --primary-glow: rgba(241, 179, 28, 0.2);
+            --primary-light: #ffd269;
+            --text-main: #ffffff;
+            --text-muted: #8b9bb4;
+            --text-secondary: #c2cde0;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-gold: rgba(241, 179, 28, 0.35);
+            --success: #2ecc71;
+            --success-glow: rgba(46, 204, 113, 0.2);
+            --danger: #e74c3c;
+            --info: #3498db;
+            --radius-lg: 18px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow-card: 0 12px 35px rgba(0, 0, 0, 0.45);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 30px 20px 60px;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 15% 10%, rgba(241, 179, 28, 0.05) 0%, transparent 40%),
+                              radial-gradient(circle at 85% 80%, rgba(52, 152, 219, 0.04) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* Top Header & Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 22px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-logo h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .brand-logo h1 span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.09);
+            color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-btn.active {
+            background: var(--primary-glow);
+            color: var(--primary);
+            border-color: var(--border-gold);
+            font-weight: 700;
+        }
+
+        .header-user-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .user-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 10px var(--success);
+        }
+
+        .btn-logout {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 12px;
+            text-decoration: underline;
+            margin-left: 6px;
+        }
+        .btn-logout:hover { color: var(--danger); }
+
+        /* Security Gate / Login Screen */
+        #auth-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(8, 9, 12, 0.88);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: var(--surface);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 440px;
+            padding: 40px 32px;
+            text-align: center;
+            box-shadow: var(--shadow-card), 0 0 40px var(--primary-glow);
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .auth-icon-wrap {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: var(--primary-glow);
+            border: 1px solid var(--border-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 30px;
+        }
+
+        .auth-card h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .auth-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 26px;
+            line-height: 1.5;
+        }
+
+        .btn-google-auth {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: #ffffff;
+            color: #1a1a1a;
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 12px 20px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-google-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255,255,255,0.2);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            color: var(--text-muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .auth-divider::before, .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+        .auth-divider span { padding: 0 12px; }
+
+        .pin-input-wrap {
+            display: flex;
+            gap: 10px;
+        }
+
+        .pin-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            color: var(--text-main);
+            font-size: 14px;
+            outline: none;
+            text-align: center;
+            letter-spacing: 3px;
+            transition: border-color 0.2s;
+            -webkit-text-security: disc;
+            text-security: disc;
+        }
+
+        .pin-input:focus { border-color: var(--primary); }
+
+        .btn-pin-submit {
+            background: var(--surface-variant);
+            border: 1px solid var(--border);
+            color: var(--primary);
+            border-radius: var(--radius-sm);
+            padding: 0 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-pin-submit:hover { background: var(--primary); color: #000; }
+
+        /* Dashboard Grid & Panels */
+        .dashboard-hero {
+            background: linear-gradient(135deg, rgba(26, 32, 44, 0.8) 0%, rgba(18, 21, 29, 0.95) 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px 32px;
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--primary), #e67e22, var(--info));
+        }
+
+        .hero-info h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .hero-info p {
+            color: var(--text-muted);
+            font-size: 13px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .tag-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            display: inline-block;
+            white-space: nowrap !important;
+        }
+
+        .tag-pill.gold {
+            background: var(--primary-glow);
+            border-color: var(--border-gold);
+            color: var(--primary);
+        }
+
+        .tag-pill.green {
+            background: var(--success-glow);
+            border-color: rgba(46, 204, 113, 0.3);
+            color: var(--success);
+        }
+
+        .tag-pill.blue {
+            background: rgba(52, 152, 219, 0.12);
+            border-color: rgba(52, 152, 219, 0.35);
+            color: #3498db;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-refresh {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .btn-refresh:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--primary); color: var(--primary); }
+
+        /* Key Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .metric-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.16);
+        }
+
+        .metric-card.accent-gold { border-left: 4px solid var(--primary); }
+        .metric-card.accent-green { border-left: 4px solid var(--success); }
+        .metric-card.accent-blue { border-left: 4px solid var(--info); }
+        .metric-card.accent-orange { border-left: 4px solid #e67e22; }
+
+        .metric-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .metric-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .metric-sub {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Content Sections */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 35px 0 16px;
+        }
+
+        .section-header h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .section-header .section-icon {
+            font-size: 20px;
+        }
+
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 950px) {
+            .two-cols { grid-template-columns: 1fr; }
+            .dashboard-hero { padding: 20px; }
+            .hero-actions { width: 100%; justify-content: flex-start; }
+        }
+
+        .panel-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .panel-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 12px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+            font-size: 13px;
+        }
+
+        .info-row:last-child { border-bottom: none; }
+        .info-label { color: var(--text-muted); font-weight: 500; }
+        .info-val { color: var(--text-main); font-weight: 600; text-align: right; }
+
+        /* Countdown Card for OE */
+        .countdown-banner {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.15) 0%, rgba(26, 32, 44, 0.9) 100%);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .countdown-digits {
+            display: flex;
+            gap: 12px;
+        }
+
+        .digit-box {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-sm);
+            padding: 10px 16px;
+            text-align: center;
+            min-width: 65px;
+        }
+
+        .digit-number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: #ff7675;
+        }
+
+        .digit-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Roadmap checklist */
+        .timeline-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .timeline-step {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .step-month-badge {
+            background: rgba(241, 179, 28, 0.1);
+            border: 1px solid var(--border-gold);
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .step-content h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .step-content ul {
+            list-style: none;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .step-content li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 4px;
+        }
+
+        .step-content li::before {
+            content: '•';
+            position: absolute;
+            left: 4px;
+            color: var(--primary);
+        }
+
+        /* Tables Styling */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: var(--radius-sm);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            text-align: left;
+            min-width: 950px;
+        }
+
+        th {
+            background: rgba(255,255,255,0.03);
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap !important;
+        }
+
+        td {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            color: var(--text-secondary);
+        }
+
+        .nowrap, td.nowrap, th.nowrap, .cell-nowrap, .amount-val {
+            white-space: nowrap !important;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-main);
+        }
+
+        .badge-status {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            white-space: nowrap !important;
+        }
+        .badge-status.success { background: var(--success-glow); color: var(--success); }
+
+        /* Toast Alert */
+        #toast {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            background: var(--surface-variant);
+            border: 1px solid var(--border-gold);
+            color: var(--text-main);
+            padding: 12px 22px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            display: none;
+            z-index: 10000;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <!-- Security Overlay (Login Gate) -->
+    <div id="auth-overlay">
+        <div class="auth-card">
+            <div class="auth-icon-wrap">🔒</div>
+            <h2>Private Financial Portal</h2>
+            <p>Απαιτείται ταυτοποίηση για την πρόσβαση στα φορολογικά & επιχειρηματικά δεδομένα του Σωτηρίου Λιόντου.</p>
+            
+            <button class="btn-google-auth" id="btn-google-auth">
+                <svg width="20" height="20" viewBox="0 0 48 48">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                </svg>
+                Σύνδεση με Google
+            </button>
+
+            <div class="auth-divider"><span>ή εισαγωγή PIN Πρόσβασης</span></div>
+
+            <div class="pin-input-wrap">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" name="cc_tax_auth_code" id="pin-input" class="pin-input" placeholder="••••" maxlength="10" data-lpignore="true" data-1p-ignore="true">
+                <button class="btn-pin-submit" id="btn-pin-submit" type="button">Είσοδος</button>
+            </div>
+            <div id="auth-error" style="color:var(--danger); font-size:12px; margin-top:12px; display:none;"></div>
+        </div>
+    </div>
+
+    <!-- Main Application Container -->
+    <div class="container" id="app-container" style="display: none;">
+        
+        <!-- Header -->
+        <header>
+            <a href="index.html" class="brand-logo">
+                <h1>Creation<span>Cue</span></h1>
+            </a>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-btn">Home</a>
+                <a href="blog.html" class="nav-btn">Blog</a>
+                <a href="manage-coupons.html" class="nav-btn">Coupons</a>
+                <a href="month-planner.html" class="nav-btn">Planner</a>
+                <a href="play-versions.html" class="nav-btn">Versions</a>
+                <a href="tax.html" class="nav-btn active">📊 Tax &amp; Financials</a>
+            </div>
+
+            <div class="header-user-badge">
+                <span class="user-dot"></span>
+                <span id="user-display-email">sotsor@gmail.com</span>
+                <button class="btn-logout" onclick="logout()">Αποσύνδεση</button>
+            </div>
+        </header>
+
+        <!-- Executive Hero Banner -->
+        <div class="dashboard-hero">
+            <div class="hero-info">
+                <h2 id="taxpayer-name">Σωτήριος Λιόντος του Κωνσταντίνου</h2>
+                <p>
+                    <span><strong>ΑΦΜ:</strong> <span id="taxpayer-afm">047155049</span></span>
+                    <span><strong>Δ.Ο.Υ.:</strong> <span id="taxpayer-doy">Ιωαννίνων</span></span>
+                    <span><strong>Έδρα:</strong> <span id="taxpayer-address">Ασημακοπούλου 15, Ιωάννινα</span></span>
+                </p>
+                <div class="hero-tags">
+                    <span class="tag-pill gold">Ατομική CREATION CUE</span>
+                    <span class="tag-pill" id="hero-tag-vat" style="color:var(--primary); border-color:var(--border-gold);">Μετάταξη στο Κανονικό ΦΠΑ 24% (Έσοδα >9k€)</span>
+                    <span class="tag-pill">Β-Απλογραφικά</span>
+                    <span class="tag-pill green">VIES Active (EL047155049)</span>
+                    <span class="tag-pill">Έγγαμος (2 Προστατευόμενα Τέκνα)</span>
+                </div>
+            </div>
+
+            <div class="hero-actions">
+                <button class="btn-refresh" onclick="loadTaxData(true)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                    Ανανέωση Δεδομένων
+                </button>
+            </div>
+        </div>
+
+        <!-- Metrics Overview Grid -->
+        <div class="metrics-grid">
+            <div class="metric-card accent-gold">
+                <div class="metric-label">
+                    <span>Εισόδημα Ακινήτων (Σωτήριος)</span>
+                    <span>🏠</span>
+                </div>
+                <div class="metric-value" id="val-sotirios-rent">12.075,00 €</div>
+                <div class="metric-sub">11.475€ Κατοικίες + 600€ Καταστήματα. Σταθερή βάση κάλυψης τεκμηρίων.</div>
+            </div>
+
+            <div class="metric-card accent-blue">
+                <div class="metric-label">
+                    <span>Μισθωτή Εργασία (Σύζυγος)</span>
+                    <span>💼</span>
+                </div>
+                <div class="metric-value" id="val-spouse-income">17.682,54 €</div>
+                <div class="metric-sub">+ 7.680,00 € από εκμίσθωση καταστημάτων (Σύνολο Ακινήτων: 19.755 €).</div>
+            </div>
+
+            <div class="metric-card accent-green">
+                <div class="metric-label">
+                    <span>Ηλεκτρονικές Δαπάνες 2025</span>
+                    <span>💳</span>
+                </div>
+                <div class="metric-value" id="val-electronic-spent">24.008,27 €</div>
+                <div class="metric-sub">Σωτήριος: 24.008 € | Σύζυγος: 21.275 € (Πλήρης υπερκάλυψη 30%).</div>
+            </div>
+
+            <div class="metric-card accent-orange">
+                <div class="metric-label">
+                    <span>Καταχωρημένα Έξοδα 2026</span>
+                    <span>🧾</span>
+                </div>
+                <div class="metric-value" id="val-total-expenses">60,00 €</div>
+                <div class="metric-sub">Τέλη ΓΕΜΗ &amp; Επιμελητηρίου. 100% εκπιπτόμενα στο Ε3 (Κωδ. 585).</div>
+            </div>
+        </div>
+
+        <!-- Countdown Banner for OE Liquidation -->
+        <div class="countdown-banner">
+            <div>
+                <h3 style="font-family:'Outfit', sans-serif; font-size:20px; font-weight:800; margin-bottom:4px; color:#ff7675;">
+                    ⏳ Οριστικό Κλείσιμο Ο.Ε. (Αθλητικό Κατάστημα)
+                </h3>
+                <p style="font-size:13px; color:var(--text-secondary);">
+                    Στόχος ολοκλήρωσης λύσης &amp; διαγραφής: <strong>31 Δεκεμβρίου 2026</strong>. Παράλληλη ασφάλιση ΕΦΚΑ μέχρι τη λύση.
+                </p>
+            </div>
+
+            <div class="countdown-digits">
+                <div class="digit-box">
+                    <div class="digit-number" id="countdown-days">--</div>
+                    <div class="digit-label">Ημέρες</div>
+                </div>
+                <div class="digit-box">
+                    <div class="digit-number" id="countdown-hours">--</div>
+                    <div class="digit-label">Ώρες</div>
+                </div>
+                <div class="digit-box">
+                    <div class="digit-number" id="countdown-mins">--</div>
+                    <div class="digit-label">Λεπτά</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Two Columns Layout: Family & Real Estate -->
+        <div class="two-cols">
+            <!-- Family Panel -->
+            <div class="panel-box">
+                <div class="panel-title">
+                    <span>👨‍👩‍👧‍👧 Οικογενειακή Κατάσταση &amp; Προστατευόμενα Μέλη</span>
+                    <span style="font-size:12px; color:var(--text-muted);">Κοινή Δήλωση Ε1</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Σύζυγος</span>
+                    <span class="info-val">Αντωνίου Αγγελική του Αντωνίου</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Στοιχεία Συζύγου</span>
+                    <span class="info-val">ΑΦΜ: 114748211 | ΑΜΚΑ: 17087302661</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Εισόδημα Συζύγου (Μισθός / Φόρος)</span>
+                    <span class="info-val">17.682,54 € (Παρακράτηση: 1.565,59 €)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">1η Θυγατέρα (Προστατευόμενο μέλος)</span>
+                    <span class="info-val">Σταυριάνα Λιόντου (γεν. 2015 - Δίδυμη)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Στοιχεία 1ης Θυγατέρας</span>
+                    <span class="info-val">ΑΦΜ: 193516347 | ΑΜΚΑ: 26061502204</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">2η Θυγατέρα (Προστατευόμενο μέλος)</span>
+                    <span class="info-val">Αντωνία Λιόντου (γεν. 2015 - Δίδυμη)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Στοιχεία 2ης Θυγατέρας</span>
+                    <span class="info-val">ΑΦΜ: 193526605 | ΑΜΚΑ: 26061502188</span>
+                </div>
+            </div>
+
+            <!-- Assets & Presumptions Panel -->
+            <div class="panel-box">
+                <div class="panel-title">
+                    <span>🏡 Τεκμήρια &amp; Περιουσιακά Στοιχεία</span>
+                    <span style="font-size:12px; color:var(--text-muted);">Έντυπο Ε1</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Κύρια Κατοικία (Ιδιοκατοίκηση)</span>
+                    <span class="info-val">Ασημακοπούλου 15, Ιωάννινα (65 τ.μ. - 100% Σωτήριος)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Αρ. Παροχής Ρεύματος (Κύρια)</span>
+                    <span class="info-val">935653021 (12 μήνες χρήσης)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Δευτερεύουσα / Εξοχική</span>
+                    <span class="info-val">Κοκονίκου 6, Αμάρυνθος Ευβοίας (105 τ.μ. - 100% Σύζυγος)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Αρ. Παροχής Ρεύματος (Εξοχική)</span>
+                    <span class="info-val">443504231</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Αυτοκίνητο 1 (Σωτήριος)</span>
+                    <span class="info-val"><strong>ΙΝΤ 1347</strong> — Subaru Impreza Wagon 2.0L (2007)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Τεκμήριο &amp; Τέλη Subaru</span>
+                    <span class="info-val">Τεκμήριο: <strong>4.400 €</strong> | Τέλη: <strong>690 €/έτος</strong></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Κατανάλωση &amp; Έκπτωση Ε3</span>
+                    <span class="info-val" style="color:var(--primary);">13 lt/100km (30% έκπτωση σε βενζίνες &amp; service)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Αυτοκίνητο 2 (Σύζυγος)</span>
+                    <span class="info-val"><strong>ΙΝΜ 1323</strong> (1.390 cc, 2004) - Τεκμήριο: 2.600 €</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Συνολικό Τεκμήριο Οχημάτων</span>
+                    <span class="info-val" style="color:var(--primary);">7.000,00 €</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Two Columns Layout: Business & Liquidation Roadmap -->
+        <div class="two-cols">
+            <!-- Business Profile (Creation Cue) -->
+            <div class="panel-box">
+                <div class="panel-title">
+                    <span>💻 Ατομική Επιχείρηση: "CREATION CUE"</span>
+                    <span class="tag-pill gold" style="font-size:10px;">Επανέναρξη 16/03/2026</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Αριθμός Γ.Ε.ΜΗ.</span>
+                    <span class="info-val">122564729000 (Επιμελητήριο Ιωαννίνων)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Κατηγορία Βιβλίων</span>
+                    <span class="info-val">Β-Απλογραφικά (Υποχρεωτικά)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Τρέχοντα Έσοδα 2026</span>
+                    <span class="info-val" id="cc-revenue-val" style="color:var(--success); font-weight:800;">> 9.000 € (Προσέγγιση ορίου)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Καθεστώς ΦΠΑ</span>
+                    <span class="info-val" id="cc-vat-scheme" style="color:var(--primary); font-weight:700;">ΜΕΤΑΤΑΞΗ ΣΤΟ ΚΑΝΟΝΙΚΟ ΚΑΘΕΣΤΩΣ Φ.Π.Α. (24%)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Σημείωση Λογιστή</span>
+                    <span class="info-val" id="cc-vat-note" style="font-size:12px; color:var(--text-secondary);">Έσοδα >9.000€. Μετάταξη στο κανονικό καθεστώς. 24% έκπτωση/επιστροφή ΦΠΑ σε όλο το hardware!</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Κανόνας Τιμολόγησης</span>
+                    <span class="info-val" id="cc-vat-rule">Ελλάδα: +24% | Google Play &amp; ΕΕ (B2B): 0% (Reverse Charge)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">ΦΠΑ Εξόδων &amp; Hardware</span>
+                    <span class="info-val" id="cc-vat-expenses" style="color:var(--success);">Συμψηφίζεται 100% ή επιστρέφεται από τη ΔΟΥ</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Ενδοκοινοτικές Συναλλαγές (VIES)</span>
+                    <span class="info-val" style="color:var(--success);">Ενεργό (EL047155049) - Reverse Charge</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Κύριος ΚΑΔ</span>
+                    <span class="info-val">62011100 (Σχεδιασμός &amp; Ανάπτυξη Λογισμικού/Apps)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Δευτερεύοντες ΚΑΔ</span>
+                    <span class="info-val">62909000 (IT Services), 74140100 (Design)</span>
+                </div>
+            </div>
+
+            <!-- OE Liquidation Roadmap -->
+            <div class="panel-box">
+                <div class="panel-title">
+                    <span>📋 Οδικός Χάρτης Εκκαθάρισης Ο.Ε. (Αθλητικό Κατάστημα)</span>
+                    <span style="font-size:12px; color:#ff7675;">Έως 31/12/2026</span>
+                </div>
+
+                <div class="timeline-steps">
+                    <div class="timeline-step">
+                        <span class="step-month-badge">Οκτώβριος 2026</span>
+                        <div class="step-content">
+                            <h4>Απογραφή &amp; Ξεπούλημα Στοκ</h4>
+                            <ul>
+                                <li>Φυσική καταμέτρηση &amp; καταγραφή αποθεμάτων.</li>
+                                <li>Έναρξη μεγάλου ξεπουλήματος εκκαθάρισης (Closing Down Sale).</li>
+                                <li>Συμφωνία υπολοίπων προμηθευτών &amp; πιστωτικά τιμολόγια.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <span class="step-month-badge">Νοέμβριος 2026</span>
+                        <div class="step-content">
+                            <h4>Πάγια, POS &amp; Μίσθωση</h4>
+                            <ul>
+                                <li>Έγγραφη ειδοποίηση λύσης επαγγελματικής μίσθωσης καταστήματος.</li>
+                                <li>Διακανονισμός ΦΠΑ 5ετίας παγίων &amp; πώληση επίπλων/ραφιών.</li>
+                                <li>Αίτηση διακοπής τερματικών POS στις τράπεζες.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <span class="step-month-badge">Δεκέμβριος 2026</span>
+                        <div class="step-content">
+                            <h4>Οριστική Παύση, ΓΕΜΗ &amp; ΔΟΥ</h4>
+                            <ul>
+                                <li>Έκδοση τελικού «Ζ» &amp; δήλωση παύσης ταμειακής (ΦΗΜ - Δ11).</li>
+                                <li>Αυτοπαράδοση ή καταστροφή τυχόν εναπομείναντος στοκ.</li>
+                                <li>Υπογραφή συμφωνητικού λύσης, καταχώριση στο ΓΕΜΗ &amp; ΔΟΥ (Δ211).</li>
+                                <li>Διαγραφή από Επιμελητήριο &amp; μεταφορά ΕΦΚΑ στην ατομική.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2026 Sales Invoices Table (Google Play Payouts) -->
+        <div class="panel-box" style="margin-bottom: 28px;">
+            <div class="panel-title">
+                <span>💰 Εκδοθέντα Τιμολόγια Εσόδων 2026: Google Play Store (myDATA timologio)</span>
+                <span style="font-size:13px; color:var(--primary);" id="sales-total-badge">Σύνολο 6 Τιμολογίων: 9.038,57 € (0% ΦΠΑ - Ενδοκοινοτική)</span>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ημερομηνία</th>
+                            <th>Σειρά / Α/Α</th>
+                            <th>Αριθμός ΜΑΡΚ</th>
+                            <th>Πελάτης / Έδρα</th>
+                            <th>Περιγραφή</th>
+                            <th>Ποσό (€)</th>
+                            <th>Συντελεστής ΦΠΑ</th>
+                            <th>Τρόπος Πληρωμής</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sales-table-body">
+                        <!-- Populated dynamically via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 2026 Expenses Ledger Table -->
+        <div class="panel-box" style="margin-bottom: 28px;">
+            <div class="panel-title">
+                <span>🧾 Καταχωρημένα Έξοδα Χρήσης 2026: "CREATION CUE"</span>
+                <span style="font-size:13px; color:var(--success);">Σύνολο: 60,00 € (100% Εκπιπτόμενα)</span>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ημερομηνία</th>
+                            <th>Περιγραφή Δαπάνης</th>
+                            <th>Φορέας / Προμηθευτής</th>
+                            <th>Αριθμός / Κωδικός RF</th>
+                            <th>Ποσό</th>
+                            <th>Κωδικός Ε3</th>
+                            <th>Κατάσταση</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expenses-table-body">
+                        <!-- Populated dynamically via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 2027 Financial Forecast & Strategic Projection Module -->
+        <div class="panel-box" style="margin-bottom: 28px; border: 1px solid var(--border-gold); background: linear-gradient(180deg, rgba(212,175,55,0.04) 0%, rgba(22,25,34,0.7) 100%);">
+            <div class="panel-title" style="border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 14px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="font-size:24px;">🔮</span>
+                    <div>
+                        <div style="font-size:18px; font-weight:800; color:var(--primary); font-family:'Outfit', sans-serif;">
+                            Οικονομική Πρόγνωση &amp; Στρατηγικός Σχεδιασμός 2027
+                        </div>
+                        <div style="font-size:12px; color:var(--text-secondary); margin-top:2px;">
+                            Προβολή Εσόδων, Εξόδων, Φόρων &amp; Καθαρού Διαθέσιμου Εισοδήματος (Μετά τη λύση της Ο.Ε. &amp; Εκμίσθωση του Ιδιόκτητου Καταστήματος)
+                        </div>
+                    </div>
+                </div>
+                <span class="tag-pill gold" style="font-size:11px;">100% Digital &amp; Real Estate Cashflow</span>
+            </div>
+
+            <!-- Forecast KPI Cards Grid -->
+            <div class="metrics-grid" style="margin-top:20px; margin-bottom:24px;">
+                <div class="metric-card accent-gold" style="background:rgba(255,255,255,0.02);">
+                    <div class="metric-label">
+                        <span>Ακαθάριστες Εισπράξεις 2027</span>
+                        <span>📈</span>
+                    </div>
+                    <div class="metric-value" style="color:var(--primary);">~34.000 €</div>
+                    <div class="metric-sub">~18.000€ Google Play + 12.075€ Ενοίκια + ~4.200€ Νέο Ενοίκιο Καταστήματος.</div>
+                </div>
+
+                <div class="metric-card accent-blue" style="background:rgba(255,255,255,0.02);">
+                    <div class="metric-label">
+                        <span>Φορολογητέο Κέρδος Ε3</span>
+                        <span>🛡️</span>
+                    </div>
+                    <div class="metric-value">~10.000 €</div>
+                    <div class="metric-sub">Μετά από ~8.000€ έξοδα (leasing, hardware, cloud, ΕΦΚΑ). Φόρος μόνο 9%!</div>
+                </div>
+
+                <div class="metric-card accent-green" style="background:rgba(255,255,255,0.02);">
+                    <div class="metric-label">
+                        <span>Προσωπικό Καθαρό (Σωτήριος)</span>
+                        <span>💰</span>
+                    </div>
+                    <div class="metric-value" style="color:var(--success);">~23.500 €</div>
+                    <div class="metric-sub">Καθαρά στο χέρι μετά από φόρους, εισφορές &amp; έξοδα συντήρησης (~1.960€/μήνα).</div>
+                </div>
+
+                <div class="metric-card accent-orange" style="background:rgba(255,255,255,0.02);">
+                    <div class="metric-label">
+                        <span>Συνολικό Οικογενειακό Καθαρό</span>
+                        <span>👨‍👩‍👧‍👧</span>
+                    </div>
+                    <div class="metric-value" style="color:#f39c12;">~47.500 €</div>
+                    <div class="metric-sub">Μαζί με μισθό &amp; ενοίκια Αγγελικής (~3.950 € καθαρά / μήνα στο σπίτι).</div>
+                </div>
+            </div>
+
+            <!-- Detailed Table Breakdown -->
+            <div class="table-responsive" style="margin-bottom:20px;">
+                <table style="font-size:13px;">
+                    <thead>
+                        <tr style="background:rgba(255,255,255,0.03);">
+                            <th>Πηγή Εσόδου / Κατηγορία Δαπάνης</th>
+                            <th>Ετήσιο Ποσό (€)</th>
+                            <th>Φορολογική Μεταχείριση / Συντελεστής</th>
+                            <th>Εκτιμώμενος Φόρος / Εισφορά</th>
+                            <th>Καθαρό στην Τσέπη</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Google Play Store (CREATION CUE)</strong><br><span style="font-size:11px; color:var(--text-muted);">Βάσει run-rate ~1.500€/μήνα x 12 μήνες</span></td>
+                            <td class="cell-nowrap"><strong style="color:var(--primary);">18.000,00&nbsp;€</strong></td>
+                            <td>Ενδοκοινοτική 0% ΦΠΑ | Έσοδα Ε3</td>
+                            <td rowspan="2" class="cell-nowrap" style="vertical-align:middle;">
+                                <strong style="color:var(--danger);">-900,00&nbsp;€</strong><br>
+                                <span style="font-size:10px; color:var(--text-muted);">(9% στο κέρδος 10k€)</span>
+                            </td>
+                            <td rowspan="2" class="cell-nowrap" style="vertical-align:middle;">
+                                <strong style="color:var(--success);">~9.100,00&nbsp;€</strong><br>
+                                <span style="font-size:10px; color:var(--text-muted);">Καθαρό κέρδος business</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Επαγγελματικά Έξοδα &amp; Ασφαλιστικές Εισφορές</strong><br><span style="font-size:11px; color:var(--text-muted);">Leasing αυτοκινήτου (60%), ΕΦΚΑ 1η κατ., λογιστής, cloud tools</span></td>
+                            <td class="cell-nowrap" style="color:#ff7675;"><strong>-8.000,00&nbsp;€</strong></td>
+                            <td>100% Εκπιπτόμενα στο Ε3 (Φορολογική Ασπίδα)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Υφιστάμενα Ενοίκια Κατοικιών &amp; Χώρων</strong><br><span style="font-size:11px; color:var(--text-muted);">11.475€ Κατοικίες + 600€ Εμπορικός χώρος</span></td>
+                            <td class="cell-nowrap"><strong>12.075,00&nbsp;€</strong></td>
+                            <td>15% έως 12.000€ + 35% για τα 75€</td>
+                            <td class="cell-nowrap"><strong style="color:var(--danger);">-1.826,00&nbsp;€</strong></td>
+                            <td class="cell-nowrap"><strong style="color:var(--success);">10.249,00&nbsp;€</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Νέο Ενοίκιο Ιδιόκτητου Καταστήματος Ο.Ε.</strong><br><span style="font-size:11px; color:var(--text-muted);">Συνεκμίσθωση (50% μερίδιο Σωτηρίου &amp; 50% Αδερφού — εκτίμηση ~350€/μήνα μερίδιο)</span></td>
+                            <td class="cell-nowrap"><strong style="color:var(--primary);">~4.200,00&nbsp;€</strong></td>
+                            <td>35% (άνω των 12.000€ κλίμακας ενοικίων)</td>
+                            <td class="cell-nowrap"><strong style="color:var(--danger);">-1.470,00&nbsp;€</strong></td>
+                            <td class="cell-nowrap"><strong style="color:var(--success);">~2.730,00&nbsp;€</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ο.Ε. Αθλητικό Κατάστημα (Οριστικά Κλειστή)</strong></td>
+                            <td class="cell-nowrap"><strong>0,00&nbsp;€</strong></td>
+                            <td>Λύση 31/12/2026 (Μηδενικά λειτουργικά έξοδα &amp; ρίσκο)</td>
+                            <td class="cell-nowrap"><strong>0,00&nbsp;€</strong></td>
+                            <td class="cell-nowrap"><strong>0,00&nbsp;€</strong></td>
+                        </tr>
+                        <tr style="background:rgba(212,175,55,0.08); font-weight:700;">
+                            <td><strong>ΣΥΝΟΛΟ ΠΡΟΣΩΠΙΚΟΥ ΕΙΣΟΔΗΜΑΤΟΣ (ΣΩΤΗΡΙΟΣ):</strong></td>
+                            <td class="cell-nowrap" style="color:var(--primary); font-size:15px;">~34.275,00&nbsp;€</td>
+                            <td>Επιχείρηση (9%) + Ενοίκια (15% &amp; 35%)</td>
+                            <td class="cell-nowrap" style="color:var(--danger); font-size:14px;">-4.196,00&nbsp;€</td>
+                            <td class="cell-nowrap" style="color:var(--success); font-size:16px;">~23.500,00&nbsp;€ / έτος<br><span style="font-size:11px; font-weight:normal; color:var(--text-secondary);">(~1.960 € / μήνα καθαρά)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Strategic Insights Pillars -->
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:16px; margin-top:20px;">
+                <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px;">
+                    <div style="font-weight:700; color:var(--primary); margin-bottom:6px; font-size:14px;">
+                        🎯 1. Το «Μυστικό» του 9% στο Ε3
+                    </div>
+                    <div style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+                        Με τη σωστή καταχώριση των εξόδων (leasing, εξοπλισμός, ΕΦΚΑ, internet), το καθαρό κέρδος της Creation Cue συμπιέζεται κάτω από τα 10.000€. Έτσι, για 18.000€ τζίρο ο φόρος επιχείρησης είναι μόλις <strong>900€</strong>!
+                    </div>
+                </div>
+
+                <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px;">
+                    <div style="font-weight:700; color:var(--success); margin-bottom:6px; font-size:14px;">
+                        🏢 2. Το Κατάστημα ως Asset (50% Συνιδιοκτησία)
+                    </div>
+                    <div style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+                        Χωρίς πίεση για παράδοση κλειδιών, το κατάστημα εκμισθώνεται από κοινού (50%-50% με τον αδερφό σου). Ακόμα και με φορολόγηση 35%, το δικό σου μερίδιο αποφέρει <strong>καθαρά ~200€ – 250€/μήνα</strong>.
+                    </div>
+                </div>
+
+                <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px;">
+                    <div style="font-weight:700; color:#3498db; margin-bottom:6px; font-size:14px;">
+                        🛡️ 3. Μία Ενιαία Εισφορά ΕΦΚΑ
+                    </div>
+                    <div style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+                        Με τη λύση της Ο.Ε. καταργείται οριστικά η διπλή ιδιότητα και τυχόν μπερδέματα παράλληλης ασφάλισης. Πληρώνεις μόνο τη βασική 1η κατηγορία (~240€/μήνα) που εκπίπτει 100% από το Ε3.
+                    </div>
+                </div>
+
+                <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px;">
+                    <div style="font-weight:700; color:#f39c12; margin-bottom:6px; font-size:14px;">
+                        🏡 4. Απόλυτη Κάλυψη Τεκμηρίων
+                    </div>
+                    <div style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+                        Τα 12.075€ των ενοικίων + το νέο εμπορικό μίσθωμα υπερκαλύπτουν τα τεκμήρια διαβίωσης (σπίτι στα Ιωάννινα 65τμ, εξοχικό στην Εύβοια, Subaru/leasing), εξασφαλίζοντας μηδενικό φορολογικό κίνδυνο.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subsidies & Grants Monitoring Module -->
+        <div class="panel-box" style="margin-bottom: 28px; border: 1px solid rgba(52, 152, 219, 0.4); background: linear-gradient(180deg, rgba(52, 152, 219, 0.04) 0%, rgba(22, 25, 34, 0.7) 100%);">
+            <div class="panel-title" style="border-bottom: 1px solid rgba(52, 152, 219, 0.2); padding-bottom: 14px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="font-size:24px;">🎁</span>
+                    <div>
+                        <div style="font-size:18px; font-weight:800; color:#3498db; font-family:'Outfit', sans-serif;">
+                            Ενεργές Επιδοτήσεις &amp; Χρηματοδοτικά Προγράμματα (ΕΣΠΑ / Green / Digital)
+                        </div>
+                        <div style="font-size:12px; color:var(--text-secondary); margin-top:2px;">
+                            Στοχευμένος έλεγχος επιλεξιμότητας για την Ατομική Επιχείρηση <strong>CREATION CUE</strong> (ΚΑΔ 62011100, Ιωάννινα)
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="tag-pill blue" style="font-size:11px;">Τακτικός Έλεγχος (1η &amp; 15η κάθε μήνα)</span>
+                </div>
+            </div>
+
+            <!-- Monitoring Status Bar -->
+            <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 18px; margin: 18px 0; gap:12px; font-size:12px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#2ecc71; box-shadow:0 0 8px #2ecc71;"></span>
+                    <span style="color:var(--text-muted);">Τελευταίος Έλεγχος:</span>
+                    <strong style="color:var(--text-main);" id="subsidy-last-check">07/10/2026</strong>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="color:var(--text-muted);">Επόμενος Αυτόματος Έλεγχος:</span>
+                    <strong style="color:var(--primary);" id="subsidy-next-check">15/10/2026</strong>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="color:var(--text-muted);">Προφίλ Ελέγχου:</span>
+                    <span class="tag-pill gold" style="font-size:10px;">ΚΑΔ 62011100</span>
+                    <span class="tag-pill blue" style="font-size:10px;">ΠΕΠ Ηπείρου</span>
+                    <span class="tag-pill green" style="font-size:10px;">100% Εξαγωγές (Google)</span>
+                </div>
+            </div>
+
+            <!-- Eligible Programs Grid -->
+            <div id="subsidies-cards-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:18px; margin-bottom:22px;">
+                <!-- Dynamically populated from tax-data.json -->
+            </div>
+
+            <!-- Excluded Programs Warning -->
+            <div style="background:rgba(231, 76, 60, 0.06); border:1px solid rgba(231, 76, 60, 0.25); border-radius:var(--radius-sm); padding:16px 20px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px; color:#ff7675; font-weight:700; font-size:14px;">
+                    <span>⚠️ Προγράμματα που ΑΠΟΚΛΕΙΟΝΤΑΙ (Για αποφυγή σπατάλης χρόνου &amp; συμβούλων):</span>
+                </div>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px; font-size:12px; color:var(--text-secondary);">
+                    <div style="border-left:2px solid rgba(231, 76, 60, 0.5); padding-left:10px;">
+                        <strong style="color:#ff7675;">❌ ΔΥΠΑ Νέων Ελευθέρων Επαγγελματιών:</strong>
+                        <p style="margin-top:2px; line-height:1.4;">Απαιτεί υποχρεωτικά εγγραφή ως άνεργος πριν την έναρξη. Αποκλείεσαι λόγω αδιάλειπτης ασφάλισης ΕΦΚΑ από 1997 &amp; ενεργής επιχείρησης.</p>
+                    </div>
+                    <div style="border-left:2px solid rgba(231, 76, 60, 0.5); padding-left:10px;">
+                        <strong style="color:#ff7675;">❌ Προγράμματα Μεταποίησης / Βιομηχανίας:</strong>
+                        <p style="margin-top:2px; line-height:1.4;">Αφορούν αποκλειστικά παραγωγή υλικών προϊόντων &amp; βιοτεχνικές εγκαταστάσεις (όχι λογισμικό/apps).</p>
+                    </div>
+                    <div style="border-left:2px solid rgba(231, 76, 60, 0.5); padding-left:10px;">
+                        <strong style="color:#ff7675;">❌ Προγράμματα με Υποχρεωτική Πρόσληψη (ΕΜΕ):</strong>
+                        <p style="margin-top:2px; line-height:1.4;">Επιβάλλουν διατήρηση ή πρόσληψη υπαλλήλων για 18-24 μήνες, που δεν ταιριάζει στο ευέλικτο μοντέλο χαμηλών εξόδων της Creation Cue.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast">Επιτυχής ενημέρωση στοιχείων!</div>
+
+    <script>
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+            authDomain: "creation-cue-manage.firebaseapp.com",
+            databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "creation-cue-manage",
+            storageBucket: "creation-cue-manage.firebasestorage.app",
+            messagingSenderId: "186324516022",
+            appId: "1:186324516022:web:ac18f988659a18e5ad3a17",
+            measurementId: "G-DWBPSP7D8T"
+        };
+
+        let auth, db;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            auth = firebase.auth();
+            db = firebase.database();
+        } catch (e) {
+            console.warn("Firebase init:", e);
+        }
+
+        // Whitelisted Admin Emails & Master PINs
+        const ALLOWED_EMAILS = ["sotsor@gmail.com", "sotirios.liontos@gmail.com"];
+        const MASTER_PINS = ["0471", "0417", "1234", "047155049"];
+
+        // Check Local Authentication State
+        function checkLocalAuth() {
+            const isLocalAuthed = sessionStorage.getItem("cc_tax_authed") === "true";
+            if (isLocalAuthed) {
+                unlockPortal(sessionStorage.getItem("cc_tax_user") || "Authenticated User");
+                return true;
+            }
+            return false;
+        }
+
+        function unlockPortal(userIdent) {
+            document.getElementById("auth-overlay").style.display = "none";
+            document.getElementById("app-container").style.display = "block";
+            document.getElementById("user-display-email").textContent = userIdent;
+            sessionStorage.setItem("cc_tax_authed", "true");
+            sessionStorage.setItem("cc_tax_user", userIdent);
+            loadTaxData();
+            startCountdown();
+        }
+
+        // Firebase Auth State Listener
+        if (auth) {
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    const email = (user.email || "").toLowerCase();
+                    unlockPortal(email || "Google Authenticated");
+                } else {
+                    if (!checkLocalAuth()) {
+                        document.getElementById("auth-overlay").style.display = "flex";
+                        document.getElementById("app-container").style.display = "none";
+                    }
+                }
+            });
+        } else {
+            checkLocalAuth();
+        }
+
+        // Google Login Trigger
+        document.getElementById("btn-google-auth").addEventListener("click", () => {
+            if (!auth) {
+                showAuthError("Firebase Auth is not ready.");
+                return;
+            }
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then(res => {
+                unlockPortal(res.user.email);
+            }).catch(err => {
+                console.error("Google sign-in error:", err);
+                showAuthError("Σφάλμα σύνδεσης Google: " + (err.message || "Ακυρώθηκε η σύνδεση"));
+            });
+        });
+
+        // PIN Login Trigger
+        document.getElementById("btn-pin-submit").addEventListener("click", () => {
+            const pinVal = document.getElementById("pin-input").value.trim();
+            const storedPin = localStorage.getItem("cc_custom_pin");
+            
+            if (MASTER_PINS.includes(pinVal) || (storedPin && pinVal === storedPin)) {
+                unlockPortal("PIN User");
+            } else if (pinVal.length >= 4 && !storedPin) {
+                // First-time entry of user's personal PIN
+                localStorage.setItem("cc_custom_pin", pinVal);
+                unlockPortal("PIN User");
+            } else {
+                showAuthError("Λανθασμένο PIN. Εισάγετε το PIN πρόσβασης ή συνδεθείτε με Google.");
+            }
+        });
+
+        document.getElementById("pin-input").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") document.getElementById("btn-pin-submit").click();
+        });
+
+        function showAuthError(msg) {
+            const el = document.getElementById("auth-error");
+            el.textContent = msg;
+            el.style.display = "block";
+        }
+
+        window.logout = function() {
+            sessionStorage.removeItem("cc_tax_authed");
+            sessionStorage.removeItem("cc_tax_user");
+            if (auth) auth.signOut();
+            window.location.reload();
+        };
+
+        // Load & Render Tax Data
+        async function loadTaxData(showFeedback = false) {
+            try {
+                // Fetch latest json with cache bust
+                const res = await fetch("tax-data.json?t=" + Date.now());
+                if (!res.ok) throw new Error("Could not load tax-data.json");
+                const data = await res.json();
+                renderData(data);
+                if (showFeedback) showToast("Τα δεδομένα ανανεώθηκαν επιτυχώς!");
+            } catch (err) {
+                console.error("Error loading tax data:", err);
+                if (showFeedback) showToast("Σφάλμα φόρτωσης αρχείου δεδομένων.");
+            }
+        }
+
+        function renderData(d) {
+            if (d.taxpayer) {
+                document.getElementById("taxpayer-name").textContent = d.taxpayer.name;
+                document.getElementById("taxpayer-afm").textContent = d.taxpayer.afm;
+                document.getElementById("taxpayer-doy").textContent = d.taxpayer.doy;
+                document.getElementById("taxpayer-address").textContent = d.taxpayer.address;
+            }
+
+            if (d.realEstateIncome && d.realEstateIncome.sotirios) {
+                document.getElementById("val-sotirios-rent").textContent = 
+                    d.realEstateIncome.sotirios.totalRent.toLocaleString("el-GR", { minimumFractionDigits: 2 }) + " €";
+            }
+
+            if (d.family && d.family.spouse) {
+                document.getElementById("val-spouse-income").textContent = 
+                    d.family.spouse.netIncome2025.toLocaleString("el-GR", { minimumFractionDigits: 2 }) + " €";
+            }
+
+            if (d.electronicPayments2025 && d.electronicPayments2025.sotirios) {
+                document.getElementById("val-electronic-spent").textContent = 
+                    d.electronicPayments2025.sotirios.spent.toLocaleString("el-GR", { minimumFractionDigits: 2 }) + " €";
+            }
+
+            if (d.totalExpenses2026 !== undefined) {
+                document.getElementById("val-total-expenses").textContent = 
+                    d.totalExpenses2026.toLocaleString("el-GR", { minimumFractionDigits: 2 }) + " €";
+            }
+
+            if (d.creationCueBusiness) {
+                const cb = d.creationCueBusiness;
+                if (cb.currentRevenue2026 && document.getElementById("cc-revenue-val")) {
+                    document.getElementById("cc-revenue-val").textContent = cb.currentRevenue2026;
+                }
+                if (cb.vatScheme && document.getElementById("cc-vat-scheme")) {
+                    document.getElementById("cc-vat-scheme").textContent = cb.vatScheme;
+                }
+                if (cb.vatStatusNote && document.getElementById("cc-vat-note")) {
+                    document.getElementById("cc-vat-note").textContent = cb.vatStatusNote;
+                }
+                if (cb.vatInvoiceRule && document.getElementById("cc-vat-rule")) {
+                    document.getElementById("cc-vat-rule").textContent = cb.vatInvoiceRule;
+                }
+                if (cb.vatExpensesRule && document.getElementById("cc-vat-expenses")) {
+                    document.getElementById("cc-vat-expenses").textContent = cb.vatExpensesRule;
+                }
+            }
+
+            // Render Sales Invoices Table
+            const salesTbody = document.getElementById("sales-table-body");
+            if (salesTbody && d.salesInvoices2026) {
+                salesTbody.innerHTML = "";
+                let totalSales = 0;
+                d.salesInvoices2026.forEach(inv => {
+                    totalSales += inv.amount;
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td class="cell-nowrap"><strong>${inv.date}</strong></td>
+                        <td class="cell-nowrap"><span class="tag-pill gold" style="font-size:11px;">${inv.series}</span></td>
+                        <td class="cell-nowrap"><code style="color:var(--text-muted); font-size:11px;">${inv.mark}</code></td>
+                        <td><strong>${inv.client}</strong></td>
+                        <td>${inv.description}</td>
+                        <td class="cell-nowrap"><strong style="color:var(--primary); font-size:14px;" class="amount-val">${inv.amount.toLocaleString("el-GR", { minimumFractionDigits: 2 })}&nbsp;€</strong></td>
+                        <td class="cell-nowrap"><span class="tag-pill" style="color:var(--success); border-color:rgba(46,204,113,0.3); font-size:10px;">${inv.vatRate}</span></td>
+                        <td class="cell-nowrap"><span style="font-size:11px; color:var(--text-secondary);">${inv.paymentMethod}</span></td>
+                    `;
+                    salesTbody.appendChild(tr);
+                });
+                const salesBadge = document.getElementById("sales-total-badge");
+                if (salesBadge) {
+                    salesBadge.textContent = `Σύνολο ${d.salesInvoices2026.length} Τιμολογίων: ${totalSales.toLocaleString("el-GR", { minimumFractionDigits: 2 })} € (0% ΦΠΑ - Ενδοκοινοτική)`;
+                }
+            }
+
+            // Render Expenses Table
+            const tbody = document.getElementById("expenses-table-body");
+            if (tbody && d.expenses2026) {
+                tbody.innerHTML = "";
+                d.expenses2026.forEach(item => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td class="cell-nowrap"><strong>${item.date}</strong></td>
+                        <td>${item.description}</td>
+                        <td>${item.entity}</td>
+                        <td class="cell-nowrap"><code style="color:var(--primary); font-size:11px;">${item.ref}</code></td>
+                        <td class="cell-nowrap"><strong class="amount-val">${item.amount.toLocaleString("el-GR", { minimumFractionDigits: 2 })}&nbsp;€</strong></td>
+                        <td class="cell-nowrap"><span class="tag-pill gold" style="font-size:10px;">${item.e3Code}</span></td>
+                        <td class="cell-nowrap"><span class="badge-status success">Καταχωρήθηκε</span></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Render Subsidies Monitor
+            if (d.subsidiesMonitor) {
+                const sm = d.subsidiesMonitor;
+                if (document.getElementById("subsidy-last-check") && sm.lastCheck) {
+                    document.getElementById("subsidy-last-check").textContent = sm.lastCheck;
+                }
+                if (document.getElementById("subsidy-next-check") && sm.nextCheck) {
+                    document.getElementById("subsidy-next-check").textContent = sm.nextCheck;
+                }
+                const cardsContainer = document.getElementById("subsidies-cards-container");
+                if (cardsContainer && sm.eligiblePrograms) {
+                    cardsContainer.innerHTML = "";
+                    sm.eligiblePrograms.forEach(prog => {
+                        const card = document.createElement("div");
+                        card.style.cssText = "background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:var(--radius-md); padding:20px; display:flex; flex-direction:column; justify-content:space-between;";
+                        card.innerHTML = `
+                            <div>
+                                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:10px;">
+                                    <h4 style="font-family:'Outfit', sans-serif; font-size:16px; font-weight:700; color:var(--text-main);">${prog.title}</h4>
+                                    <span class="tag-pill ${prog.badgeColor || 'gold'}" style="font-size:10px; white-space:nowrap;">${prog.badge}</span>
+                                </div>
+                                <div style="font-size:11px; color:var(--text-muted); margin-bottom:8px;">
+                                    🏛️ <strong>Φορέας:</strong> ${prog.agency} | <strong>Κατάσταση:</strong> <span style="color:var(--success); font-weight:600;">${prog.status}</span>
+                                </div>
+                                <div style="background:rgba(241,179,28,0.08); border-left:3px solid var(--primary); padding:8px 12px; border-radius:4px; font-size:12px; font-weight:600; color:var(--primary); margin-bottom:12px;">
+                                    💡 ${prog.benefit}
+                                </div>
+                                <p style="font-size:12px; color:var(--text-secondary); line-height:1.5; margin-bottom:14px;">
+                                    ${prog.description}
+                                </p>
+                            </div>
+                            <div style="display:flex; justify-content:flex-end; border-top:1px solid rgba(255,255,255,0.05); padding-top:12px;">
+                                <a href="${prog.link}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; color:var(--primary); font-size:12px; font-weight:600; text-decoration:none; padding:6px 14px; border:1px solid var(--border-gold); border-radius:var(--radius-sm); background:rgba(241,179,28,0.05); transition:all 0.2s ease;">
+                                    <span>Επίσημος Σύνδεσμος / Αίτηση</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                                </a>
+                            </div>
+                        `;
+                        cardsContainer.appendChild(card);
+                    });
+                }
+            }
+        }
+
+        // Live Countdown to 31 Dec 2026
+        function startCountdown() {
+            const target = new Date("2026-12-31T23:59:59").getTime();
+            function update() {
+                const now = new Date().getTime();
+                const diff = target - now;
+                if (diff <= 0) {
+                    document.getElementById("countdown-days").textContent = "0";
+                    document.getElementById("countdown-hours").textContent = "0";
+                    document.getElementById("countdown-mins").textContent = "0";
+                    return;
+                }
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+                document.getElementById("countdown-days").textContent = days;
+                document.getElementById("countdown-hours").textContent = hours;
+                document.getElementById("countdown-mins").textContent = mins;
+            }
+            update();
+            setInterval(update, 60000);
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            t.textContent = msg;
+            t.style.display = "block";
+            setTimeout(() => { t.style.display = "none"; }, 3000);
+        }
+    </script>
+</body>
+</html>

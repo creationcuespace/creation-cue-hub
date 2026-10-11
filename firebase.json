@@ -7,6 +7,48 @@
     "public": ".",
     "cleanUrls": true,
     "trailingSlash": false,
+    "rewrites": [
+      {
+        "source": "/tax",
+        "destination": "/tax.html"
+      },
+      {
+        "source": "/month-planner",
+        "destination": "/month-planner.html"
+      },
+      {
+        "source": "/manage-coupons",
+        "destination": "/manage-coupons.html"
+      },
+      {
+        "source": "/reddit-generator",
+        "destination": "/reddit-generator.html"
+      },
+      {
+        "source": "/watch-recorder",
+        "destination": "/watch-recorder.html"
+      },
+      {
+        "source": "/play-versions",
+        "destination": "/play-versions.html"
+      },
+      {
+        "source": "/play-deploy",
+        "destination": "/play-deploy.html"
+      },
+      {
+        "source": "/blog",
+        "destination": "/blog.html"
+      },
+      {
+        "source": "/live",
+        "destination": "/live.html"
+      },
+      {
+        "source": "/admin",
+        "destination": "/admin.html"
+      }
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -21,7 +63,6 @@
       "**/*.bat",
       "**/*.ps1",
       "**/*.sh",
-      "tracker/**",
       "docs/**",
       "blog/images/**",
       "scratch/**",
