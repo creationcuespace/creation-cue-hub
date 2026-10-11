@@ -980,46 +980,54 @@ AAAA-BBBB-CCCC"></textarea>
 
         <!-- Direct Review Link Generator Card -->
         <div class="card" id="review-generator-card">
-          <div class="card-title">Direct Review Link Generator</div>
-          <div style="font-size:12px; line-height:1.4; color:var(--muted); margin-bottom:8px;">
-            Enter your Google Play Store App Link or Package Name to generate direct review links and a custom QR code.
-          </div>
-          <div class="form-group">
-            <span class="form-label">Google Play App Link or Package Name</span>
-            <div style="display:flex; gap:8px;">
-              <input class="input-text" id="gen-app-link" type="text" placeholder="e.g. com.creationcue.classicretro or full play store link">
-              <button class="btn small" onclick="generateReviewLinks()" style="flex:none;">Generate</button>
-            </div>
+          <div class="card-title" id="review-gen-title" onclick="toggleReviewGen()" style="cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; border-bottom: none; padding-bottom: 0;">
+            <span>Direct Review Link Generator</span>
+            <svg id="review-gen-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s ease;">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
           </div>
           
-          <div id="gen-results-area" style="display:none; flex-direction:column; gap:12px; margin-top:8px; border-top:1px solid var(--border); padding-top:12px;">
-            <div class="form-group">
-              <span class="form-label">Google Play Web Review Link</span>
-              <div style="display:flex; gap:8px;">
-                <input class="input-text" id="gen-web-link" type="text" readonly style="font-family:monospace; font-size:11px;">
-                <button class="btn small" onclick="copyGenLink('gen-web-link', 'Web review link')">Copy</button>
-              </div>
+          <div id="review-gen-body" style="display: none; flex-direction: column; gap: 12px; margin-top: 16px; border-top: 1px solid var(--border); padding-top: 16px;">
+            <div style="font-size:12px; line-height:1.4; color:var(--muted); margin-bottom:8px;">
+              Enter your Google Play Store App Link or Package Name to generate direct review links and a custom QR code.
             </div>
             <div class="form-group">
-              <span class="form-label">Play Store App Intent (Deep Link)</span>
+              <span class="form-label">Google Play App Link or Package Name</span>
               <div style="display:flex; gap:8px;">
-                <input class="input-text" id="gen-intent-link" type="text" readonly style="font-family:monospace; font-size:11px;">
-                <button class="btn small" onclick="copyGenLink('gen-intent-link', 'App deep link')">Copy</button>
+                <input class="input-text" id="gen-app-link" type="text" placeholder="e.g. com.creationcue.classicretro or full play store link">
+                <button class="btn small" onclick="generateReviewLinks()" style="flex:none;">Generate</button>
               </div>
             </div>
-            <div class="form-group">
-              <span class="form-label">Direct Write Review Link</span>
-              <div style="display:flex; gap:8px;">
-                <input class="input-text" id="gen-direct-link" type="text" readonly style="font-family:monospace; font-size:11px;">
-                <button class="btn small" onclick="copyGenLink('gen-direct-link', 'Direct review link')">Copy</button>
+            
+            <div id="gen-results-area" style="display:none; flex-direction:column; gap:12px; margin-top:8px; border-top:1px solid var(--border); padding-top:12px;">
+              <div class="form-group">
+                <span class="form-label">Google Play Web Review Link</span>
+                <div style="display:flex; gap:8px;">
+                  <input class="input-text" id="gen-web-link" type="text" readonly style="font-family:monospace; font-size:11px;">
+                  <button class="btn small" onclick="copyGenLink('gen-web-link', 'Web review link')">Copy</button>
+                </div>
               </div>
-            </div>
-            <div style="display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:8px; background:var(--mid); border:1px solid var(--border); padding:12px; border-radius:4px;">
-              <span class="form-label">Generated Review QR Code</span>
-              <div id="gen-qrcode-container" style="background:white; padding:8px; border-radius:4px; display:flex; align-items:center; justify-content:center; width:166px; height:166px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
-                <!-- Image tag will load QR code -->
+              <div class="form-group">
+                <span class="form-label">Play Store App Intent (Deep Link)</span>
+                <div style="display:flex; gap:8px;">
+                  <input class="input-text" id="gen-intent-link" type="text" readonly style="font-family:monospace; font-size:11px;">
+                  <button class="btn small" onclick="copyGenLink('gen-intent-link', 'App deep link')">Copy</button>
+                </div>
               </div>
-              <div style="font-size:10px; color:var(--muted); text-align:center;">Right-click the QR code image to save or copy it.</div>
+              <div class="form-group">
+                <span class="form-label">Direct Write Review Link</span>
+                <div style="display:flex; gap:8px;">
+                  <input class="input-text" id="gen-direct-link" type="text" readonly style="font-family:monospace; font-size:11px;">
+                  <button class="btn small" onclick="copyGenLink('gen-direct-link', 'Direct review link')">Copy</button>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:8px; background:var(--mid); border:1px solid var(--border); padding:12px; border-radius:4px;">
+                <span class="form-label">Generated Review QR Code</span>
+                <div id="gen-qrcode-container" style="background:white; padding:8px; border-radius:4px; display:flex; align-items:center; justify-content:center; width:166px; height:166px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+                  <!-- Image tag will load QR code -->
+                </div>
+                <div style="font-size:10px; color:var(--muted); text-align:center;">Right-click the QR code image to save or copy it.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1611,6 +1619,7 @@ AAAA-BBBB-CCCC"></textarea>
     };
 
     window.generateReviewLinks = function(optionalPkgName) {
+      if (typeof toggleReviewGen === 'function') toggleReviewGen(true);
       var inputVal = (optionalPkgName || document.getElementById('gen-app-link').value).trim();
       if (!inputVal) {
         alert("Please enter a Play Store link or package name.");
@@ -2076,6 +2085,29 @@ AAAA-BBBB-CCCC"></textarea>
         var isHidden = body.style.display === 'none';
         var shouldExpand = forceState !== undefined ? forceState : isHidden;
         
+        if (shouldExpand) {
+          body.style.display = 'flex';
+          arrow.style.transform = 'rotate(180deg)';
+          title.style.borderBottom = '1px solid var(--border)';
+          title.style.paddingBottom = '8px';
+        } else {
+          body.style.display = 'none';
+          arrow.style.transform = 'rotate(0deg)';
+          title.style.borderBottom = 'none';
+          title.style.paddingBottom = '0';
+        }
+      }
+    };
+
+    // Toggle collapsible Direct Review Link Generator card
+    window.toggleReviewGen = function(forceState) {
+      var body = document.getElementById('review-gen-body');
+      var arrow = document.getElementById('review-gen-arrow');
+      var title = document.getElementById('review-gen-title');
+      if (body && arrow && title) {
+        var isHidden = body.style.display === 'none';
+        var shouldExpand = forceState !== undefined ? forceState : isHidden;
+
         if (shouldExpand) {
           body.style.display = 'flex';
           arrow.style.transform = 'rotate(180deg)';
