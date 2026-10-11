@@ -19,6 +19,7 @@ CURRENT_RECORDING = {
 
 # Auto-detect ADB executable
 POSSIBLE_ADB_PATHS = [
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "adb.exe"),
     r"C:\Users\smash\.dronehacks\platform-tools\adb.exe",
     r"C:\Users\smash\Desktop\Mega\WATCHFACESTUDIO\platform-tools\adb.exe",
     r"C:\Users\User\Mega\WATCHFACESTUDIO\platform-tools\adb.exe",
