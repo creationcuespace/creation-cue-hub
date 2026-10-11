@@ -727,11 +727,19 @@
             select.value = currentVal;
           }
           
-          const activeDev = select.value || connectedDevices[0].id;
-          updateStatusBadge('online', `Connected: ${activeDev}`);
-          document.getElementById('recBtn').disabled = false;
-          if (!isRecording) {
-            document.getElementById('recHint').innerText = 'Click big RED button to start recording watch screen';
+          const activeDevId = select.value || connectedDevices[0].id;
+          const activeDev = connectedDevices.find(d => d.id === activeDevId) || connectedDevices[0];
+
+          if (activeDev && activeDev.status === 'unauthorized') {
+            updateStatusBadge('connecting', `⚠️ Tap 'Allow' on Watch Screen`);
+            document.getElementById('recBtn').disabled = true;
+            document.getElementById('recHint').innerText = 'Check your watch: Tap "Always allow from this computer"';
+          } else {
+            updateStatusBadge('online', `Connected: ${activeDev ? activeDev.id : activeDevId}`);
+            document.getElementById('recBtn').disabled = false;
+            if (!isRecording) {
+              document.getElementById('recHint').innerText = 'Click big RED button to start recording watch screen';
+            }
           }
         }
 

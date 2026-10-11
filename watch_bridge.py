@@ -283,35 +283,41 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
 
     def get_adb_devices(self):
         try:
-            res = subprocess.run([ADB_PATH, "devices", "-l"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=3)
+            res = subprocess.run([ADB_PATH, "devices", "-l"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=4)
             lines = res.stdout.strip().split("\n")[1:]
             devices = []
             for line in lines:
                 line = line.strip()
-                if not line or "offline" in line or "unauthorized" in line:
+                if not line or "offline" in line:
                     continue
                 parts = line.split()
-                if len(parts) >= 2 and parts[1] == "device":
+                if len(parts) >= 2:
                     dev_id = parts[0]
+                    state = parts[1]
 
-                    # Verify active responsiveness to auto-prune stale cached connections
-                    try:
-                        ping_res = subprocess.run([ADB_PATH, "-s", dev_id, "shell", "echo", "1"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=1.5)
-                        if ping_res.returncode != 0 or "closed" in ping_res.stderr.lower():
-                            subprocess.run([ADB_PATH, "disconnect", dev_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                            continue
-                    except Exception:
-                        subprocess.run([ADB_PATH, "disconnect", dev_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    if state == "unauthorized":
+                        devices.append({"id": dev_id, "model": "Watch (Tap 'Allow' on screen)", "status": "unauthorized"})
                         continue
 
-                    model = "Smartwatch"
-                    for p in parts[2:]:
-                        if p.startswith("model:"):
-                            model = p.split(":")[1].replace("_", " ")
-                        elif p.startswith("device:"):
-                            if model == "Smartwatch":
+                    if state == "device":
+                        # Only prune if connection socket is explicitly closed (e.g. Wireless Debugging toggled off)
+                        try:
+                            ping_res = subprocess.run([ADB_PATH, "-s", dev_id, "shell", "echo", "1"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=3.5)
+                            if "closed" in ping_res.stderr.lower():
+                                subprocess.run([ADB_PATH, "disconnect", dev_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                                continue
+                        except Exception:
+                            # Don't disconnect on transient Wi-Fi latency
+                            pass
+
+                        model = "Smartwatch"
+                        for p in parts[2:]:
+                            if p.startswith("model:"):
                                 model = p.split(":")[1].replace("_", " ")
-                    devices.append({"id": dev_id, "model": model, "status": "online"})
+                            elif p.startswith("device:"):
+                                if model == "Smartwatch":
+                                    model = p.split(":")[1].replace("_", " ")
+                        devices.append({"id": dev_id, "model": model, "status": "online"})
             return devices
         except Exception:
             return []
