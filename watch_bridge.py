@@ -45,11 +45,13 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
     def _send_cors_headers(self):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Request-Private-Network, *")
+        self.send_header("Access-Control-Allow-Private-Network", "true")
 
     def do_OPTIONS(self):
         self.send_response(200)
         self._send_cors_headers()
+        self.send_header("Content-Length", "0")
         self.end_headers()
 
     def _send_json(self, data, code=200):
@@ -64,6 +66,17 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed = urlparse(self.path)
         path = parsed.path
+
+        if path in ["/", "/watch-recorder", "/watch-recorder.html"]:
+            local_html = os.path.join(os.path.dirname(os.path.abspath(__file__)), "watch-recorder.html")
+            if os.path.exists(local_html):
+                self.send_response(200)
+                self.send_header("Content-Type", "text/html; charset=utf-8")
+                self._send_cors_headers()
+                self.end_headers()
+                with open(local_html, "rb") as f:
+                    self.wfile.write(f.read())
+                return
 
         if path == "/api/status":
             devices = self.get_adb_devices()

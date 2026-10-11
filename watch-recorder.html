@@ -585,7 +585,26 @@
   </div>
 
   <script>
-    const BRIDGE_API = 'http://localhost:37380';
+    let bridgeBase = (window.location.port === '37380') ? '' : 'http://127.0.0.1:37380';
+
+    async function callBridge(path, options = {}) {
+      const candidates = (window.location.port === '37380')
+        ? ['']
+        : [bridgeBase, 'http://127.0.0.1:37380', 'http://localhost:37380'];
+      
+      let lastErr = null;
+      for (const base of candidates) {
+        try {
+          const res = await fetch(`${base}${path}`, options);
+          bridgeBase = base;
+          return res;
+        } catch (e) {
+          lastErr = e;
+        }
+      }
+      throw lastErr || new Error('Bridge unreachable');
+    }
+
     let isRecording = false;
     let timerInterval = null;
     let startTime = 0;
@@ -681,7 +700,7 @@
 
     async function refreshStatus() {
       try {
-        const res = await fetch(`${BRIDGE_API}/api/status`, { method: 'GET' });
+        const res = await callBridge('/api/status', { method: 'GET' });
         const data = await res.json();
         
         document.getElementById('bridgeNotice').style.display = 'none';
@@ -747,7 +766,7 @@
       btn.innerText = 'Connecting...';
 
       try {
-        const res = await fetch(`${BRIDGE_API}/api/connect`, {
+        const res = await callBridge('/api/connect', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ target: ip })
@@ -767,7 +786,7 @@
     async function disconnectDevice() {
       try {
         const selectedDevice = document.getElementById('deviceSelect').value;
-        const res = await fetch(`${BRIDGE_API}/api/disconnect`, {
+        const res = await callBridge('/api/disconnect', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ target: selectedDevice || '' })
@@ -789,7 +808,7 @@
       btn.innerText = 'Pairing...';
 
       try {
-        const res = await fetch(`${BRIDGE_API}/api/pair`, {
+        const res = await callBridge('/api/pair', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ target, code })
@@ -822,7 +841,7 @@
         // Start Recording
         const selectedDevice = document.getElementById('deviceSelect').value;
         try {
-          const res = await fetch(`${BRIDGE_API}/api/record/start`, {
+          const res = await callBridge('/api/record/start', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ device_id: selectedDevice })
@@ -843,7 +862,7 @@
         document.getElementById('recBtn').disabled = true;
         
         try {
-          const res = await fetch(`${BRIDGE_API}/api/record/stop`, {
+          const res = await callBridge('/api/record/stop', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
           });
@@ -914,7 +933,7 @@
 
     async function openPCFolder() {
       try {
-        await fetch(`${BRIDGE_API}/api/open-folder`, { method: 'POST' });
+        await callBridge('/api/open-folder', { method: 'POST' });
       } catch (e) {
         alert('Could not open folder');
       }
