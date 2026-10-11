@@ -175,7 +175,7 @@ def main():
     <br><br>
     <div>
       <a href="https://play.google.com/store/apps/dev?id=7609098870161748513">
-        <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/more.png" alt="Visit the Official Creation Cue Play Store" style="max-width: 400px; height: auto; border: 0;">
+        <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/playStore3.png" alt="Visit the Official Creation Cue Play Store" style="max-width: 400px; height: auto; border: 0;">
       </a>
     </div>
   </body>

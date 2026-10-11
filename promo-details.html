@@ -734,6 +734,10 @@
               These links can be clicked exactly once. After claim, the code is revealed and the link is deactivated. Perfect for newsletter prizes.
             </div>
 
+            <div style="margin: 8px 0; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; background: #fff;" title="Signature banner included in copied message">
+              <img src="images/playStore3.png" alt="Play Store Signature Banner" style="width: 100%; height: auto; display: block;">
+            </div>
+
             <div class="flex-mobile-column" style="display:flex; gap:10px;">
               <button class="btn" id="btn-gen-token" style="flex:1;">Generate Link</button>
               <button class="btn ghost" id="btn-gen-bulk" style="flex:1;">Bulk Generate (5)</button>
@@ -1201,10 +1205,25 @@
     // Copy public link
     document.getElementById('btn-copy-public-link').addEventListener('click', function() {
       var url = document.getElementById('lbl-public-url').textContent;
-      var text = "🎟️ A few coupons are available here:\n" + url + "\n\n⭐ A review is appreciated!";
-      navigator.clipboard.writeText(text).then(function() {
-        showToast("Public claim message copied!");
-      });
+      var textToCopy = "🎟️ A few coupons are available here:\n" + url + "\n\n⭐ A review is appreciated!";
+      var bannerUrl = "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/playStore3.png";
+      var htmlToCopy = `<div>🎟️ A few coupons are available here:<br><a href="${url}">${url}</a><br><br>⭐ A review is appreciated!<br><br><a href="https://play.google.com/store/apps/dev?id=7609098870161748513"><img src="${bannerUrl}" alt="Visit the Official Creation Cue Play Store" style="max-width:400px; height:auto; border:0;"></a></div>`;
+
+      if (navigator.clipboard && window.ClipboardItem) {
+        var textBlob = new Blob([textToCopy], { type: 'text/plain' });
+        var htmlBlob = new Blob([htmlToCopy], { type: 'text/html' });
+        navigator.clipboard.write([new ClipboardItem({ 'text/plain': textBlob, 'text/html': htmlBlob })]).then(function() {
+          showToast("Public claim message copied!");
+        }).catch(function() {
+          navigator.clipboard.writeText(textToCopy).then(function() {
+            showToast("Public claim message copied!");
+          });
+        });
+      } else {
+        navigator.clipboard.writeText(textToCopy).then(function() {
+          showToast("Public claim message copied!");
+        });
+      }
     });
 
 
@@ -1358,9 +1377,24 @@
       var link = input ? input.value : '';
       var wfName = document.getElementById('promo-name').value.trim() || (promoData ? promoData.name : '') || 'the watch face';
       var textToCopy = "Hi,\nHere is your coupon for " + wfName + ". A review is appreciated.\n" + link;
-      navigator.clipboard.writeText(textToCopy).then(function() {
-        showToast("Claim message copied!");
-      });
+      var bannerUrl = "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/playStore3.png";
+      var htmlToCopy = `<div>Hi,<br>Here is your coupon for ${wfName}. A review is appreciated.<br><a href="${link}">${link}</a><br><br><a href="https://play.google.com/store/apps/dev?id=7609098870161748513"><img src="${bannerUrl}" alt="Visit the Official Creation Cue Play Store" style="max-width:400px; height:auto; border:0;"></a></div>`;
+
+      if (navigator.clipboard && window.ClipboardItem) {
+        var textBlob = new Blob([textToCopy], { type: 'text/plain' });
+        var htmlBlob = new Blob([htmlToCopy], { type: 'text/html' });
+        navigator.clipboard.write([new ClipboardItem({ 'text/plain': textBlob, 'text/html': htmlBlob })]).then(function() {
+          showToast("Claim message copied!");
+        }).catch(function() {
+          navigator.clipboard.writeText(textToCopy).then(function() {
+            showToast("Claim message copied!");
+          });
+        });
+      } else {
+        navigator.clipboard.writeText(textToCopy).then(function() {
+          showToast("Claim message copied!");
+        });
+      }
     };
 
     window.deleteToken = function(tokenId) {
