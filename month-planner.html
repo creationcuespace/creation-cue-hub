@@ -2237,11 +2237,7 @@
           Paste your Gemini sales audit report, or type your own task list using bullet points (e.g., <code>- Action: update store screenshots for CUE180</code> or <code>- check compatibility for CRC072</code>). Any custom line with actions or watch face codes will be parsed.
         </p>
         <textarea id="audit-text-input" class="input-text" style="flex: 1; min-height: 250px; resize: none; font-family: monospace; font-size: 11.5px;" placeholder="Paste Gemini report text here..."></textarea>
-        <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 8px;">
-          <button type="button" onclick="loadPromoRoadmapPreset()" class="btn-secondary" style="border-color: var(--primary); color: var(--primary-text); margin-right: auto; gap: 6px; font-size: 11.5px; padding: 7px 12px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-            ✨ Load Promo Roadmap
-          </button>
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;">
           <button onclick="closeAuditModal()" class="btn-secondary" style="padding: 8px 14px;">Cancel</button>
           <button onclick="extractAuditTasks()" class="btn-primary" style="padding: 8px 16px;">Extract Tasks</button>
         </div>
@@ -5941,21 +5937,6 @@
     function backToAuditStep1() {
       document.getElementById('audit-step-1').style.display = 'flex';
       document.getElementById('audit-step-2').style.display = 'none';
-    }
-
-    function loadPromoRoadmapPreset() {
-      var promoText = `1. Watch Face Promotional Roadmap (2x Weekly Rotation)
-- Action: [2026-10-14] Launch CUE179 Giveaway on Reddit (r/GalaxyWatch & r/WearOS - Cap 50-75 coupons)
-- Action: [2026-10-16] Post CUE177 Analog Watch Face Promo on Facebook Groups (100 coupons)
-- Action: [2026-10-21] Launch CUE178 Digital Weather & Health Giveaway on Reddit (Cap 50-75 coupons)
-- Action: [2026-10-23] Post CUE176 Hybrid Watch Face Promo on Facebook Groups (100 coupons)
-- Action: [2026-10-28] Launch CRC094 Revival Giveaway on Reddit (Cap 50 coupons)
-- Action: [2026-10-30] Post CUE174 Digital Watch Face Promo on Facebook Groups (100 coupons)
-- Action: [2026-11-04] Launch CUE175 Bold Typography Giveaway on Reddit (Cap 50-75 coupons)
-- Action: [2026-11-06] Post CRC082 Classic Revival Promo on Facebook Groups (100 coupons)`;
-
-      document.getElementById('audit-text-input').value = promoText;
-      extractAuditTasks();
     }
 
     function extractAuditTasks() {
