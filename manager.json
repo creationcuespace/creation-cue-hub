@@ -833,9 +833,12 @@
       "play_store_url": "market://details?id=com.creation.cue104watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue104",
       "description_en": "WEAR OS Watch Face CUE104 . ❖ 3 custom complications or image shortcuts & 1 image shortcut, ❖ heart rate with warning for extremes, ❖ battery and progression display, ❖ upcoming event display, distance...",
       "description_de": "CUE104 ist ein modernes digitales Zifferblatt mit klarem Layout und anpassbaren Komplikationen.",
-      "filters": [],
+      "filters": [
+        "FREE"
+      ],
       "type": "digital",
-      "is_free": false
+      "is_free": true,
+      "badge_text": "🎀 FREE"
     },
     {
       "id": "cue103",
