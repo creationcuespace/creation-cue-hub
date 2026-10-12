@@ -35,6 +35,11 @@
       label: 'Earnings',
       href: 'https://cue-earnings.sotsor.workers.dev/',
       target: '_blank',
+      color: '#34d399',
+      bg: 'rgba(52, 211, 153, 0.14)',
+      border: 'rgba(52, 211, 153, 0.32)',
+      hoverBg: 'rgba(52, 211, 153, 0.25)',
+      activeBg: 'rgba(52, 211, 153, 0.35)',
       icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>',
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>'
     },
@@ -43,6 +48,11 @@
       label: 'Analytics',
       href: 'https://cue-earnings.sotsor.workers.dev/analytics',
       target: '_blank',
+      color: '#38bdf8',
+      bg: 'rgba(56, 189, 248, 0.14)',
+      border: 'rgba(56, 189, 248, 0.32)',
+      hoverBg: 'rgba(56, 189, 248, 0.25)',
+      activeBg: 'rgba(56, 189, 248, 0.35)',
       icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>',
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>'
     },
@@ -50,6 +60,11 @@
       id: 'coupons',
       label: 'Coupons',
       href: 'https://creationcue.web.app/manage-coupons.html',
+      color: '#fbbf24',
+      bg: 'rgba(251, 191, 36, 0.14)',
+      border: 'rgba(251, 191, 36, 0.32)',
+      hoverBg: 'rgba(251, 191, 36, 0.25)',
+      activeBg: 'rgba(251, 191, 36, 0.35)',
       icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>',
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>'
     },
@@ -57,6 +72,11 @@
       id: 'reddit',
       label: 'Reddit',
       href: 'https://creationcue.web.app/reddit-generator.html',
+      color: '#ff652f',
+      bg: 'rgba(255, 101, 47, 0.14)',
+      border: 'rgba(255, 101, 47, 0.32)',
+      hoverBg: 'rgba(255, 101, 47, 0.25)',
+      activeBg: 'rgba(255, 101, 47, 0.35)',
       icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>',
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>'
     },
@@ -64,6 +84,11 @@
       id: 'socials',
       label: 'Socials',
       href: 'https://creationcue.web.app/social-generator.html',
+      color: '#f472b6',
+      bg: 'rgba(244, 114, 182, 0.14)',
+      border: 'rgba(244, 114, 182, 0.32)',
+      hoverBg: 'rgba(244, 114, 182, 0.25)',
+      activeBg: 'rgba(244, 114, 182, 0.35)',
       icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line></svg>',
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>'
     },
@@ -71,6 +96,11 @@
       id: 'batch',
       label: 'Batch Update',
       href: 'https://creationcue.web.app/batchUpdates.html',
+      color: '#c084fc',
+      bg: 'rgba(192, 132, 252, 0.14)',
+      border: 'rgba(192, 132, 252, 0.32)',
+      hoverBg: 'rgba(192, 132, 252, 0.25)',
+      activeBg: 'rgba(192, 132, 252, 0.35)',
       icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>',
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>'
     },
@@ -78,6 +108,11 @@
       id: 'planner',
       label: 'Planner',
       href: 'https://creationcue.web.app/month-planner.html',
+      color: '#2dd4bf',
+      bg: 'rgba(45, 212, 191, 0.14)',
+      border: 'rgba(45, 212, 191, 0.32)',
+      hoverBg: 'rgba(45, 212, 191, 0.25)',
+      activeBg: 'rgba(45, 212, 191, 0.35)',
       icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>',
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>'
     },
@@ -85,6 +120,11 @@
       id: 'versions',
       label: 'Versions',
       href: 'https://creationcue.web.app/play-versions.html',
+      color: '#60a5fa',
+      bg: 'rgba(96, 165, 250, 0.14)',
+      border: 'rgba(96, 165, 250, 0.32)',
+      hoverBg: 'rgba(96, 165, 250, 0.25)',
+      activeBg: 'rgba(96, 165, 250, 0.35)',
       icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="11" height="11" rx="2" ry="2"></rect></svg>',
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="11" height="11" rx="2" ry="2"></rect></svg>'
     },
@@ -92,6 +132,11 @@
       id: 'deploy',
       label: 'Deploy',
       href: 'https://creationcue.web.app/play-deploy.html',
+      color: '#fb7185',
+      bg: 'rgba(251, 113, 133, 0.14)',
+      border: 'rgba(251, 113, 133, 0.32)',
+      hoverBg: 'rgba(251, 113, 133, 0.25)',
+      activeBg: 'rgba(251, 113, 133, 0.35)',
       icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12,4 L19,9 L19,16 L12,20 L5,16 L5,9 Z"></path></svg>',
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12,4 L19,9 L19,16 L12,20 L5,16 L5,9 Z"></path></svg>'
     },
@@ -99,6 +144,11 @@
       id: 'blog',
       label: 'Blog',
       href: 'https://creationcue.web.app/admin.html',
+      color: '#a3e635',
+      bg: 'rgba(163, 230, 53, 0.14)',
+      border: 'rgba(163, 230, 53, 0.32)',
+      hoverBg: 'rgba(163, 230, 53, 0.25)',
+      activeBg: 'rgba(163, 230, 53, 0.35)',
       icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>',
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>'
     },
@@ -106,6 +156,11 @@
       id: 'watch-recorder',
       label: 'Watch Recorder',
       href: 'https://creationcue.web.app/watch-recorder.html',
+      color: '#fb923c',
+      bg: 'rgba(251, 146, 60, 0.14)',
+      border: 'rgba(251, 146, 60, 0.32)',
+      hoverBg: 'rgba(251, 146, 60, 0.25)',
+      activeBg: 'rgba(251, 146, 60, 0.35)',
       icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>',
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>'
     }
@@ -234,51 +289,113 @@
         letter-spacing: 0.5px;
         text-decoration: none;
         flex-shrink: 0;
-        font-size: 12px;
+        font-size: 11.5px;
+        padding: 4px 8px;
+        border-radius: 6px;
+        background: rgba(245, 197, 24, 0.10);
+        border: 1px solid rgba(245, 197, 24, 0.25);
+        transition: all 0.15s ease;
       }
       .admin-bar-brand:hover {
-        opacity: 0.9;
+        background: rgba(245, 197, 24, 0.20);
+        border-color: #f5c518;
       }
 
       .admin-bar-links {
         display: flex;
-        gap: 16px;
+        gap: 8px;
         align-items: center;
         overflow-x: auto;
         white-space: nowrap;
         scrollbar-width: none;
         -ms-overflow-style: none;
         -webkit-overflow-scrolling: touch;
-        margin: 0 12px;
+        margin: 0 10px;
       }
       .admin-bar-links::-webkit-scrollbar {
         display: none;
       }
 
-      .admin-bar-links a,
-      .admin-bar-links .admin-bar-btn {
-        color: #e5e7eb;
+      .admin-bar-links a {
+        background: var(--tab-bg);
+        border: 1px solid var(--tab-border);
+        color: #f3f4f6;
         text-decoration: none;
         font-weight: 600;
-        transition: color 0.15s, background-color 0.15s;
+        transition: all 0.15s ease;
         display: inline-flex;
         align-items: center;
         gap: 5px;
         flex-shrink: 0;
-        font-size: 12px;
+        font-size: 11.5px;
         cursor: pointer;
         user-select: none;
-        padding: 4px 6px;
-        border-radius: 4px;
+        padding: 4px 9px;
+        border-radius: 6px;
       }
-      .admin-bar-links a:hover,
-      .admin-bar-links .admin-bar-btn:hover {
-        color: #f5c518;
+      .admin-bar-links a svg {
+        color: var(--tab-color);
+        flex-shrink: 0;
+        transition: transform 0.15s ease;
+      }
+      .admin-bar-links a:hover {
+        background: var(--tab-hover-bg);
+        border-color: var(--tab-color);
+        color: #ffffff;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      }
+      .admin-bar-links a:hover svg {
+        transform: scale(1.12);
       }
       .admin-bar-links a.active {
-        color: #f5c518;
-        background: rgba(245, 197, 24, 0.12);
+        background: var(--tab-active-bg);
+        border-color: var(--tab-color);
+        color: var(--tab-color);
         font-weight: 700;
+        box-shadow: 0 0 10px var(--tab-border);
+      }
+
+      .admin-bar-links .admin-bar-btn {
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.15s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        flex-shrink: 0;
+        font-size: 11.5px;
+        cursor: pointer;
+        user-select: none;
+        padding: 4px 9px;
+        border-radius: 6px;
+      }
+      .admin-bar-links .admin-bar-btn:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.2);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      }
+
+      .app-slide-link {
+        transition: all 0.15s ease !important;
+      }
+      .app-slide-link .app-slide-icon {
+        color: var(--tab-color);
+        transition: transform 0.15s ease;
+      }
+      .app-slide-link:hover {
+        background: var(--tab-bg) !important;
+        border-left-color: var(--tab-color) !important;
+        color: var(--tab-color) !important;
+      }
+      .app-slide-link:hover .app-slide-icon {
+        transform: scale(1.1);
+      }
+      .app-slide-link.active {
+        background: var(--tab-bg) !important;
+        border-left-color: var(--tab-color) !important;
+        color: var(--tab-color) !important;
+        font-weight: 700 !important;
       }
 
       .admin-bar-user {
@@ -288,19 +405,20 @@
         flex-shrink: 0;
       }
       .admin-bar-user button {
-        background: transparent;
+        background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.2);
         color: #9ca3af;
-        padding: 3px 8px;
-        border-radius: 4px;
+        padding: 4px 8px;
+        border-radius: 5px;
         font-size: 11px;
         cursor: pointer;
         font-weight: 500;
         transition: all 0.15s;
       }
       .admin-bar-user button:hover {
-        border-color: #f5c518;
-        color: #ffffff;
+        background: rgba(239, 68, 68, 0.15);
+        border-color: #ef4444;
+        color: #fca5a5;
       }
 
       @keyframes adminPulseDot {
@@ -356,8 +474,9 @@
       const target = getLinkTarget(item);
       const targetAttr = target ? ` target="${target}"` : '';
       const href = resolveHref(item.href);
+      const styleAttr = `style="--tab-color:${item.color}; --tab-bg:${item.bg}; --tab-border:${item.border}; --tab-hover-bg:${item.hoverBg}; --tab-active-bg:${item.activeBg};"`;
       return `
-        <a href="${href}" class="admin-bar-link${activeClass}"${targetAttr}>
+        <a href="${href}" class="admin-bar-link${activeClass}"${targetAttr} ${styleAttr}>
           ${item.icon}
           <span>${item.label}</span>
         </a>
@@ -371,18 +490,18 @@
       </a>
       <div class="admin-bar-links">
         ${navLinksHtml}
-        <span id="btn-subscribers-admin-bar" class="admin-bar-btn" onclick="window.openAdminSubscribers()" style="color: #f5c518;">
+        <span id="btn-subscribers-admin-bar" class="admin-bar-btn" onclick="window.openAdminSubscribers()" style="color: #f5c518; background: rgba(245, 197, 24, 0.12); border: 1px solid rgba(245, 197, 24, 0.3);">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
           Subscribers 
-          <span id="admin-subscribers-count" style="background: rgba(245, 197, 24, 0.18); border: 1px solid rgba(245, 197, 24, 0.4); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #f5c518; margin-left: 2px;">0</span>
+          <span id="admin-subscribers-count" style="background: rgba(245, 197, 24, 0.22); border: 1px solid rgba(245, 197, 24, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #f5c518; margin-left: 2px;">0</span>
         </span>
-        <span id="btn-support-admin-bar" class="admin-bar-btn" onclick="window.handleAdminSupport()" style="color: #9ca3af;">
+        <span id="btn-support-admin-bar" class="admin-bar-btn" onclick="window.handleAdminSupport()" style="color: #cbd5e1; background: rgba(148, 163, 184, 0.12); border: 1px solid rgba(148, 163, 184, 0.25);">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
           Support 
-          <span id="admin-support-count" style="display: none; background: rgba(245, 197, 24, 0.18); border: 1px solid rgba(245, 197, 24, 0.4); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #f5c518; margin-left: 2px;">0</span>
+          <span id="admin-support-count" style="display: none; background: rgba(245, 197, 24, 0.22); border: 1px solid rgba(245, 197, 24, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #f5c518; margin-left: 2px;">0</span>
         </span>
-        <span id="btn-live-visitors" class="admin-bar-btn" onclick="window.openAdminLiveVisitors()" style="color: #4caf50;">
-          Live <span class="admin-live-dot"></span> <span id="admin-live-count" style="background: rgba(76, 175, 80, 0.18); border: 1px solid rgba(76, 175, 80, 0.4); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #4caf50;">0</span>
+        <span id="btn-live-visitors" class="admin-bar-btn" onclick="window.openAdminLiveVisitors()" style="color: #4caf50; background: rgba(76, 175, 80, 0.12); border: 1px solid rgba(76, 175, 80, 0.3);">
+          Live <span class="admin-live-dot"></span> <span id="admin-live-count" style="background: rgba(76, 175, 80, 0.22); border: 1px solid rgba(76, 175, 80, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #4caf50;">0</span>
         </span>
       </div>
       <div class="admin-bar-user">
@@ -406,9 +525,10 @@
         const target = getLinkTarget(item);
         const targetAttr = target ? ` target="${target}"` : '';
         const href = resolveHref(item.href);
+        const styleAttr = `style="--tab-color:${item.color}; --tab-bg:${item.bg}; --tab-border:${item.border};"`;
         return `
-          <a href="${href}" class="app-slide-link${activeClass}"${targetAttr}>
-            ${item.slideIcon || item.icon}
+          <a href="${href}" class="app-slide-link${activeClass}"${targetAttr} ${styleAttr}>
+            <span class="app-slide-icon" style="display:flex; align-items:center;">${item.slideIcon || item.icon}</span>
             <span>${item.label}</span>
           </a>
         `;
