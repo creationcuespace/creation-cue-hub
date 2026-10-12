@@ -17,6 +17,7 @@
     
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="/admin-bar.js"></script>
     
     <style>
         :root {
@@ -1585,11 +1586,7 @@
             </a>
     </div>
             <div class="header-btns">
-                <a href="manage-coupons.html" class="header-btn">Coupons</a>
-                <a href="month-planner.html" class="header-btn">Planner</a>
-                <a href="play-versions.html" class="header-btn">Versions</a>
-                <a href="play-deploy.html" class="header-btn">Deploy</a>
-                <button onclick="handleLogout()" class="header-btn">Logout</button>
+                <button onclick="handleLogout()" class="header-btn" style="display: none;">Logout</button>
             </div>
         </header>
 
