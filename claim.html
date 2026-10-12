@@ -636,6 +636,17 @@
         <button class="btn" id="btn-claim" disabled>
           CLAIM FREE COUPON
         </button>
+
+        <!-- Out of Coupons / Purchase Option (Only shown when coupons hit 0) -->
+        <div id="out-of-coupons-store-area" style="display: none; flex-direction: column; gap: 8px; width: 100%;">
+          <a id="btn-store-redirect" href="#" target="_blank" class="btn" style="background: var(--yellow); color: #000; font-weight: 700; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(245, 197, 24, 0.25);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a2.003 2.003 0 0 1-1.61-1.956V3.77a2 2 0 0 1 1.609-1.956zm11.605 11.605l2.43 2.43-12.028 6.944 9.598-9.374zm2.43-2.43l-2.43 2.43-9.598-9.374 12.028 6.944zm1.408 1.408l3.14 1.814a1.2 1.2 0 0 1 0 2.078l-3.14 1.814-1.92-1.853 1.92-1.853z"/></svg>
+            <span>GET IT ON GOOGLE PLAY ↗</span>
+          </a>
+          <p id="store-redirect-subtext" style="font-size: 12px; color: var(--muted); text-align: center; margin-top: 4px; line-height: 1.4;">
+            All free giveaway codes have been claimed! You can get this watch face directly on Google Play.
+          </p>
+        </div>
       </div>
 
       <!-- Claimed Area -->
@@ -1236,18 +1247,34 @@
 
     function resetClaimButton() {
       var claimBtn = document.getElementById('btn-claim');
+      var storeArea = document.getElementById('out-of-coupons-store-area');
+      var storeBtn = document.getElementById('btn-store-redirect');
+      var storeSubtext = document.getElementById('store-redirect-subtext');
+
       if (claimBtn) {
         var total = promoData.totalCoupons || 0;
         var claimed = promoData.claimedCount || 0;
         var cap = promoData.claimsCap || 0;
         var allowedMax = (cap && cap > 0 && !isTokenClaim) ? Math.min(cap, total) : total;
         var remaining = Math.max(0, allowedMax - claimed);
+
         if (remaining === 0) {
-          claimBtn.disabled = true;
-          claimBtn.textContent = "OUT OF COUPONS";
+          if (promoData.storeLink && storeArea && storeBtn) {
+            claimBtn.style.display = 'none';
+            storeBtn.href = promoData.storeLink;
+            if (storeSubtext) storeSubtext.textContent = "All free giveaway codes have been claimed! You can get this watch face directly on Google Play.";
+            storeArea.style.display = 'flex';
+          } else {
+            claimBtn.style.display = 'block';
+            claimBtn.disabled = true;
+            claimBtn.textContent = "OUT OF COUPONS";
+            if (storeArea) storeArea.style.display = 'none';
+          }
         } else {
+          claimBtn.style.display = 'block';
           claimBtn.disabled = false;
           claimBtn.textContent = "CLAIM FREE COUPON";
+          if (storeArea) storeArea.style.display = 'none';
         }
       }
     }
@@ -1265,6 +1292,9 @@
       var now = Date.now();
       var countdownArea = document.getElementById('promo-countdown-area');
       var claimBtn = document.getElementById('btn-claim');
+      var storeArea = document.getElementById('out-of-coupons-store-area');
+      var storeBtn = document.getElementById('btn-store-redirect');
+      var storeSubtext = document.getElementById('store-redirect-subtext');
       
       if (hasUserClaimed) {
         countdownArea.style.display = 'none';
@@ -1282,8 +1312,10 @@
         countdownArea.style.background = 'rgba(245, 197, 24, 0.05)';
         countdownArea.style.color = 'var(--yellow)';
         
+        claimBtn.style.display = 'block';
         claimBtn.disabled = true;
         claimBtn.textContent = "PROMOTION SCHEDULED";
+        if (storeArea) storeArea.style.display = 'none';
       } else if (isExpired) {
         countdownArea.style.display = 'block';
         countdownArea.innerHTML = `★ PROMOTION EXPIRED ★`;
@@ -1291,8 +1323,17 @@
         countdownArea.style.background = 'rgba(232, 40, 30, 0.05)';
         countdownArea.style.color = 'var(--red)';
         
-        claimBtn.disabled = true;
-        claimBtn.textContent = "PROMOTION EXPIRED";
+        if (promoData.storeLink && storeArea && storeBtn) {
+          claimBtn.style.display = 'none';
+          storeBtn.href = promoData.storeLink;
+          if (storeSubtext) storeSubtext.textContent = "This free promotion has ended. You can get this watch face directly on Google Play.";
+          storeArea.style.display = 'flex';
+        } else {
+          claimBtn.style.display = 'block';
+          claimBtn.disabled = true;
+          claimBtn.textContent = "PROMOTION EXPIRED";
+          if (storeArea) storeArea.style.display = 'none';
+        }
       } else {
         countdownArea.style.display = 'none';
         
@@ -1303,11 +1344,22 @@
         var remaining = Math.max(0, allowedMax - claimed);
         
         if (remaining === 0) {
-          claimBtn.disabled = true;
-          claimBtn.textContent = "OUT OF COUPONS";
+          if (promoData.storeLink && storeArea && storeBtn) {
+            claimBtn.style.display = 'none';
+            storeBtn.href = promoData.storeLink;
+            if (storeSubtext) storeSubtext.textContent = "All free giveaway codes have been claimed! You can get this watch face directly on Google Play.";
+            storeArea.style.display = 'flex';
+          } else {
+            claimBtn.style.display = 'block';
+            claimBtn.disabled = true;
+            claimBtn.textContent = "OUT OF COUPONS";
+            if (storeArea) storeArea.style.display = 'none';
+          }
         } else if (!isClaiming) {
+          claimBtn.style.display = 'block';
           claimBtn.disabled = false;
           claimBtn.textContent = "CLAIM FREE COUPON";
+          if (storeArea) storeArea.style.display = 'none';
         }
       }
     }
