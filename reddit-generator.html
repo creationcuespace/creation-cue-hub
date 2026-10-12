@@ -806,14 +806,18 @@
       <div class="output-column">
         <!-- Selected Preview Info -->
         <div class="card" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
-          <div style="display:flex; align-items:center; gap:14px;">
+          <div style="display:flex; align-items:center; gap:14px; min-width: 200px;">
             <img id="selected-face-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%232a2a2a'/%3E%3C/svg%3E" alt="Watch face" style="width:48px; height:48px; border-radius:50%; border:1px solid var(--border); object-fit:cover;">
             <div>
               <div id="selected-face-title" style="font-size:16px; font-weight:700; color:#fff;">Select a Watch Face from the left list</div>
               <div id="selected-face-meta" style="font-size:12px; color:var(--yellow); margin-top:2px;">No promotion selected</div>
             </div>
           </div>
-          <div id="selected-face-stats" style="text-align:right;">
+          <div id="selected-face-stats" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px;">
+              <label for="custom-cap-input" style="font-size: 11.5px; font-weight: 700; color: var(--yellow); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Giveaway Cap:</label>
+              <input type="number" id="custom-cap-input" min="1" max="1000" placeholder="e.g. 100" style="width: 80px; background: var(--black); border: 1px solid var(--border); border-radius: 4px; color: #fff; font-size: 13.5px; font-weight: 700; padding: 4px 8px; text-align: center;" oninput="onCapInputChange()">
+            </div>
             <span class="coupons-count-badge badge-active" id="selected-coupons-badge" style="display:none;">489 Coupons Available</span>
           </div>
         </div>
@@ -1235,8 +1239,27 @@ Links to claim your free code and the Play Store link are in the first comment b
         badge.textContent = 'No Coupons Set';
       }
 
+      // Initialize or prefill Cap input
+      var capInput = document.getElementById('custom-cap-input');
+      if (capInput) {
+        if (item.cap && item.cap > 0) {
+          capInput.value = item.cap;
+        } else if (item.remaining > 0) {
+          capInput.value = item.remaining;
+        } else {
+          capInput.value = '';
+        }
+      }
+
       // Generate Outputs
       generateRedditContent(item);
+    }
+
+    // React live to cap input typing
+    function onCapInputChange() {
+      if (selectedItem) {
+        generateRedditContent(selectedItem);
+      }
     }
 
     // Generate Titles, Body, and Comments
@@ -1245,13 +1268,22 @@ Links to claim your free code and the Play Store link are in the first comment b
       var typeStr = item.faceType ? (item.faceType.charAt(0).toUpperCase() + item.faceType.slice(1)) : 'Digital';
       if (typeStr.toLowerCase() === 'watch face') typeStr = 'Digital';
 
+      // Read cap from input if user entered one
+      var capInput = document.getElementById('custom-cap-input');
+      var capInputVal = capInput ? capInput.value.trim() : '';
+      var customLimit = capInputVal ? parseInt(capInputVal, 10) : null;
+
+      // Determine the count to advertise
+      var countToUse = (customLimit !== null && !isNaN(customLimit) && customLimit > 0) ? customLimit : (item.remaining > 0 ? item.remaining : 0);
+
       // 1. Post Title
-      var couponsText = item.remaining > 0 ? (item.remaining + '+ Free Coupon Codes Giveaway!') : 'Free Promo Codes Giveaway!';
+      var couponsText = countToUse > 0 ? (countToUse + ' Free Coupon Codes Giveaway!') : 'Free Promo Codes Giveaway!';
       var titleText = `[Wear OS] ${name} ${typeStr} Watch Face – ${couponsText}`;
       document.getElementById('output-title').value = titleText;
 
       // 2. Post Body (Safe without links)
-      var bodyText = `Hey everyone! Giving away free Google Play promo codes for ${name} Wear OS watch face.\n\nLinks to claim your free code and the Play Store link are in the first comment below! 👇`;
+      var countPhrase = countToUse > 0 ? `${countToUse} free Google Play promo codes` : `free Google Play promo codes`;
+      var bodyText = `Hey everyone! Giving away ${countPhrase} for ${name} Wear OS watch face.\n\nLinks to claim your free code and the Play Store link are in the first comment below! 👇`;
       document.getElementById('output-body').value = bodyText;
 
       // 3. Direct Clean Claim URL (No URL shorteners!)
@@ -1273,7 +1305,8 @@ Links to claim your free code and the Play Store link are in the first comment b
       var featuresList = extractFeatures(item.description);
 
       // 4. Formatted First Comment
-      var commentText = `Hey everyone!\n\nGiving away free Google Play promo codes for **${name}** Wear OS watch face.\n\n🎁 **Claim your free coupon code here:**\n${claimUrl}\n\n🏪 **Google Play Store Link:**\n${playStoreUrl}\n\n**Features:**\n${featuresList}\n\nIf you like the watch face, a rating or review on Google Play would be greatly appreciated! Enjoy!`;
+      var commentIntro = countToUse > 0 ? `Giving away ${countToUse} free Google Play promo codes` : `Giving away free Google Play promo codes`;
+      var commentText = `Hey everyone!\n\n${commentIntro} for **${name}** Wear OS watch face.\n\n🎁 **Claim your free coupon code here:**\n${claimUrl}\n\n🏪 **Google Play Store Link:**\n${playStoreUrl}\n\n**Features:**\n${featuresList}\n\nIf you like the watch face, a rating or review on Google Play would be greatly appreciated! Enjoy!`;
 
       document.getElementById('output-comment').value = commentText;
     }
