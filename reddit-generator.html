@@ -866,7 +866,7 @@
           </div>
           <input type="text" id="output-title" class="text-output-area" style="font-weight:600;" placeholder="[Wear OS] CRC066 Digital Watch Face – Free Coupon Codes Giveaway!">
           <div class="help-hint">
-            💡 Standard clean title format that passes subreddit moderators without triggering filters.
+            💡 Clean moderator-safe format. Exact coupon count is only shown when limited (≤100 or when a cap is set) to maximize urgency without looking like mass dumping.
           </div>
         </div>
 
@@ -1388,17 +1388,38 @@ Links to claim your free code and the Play Store link are in the first comment b
       var capInput = document.getElementById('custom-cap-input');
       var capInputVal = capInput ? capInput.value.trim() : '';
       var customLimit = capInputVal ? parseInt(capInputVal, 10) : null;
+      var hasExplicitCap = (customLimit !== null && !isNaN(customLimit) && customLimit > 0);
 
-      // Determine the count to advertise
-      var countToUse = (customLimit !== null && !isNaN(customLimit) && customLimit > 0) ? customLimit : (item.remaining > 0 ? item.remaining : 0);
+      // Smart count rule:
+      // Only mention exact numbers when it builds urgency/FOMO (explicit cap set, or remaining balance <= 100).
+      // If remaining > 100 and no cap is set, avoid broadcasting huge numbers so the post doesn't look like mass dumping.
+      var shouldMentionNumber = false;
+      var countToUse = 0;
+
+      if (hasExplicitCap) {
+        shouldMentionNumber = true;
+        countToUse = customLimit;
+      } else if (item.remaining > 0 && item.remaining <= 100) {
+        shouldMentionNumber = true;
+        countToUse = item.remaining;
+      }
 
       // 1. Post Title
-      var couponsText = countToUse > 0 ? (countToUse + ' Free Coupon Codes Giveaway!') : 'Free Promo Codes Giveaway!';
+      var couponsText = '';
+      if (shouldMentionNumber && countToUse > 0) {
+        couponsText = `${countToUse} Free Coupon Codes Giveaway!`;
+      } else if (item.remaining > 0 || hasExplicitCap) {
+        couponsText = 'Limited Free Promo Codes Giveaway!';
+      } else {
+        couponsText = 'Free Promo Codes Giveaway!';
+      }
       var titleText = `[Wear OS] ${name} ${typeStr} Watch Face – ${couponsText}`;
       document.getElementById('output-title').value = titleText;
 
       // 2. Post Body (Safe without links)
-      var countPhrase = countToUse > 0 ? `${countToUse} free Google Play promo codes` : `free Google Play promo codes`;
+      var countPhrase = shouldMentionNumber && countToUse > 0 
+        ? `${countToUse} free Google Play promo codes` 
+        : `free Google Play promo codes (limited supply)`;
       var bodyText = `Hey everyone! Giving away ${countPhrase} for ${name} Wear OS watch face.\n\nLinks to claim your free code and the Play Store link are in the first comment below! 👇`;
       document.getElementById('output-body').value = bodyText;
 
@@ -1421,7 +1442,9 @@ Links to claim your free code and the Play Store link are in the first comment b
       var featuresList = extractFeatures(item.description);
 
       // 4. Formatted First Comment
-      var commentIntro = countToUse > 0 ? `Giving away ${countToUse} free Google Play promo codes` : `Giving away free Google Play promo codes`;
+      var commentIntro = shouldMentionNumber && countToUse > 0 
+        ? `Giving away ${countToUse} free Google Play promo codes` 
+        : `Giving away free Google Play promo codes`;
       var commentText = `Hey everyone!\n\n${commentIntro} for **${name}** Wear OS watch face.\n\n🎁 **Claim your free coupon code here:**\n${claimUrl}\n\n🏪 **Google Play Store Link:**\n${playStoreUrl}\n\n**Features:**\n${featuresList}\n\nIf you like the watch face, a rating or review on Google Play would be greatly appreciated! Enjoy!`;
 
       document.getElementById('output-comment').value = commentText;
