@@ -1000,10 +1000,19 @@ Links to claim your free code and the Play Store link are in the first comment b
     // Load Catalog Faces (manager.json)
     async function loadCatalog() {
       try {
-        var localResp = await fetch('manager.json');
+        var localResp = await fetch('/manager.json');
         if (localResp.ok) {
           var parsed = await localResp.json();
           catalogFaces = parsed.watch_faces || parsed.faces || [];
+          return;
+        }
+      } catch(e) {}
+
+      try {
+        var localResp2 = await fetch('manager.json');
+        if (localResp2.ok) {
+          var parsed2 = await localResp2.json();
+          catalogFaces = parsed2.watch_faces || parsed2.faces || [];
           return;
         }
       } catch(e) {}
@@ -1019,12 +1028,27 @@ Links to claim your free code and the Play Store link are in the first comment b
       }
     }
 
-    // Load Promotions from Firebase RTDB
+    // Load Promotions from Firebase RTDB with safety timeout
     function loadPromotions() {
+      var loaded = false;
+      var safetyTimer = setTimeout(function() {
+        if (!loaded) {
+          console.warn("RTDB query timed out after 3s, rendering catalog items directly");
+          loaded = true;
+          buildCombinedList();
+        }
+      }, 3000);
+
       db.ref('promotions').once('value').then(function(snapshot) {
+        if (loaded) return;
+        loaded = true;
+        clearTimeout(safetyTimer);
         promotionsData = snapshot.val() || {};
         buildCombinedList();
       }).catch(function(err) {
+        if (loaded) return;
+        loaded = true;
+        clearTimeout(safetyTimer);
         console.warn("Promotions read notice (unauth or rule):", err.message);
         // Fallback: build from catalog directly
         buildCombinedList();
@@ -1109,6 +1133,18 @@ Links to claim your free code and the Play Store link are in the first comment b
       });
 
       document.getElementById('promo-count-badge').textContent = combinedList.length + ' Faces Loaded';
+
+      // Auto-fallback: if with-coupons has 0 items, switch to all-promos filter so list is never empty
+      var couponsAvailable = combinedList.filter(function(i) { return i.remaining > 0; }).length;
+      if (couponsAvailable === 0 && currentFilter === 'with-coupons') {
+        currentFilter = 'all-promos';
+        var filterBtns = document.querySelectorAll('.filter-btn');
+        if (filterBtns.length >= 2) {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          filterBtns[1].classList.add('active');
+        }
+      }
+
       renderPromotionsList();
 
       // Automatically select CRC066 by default if found, or first with remaining coupons
@@ -1488,9 +1524,25 @@ Links to claim your free code and the Play Store link are in the first comment b
     }
 
     // Initialize on load
-    window.addEventListener('DOMContentLoaded', async function() {
-      await loadCatalog();
-      loadPromotions();
+    function startApp() {
+      loadCatalog().then(function() {
+        loadPromotions();
+      }).catch(function() {
+        loadPromotions();
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', startApp);
+    } else {
+      startApp();
+    }
+
+    // If admin signs in or session restores, refresh promotions
+    auth.onAuthStateChanged(function(user) {
+      if (user) {
+        loadPromotions();
+      }
     });
   </script>
 </body>
