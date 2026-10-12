@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-12T10:10:00+03:00",
+  "lastUpdated": "2026-10-12T21:26:00+03:00",
   "taxpayer": {
     "name": "Σωτήριος Λιόντος του Κωνσταντίνου",
     "afm": "047155049",
@@ -268,6 +268,23 @@
     }
   ],
   "totalInvoicedRevenue2026": 9038.57,
+  "activeContracts2026": [
+    {
+      "contractId": "n473618",
+      "docusignEnvelopeId": "EB3930B9-35B1-8EB4-83CF-B90C2B6AA067",
+      "client": "Google LLC (Mountain View, CA, USA)",
+      "title": "Partner Content Agreement",
+      "signDate": "12/10/2026",
+      "deliverable": "gitlab-playstore-developer-automation-suite.tar.gz",
+      "deliveryDeadline": "11/11/2026",
+      "feeUsd": 1885.0,
+      "feeEurEst": 1730.0,
+      "vatRate": "0% (Άρθρο 14 παρ. 2 περ. α' - Τρίτη Χώρα)",
+      "withholdingTax": "0% (W-8BEN / ΣΑΔΦ Ελλάδας - ΗΠΑ)",
+      "status": "Υπογεγραμμένο (Executed) / Αναμονή Παράδοσης & Έκδοσης ΤΠΥ",
+      "documentPath": "documents/contracts/Google_LLC_PCA_Agreement_Signed_2026-10-12_n473618.pdf"
+    }
+  ],
   "forecast2027": {
     "creationCueGrossRevenue": 18000.0,
     "creationCueExpenses": 8000.0,
