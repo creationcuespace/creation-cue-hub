@@ -1,6 +1,54 @@
 {
-  "lastUpdated": "2026-10-11T02:12:02.496Z",
+  "lastUpdated": "2026-10-12T02:39:37.475Z",
   "reviews": [
+    {
+      "reviewId": "e731e734-3963-4d40-9bbb-c0abf8c6f779",
+      "packageName": "com.creationcue.crc066watchface",
+      "title": "Digital Watch Face CRC066",
+      "wfId": "crc066",
+      "authorName": "SuperMan Bat",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
+      "text": "\tcoool",
+      "lastModified": "2026-10-11T12:06:28.000Z"
+    },
+    {
+      "reviewId": "0584f714-abe7-489f-b6db-603f7277458c",
+      "packageName": "com.creationcue.crc090watchface",
+      "title": "Digital Watch Face CRC090",
+      "wfId": "crc090",
+      "authorName": "Emanuel Bruno Rocha Dias",
+      "starRating": 5,
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
+      "text": "\tBeautiful",
+      "lastModified": "2026-10-11T08:50:25.000Z"
+    },
+    {
+      "reviewId": "f9ee268e-89ec-4593-aa17-7e8afa798c76",
+      "packageName": "com.watchfacestudio.crc035",
+      "title": "Info Watch Face crc035",
+      "wfId": "crc035",
+      "authorName": "Emanuel Bruno Rocha Dias",
+      "starRating": 5,
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
+      "text": "\tNice Watch Face",
+      "lastModified": "2026-10-11T08:49:36.000Z"
+    },
+    {
+      "reviewId": "524b99a7-6f13-4bbf-a37d-bf2adecae1f1",
+      "packageName": "com.creationcue.crc044",
+      "title": "Digital Watch Face CRC044",
+      "wfId": "crc044",
+      "authorName": "Emanuel Bruno Rocha Dias",
+      "starRating": 5,
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
+      "text": "\tUnique Design watch face",
+      "lastModified": "2026-10-11T08:48:43.000Z"
+    },
     {
       "reviewId": "f64d4b4e-2462-45f7-a48a-728387b8d652",
       "packageName": "com.creation.cue157watchface",
