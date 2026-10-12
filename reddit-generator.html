@@ -1028,31 +1028,37 @@ Links to claim your free code and the Play Store link are in the first comment b
       }
     }
 
-    // Load Promotions from Firebase RTDB with safety timeout
-    function loadPromotions() {
-      var loaded = false;
-      var safetyTimer = setTimeout(function() {
-        if (!loaded) {
-          console.warn("RTDB query timed out after 3s, rendering catalog items directly");
-          loaded = true;
+    // Load Promotions via HTTPS REST (instant & guaranteed) + live RTDB listener
+    async function loadPromotions() {
+      // 1. Direct HTTPS fetch (fastest, guaranteed to work across all network conditions)
+      try {
+        var resp = await fetch('https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app/promotions.json');
+        if (resp.ok) {
+          var data = await resp.json();
+          if (data && typeof data === 'object') {
+            promotionsData = data;
+            buildCombinedList();
+          }
+        }
+      } catch(e) {
+        console.warn("Direct REST promotions fetch fallback:", e);
+      }
+
+      // 2. Also attach live RTDB listener for realtime updates
+      try {
+        db.ref('promotions').on('value', function(snapshot) {
+          var val = snapshot.val();
+          if (val) {
+            promotionsData = val;
+            buildCombinedList();
+          }
+        });
+      } catch(e) {
+        console.warn("RTDB realtime listener notice:", e);
+        if (Object.keys(promotionsData).length === 0) {
           buildCombinedList();
         }
-      }, 3000);
-
-      db.ref('promotions').once('value').then(function(snapshot) {
-        if (loaded) return;
-        loaded = true;
-        clearTimeout(safetyTimer);
-        promotionsData = snapshot.val() || {};
-        buildCombinedList();
-      }).catch(function(err) {
-        if (loaded) return;
-        loaded = true;
-        clearTimeout(safetyTimer);
-        console.warn("Promotions read notice (unauth or rule):", err.message);
-        // Fallback: build from catalog directly
-        buildCombinedList();
-      });
+      }
     }
 
     // Build unified list of promotions + catalog items
@@ -1132,16 +1138,19 @@ Links to claim your free code and the Play Store link are in the first comment b
         }
       });
 
-      document.getElementById('promo-count-badge').textContent = combinedList.length + ' Faces Loaded';
-
-      // Auto-fallback: if with-coupons has 0 items, switch to all-promos filter so list is never empty
       var couponsAvailable = combinedList.filter(function(i) { return i.remaining > 0; }).length;
+      var countText = couponsAvailable > 0 
+        ? `${couponsAvailable} with Coupons • ${combinedList.length} Total` 
+        : `${combinedList.length} Faces Loaded`;
+      document.getElementById('promo-count-badge').textContent = countText;
+
+      // Auto-fallback: if with-coupons has 0 items, switch to all-catalog so list is never empty
       if (couponsAvailable === 0 && currentFilter === 'with-coupons') {
-        currentFilter = 'all-promos';
+        currentFilter = 'all-catalog';
         var filterBtns = document.querySelectorAll('.filter-btn');
-        if (filterBtns.length >= 2) {
+        if (filterBtns.length >= 3) {
           filterBtns.forEach(b => b.classList.remove('active'));
-          filterBtns[1].classList.add('active');
+          filterBtns[2].classList.add('active'); // "All Faces"
         }
       }
 
