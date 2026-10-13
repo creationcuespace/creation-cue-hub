@@ -49,7 +49,6 @@
 
     html {
       scroll-behavior: smooth;
-      overflow-x: hidden;
       width: 100%;
       max-width: 100%;
     }
@@ -59,7 +58,6 @@
       color: var(--text);
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       line-height: 1.6;
-      overflow-x: hidden;
       width: 100%;
       max-width: 100%;
       position: relative;
@@ -1796,7 +1794,7 @@
         width: 100% !important;
         list-style: none !important;
       }
-      .nav-links.mobile-open li a {
+      .nav-links.mobile-open li:not(.mobile-social-drawer) > a {
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
@@ -1809,10 +1807,16 @@
         background: var(--bg-alt) !important;
         transition: background 0.2s, color 0.2s !important;
       }
-      .nav-links.mobile-open li a:hover,
-      .nav-links.mobile-open li a:active {
+      .nav-links.mobile-open li:not(.mobile-social-drawer) > a:hover,
+      .nav-links.mobile-open li:not(.mobile-social-drawer) > a:active {
         background: var(--primary) !important;
         color: #fff !important;
+      }
+      .nav-links.mobile-open .mobile-social-drawer {
+        display: block !important;
+        margin-top: 6px !important;
+        padding-top: 14px !important;
+        border-top: 1px solid var(--border) !important;
       }
       body.admin-mode .nav-links.mobile-open {
         top: 110px !important;
@@ -2043,6 +2047,20 @@
         font-size: 11px !important;
         padding: 6px 4px !important;
       }
+      .community-card {
+        padding: 28px 18px !important;
+        border-radius: var(--radius-md) !important;
+      }
+      .community-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+      .community-item {
+        padding: 16px 10px !important;
+      }
+      .community-desc {
+        display: none !important;
+      }
     }
 
     /* Handheld Phone Screen Optimizations <= 600px */
@@ -2170,7 +2188,7 @@
       }
       .catalog-toolbar {
         position: sticky !important;
-        top: 56px !important;
+        top: 64px !important;
         z-index: 900 !important;
         background: rgba(255, 255, 255, 0.96) !important;
         backdrop-filter: blur(16px) !important;
@@ -2276,6 +2294,36 @@
       }
       .cookie-banner-actions .btn-cookie {
         width: 100% !important;
+      }
+      .section-community {
+        padding: 36px 0 20px !important;
+      }
+      .community-card {
+        padding: 22px 14px !important;
+      }
+      .community-header {
+        margin-bottom: 20px !important;
+      }
+      .community-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+      }
+      .community-item {
+        padding: 14px 8px !important;
+      }
+      .community-icon-box {
+        width: 38px !important;
+        height: 38px !important;
+        margin-bottom: 8px !important;
+      }
+      .community-platform {
+        font-size: 13.5px !important;
+      }
+      .community-handle {
+        font-size: 11px !important;
+      }
+      .community-arrow {
+        display: none !important;
       }
     }
 
