@@ -9,10 +9,14 @@
   <link rel="shortcut icon" type="image/png" href="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png">
   <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png">
 
-  <!-- Google Fonts: Plus Jakarta Sans & Inter (Clean, geometric, agency-grade typography) -->
+  <!-- Preload Critical LCP Hero Watch Assets -->
+  <link rel="preload" as="image" href="images/cue177.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="images/watch_frame_samsung.webp" type="image/webp" fetchpriority="high">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter with font-display: swap -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -2576,9 +2580,9 @@
             <div class="hero-watch-stage" id="hero-watch-stage">
               <div class="hero-watch-dial-bg"></div>
               <!-- Watch Face Circular Image -->
-              <img id="hero-watch-face-img" class="hero-watch-face-img" src="images/cue177.png" alt="Featured Watch Face">
+              <img id="hero-watch-face-img" class="hero-watch-face-img" src="images/cue177.webp" alt="Featured Watch Face" fetchpriority="high" decoding="async" width="512" height="512">
               <!-- Official Wear OS Watch Frame Image -->
-              <img id="hero-watch-frame-img" class="hero-watch-frame-img" src="images/watch_frame_samsung.png" alt="Samsung Galaxy Watch Ultra">
+              <img id="hero-watch-frame-img" class="hero-watch-frame-img" src="images/watch_frame_samsung.webp" alt="Samsung Galaxy Watch Ultra" fetchpriority="high" decoding="async" width="1024" height="1100">
             </div>
 
             <!-- Previous / Next Navigation Arrows -->
@@ -3067,12 +3071,12 @@
   </footer>
 
   <!-- ========================================================
-       FIREBASE COMPAT & GLOBAL ADMIN BAR
+       FIREBASE COMPAT & GLOBAL ADMIN BAR (DEFERRED FOR PERFORMANCE)
        ======================================================== -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-  <script src="/admin-bar.js?v=2.2"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script defer src="/admin-bar.js?v=2.2"></script>
 
   <!-- ========================================================
        CORE JS SCRIPT: CATALOG, INFINITE SCROLL, WATCH SHOWCASE
@@ -3090,9 +3094,13 @@
       messagingSenderId: "186324516022",
       appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
     };
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
+
+    function initFirebaseIfReady() {
+      if (typeof firebase !== 'undefined' && firebase.initializeApp && !firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
     }
+    window.addEventListener('load', initFirebaseIfReady);
 
     // --------------------------------------------------------
     // Global Catalog & Pagination State
@@ -3114,7 +3122,7 @@
       samsung: {
         id: 'samsung',
         name: 'Samsung Galaxy Watch Ultra',
-        frame: 'images/watch_frame_samsung.png',
+        frame: 'images/watch_frame_samsung.webp',
         faceSize: '49.8%',
         bgSize: '53.0%',
         scale: 0.96
@@ -3122,7 +3130,7 @@
       ticwatch: {
         id: 'ticwatch',
         name: 'TicWatch Pro 5 Enduro',
-        frame: 'images/watch_frame_ticwatch.png',
+        frame: 'images/watch_frame_ticwatch.webp',
         faceSize: '47.2%',
         bgSize: '51.0%',
         scale: 0.98
@@ -3130,7 +3138,7 @@
       xiaomi: {
         id: 'xiaomi',
         name: 'Xiaomi Watch 5',
-        frame: 'images/watch_frame_xiaomi.png',
+        frame: 'images/watch_frame_xiaomi.webp',
         faceSize: '49.8%',
         bgSize: '53.0%',
         scale: 0.96
@@ -3138,7 +3146,7 @@
       pixel: {
         id: 'pixel',
         name: 'Google Pixel Watch 3',
-        frame: 'images/watch_frame_pixel.png',
+        frame: 'images/watch_frame_pixel.webp',
         faceSize: '49.8%',
         bgSize: '53.0%',
         scale: 0.84
@@ -3146,7 +3154,7 @@
       oneplus: {
         id: 'oneplus',
         name: 'OnePlus Watch 2',
-        frame: 'images/watch_frame_oneplus.png',
+        frame: 'images/watch_frame_oneplus.webp',
         faceSize: '48.5%',
         bgSize: '51.5%',
         scale: 1.03
@@ -3159,7 +3167,7 @@
       {
         id: 'cue177',
         name: 'CUE177',
-        file: 'images/cue177.png',
+        file: 'images/cue177.webp',
         badge: 'DYNAMIC COMPLICATIONS • CUE177',
         title: 'INTELLIGENCE<br><span>ON YOUR WRIST</span>',
         tagline: 'Live weather, heart rate, step progress, battery monitor, and calendar events customized to fit your unique lifestyle on CUE177.',
@@ -3168,7 +3176,7 @@
       {
         id: 'cue179',
         name: 'CUE179',
-        file: 'images/cue179.png',
+        file: 'images/cue179.webp',
         badge: 'NEW RELEASE • CUE179',
         title: 'FUTURISTIC<br><span>CYBER POWER</span>',
         tagline: 'Bold dual-color digital display, circuit board styling, 2 short text and 1 long text custom complications, and battery arc powered by CUE179.',
@@ -3177,7 +3185,7 @@
       {
         id: 'cue178',
         name: 'CUE178',
-        file: 'images/cue178.png',
+        file: 'images/cue178.webp',
         badge: 'NEW RELEASE • CUE178',
         title: 'TIME, CRAFTED TO<br><span>PERFECTION</span>',
         tagline: 'Featuring the all-new CUE178 and 115+ precision-engineered watch faces for Samsung Galaxy Watch, Google Pixel Watch & all Wear OS smartwatches.',
@@ -3186,7 +3194,7 @@
       {
         id: 'cue003',
         name: 'CUE003',
-        file: 'images/cue003.png',
+        file: 'images/cue003.webp',
         badge: 'FLAGSHIP DESIGN • CUE003',
         title: 'PURE<br><span>AMOLED DEPTH</span>',
         tagline: 'Ultra battery-friendly aesthetics with deep contrast, custom indices, and high-readability typography powered by CUE003.',
@@ -3195,7 +3203,7 @@
       {
         id: 'cue176',
         name: 'CUE176',
-        file: 'images/cue176.png',
+        file: 'images/cue176.webp',
         badge: 'TACTICAL CHRONO • CUE176',
         title: 'RUGGED<br><span>PRECISION</span>',
         tagline: 'Multi-ring chronometer layout engineered for extreme outdoor adventures and fitness tracking on CUE176.',
@@ -3204,7 +3212,7 @@
       {
         id: 'cue175',
         name: 'CUE175',
-        file: 'images/cue175.png',
+        file: 'images/cue175.webp',
         badge: 'MINIMAL ELEGANCE • CUE175',
         title: 'REFINED<br><span>SIMPLICITY</span>',
         tagline: 'Clean geometry and modern aesthetics with subtle ambient always-on display styling on CUE175.',
@@ -3831,7 +3839,7 @@
       card.innerHTML = `
         <div class="watch-card-media" onclick="openModal('${f.id}')">
           ${displayBadge ? `<span class="${badgeClass}">${displayBadge}</span>` : ''}
-          <img src="${imgSrc}" loading="lazy" alt="${f.title}" onerror="this.src='images/${f.id}.png'">
+          <img src="${imgSrc}" loading="lazy" decoding="async" width="512" height="512" alt="${f.title}" onerror="this.src='images/${f.id}.png'">
         </div>
         <h4 class="watch-card-title">${f.title}</h4>
         <p class="watch-card-desc">${f.description_en || 'Modern, customizable Wear OS watch face.'}</p>
