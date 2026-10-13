@@ -238,24 +238,26 @@
     style.textContent = `
       #admin-bar {
         display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 40px;
-        background: rgba(26, 26, 26, 0.96);
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 40px !important;
+        background: rgba(26, 26, 26, 0.96) !important;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        z-index: 99999;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        z-index: 99999 !important;
         align-items: center;
         justify-content: space-between;
-        padding: 0 16px;
+        padding: 0 10px !important;
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         font-size: 12px;
         box-shadow: 0 4px 14px rgba(0,0,0,0.5);
         color: #ffffff;
-        box-sizing: border-box;
+        box-sizing: border-box !important;
       }
 
       body.admin-mode {
@@ -277,6 +279,12 @@
         body.admin-mode .bottom-nav {
           top: 104px !important;
         }
+      }
+
+      .admin-bar-left {
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
       }
 
       .admin-bar-brand {
@@ -301,19 +309,65 @@
         border-color: #f5c518;
       }
 
+      .admin-bar-center {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        min-width: 0;
+        position: relative;
+        margin: 0 8px;
+      }
+
       .admin-bar-links {
         display: flex;
-        gap: 8px;
+        gap: 6px;
         align-items: center;
         overflow-x: auto;
         white-space: nowrap;
         scrollbar-width: none;
         -ms-overflow-style: none;
         -webkit-overflow-scrolling: touch;
-        margin: 0 10px;
+        flex: 1;
+        min-width: 0;
+        scroll-behavior: smooth;
+        padding: 2px 0;
       }
       .admin-bar-links::-webkit-scrollbar {
         display: none;
+      }
+
+      .admin-nav-arrow {
+        display: none;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        color: #e5e7eb;
+        width: 20px;
+        height: 26px;
+        border-radius: 4px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        padding: 0;
+        flex-shrink: 0;
+        transition: all 0.15s ease;
+        user-select: none;
+        z-index: 2;
+      }
+      .admin-nav-arrow:hover {
+        background: rgba(245, 197, 24, 0.2);
+        border-color: #f5c518;
+        color: #f5c518;
+      }
+      .admin-nav-arrow.disabled {
+        opacity: 0.18;
+        cursor: default;
+        pointer-events: none;
+      }
+      .admin-nav-arrow.prev {
+        margin-right: 4px;
+      }
+      .admin-nav-arrow.next {
+        margin-left: 4px;
       }
 
       .admin-bar-links a {
@@ -330,7 +384,7 @@
         font-size: 11.5px;
         cursor: pointer;
         user-select: none;
-        padding: 4px 9px;
+        padding: 4px 8px;
         border-radius: 6px;
       }
       .admin-bar-links a svg {
@@ -356,7 +410,21 @@
         box-shadow: 0 0 10px var(--tab-border);
       }
 
-      .admin-bar-links .admin-bar-btn {
+      .admin-bar-right {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+
+      .admin-bar-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+
+      .admin-bar-btn {
         text-decoration: none;
         font-weight: 600;
         transition: all 0.15s ease;
@@ -364,13 +432,13 @@
         align-items: center;
         gap: 5px;
         flex-shrink: 0;
-        font-size: 11.5px;
+        font-size: 11px;
         cursor: pointer;
         user-select: none;
-        padding: 4px 9px;
+        padding: 4px 8px;
         border-radius: 6px;
       }
-      .admin-bar-links .admin-bar-btn:hover {
+      .admin-bar-btn:hover {
         transform: translateY(-1px);
         filter: brightness(1.2);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
@@ -401,8 +469,16 @@
       .admin-bar-user {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
         flex-shrink: 0;
+      }
+      #admin-user-email {
+        color: #9ca3af;
+        font-size: 11px;
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .admin-bar-user button {
         background: rgba(255, 255, 255, 0.05);
@@ -414,6 +490,7 @@
         cursor: pointer;
         font-weight: 500;
         transition: all 0.15s;
+        flex-shrink: 0;
       }
       .admin-bar-user button:hover {
         background: rgba(239, 68, 68, 0.15);
@@ -436,21 +513,30 @@
         animation: adminPulseDot 1.2s infinite ease-in-out;
       }
 
-      @media (max-width: 900px) {
-        #admin-bar {
-          padding: 0 10px !important;
+      @media (max-width: 1380px) {
+        .admin-btn-label {
+          display: none !important;
+        }
+      }
+
+      @media (max-width: 1100px) {
+        #admin-user-email {
+          display: none !important;
         }
         .admin-bar-title-text {
           display: none !important;
         }
-        .admin-bar-links {
-          gap: 10px !important;
-          margin: 0 8px;
-          flex: 1;
-          min-width: 0;
+      }
+
+      @media (max-width: 768px) {
+        #admin-bar {
+          padding: 0 6px !important;
         }
-        #admin-user-email {
+        .admin-nav-arrow {
           display: none !important;
+        }
+        .admin-bar-center {
+          margin: 0 4px;
         }
       }
     `;
@@ -466,6 +552,9 @@
       bar = document.createElement('div');
       bar.id = 'admin-bar';
       document.body.insertAdjacentElement('afterbegin', bar);
+    } else {
+      // Clear obsolete inline styles that might linger from older markup
+      bar.removeAttribute('style');
     }
 
     // Build bar inner HTML
@@ -484,34 +573,113 @@
     }).join('');
 
     bar.innerHTML = `
-      <a href="${resolveHref('https://creationcue.web.app/index.html')}" class="admin-bar-brand" title="Creation Cue Admin Panel">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-        <span class="admin-bar-title-text">Admin Panel</span>
-      </a>
-      <div class="admin-bar-links">
-        ${navLinksHtml}
-        <span id="btn-subscribers-admin-bar" class="admin-bar-btn" onclick="window.openAdminSubscribers()" style="color: #f5c518; background: rgba(245, 197, 24, 0.12); border: 1px solid rgba(245, 197, 24, 0.3);">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-          Subscribers 
-          <span id="admin-subscribers-count" style="background: rgba(245, 197, 24, 0.22); border: 1px solid rgba(245, 197, 24, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #f5c518; margin-left: 2px;">0</span>
-        </span>
-        <span id="btn-support-admin-bar" class="admin-bar-btn" onclick="window.handleAdminSupport()" style="color: #cbd5e1; background: rgba(148, 163, 184, 0.12); border: 1px solid rgba(148, 163, 184, 0.25);">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-          Support 
-          <span id="admin-support-count" style="display: none; background: rgba(245, 197, 24, 0.22); border: 1px solid rgba(245, 197, 24, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #f5c518; margin-left: 2px;">0</span>
-        </span>
-        <span id="btn-live-visitors" class="admin-bar-btn" onclick="window.openAdminLiveVisitors()" style="color: #4caf50; background: rgba(76, 175, 80, 0.12); border: 1px solid rgba(76, 175, 80, 0.3);">
-          Live <span class="admin-live-dot"></span> <span id="admin-live-count" style="background: rgba(76, 175, 80, 0.22); border: 1px solid rgba(76, 175, 80, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #4caf50;">0</span>
-        </span>
+      <div class="admin-bar-left">
+        <a href="${resolveHref('https://creationcue.web.app/index.html')}" class="admin-bar-brand" title="Creation Cue Admin Panel">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span class="admin-bar-title-text">Admin Panel</span>
+        </a>
       </div>
-      <div class="admin-bar-user">
-        <span id="admin-user-email" style="color: #9ca3af; font-size: 11px;">${localStorage.getItem('cc_admin_email') || 'Admin'}</span>
-        <button onclick="window.handleAdminLogout()">Logout</button>
+
+      <div class="admin-bar-center">
+        <button type="button" class="admin-nav-arrow prev" id="admin-nav-prev" title="Scroll left" aria-label="Previous tabs">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="admin-bar-links" id="admin-bar-scroll-links">
+          ${navLinksHtml}
+        </div>
+        <button type="button" class="admin-nav-arrow next" id="admin-nav-next" title="Scroll right" aria-label="Next tabs">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+      <div class="admin-bar-right">
+        <div class="admin-bar-status">
+          <span id="btn-subscribers-admin-bar" class="admin-bar-btn" onclick="window.openAdminSubscribers()" title="Subscribers" style="color: #f5c518; background: rgba(245, 197, 24, 0.12); border: 1px solid rgba(245, 197, 24, 0.3);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <span class="admin-btn-label">Subscribers</span> 
+            <span id="admin-subscribers-count" style="background: rgba(245, 197, 24, 0.22); border: 1px solid rgba(245, 197, 24, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #f5c518; margin-left: 2px;">0</span>
+          </span>
+          <span id="btn-support-admin-bar" class="admin-bar-btn" onclick="window.handleAdminSupport()" title="Support Requests" style="color: #cbd5e1; background: rgba(148, 163, 184, 0.12); border: 1px solid rgba(148, 163, 184, 0.25);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <span class="admin-btn-label">Support</span> 
+            <span id="admin-support-count" style="display: none; background: rgba(245, 197, 24, 0.22); border: 1px solid rgba(245, 197, 24, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #f5c518; margin-left: 2px;">0</span>
+          </span>
+          <span id="btn-live-visitors" class="admin-bar-btn" onclick="window.openAdminLiveVisitors()" title="Live Visitors" style="color: #4caf50; background: rgba(76, 175, 80, 0.12); border: 1px solid rgba(76, 175, 80, 0.3);">
+            Live <span class="admin-live-dot"></span> <span id="admin-live-count" style="background: rgba(76, 175, 80, 0.22); border: 1px solid rgba(76, 175, 80, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #4caf50;">0</span>
+          </span>
+        </div>
+        <div class="admin-bar-user">
+          <span id="admin-user-email" title="${localStorage.getItem('cc_admin_email') || 'Admin'}">${localStorage.getItem('cc_admin_email') || 'Admin'}</span>
+          <button onclick="window.handleAdminLogout()">Logout</button>
+        </div>
       </div>
     `;
 
+    setupScrollControls(bar);
+
     // Also synchronize sliding side drawer (.app-slide-links) if present on the page
     syncSlideDrawer();
+  }
+
+  // Setup horizontal wheel scroll, arrow buttons, and active tab auto-scrolling
+  function setupScrollControls(bar) {
+    const scrollContainer = bar.querySelector('#admin-bar-scroll-links');
+    const prevBtn = bar.querySelector('#admin-nav-prev');
+    const nextBtn = bar.querySelector('#admin-nav-next');
+    if (!scrollContainer || !prevBtn || !nextBtn) return;
+
+    function updateArrows() {
+      const hasOverflow = scrollContainer.scrollWidth > scrollContainer.clientWidth + 4;
+      if (!hasOverflow) {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+      } else {
+        prevBtn.style.display = 'inline-flex';
+        nextBtn.style.display = 'inline-flex';
+        if (scrollContainer.scrollLeft <= 4) {
+          prevBtn.classList.add('disabled');
+        } else {
+          prevBtn.classList.remove('disabled');
+        }
+        if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth - 4) {
+          nextBtn.classList.add('disabled');
+        } else {
+          nextBtn.classList.remove('disabled');
+        }
+      }
+    }
+
+    // Prev / Next button clicks
+    prevBtn.onclick = function () {
+      scrollContainer.scrollBy({ left: -220, behavior: 'smooth' });
+    };
+    nextBtn.onclick = function () {
+      scrollContainer.scrollBy({ left: 220, behavior: 'smooth' });
+    };
+
+    // Horizontal wheel scrolling with mouse
+    scrollContainer.addEventListener('wheel', function (e) {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        scrollContainer.scrollLeft += e.deltaY;
+        updateArrows();
+      }
+    }, { passive: false });
+
+    scrollContainer.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+
+    // Initial check
+    setTimeout(updateArrows, 100);
+
+    // Auto-scroll to active tab on load
+    const activeLink = scrollContainer.querySelector('.admin-bar-link.active');
+    if (activeLink) {
+      setTimeout(function () {
+        activeLink.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        updateArrows();
+      }, 150);
+    }
   }
 
   // Synchronize .app-slide-links across pages
