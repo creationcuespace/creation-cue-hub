@@ -1754,6 +1754,9 @@
         width: 100% !important;
         box-sizing: border-box !important;
         padding: 10px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
       }
       .catalog-search-box {
         width: 100% !important;
@@ -1761,10 +1764,21 @@
       }
       .filter-pills {
         width: 100% !important;
-        gap: 4px !important;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        gap: 6px !important;
+        padding: 2px 2px 6px 2px !important;
+      }
+      .filter-pills::-webkit-scrollbar {
+        display: none !important;
       }
       .filter-pill {
-        padding: 6px 11px !important;
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+        padding: 6px 12px !important;
         font-size: 12px !important;
       }
       .section {
@@ -2092,24 +2106,33 @@
 
         <!-- TOOLBAR (FILTERS & SEARCH) -->
         <div class="catalog-toolbar">
-          <div class="filter-pills">
-            <button class="filter-pill active" data-filter="all" onclick="filterBy('all')">
+          <div class="filter-pills" id="catalog-filter-pills">
+            <button class="filter-pill active" data-filter="ALL" onclick="filterBy('ALL')">
               All <span class="badge-count" id="count-all">115</span>
             </button>
-            <button class="filter-pill" data-filter="digital" onclick="filterBy('digital')">
-              Digital <span class="badge-count" id="count-digital">0</span>
+            <button class="filter-pill" data-filter="ANALOG" onclick="filterBy('ANALOG')">
+              ANALOG <span class="badge-count" id="count-analog">10</span>
             </button>
-            <button class="filter-pill" data-filter="analog" onclick="filterBy('analog')">
-              Analog <span class="badge-count" id="count-analog">0</span>
+            <button class="filter-pill" data-filter="DIGITAL" onclick="filterBy('DIGITAL')">
+              DIGITAL <span class="badge-count" id="count-digital">89</span>
             </button>
-            <button class="filter-pill" data-filter="free" onclick="filterBy('free')">
-              🎁 Free <span class="badge-count" id="count-free">11</span>
+            <button class="filter-pill" data-filter="FREE" onclick="filterBy('FREE')">
+              FREE <span class="badge-count" id="count-free">11</span>
             </button>
-            <button class="filter-pill" data-filter="new" onclick="filterBy('new')">
-              ✨ New <span class="badge-count" id="count-new">0</span>
+            <button class="filter-pill" data-filter="HOT" onclick="filterBy('HOT')">
+              HOT <span class="badge-count" id="count-hot">6</span>
             </button>
-            <button class="filter-pill" data-filter="hot" onclick="filterBy('hot')">
-              🔥 Hot <span class="badge-count" id="count-hot">0</span>
+            <button class="filter-pill" data-filter="HYBRID" onclick="filterBy('HYBRID')">
+              HYBRID <span class="badge-count" id="count-hybrid">16</span>
+            </button>
+            <button class="filter-pill" data-filter="NEON" onclick="filterBy('NEON')">
+              NEON <span class="badge-count" id="count-neon">4</span>
+            </button>
+            <button class="filter-pill" data-filter="NEW" onclick="filterBy('NEW')">
+              NEW <span class="badge-count" id="count-new">6</span>
+            </button>
+            <button class="filter-pill" data-filter="🌤️ WEATHER" onclick="filterBy('🌤️ WEATHER')">
+              🌤️ WEATHER <span class="badge-count" id="count-weather">9</span>
             </button>
           </div>
 
@@ -2970,21 +2993,24 @@
         const data = await res.json();
         allWatchFaces = data.watch_faces || [];
 
-        // Count stats
-        const total = allWatchFaces.length;
-        const digitalCount = allWatchFaces.filter(f => (f.type || '').toLowerCase() === 'digital').length;
-        const analogCount = allWatchFaces.filter(f => (f.type || '').toLowerCase() === 'analog').length;
-        const freeCount = allWatchFaces.filter(f => f.is_free || (f.badge_text && f.badge_text.includes('FREE'))).length;
-        const newCount = allWatchFaces.filter(f => f.is_new || (f.badge_text && f.badge_text.includes('NEW'))).length;
-        const hotCount = allWatchFaces.filter(f => f.is_featured || (f.badge_text && f.badge_text.includes('HOT'))).length;
+        // Count stats for all 9 filters
+        const filterKeys = ['ALL', 'ANALOG', 'DIGITAL', 'FREE', 'HOT', 'HYBRID', 'NEON', 'NEW', '🌤️ WEATHER'];
+        const countMap = {};
+        filterKeys.forEach(k => {
+          countMap[k] = allWatchFaces.filter(f => matchesFilterCondition(f, k)).length;
+        });
 
+        const total = allWatchFaces.length;
         document.getElementById('stat-count').innerText = total + '+';
-        document.getElementById('count-all').innerText = total;
-        document.getElementById('count-digital').innerText = digitalCount;
-        document.getElementById('count-analog').innerText = analogCount;
-        document.getElementById('count-free').innerText = freeCount;
-        document.getElementById('count-new').innerText = newCount;
-        document.getElementById('count-hot').innerText = hotCount;
+        if (document.getElementById('count-all')) document.getElementById('count-all').innerText = total;
+        if (document.getElementById('count-analog')) document.getElementById('count-analog').innerText = countMap['ANALOG'] || 0;
+        if (document.getElementById('count-digital')) document.getElementById('count-digital').innerText = countMap['DIGITAL'] || 0;
+        if (document.getElementById('count-free')) document.getElementById('count-free').innerText = countMap['FREE'] || 0;
+        if (document.getElementById('count-hot')) document.getElementById('count-hot').innerText = countMap['HOT'] || 0;
+        if (document.getElementById('count-hybrid')) document.getElementById('count-hybrid').innerText = countMap['HYBRID'] || 0;
+        if (document.getElementById('count-neon')) document.getElementById('count-neon').innerText = countMap['NEON'] || 0;
+        if (document.getElementById('count-new')) document.getElementById('count-new').innerText = countMap['NEW'] || 0;
+        if (document.getElementById('count-weather')) document.getElementById('count-weather').innerText = countMap['🌤️ WEATHER'] || 0;
 
         // Fetch live total downloads from versions-data.json
         await loadDownloadsStat();
@@ -3010,10 +3036,11 @@
     // Filtering & Search
     // --------------------------------------------------------
     function filterBy(filterName) {
-      currentFilter = filterName;
+      currentFilter = (filterName || 'ALL').toUpperCase().trim();
       currentPage = 1;
       document.querySelectorAll('.filter-pill').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-filter') === filterName);
+        const btnFilter = (btn.getAttribute('data-filter') || '').toUpperCase().trim();
+        btn.classList.toggle('active', btnFilter === currentFilter);
       });
       applyFilters();
     }
@@ -3024,20 +3051,37 @@
       applyFilters();
     }
 
+    function matchesFilterCondition(f, filterName) {
+      const filterUpper = (filterName || 'ALL').toUpperCase().trim();
+      if (filterUpper === 'ALL') return true;
+
+      const badge = (f.badge_text || '').toUpperCase();
+      const type = (f.type || f.category || '').toUpperCase();
+      const tags = [
+        ...(Array.isArray(f.filters) ? f.filters : []),
+        ...(Array.isArray(f.tags) ? f.tags : [])
+      ].map(t => (typeof t === 'string' ? t.toUpperCase().trim() : ''));
+
+      const isFree = f.is_free || badge.includes('FREE');
+      const isNew = f.is_new || badge.includes('NEW');
+      const isHot = f.is_featured || (badge.includes('HOT') || badge.includes('PRO'));
+
+      if (badge.includes(filterUpper)) return true;
+      if (type === filterUpper) return true;
+      if (tags.includes(filterUpper)) return true;
+
+      if (filterUpper === 'FREE' && isFree) return true;
+      if (filterUpper === 'NEW' && isNew) return true;
+      if (filterUpper === 'HOT' && isHot) return true;
+
+      if (filterUpper.includes('WEATHER') && (badge.includes('WEATHER') || tags.some(t => t.includes('WEATHER')))) return true;
+
+      return false;
+    }
+
     function applyFilters() {
       filteredWatchFaces = allWatchFaces.filter(f => {
-        const type = (f.type || '').toLowerCase();
-        const badge = (f.badge_text || '').toUpperCase();
-        const isFree = f.is_free || badge.includes('FREE');
-        const isNew = f.is_new || badge.includes('NEW');
-        const isHot = f.is_featured || badge.includes('HOT');
-
-        let matchesTab = true;
-        if (currentFilter === 'digital') matchesTab = (type === 'digital');
-        else if (currentFilter === 'analog') matchesTab = (type === 'analog');
-        else if (currentFilter === 'free') matchesTab = isFree;
-        else if (currentFilter === 'new') matchesTab = isNew;
-        else if (currentFilter === 'hot') matchesTab = isHot;
+        const matchesTab = matchesFilterCondition(f, currentFilter);
 
         let matchesSearch = true;
         if (searchQuery) {
