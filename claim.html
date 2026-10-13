@@ -302,12 +302,6 @@
       border-color: var(--text);
     }
 
-    .code-subtext {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: -8px;
-    }
-
     .redeem-btn {
       background: var(--green);
       color: white;
@@ -558,66 +552,40 @@
       background: #000;
     }
 
-    .card.is-gift-card .btn:not(.redeem-btn):not(.btn-voucher-copy):not(#btn-review):not(.ghost) {
+    .card.is-gift-card .btn:not(.redeem-btn):not(#btn-review):not(.ghost) {
       background: var(--yellow);
       color: #000;
       font-weight: 700;
       box-shadow: none;
     }
 
-    .voucher-actions-row {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 100%;
-    }
-
-    .btn-voucher-copy {
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--text);
-      border: 1px solid var(--border);
-      font-family: 'Teko', sans-serif;
-      font-size: 20px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 10px 14px;
-      border-radius: 4px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background 0.15s, border-color 0.15s;
-      width: 100%;
-    }
-
-    .btn-voucher-copy:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: var(--yellow);
-      color: var(--yellow);
-    }
-
-    /* Watch Installation Guide Styles */
+    /* Watch Installation Guide Styles (Subtle & Unobtrusive) */
     .install-guide-card {
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--mid);
-      padding: 12px;
+      border: none;
+      background: transparent;
+      padding: 0;
       text-align: left;
       margin-top: 4px;
       transition: all 0.2s ease;
     }
 
     .install-guide-card summary {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--yellow);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 6px;
       user-select: none;
       list-style: none;
       cursor: pointer;
+      padding: 6px 0;
+      transition: color 0.15s ease;
+    }
+
+    .install-guide-card summary:hover {
+      color: var(--text);
     }
 
     .install-guide-card summary::-webkit-details-marker {
@@ -625,7 +593,7 @@
     }
 
     .install-guide-card summary .arrow {
-      font-size: 10px;
+      font-size: 9px;
       color: var(--muted);
       transition: transform 0.2s ease;
       display: inline-block;
@@ -633,6 +601,21 @@
 
     .install-guide-card[open] summary .arrow {
       transform: rotate(180deg);
+    }
+
+    .install-guide-card[open] {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+      margin-top: 8px;
+    }
+
+    .install-guide-card[open] summary {
+      justify-content: space-between;
+      color: var(--yellow);
+      margin-bottom: 6px;
+      padding: 0;
     }
     
     .install-step {
@@ -718,9 +701,6 @@
 
       <!-- Claimed Area -->
       <div class="claimed-area" id="claimed-area" style="display: none;">
-        <div id="claimed-success-title" style="font-weight: 600; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; color: var(--green); margin-bottom: 4px;">
-          ★ Coupon Claimed Successfully ★
-        </div>
         
         <!-- COUNTDOWN STATE (Strategy 4) -->
         <div id="claim-countdown-block" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; gap: 14px; background: linear-gradient(135deg, rgba(245, 197, 24, 0.05) 0%, rgba(30, 30, 30, 0.9) 100%); border: 1.5px dashed rgba(245, 197, 24, 0.3); border-radius: 8px; width: 100%; box-shadow: inset 0 0 10px rgba(245, 197, 24, 0.05);">
@@ -741,28 +721,21 @@
           <div class="code-box" id="code-display" title="Click to copy">
             --------
           </div>
-          <div class="code-subtext">Tap code to copy to clipboard</div>
           
-          <div class="voucher-actions-row">
-            <button class="btn redeem-btn" id="btn-redeem" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M3.609 1.814L13.792 12 3.61 22.186a2.003 2.003 0 0 1-1.61-1.956V3.77a2 2 0 0 1 1.609-1.956z" fill="#00d2ff"/>
-                <path d="M17.632 9.574L15.202 12l2.43 2.426 3.14-1.814a1.2 1.2 0 0 0 0-2.078l-3.14-1.814z" fill="#ffc700"/>
-                <path d="M3.61 22.186L15.202 12 13.792 10.59 1.999 22.186a2 2 0 0 0 1.611 0z" fill="#ff334b"/>
-                <path d="M15.202 12L3.61 1.814A2 2 0 0 0 1.999 1.814L13.792 13.41 15.202 12z" fill="#00f076"/>
-              </svg>
-              <span>REDEEM IN GOOGLE PLAY ↗</span>
-            </button>
-            <button type="button" class="btn-voucher-copy" id="btn-copy-code">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              <span>COPY CODE</span>
-            </button>
-          </div>
+          <button class="btn redeem-btn" id="btn-redeem" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M3.609 1.814L13.792 12 3.61 22.186a2.003 2.003 0 0 1-1.61-1.956V3.77a2 2 0 0 1 1.609-1.956z" fill="#00d2ff"/>
+              <path d="M17.632 9.574L15.202 12l2.43 2.426 3.14-1.814a1.2 1.2 0 0 0 0-2.078l-3.14-1.814z" fill="#ffc700"/>
+              <path d="M3.61 22.186L15.202 12 13.792 10.59 1.999 22.186a2 2 0 0 0 1.611 0z" fill="#ff334b"/>
+              <path d="M15.202 12L3.61 1.814A2 2 0 0 0 1.999 1.814L13.792 13.41 15.202 12z" fill="#00f076"/>
+            </svg>
+            <span>REDEEM IN GOOGLE PLAY ↗</span>
+          </button>
 
           <!-- Watch Installation Guide -->
           <details class="install-guide-card">
             <summary>
-              <span>⌚ HOW TO INSTALL ON YOUR WATCH</span>
+              <span>How to install on your watch</span>
               <span class="arrow">▼</span>
             </summary>
             <div class="install-step" style="display: flex; flex-direction: column; gap: 8px;">
@@ -1236,15 +1209,6 @@
         if (reviewBtn) reviewBtn.style.display = 'none';
       }
 
-      var copyCodeBtn = document.getElementById('btn-copy-code');
-      if (copyCodeBtn) {
-        copyCodeBtn.onclick = function() {
-          navigator.clipboard.writeText(code).then(function() {
-            showToast("Code Copied!");
-          });
-        };
-      }
-
       if (isTokenClaim) {
         var card = document.getElementById('main-card');
         if (card) card.classList.add('is-gift-card');
@@ -1252,14 +1216,10 @@
         if (giftBadge) giftBadge.style.display = 'flex';
         var voucherBadge = document.getElementById('voucher-badge-label');
         if (voucherBadge) voucherBadge.style.display = 'block';
-        var successTitle = document.getElementById('claimed-success-title');
-        if (successTitle) successTitle.textContent = "★ Gift Card Claimed Successfully ★";
         var countdownSub = document.getElementById('claim-countdown-subtext');
         if (countdownSub) countdownSub.textContent = "Loading your Google Play promo code...";
         var countLoading = document.getElementById('claim-countdown-loading-label');
         if (countLoading) countLoading.textContent = "Preparing your coupon...";
-        var codeSub = document.querySelector('.code-subtext');
-        if (codeSub) codeSub.textContent = "Single-use code • Tap code or redeem directly below";
       }
 
       var countdownBlock = document.getElementById('claim-countdown-block');
