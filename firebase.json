@@ -78,11 +78,14 @@
       "docs/**",
       "blog/images/**",
       "scratch/**",
+      "tickets/**",
       "*backup*",
       "*.zip",
       "*.pdf",
       "dragon*",
-      "*.py"
+      "*.py",
+      "all_found_promotions.json",
+      "promotions_summary.json"
     ],
     "maxReleases": 2,
     "headers": [
