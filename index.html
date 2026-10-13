@@ -2542,9 +2542,6 @@
             <button type="button" class="btn btn-outline" onclick="resetContactForm()" style="font-size:12.5px; padding:10px 20px;">
               Send Another Message
             </button>
-            <a id="success-direct-mailto" href="mailto:creationcuespace@gmail.com" class="btn btn-dark" style="font-size:12.5px; padding:10px 20px;">
-              ✉️ Open Direct Email
-            </a>
           </div>
         </div>
       </div>
@@ -3739,21 +3736,10 @@
       const nameEl = document.getElementById('success-user-name');
       const emailEl = document.getElementById('success-user-email');
       const topicEl = document.getElementById('success-user-topic');
-      const mailtoEl = document.getElementById('success-direct-mailto');
 
       if (nameEl) nameEl.textContent = name || 'there';
       if (emailEl) emailEl.textContent = email || 'your email';
       if (topicEl) topicEl.textContent = topic || 'your inquiry';
-
-      const mailSubject = encodeURIComponent(`[Creation Cue Support] ${topic || 'Feedback'} - ${name || 'User'}`);
-      const mailBody = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nSmartwatch: ${model}\nTopic: ${topic}\n\nMessage:\n${message}`);
-      const directMailtoUrl = `mailto:creationcuespace@gmail.com?subject=${mailSubject}&body=${mailBody}`;
-      if (mailtoEl) mailtoEl.href = directMailtoUrl;
-
-      // Fallback: only if both email and DB failed (e.g. offline / blocked), open mail app
-      if (!delivered) {
-        window.open(directMailtoUrl, '_blank');
-      }
 
       if (form) form.style.display = 'none';
       if (successCard) successCard.style.display = 'block';
