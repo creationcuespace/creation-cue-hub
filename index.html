@@ -3465,7 +3465,7 @@
 
       sentinelObserver = new IntersectionObserver((entries) => {
         const entry = entries[0];
-        if (entry && entry.isIntersecting && !isAppending) {
+        if (entry && entry.isIntersecting && !isAppending && !suppressInfiniteScroll) {
           const loadedCount = currentPage * PAGE_SIZE;
           if (loadedCount < filteredWatchFaces.length) {
             loadMoreBatch();
@@ -3477,6 +3477,69 @@
 
       sentinelObserver.observe(sentinel);
     }
+
+    // --------------------------------------------------------
+    // Anchor Navigation (pauses infinite scroll while jumping past the catalog)
+    // --------------------------------------------------------
+    let suppressInfiniteScroll = false;
+    let suppressReleaseTimer = null;
+    const SKIP_SCROLL_PAUSE = ['catalog', 'free-faces', 'top'];
+
+    function getHeaderOffset() {
+      const header = document.querySelector('header, .header, .site-header, nav');
+      return (header ? header.getBoundingClientRect().height : 64) + 12;
+    }
+
+    function scrollToSection(id, smooth = true) {
+      const target = document.getElementById(id);
+      if (!target) return false;
+
+      suppressInfiniteScroll = true;
+      clearTimeout(suppressReleaseTimer);
+
+      const go = (behavior) => {
+        const y = target.getBoundingClientRect().top + window.pageYOffset - getHeaderOffset();
+        window.scrollTo({ top: Math.max(0, y), behavior });
+      };
+      go(smooth ? 'smooth' : 'auto');
+
+      // Re-correct the position once the smooth scroll settles (layout may shift from lazy images)
+      let lastY = -1, stableTicks = 0, ticks = 0;
+      const settle = setInterval(() => {
+        ticks++;
+        const curY = window.pageYOffset;
+        stableTicks = Math.abs(curY - lastY) < 2 ? stableTicks + 1 : 0;
+        lastY = curY;
+        if (stableTicks >= 3 || ticks > 40) {
+          clearInterval(settle);
+          const off = target.getBoundingClientRect().top - getHeaderOffset();
+          if (Math.abs(off) > 4) go('auto');
+          // Keep loading paused briefly; sentinel is now far above the viewport
+          suppressReleaseTimer = setTimeout(() => { suppressInfiniteScroll = false; }, 600);
+        }
+      }, 60);
+      return true;
+    }
+
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+      const id = link.getAttribute('href').slice(1);
+      if (!id || SKIP_SCROLL_PAUSE.includes(id) || id.startsWith('cue')) return;
+      if (!document.getElementById(id)) return;
+      e.preventDefault();
+      if (typeof closeMobileMenu === 'function') closeMobileMenu();
+      history.replaceState(null, '', '#' + id);
+      scrollToSection(id, true);
+    });
+
+    // Handle direct links like /#contact coming from Blog/Privacy pages
+    window.addEventListener('load', () => {
+      const id = (window.location.hash || '').slice(1);
+      if (id && !SKIP_SCROLL_PAUSE.includes(id) && !/^(cue|cc|crc)/i.test(id) && document.getElementById(id)) {
+        setTimeout(() => scrollToSection(id, false), 150);
+      }
+    });
 
     function loadMoreBatch() {
       isAppending = true;
@@ -3641,8 +3704,36 @@
           console.log('Support request saved to Firebase support_requests:', newRef.key);
         }
       } catch (err) {
-        console.warn('Firebase ticket submission warning, triggering mailto fallback:', err);
+        console.warn('Firebase ticket submission warning:', err);
       }
+
+      // Email delivery to creationcuespace@gmail.com (FormSubmit AJAX endpoint)
+      let emailSent = false;
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/creationcuespace@gmail.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: `[Creation Cue Support] ${topic || 'Message'} - ${name || 'Website visitor'}`,
+            _replyto: email,
+            _template: 'table',
+            _captcha: 'false',
+            Name: name,
+            Email: email,
+            Smartwatch: model,
+            Topic: topic,
+            Message: message,
+            Page: window.location.href,
+            Sent: new Date().toLocaleString()
+          })
+        });
+        const data = await res.json().catch(() => ({}));
+        emailSent = res.ok && (data.success === true || data.success === 'true');
+        if (!emailSent) console.warn('FormSubmit response:', data);
+      } catch (err) {
+        console.warn('Email delivery failed:', err);
+      }
+      const delivered = dbSaved || emailSent;
 
       // Update success card details
       const nameEl = document.getElementById('success-user-name');
@@ -3659,8 +3750,8 @@
       const directMailtoUrl = `mailto:creationcuespace@gmail.com?subject=${mailSubject}&body=${mailBody}`;
       if (mailtoEl) mailtoEl.href = directMailtoUrl;
 
-      // Fallback: If DB failed (e.g. adblocker), open mailto
-      if (!dbSaved) {
+      // Fallback: only if both email and DB failed (e.g. offline / blocked), open mail app
+      if (!delivered) {
         window.open(directMailtoUrl, '_blank');
       }
 
