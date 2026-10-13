@@ -663,6 +663,59 @@
       transform: translateX(-50%) translateY(-2px);
     }
 
+    /* Trust & Press Accolades Ribbon (WOW Space style) */
+    .trust-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+      padding: 16px 0;
+    }
+    .trust-grid {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-around;
+      gap: 16px 28px;
+    }
+    .trust-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .trust-item:hover {
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .trust-badge-pill {
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      padding: 3px 9px;
+      border-radius: 99px;
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+    }
+    .trust-badge-yt {
+      background: rgba(239, 68, 68, 0.1);
+      color: #dc2626;
+      border-color: rgba(239, 68, 68, 0.25);
+    }
+    .trust-badge-star {
+      background: rgba(245, 158, 11, 0.12);
+      color: #b45309;
+      border-color: rgba(245, 158, 11, 0.25);
+    }
+    .trust-badge-hw {
+      background: rgba(220, 38, 38, 0.08);
+      color: #b91c1c;
+      border-color: rgba(220, 38, 38, 0.2);
+    }
+
     /* "At a Glance" Feature Grid (WOW Space style) */
     .glance-grid {
       display: grid;
@@ -1209,6 +1262,32 @@
       color: var(--text);
     }
 
+    .footer-social-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .footer-social-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .footer-social-icon:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
     .btn-play-text {
       display: inline;
     }
@@ -1482,6 +1561,22 @@
 
     /* 2 Columns on Mobile / Tablets <= 768px */
     @media (max-width: 768px) {
+      .trust-strip {
+        padding: 12px 0 !important;
+      }
+      .trust-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px 14px !important;
+      }
+      .trust-item {
+        font-size: 11.5px !important;
+        gap: 6px !important;
+      }
+      .trust-badge-pill {
+        font-size: 9.5px !important;
+        padding: 2px 7px !important;
+      }
       .watch-grid {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 12px !important;
@@ -1711,7 +1806,7 @@
     <div class="container">
       <div class="header-inner">
         <!-- Brand with Grayscale Logo -->
-        <a href="v2" class="brand">
+        <a href="/" class="brand">
           <img src="images/logo.png" onerror="this.src='https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp'" width="36" height="36" class="brand-logo-img" alt="Creation Cue Logo">
           <div class="brand-name">Creation<span>Cue</span>™</div>
         </a>
@@ -1854,6 +1949,36 @@
               <span>Get on Google Play</span>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST & PRESS ACCOLADES (WOW Space Style) -->
+  <section class="trust-strip">
+    <div class="container">
+      <div class="trust-grid">
+        <a href="https://www.youtube.com/watch?v=zoD0DCDpLrA&list=PLq_hih0jW64xYQhELgx--6_NI9pwlsRbD" target="_blank" rel="noopener" class="trust-item" title="Watch on YouTube">
+          <span class="trust-badge-pill trust-badge-yt">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style="vertical-align:middle; margin-right:3px;"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.508 9.388.508 9.388.508s7.518 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            FEATURED
+          </span>
+          <span>Top 10 by Android Authority ↗</span>
+        </a>
+
+        <div class="trust-item">
+          <span class="trust-badge-pill">#1 & #2</span>
+          <span>Top Charts in S. Korea (Personalization)</span>
+        </div>
+
+        <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank" rel="noopener" class="trust-item">
+          <span class="trust-badge-pill trust-badge-star">★ 4.6</span>
+          <span>Average Play Store Rating</span>
+        </a>
+
+        <div class="trust-item">
+          <span class="trust-badge-pill trust-badge-hw">HUAWEI</span>
+          <span>Official Themes Partner</span>
         </div>
       </div>
     </div>
@@ -2119,16 +2244,23 @@
 
             <div class="form-group full">
               <label class="form-label">Your Message</label>
-              <textarea class="form-textarea" required placeholder="How can we help you?"></textarea>
+              <textarea class="form-textarea" id="contact-message" name="message" required placeholder="How can we help you?"></textarea>
             </div>
 
             <div class="form-group full">
-              <button type="submit" class="btn btn-dark" style="width: 100%; padding: 14px; font-size: 14px;">
+              <button type="submit" id="contact-submit-btn" class="btn btn-dark" style="width: 100%; padding: 14px; font-size: 14px;">
                 Send Message →
               </button>
             </div>
           </div>
         </form>
+
+        <div id="contact-success-card" style="display:none; text-align:center; padding:32px 20px; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:var(--radius-md); margin-top:20px;">
+          <div style="font-size:36px; margin-bottom:8px;">✅</div>
+          <h3 style="font-size:18px; font-weight:800; color:#166534; margin-bottom:6px;">Message Received!</h3>
+          <p style="font-size:14px; color:#15803d; max-width:440px; margin:0 auto 16px;">Thank you! Your message has been sent to Creation Cue. We will review it and reply to your email shortly.</p>
+          <button type="button" class="btn btn-outline" onclick="resetContactForm()" style="font-size:12px; padding:8px 18px;">Send Another Message</button>
+        </div>
       </div>
     </div>
   </section>
@@ -2146,11 +2278,14 @@
         <p id="modal-pkg" style="font-size: 11px; color: var(--text-light); font-family: monospace;"></p>
       </div>
       <p id="modal-desc" style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; text-align: left; background: var(--bg-alt); padding: 14px 18px; border-radius: var(--radius-md);"></p>
-      <div style="display: flex; gap: 12px;">
-        <button id="modal-preview-btn" class="btn btn-outline" style="flex: 1; padding: 12px;" onclick="previewModalFaceOnWatch()">
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button id="modal-preview-btn" class="btn btn-outline" style="flex: 1 1 120px; padding: 12px;" onclick="previewModalFaceOnWatch()">
           ⌚ Preview on Watch
         </button>
-        <a id="modal-play-link" href="#" target="_blank" class="btn btn-dark" style="flex: 1.2; padding: 12px;">
+        <button id="modal-share-btn" class="btn btn-outline" style="padding: 12px 14px;" onclick="shareCurrentModalFace()" title="Share watch face" aria-label="Share">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+        </button>
+        <a id="modal-play-link" href="#" target="_blank" class="btn btn-dark" style="flex: 1.2 1 140px; padding: 12px;">
           Open in Google Play →
         </a>
       </div>
@@ -2168,10 +2303,26 @@
             <div class="brand-name" style="font-size: 16px;">Creation<span>Cue</span>™</div>
           </div>
           <p class="footer-copy">© 2026 Creation Cue™ Studio. Wear OS by Google. All rights reserved.</p>
+
+          <!-- Social Media Icons Row -->
+          <div class="footer-social-row">
+            <a href="https://www.youtube.com/@creationcue" target="_blank" rel="noopener" class="footer-social-icon" aria-label="YouTube" title="YouTube">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.508 9.388.508 9.388.508s7.518 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/creation.cue/" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Instagram" title="Instagram">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://www.tiktok.com/@creationcue" target="_blank" rel="noopener" class="footer-social-icon" aria-label="TikTok" title="TikTok">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.525.02c1.31-.03 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.74-3.94-1.74-.22-.21-.42-.45-.6-.7v5.77c.06 1.77-.35 3.58-1.28 5.09-1.39 2.27-3.99 3.65-6.66 3.57-2.82-.09-5.54-1.72-6.75-4.28-1.46-3.08-1.01-7.1 1.25-9.67 1.83-2.09 4.67-3.05 7.42-2.5v4.07c-1.34-.41-2.91-.08-3.92.83-1.18 1.06-1.41 2.94-.65 4.36.78 1.45 2.51 2.3 4.15 2.12 1.61-.17 3.01-1.36 3.28-2.96.11-1.02.05-2.07.06-3.11V0z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=100089647182787" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Facebook" title="Facebook">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.3c-4.6 0-5.7 3.4-5.7 5.5v1.4H5.4v3.7h3.1v10.8h4.5V11.2h4.3l.5-3.7z"/></svg>
+            </a>
+          </div>
         </div>
 
         <div class="footer-links">
-          <a href="index.html">Classic Website</a>
+          <a href="classic.html">Classic Website</a>
           <a href="blog.html">Blog & Guides</a>
           <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank">Google Play Store</a>
           <a href="privacy.html">Privacy Policy</a>
@@ -2846,6 +2997,10 @@
 
         // Setup Infinite Scroll Observer
         setupInfiniteScroll();
+
+        // Handle Deep Linking (?face=cue... or #cue...)
+        handleDeepLinks();
+        window.addEventListener('hashchange', handleDeepLinks);
       } catch (err) {
         console.error('Failed to load manager.json', err);
       }
@@ -3085,12 +3240,117 @@
     }
 
     // --------------------------------------------------------
-    // Contact Form Handler
+    // Deep Linking Support (?face=cue... or #cue...)
     // --------------------------------------------------------
-    function handleContactSubmit(e) {
+    function handleDeepLinks() {
+      if (!allWatchFaces || allWatchFaces.length === 0) return;
+      const params = new URLSearchParams(window.location.search);
+      let faceId = params.get('face');
+      if (!faceId && window.location.hash) {
+        const hash = window.location.hash.replace('#', '').toLowerCase();
+        if (hash.startsWith('cue') || hash.startsWith('cc') || hash.startsWith('crc')) {
+          faceId = hash;
+        }
+      }
+      if (faceId) {
+        const match = allWatchFaces.find(f => f.id.toLowerCase() === faceId.toLowerCase());
+        if (match) {
+          openModal(match.id);
+          previewOnHeroWatch(match.id);
+        }
+      }
+    }
+
+    // --------------------------------------------------------
+    // Share Current Watch Face
+    // --------------------------------------------------------
+    async function shareCurrentModalFace() {
+      if (!currentModalFace) return;
+      const shareUrl = `${window.location.origin}${window.location.pathname.replace(/\/$/, '')}/?face=${currentModalFace.id}`;
+      const shareData = {
+        title: `${currentModalFace.title} - Creation Cue Watch Face`,
+        text: `Check out ${currentModalFace.title} for Wear OS smartwatches by Creation Cue!`,
+        url: shareUrl
+      };
+
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+        } catch (err) {
+          // User cancelled share
+        }
+      } else {
+        try {
+          await navigator.clipboard.writeText(shareUrl);
+          alert('Link copied to clipboard!\n' + shareUrl);
+        } catch (e) {
+          alert(shareUrl);
+        }
+      }
+    }
+
+    // --------------------------------------------------------
+    // Contact Form Handler (Firebase Realtime DB + Fallback)
+    // --------------------------------------------------------
+    async function handleContactSubmit(e) {
       e.preventDefault();
-      alert('Thank you! Your inquiry has been sent to Creation Cue. We will get back to you shortly.');
-      e.target.reset();
+      const form = document.getElementById('contact-form');
+      const successCard = document.getElementById('contact-success-card');
+      const submitBtn = document.getElementById('contact-submit-btn');
+
+      const name = document.getElementById('contact-name')?.value || '';
+      const email = document.getElementById('contact-email')?.value || '';
+      const model = document.getElementById('contact-model')?.value || '';
+      const topic = document.getElementById('contact-topic')?.value || '';
+      const message = document.getElementById('contact-message')?.value || '';
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending message...';
+      }
+
+      const ticket = {
+        name,
+        email,
+        model,
+        topic,
+        message,
+        timestamp: Date.now(),
+        dateStr: new Date().toISOString(),
+        status: 'open',
+        source: 'v2_website'
+      };
+
+      try {
+        if (typeof firebase !== 'undefined' && firebase.database) {
+          await firebase.database().ref('support_tickets').push(ticket);
+        }
+      } catch (err) {
+        console.warn('Firebase ticket submission warning, triggering mailto fallback:', err);
+        const subject = encodeURIComponent(`[Creation Cue Support] ${topic} - ${name}`);
+        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nSmartwatch: ${model}\nTopic: ${topic}\n\nMessage:\n${message}`);
+        window.open(`mailto:creationcuespace@gmail.com?subject=${subject}&body=${body}`, '_blank');
+      }
+
+      if (form) form.style.display = 'none';
+      if (successCard) successCard.style.display = 'block';
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message →';
+      }
+    }
+
+    function resetContactForm() {
+      const form = document.getElementById('contact-form');
+      const successCard = document.getElementById('contact-success-card');
+      if (form) {
+        form.reset();
+        form.style.display = 'block';
+      }
+      if (successCard) {
+        successCard.style.display = 'none';
+      }
     }
 
     // --------------------------------------------------------

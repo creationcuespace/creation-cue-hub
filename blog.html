@@ -1,845 +1,945 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://cdn.jsdelivr.net https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.jsdelivr.net https://creationcue.space https://via.placeholder.com https://wsrv.nl https://*.googleusercontent.com https://raw.githubusercontent.com https://*.githubusercontent.com; connect-src 'self' https://raw.githubusercontent.com wss://*.firebasedatabase.app https://*.firebasedatabase.app https://*.googleapis.com https://identitytoolkit.googleapis.com https://www.google.com/recaptcha/ https://ntfy.sh https://corsproxy.io https://api.allorigins.win; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://*.firebaseapp.com https://*.firebasedatabase.app https://www.google.com/recaptcha/ https://recaptcha.net/;">
-    
-    <title>CreationCue™ Blog | Wear OS Smartwatch News & Guides</title>
-    <meta name="description" content="Stay up-to-date with Wear OS news, smartwatch tips, installation guides, and premium watch face releases from CreationCue.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://creationcue.web.app/blog.html">
-    
-    <!-- OG Meta -->
-    <meta property="og:title" content="CreationCue™ Blog | Wear OS Smartwatch News & Guides">
-    <meta property="og:description" content="Stay up-to-date with Wear OS news, smartwatch tips, installation guides, and premium watch face releases.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://creationcue.web.app/blog.html">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png">
-    
-    <!-- Premium Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Firebase SDK (For Admin Auth Detection) -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="/admin-bar.js"></script>
-    
-    <style>
-        :root {
-            /* HSL tailored color palette matching main app */
-            --bg-color: hsl(240, 10%, 3%);
-            --surface-color: hsl(240, 10%, 7%);
-            --surface-hover: hsl(240, 10%, 12%);
-            --surface-variant: hsl(240, 5%, 15%);
-            
-            --primary: hsl(43, 89%, 53%);      /* Custom Gold #f1b31c */
-            --primary-glow: hsla(43, 89%, 53%, 0.15);
-            --primary-text: hsl(43, 89%, 60%);
-            
-            --text-primary: hsl(0, 0%, 100%);
-            --text-secondary: hsl(240, 5%, 70%);
-            --text-muted: hsl(240, 5%, 45%);
-            
-            --border-color: hsla(0, 0%, 100%, 0.08);
-            
-            --glass-bg: rgba(15, 15, 20, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.06);
-            --glass-shadow: rgba(0, 0, 0, 0.5);
-            
-            --font-main: 'Inter', sans-serif;
-            --font-display: 'Outfit', sans-serif;
-            
-            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --border-radius-lg: 16px;
-            --border-radius-md: 12px;
-            --border-radius-sm: 8px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://cdn.jsdelivr.net https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.jsdelivr.net https://creationcue.space https://via.placeholder.com https://wsrv.nl https://*.googleusercontent.com https://raw.githubusercontent.com https://*.githubusercontent.com https://github.com; connect-src 'self' https://raw.githubusercontent.com wss://*.firebasedatabase.app https://*.firebasedatabase.app https://*.googleapis.com https://identitytoolkit.googleapis.com https://www.google.com/recaptcha/ https://ntfy.sh https://corsproxy.io https://api.allorigins.win; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://*.firebaseapp.com https://*.firebasedatabase.app https://www.google.com/recaptcha/ https://recaptcha.net/;">
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            outline: none;
-        }
+  <title>CreationCue™ Blog | Wear OS Smartwatch News & Guides</title>
+  <meta name="description" content="Stay up-to-date with Wear OS news, smartwatch tips, installation guides, and premium watch face releases from CreationCue Studio.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://creationcue.web.app/blog.html">
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            font-family: var(--font-main);
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            line-height: 1.6;
-        }
+  <!-- OG Meta -->
+  <meta property="og:title" content="CreationCue™ Blog | Wear OS Smartwatch News & Guides">
+  <meta property="og:description" content="Stay up-to-date with Wear OS news, smartwatch tips, installation guides, and premium watch face releases.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://creationcue.web.app/blog.html">
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp">
 
-        /* Top Brand Header */
-        .top-brand-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 24px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--glass-border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/logo.png">
 
-        .brand-logo-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: inherit;
-            transition: opacity 0.2s ease;
-        }
-        .brand-logo-area:hover {
-            opacity: 0.85;
-        }
+  <!-- Plus Jakarta Sans Font (WOW Space Standard) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        .brand-logo {
-            width: 32px;
-            height: 32px;
-            object-fit: contain;
-            border-radius: 50%;
-        }
+  <!-- Firebase SDK (For Admin Auth Detection) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="/admin-bar.js"></script>
 
-        .brand-name {
-            font-family: var(--font-display);
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            color: var(--text-primary);
-            text-transform: uppercase;
-        }
+  <style>
+    :root {
+      --bg: #fbfbfc;
+      --bg-alt: #f3f4f6;
+      --bg-card: #ffffff;
+      --text: #111114;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --border: #e2e8f0;
+      --border-light: #f1f5f9;
+      --primary: #111114;
+      --accent: #f59e0b;
+      --accent-glow: rgba(245, 158, 11, 0.15);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.09);
+      --max-width: 1140px;
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
 
-        .brand-name span {
-            color: var(--primary);
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .hub-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: var(--transition-smooth);
-            border: 1px solid var(--border-color);
-            padding: 6px 16px;
-            border-radius: 20px;
-            background: var(--surface-color);
-        }
-        .hub-link:hover {
-            color: var(--primary);
-            border-color: var(--primary);
-            background: var(--surface-hover);
-        }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-        /* Container Layout */
-        .main-container {
-            flex: 1;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 24px;
-        }
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      width: 100%;
+    }
 
-        .blog-header {
-            text-align: center;
-            margin-bottom: 48px;
-        }
+    /* HEADER */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-logo-img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      border-radius: 8px;
+      filter: grayscale(100%) contrast(1.15);
+      transition: transform 0.2s ease;
+    }
+    .brand:hover .brand-logo-img {
+      transform: scale(1.06);
+    }
+    .brand-name {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .brand-name span {
+      color: var(--accent);
+    }
 
-        .blog-header h1 {
-            font-family: var(--font-display);
-            font-size: clamp(2rem, 6vw, 3rem);
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+    }
+    .nav-link-blog {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text) !important;
+      font-weight: 700 !important;
+    }
+    .nav-badge-pill {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      padding: 2px 6px;
+      border-radius: 99px;
+      background: rgba(245, 158, 11, 0.15);
+      color: #b45309;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
 
-        .blog-header h1 span {
-            color: var(--primary);
-        }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+    .btn-dark {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-dark:hover {
+      background: #2a2a2e;
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background: #fff;
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--text);
+      background: var(--bg-alt);
+    }
 
-        .blog-header p {
-            color: var(--text-secondary);
-            font-size: 16px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--text);
+    }
 
-        /* Pinned Small Grid */
-        .pinned-small-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 32px;
-        }
+    /* BLOG HERO */
+    .blog-hero {
+      padding: 56px 0 40px;
+      text-align: center;
+      background: radial-gradient(circle at 50% 10%, rgba(245, 158, 11, 0.05) 0%, transparent 65%);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: rgba(0,0,0,0.04);
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      margin-bottom: 16px;
+    }
+    .eyebrow-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .blog-hero h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+      color: var(--text);
+    }
+    .blog-hero h1 span {
+      color: var(--accent);
+    }
+    .blog-hero p {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto;
+    }
 
-        .article-card-small {
-            background: var(--glass-bg);
-            border: 1px solid rgba(241, 179, 28, 0.3);
-            border-radius: var(--border-radius-md);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: var(--transition-smooth);
-            text-decoration: none;
-            color: inherit;
-        }
+    /* MAIN CONTENT */
+    .blog-main {
+      flex: 1;
+      padding-bottom: 80px;
+    }
 
-        .article-card-small:hover {
-            border-color: rgba(241, 179, 28, 0.8);
-            transform: translateY(-2px);
-        }
+    /* SECTION LABELS */
+    .section-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+    .section-label {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-label-tag {
+      font-size: 11px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      color: var(--text);
+    }
 
-        .article-card-small .article-thumb-container {
-            width: 100%;
-            height: 110px;
-            min-height: auto;
-        }
+    /* PINNED SMALL GRID */
+    .pinned-small-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .article-card-small {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      color: inherit;
+      box-shadow: var(--shadow-sm);
+    }
+    .article-card-small:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .article-card-small .article-thumb-container {
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+      background: var(--bg-alt);
+      overflow: hidden;
+    }
+    .article-card-small .article-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .article-card-small:hover .article-thumb {
+      transform: scale(1.05);
+    }
+    .article-card-small .article-details {
+      padding: 12px 16px;
+      flex: 1;
+      min-width: 0;
+    }
+    .article-card-small .article-meta {
+      font-size: 11px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-light);
+    }
+    .article-card-small .article-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
 
-        .article-card-small .article-details {
-            padding: 12px;
-            flex: 1;
-            justify-content: flex-start;
-        }
+    /* MAIN ARTICLES GRID */
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 28px;
+    }
+    .article-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      color: inherit;
+    }
+    .article-card:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+    .article-thumb-container {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      background: var(--bg-alt);
+      overflow: hidden;
+    }
+    .article-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+    .article-card:hover .article-thumb {
+      transform: scale(1.04);
+    }
+    .article-details {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .article-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .badge-pinned {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      background: rgba(245, 158, 11, 0.15);
+      color: #b45309;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+    .article-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.35;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+      transition: color 0.2s;
+    }
+    .article-card:hover .article-title {
+      color: var(--accent);
+    }
+    .article-excerpt {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 18px;
+      flex: 1;
+    }
+    .article-footer-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-light);
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .article-footer-cta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s;
+    }
+    .article-card:hover .article-footer-cta span {
+      gap: 10px;
+      color: var(--accent);
+    }
 
-        .article-card-small .article-title {
-            font-size: 13px;
-            margin-bottom: 6px;
-            line-height: 1.4;
-        }
+    /* EMPTY / LOADER STATE */
+    .empty-blog {
+      text-align: center;
+      padding: 64px 24px;
+      background: var(--bg-card);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-lg);
+      color: var(--text-muted);
+      font-size: 15px;
+      grid-column: 1 / -1;
+    }
 
-        .article-card-small .article-meta {
-            font-size: 10px;
-            margin-bottom: 6px;
-            flex-wrap: wrap;
-        }
+    /* LOAD MORE BUTTON */
+    .load-more-btn-container {
+      text-align: center;
+      margin-top: 48px;
+    }
 
-        /* Article Grid */
-        .article-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 24px;
-        }
+    /* FOOTER */
+    .footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 60px 0 40px;
+      margin-top: auto;
+    }
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 32px;
+      align-items: center;
+    }
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover {
+      color: var(--text);
+    }
+    .footer-social-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .footer-social-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .footer-social-icon:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
 
-        .article-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--border-radius-lg);
-            overflow: hidden;
-            display: flex;
-            box-shadow: 0 8px 24px var(--glass-shadow);
-            transition: var(--transition-smooth);
-            text-decoration: none;
-            color: inherit;
-        }
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+      .nav-links.mobile-open {
+        display: flex !important;
+        flex-direction: column !important;
+        position: fixed !important;
+        top: 72px !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        padding: 24px 20px !important;
+        gap: 12px !important;
+        z-index: 2000 !important;
+        overflow-y: auto !important;
+        border-top: 1px solid var(--border) !important;
+      }
+      .nav-links.mobile-open li {
+        width: 100% !important;
+        list-style: none !important;
+      }
+      .nav-links.mobile-open li a {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        padding: 12px 16px !important;
+        border-radius: var(--radius-sm) !important;
+        color: var(--text) !important;
+        text-decoration: none !important;
+        background: var(--bg-alt) !important;
+      }
+      .nav-links.mobile-open li a:hover {
+        background: var(--primary) !important;
+        color: #fff !important;
+      }
+      .menu-toggle {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 8px !important;
+        background: var(--bg-alt) !important;
+        border: 1px solid var(--border) !important;
+        cursor: pointer !important;
+      }
+      .article-grid {
+        grid-template-columns: 1fr;
+      }
+      .pinned-small-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
-        .article-card:hover {
-            border-color: rgba(241, 179, 28, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .article-thumb-container {
-            width: 260px;
-            min-height: 180px;
-            position: relative;
-            flex-shrink: 0;
-            background: #111;
-        }
-
-        .article-thumb {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .article-details {
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            flex: 1;
-        }
-
-        .article-meta {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            display: flex;
-            gap: 12px;
-        }
-
-        .article-title {
-            font-family: var(--font-display);
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-primary);
-            line-height: 1.3;
-            margin-bottom: 12px;
-            transition: color 0.2s;
-        }
-
-        .article-card:hover .article-title {
-            color: var(--primary);
-        }
-
-        .article-excerpt {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Facebook-Style Link Preview Card styling */
-        .link-preview-card {
-            margin: 24px 0;
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius-md);
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-            transition: var(--transition-smooth);
-        }
-
-        .link-preview-card:hover {
-            border-color: rgba(241, 179, 28, 0.4);
-            transform: translateY(-2px);
-            background: var(--surface-hover);
-        }
-
-        .lp-card-inner {
-            display: flex;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .lp-card-img {
-            width: 150px;
-            min-height: 110px;
-            background-size: cover;
-            background-position: center;
-            flex-shrink: 0;
-            border-right: 1px solid var(--border-color);
-        }
-
-        .lp-card-info {
-            padding: 16px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            flex: 1;
-        }
-
-        .lp-card-title {
-            font-family: var(--font-display);
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 6px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .lp-card-desc {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            line-height: 1.4;
-        }
-
-        .lp-card-url {
-            font-size: 11px;
-            color: var(--primary);
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        @media (max-width: 550px) {
-            .lp-card-inner {
-                flex-direction: column;
-            }
-            .lp-card-img {
-                width: 100%;
-                height: 140px;
-                border-right: none;
-                border-bottom: 1px solid var(--border-color);
-            }
-            .lp-card-info {
-                padding: 12px;
-            }
-        }
-
-        .empty-blog {
-            text-align: center;
-            padding: 48px;
-            background: var(--glass-bg);
-            border: 1px dashed var(--border-color);
-            border-radius: var(--border-radius-lg);
-            color: var(--text-muted);
-            font-size: 15px;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 24px;
-            font-size: 11px;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            background: var(--surface-color);
-        }
-
-        @media (max-width: 768px) {
-            body { padding: 0; }
-            .main-content-area { padding: 16px 12px; }
-            .blog-header { margin-bottom: 32px; padding: 0 10px; }
-            .blog-header h1 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
-            .article-card {
-                flex-direction: column;
-            }
-            .article-thumb-container {
-                width: 100%;
-                height: 180px;
-                border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
-                overflow: hidden;
-            }
-            .article-thumb {
-                border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
-            }
-            .article-details {
-                padding: 16px;
-            }
-            .admin-option-divider {
-                border-left: none !important;
-                padding-left: 0 !important;
-                border-top: 1px dashed var(--border-color);
-                padding-top: 20px;
-                margin-top: 10px;
-            }
-        }
-
-        /* Fixed Bottom Tab Navigation (Mobile) */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid var(--glass-border);
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 12px 14px 12px;
-            z-index: 100;
-            box-shadow: 0 -4px 24px rgba(0,0,0,0.6);
-        }
-
-        .nav-item {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            padding: 6px 12px;
-            transition: var(--transition-smooth);
-            flex: 1;
-            max-width: 120px;
-            text-decoration: none;
-        }
-
-        .nav-item:hover {
-            color: var(--text-primary);
-        }
-
-        .nav-item.active {
-            color: var(--primary);
-        }
-
-        .nav-icon {
-            width: 22px;
-            height: 22px;
-            color: inherit;
-            transition: var(--transition-smooth);
-        }
-
-        .nav-item.active .nav-icon {
-            transform: translateY(-2px);
-        }
-
-        .nav-item span {
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 1280px;
-            margin: 0 auto;
-            min-height: 100vh;
-            position: relative;
-            z-index: 2;
-            padding-bottom: 80px; /* space for bottom nav on mobile */
-        }
-
-        .main-content-area {
-            flex: 1;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        /* Desktop Layout (Grid Sidebar) */
-        @media (min-width: 769px) {
-            .app-container {
-                padding-bottom: 0;
-                display: grid;
-                grid-template-columns: 80px 1fr;
-                min-height: 100vh;
-                max-width: 100%;
-            }
-
-            .top-brand-header {
-                grid-column: 1 / span 2;
-                border-bottom: 1px solid var(--border-color);
-            }
-
-            .bottom-nav {
-                grid-column: 1;
-                position: sticky;
-                top: 64px;
-                height: calc(100vh - 64px);
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: center;
-                padding: 24px 4px;
-                gap: 24px;
-                border-top: none;
-                border-right: 1px solid var(--border-color);
-                box-shadow: none;
-                background: var(--surface-color);
-                z-index: 99;
-            }
-
-            .main-content-area {
-                grid-column: 2;
-                padding: 40px 40px;
-                min-height: calc(100vh - 64px);
-                max-width: 1000px;
-            }
-        }
-    </style>
+    @media (max-width: 500px) {
+      .header-actions .btn-play-text {
+        display: none;
+      }
+      .header-actions .btn-dark {
+        padding: 8px 12px;
+      }
+      .article-details {
+        padding: 18px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Persistent Header -->
-        <header class="top-brand-header">
-            <a href="index.html" class="brand-logo-area">
-                <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" width="32" height="32" class="brand-logo" alt="Logo">
-                <span class="brand-name">Creation<span>Cue</span>™</span>
-            </a>
-        </header>
 
-        <!-- Navigation bar -->
-        <nav class="bottom-nav">
-            <a class="nav-item" href="index.html#catalog">
-                <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="14" width="7" height="7"></rect>
-                    <rect x="3" y="14" width="7" height="7"></rect>
-                </svg>
-                <span>Catalog</span>
-            </a>
-            <a class="nav-item" href="index.html#my-faces">
-                <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                </svg>
-                <span>My Faces</span>
-            </a>
-            <a class="nav-item" href="index.html#support">
-                <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>
-                <span>Support</span>
-            </a>
-            <a class="nav-item" href="index.html#subscribe">
-                <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                <span>Subscribe</span>
-            </a>
-            <a class="nav-item active" href="blog.html">
-                <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                </svg>
-                <span>Blog</span>
-            </a>
-            <a class="nav-item" href="index.html#about">
-                <svg viewBox="0 0 24 24" class="nav-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
-                <span>About</span>
-            </a>
+  <!-- STICKY HEADER -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <!-- Brand with Grayscale Logo -->
+        <a href="/" class="brand">
+          <img src="images/logo.png" onerror="this.src='https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp'" width="36" height="36" class="brand-logo-img" alt="Creation Cue Logo">
+          <div class="brand-name">Creation<span>Cue</span>™</div>
+        </a>
+
+        <!-- Navigation Menu -->
+        <nav>
+          <ul class="nav-links" id="nav-links">
+            <li><a href="/#catalog" onclick="closeMobileMenu()">Watch Faces</a></li>
+            <li><a href="/#free-faces" onclick="closeMobileMenu()">Free Faces (11)</a></li>
+            <li>
+              <a href="blog.html" class="nav-link-blog active" onclick="closeMobileMenu()">
+                Blog <span class="nav-badge-pill">NEW</span>
+              </a>
+            </li>
+            <li><a href="/#faq" onclick="closeMobileMenu()">FAQ</a></li>
+            <li><a href="/#contact" onclick="closeMobileMenu()">Contact</a></li>
+          </ul>
         </nav>
 
-        <!-- Main Content Area -->
-        <main class="main-content-area">
-
-
-            <div class="blog-header">
-                <h1>Wear OS <span>News & Guides</span></h1>
-                <p>Tips, custom layout guides, and recent updates from CreationCue Watch Face design lab.</p>
-            </div>
-
-            <div class="article-grid" id="blog-posts-container">
-                <!-- Loading Indicator -->
-                <div class="empty-blog" id="blog-loader">Loading articles...</div>
-            </div>
-
-        </main>
+        <div class="header-actions">
+          <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank" rel="noopener" class="btn btn-dark">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a2.385 2.385 0 0 1-.61-.954V2.768c.15-.36.368-.69.61-.954zm11.235 11.238l2.678 2.678-12.784 7.378 10.106-10.056zm0-2.104L4.738.892l12.784 7.378-2.678 2.678zm1.488 1.488l3.961-2.288a1.59 1.59 0 0 0 0-2.764l-3.961-2.288-1.745 1.745 1.745 1.745 3.961 3.85z"/></svg>
+            <span class="btn-play-text">Play Store</span>
+          </a>
+          <button type="button" class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Navigation" aria-expanded="false">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
     </div>
+  </header>
 
-    <!-- Footer -->
-    <footer>
-        &copy; 2026 CreationCue. All rights reserved. Smartwatch designs and Wear OS news hub.
-        <br><br>
-        <span onclick="toggleAdminPanel()" style="cursor:pointer; text-decoration:underline; opacity:0.6; font-size:11px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">🔑 Admin Portal</span>
-    </footer>
+  <!-- BLOG HERO -->
+  <section class="blog-hero">
+    <div class="container">
+      <div class="eyebrow"><span class="eyebrow-dot"></span>STUDIO JOURNAL & GUIDES</div>
+      <h1>Wear OS <span>News & Guides</span></h1>
+      <p>Customization walkthroughs, battery optimization tips, Wear OS updates, and watch face design releases from CreationCue Studio.</p>
+    </div>
+  </section>
 
-    <script>
-        // Firebase Config (Identical to main app)
-        const firebaseConfig = {
-            apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
-            authDomain: "creation-cue-manage.firebaseapp.com",
-            databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "creation-cue-manage",
-            storageBucket: "creation-cue-manage.firebasestorage.app",
-            messagingSenderId: "186324516022",
-            appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
-        };
+  <!-- MAIN ARTICLES CONTAINER -->
+  <main class="blog-main">
+    <div class="container" id="blog-content-area">
+      <!-- Loader state -->
+      <div class="empty-blog" id="blog-loader">
+        <p style="font-weight: 600;">Loading latest articles and guides...</p>
+      </div>
 
-        function toggleAdminPanel() {
-            window.location.href = 'admin.html';
+      <!-- Pinned Guides Container (Loaded dynamically) -->
+      <div id="pinned-section-container" style="display: none;">
+        <div class="section-label-row">
+          <div class="section-label">
+            <span>Essential Guides</span>
+            <span class="section-label-tag">Pinned</span>
+          </div>
+        </div>
+        <div class="pinned-small-grid" id="pinned-posts-grid"></div>
+      </div>
+
+      <!-- Regular Articles Feed -->
+      <div id="regular-section-container" style="display: none;">
+        <div class="section-label-row">
+          <div class="section-label">
+            <span>Latest Stories & Updates</span>
+          </div>
+        </div>
+        <div class="article-grid" id="blog-posts-container"></div>
+        <div class="load-more-btn-container" id="load-more-container" style="display: none;">
+          <button type="button" id="load-more-btn" class="btn btn-outline">Load More Articles</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <div class="brand" style="margin-bottom: 8px;">
+            <img src="images/logo.png" onerror="this.src='https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp'" width="28" height="28" class="brand-logo-img" alt="Creation Cue Logo" style="width:28px; height:28px; border-radius:6px;">
+            <div class="brand-name" style="font-size: 16px;">Creation<span>Cue</span>™</div>
+          </div>
+          <p class="footer-copy">© 2026 Creation Cue™ Studio. Wear OS by Google. All rights reserved.</p>
+
+          <div class="footer-social-row">
+            <a href="https://www.youtube.com/@creationcue" target="_blank" rel="noopener" class="footer-social-icon" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.508 9.388.508 9.388.508s7.518 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/creation.cue/" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://www.tiktok.com/@creationcue" target="_blank" rel="noopener" class="footer-social-icon" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.525.02c1.31-.03 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.74-3.94-1.74-.22-.21-.42-.45-.6-.7v5.77c.06 1.77-.35 3.58-1.28 5.09-1.39 2.27-3.99 3.65-6.66 3.57-2.82-.09-5.54-1.72-6.75-4.28-1.46-3.08-1.01-7.1 1.25-9.67 1.83-2.09 4.67-3.05 7.42-2.5v4.07c-1.34-.41-2.91-.08-3.92.83-1.18 1.06-1.41 2.94-.65 4.36.78 1.45 2.51 2.3 4.15 2.12 1.61-.17 3.01-1.36 3.28-2.96.11-1.02.05-2.07.06-3.11V0z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=100089647182787" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.3c-4.6 0-5.7 3.4-5.7 5.5v1.4H5.4v3.7h3.1v10.8h4.5V11.2h4.3l.5-3.7z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <a href="/">Home</a>
+          <a href="classic.html">Classic Website</a>
+          <a href="blog.html" style="color: var(--text); font-weight: 700;">Blog & Guides</a>
+          <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank" rel="noopener">Google Play Store</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="/#faq">FAQ</a>
+          <a href="/#contact">Contact</a>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border-light);">
+        <span onclick="toggleAdminPanel()" style="cursor:pointer; text-decoration:underline; opacity:0.6; font-size:12px;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">🔑 Admin Portal</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile navigation toggle
+    function toggleMobileMenu() {
+      const nav = document.getElementById('nav-links');
+      if (nav) nav.classList.toggle('mobile-open');
+    }
+    function closeMobileMenu() {
+      const nav = document.getElementById('nav-links');
+      if (nav) nav.classList.remove('mobile-open');
+    }
+
+    // Firebase Config (Identical to main app)
+    const firebaseConfig = {
+      apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+      authDomain: "creation-cue-manage.firebaseapp.com",
+      databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "creation-cue-manage",
+      storageBucket: "creation-cue-manage.firebasestorage.app",
+      messagingSenderId: "186324516022",
+      appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
+    };
+
+    function toggleAdminPanel() {
+      window.location.href = 'admin.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check for ?admin=true param
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('admin') === 'true') {
+        showAdminPanel();
+      }
+
+      // Check Firebase Auth state dynamically
+      try {
+        firebase.initializeApp(firebaseConfig);
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            showAdminPanel();
+          }
+        });
+      } catch (e) {
+        console.warn('Firebase auth check skipped/failed:', e);
+      }
+
+      function showAdminPanel() {
+        const adminBar = document.getElementById('admin-bar');
+        if (adminBar) {
+          adminBar.style.display = 'flex';
+          document.body.style.paddingTop = '40px';
+        }
+      }
+
+      loadBlogPosts();
+    });
+
+    async function loadBlogPosts() {
+      const loader = document.getElementById('blog-loader');
+      const pinnedContainer = document.getElementById('pinned-section-container');
+      const pinnedGrid = document.getElementById('pinned-posts-grid');
+      const regularContainer = document.getElementById('regular-section-container');
+      const regularGrid = document.getElementById('blog-posts-container');
+      const loadMoreContainer = document.getElementById('load-more-container');
+      const loadMoreBtn = document.getElementById('load-more-btn');
+
+      try {
+        let posts = [];
+        // 1. Try local fetch first
+        try {
+          const response = await fetch('blog/posts.json?v=' + Date.now());
+          if (response.ok) {
+            posts = await response.json();
+          }
+        } catch(e) {}
+
+        // 2. Fallback to raw GitHub in case Firebase Hosting deployment is still running
+        try {
+          const rawResponse = await fetch('https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/blog/posts.json?v=' + Date.now());
+          if (rawResponse.ok) {
+            const rawPosts = await rawResponse.json();
+            if (rawPosts && Array.isArray(rawPosts) && rawPosts.length >= posts.length) {
+              posts = rawPosts;
+            }
+          }
+        } catch(e) {}
+
+        if (!posts || posts.length === 0) {
+          throw new Error('No articles registry found.');
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Show admin panel if ?admin=true is present in URL
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('admin') === 'true') {
-                showAdminPanel();
-            }
+        // Filter out drafts
+        const publicPosts = posts.filter(p => p.draft !== true);
 
-            // Check Firebase Auth state dynamically
-            try {
-                firebase.initializeApp(firebaseConfig);
-                firebase.auth().onAuthStateChanged((user) => {
-                    if (user) {
-                        showAdminPanel();
-                    }
-                });
-            } catch (e) {
-                console.warn('Firebase auth check skipped/failed:', e);
-            }
+        if (!publicPosts || publicPosts.length === 0) {
+          loader.innerHTML = '<p>Check back soon! We are drafting new guides and updates.</p>';
+          return;
+        }
 
-            function showAdminPanel() {
-                const adminPanel = document.getElementById('admin-panel');
-                if (adminPanel) adminPanel.style.display = 'block';
-                const adminBar = document.getElementById('admin-bar');
-                if (adminBar) {
-                    adminBar.style.display = 'flex';
-                    document.body.style.paddingTop = '40px';
-                }
-            }
+        // Hide loader
+        loader.style.display = 'none';
 
-            loadBlogPosts();
+        // Separate small pinned posts from regular posts
+        const smallPinnedPosts = publicPosts.filter(p => p.pinned && p.pinStyle === 'small');
+        const regularPosts = publicPosts.filter(p => !(p.pinned && p.pinStyle === 'small'));
+
+        // Sort regular posts: pinned first, then newest date first
+        const sortedPosts = [...regularPosts].sort((a, b) => {
+          if (a.pinned && !b.pinned) return -1;
+          if (!a.pinned && b.pinned) return 1;
+          return new Date(b.date) - new Date(a.date);
         });
 
-        async function loadBlogPosts() {
-            const container = document.getElementById('blog-posts-container');
-            if (!container) return;
+        // 1. Render small pinned cards
+        if (smallPinnedPosts.length > 0 && pinnedGrid && pinnedContainer) {
+          pinnedGrid.innerHTML = '';
+          smallPinnedPosts.forEach(post => {
+            const thumbImg = post.thumbnail 
+              ? `https://wsrv.nl/?url=${encodeURIComponent(post.thumbnail)}&w=240&h=240&fit=cover&output=webp&q=80`
+              : 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp';
 
-            try {
-                let posts = [];
-                // 1. Try local fetch first
-                try {
-                    const response = await fetch('blog/posts.json?v=' + Date.now());
-                    if (response.ok) {
-                        posts = await response.json();
-                    }
-                } catch(e) {}
-
-                // 2. Fallback to raw GitHub in case Firebase Hosting deployment is still running
-                try {
-                    const rawResponse = await fetch('https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/blog/posts.json?v=' + Date.now());
-                    if (rawResponse.ok) {
-                        const rawPosts = await rawResponse.json();
-                        if (rawPosts && Array.isArray(rawPosts) && rawPosts.length >= posts.length) {
-                            posts = rawPosts;
-                        }
-                    }
-                } catch(e) {}
-
-                if (!posts || posts.length === 0) {
-                    throw new Error('No articles registry found.');
-                }
-
-                // Filter out draft posts
-                const publicPosts = posts.filter(p => p.draft !== true);
-
-                if (!publicPosts || publicPosts.length === 0) {
-                    container.innerHTML = '<div class="empty-blog">Check back soon! We are drafting new guides and updates.</div>';
-                    return;
-                }
-
-                // Separate small pinned posts from the rest
-                const smallPinnedPosts = publicPosts.filter(p => p.pinned && p.pinStyle === 'small');
-                const regularPosts = publicPosts.filter(p => !(p.pinned && p.pinStyle === 'small'));
-
-                // Sort regular posts by pinned status (large) first, then date (newest first)
-                const sortedPosts = [...regularPosts].sort((a, b) => {
-                    if (a.pinned && !b.pinned) return -1;
-                    if (!a.pinned && b.pinned) return 1;
-                    return new Date(b.date) - new Date(a.date);
-                });
-
-                container.innerHTML = '';
-                
-                // Render small pinned grid if any
-                if (smallPinnedPosts.length > 0) {
-                    const smallGrid = document.createElement('div');
-                    smallGrid.className = 'pinned-small-grid';
-                    smallPinnedPosts.forEach(post => {
-                        const thumbImg = post.thumbnail 
-                            ? `https://wsrv.nl/?url=${encodeURIComponent(post.thumbnail)}&w=300&h=160&fit=cover&output=webp&q=80`
-                            : 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp';
-
-                        const card = document.createElement('a');
-                        card.className = 'article-card-small';
-                        card.href = `blog/post.html?id=${post.slug}`;
-                        card.innerHTML = `
-                            <div class="article-thumb-container">
-                                <img class="article-thumb" src="${thumbImg}" alt="${post.title}" loading="lazy">
-                            </div>
-                            <div class="article-details">
-                                <div class="article-meta">
-                                    <span style="background:rgba(255,255,255,0.05); color:var(--text-muted); font-size:10px; font-weight:700; padding:2px 8px; border-radius:12px; border:1px solid rgba(255,255,255,0.1); display:inline-block; margin-right:8px; text-transform:uppercase; letter-spacing:0.5px;">Pinned</span>
-                                    <span>${post.date}</span>
-                                </div>
-                                <h2 class="article-title">${post.title}</h2>
-                            </div>
-                        `;
-                        smallGrid.appendChild(card);
-                    });
-                    container.appendChild(smallGrid);
-                }
-
-                // Create regular article grid
-                const articleGrid = document.createElement('div');
-                articleGrid.className = 'article-grid';
-                container.appendChild(articleGrid);
-                
-                const ITEMS_PER_PAGE = 6;
-                let currentIndex = 0;
-
-                const loadMoreBtn = document.createElement('button');
-                loadMoreBtn.className = 'btn';
-                loadMoreBtn.style.cssText = 'margin: 30px auto; display: block; max-width: 200px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-primary); border-radius: 20px; transition: 0.2s; cursor: pointer;';
-                loadMoreBtn.textContent = 'Load More Articles';
-                loadMoreBtn.onmouseover = () => loadMoreBtn.style.background = 'rgba(255,255,255,0.1)';
-                loadMoreBtn.onmouseout = () => loadMoreBtn.style.background = 'rgba(255,255,255,0.05)';
-                
-                function renderNextBatch() {
-                    const nextBatch = sortedPosts.slice(currentIndex, currentIndex + ITEMS_PER_PAGE);
-                    nextBatch.forEach(post => {
-                        const thumbImg = post.thumbnail 
-                            ? `https://wsrv.nl/?url=${encodeURIComponent(post.thumbnail)}&w=400&h=280&fit=cover&output=webp&q=80`
-                            : 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp';
-
-                        const pinnedBadge = post.pinned ? '<span style="background:rgba(255,255,255,0.05); color:var(--text-muted); font-size:10px; font-weight:700; padding:2px 8px; border-radius:12px; margin-right:8px; border:1px solid rgba(255,255,255,0.1); display:inline-block; text-transform:uppercase; letter-spacing:0.5px;">Pinned</span>' : '';
-
-                        const card = document.createElement('a');
-                        card.className = 'article-card';
-                        card.href = `blog/post.html?id=${post.slug}`;
-                        card.innerHTML = `
-                            <div class="article-thumb-container">
-                                <img class="article-thumb" src="${thumbImg}" alt="${post.title}" loading="lazy">
-                            </div>
-                            <div class="article-details">
-                                <div class="article-meta">
-                                    ${pinnedBadge}<span>${post.date}</span>
-                                    <span>•</span>
-                                    <span>${post.readTime || '3 min'} Read</span>
-                                </div>
-                                <h2 class="article-title">${post.title}</h2>
-                                <p class="article-excerpt">${post.excerpt || ''}</p>
-                            </div>
-                        `;
-                        
-                        if (loadMoreBtn.parentNode) {
-                            articleGrid.insertBefore(card, loadMoreBtn);
-                        } else {
-                            articleGrid.appendChild(card);
-                        }
-                    });
-                    
-                    currentIndex += ITEMS_PER_PAGE;
-                    
-                    if (currentIndex >= sortedPosts.length) {
-                        if (loadMoreBtn.parentNode) {
-                            loadMoreBtn.parentNode.removeChild(loadMoreBtn);
-                        }
-                    } else {
-                        if (!loadMoreBtn.parentNode) {
-                            articleGrid.appendChild(loadMoreBtn);
-                        }
-                    }
-                }
-
-                renderNextBatch();
-                loadMoreBtn.onclick = renderNextBatch;
-            } catch (err) {
-                console.warn('Error loading blog posts:', err);
-                container.innerHTML = '<div class="empty-blog">No articles published yet. Check back soon!</div>';
-            }
+            const card = document.createElement('a');
+            card.className = 'article-card-small';
+            card.href = `blog/post.html?id=${post.slug}`;
+            card.innerHTML = `
+              <div class="article-thumb-container">
+                <img class="article-thumb" src="${thumbImg}" alt="${post.title}" loading="lazy">
+              </div>
+              <div class="article-details">
+                <div class="article-meta">
+                  <span class="badge-pinned">Pinned</span>
+                  <span>${post.date}</span>
+                </div>
+                <h3 class="article-title">${post.title}</h3>
+              </div>
+            `;
+            pinnedGrid.appendChild(card);
+          });
+          pinnedContainer.style.display = 'block';
         }
-    </script>
+
+        // 2. Render regular article grid with pagination
+        if (regularGrid && regularContainer) {
+          regularContainer.style.display = 'block';
+          regularGrid.innerHTML = '';
+
+          const ITEMS_PER_PAGE = 6;
+          let currentIndex = 0;
+
+          function renderBatch() {
+            const nextBatch = sortedPosts.slice(currentIndex, currentIndex + ITEMS_PER_PAGE);
+            nextBatch.forEach(post => {
+              const thumbImg = post.thumbnail 
+                ? `https://wsrv.nl/?url=${encodeURIComponent(post.thumbnail)}&w=640&h=360&fit=cover&output=webp&q=85`
+                : 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp';
+
+              const pinnedBadge = post.pinned ? '<span class="badge-pinned">Pinned</span>' : '';
+              const readTime = post.readTime || '3 min Read';
+
+              const card = document.createElement('a');
+              card.className = 'article-card';
+              card.href = `blog/post.html?id=${post.slug}`;
+              card.innerHTML = `
+                <div class="article-thumb-container">
+                  <img class="article-thumb" src="${thumbImg}" alt="${post.title}" loading="lazy">
+                </div>
+                <div class="article-details">
+                  <div class="article-meta">
+                    ${pinnedBadge}
+                    <span>${post.date}</span>
+                    <span>•</span>
+                    <span>${readTime}</span>
+                  </div>
+                  <h2 class="article-title">${post.title}</h2>
+                  <p class="article-excerpt">${post.excerpt || ''}</p>
+                  <div class="article-footer-cta">
+                    <span>Read Article →</span>
+                  </div>
+                </div>
+              `;
+              regularGrid.appendChild(card);
+            });
+
+            currentIndex += ITEMS_PER_PAGE;
+
+            if (currentIndex >= sortedPosts.length) {
+              if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+            } else {
+              if (loadMoreContainer) loadMoreContainer.style.display = 'block';
+            }
+          }
+
+          renderBatch();
+          if (loadMoreBtn) {
+            loadMoreBtn.onclick = renderBatch;
+          }
+        }
+      } catch (err) {
+        console.warn('Error loading blog posts:', err);
+        loader.style.display = 'block';
+        loader.innerHTML = '<p>No articles published yet. Check back soon for fresh guides!</p>';
+      }
+    }
+  </script>
 </body>
 </html>

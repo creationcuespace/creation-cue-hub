@@ -1,206 +1,567 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy | CreationCue</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #f1b31c;
-            --bg: #050505;
-            --card-bg: #111;
-            --text-main: #ffffff;
-            --text-dim: #a0a0a0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy | Creation Cue™ Wear OS Studio</title>
+  <meta name="description" content="Privacy policy and data transparency for Creation Cue Wear OS watch faces and complication utilities. 100% on-device processing and zero background tracking.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://creationcue.web.app/privacy.html">
 
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.7;
-        }
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/logo.png">
 
-        header {
-            position: relative;
-            padding: 80px 20px;
-            text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85));
-        }
+  <!-- Plus Jakarta Sans Font (WOW Space Standard) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        .logo { max-width: 90px; margin-bottom: 20px; }
-        h1 { font-size: 2.5rem; font-weight: 800; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
-        h1 span { color: var(--primary); }
-        .tagline { color: var(--text-dim); font-size: 0.8rem; margin-top: 10px; text-transform: uppercase; letter-spacing: 2px; }
+  <style>
+    :root {
+      --bg: #fbfbfc;
+      --bg-alt: #f3f4f6;
+      --bg-card: #ffffff;
+      --text: #111114;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --border: #e2e8f0;
+      --border-light: #f1f5f9;
+      --primary: #111114;
+      --accent: #f59e0b;
+      --accent-glow: rgba(245, 158, 11, 0.15);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --max-width: 1200px;
+    }
 
-        .content-width {
-            max-width: 900px;
-            margin: -40px auto 60px;
-            padding: 0 20px;
-            position: relative;
-            z-index: 10;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .privacy-card {
-            background: var(--card-bg);
-            border: 1px solid #222;
-            padding: 50px;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-        }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+    }
 
-        h2 {
-            color: var(--primary);
-            font-size: 1.4rem;
-            margin-top: 45px;
-            margin-bottom: 20px;
-            font-weight: 800;
-            border-left: 4px solid var(--primary);
-            padding-left: 20px;
-            text-transform: uppercase;
-        }
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-        h3 {
-            color: #fff;
-            font-size: 1.1rem;
-            margin-top: 25px;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-logo-img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      border-radius: 8px;
+      filter: grayscale(100%) contrast(1.15);
+      transition: transform 0.2s ease;
+    }
+    .brand:hover .brand-logo-img {
+      transform: scale(1.06);
+    }
+    .brand-name {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .brand-name span {
+      color: var(--accent);
+    }
 
-        p {
-            color: var(--text-dim);
-            margin-bottom: 20px;
-            font-size: 1rem;
-        }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--text);
+    }
 
-        ul {
-            color: var(--text-dim);
-            margin-bottom: 25px;
-            padding-left: 20px;
-        }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+    .btn-dark {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-dark:hover {
+      background: #2a2a2e;
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background: #fff;
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--text);
+      background: var(--bg-alt);
+    }
 
-        li { margin-bottom: 12px; }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--text);
+    }
 
-        .highlight-box {
-            background: rgba(241, 179, 28, 0.05);
-            border: 1px hide solid rgba(241, 179, 28, 0.2);
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 20px;
-        }
+    /* Policy Page Hero */
+    .privacy-hero {
+      padding: 60px 0 40px;
+      background: radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.04) 0%, transparent 60%);
+      text-align: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: rgba(0,0,0,0.04);
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      margin-bottom: 16px;
+    }
+    .eyebrow-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .page-title {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+      color: var(--text);
+    }
+    .page-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto;
+    }
 
-        .btn-back {
-            display: inline-block;
-            background: #1a1a1a;
-            color: #fff;
-            padding: 14px 30px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.8rem;
-            margin-top: 40px;
-            transition: 0.3s;
-            border: 1px solid #333;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-        }
+    /* Policy Content Card */
+    .policy-content-wrapper {
+      max-width: 860px;
+      margin: 0 auto 80px;
+    }
+    .policy-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      box-shadow: var(--shadow-sm);
+    }
+    .policy-card p {
+      font-size: 15px;
+      color: #334155;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+    .policy-card h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-top: 40px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .policy-card h2 .num-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--text);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .policy-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+    .policy-card ul {
+      margin-bottom: 24px;
+      padding-left: 20px;
+      color: #334155;
+    }
+    .policy-card li {
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+    .policy-callout {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .policy-callout h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .policy-callout p {
+      margin-bottom: 0;
+      font-size: 14.5px;
+    }
+    .sub-note {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      font-style: italic;
+      background: var(--bg-alt);
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 20px;
+      border: 1px solid var(--border-light);
+    }
 
-        .btn-back:hover {
-            background: var(--primary);
-            color: #000;
-            border-color: var(--primary);
-            transform: scale(1.05);
-        }
+    /* Footer */
+    .footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 60px 0 40px;
+    }
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 32px;
+      align-items: center;
+    }
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .footer-social-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .footer-social-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .footer-social-icon:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover {
+      color: var(--text);
+    }
 
-        footer { 
-            text-align: center; 
-            padding: 60px 20px; 
-            color: #444; 
-            font-size: 0.85rem;
-            border-top: 1px solid #111;
-        }
-
-        .footer-link { color: var(--primary); text-decoration: none; font-weight: bold; margin: 0 10px; }
-
-        @media (max-width: 600px) {
-            .privacy-card { padding: 25px; }
-            h1 { font-size: 2rem; }
-            h2 { font-size: 1.2rem; }
-        }
-    </style>
+    /* Mobile Responsive */
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+      .nav-links.mobile-open {
+        display: flex !important;
+        flex-direction: column !important;
+        position: fixed !important;
+        top: 64px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100vw !important;
+        background: #ffffff !important;
+        padding: 20px 20px 28px !important;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16) !important;
+        border-bottom: 1px solid var(--border) !important;
+        gap: 10px !important;
+        z-index: 2000 !important;
+      }
+      .nav-links.mobile-open li {
+        width: 100% !important;
+        list-style: none !important;
+      }
+      .nav-links.mobile-open li a {
+        display: flex !important;
+        align-items: center !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        padding: 12px 16px !important;
+        border-radius: var(--radius-sm) !important;
+        color: var(--text) !important;
+        text-decoration: none !important;
+        background: var(--bg-alt) !important;
+      }
+      .menu-toggle {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 9px !important;
+        background: var(--bg-alt) !important;
+        border: 1px solid var(--border) !important;
+        cursor: pointer !important;
+      }
+      .policy-card {
+        padding: 24px 18px;
+        border-radius: var(--radius-md);
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <a href="https://creationcue.web.app/">
-            <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/refs/heads/main/images/logo.png" alt="Creation Cue" class="logo">
+  <!-- STICKY HEADER -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <!-- Brand with Grayscale Logo -->
+        <a href="/" class="brand">
+          <img src="images/logo.png" onerror="this.src='https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp'" width="36" height="36" class="brand-logo-img" alt="Creation Cue Logo">
+          <div class="brand-name">Creation<span>Cue</span>™</div>
         </a>
-        <h1>PRIVACY <span>POLICY</span></h1>
-        <p class="tagline">Last Updated: April 8, 2026</p>
-    </header>
 
-    <main class="content-width">
-        <div class="privacy-card">
-            
-            <p>
-                <strong>Creation Cue</strong> ("we," "our," or "us") provides premium Wear OS watch faces and specialized complication utility applications. This policy outlines our commitment to your privacy and explains how we handle data across our entire portfolio of over 110+ products.
-            </p>
+        <!-- Navigation Menu -->
+        <nav>
+          <ul class="nav-links" id="nav-links">
+            <li><a href="/#catalog">Watch Faces</a></li>
+            <li><a href="/#glance">Features</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="/#faq">FAQ</a></li>
+            <li><a href="/#contact">Contact</a></li>
+          </ul>
+        </nav>
 
-            <h2>1. Data Access and Collection</h2>
-            <p>We prioritize your privacy and do not collect personal, sensitive, or identifying information for storage on our servers. All data remains on your device.</p>
-            
-            <h3>Complication Data & Customization (Flags App)</h3>
-            <p>Our utility applications (such as the <strong>Flags Complication</strong>) allow users to input text and select icons for display on their watch faces.</p>
-            <p style="font-style: italic; opacity: 0.7; font-size: 0.9rem;">Usage: User-selected icons and custom text labels are stored locally on your Wear OS device using SharedPreferences. This data is only used to populate complication slots on your active watch face and is never transmitted to us or any third party.</p>
-
-            <h3>Health and Fitness Data (Watch Faces)</h3>
-            <p>Our watch faces access real-time sensor data, including <strong>Heart Rate, Step Count, and Physical Activity</strong>, through the Wear OS platform.</p>
-            <p style="font-style: italic; opacity: 0.7; font-size: 0.9rem;">Usage: This data is accessed solely to display it on the watch face interface. It is processed locally and is never shared, stored, or transmitted off your device.</p>
-
-            <h3>Referrer Information (Companion App)</h3>
-            <p>Our companion app uses the <strong>Google Play Install Referrer API</strong>.</p>
-            <p style="font-style: italic; opacity: 0.7; font-size: 0.9rem;">Usage: Used to identify the source of your visit to our "Featured Designs" carousel to improve our marketing. This information is non-identifying.</p>
-
-            <h2>2. Data Retention & Deletion</h2>
-            <p>We do not maintain any cloud-based storage or permanent databases for user data.</p>
-            <ul>
-                <li><strong>Retention:</strong> Local settings (like flag selection or custom text) persist on your device only as long as the app is installed.</li>
-                <li><strong>Deletion:</strong> Uninstalling our application or watch face immediately and permanently removes all locally stored preferences and cached data from your device memory.</li>
-            </ul>
-
-            <div class="highlight-box">
-                <h3>User Control & Transparency</h3>
-                <p>You have full control over the permissions granted to our apps:</p>
-                <ul>
-                    <li>You may revoke "Sensors" or "Physical Activity" permissions at any time via Wear OS System Settings.</li>
-                    <li>Settings changed within our utility apps are updated instantly and can be cleared by the user.</li>
-                </ul>
-            </div>
-
-            <h2>3. Security</h2>
-            <p>We follow industry standards for local data handling to ensure that data accessed by our apps is handled securely within the Android/Wear OS sandbox environment, preventing unauthorized access by other applications.</p>
-
-            <h2>4. Contact Information</h2>
-            <p>For any questions regarding this policy or our 110+ designs, please contact us at:</p>
-            <a href="mailto:creationcuespace@gmail.com" class="footer-link" style="margin-left: 0; font-size: 1.1rem;">creationcuespace@gmail.com</a>
-
-            <div style="text-align: center; border-top: 1px solid #222; margin-top: 50px; padding-top: 20px;">
-                <a href="https://creationcue.web.app/" class="btn-back">← GO BACK</a>
-            </div>
+        <div class="header-actions">
+          <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank" class="btn btn-dark">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a2.385 2.385 0 0 1-.61-.954V2.768c.15-.36.368-.69.61-.954zm11.235 11.238l2.678 2.678-12.784 7.378 10.106-10.056zm0-2.104L4.738.892l12.784 7.378-2.678 2.678zm1.488 1.488l3.961-2.288a1.59 1.59 0 0 0 0-2.764l-3.961-2.288-1.745 1.745 1.745 1.745 3.961 3.85z"/></svg>
+            Play Store
+          </a>
+          <button type="button" class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Navigation" aria-expanded="false">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
         </div>
-    </main>
+      </div>
+    </div>
+  </header>
 
-    <footer>
-        <p>&copy; 2026 Creation Cue. All rights reserved.</p>
-        <div style="margin-top: 10px;">
-            <a href="https://creationcue.web.app/" class="footer-link">Home Hub</a>
+  <!-- HERO -->
+  <section class="privacy-hero">
+    <div class="container">
+      <div class="eyebrow"><span class="eyebrow-dot"></span> LEGAL & TRANSPARENCY</div>
+      <h1 class="page-title">Privacy Policy</h1>
+      <p class="page-desc">Last Updated: April 8, 2026 • 100% On-Device Processing & Zero Background Tracking across 115+ Wear OS designs.</p>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="container policy-content-wrapper">
+    <div class="policy-card">
+      <p>
+        <strong>Creation Cue™</strong> ("we," "our," or "us") provides premium Wear OS watch faces and specialized complication utility applications. This policy outlines our commitment to your privacy and explains how we handle data across our entire portfolio of over 115+ products on Google Play.
+      </p>
+
+      <h2><span class="num-badge">1</span> Data Access and Collection</h2>
+      <p>We prioritize your privacy and <strong>do not collect personal, sensitive, or identifying information</strong> for storage on our servers. All data processing remains strictly on your device.</p>
+
+      <h3>Complication Data & Customization (Flags App)</h3>
+      <p>Our utility applications (such as the <strong>Flags Complication</strong>) allow users to input text and select icons for display on their watch faces.</p>
+      <div class="sub-note">
+        <strong>Usage:</strong> User-selected icons and custom text labels are stored locally on your Wear OS device using SharedPreferences. This data is only used to populate complication slots on your active watch face and is never transmitted to us or any third party.
+      </div>
+
+      <h3>Health and Fitness Data (Watch Faces)</h3>
+      <p>Our watch faces access real-time sensor data, including <strong>Heart Rate, Step Count, and Physical Activity</strong>, through the Wear OS platform and Google's official Watch Face Format (WFF).</p>
+      <div class="sub-note">
+        <strong>Usage:</strong> This data is accessed solely to display it on the watch face interface. It is processed locally in real time and is never shared, stored, or transmitted off your device.
+      </div>
+
+      <h3>Referrer Information (Companion App)</h3>
+      <p>Our companion application uses the <strong>Google Play Install Referrer API</strong>.</p>
+      <div class="sub-note">
+        <strong>Usage:</strong> Used to identify the source of your visit to our "Featured Designs" carousel to measure marketing performance. This information is completely non-identifying.
+      </div>
+
+      <h2><span class="num-badge">2</span> Data Retention & Deletion</h2>
+      <p>We do not maintain any cloud-based storage or permanent remote databases for user data.</p>
+      <ul>
+        <li><strong>Retention:</strong> Local settings (like flag selection or custom complication text) persist on your device only as long as the application remains installed.</li>
+        <li><strong>Deletion:</strong> Uninstalling our application or watch face immediately and permanently removes all locally stored preferences and cached data from your smartwatch memory.</li>
+      </ul>
+
+      <div class="policy-callout">
+        <h3>User Control & Transparency</h3>
+        <p>You maintain full control over the permissions granted to our applications:</p>
+        <ul style="margin-top: 10px; margin-bottom: 0;">
+          <li>You may revoke "Sensors" or "Physical Activity" permissions at any time via your smartwatch's Wear OS System Settings.</li>
+          <li>Settings changed within our utility applications are updated instantly and can be cleared by the user at any time.</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-badge">3</span> Security</h2>
+      <p>We follow industry standards for local data handling to ensure that data accessed by our apps is handled securely within the Android/Wear OS sandbox environment, preventing unauthorized access by other applications.</p>
+
+      <h2><span class="num-badge">4</span> Contact Information</h2>
+      <p>For any questions regarding this privacy policy or our 115+ designs, please contact our studio at:</p>
+      <p>
+        <a href="mailto:creationcuespace@gmail.com" style="color: var(--text); font-weight: 700; text-decoration: underline;">creationcuespace@gmail.com</a>
+      </p>
+
+      <div style="text-align: center; border-top: 1px solid var(--border); margin-top: 48px; padding-top: 28px;">
+        <a href="/" class="btn btn-outline">← Back to Watch Faces</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <div class="brand" style="margin-bottom: 8px;">
+            <img src="images/logo.png" onerror="this.src='https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp'" width="28" height="28" class="brand-logo-img" alt="Creation Cue Logo" style="width:28px; height:28px; border-radius:6px;">
+            <div class="brand-name" style="font-size: 16px;">Creation<span>Cue</span>™</div>
+          </div>
+          <p class="footer-copy">© 2026 Creation Cue™ Studio. Wear OS by Google. All rights reserved.</p>
+
+          <div class="footer-social-row">
+            <a href="https://www.youtube.com/@creationcue" target="_blank" rel="noopener" class="footer-social-icon" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.508 9.388.508 9.388.508s7.518 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/creation.cue/" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://www.tiktok.com/@creationcue" target="_blank" rel="noopener" class="footer-social-icon" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.525.02c1.31-.03 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.74-3.94-1.74-.22-.21-.42-.45-.6-.7v5.77c.06 1.77-.35 3.58-1.28 5.09-1.39 2.27-3.99 3.65-6.66 3.57-2.82-.09-5.54-1.72-6.75-4.28-1.46-3.08-1.01-7.1 1.25-9.67 1.83-2.09 4.67-3.05 7.42-2.5v4.07c-1.34-.41-2.91-.08-3.92.83-1.18 1.06-1.41 2.94-.65 4.36.78 1.45 2.51 2.3 4.15 2.12 1.61-.17 3.01-1.36 3.28-2.96.11-1.02.05-2.07.06-3.11V0z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=100089647182787" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.3c-4.6 0-5.7 3.4-5.7 5.5v1.4H5.4v3.7h3.1v10.8h4.5V11.2h4.3l.5-3.7z"/></svg>
+            </a>
+          </div>
         </div>
-    </footer>
 
+        <div class="footer-links">
+          <a href="/">Home</a>
+          <a href="classic.html">Classic Website</a>
+          <a href="blog.html">Blog & Guides</a>
+          <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank">Google Play Store</a>
+          <a href="privacy.html" style="color: var(--text); font-weight: 700;">Privacy Policy</a>
+          <a href="/#faq">FAQ</a>
+          <a href="/#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const nav = document.getElementById('nav-links');
+      if (!nav) return;
+      nav.classList.toggle('mobile-open');
+    }
+  </script>
 </body>
 </html>
