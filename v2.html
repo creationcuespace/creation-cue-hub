@@ -61,7 +61,6 @@
       width: 100%;
       max-width: 100%;
       position: relative;
-      padding-bottom: 90px;
     }
 
     /* Admin Bar Offset Support */
@@ -1116,37 +1115,6 @@
       min-height: 110px;
     }
 
-    /* Sticky Bottom Action Bar (WOW Space style) */
-    .bottom-bar {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 999;
-      background: rgba(18, 18, 20, 0.95);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: var(--radius-full);
-      padding: 10px 18px 10px 24px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      max-width: 90vw;
-      transition: all 0.3s ease;
-    }
-    .bottom-bar-text {
-      color: #fff;
-      font-size: 13px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .bottom-bar .btn {
-      padding: 8px 18px;
-      font-size: 12px;
-    }
-
     /* Details Modal */
     .modal-backdrop {
       position: fixed;
@@ -1686,12 +1654,6 @@
         width: 100% !important;
         box-sizing: border-box !important;
       }
-      .bottom-bar-text {
-        display: none !important;
-      }
-      .bottom-bar {
-        padding: 8px 12px !important;
-      }
       .catalog-toolbar {
         border-radius: var(--radius-lg) !important;
         width: 100% !important;
@@ -2170,17 +2132,6 @@
       </div>
     </div>
   </section>
-
-  <!-- STICKY BOTTOM FLOATING PILL (WOW Space Style) -->
-  <aside class="bottom-bar">
-    <div class="bottom-bar-text">
-      ✨ <strong>Creation Cue</strong> • 115+ Wear OS Watch Faces on Google Play
-    </div>
-    <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank" class="btn btn-accent">
-      Visit Play Store
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-    </a>
-  </aside>
 
   <!-- DETAILS MODAL -->
   <div class="modal-backdrop" id="details-modal" onclick="closeModal(event)">
