@@ -1370,8 +1370,7 @@
       var link = input ? input.value : '';
       var wfName = document.getElementById('promo-name').value.trim() || (promoData ? promoData.name : '') || 'the watch face';
       var textToCopy = "Here is your Google Play Gift Card for " + wfName + ":\n" + link + "\n\n⭐ A review is appreciated!";
-      var bannerUrl = "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/playStore3.png";
-      var htmlToCopy = `<div>Here is your Google Play Gift Card for <strong>${wfName}</strong>:<br><a href="${link}">${link}</a><br><br>⭐ A review is appreciated!<br><br><a href="https://play.google.com/store/apps/dev?id=7609098870161748513"><img src="${bannerUrl}" alt="Visit the Official Creation Cue Play Store" style="max-width:400px; height:auto; border:0;"></a></div>`;
+      var htmlToCopy = `<div>Here is your Google Play Gift Card for <strong>${wfName}</strong>:<br><a href="${link}">${link}</a><br><br>⭐ A review is appreciated!</div>`;
 
       if (navigator.clipboard && window.ClipboardItem) {
         var textBlob = new Blob([textToCopy], { type: 'text/plain' });
