@@ -275,7 +275,7 @@
         top: 104px !important;
       }
 
-      @media (min-width: 769px) {
+      @media (min-width: 901px) {
         body.admin-mode .bottom-nav {
           top: 104px !important;
         }
@@ -691,7 +691,7 @@
         }
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 900px) {
         #admin-bar {
           padding: 0 6px !important;
         }
@@ -782,7 +782,7 @@
       </div>
 
       <div class="admin-bar-right">
-        <!-- Desktop Dock (> 768px): Full status badges & logout -->
+        <!-- Desktop Dock (> 900px): Full status badges & logout -->
         <div class="admin-bar-right-desktop">
           <div class="admin-bar-status">
             <span id="btn-subscribers-admin-bar" class="admin-bar-btn" onclick="window.openAdminSubscribers()" title="Subscribers" style="color: #f5c518; background: rgba(245, 197, 24, 0.12); border: 1px solid rgba(245, 197, 24, 0.3);">
@@ -805,7 +805,7 @@
           </div>
         </div>
 
-        <!-- Mobile Quick-Menu Trigger (<= 768px): Leaves 80%+ width for menu tabs -->
+        <!-- Mobile Quick-Menu Trigger (<= 900px): Leaves 80%+ width for menu tabs -->
         <div class="admin-bar-right-mobile">
           <button type="button" id="admin-mobile-menu-btn" class="admin-mobile-menu-trigger" onclick="window.toggleAdminMobilePopover(event)" title="Admin Controls & Status" aria-label="Open Admin Menu">
             <span class="admin-live-dot"></span>
@@ -935,6 +935,12 @@
         isDragging = false;
       }
     }, true);
+
+    scrollContainer.addEventListener('touchend', function () {
+      setTimeout(function () {
+        isDragging = false;
+      }, 250);
+    }, { passive: true });
 
     scrollContainer.addEventListener('scroll', updateArrows, { passive: true });
     window.addEventListener('resize', updateArrows);
@@ -1072,7 +1078,7 @@
 
   // Optional badge listeners when firebase database is available
   function initDatabaseListeners() {
-    if (!window.firebase || !firebase.database) return;
+    if (!window.firebase || !firebase.database || !firebase.apps || !firebase.apps.length) return;
     try {
       const db = firebase.database();
 
@@ -1149,7 +1155,7 @@
     let attempts = 0;
     const authInterval = setInterval(function () {
       attempts++;
-      if (window.firebase && firebase.auth) {
+      if (window.firebase && firebase.auth && firebase.apps && firebase.apps.length > 0) {
         clearInterval(authInterval);
         try {
           firebase.auth().onAuthStateChanged(function (user) {
@@ -1166,7 +1172,7 @@
         } catch (e) {
           console.warn("Firebase auth listener setup failed:", e);
         }
-      } else if (attempts >= 25) {
+      } else if (attempts >= 30) {
         clearInterval(authInterval);
       }
     }, 100);
@@ -1196,6 +1202,7 @@
     renderAdminBar();
     setupAuth();
     handleUrlParams();
+    console.log('[Creation Cue] Admin Bar v2.2 loaded');
   }
 
   if (document.readyState === 'loading') {
