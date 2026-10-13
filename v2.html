@@ -589,12 +589,12 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 42px;
-      height: 42px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border: 1px solid var(--border);
       color: var(--text);
       display: flex;
@@ -602,45 +602,34 @@
       justify-content: center;
       cursor: pointer;
       z-index: 12;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       padding: 0;
     }
-
+    .hero-watch-arrow svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 2.8;
+      transition: transform 0.2s ease;
+    }
     .hero-watch-arrow:hover {
       background: var(--primary);
       color: #fff;
       border-color: var(--primary);
-      transform: translateY(-50%) scale(1.1);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      transform: translateY(-50%) scale(1.08);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
     }
-
+    .hero-watch-arrow:hover svg {
+      stroke: #fff;
+    }
     .hero-watch-arrow:active {
-      transform: translateY(-50%) scale(0.95);
+      transform: translateY(-50%) scale(0.94);
     }
-
     .hero-watch-arrow-prev {
-      left: -14px;
+      left: -20px;
     }
     .hero-watch-arrow-next {
-      right: -14px;
-    }
-
-    @media (max-width: 600px) {
-      .hero-watch-arrow-prev {
-        left: -4px;
-        width: 34px;
-        height: 34px;
-      }
-      .hero-watch-arrow-next {
-        right: -4px;
-        width: 34px;
-        height: 34px;
-      }
-      .hero-watch-mockup {
-        width: 310px;
-        height: 332px;
-      }
+      right: -20px;
     }
 
     .hero-watch-play-pill {
@@ -1493,20 +1482,27 @@
         letter-spacing: 0.3px !important;
       }
       .hero-watch-mockup {
-        width: min(280px, calc(100vw - 32px)) !important;
+        width: min(340px, calc(100vw - 28px)) !important;
         height: auto !important;
         aspect-ratio: 1024 / 1100 !important;
-        max-width: calc(100vw - 32px) !important;
+        max-width: calc(100vw - 28px) !important;
+        margin: 0 auto !important;
+      }
+      .hero-watch-arrow {
+        width: 44px !important;
+        height: 44px !important;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22) !important;
+      }
+      .hero-watch-arrow svg {
+        width: 20px !important;
+        height: 20px !important;
+        stroke-width: 2.6 !important;
       }
       .hero-watch-arrow-prev {
-        left: 2px !important;
-        width: 32px !important;
-        height: 32px !important;
+        left: -6px !important;
       }
       .hero-watch-arrow-next {
-        right: 2px !important;
-        width: 32px !important;
-        height: 32px !important;
+        right: -6px !important;
       }
       .hero-watch-model-selector {
         width: min(350px, calc(100vw - 28px)) !important;
@@ -1721,10 +1717,10 @@
 
             <!-- Previous / Next Navigation Arrows -->
             <button type="button" class="hero-watch-arrow hero-watch-arrow-prev" onclick="event.stopPropagation(); switchHeroWatchFaceByOffset(-1);" title="Previous watch face" aria-label="Previous watch face">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
             <button type="button" class="hero-watch-arrow hero-watch-arrow-next" onclick="event.stopPropagation(); switchHeroWatchFaceByOffset(1);" title="Next watch face" aria-label="Next watch face">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
 
             <!-- Interactive Google Play Pill -->
