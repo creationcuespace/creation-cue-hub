@@ -3742,9 +3742,6 @@
       }
     }
 
-    // --------------------------------------------------------
-    // Filtering & Search
-    // --------------------------------------------------------
     function filterBy(filterName, shouldScroll = false) {
       currentFilter = (filterName || 'ALL').toUpperCase().trim();
       currentPage = 1;
@@ -3754,7 +3751,11 @@
       });
       applyFilters();
 
-      if (shouldScroll) {
+      // Check if user is scrolled down below the catalog top
+      const catalogEl = document.getElementById('catalog');
+      const catalogTop = catalogEl ? (catalogEl.getBoundingClientRect().top + window.pageYOffset - getHeaderOffset()) : 0;
+      
+      if (shouldScroll || window.pageYOffset > (catalogTop + 40)) {
         scrollToSection('catalog', true);
       }
     }
