@@ -47,6 +47,9 @@
 
     html {
       scroll-behavior: smooth;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
     }
 
     body {
@@ -55,6 +58,9 @@
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       line-height: 1.6;
       overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+      position: relative;
       padding-bottom: 90px;
     }
 
@@ -1238,14 +1244,52 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
+      transition: all 0.2s;
     }
     .v2-switch-badge:hover {
       background: var(--accent);
       color: #000;
     }
+    .v2-switch-full {
+      display: inline;
+    }
+    .v2-switch-short {
+      display: none;
+    }
+    .btn-play-text {
+      display: inline;
+    }
 
     /* Responsive Adjustments */
     @media (max-width: 900px) {
+      .header {
+        width: 100%;
+        max-width: 100vw;
+        overflow: hidden;
+      }
+      .header-inner {
+        width: 100%;
+        max-width: 100%;
+        gap: 8px;
+      }
+      .brand {
+        min-width: 0;
+        flex-shrink: 1;
+      }
+      .header-actions {
+        flex-shrink: 0;
+        margin-left: auto;
+        gap: 8px;
+      }
+      .header-actions .btn {
+        padding: 8px 14px;
+        font-size: 12px;
+      }
+      .v2-switch-badge {
+        padding: 6px 12px;
+        font-size: 11.5px;
+      }
       .hero-grid {
         display: flex;
         flex-direction: column;
@@ -1264,7 +1308,7 @@
         order: 2;
         margin-top: 4px;
         margin-bottom: 12px;
-        min-height: 2.3em;
+        min-height: auto;
         justify-content: center;
       }
       .hero-watch-col {
@@ -1274,8 +1318,8 @@
       }
       .hero-desc {
         order: 4;
-        min-height: 3.2em;
-        max-height: 4.8em;
+        min-height: auto;
+        max-height: none;
         margin: 0 auto 18px;
         max-width: 520px;
       }
@@ -1301,24 +1345,231 @@
         display: none;
       }
       .menu-toggle {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .watch-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 16px;
       }
     }
+
+    /* 2 Columns on Mobile / Tablets <= 768px */
+    @media (max-width: 768px) {
+      .watch-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+      }
+      .watch-card {
+        padding: 10px !important;
+        border-radius: var(--radius-md) !important;
+      }
+      .watch-card-media {
+        margin-bottom: 8px !important;
+      }
+      .card-badge {
+        top: 6px !important;
+        left: 6px !important;
+        font-size: 8.5px !important;
+        padding: 2px 6px !important;
+      }
+      .watch-card-title {
+        font-size: 13.5px !important;
+        margin-bottom: 2px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .watch-card-desc {
+        font-size: 11px !important;
+        line-height: 1.35 !important;
+        margin-bottom: 8px !important;
+        -webkit-line-clamp: 1 !important;
+        height: 1.35em;
+      }
+      .watch-card-actions {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 4px !important;
+      }
+      .watch-card-actions .btn {
+        padding: 6px 2px !important;
+        font-size: 10px !important;
+        border-radius: var(--radius-sm) !important;
+        min-height: 28px !important;
+      }
+      .watch-card-actions .btn-dark {
+        grid-column: 1 / -1 !important;
+        font-size: 11px !important;
+        padding: 6px 4px !important;
+      }
+    }
+
+    /* Handheld Phone Screen Optimizations <= 600px */
     @media (max-width: 600px) {
+      .container {
+        padding: 0 14px !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .header-inner {
+        height: 60px !important;
+        gap: 6px !important;
+      }
+      .brand {
+        gap: 8px !important;
+      }
+      .brand-logo-img {
+        width: 28px !important;
+        height: 28px !important;
+      }
+      .brand-name {
+        font-size: 15px !important;
+        letter-spacing: -0.3px !important;
+      }
+      .header-actions {
+        gap: 5px !important;
+      }
+      .header-actions .btn-dark {
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+        gap: 4px !important;
+      }
+      .v2-switch-badge {
+        padding: 5px 8px !important;
+        font-size: 10.5px !important;
+        gap: 3px !important;
+      }
+      .v2-switch-full {
+        display: none !important;
+      }
+      .v2-switch-short {
+        display: inline !important;
+      }
+      .menu-toggle {
+        padding: 6px !important;
+        width: 34px !important;
+        height: 34px !important;
+      }
+      .menu-toggle svg {
+        width: 20px !important;
+        height: 20px !important;
+      }
+      .hero-title {
+        font-size: clamp(24px, 7vw, 36px) !important;
+        letter-spacing: -0.025em !important;
+        max-width: 100% !important;
+        word-break: break-word !important;
+        margin-bottom: 8px !important;
+      }
+      .hero-desc {
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        max-width: 100% !important;
+        margin-bottom: 14px !important;
+      }
+      .hero-stats {
+        gap: 8px 16px !important;
+        padding-top: 14px !important;
+        flex-wrap: wrap !important;
+        justify-content: space-around !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .stat-item {
+        text-align: center !important;
+      }
+      .stat-item h4 {
+        font-size: 18px !important;
+      }
+      .stat-item p {
+        font-size: 10px !important;
+        letter-spacing: 0.3px !important;
+      }
+      .hero-watch-mockup {
+        width: min(280px, calc(100vw - 32px)) !important;
+        height: auto !important;
+        aspect-ratio: 1024 / 1100 !important;
+        max-width: calc(100vw - 32px) !important;
+      }
+      .hero-watch-arrow-prev {
+        left: 2px !important;
+        width: 32px !important;
+        height: 32px !important;
+      }
+      .hero-watch-arrow-next {
+        right: 2px !important;
+        width: 32px !important;
+        height: 32px !important;
+      }
+      .hero-watch-model-selector {
+        width: min(350px, calc(100vw - 28px)) !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .glance-grid,
+      .collections-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .collection-item,
+      .glance-card {
+        padding: 18px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
       .bottom-bar-text {
-        display: none;
+        display: none !important;
       }
       .bottom-bar {
-        padding: 8px 12px;
+        padding: 8px 12px !important;
       }
       .catalog-toolbar {
-        border-radius: var(--radius-lg);
+        border-radius: var(--radius-lg) !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 10px !important;
       }
       .catalog-search-box {
-        width: 100%;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .filter-pills {
+        width: 100% !important;
+        gap: 4px !important;
+      }
+      .filter-pill {
+        padding: 6px 11px !important;
+        font-size: 12px !important;
       }
       .section {
-        padding: 50px 0;
+        padding: 42px 0 !important;
+      }
+      .watch-grid {
+        gap: 8px !important;
+      }
+      .watch-card {
+        padding: 8px !important;
+      }
+    }
+
+    /* Extra small screens <= 390px */
+    @media (max-width: 390px) {
+      .header-actions .btn-play-text {
+        display: none !important;
+      }
+      .header-actions .btn-dark {
+        padding: 6px 8px !important;
+      }
+      .brand-name {
+        font-size: 13.5px !important;
+      }
+      .v2-switch-badge {
+        font-size: 10px !important;
+        padding: 4px 6px !important;
       }
     }
   </style>
@@ -1349,19 +1600,20 @@
             </li>
             <li><a href="#faq" onclick="closeMobileMenu()">FAQ</a></li>
             <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+            <li><a href="index.html" onclick="closeMobileMenu()">Classic Site →</a></li>
           </ul>
         </nav>
 
         <div class="header-actions">
           <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank" class="btn btn-dark">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a2.385 2.385 0 0 1-.61-.954V2.768c.15-.36.368-.69.61-.954zm11.235 11.238l2.678 2.678-12.784 7.378 10.106-10.056zm0-2.104L4.738.892l12.784 7.378-2.678 2.678zm1.488 1.488l3.961-2.288a1.59 1.59 0 0 0 0-2.764l-3.961-2.288-1.745 1.745 1.745 1.745 3.961 3.85z"/></svg>
-            Play Store
+            <span class="btn-play-text">Play Store</span>
           </a>
           <a href="index.html" class="v2-switch-badge" title="Go to classic website">
-            <span>Classic Site</span> →
+            <span class="v2-switch-full">Classic Site</span><span class="v2-switch-short">Classic</span> →
           </a>
           <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
           </button>
         </div>
       </div>
@@ -2721,16 +2973,21 @@
       if (nav.style.display === 'flex') {
         closeMobileMenu();
       } else {
+        const headerEl = document.querySelector('.header');
+        const headerH = headerEl ? headerEl.offsetHeight : 62;
         nav.style.display = 'flex';
         nav.style.flexDirection = 'column';
         nav.style.position = 'absolute';
-        nav.style.top = '72px';
+        nav.style.top = headerH + 'px';
         nav.style.left = '0';
         nav.style.right = '0';
+        nav.style.width = '100%';
+        nav.style.boxSizing = 'border-box';
         nav.style.background = '#fff';
-        nav.style.padding = '24px';
-        nav.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+        nav.style.padding = '20px 24px';
+        nav.style.boxShadow = '0 14px 35px rgba(0,0,0,0.12)';
         nav.style.borderBottom = '1px solid var(--border)';
+        nav.style.zIndex = '1001';
       }
     }
 
