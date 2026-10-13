@@ -958,13 +958,22 @@
           promoId = tokenData.promoId;
           
           if (tokenData.claimed) {
+            // If user is actively claiming right now, let attemptClaim() finish and handle the UI
+            if (isClaiming) {
+              return;
+            }
+
             if (currentUser && tokenData.claimedBy === currentUser.uid) {
               // User already claimed this token, show it to them!
               db.ref('promotions/' + promoId + '/public').once('value').then(function(snapshot) {
                 promoData = snapshot.val();
                 if (promoData) {
                   renderPromotion();
-                  showClaimedCoupon(tokenData.code || '--------', false);
+                  if (tokenData.code && tokenData.code !== '--------') {
+                    showClaimedCoupon(tokenData.code, false);
+                  } else {
+                    fetchTokenCodeFallback(promoId, currentUser.uid, tokenId);
+                  }
                 } else {
                   showState('error');
                   document.getElementById('error-msg').textContent = "The associated promotion was not found.";
@@ -1156,7 +1165,42 @@
       });
     }
 
+    function fetchTokenCodeFallback(targetPromoId, uid, targetTokenId) {
+      db.ref('promotion_claims/' + targetPromoId + '/' + uid).once('value').then(function(snapshot) {
+        var claim = snapshot.val();
+        if (claim && claim.code && claim.code !== '--------') {
+          db.ref('one_time_tokens/' + targetTokenId + '/code').set(claim.code).catch(function() {});
+          showClaimedCoupon(claim.code, false);
+        } else if (claim && claim.index !== undefined) {
+          db.ref('promotion_codes/' + targetPromoId + '/' + claim.index).once('value').then(function(codeSnap) {
+            var code = codeSnap.val();
+            if (code && code !== '--------') {
+              db.ref('one_time_tokens/' + targetTokenId + '/code').set(code).catch(function() {});
+              db.ref('promotion_claims/' + targetPromoId + '/' + uid + '/code').set(code).catch(function() {});
+              showClaimedCoupon(code, false);
+            } else {
+              showState('error');
+              document.getElementById('error-msg').textContent = "Unable to retrieve your voucher code. Please refresh or contact support.";
+            }
+          }).catch(function(err) {
+            showState('error');
+            document.getElementById('error-msg').textContent = "Error reading voucher code. Please refresh or contact support.";
+          });
+        } else {
+          showState('error');
+          document.getElementById('error-msg').textContent = "Voucher details could not be found. Please contact support.";
+        }
+      }).catch(function(err) {
+        showState('error');
+        document.getElementById('error-msg').textContent = "Connection error loading voucher details.";
+      });
+    }
+
     function showClaimedCoupon(code, showCountdown) {
+      if (!code || code === '--------') {
+        console.warn("Attempted to show invalid code:", code);
+        return;
+      }
       hasUserClaimed = true;
       if (countdownInterval) {
         clearInterval(countdownInterval);
