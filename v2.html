@@ -1268,7 +1268,7 @@
       .header-actions {
         flex-shrink: 0;
         margin-left: auto;
-        gap: 10px;
+        gap: 16px;
       }
       .header-actions .btn {
         padding: 8px 16px;
@@ -1571,38 +1571,41 @@
         box-sizing: border-box !important;
       }
       .header-inner {
-        height: 60px !important;
-        gap: 6px !important;
+        height: 64px !important;
+        gap: 8px !important;
       }
       .brand {
-        gap: 8px !important;
+        gap: 10px !important;
       }
       .brand-logo-img {
-        width: 28px !important;
-        height: 28px !important;
+        width: 35px !important;
+        height: 35px !important;
       }
       .brand-name {
-        font-size: 15px !important;
-        letter-spacing: -0.3px !important;
+        font-size: 18px !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.4px !important;
       }
       .nav-links.mobile-open {
-        top: 60px !important;
+        top: 64px !important;
       }
       body.admin-mode .nav-links.mobile-open {
-        top: 98px !important;
+        top: 102px !important;
       }
       .header-actions {
-        gap: 8px !important;
+        gap: 16px !important;
+        align-items: center !important;
       }
       .header-actions .btn-dark {
-        padding: 6px 12px !important;
-        font-size: 11.5px !important;
-        gap: 4px !important;
+        padding: 7px 13px !important;
+        font-size: 12px !important;
+        gap: 5px !important;
       }
       .menu-toggle {
         padding: 0 !important;
-        width: 38px !important;
-        height: 38px !important;
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 9px !important;
       }
       .menu-toggle svg {
         width: 22px !important;
@@ -1718,16 +1721,23 @@
       }
     }
 
-    /* Extra small screens <= 390px */
-    @media (max-width: 390px) {
+    /* Extra small screens <= 350px */
+    @media (max-width: 350px) {
+      .header-actions {
+        gap: 12px !important;
+      }
       .header-actions .btn-play-text {
         display: none !important;
       }
       .header-actions .btn-dark {
-        padding: 6px 8px !important;
+        padding: 6px 9px !important;
+      }
+      .brand-logo-img {
+        width: 30px !important;
+        height: 30px !important;
       }
       .brand-name {
-        font-size: 13.5px !important;
+        font-size: 15.5px !important;
       }
     }
   </style>
