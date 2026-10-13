@@ -388,6 +388,7 @@
       font-weight: 800;
       letter-spacing: -0.02em;
       color: var(--text);
+      font-variant-numeric: tabular-nums;
     }
     .stat-item p {
       font-size: 12px;
@@ -1418,7 +1419,7 @@
               <p>Watch Faces</p>
             </div>
             <div class="stat-item">
-              <h4 id="stat-installs">322.3K+</h4>
+              <h4 id="stat-installs">0.0K+</h4>
               <p id="stat-installs-label">Total Downloads</p>
             </div>
             <div class="stat-item">
@@ -2286,12 +2287,92 @@
     }
 
     // --------------------------------------------------------
+    // Count-Up Animation for Total Downloads Stat
+    // --------------------------------------------------------
+    const downloadsAnimState = {
+      rafId: null,
+      target: 322.3,
+      suffix: 'K+',
+      decimals: 1,
+      startTime: 0,
+      startVal: 0,
+      duration: 1600,
+      isFinished: false
+    };
+
+    function animateDownloadsCountUp(targetNum = 322.3, suffix = 'K+', decimals = 1, duration = 1600) {
+      const el = document.getElementById('stat-installs');
+      if (!el) return;
+
+      // If animation already completed and target is unchanged, keep formatted display
+      if (downloadsAnimState.isFinished && Math.abs(downloadsAnimState.target - targetNum) < 0.05) {
+        return;
+      }
+
+      // If already running towards this target, don't restart from 0
+      if (downloadsAnimState.rafId && Math.abs(downloadsAnimState.target - targetNum) < 0.05) {
+        return;
+      }
+
+      // If already running but target changed, smoothly adapt target in-flight
+      if (downloadsAnimState.rafId) {
+        downloadsAnimState.target = targetNum;
+        downloadsAnimState.suffix = suffix;
+        downloadsAnimState.decimals = decimals;
+        return;
+      }
+
+      downloadsAnimState.target = targetNum;
+      downloadsAnimState.suffix = suffix;
+      downloadsAnimState.decimals = decimals;
+      downloadsAnimState.duration = duration;
+      downloadsAnimState.startTime = performance.now();
+      downloadsAnimState.startVal = 0;
+      downloadsAnimState.isFinished = false;
+
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function step(now) {
+        const elapsed = now - downloadsAnimState.startTime;
+        const progress = Math.min(elapsed / downloadsAnimState.duration, 1);
+        const eased = easeOutCubic(progress);
+        const currentVal = downloadsAnimState.startVal + (downloadsAnimState.target - downloadsAnimState.startVal) * eased;
+
+        if (downloadsAnimState.decimals > 0) {
+          el.textContent = currentVal.toFixed(downloadsAnimState.decimals) + downloadsAnimState.suffix;
+        } else {
+          el.textContent = Math.floor(currentVal).toLocaleString() + downloadsAnimState.suffix;
+        }
+
+        if (progress < 1) {
+          downloadsAnimState.rafId = requestAnimationFrame(step);
+        } else {
+          el.textContent = (downloadsAnimState.decimals > 0 
+            ? downloadsAnimState.target.toFixed(downloadsAnimState.decimals) 
+            : downloadsAnimState.target.toLocaleString()) + downloadsAnimState.suffix;
+          downloadsAnimState.rafId = null;
+          downloadsAnimState.isFinished = true;
+        }
+      }
+
+      downloadsAnimState.rafId = requestAnimationFrame(step);
+    }
+
+    // --------------------------------------------------------
     // Sync Total Downloads dynamically with play-versions
     // --------------------------------------------------------
+    let isFetchingDownloads = false;
     async function loadDownloadsStat() {
+      if (isFetchingDownloads) return;
+      isFetchingDownloads = true;
       try {
         const res = await fetch('versions-data.json?t=' + Date.now());
-        if (!res.ok) return;
+        if (!res.ok) {
+          animateDownloadsCountUp(322.3, 'K+', 1, 1600);
+          return;
+        }
         const data = await res.json();
         const results = data.results || [];
         let totalDownloads = 0;
@@ -2308,25 +2389,42 @@
           }
         });
 
+        const statEl = document.getElementById('stat-installs');
+        const labelEl = document.getElementById('stat-installs-label');
+        if (labelEl) {
+          labelEl.textContent = 'Total Downloads';
+        }
+
         if (totalDownloads > 0) {
-          function formatDownloads(num) {
-            if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M+';
-            if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K+';
-            return num.toLocaleString() + '+';
+          let targetVal = 322.3;
+          let suffix = 'K+';
+          let decimals = 1;
+
+          if (totalDownloads >= 1000000) {
+            targetVal = totalDownloads / 1000000;
+            suffix = 'M+';
+            decimals = 1;
+          } else if (totalDownloads >= 1000) {
+            targetVal = totalDownloads / 1000;
+            suffix = 'K+';
+            decimals = 1;
+          } else {
+            targetVal = totalDownloads;
+            suffix = '+';
+            decimals = 0;
           }
-          const formatted = formatDownloads(totalDownloads);
-          const statEl = document.getElementById('stat-installs');
+
           if (statEl) {
-            statEl.textContent = formatted;
             statEl.title = `${totalDownloads.toLocaleString()} Total Google Play Downloads`;
           }
-          const labelEl = document.getElementById('stat-installs-label');
-          if (labelEl) {
-            labelEl.textContent = 'Total Downloads';
-          }
+
+          animateDownloadsCountUp(targetVal, suffix, decimals, 1600);
+        } else {
+          animateDownloadsCountUp(322.3, 'K+', 1, 1600);
         }
       } catch (err) {
         console.warn('Could not load versions-data.json downloads', err);
+        animateDownloadsCountUp(322.3, 'K+', 1, 1600);
       }
     }
 
@@ -2648,6 +2746,8 @@
     // --------------------------------------------------------
     window.addEventListener('DOMContentLoaded', () => {
       initHeroWatch();
+      animateDownloadsCountUp(322.3, 'K+', 1, 1600);
+      loadDownloadsStat();
       loadCatalog();
     });
   </script>
