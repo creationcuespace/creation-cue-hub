@@ -279,11 +279,15 @@
     .hero-grid {
       display: grid;
       grid-template-columns: 1.08fr 0.92fr;
-      align-items: center;
+      align-items: start; /* Anchors top edge so right column never shifts */
       gap: 48px;
     }
     .hero-content {
       max-width: 620px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-height: 470px; /* Locks left column height */
     }
     .hero-title {
       font-size: clamp(32px, 4.8vw, 54px);
@@ -291,7 +295,10 @@
       line-height: 1.15;
       letter-spacing: -0.04em;
       margin-top: 14px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
+      min-height: 2.3em; /* Locks 2 lines height constant across faces */
+      display: flex;
+      align-items: flex-start;
     }
     .hero-title span {
       background: linear-gradient(135deg, #111 20%, #666 100%);
@@ -302,7 +309,13 @@
       font-size: clamp(15px, 2vw, 18px);
       color: var(--text-muted);
       line-height: 1.6;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
+      min-height: 4.8em; /* Locks 3 lines height constant across faces */
+      max-height: 4.8em;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     .hero-actions {
       display: flex;
@@ -392,8 +405,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       position: relative;
+      padding-top: 6px;
     }
 
     .hero-watch-model-selector {
@@ -1232,21 +1246,52 @@
     /* Responsive Adjustments */
     @media (max-width: 900px) {
       .hero-grid {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         text-align: center;
-        gap: 40px;
+        gap: 16px;
       }
       .hero-content {
-        margin: 0 auto;
+        display: contents; /* Allows flex ordering so tagline is below the watch */
+      }
+      .eyebrow {
+        order: 1;
+        margin-bottom: 8px;
+      }
+      .hero-title {
+        order: 2;
+        margin-top: 4px;
+        margin-bottom: 12px;
+        min-height: 2.3em;
+        justify-content: center;
+      }
+      .hero-watch-col {
+        order: 3;
+        margin: 6px auto 16px;
+        padding-top: 0;
+      }
+      .hero-desc {
+        order: 4;
+        min-height: 3.2em;
+        max-height: 4.8em;
+        margin: 0 auto 18px;
+        max-width: 520px;
       }
       .hero-actions {
+        order: 5;
         justify-content: center;
+        margin-bottom: 16px;
       }
       .hero-face-chips-container {
+        order: 6;
         justify-content: center;
+        margin-bottom: 24px;
       }
       .hero-stats {
+        order: 7;
         justify-content: center;
+        width: 100%;
       }
       .form-grid {
         grid-template-columns: 1fr;
