@@ -10,7 +10,7 @@
   <!-- Google Fonts: Plus Jakarta Sans & Inter (Clean, geometric, agency-grade typography) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -35,7 +35,7 @@
       --radius-md: 14px;
       --radius-lg: 24px;
       --radius-full: 9999px;
-      --max-width: 1200px;
+      --max-width: 1240px;
     }
 
     * {
@@ -56,6 +56,14 @@
       line-height: 1.6;
       overflow-x: hidden;
       padding-bottom: 90px;
+    }
+
+    /* Admin Bar Offset Support */
+    body.admin-mode {
+      padding-top: 38px;
+    }
+    body.admin-mode .header {
+      top: 38px !important;
     }
 
     /* Container */
@@ -118,11 +126,11 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-light);
-      transition: all 0.3s ease;
+      transition: top 0.3s ease, background 0.3s ease;
     }
     .header-inner {
       display: flex;
@@ -137,24 +145,19 @@
       text-decoration: none;
       color: inherit;
     }
-    .brand-mark {
+    .brand-logo-img {
       width: 36px;
       height: 36px;
-      background: #111111;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      color: #fff;
-      font-weight: 800;
-      font-size: 15px;
-      letter-spacing: -0.5px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      object-fit: contain;
+      border-radius: 8px;
+      filter: grayscale(100%) contrast(1.15);
+      transition: transform 0.2s ease, filter 0.2s ease;
     }
-    .brand-mark span {
-      color: var(--accent);
+    .brand:hover .brand-logo-img {
+      transform: scale(1.06);
     }
     .brand-name {
-      font-size: 18px;
+      font-size: 19px;
       font-weight: 800;
       letter-spacing: -0.5px;
       display: flex;
@@ -202,6 +205,7 @@
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       border: 1px solid transparent;
       white-space: nowrap;
+      font-family: inherit;
     }
     .btn-dark {
       background: var(--primary);
@@ -241,23 +245,23 @@
 
     /* Hero Section (WOW Space style) */
     .hero {
-      padding: 80px 0 60px;
+      padding: 70px 0 50px;
       background: radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 60%),
                   radial-gradient(circle at 10% 80%, rgba(0, 0, 0, 0.02) 0%, transparent 50%);
     }
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.08fr 0.92fr;
       align-items: center;
-      gap: 60px;
+      gap: 48px;
     }
     .hero-content {
       max-width: 620px;
     }
     .hero-title {
-      font-size: clamp(36px, 5.5vw, 62px);
+      font-size: clamp(34px, 5vw, 56px);
       font-weight: 800;
-      line-height: 1.08;
+      line-height: 1.1;
       letter-spacing: -0.04em;
       margin-bottom: 20px;
     }
@@ -267,18 +271,71 @@
       -webkit-text-fill-color: transparent;
     }
     .hero-desc {
-      font-size: clamp(16px, 2vw, 19px);
+      font-size: clamp(15px, 2vw, 18px);
       color: var(--text-muted);
       line-height: 1.6;
-      margin-bottom: 32px;
+      margin-bottom: 30px;
     }
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       align-items: center;
-      margin-bottom: 40px;
+      margin-bottom: 24px;
     }
+    .hero-face-counter {
+      font-size: 11px;
+      font-weight: 800;
+      background: rgba(0,0,0,0.06);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      margin-left: 6px;
+      color: var(--text);
+    }
+
+    /* Face Chips in Hero */
+    .hero-face-chips-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .hero-face-chips-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+    }
+    .hero-face-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .hero-face-chip {
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      font-family: inherit;
+    }
+    .hero-face-chip:hover {
+      background: var(--bg-alt);
+      border-color: var(--text);
+    }
+    .hero-face-chip.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
     .hero-stats {
       display: flex;
       gap: 32px;
@@ -299,79 +356,273 @@
       letter-spacing: 0.5px;
     }
 
-    /* Hero Smartwatch Mockup */
-    .hero-mockup-wrapper {
-      position: relative;
+    /* ========================================================
+       MULTI-MODEL WEAR OS SMARTWATCH SHOWCASE
+       ======================================================== */
+    .hero-watch-col {
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-    }
-    .watch-bezel-case {
-      width: 320px;
-      height: 320px;
-      background: linear-gradient(145deg, #2b2b2f, #141416);
-      border-radius: 50%;
-      padding: 14px;
-      box-shadow: 0 25px 60px -15px rgba(0,0,0,0.3),
-                  inset 0 2px 4px rgba(255,255,255,0.2),
-                  inset 0 -2px 6px rgba(0,0,0,0.6);
       position: relative;
-      margin: 0 auto;
     }
-    .watch-screen {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      overflow: hidden;
-      background: #000;
+
+    .hero-watch-model-selector {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: #111114;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 30px;
+      padding: 4px;
+      margin-bottom: 16px;
+      z-index: 10;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      max-width: 100%;
+    }
+
+    .model-pill {
+      background: transparent;
+      border: 1px solid transparent;
+      color: rgba(255, 255, 255, 0.65);
+      padding: 6px 14px;
+      border-radius: 24px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+      user-select: none;
+      -webkit-user-select: none;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      letter-spacing: 0.2px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .model-pill:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .model-pill.active {
+      background: #ffffff;
+      border-color: #ffffff;
+      color: #111114;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      font-weight: 700;
+    }
+
+    .model-name-short {
+      display: none;
+    }
+    .model-name-full {
+      display: inline;
+    }
+
+    @media (max-width: 640px) {
+      .hero-watch-model-selector {
+        display: flex;
+        width: calc(100% - 16px);
+        max-width: 390px;
+        gap: 2px;
+        padding: 3px;
+        margin-bottom: 14px;
+        border-radius: 24px;
+      }
+      .model-pill {
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 7px 1px;
+        font-size: 10px;
+        border-radius: 20px;
+        text-align: center;
+      }
+      .model-name-full {
+        display: none;
+      }
+      .model-name-short {
+        display: inline;
+      }
+    }
+
+    .hero-watch-mockup {
       position: relative;
-      border: 2px solid #0a0a0c;
-    }
-    .watch-screen img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: opacity 0.3s ease, transform 0.4s ease;
-    }
-    .watch-controls {
+      width: 440px;
+      max-width: 92vw;
+      height: 472px;
+      aspect-ratio: 1024 / 1100;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 16px;
-      margin-top: 24px;
-    }
-    .watch-btn-arrow {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: #fff;
-      border: 1px solid var(--border);
-      display: grid;
-      place-items: center;
+      filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.22));
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      margin: 0 auto;
       cursor: pointer;
-      color: var(--text);
-      transition: all 0.2s;
-      box-shadow: var(--shadow-sm);
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: pan-y;
+      -webkit-tap-highlight-color: transparent;
+      transition: filter 0.3s ease;
     }
-    .watch-btn-arrow:hover {
-      background: var(--text);
-      color: #fff;
-      border-color: var(--text);
-      transform: scale(1.06);
+
+    @media (hover: hover) and (pointer: fine) {
+      .hero-watch-mockup:hover {
+        filter: drop-shadow(0 24px 50px rgba(0, 0, 0, 0.3));
+      }
     }
-    .watch-info-pill {
-      background: #fff;
+
+    .hero-watch-stage {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform: scale(var(--watch-scale, 0.96));
+      transform-origin: 50% 49.86%;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+      pointer-events: none;
+    }
+
+    .hero-watch-dial-bg {
+      position: absolute;
+      top: 49.86%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 53.0%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background-color: #000000;
+      z-index: 1;
+      transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-watch-face-img {
+      position: absolute;
+      top: 49.86%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 49.8%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      border-radius: 0;
+      clip-path: circle(50.5% at 50% 50%);
+      -webkit-clip-path: circle(50.5% at 50% 50%);
+      object-fit: cover;
+      background-color: transparent;
+      z-index: 2;
+      box-shadow: none;
+      display: block;
+      pointer-events: none;
+      transition: opacity 0.12s ease, width 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-watch-frame-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+      z-index: 3;
+      display: block;
+    }
+
+    .hero-watch-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border: 1px solid var(--border);
-      border-radius: var(--radius-full);
-      padding: 8px 18px;
-      font-size: 13px;
-      font-weight: 700;
-      box-shadow: var(--shadow-sm);
+      color: var(--text);
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 12;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 0;
+    }
+
+    .hero-watch-arrow:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-watch-arrow:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+
+    .hero-watch-arrow-prev {
+      left: -14px;
+    }
+    .hero-watch-arrow-next {
+      right: -14px;
+    }
+
+    @media (max-width: 600px) {
+      .hero-watch-arrow-prev {
+        left: -4px;
+        width: 34px;
+        height: 34px;
+      }
+      .hero-watch-arrow-next {
+        right: -4px;
+        width: 34px;
+        height: 34px;
+      }
+      .hero-watch-mockup {
+        width: 310px;
+        height: 332px;
+      }
+    }
+
+    .hero-watch-play-pill {
+      position: absolute;
+      bottom: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111114;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 7px 18px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      z-index: 10;
+      white-space: nowrap;
+      pointer-events: none;
+      transition: all 0.25s ease;
+      text-transform: uppercase;
+    }
+
+    .hero-watch-mockup:hover .hero-watch-play-pill {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      box-shadow: 0 10px 28px rgba(245, 158, 11, 0.35);
+      transform: translateX(-50%) translateY(-2px);
     }
 
     /* "At a Glance" Feature Grid (WOW Space style) */
@@ -493,6 +744,7 @@
       color: var(--text-muted);
       cursor: pointer;
       transition: all 0.2s;
+      font-family: inherit;
     }
     .filter-pill:hover {
       color: var(--text);
@@ -540,6 +792,21 @@
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 24px;
     }
+
+    /* ========================================================
+       WOW SPACE ENTRANCE ANIMATION & CARD STYLING
+       ======================================================== */
+    @keyframes wowFadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(28px) scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
     .watch-card {
       background: #fff;
       border: 1px solid var(--border);
@@ -547,14 +814,22 @@
       padding: 18px;
       display: flex;
       flex-direction: column;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.3s ease;
+      will-change: transform, box-shadow;
+    }
+    .watch-card.wow-card-enter {
+      opacity: 0;
+      animation: wowFadeInUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .watch-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-md);
+      transform: translateY(-8px) scale(1.015);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.05);
       border-color: #cbd5e1;
     }
+
     .watch-card-media {
       width: 100%;
       aspect-ratio: 1;
@@ -570,17 +845,19 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.4s ease;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .watch-card:hover .watch-card-media img {
-      transform: scale(1.05);
+      transform: scale(1.08);
     }
+
     .card-badge {
       position: absolute;
       top: 10px;
       left: 10px;
-      background: rgba(18, 18, 20, 0.85);
+      background: rgba(18, 18, 20, 0.88);
       backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       color: #fff;
       font-size: 10px;
       font-weight: 700;
@@ -594,6 +871,7 @@
       background: var(--green);
       color: #fff;
     }
+
     .watch-card-title {
       font-size: 16px;
       font-weight: 700;
@@ -614,21 +892,60 @@
     }
     .watch-card-actions {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       align-items: center;
       margin-top: auto;
     }
     .watch-card-actions .btn {
       flex: 1;
-      padding: 8px 12px;
+      padding: 8px 10px;
       font-size: 12px;
     }
+    .watch-card-actions .btn-preview {
+      flex: 0 0 auto;
+      padding: 8px 10px;
+      font-size: 11.5px;
+      background: rgba(0,0,0,0.03);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .watch-card-actions .btn-preview:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
 
-    /* Load More Button */
-    .load-more-wrap {
+    /* ========================================================
+       INFINITE SCROLL SENTINEL & SPINNER
+       ======================================================== */
+    .scroll-sentinel {
+      width: 100%;
+      padding: 36px 0 20px;
       display: flex;
+      align-items: center;
       justify-content: center;
-      margin-top: 48px;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .sentinel-spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: sentinelSpin 0.7s linear infinite;
+    }
+    @keyframes sentinelSpin {
+      to { transform: rotate(360deg); }
+    }
+    .sentinel-end-badge {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      padding: 8px 20px;
+      border-radius: var(--radius-full);
     }
 
     /* FAQ Accordion (WOW Space style) */
@@ -778,6 +1095,7 @@
       inset: 0;
       background: rgba(0,0,0,0.6);
       backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 2000;
       display: none;
       place-items: center;
@@ -882,7 +1200,7 @@
       color: #000;
     }
 
-    /* Responsive */
+    /* Responsive Adjustments */
     @media (max-width: 900px) {
       .hero-grid {
         grid-template-columns: 1fr;
@@ -893,6 +1211,9 @@
         margin: 0 auto;
       }
       .hero-actions {
+        justify-content: center;
+      }
+      .hero-face-chips-container {
         justify-content: center;
       }
       .hero-stats {
@@ -924,10 +1245,6 @@
       .section {
         padding: 50px 0;
       }
-      .watch-bezel-case {
-        width: 270px;
-        height: 270px;
-      }
     }
   </style>
 </head>
@@ -937,9 +1254,10 @@
   <header class="header">
     <div class="container">
       <div class="header-inner">
+        <!-- Brand with Grayscale Logo -->
         <a href="v2" class="brand">
-          <div class="brand-mark">CC<span>™</span></div>
-          <div class="brand-name">Creation<span>Cue</span></div>
+          <img src="images/logo.png" onerror="this.src='https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp'" width="36" height="36" class="brand-logo-img" alt="Creation Cue Logo">
+          <div class="brand-name">Creation<span>Cue</span>™</div>
         </a>
 
         <nav>
@@ -958,7 +1276,7 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a2.385 2.385 0 0 1-.61-.954V2.768c.15-.36.368-.69.61-.954zm11.235 11.238l2.678 2.678-12.784 7.378 10.106-10.056zm0-2.104L4.738.892l12.784 7.378-2.678 2.678zm1.488 1.488l3.961-2.288a1.59 1.59 0 0 0 0-2.764l-3.961-2.288-1.745 1.745 1.745 1.745 3.961 3.85z"/></svg>
             Play Store
           </a>
-          <a href="index.html" class="v2-switch-badge" title="Go to main site">
+          <a href="index.html" class="v2-switch-badge" title="Go to classic website">
             <span>Classic Site</span> →
           </a>
           <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">
@@ -969,28 +1287,46 @@
     </div>
   </header>
 
-  <!-- HERO SECTION (WOW Space Style) -->
+  <!-- HERO SECTION WITH WEAR OS SMARTWATCH SHOWCASE (WOW Space Style) -->
   <section class="hero">
     <div class="container">
       <div class="hero-grid">
         <div class="hero-content">
-          <div class="eyebrow">
-            <span></span> WEAR OS DESIGN STUDIO
+          <div class="eyebrow" id="hero-eyebrow">
+            <span></span> <span id="hero-badge-text">WEAR OS DESIGN STUDIO</span>
           </div>
-          <h1 class="hero-title">
+          <h1 class="hero-title" id="hero-main-title">
             Watch faces crafted for <span>precision, style & performance.</span>
           </h1>
-          <p class="hero-desc">
+          <p class="hero-desc" id="hero-main-tagline">
             Creation Cue designs premium Wear OS watch faces engineered with Google's Watch Face Format (WFF). Experience ultra-crisp typography, deep battery optimization, and customizable complications tailored for your daily lifestyle.
           </p>
 
           <div class="hero-actions">
-            <a href="#catalog" class="btn btn-dark" style="padding: 12px 26px; font-size: 14px;">
+            <a href="#catalog" class="btn btn-dark" style="padding: 12px 24px; font-size: 14px;">
               Explore 115+ Watch Faces ↓
             </a>
-            <button onclick="filterBy('free'); document.getElementById('catalog').scrollIntoView({behavior:'smooth'});" class="btn btn-outline" style="padding: 12px 24px; font-size: 14px;">
-              🎁 11 Free Releases
+            <button onclick="switchHeroWatchFaceByOffset(1)" class="btn btn-outline" style="padding: 12px 20px; font-size: 14px;" title="Switch watch face on watch">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              <span id="hero-current-face-label">CUE177</span>
+              <span id="hero-face-counter" class="hero-face-counter">1 / 115</span>
             </button>
+            <button onclick="filterBy('free'); document.getElementById('catalog').scrollIntoView({behavior:'smooth'});" class="btn btn-outline" style="padding: 12px 18px; font-size: 14px;">
+              🎁 11 Free
+            </button>
+          </div>
+
+          <!-- Popular Face Chips -->
+          <div class="hero-face-chips-container">
+            <span class="hero-face-chips-label">Popular Faces:</span>
+            <div class="hero-face-chips" id="hero-face-chips">
+              <button class="hero-face-chip active" onclick="setHeroWatchFace(0)">CUE177</button>
+              <button class="hero-face-chip" onclick="setHeroWatchFace(1)">CUE179</button>
+              <button class="hero-face-chip" onclick="setHeroWatchFace(2)">CUE178</button>
+              <button class="hero-face-chip" onclick="setHeroWatchFace(3)">CUE003</button>
+              <button class="hero-face-chip" onclick="setHeroWatchFace(4)">CUE176</button>
+              <button class="hero-face-chip" onclick="setHeroWatchFace(5)">CUE175</button>
+            </div>
           </div>
 
           <div class="hero-stats">
@@ -999,8 +1335,8 @@
               <p>Watch Faces</p>
             </div>
             <div class="stat-item">
-              <h4>250K+</h4>
-              <p>Total Downloads</p>
+              <h4>300K+</h4>
+              <p>Total Installs</p>
             </div>
             <div class="stat-item">
               <h4>100%</h4>
@@ -1009,20 +1345,56 @@
           </div>
         </div>
 
-        <!-- HERO SMARTWATCH SHOWCASE (Interactive Mockup) -->
-        <div class="hero-mockup-wrapper">
-          <div class="watch-bezel-case">
-            <div class="watch-screen">
-              <img id="hero-watch-img" src="images/cue178.png" alt="Featured Watch Face">
-            </div>
+        <!-- RIGHT COLUMN: MULTI-MODEL WEAR OS SMARTWATCH SHOWCASE -->
+        <div class="hero-watch-col">
+          <!-- Watch Model Switcher Pills (Galaxy Ultra, TicWatch, Xiaomi, Pixel, OnePlus) -->
+          <div class="hero-watch-model-selector" role="tablist" aria-label="Select Watch Model">
+            <button type="button" class="model-pill active" data-model="samsung" onclick="setHeroWatchModel('samsung')" role="tab" aria-selected="true">
+              <span class="model-name-full">Galaxy Ultra</span>
+              <span class="model-name-short">Galaxy</span>
+            </button>
+            <button type="button" class="model-pill" data-model="ticwatch" onclick="setHeroWatchModel('ticwatch')" role="tab" aria-selected="false">
+              <span class="model-name-full">TicWatch Pro 5</span>
+              <span class="model-name-short">TicWatch</span>
+            </button>
+            <button type="button" class="model-pill" data-model="xiaomi" onclick="setHeroWatchModel('xiaomi')" role="tab" aria-selected="false">
+              <span class="model-name-full">Xiaomi Watch 5</span>
+              <span class="model-name-short">Xiaomi</span>
+            </button>
+            <button type="button" class="model-pill" data-model="pixel" onclick="setHeroWatchModel('pixel')" role="tab" aria-selected="false">
+              <span class="model-name-full">Pixel Watch 3</span>
+              <span class="model-name-short">Pixel</span>
+            </button>
+            <button type="button" class="model-pill" data-model="oneplus" onclick="setHeroWatchModel('oneplus')" role="tab" aria-selected="false">
+              <span class="model-name-full">OnePlus Watch 2</span>
+              <span class="model-name-short">OnePlus</span>
+            </button>
           </div>
-          <div class="watch-controls">
-            <button class="watch-btn-arrow" onclick="prevHeroWatch()" aria-label="Previous watch face">‹</button>
-            <div class="watch-info-pill">
-              <span id="hero-watch-name">CUE178</span>
-              <span id="hero-watch-badge" style="font-size:10px; background:var(--accent); color:#000; padding:2px 8px; border-radius:99px; font-weight:800;">NEW</span>
+
+          <!-- Photorealistic Smartwatch Mockup -->
+          <div class="hero-watch-mockup" id="hero-watch-mockup" onclick="openActiveHeroWatchFaceStore()" title="Tap to open on Google Play • Swipe left/right to change faces" role="button" tabindex="0">
+            <!-- Proportional Watch Scaling Stage -->
+            <div class="hero-watch-stage" id="hero-watch-stage">
+              <div class="hero-watch-dial-bg"></div>
+              <!-- Watch Face Circular Image -->
+              <img id="hero-watch-face-img" class="hero-watch-face-img" src="images/cue177.png" alt="Featured Watch Face">
+              <!-- Official Wear OS Watch Frame Image -->
+              <img id="hero-watch-frame-img" class="hero-watch-frame-img" src="images/watch_frame_samsung.png" alt="Samsung Galaxy Watch Ultra">
             </div>
-            <button class="watch-btn-arrow" onclick="nextHeroWatch()" aria-label="Next watch face">›</button>
+
+            <!-- Previous / Next Navigation Arrows -->
+            <button type="button" class="hero-watch-arrow hero-watch-arrow-prev" onclick="event.stopPropagation(); switchHeroWatchFaceByOffset(-1);" title="Previous watch face" aria-label="Previous watch face">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button type="button" class="hero-watch-arrow hero-watch-arrow-next" onclick="event.stopPropagation(); switchHeroWatchFaceByOffset(1);" title="Next watch face" aria-label="Next watch face">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+
+            <!-- Interactive Google Play Pill -->
+            <div class="hero-watch-play-pill">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></svg>
+              <span>Get on Google Play</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1107,14 +1479,14 @@
     </div>
   </section>
 
-  <!-- MAIN CATALOG SECTION -->
+  <!-- MAIN CATALOG SECTION WITH INFINITE SCROLL & WOW ENTRANCE EFFECT -->
   <section class="section section-alt" id="catalog">
     <div class="container">
       <div class="catalog-header">
         <div>
           <div class="eyebrow"><span></span> EXPLORE OUR CATALOG</div>
           <h2 class="section-title">All 115+ Watch Faces</h2>
-          <p class="section-desc">Search, filter, and inspect the full Creation Cue collection live on Google Play Store.</p>
+          <p class="section-desc">Search, filter, and inspect the full Creation Cue collection live on Google Play Store. Faces load automatically as you scroll.</p>
         </div>
 
         <!-- TOOLBAR (FILTERS & SEARCH) -->
@@ -1147,13 +1519,17 @@
         </div>
       </div>
 
-      <!-- WATCH FACE GRID -->
+      <!-- WATCH FACE GRID (Appended via Infinite Scroll with WOW entrance effect) -->
       <div class="watch-grid" id="watch-grid">
         <!-- Rendered dynamically from manager.json -->
       </div>
 
-      <div class="load-more-wrap" id="load-more-wrap" style="display: none;">
-        <button class="btn btn-outline" style="padding: 12px 32px;" onclick="loadMore()">Load More Watch Faces</button>
+      <!-- INFINITE SCROLL SENTINEL -->
+      <div id="scroll-sentinel" class="scroll-sentinel">
+        <div id="sentinel-spinner" class="sentinel-spinner" style="display: none;"></div>
+        <div id="sentinel-end-badge" class="sentinel-end-badge" style="display: none;">
+          ✨ All 115+ Watch Faces Loaded
+        </div>
       </div>
     </div>
   </section>
@@ -1306,7 +1682,10 @@
       </div>
       <p id="modal-desc" style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px; text-align: left; background: var(--bg-alt); padding: 14px 18px; border-radius: var(--radius-md);"></p>
       <div style="display: flex; gap: 12px;">
-        <a id="modal-play-link" href="#" target="_blank" class="btn btn-dark" style="flex: 1; padding: 12px;">
+        <button id="modal-preview-btn" class="btn btn-outline" style="flex: 1; padding: 12px;" onclick="previewModalFaceOnWatch()">
+          ⌚ Preview on Watch
+        </button>
+        <a id="modal-play-link" href="#" target="_blank" class="btn btn-dark" style="flex: 1.2; padding: 12px;">
           Open in Google Play →
         </a>
       </div>
@@ -1318,9 +1697,10 @@
     <div class="container">
       <div class="footer-inner">
         <div>
+          <!-- Grayscale Logo in Footer -->
           <div class="brand" style="margin-bottom: 8px;">
-            <div class="brand-mark" style="width:28px; height:28px; font-size:12px;">CC<span>™</span></div>
-            <div class="brand-name" style="font-size: 16px;">Creation<span>Cue</span></div>
+            <img src="images/logo.png" onerror="this.src='https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp'" width="28" height="28" class="brand-logo-img" alt="Creation Cue Logo" style="width:28px; height:28px; border-radius:6px;">
+            <div class="brand-name" style="font-size: 16px;">Creation<span>Cue</span>™</div>
           </div>
           <p class="footer-copy">© 2026 Creation Cue™ Studio. Wear OS by Google. All rights reserved.</p>
         </div>
@@ -1335,58 +1715,494 @@
     </div>
   </footer>
 
-  <!-- SCRIPT -->
+  <!-- ========================================================
+       FIREBASE COMPAT & GLOBAL ADMIN BAR
+       ======================================================== -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script src="admin-bar.js"></script>
+
+  <!-- ========================================================
+       CORE JS SCRIPT: CATALOG, INFINITE SCROLL, WATCH SHOWCASE
+       ======================================================== -->
   <script>
-    // Global Catalog State
+    // --------------------------------------------------------
+    // Firebase Initialization for Admin Bar & Support
+    // --------------------------------------------------------
+    const firebaseConfig = {
+      apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+      authDomain: "creation-cue-manage.firebaseapp.com",
+      databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "creation-cue-manage",
+      storageBucket: "creation-cue-manage.firebasestorage.app",
+      messagingSenderId: "186324516022",
+      appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
+    };
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    // --------------------------------------------------------
+    // Global Catalog & Pagination State
+    // --------------------------------------------------------
     let allWatchFaces = [];
     let filteredWatchFaces = [];
     let currentFilter = 'all';
     let searchQuery = '';
     let currentPage = 1;
     const PAGE_SIZE = 24;
+    let isAppending = false;
+    let sentinelObserver = null;
+    let currentModalFace = null;
 
-    // Featured Showcase faces for the Hero
-    const HERO_FEATURED = [
-      { id: 'cue178', name: 'CUE178 Digital', img: 'images/cue178.png', badge: 'NEW' },
-      { id: 'cue179', name: 'CUE179 Circuit', img: 'images/cue179.png', badge: 'NEW' },
-      { id: 'cue177', name: 'CUE177 Analog', img: 'images/cue177.png', badge: 'POPULAR' },
-      { id: 'cue003', name: 'CUE003 Retro', img: 'images/cue003.png', badge: 'HOT' },
-      { id: 'crc080', name: 'CRC080 Cyber', img: 'images/crc080.png', badge: 'FREE 50K+' },
-      { id: 'crc046', name: 'CRC046 Luxury', img: 'images/crc046.png', badge: 'FREE 100K+' },
-      { id: 'cue104', name: 'CUE104 Digital', img: 'images/cue104.png', badge: 'FREE' }
+    // --------------------------------------------------------
+    // Photorealistic Wear OS Smartwatch Showcase Logic
+    // --------------------------------------------------------
+    const WATCH_MODELS = {
+      samsung: {
+        id: 'samsung',
+        name: 'Samsung Galaxy Watch Ultra',
+        frame: 'images/watch_frame_samsung.png',
+        faceSize: '49.8%',
+        bgSize: '53.0%',
+        scale: 0.96
+      },
+      ticwatch: {
+        id: 'ticwatch',
+        name: 'TicWatch Pro 5 Enduro',
+        frame: 'images/watch_frame_ticwatch.png',
+        faceSize: '47.2%',
+        bgSize: '51.0%',
+        scale: 0.98
+      },
+      xiaomi: {
+        id: 'xiaomi',
+        name: 'Xiaomi Watch 5',
+        frame: 'images/watch_frame_xiaomi.png',
+        faceSize: '49.8%',
+        bgSize: '53.0%',
+        scale: 0.96
+      },
+      pixel: {
+        id: 'pixel',
+        name: 'Google Pixel Watch 3',
+        frame: 'images/watch_frame_pixel.png',
+        faceSize: '49.8%',
+        bgSize: '53.0%',
+        scale: 0.84
+      },
+      oneplus: {
+        id: 'oneplus',
+        name: 'OnePlus Watch 2',
+        frame: 'images/watch_frame_oneplus.png',
+        faceSize: '48.5%',
+        bgSize: '51.5%',
+        scale: 1.03
+      }
+    };
+
+    let currentWatchModel = 'samsung';
+
+    const FEATURED_WATCH_FACES = [
+      {
+        id: 'cue177',
+        name: 'CUE177',
+        file: 'images/cue177.png',
+        badge: 'DYNAMIC COMPLICATIONS • CUE177',
+        title: 'INTELLIGENCE <br><span>ON YOUR WRIST</span>',
+        tagline: 'Live weather, heart rate, step progress, battery monitor, and calendar events customized to fit your unique lifestyle on CUE177.',
+        play_store_url: 'https://play.google.com/store/apps/details?id=com.creation.cue177watchface'
+      },
+      {
+        id: 'cue179',
+        name: 'CUE179',
+        file: 'images/cue179.png',
+        badge: 'NEW RELEASE • CUE179',
+        title: 'FUTURISTIC <br><span>CYBER POWER</span>',
+        tagline: 'Bold dual-color digital display, circuit board styling, 2 short text and 1 long text custom complications, and battery arc powered by CUE179.',
+        play_store_url: 'https://play.google.com/store/apps/details?id=com.creation.cue179watchface'
+      },
+      {
+        id: 'cue178',
+        name: 'CUE178',
+        file: 'images/cue178.png',
+        badge: 'NEW RELEASE • CUE178',
+        title: 'TIME, CRAFTED TO <br><span>PERFECTION</span>',
+        tagline: 'Featuring the all-new CUE178 and 115+ precision-engineered watch faces for Samsung Galaxy Watch, Google Pixel Watch & all Wear OS smartwatches.',
+        play_store_url: 'https://play.google.com/store/apps/details?id=com.creation.cue178watchface'
+      },
+      {
+        id: 'cue003',
+        name: 'CUE003',
+        file: 'images/cue003.png',
+        badge: 'FLAGSHIP DESIGN • CUE003',
+        title: 'PURE <br><span>AMOLED DEPTH</span>',
+        tagline: 'Ultra battery-friendly aesthetics with deep contrast, custom indices, and high-readability typography powered by CUE003.',
+        play_store_url: 'https://play.google.com/store/apps/details?id=com.creation.cue003watchface'
+      },
+      {
+        id: 'cue176',
+        name: 'CUE176',
+        file: 'images/cue176.png',
+        badge: 'TACTICAL CHRONO • CUE176',
+        title: 'RUGGED <br><span>PRECISION</span>',
+        tagline: 'Multi-ring chronometer layout engineered for extreme outdoor adventures and fitness tracking on CUE176.',
+        play_store_url: 'https://play.google.com/store/apps/details?id=com.creation.cue176watchface'
+      },
+      {
+        id: 'cue175',
+        name: 'CUE175',
+        file: 'images/cue175.png',
+        badge: 'MINIMAL ELEGANCE • CUE175',
+        title: 'REFINED <br><span>SIMPLICITY</span>',
+        tagline: 'Clean geometry and modern aesthetics with subtle ambient always-on display styling on CUE175.',
+        play_store_url: 'https://play.google.com/store/apps/details?id=com.creation.cue175watchface'
+      }
     ];
-    let heroIndex = 0;
 
-    function updateHeroWatch() {
-      const item = HERO_FEATURED[heroIndex];
-      const img = document.getElementById('hero-watch-img');
-      const name = document.getElementById('hero-watch-name');
-      const badge = document.getElementById('hero-watch-badge');
+    let heroWatchFacesList = [...FEATURED_WATCH_FACES];
+    let currentHeroFaceIndex = 0;
+    let currentHeroPlayStoreUrl = FEATURED_WATCH_FACES[0].play_store_url;
+    let isSwipingOrDragged = false;
+    let hasSwiped = false;
 
-      img.style.opacity = '0.4';
-      img.style.transform = 'scale(0.96)';
-      setTimeout(() => {
-        img.src = item.img;
-        name.innerText = item.name;
-        badge.innerText = item.badge;
-        img.style.opacity = '1';
-        img.style.transform = 'scale(1)';
-      }, 150);
+    window.setHeroWatchModel = function(modelKey) {
+      if (!WATCH_MODELS[modelKey]) return;
+      currentWatchModel = modelKey;
+      const model = WATCH_MODELS[modelKey];
+
+      const stage = document.getElementById('hero-watch-stage');
+      const frameImg = document.getElementById('hero-watch-frame-img');
+      const faceImg = document.getElementById('hero-watch-face-img');
+      const dialBg = document.querySelector('.hero-watch-dial-bg');
+
+      if (stage && model.scale) {
+        stage.style.setProperty('--watch-scale', model.scale);
+      }
+
+      if (frameImg) {
+        frameImg.style.transition = 'opacity 0.2s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)';
+        frameImg.style.opacity = '0.35';
+        frameImg.style.transform = 'scale(0.97)';
+        
+        setTimeout(() => {
+          frameImg.src = model.frame;
+          frameImg.alt = model.name;
+          frameImg.style.opacity = '1';
+          frameImg.style.transform = 'scale(1)';
+        }, 120);
+      }
+
+      if (faceImg && model.faceSize) {
+        faceImg.style.width = model.faceSize;
+        faceImg.style.height = 'auto';
+        faceImg.style.aspectRatio = '1 / 1';
+      }
+
+      if (dialBg && model.bgSize) {
+        dialBg.style.width = model.bgSize;
+        dialBg.style.height = 'auto';
+        dialBg.style.aspectRatio = '1 / 1';
+      }
+
+      document.querySelectorAll('.model-pill').forEach(pill => {
+        const isMatch = pill.getAttribute('data-model') === modelKey;
+        pill.classList.toggle('active', isMatch);
+        pill.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+      });
+
+      try {
+        localStorage.setItem('cc_selected_watch_model', modelKey);
+      } catch(e) {}
+    };
+
+    function populateHeroWatchFacesFromCatalog(catalogFaces) {
+      if (!catalogFaces || !catalogFaces.length) return;
+
+      const curatedMap = {};
+      FEATURED_WATCH_FACES.forEach(f => {
+        curatedMap[f.id.toLowerCase()] = f;
+      });
+
+      const mappedCatalog = catalogFaces.map(face => {
+        const idLower = (face.id || '').toLowerCase();
+        if (curatedMap[idLower]) {
+          return curatedMap[idLower];
+        }
+        const titleName = (face.title || face.id || '').toUpperCase();
+        const img = face.image_url || `images/${face.id}.png`;
+        const badgePrefix = face.badge_text ? `${face.badge_text.toUpperCase()} • ` : (face.is_new ? 'NEW • ' : 'COLLECTION • ');
+        const playLink = face.play_store_url ? face.play_store_url.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=').split('&')[0] : 'https://play.google.com/store/apps/dev?id=7609098870161748513';
+        return {
+          id: face.id,
+          name: face.title || face.id.toUpperCase(),
+          file: img,
+          badge: badgePrefix + titleName,
+          title: `${titleName} <br><span>EDITION</span>`,
+          tagline: face.description_en ? face.description_en.replace(/[\r\n]+/g, ' ') : `Precision-engineered for Samsung Galaxy Watch, Google Pixel Watch & all Wear OS smartwatches.`,
+          play_store_url: playLink
+        };
+      });
+
+      const featuredIds = new Set(FEATURED_WATCH_FACES.map(f => f.id.toLowerCase()));
+      const remainingCatalog = mappedCatalog.filter(f => !featuredIds.has((f.id || '').toLowerCase()));
+      
+      heroWatchFacesList = [...FEATURED_WATCH_FACES, ...remainingCatalog];
+      updateHeroWatchCounter();
     }
 
-    function nextHeroWatch() {
-      heroIndex = (heroIndex + 1) % HERO_FEATURED.length;
-      updateHeroWatch();
-    }
-    function prevHeroWatch() {
-      heroIndex = (heroIndex - 1 + HERO_FEATURED.length) % HERO_FEATURED.length;
-      updateHeroWatch();
+    function updateHeroWatchCounter() {
+      const counter = document.getElementById('hero-face-counter');
+      if (counter && heroWatchFacesList.length > 0) {
+        counter.textContent = `${currentHeroFaceIndex + 1} / ${heroWatchFacesList.length}`;
+      }
     }
 
-    // Auto rotate hero watch showcase every 5 seconds
-    setInterval(nextHeroWatch, 5000);
+    function setHeroWatchFace(idx, direction = 1) {
+      if (!heroWatchFacesList || !heroWatchFacesList.length) return;
+      if (idx < 0) {
+        idx = heroWatchFacesList.length - 1;
+      } else if (idx >= heroWatchFacesList.length) {
+        idx = 0;
+      }
+      currentHeroFaceIndex = idx;
+      const data = heroWatchFacesList[idx];
+      if (data.play_store_url) {
+        currentHeroPlayStoreUrl = data.play_store_url;
+      }
 
-    // Fetch catalog
+      const faceImg = document.getElementById('hero-watch-face-img');
+      if (faceImg) {
+        faceImg.src = data.file;
+        faceImg.style.transition = 'none';
+        faceImg.style.transform = 'translate(-50%, -50%)';
+        faceImg.style.opacity = '1';
+      }
+
+      const label = document.getElementById('hero-current-face-label');
+      if (label) label.textContent = data.name;
+
+      updateHeroWatchCounter();
+
+      const badge = document.getElementById('hero-badge-text');
+      if (badge && data.badge) badge.textContent = data.badge;
+
+      const title = document.getElementById('hero-main-title');
+      if (title && data.title) title.innerHTML = data.title;
+
+      const tagline = document.getElementById('hero-main-tagline');
+      if (tagline && data.tagline) tagline.textContent = data.tagline;
+
+      document.querySelectorAll('.hero-face-chip').forEach(chip => {
+        const chipName = chip.textContent.trim().toUpperCase();
+        chip.classList.toggle('active', chipName === (data.name || '').toUpperCase());
+      });
+    }
+
+    window.switchHeroWatchFaceByOffset = function(direction) {
+      const nextIdx = currentHeroFaceIndex + direction;
+      setHeroWatchFace(nextIdx, direction);
+    };
+
+    window.openActiveHeroWatchFaceStore = function() {
+      if (isSwipingOrDragged || hasSwiped) {
+        isSwipingOrDragged = false;
+        hasSwiped = false;
+        return;
+      }
+      const currentFace = heroWatchFacesList[currentHeroFaceIndex] || FEATURED_WATCH_FACES[0];
+      const targetUrl = currentHeroPlayStoreUrl || currentFace?.play_store_url || 'https://play.google.com/store/apps/dev?id=7609098870161748513';
+      window.open(targetUrl, '_blank', 'noopener,noreferrer');
+    };
+
+    window.previewOnHeroWatch = function(faceId) {
+      const foundIdx = heroWatchFacesList.findIndex(f => f.id.toLowerCase() === faceId.toLowerCase());
+      if (foundIdx !== -1) {
+        setHeroWatchFace(foundIdx, 1);
+        const mockupEl = document.getElementById('hero-watch-mockup');
+        if (mockupEl) {
+          mockupEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    };
+
+    function previewModalFaceOnWatch() {
+      if (currentModalFace) {
+        closeModal();
+        previewOnHeroWatch(currentModalFace.id);
+      }
+    }
+
+    function initHeroWatch() {
+      setHeroWatchFace(0);
+
+      // Restore saved watch model
+      try {
+        const savedModel = localStorage.getItem('cc_selected_watch_model');
+        if (savedModel && WATCH_MODELS[savedModel]) {
+          setHeroWatchModel(savedModel);
+        } else {
+          setHeroWatchModel('samsung');
+        }
+      } catch(e) {
+        setHeroWatchModel('samsung');
+      }
+
+      // Preload frames
+      Object.values(WATCH_MODELS).forEach(m => {
+        const img = new Image();
+        img.src = m.frame;
+      });
+
+      const watchMockupEl = document.getElementById('hero-watch-mockup');
+      if (!watchMockupEl) return;
+
+      // Keyboard navigation
+      watchMockupEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          window.openActiveHeroWatchFaceStore();
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          switchHeroWatchFaceByOffset(-1);
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          switchHeroWatchFaceByOffset(1);
+        }
+      });
+
+      // Touch Swipe (Mobile & Tablets)
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchStartTime = 0;
+      let isTouchTracking = false;
+
+      watchMockupEl.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        if (e.target.closest('.hero-watch-arrow')) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+        isTouchTracking = true;
+        hasSwiped = false;
+      }, { passive: true });
+
+      watchMockupEl.addEventListener('touchmove', (e) => {
+        if (!isTouchTracking || e.touches.length !== 1) return;
+        const dx = e.touches[0].clientX - touchStartX;
+        const dy = e.touches[0].clientY - touchStartY;
+        if (Math.abs(dx) > 28 && Math.abs(dx) > Math.abs(dy) * 1.8) {
+          if (e.cancelable) e.preventDefault();
+          const faceImg = document.getElementById('hero-watch-face-img');
+          if (faceImg) {
+            const dragPx = Math.max(-45, Math.min(45, dx * 0.35));
+            faceImg.style.transition = 'none';
+            faceImg.style.transform = `translate(calc(-50% + ${dragPx}px), -50%)`;
+          }
+        }
+      }, { passive: false });
+
+      const handleTouchEnd = (e) => {
+        if (!isTouchTracking) return;
+        isTouchTracking = false;
+        const endX = e.changedTouches ? e.changedTouches[0].clientX : 0;
+        const endY = e.changedTouches ? e.changedTouches[0].clientY : 0;
+        const dx = endX - touchStartX;
+        const dy = endY - touchStartY;
+        const dt = Date.now() - touchStartTime;
+
+        const faceImg = document.getElementById('hero-watch-face-img');
+        if (faceImg) faceImg.style.transition = '';
+
+        const isHorizontal = Math.abs(dx) > Math.abs(dy);
+        const isSwipe = (Math.abs(dx) >= 30) || (Math.abs(dx) >= 20 && dt < 300);
+
+        if (isHorizontal && isSwipe) {
+          hasSwiped = true;
+          isSwipingOrDragged = true;
+          setTimeout(() => { 
+            isSwipingOrDragged = false; 
+            hasSwiped = false;
+          }, 350);
+
+          if (dx < 0) {
+            switchHeroWatchFaceByOffset(1);
+          } else {
+            switchHeroWatchFaceByOffset(-1);
+          }
+        } else {
+          if (faceImg) faceImg.style.transform = 'translate(-50%, -50%)';
+        }
+      };
+
+      watchMockupEl.addEventListener('touchend', handleTouchEnd, { passive: true });
+      watchMockupEl.addEventListener('touchcancel', () => {
+        isTouchTracking = false;
+        const faceImg = document.getElementById('hero-watch-face-img');
+        if (faceImg) {
+          faceImg.style.transition = '';
+          faceImg.style.transform = 'translate(-50%, -50%)';
+        }
+      }, { passive: true });
+
+      // Desktop Mouse Drag
+      let mouseStartX = 0;
+      let mouseStartY = 0;
+      let isMouseDown = false;
+
+      watchMockupEl.addEventListener('mousedown', (e) => {
+        if (e.button !== 0 || e.target.closest('button')) return;
+        mouseStartX = e.clientX;
+        mouseStartY = e.clientY;
+        isMouseDown = true;
+        hasSwiped = false;
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isMouseDown) return;
+        const dx = e.clientX - mouseStartX;
+        const dy = e.clientY - mouseStartY;
+        if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+          const faceImg = document.getElementById('hero-watch-face-img');
+          if (faceImg) {
+            const dragPx = Math.max(-45, Math.min(45, dx * 0.35));
+            faceImg.style.transition = 'none';
+            faceImg.style.transform = `translate(calc(-50% + ${dragPx}px), -50%)`;
+          }
+        }
+      });
+
+      window.addEventListener('mouseup', (e) => {
+        if (!isMouseDown) return;
+        isMouseDown = false;
+        const dx = e.clientX - mouseStartX;
+        const dy = e.clientY - mouseStartY;
+        const faceImg = document.getElementById('hero-watch-face-img');
+        if (faceImg) faceImg.style.transition = '';
+
+        if (Math.abs(dx) >= 30 && Math.abs(dx) > Math.abs(dy)) {
+          hasSwiped = true;
+          isSwipingOrDragged = true;
+          setTimeout(() => { 
+            isSwipingOrDragged = false; 
+            hasSwiped = false;
+          }, 350);
+
+          if (dx < 0) {
+            switchHeroWatchFaceByOffset(1);
+          } else {
+            switchHeroWatchFaceByOffset(-1);
+          }
+        } else {
+          if (faceImg) faceImg.style.transform = 'translate(-50%, -50%)';
+        }
+      });
+    }
+
+    // --------------------------------------------------------
+    // Fetch Catalog & Populate
+    // --------------------------------------------------------
     async function loadCatalog() {
       try {
         const res = await fetch('manager.json?v=' + Date.now());
@@ -1409,13 +2225,22 @@
         document.getElementById('count-new').innerText = newCount;
         document.getElementById('count-hot').innerText = hotCount;
 
+        // Populate Hero Watch faces list with full catalog
+        populateHeroWatchFacesFromCatalog(allWatchFaces);
+
+        // Apply filters & render initial page
         applyFilters();
+
+        // Setup Infinite Scroll Observer
+        setupInfiniteScroll();
       } catch (err) {
         console.error('Failed to load manager.json', err);
       }
     }
 
-    // Filter Logic
+    // --------------------------------------------------------
+    // Filtering & Search
+    // --------------------------------------------------------
     function filterBy(filterName) {
       currentFilter = filterName;
       currentPage = 1;
@@ -1457,73 +2282,148 @@
         return matchesTab && matchesSearch;
       });
 
-      renderGrid();
+      renderInitialGrid();
     }
 
-    function renderGrid() {
+    // --------------------------------------------------------
+    // Rendering Grid with WOW Space Entrance Animation
+    // --------------------------------------------------------
+    function createCardElement(f, staggerIndex) {
+      const badge = f.badge_text || '';
+      const isFree = f.is_free || badge.includes('FREE');
+      const badgeClass = isFree ? 'card-badge free' : 'card-badge';
+      const displayBadge = isFree ? '🎀 FREE' : (badge || (f.type || '').toUpperCase());
+
+      const playLink = f.play_store_url ? f.play_store_url.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=').split('&')[0] : 'https://play.google.com/store/apps/dev?id=7609098870161748513';
+      const imgSrc = f.image_url || `images/${f.id}.png`;
+
+      const card = document.createElement('div');
+      card.className = 'watch-card wow-card-enter';
+      card.style.animationDelay = `${staggerIndex * 40}ms`;
+
+      card.innerHTML = `
+        <div class="watch-card-media" onclick="openModal('${f.id}')">
+          ${displayBadge ? `<span class="${badgeClass}">${displayBadge}</span>` : ''}
+          <img src="${imgSrc}" loading="lazy" alt="${f.title}" onerror="this.src='images/${f.id}.png'">
+        </div>
+        <h4 class="watch-card-title">${f.title}</h4>
+        <p class="watch-card-desc">${f.description_en || 'Modern, customizable Wear OS watch face.'}</p>
+        <div class="watch-card-actions">
+          <button class="btn btn-preview" onclick="previewOnHeroWatch('${f.id}')" title="Preview on smartwatch">⌚ Preview</button>
+          <button class="btn btn-outline" onclick="openModal('${f.id}')">Details</button>
+          <a href="${playLink}" target="_blank" class="btn btn-dark">Get</a>
+        </div>
+      `;
+      return card;
+    }
+
+    function renderInitialGrid() {
       const grid = document.getElementById('watch-grid');
-      const loadMoreWrap = document.getElementById('load-more-wrap');
+      const endBadge = document.getElementById('sentinel-end-badge');
+      const spinner = document.getElementById('sentinel-spinner');
 
-      const itemsToShow = filteredWatchFaces.slice(0, currentPage * PAGE_SIZE);
+      grid.innerHTML = '';
 
-      if (itemsToShow.length === 0) {
+      if (filteredWatchFaces.length === 0) {
         grid.innerHTML = `
           <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-muted);">
             <div style="font-size: 32px; margin-bottom: 12px;">🔍</div>
             <h3 style="font-size: 18px; color: var(--text); margin-bottom: 6px;">No watch faces found</h3>
             <p style="font-size: 14px;">Try searching for a different keyword or select another category filter.</p>
           </div>`;
-        loadMoreWrap.style.display = 'none';
+        if (endBadge) endBadge.style.display = 'none';
+        if (spinner) spinner.style.display = 'none';
         return;
       }
 
-      let html = '';
-      itemsToShow.forEach(f => {
-        const badge = f.badge_text || '';
-        const isFree = f.is_free || badge.includes('FREE');
-        const badgeClass = isFree ? 'card-badge free' : 'card-badge';
-        const displayBadge = isFree ? '🎀 FREE' : (badge || (f.type || '').toUpperCase());
-
-        const playLink = f.play_store_url ? f.play_store_url.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=').split('&')[0] : 'https://play.google.com/store/apps/dev?id=7609098870161748513';
-
-        // Local image fallback
-        const imgSrc = f.image_url || `images/${f.id}.png`;
-
-        html += `
-          <div class="watch-card">
-            <div class="watch-card-media" onclick="openModal('${f.id}')">
-              ${displayBadge ? `<span class="${badgeClass}">${displayBadge}</span>` : ''}
-              <img src="${imgSrc}" loading="lazy" alt="${f.title}" onerror="this.src='images/${f.id}.png'">
-            </div>
-            <h4 class="watch-card-title">${f.title}</h4>
-            <p class="watch-card-desc">${f.description_en || 'Modern, customizable Wear OS watch face.'}</p>
-            <div class="watch-card-actions">
-              <button class="btn btn-outline" onclick="openModal('${f.id}')">Details</button>
-              <a href="${playLink}" target="_blank" class="btn btn-dark">Get on Play</a>
-            </div>
-          </div>
-        `;
+      const initialBatch = filteredWatchFaces.slice(0, PAGE_SIZE);
+      const frag = document.createDocumentFragment();
+      initialBatch.forEach((f, idx) => {
+        frag.appendChild(createCardElement(f, idx));
       });
+      grid.appendChild(frag);
 
-      grid.innerHTML = html;
+      updateSentinelStatus();
+    }
 
-      // Show/hide load more button
-      if (itemsToShow.length < filteredWatchFaces.length) {
-        loadMoreWrap.style.display = 'flex';
+    function appendNextBatch() {
+      const grid = document.getElementById('watch-grid');
+      const startIndex = (currentPage - 1) * PAGE_SIZE;
+      const nextBatch = filteredWatchFaces.slice(startIndex, startIndex + PAGE_SIZE);
+
+      if (!nextBatch.length) return;
+
+      const frag = document.createDocumentFragment();
+      nextBatch.forEach((f, idx) => {
+        frag.appendChild(createCardElement(f, idx));
+      });
+      grid.appendChild(frag);
+
+      updateSentinelStatus();
+    }
+
+    function updateSentinelStatus() {
+      const endBadge = document.getElementById('sentinel-end-badge');
+      const spinner = document.getElementById('sentinel-spinner');
+      const loadedCount = currentPage * PAGE_SIZE;
+
+      if (loadedCount >= filteredWatchFaces.length) {
+        if (spinner) spinner.style.display = 'none';
+        if (endBadge) {
+          endBadge.textContent = `✨ All ${filteredWatchFaces.length} Watch Faces Loaded`;
+          endBadge.style.display = 'inline-block';
+        }
       } else {
-        loadMoreWrap.style.display = 'none';
+        if (endBadge) endBadge.style.display = 'none';
       }
     }
 
-    function loadMore() {
-      currentPage++;
-      renderGrid();
+    // --------------------------------------------------------
+    // Automatic Infinite Scroll with IntersectionObserver
+    // --------------------------------------------------------
+    function setupInfiniteScroll() {
+      const sentinel = document.getElementById('scroll-sentinel');
+      if (!sentinel) return;
+
+      if (sentinelObserver) {
+        sentinelObserver.disconnect();
+      }
+
+      sentinelObserver = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (entry && entry.isIntersecting && !isAppending) {
+          const loadedCount = currentPage * PAGE_SIZE;
+          if (loadedCount < filteredWatchFaces.length) {
+            loadMoreBatch();
+          }
+        }
+      }, {
+        rootMargin: '260px'
+      });
+
+      sentinelObserver.observe(sentinel);
     }
 
-    // Modal
+    function loadMoreBatch() {
+      isAppending = true;
+      const spinner = document.getElementById('sentinel-spinner');
+      if (spinner) spinner.style.display = 'block';
+
+      setTimeout(() => {
+        currentPage++;
+        appendNextBatch();
+        isAppending = false;
+        if (spinner) spinner.style.display = 'none';
+      }, 100);
+    }
+
+    // --------------------------------------------------------
+    // Details Modal
+    // --------------------------------------------------------
     function openModal(faceId) {
       const face = allWatchFaces.find(f => f.id === faceId);
       if (!face) return;
+      currentModalFace = face;
 
       const badge = face.badge_text || '';
       const isFree = face.is_free || badge.includes('FREE');
@@ -1557,12 +2457,13 @@
       }
     }
 
+    // --------------------------------------------------------
     // FAQ Accordion
+    // --------------------------------------------------------
     function toggleFaq(headerEl) {
       const item = headerEl.parentElement;
       const isOpen = item.classList.contains('open');
 
-      // Close all others
       document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
 
       if (!isOpen) {
@@ -1570,14 +2471,18 @@
       }
     }
 
+    // --------------------------------------------------------
     // Contact Form Handler
+    // --------------------------------------------------------
     function handleContactSubmit(e) {
       e.preventDefault();
       alert('Thank you! Your inquiry has been sent to Creation Cue. We will get back to you shortly.');
       e.target.reset();
     }
 
+    // --------------------------------------------------------
     // Mobile Menu Toggle
+    // --------------------------------------------------------
     function toggleMobileMenu() {
       const nav = document.querySelector('.nav-links');
       if (nav.style.display === 'flex') {
@@ -1596,8 +2501,13 @@
       }
     }
 
-    // Init
-    loadCatalog();
+    // --------------------------------------------------------
+    // Lifecycle Entry
+    // --------------------------------------------------------
+    window.addEventListener('DOMContentLoaded', () => {
+      initHeroWatch();
+      loadCatalog();
+    });
   </script>
 </body>
 </html>

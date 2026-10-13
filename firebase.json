@@ -47,6 +47,10 @@
       {
         "source": "/admin",
         "destination": "/admin.html"
+      },
+      {
+        "source": "/v2",
+        "destination": "/v2.html"
       }
     ],
     "ignore": [
