@@ -317,7 +317,6 @@
         position: relative;
         margin: 0 8px;
       }
-
       .admin-bar-links {
         display: flex;
         gap: 6px;
@@ -329,8 +328,9 @@
         -webkit-overflow-scrolling: touch;
         flex: 1;
         min-width: 0;
-        scroll-behavior: smooth;
         padding: 2px 0;
+        touch-action: pan-x;
+        overscroll-behavior-x: contain;
       }
       .admin-bar-links::-webkit-scrollbar {
         display: none;
@@ -384,6 +384,8 @@
         font-size: 11.5px;
         cursor: pointer;
         user-select: none;
+        -webkit-user-select: none;
+        touch-action: pan-x;
         padding: 4px 8px;
         border-radius: 6px;
       }
@@ -413,8 +415,22 @@
       .admin-bar-right {
         display: inline-flex;
         align-items: center;
+        flex-shrink: 0;
+        position: relative;
+      }
+
+      .admin-bar-right-desktop {
+        display: inline-flex;
+        align-items: center;
         gap: 8px;
         flex-shrink: 0;
+      }
+
+      .admin-bar-right-mobile {
+        display: none;
+        align-items: center;
+        flex-shrink: 0;
+        position: relative;
       }
 
       .admin-bar-status {
@@ -442,6 +458,153 @@
         transform: translateY(-1px);
         filter: brightness(1.2);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      }
+
+      .admin-mobile-menu-trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        color: #e5e7eb;
+        height: 28px;
+        padding: 0 8px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 600;
+        transition: all 0.15s ease;
+        user-select: none;
+        -webkit-user-select: none;
+        position: relative;
+      }
+      .admin-mobile-menu-trigger:active,
+      .admin-mobile-menu-trigger.active {
+        background: rgba(245, 197, 24, 0.2);
+        border-color: #f5c518;
+        color: #f5c518;
+      }
+
+      .admin-mobile-alert-dot {
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        width: 7px;
+        height: 7px;
+        background: #ef4444;
+        border: 1.5px solid #1a1a1a;
+        border-radius: 50%;
+      }
+
+      .admin-mobile-popover {
+        position: fixed;
+        top: 44px;
+        right: 8px;
+        width: 250px;
+        background: rgba(24, 24, 27, 0.98);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 10px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        z-index: 100000;
+        overflow: hidden;
+        animation: adminPopoverFadeIn 0.15s ease-out;
+        font-family: inherit;
+      }
+      @keyframes adminPopoverFadeIn {
+        from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      .admin-popover-header {
+        padding: 10px 12px 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .admin-popover-title {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #f5c518;
+      }
+      .admin-popover-user {
+        font-size: 10.5px;
+        color: #9ca3af;
+        margin-top: 2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .admin-popover-items {
+        padding: 6px 0;
+      }
+      .admin-popover-item {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        padding: 9px 12px;
+        background: transparent;
+        border: none;
+        color: #f3f4f6;
+        font-size: 11.5px;
+        font-weight: 550;
+        cursor: pointer;
+        text-align: left;
+        transition: background 0.15s ease;
+      }
+      .admin-popover-item:active {
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .admin-popover-item-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .admin-popover-badge {
+        font-size: 10px;
+        font-weight: 700;
+        padding: 1px 6px;
+        border-radius: 10px;
+      }
+      .admin-popover-badge.green {
+        background: rgba(76, 175, 80, 0.2);
+        color: #4caf50;
+        border: 1px solid rgba(76, 175, 80, 0.4);
+      }
+      .admin-popover-badge.yellow {
+        background: rgba(245, 197, 24, 0.2);
+        color: #f5c518;
+        border: 1px solid rgba(245, 197, 24, 0.4);
+      }
+
+      .admin-popover-footer {
+        padding: 8px 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .admin-popover-logout {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: 100%;
+        padding: 6px 10px;
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #f87171;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .admin-popover-logout:active {
+        background: rgba(239, 68, 68, 0.25);
+        color: #ffffff;
       }
 
       .app-slide-link {
@@ -532,11 +695,35 @@
         #admin-bar {
           padding: 0 6px !important;
         }
+        .admin-bar-brand {
+          padding: 4px 6px !important;
+        }
+        .admin-bar-title-text {
+          display: none !important;
+        }
         .admin-nav-arrow {
           display: none !important;
         }
         .admin-bar-center {
-          margin: 0 4px;
+          margin: 0 4px !important;
+          flex: 1 !important;
+          min-width: 0 !important;
+        }
+        .admin-bar-links {
+          touch-action: pan-x !important;
+          -webkit-overflow-scrolling: touch !important;
+          overscroll-behavior-x: contain !important;
+        }
+        .admin-bar-links a {
+          touch-action: pan-x !important;
+          padding: 4px 8px !important;
+          font-size: 11px !important;
+        }
+        .admin-bar-right-desktop {
+          display: none !important;
+        }
+        .admin-bar-right-mobile {
+          display: inline-flex !important;
         }
       }
     `;
@@ -572,6 +759,8 @@
       `;
     }).join('');
 
+    const userEmail = localStorage.getItem('cc_admin_email') || 'Admin';
+
     bar.innerHTML = `
       <div class="admin-bar-left">
         <a href="${resolveHref('https://creationcue.web.app/index.html')}" class="admin-bar-brand" title="Creation Cue Admin Panel">
@@ -593,24 +782,74 @@
       </div>
 
       <div class="admin-bar-right">
-        <div class="admin-bar-status">
-          <span id="btn-subscribers-admin-bar" class="admin-bar-btn" onclick="window.openAdminSubscribers()" title="Subscribers" style="color: #f5c518; background: rgba(245, 197, 24, 0.12); border: 1px solid rgba(245, 197, 24, 0.3);">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            <span class="admin-btn-label">Subscribers</span> 
-            <span id="admin-subscribers-count" style="background: rgba(245, 197, 24, 0.22); border: 1px solid rgba(245, 197, 24, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #f5c518; margin-left: 2px;">0</span>
-          </span>
-          <span id="btn-support-admin-bar" class="admin-bar-btn" onclick="window.handleAdminSupport()" title="Support Requests" style="color: #cbd5e1; background: rgba(148, 163, 184, 0.12); border: 1px solid rgba(148, 163, 184, 0.25);">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-            <span class="admin-btn-label">Support</span> 
-            <span id="admin-support-count" style="display: none; background: rgba(245, 197, 24, 0.22); border: 1px solid rgba(245, 197, 24, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #f5c518; margin-left: 2px;">0</span>
-          </span>
-          <span id="btn-live-visitors" class="admin-bar-btn" onclick="window.openAdminLiveVisitors()" title="Live Visitors" style="color: #4caf50; background: rgba(76, 175, 80, 0.12); border: 1px solid rgba(76, 175, 80, 0.3);">
-            Live <span class="admin-live-dot"></span> <span id="admin-live-count" style="background: rgba(76, 175, 80, 0.22); border: 1px solid rgba(76, 175, 80, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #4caf50;">0</span>
-          </span>
+        <!-- Desktop Dock (> 768px): Full status badges & logout -->
+        <div class="admin-bar-right-desktop">
+          <div class="admin-bar-status">
+            <span id="btn-subscribers-admin-bar" class="admin-bar-btn" onclick="window.openAdminSubscribers()" title="Subscribers" style="color: #f5c518; background: rgba(245, 197, 24, 0.12); border: 1px solid rgba(245, 197, 24, 0.3);">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              <span class="admin-btn-label">Subscribers</span> 
+              <span id="admin-subscribers-count" class="admin-subscribers-count-target" style="background: rgba(245, 197, 24, 0.22); border: 1px solid rgba(245, 197, 24, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #f5c518; margin-left: 2px;">0</span>
+            </span>
+            <span id="btn-support-admin-bar" class="admin-bar-btn" onclick="window.handleAdminSupport()" title="Support Requests" style="color: #cbd5e1; background: rgba(148, 163, 184, 0.12); border: 1px solid rgba(148, 163, 184, 0.25);">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              <span class="admin-btn-label">Support</span> 
+              <span id="admin-support-count" class="admin-support-count-target" style="display: none; background: rgba(245, 197, 24, 0.22); border: 1px solid rgba(245, 197, 24, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #f5c518; margin-left: 2px;">0</span>
+            </span>
+            <span id="btn-live-visitors" class="admin-bar-btn" onclick="window.openAdminLiveVisitors()" title="Live Visitors" style="color: #4caf50; background: rgba(76, 175, 80, 0.12); border: 1px solid rgba(76, 175, 80, 0.3);">
+              Live <span class="admin-live-dot"></span> <span id="admin-live-count" class="admin-live-count-target" style="background: rgba(76, 175, 80, 0.22); border: 1px solid rgba(76, 175, 80, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #4caf50;">0</span>
+            </span>
+          </div>
+          <div class="admin-bar-user">
+            <span id="admin-user-email" title="${userEmail}">${userEmail}</span>
+            <button onclick="window.handleAdminLogout()">Logout</button>
+          </div>
         </div>
-        <div class="admin-bar-user">
-          <span id="admin-user-email" title="${localStorage.getItem('cc_admin_email') || 'Admin'}">${localStorage.getItem('cc_admin_email') || 'Admin'}</span>
-          <button onclick="window.handleAdminLogout()">Logout</button>
+
+        <!-- Mobile Quick-Menu Trigger (<= 768px): Leaves 80%+ width for menu tabs -->
+        <div class="admin-bar-right-mobile">
+          <button type="button" id="admin-mobile-menu-btn" class="admin-mobile-menu-trigger" onclick="window.toggleAdminMobilePopover(event)" title="Admin Controls & Status" aria-label="Open Admin Menu">
+            <span class="admin-live-dot"></span>
+            <span id="admin-mobile-live-count" class="admin-live-count-target">0</span>
+            <span id="admin-mobile-badge" class="admin-mobile-alert-dot" style="display: none;"></span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 2px;"><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg>
+          </button>
+
+          <!-- Floating Popover on Mobile -->
+          <div id="admin-mobile-popover" class="admin-mobile-popover" style="display: none;">
+            <div class="admin-popover-header">
+              <div class="admin-popover-title">Admin Controls</div>
+              <div class="admin-popover-user" id="admin-popover-email">${userEmail}</div>
+            </div>
+            <div class="admin-popover-items">
+              <button type="button" class="admin-popover-item" onclick="window.openAdminLiveVisitors(); window.closeAdminMobilePopover();">
+                <div class="admin-popover-item-left">
+                  <span class="admin-live-dot" style="margin: 0 2px 0 0;"></span>
+                  <span>Live Visitors</span>
+                </div>
+                <span class="admin-popover-badge green"><span class="admin-live-count-target">0</span> live</span>
+              </button>
+              <button type="button" class="admin-popover-item" onclick="window.openAdminSubscribers(); window.closeAdminMobilePopover();">
+                <div class="admin-popover-item-left">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  <span>Subscribers</span>
+                </div>
+                <span class="admin-popover-badge yellow" id="admin-popover-sub-count">0</span>
+              </button>
+              <button type="button" class="admin-popover-item" onclick="window.handleAdminSupport(); window.closeAdminMobilePopover();">
+                <div class="admin-popover-item-left">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  <span>Support Requests</span>
+                </div>
+                <span class="admin-popover-badge yellow" id="admin-popover-support-count" style="display:none;">0 pending</span>
+              </button>
+            </div>
+            <div class="admin-popover-footer">
+              <button type="button" class="admin-popover-logout" onclick="window.handleAdminLogout()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <span>Logout</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     `;
@@ -657,7 +896,7 @@
       scrollContainer.scrollBy({ left: 220, behavior: 'smooth' });
     };
 
-    // Horizontal wheel scrolling with mouse
+    // Horizontal wheel scrolling with mouse on desktop
     scrollContainer.addEventListener('wheel', function (e) {
       if (e.deltaY !== 0) {
         e.preventDefault();
@@ -665,6 +904,37 @@
         updateArrows();
       }
     }, { passive: false });
+
+    // Touch dragging tracking on mobile: prevents accidental link navigation when swiping
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+
+    scrollContainer.addEventListener('touchstart', function (e) {
+      if (e.touches && e.touches.length === 1) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isDragging = false;
+      }
+    }, { passive: true });
+
+    scrollContainer.addEventListener('touchmove', function (e) {
+      if (e.touches && e.touches.length === 1) {
+        const diffX = Math.abs(e.touches[0].clientX - startX);
+        const diffY = Math.abs(e.touches[0].clientY - startY);
+        if (diffX > 7 && diffX > diffY) {
+          isDragging = true;
+        }
+      }
+    }, { passive: true });
+
+    scrollContainer.addEventListener('click', function (e) {
+      if (isDragging) {
+        e.preventDefault();
+        e.stopPropagation();
+        isDragging = false;
+      }
+    }, true);
 
     scrollContainer.addEventListener('scroll', updateArrows, { passive: true });
     window.addEventListener('resize', updateArrows);
@@ -681,6 +951,41 @@
       }, 150);
     }
   }
+
+  // Popover controls for mobile admin controls
+  window.toggleAdminMobilePopover = function (e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const popover = document.getElementById('admin-mobile-popover');
+    const trigger = document.getElementById('admin-mobile-menu-btn');
+    if (!popover) return;
+    const isShown = popover.style.display === 'block';
+    popover.style.display = isShown ? 'none' : 'block';
+    if (trigger) {
+      if (isShown) trigger.classList.remove('active');
+      else trigger.classList.add('active');
+    }
+  };
+
+  window.closeAdminMobilePopover = function () {
+    const popover = document.getElementById('admin-mobile-popover');
+    const trigger = document.getElementById('admin-mobile-menu-btn');
+    if (popover) popover.style.display = 'none';
+    if (trigger) trigger.classList.remove('active');
+  };
+
+  // Close popover when clicking anywhere outside
+  document.addEventListener('click', function (e) {
+    const popover = document.getElementById('admin-mobile-popover');
+    const trigger = document.getElementById('admin-mobile-menu-btn');
+    if (!popover || popover.style.display === 'none') return;
+    if (trigger && (trigger === e.target || trigger.contains(e.target))) return;
+    if (popover && (popover === e.target || popover.contains(e.target))) return;
+    popover.style.display = 'none';
+    if (trigger) trigger.classList.remove('active');
+  });
 
   // Synchronize .app-slide-links across pages
   function syncSlideDrawer() {
@@ -710,10 +1015,11 @@
     document.body.classList.add('admin-mode');
     const bar = document.getElementById('admin-bar');
     if (bar) bar.style.display = 'flex';
+    const email = (user && user.email) ? user.email : (localStorage.getItem('cc_admin_email') || 'Admin');
     const emailEl = document.getElementById('admin-user-email');
-    if (emailEl && user && user.email) {
-      emailEl.textContent = user.email;
-    }
+    if (emailEl) emailEl.textContent = email;
+    const popoverEmailEl = document.getElementById('admin-popover-email');
+    if (popoverEmailEl) popoverEmailEl.textContent = email;
     initDatabaseListeners();
   }
 
@@ -721,6 +1027,7 @@
     document.body.classList.remove('admin-mode');
     const bar = document.getElementById('admin-bar');
     if (bar) bar.style.display = 'none';
+    window.closeAdminMobilePopover();
   }
 
   // Global click actions for admin utilities
@@ -770,20 +1077,21 @@
       const db = firebase.database();
 
       // Subscribers count
-      const subEl = document.getElementById('admin-subscribers-count');
-      if (subEl && !window._adminSubListenerStarted) {
+      if (!window._adminSubListenerStarted) {
         window._adminSubListenerStarted = true;
         db.ref('newsletter_subscribers').on('value', function (snap) {
           if (snap.exists()) {
             const count = snap.numChildren();
-            subEl.textContent = count;
+            const subEl = document.getElementById('admin-subscribers-count');
+            if (subEl) subEl.textContent = count;
+            const popoverSubEl = document.getElementById('admin-popover-sub-count');
+            if (popoverSubEl) popoverSubEl.textContent = count;
           }
         });
       }
 
       // Pending support requests count
-      const supportEl = document.getElementById('admin-support-count');
-      if (supportEl && !window._adminSupportListenerStarted) {
+      if (!window._adminSupportListenerStarted) {
         window._adminSupportListenerStarted = true;
         db.ref('support_requests').on('value', function (snap) {
           if (snap.exists()) {
@@ -791,13 +1099,37 @@
             snap.forEach(function (child) {
               if (child.val() && child.val().status === 'pending') pending++;
             });
+            const supportEl = document.getElementById('admin-support-count');
+            const popoverSupportEl = document.getElementById('admin-popover-support-count');
+            const mobileBadge = document.getElementById('admin-mobile-badge');
+
             if (pending > 0) {
-              supportEl.textContent = pending;
-              supportEl.style.display = 'inline-block';
+              if (supportEl) {
+                supportEl.textContent = pending;
+                supportEl.style.display = 'inline-block';
+              }
+              if (popoverSupportEl) {
+                popoverSupportEl.textContent = pending + ' pending';
+                popoverSupportEl.style.display = 'inline-block';
+              }
+              if (mobileBadge) mobileBadge.style.display = 'block';
             } else {
-              supportEl.style.display = 'none';
+              if (supportEl) supportEl.style.display = 'none';
+              if (popoverSupportEl) popoverSupportEl.style.display = 'none';
+              if (mobileBadge) mobileBadge.style.display = 'none';
             }
           }
+        });
+      }
+
+      // Active visitors count
+      if (!window._adminLiveListenerStarted) {
+        window._adminLiveListenerStarted = true;
+        db.ref('active_visitors').on('value', function (snap) {
+          const count = snap.exists() ? snap.numChildren() : 0;
+          document.querySelectorAll('.admin-live-count-target').forEach(function (el) {
+            el.textContent = count;
+          });
         });
       }
     } catch (e) {
