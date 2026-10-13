@@ -7,6 +7,18 @@
     "public": ".",
     "cleanUrls": true,
     "trailingSlash": false,
+    "redirects": [
+      {
+        "source": "/v2",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/v2.html",
+        "destination": "/",
+        "type": 301
+      }
+    ],
     "rewrites": [
       {
         "source": "/tax",
@@ -47,10 +59,6 @@
       {
         "source": "/admin",
         "destination": "/admin.html"
-      },
-      {
-        "source": "/v2",
-        "destination": "/v2.html"
       }
     ],
     "ignore": [
