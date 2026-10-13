@@ -748,6 +748,25 @@
       line-height: 1.6;
     }
 
+    /* Collapsible Sections (At a Glance & Curated Series) */
+    .section-collapse-header {
+      /* Normal block behavior on desktop */
+    }
+    #glance .collapse-header-info {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    #glance .collapse-section-desc {
+      margin: 0 auto;
+    }
+    .section-collapse-btn {
+      display: none;
+    }
+    .section-collapse-body {
+      display: block;
+    }
+
     /* Catalog Section */
     .catalog-header {
       display: flex;
@@ -1374,6 +1393,123 @@
         grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
         gap: 16px;
       }
+
+      /* Collapsible Sections on Mobile (#glance and #collections) */
+      .section-collapsible {
+        padding: 10px 0 !important;
+        transition: padding 0.3s ease;
+      }
+      .section-collapsible.is-open {
+        padding: 24px 0 36px !important;
+      }
+
+      .section-collapse-header {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 12px !important;
+        padding: 14px 16px !important;
+        background: #ffffff !important;
+        border: 1px solid var(--border) !important;
+        border-radius: var(--radius-md) !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+        cursor: pointer !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
+        -webkit-tap-highlight-color: transparent !important;
+        transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s !important;
+      }
+      .section-collapse-header:hover,
+      .section-collapse-header:active {
+        background: #fbfbfc !important;
+        border-color: #cbd5e1 !important;
+      }
+      .section-collapsible.is-open .section-collapse-header {
+        border-color: var(--primary) !important;
+      }
+
+      .collapse-header-info {
+        text-align: left !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+      }
+      .collapse-header-info .eyebrow {
+        font-size: 10px !important;
+        padding: 3px 10px !important;
+        margin-bottom: 5px !important;
+        letter-spacing: 1px !important;
+      }
+      .collapse-section-title {
+        font-size: 15.5px !important;
+        font-weight: 750 !important;
+        letter-spacing: -0.02em !important;
+        line-height: 1.25 !important;
+        margin-bottom: 0 !important;
+        color: var(--text) !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+      .collapse-section-desc {
+        display: none !important;
+      }
+      .section-collapsible.is-open .collapse-section-desc {
+        display: block !important;
+        margin-top: 14px !important;
+        font-size: 13px !important;
+        line-height: 1.55 !important;
+        color: var(--text-muted) !important;
+      }
+
+      .section-collapse-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        padding: 7px 12px !important;
+        background: var(--bg-alt) !important;
+        border: 1px solid var(--border) !important;
+        border-radius: var(--radius-full) !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        color: var(--text) !important;
+        flex-shrink: 0 !important;
+        pointer-events: none !important;
+        transition: all 0.25s ease !important;
+      }
+      .section-collapsible.is-open .section-collapse-btn {
+        background: var(--primary) !important;
+        color: #ffffff !important;
+        border-color: var(--primary) !important;
+      }
+
+      .collapse-arrow-icon {
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      .section-collapsible.is-open .collapse-arrow-icon {
+        transform: rotate(180deg) !important;
+      }
+
+      .section-collapse-body {
+        display: none !important;
+        margin-top: 16px !important;
+      }
+      .section-collapsible.is-open .section-collapse-body {
+        display: block !important;
+        animation: collapseExpandFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      @keyframes collapseExpandFade {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
     }
 
     /* 2 Columns on Mobile / Tablets <= 768px */
@@ -1751,79 +1887,97 @@
     </div>
   </section>
 
-  <!-- AT A GLANCE (WOW Space style 3x3 Grid) -->
-  <section class="section section-alt" id="glance">
+  <!-- AT A GLANCE (WOW Space style 3x3 Grid, Collapsible on Mobile) -->
+  <section class="section section-alt section-collapsible" id="glance">
     <div class="container">
-      <div style="text-align: center; max-width: 640px; margin: 0 auto;">
-        <div class="eyebrow"><span class="eyebrow-dot"></span> THE STUDIO AT A GLANCE</div>
-        <h2 class="section-title">Everything engineered for your wrist</h2>
-        <p class="section-desc" style="margin: 0 auto;">From high-contrast digital dashboards to minimalist analog classics, every design is built for readability, battery life, and everyday comfort.</p>
+      <div class="section-collapse-header" onclick="toggleSectionCollapse('glance')" role="button" tabindex="0" aria-expanded="false" aria-controls="glance-collapse-body">
+        <div class="collapse-header-info">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> THE STUDIO AT A GLANCE</div>
+          <h2 class="section-title collapse-section-title">Everything engineered for your wrist</h2>
+          <p class="section-desc collapse-section-desc">From high-contrast digital dashboards to minimalist analog classics, every design is built for readability, battery life, and everyday comfort.</p>
+        </div>
+        <button type="button" class="section-collapse-btn" id="btn-collapse-glance" aria-label="Toggle Features" tabindex="-1">
+          <span class="collapse-pill-text">6 Features</span>
+          <svg class="collapse-arrow-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
       </div>
 
-      <div class="glance-grid">
-        <div class="glance-card">
-          <div class="glance-icon">⚡</div>
-          <h3 class="glance-title">100% Watch Face Format (WFF)</h3>
-          <p class="glance-desc">Compliant with Google's modern declarative XML standard. Zero background battery drain and native Wear OS performance.</p>
-        </div>
+      <div class="section-collapse-body" id="glance-collapse-body">
+        <div class="glance-grid">
+          <div class="glance-card">
+            <div class="glance-icon">⚡</div>
+            <h3 class="glance-title">100% Watch Face Format (WFF)</h3>
+            <p class="glance-desc">Compliant with Google's modern declarative XML standard. Zero background battery drain and native Wear OS performance.</p>
+          </div>
 
-        <div class="glance-card">
-          <div class="glance-icon">🎨</div>
-          <h3 class="glance-title">Deep Customization</h3>
-          <p class="glance-desc">Customize accent palettes, change hands, toggle gauges, and personalize complication slots for steps, weather, and calendar.</p>
-        </div>
+          <div class="glance-card">
+            <div class="glance-icon">🎨</div>
+            <h3 class="glance-title">Deep Customization</h3>
+            <p class="glance-desc">Customize accent palettes, change hands, toggle gauges, and personalize complication slots for steps, weather, and calendar.</p>
+          </div>
 
-        <div class="glance-card">
-          <div class="glance-icon">🖤</div>
-          <h3 class="glance-title">True AMOLED Black</h3>
-          <p class="glance-desc">Pure black backgrounds turn individual OLED pixels off completely, preserving your smartwatch's battery throughout the day.</p>
-        </div>
+          <div class="glance-card">
+            <div class="glance-icon">🖤</div>
+            <h3 class="glance-title">True AMOLED Black</h3>
+            <p class="glance-desc">Pure black backgrounds turn individual OLED pixels off completely, preserving your smartwatch's battery throughout the day.</p>
+          </div>
 
-        <div class="glance-card">
-          <div class="glance-icon">🏃</div>
-          <h3 class="glance-title">Health & Fitness Hub</h3>
-          <p class="glance-desc">Integrated real-time heart rate indicators, step goals, distance (km/mi), and battery progression bars at a quick glance.</p>
-        </div>
+          <div class="glance-card">
+            <div class="glance-icon">🏃</div>
+            <h3 class="glance-title">Health & Fitness Hub</h3>
+            <p class="glance-desc">Integrated real-time heart rate indicators, step goals, distance (km/mi), and battery progression bars at a quick glance.</p>
+          </div>
 
-        <div class="glance-card">
-          <div class="glance-icon">⌚</div>
-          <h3 class="glance-title">Samsung & Pixel Ready</h3>
-          <p class="glance-desc">Tested and calibrated on Samsung Galaxy Watch (4/5/6/7/Ultra), Google Pixel Watch (1/2/3), and OnePlus Watch 2.</p>
-        </div>
+          <div class="glance-card">
+            <div class="glance-icon">⌚</div>
+            <h3 class="glance-title">Samsung & Pixel Ready</h3>
+            <p class="glance-desc">Tested and calibrated on Samsung Galaxy Watch (4/5/6/7/Ultra), Google Pixel Watch (1/2/3), and OnePlus Watch 2.</p>
+          </div>
 
-        <div class="glance-card">
-          <div class="glance-icon">🎁</div>
-          <h3 class="glance-title">11 Permanent Free Faces</h3>
-          <p class="glance-desc">Download top-tier watch faces with 100K+ installs completely free with zero ads and zero hidden subscriptions.</p>
+          <div class="glance-card">
+            <div class="glance-icon">🎁</div>
+            <h3 class="glance-title">11 Permanent Free Faces</h3>
+            <p class="glance-desc">Download top-tier watch faces with 100K+ installs completely free with zero ads and zero hidden subscriptions.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- COLLECTIONS BLUEPRINT (WOW Space Style) -->
-  <section class="section" id="collections">
+  <!-- COLLECTIONS BLUEPRINT (WOW Space Style, Collapsible on Mobile) -->
+  <section class="section section-collapsible" id="collections">
     <div class="container">
-      <div class="eyebrow"><span class="eyebrow-dot"></span> CURATED SERIES</div>
-      <h2 class="section-title">Tailored for every occasion & style</h2>
-      <p class="section-desc">Whether you are heading to the gym, an executive board meeting, or an outdoor trek, choose the style that complements your outfit and day.</p>
-
-      <div class="collections-grid">
-        <div class="collection-item">
-          <div class="collection-num">SERIES 01</div>
-          <h3>Digital Performance</h3>
-          <p>Bold numerals, high-density health tracking, heart rate monitors, and customizable multi-complication layouts. Built for athletes, tech enthusiasts, and daily productivity.</p>
+      <div class="section-collapse-header" onclick="toggleSectionCollapse('collections')" role="button" tabindex="0" aria-expanded="false" aria-controls="collections-collapse-body">
+        <div class="collapse-header-info">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> CURATED SERIES</div>
+          <h2 class="section-title collapse-section-title">Tailored for every occasion & style</h2>
+          <p class="section-desc collapse-section-desc">Whether you are heading to the gym, an executive board meeting, or an outdoor trek, choose the style that complements your outfit and day.</p>
         </div>
+        <button type="button" class="section-collapse-btn" id="btn-collapse-collections" aria-label="Toggle Curated Series" tabindex="-1">
+          <span class="collapse-pill-text">3 Series</span>
+          <svg class="collapse-arrow-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+      </div>
 
-        <div class="collection-item">
-          <div class="collection-num">SERIES 02</div>
-          <h3>Classic Analog</h3>
-          <p>Traditional chronograph dials, authentic sweep hands, clean date windows, and luxury dress-watch aesthetic. Perfect for formal wear, work, and minimalist wrists.</p>
-        </div>
+      <div class="section-collapse-body" id="collections-collapse-body">
+        <div class="collections-grid">
+          <div class="collection-item">
+            <div class="collection-num">SERIES 01</div>
+            <h3>Digital Performance</h3>
+            <p>Bold numerals, high-density health tracking, heart rate monitors, and customizable multi-complication layouts. Built for athletes, tech enthusiasts, and daily productivity.</p>
+          </div>
 
-        <div class="collection-item">
-          <div class="collection-num">SERIES 03</div>
-          <h3>Hybrid & Tactical</h3>
-          <p>The best of both worlds: elegant analog dial aesthetics paired with precise digital LCD secondary screens, battery meters, and outdoor compass styles.</p>
+          <div class="collection-item">
+            <div class="collection-num">SERIES 02</div>
+            <h3>Classic Analog</h3>
+            <p>Traditional chronograph dials, authentic sweep hands, clean date windows, and luxury dress-watch aesthetic. Perfect for formal wear, work, and minimalist wrists.</p>
+          </div>
+
+          <div class="collection-item">
+            <div class="collection-num">SERIES 03</div>
+            <h3>Hybrid & Tactical</h3>
+            <p>The best of both worlds: elegant analog dial aesthetics paired with precise digital LCD secondary screens, battery meters, and outdoor compass styles.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -3018,6 +3172,43 @@
       if (window.innerWidth > 900) {
         closeMobileMenu();
       }
+    });
+
+    // --------------------------------------------------------
+    // Mobile Collapsible Sections (#glance & #collections)
+    // --------------------------------------------------------
+    function toggleSectionCollapse(sectionId) {
+      if (window.innerWidth > 900) return;
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+
+      const isOpen = section.classList.toggle('is-open');
+      const header = section.querySelector('.section-collapse-header');
+      const pillText = section.querySelector('.collapse-pill-text');
+
+      if (header) {
+        header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+
+      if (pillText) {
+        if (isOpen) {
+          pillText.textContent = 'Hide';
+        } else {
+          pillText.textContent = sectionId === 'glance' ? '6 Features' : '3 Series';
+        }
+      }
+    }
+
+    // Keyboard navigation (Enter / Space) for collapsible headers
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.section-collapse-header').forEach(header => {
+        header.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            header.click();
+          }
+        });
+      });
     });
 
     // --------------------------------------------------------
