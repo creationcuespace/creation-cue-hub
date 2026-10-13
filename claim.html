@@ -540,6 +540,78 @@
       }
     }
 
+    /* Play Store VIP Gift Card Theme */
+    .card.is-gift-card {
+      border: 1.5px solid rgba(245, 197, 24, 0.45);
+      border-radius: 14px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75), 0 0 25px rgba(245, 197, 24, 0.12);
+      background: radial-gradient(ellipse at 85% 0%, rgba(0, 230, 118, 0.08) 0%, rgba(20, 20, 24, 0.98) 60%), var(--dark);
+    }
+
+    .card.is-gift-card::before {
+      height: 4px;
+      background: linear-gradient(90deg, #00d2ff 0%, #00f076 35%, #ffc700 70%, #ff334b 100%);
+    }
+
+    .card.is-gift-card .watchface-preview {
+      border: 3px solid rgba(245, 197, 24, 0.4);
+      box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.5), 0 10px 25px rgba(0, 0, 0, 0.7);
+      background: #000;
+    }
+
+    .card.is-gift-card .btn:not(.redeem-btn):not(.btn-voucher-copy):not(#btn-review):not(.ghost) {
+      background: linear-gradient(135deg, #f5c518 0%, #e5b615 100%);
+      color: #000;
+      box-shadow: 0 4px 15px rgba(245, 197, 24, 0.35);
+    }
+
+    .gift-card-value-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      background: rgba(245, 197, 24, 0.08);
+      border: 1px solid rgba(245, 197, 24, 0.3);
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--yellow);
+      letter-spacing: 0.5px;
+      margin-top: 8px;
+    }
+
+    .voucher-actions-row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .btn-voucher-copy {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border: 1px solid var(--border);
+      font-family: 'Teko', sans-serif;
+      font-size: 20px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 10px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.15s, border-color 0.15s;
+      width: 100%;
+    }
+
+    .btn-voucher-copy:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--yellow);
+      color: var(--yellow);
+    }
+
     /* Watch Installation Guide Styles */
     .install-guide-card {
       border: 1px solid var(--border);
@@ -609,6 +681,27 @@
 
     <!-- State: Active Promotion -->
     <div id="state-active" style="display: none; flex-direction: column; gap: 20px;">
+      
+      <!-- Gift Card Header Ribbon (Activated on One-Time Token links) -->
+      <div id="gift-card-badge" style="display: none; align-items: center; justify-content: space-between; background: linear-gradient(90deg, rgba(245,197,24,0.12), rgba(0,230,118,0.12)); border: 1px solid rgba(245,197,24,0.35); border-radius: 8px; padding: 10px 14px; margin-bottom: -6px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 20px;">🎁</span>
+          <div style="display: flex; flex-direction: column; text-align: left; line-height: 1.15;">
+            <span style="font-size: 11px; font-weight: 700; color: var(--yellow); letter-spacing: 1px; text-transform: uppercase;">Play Store VIP Gift Card</span>
+            <span style="font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">Complimentary Access • Wear OS</span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.45); padding: 5px 9px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.08);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M3.609 1.814L13.792 12 3.61 22.186a2.003 2.003 0 0 1-1.61-1.956V3.77a2 2 0 0 1 1.609-1.956z" fill="#00d2ff"/>
+            <path d="M17.632 9.574L15.202 12l2.43 2.426 3.14-1.814a1.2 1.2 0 0 0 0-2.078l-3.14-1.814z" fill="#ffc700"/>
+            <path d="M3.61 22.186L15.202 12 13.792 10.59 1.999 22.186a2 2 0 0 0 1.611 0z" fill="#ff334b"/>
+            <path d="M15.202 12L3.61 1.814A2 2 0 0 0 1.999 1.814L13.792 13.41 15.202 12z" fill="#00f076"/>
+          </svg>
+          <span style="font-size: 10px; font-weight: 600; color: #fff; letter-spacing: 0.5px;">Google Play</span>
+        </div>
+      </div>
+
       <div class="watchface-preview" id="wf-preview-container">
         <!-- Loaded image or default icon -->
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -620,6 +713,9 @@
       <div class="title-area">
         <h1 class="wf-name" id="wf-name">Loading Promotion...</h1>
         <p class="wf-desc" id="wf-desc">Please wait while we fetch the watch face details.</p>
+        <div id="gift-card-value-pill" class="gift-card-value-pill" style="display: none;">
+          <span>★ Valued at $1.99 • 100% Free VIP Pass ★</span>
+        </div>
         <div id="promo-countdown-area" style="display:none; margin-top:12px; font-weight:600; font-size:13px; color:var(--yellow); background:rgba(245,197,24,0.05); padding:8px 12px; border:1px dashed rgba(245,197,24,0.2); border-radius:4px; text-transform:uppercase; letter-spacing:1px; text-align:center;">
           <!-- Timer text will be injected here -->
         </div>
@@ -651,31 +747,46 @@
 
       <!-- Claimed Area -->
       <div class="claimed-area" id="claimed-area" style="display: none;">
-        <div style="font-weight: 600; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; color: var(--green); margin-bottom: 4px;">
+        <div id="claimed-success-title" style="font-weight: 600; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; color: var(--green); margin-bottom: 4px;">
           ★ Coupon Claimed Successfully ★
         </div>
         
         <!-- COUNTDOWN STATE (Strategy 4) -->
         <div id="claim-countdown-block" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; gap: 14px; background: linear-gradient(135deg, rgba(245, 197, 24, 0.05) 0%, rgba(30, 30, 30, 0.9) 100%); border: 1.5px dashed rgba(245, 197, 24, 0.3); border-radius: 8px; width: 100%; box-shadow: inset 0 0 10px rgba(245, 197, 24, 0.05);">
-          <div style="font-size: 15px; color: var(--yellow); font-weight: 600; font-style: italic; line-height: 1.4; max-width: 320px; padding: 0 5px; text-align: center; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+          <div id="claim-countdown-subtext" style="font-size: 15px; color: var(--yellow); font-weight: 600; font-style: italic; line-height: 1.4; max-width: 320px; padding: 0 5px; text-align: center; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">
             ✨ "Remember: leaving a review helps me create more faces!"
           </div>
           <div style="display: flex; align-items: center; gap: 10px; margin-top: 4px;">
             <div class="loader" style="border-top-color: var(--yellow); width: 16px; height: 16px;"></div>
-            <div style="font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: 0.5px;">Your coupon is coming...</div>
+            <div id="claim-countdown-loading-label" style="font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: 0.5px;">Your coupon is coming...</div>
           </div>
         </div>
 
         <!-- REVEALED CONTENT (Hidden by default, shown after countdown) -->
         <div id="claim-revealed-block" style="display: none; flex-direction: column; gap: 14px; width: 100%;">
+          <div id="voucher-badge-label" style="display: none; font-size: 11px; font-weight: 700; color: var(--yellow); letter-spacing: 1.5px; text-transform: uppercase;">
+            ★ GOOGLE PLAY SINGLE-USE VOUCHER ★
+          </div>
           <div class="code-box" id="code-display" title="Click to copy">
             --------
           </div>
           <div class="code-subtext">Tap code to copy to clipboard</div>
           
-          <button class="btn redeem-btn" id="btn-redeem">
-            REDEEM ON GOOGLE PLAY
-          </button>
+          <div class="voucher-actions-row">
+            <button class="btn redeem-btn" id="btn-redeem" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M3.609 1.814L13.792 12 3.61 22.186a2.003 2.003 0 0 1-1.61-1.956V3.77a2 2 0 0 1 1.609-1.956z" fill="#00d2ff"/>
+                <path d="M17.632 9.574L15.202 12l2.43 2.426 3.14-1.814a1.2 1.2 0 0 0 0-2.078l-3.14-1.814z" fill="#ffc700"/>
+                <path d="M3.61 22.186L15.202 12 13.792 10.59 1.999 22.186a2 2 0 0 0 1.611 0z" fill="#ff334b"/>
+                <path d="M15.202 12L3.61 1.814A2 2 0 0 0 1.999 1.814L13.792 13.41 15.202 12z" fill="#00f076"/>
+              </svg>
+              <span>REDEEM IN GOOGLE PLAY ↗</span>
+            </button>
+            <button type="button" class="btn-voucher-copy" id="btn-copy-code">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>COPY VOUCHER CODE</span>
+            </button>
+          </div>
 
           <!-- Watch Installation Guide -->
           <details class="install-guide-card">
@@ -876,8 +987,13 @@
         document.getElementById('error-msg').textContent = "No promotion code or claim token provided in the URL.";
         return;
       }
-      
-      document.getElementById('loading-msg').textContent = "Loading claim details...";
+      if (isTokenClaim) {
+        var card = document.getElementById('main-card');
+        if (card) card.classList.add('is-gift-card');
+        document.getElementById('loading-msg').textContent = "Unwrapping digital gift pass...";
+      } else {
+        document.getElementById('loading-msg').textContent = "Loading claim details...";
+      }
       
       var dbLoadTimeout = setTimeout(function() {
         if (!promoData && !tokenData) {
@@ -1011,6 +1127,19 @@
       if (promoData.imageUrl) {
         document.getElementById('wf-preview-container').innerHTML = `<img src="${promoData.imageUrl}" alt="${promoData.name}">`;
       }
+
+      if (isTokenClaim) {
+        var card = document.getElementById('main-card');
+        if (card) card.classList.add('is-gift-card');
+        var giftBadge = document.getElementById('gift-card-badge');
+        if (giftBadge) giftBadge.style.display = 'flex';
+        var valuePill = document.getElementById('gift-card-value-pill');
+        if (valuePill) valuePill.style.display = 'inline-flex';
+        var claimBtn = document.getElementById('btn-claim');
+        if (claimBtn && !hasUserClaimed) {
+          claimBtn.innerHTML = '🎁 UNWRAP YOUR GIFT PASS';
+        }
+      }
       
       var total = promoData.totalCoupons || 0;
       var claimed = promoData.claimedCount || 0;
@@ -1136,6 +1265,32 @@
         if (reviewBtn) reviewBtn.style.display = 'none';
       }
 
+      var copyCodeBtn = document.getElementById('btn-copy-code');
+      if (copyCodeBtn) {
+        copyCodeBtn.onclick = function() {
+          navigator.clipboard.writeText(code).then(function() {
+            showToast("Voucher Code Copied!");
+          });
+        };
+      }
+
+      if (isTokenClaim) {
+        var card = document.getElementById('main-card');
+        if (card) card.classList.add('is-gift-card');
+        var giftBadge = document.getElementById('gift-card-badge');
+        if (giftBadge) giftBadge.style.display = 'flex';
+        var voucherBadge = document.getElementById('voucher-badge-label');
+        if (voucherBadge) voucherBadge.style.display = 'block';
+        var successTitle = document.getElementById('claimed-success-title');
+        if (successTitle) successTitle.textContent = "★ Play Store VIP Gift Card Unwrapped! ★";
+        var countdownSub = document.getElementById('claim-countdown-subtext');
+        if (countdownSub) countdownSub.textContent = "✨ Unwrapping your personal Google Play voucher...";
+        var countLoading = document.getElementById('claim-countdown-loading-label');
+        if (countLoading) countLoading.textContent = "Preparing your VIP Gift Pass...";
+        var codeSub = document.querySelector('.code-subtext');
+        if (codeSub) codeSub.textContent = "Single-use voucher • Tap code or redeem directly below";
+      }
+
       var countdownBlock = document.getElementById('claim-countdown-block');
       var revealedBlock = document.getElementById('claim-revealed-block');
 
@@ -1161,7 +1316,7 @@
       var claimBtn = document.getElementById('btn-claim');
       isClaiming = true;
       claimBtn.disabled = true;
-      claimBtn.innerHTML = '<span class="loader"></span> CLAIMING...';
+      claimBtn.innerHTML = isTokenClaim ? '<span class="loader" style="border-top-color:#000;"></span> UNWRAPPING...' : '<span class="loader"></span> CLAIMING...';
       
       attemptClaim();
     });
@@ -1297,7 +1452,7 @@
         } else {
           claimBtn.style.display = 'block';
           claimBtn.disabled = false;
-          claimBtn.textContent = "CLAIM FREE COUPON";
+          claimBtn.textContent = isTokenClaim ? "🎁 UNWRAP YOUR GIFT PASS" : "CLAIM FREE COUPON";
           if (storeArea) storeArea.style.display = 'none';
         }
       }
