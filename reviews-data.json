@@ -1,65 +1,65 @@
 {
-  "lastUpdated": "2026-10-12T02:39:37.475Z",
+  "lastUpdated": "2026-10-13T03:53:42.658Z",
   "reviews": [
     {
-      "reviewId": "e731e734-3963-4d40-9bbb-c0abf8c6f779",
+      "reviewId": "365327ad-3df4-45b8-8215-ab24a99001d1",
+      "packageName": "com.creation.cue101watchface",
+      "title": "Digital Watch Face CUE101",
+      "wfId": "cue101",
+      "authorName": "The Active Chat",
+      "starRating": 4,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
+      "text": "\tThis face has a unique design that is very cool to look at & with clear info layout and good color options, I like it. I have several of this designer's faces and each one brings something different..",
+      "lastModified": "2026-10-12T23:29:55.000Z"
+    },
+    {
+      "reviewId": "474c3256-321b-4c15-9b43-fcca466aaa5a",
       "packageName": "com.creationcue.crc066watchface",
       "title": "Digital Watch Face CRC066",
       "wfId": "crc066",
-      "authorName": "SuperMan Bat",
+      "authorName": "Hector Paez",
       "starRating": 5,
       "reviewerLanguage": "en",
-      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
-      "text": "\tcoool",
-      "lastModified": "2026-10-11T12:06:28.000Z"
+      "deviceMetadata": "q7q (Galaxy Z Fold7)",
+      "text": "\tvery clear and easy to install.",
+      "lastModified": "2026-10-12T19:23:48.000Z"
     },
     {
-      "reviewId": "0584f714-abe7-489f-b6db-603f7277458c",
-      "packageName": "com.creationcue.crc090watchface",
-      "title": "Digital Watch Face CRC090",
-      "wfId": "crc090",
-      "authorName": "Emanuel Bruno Rocha Dias",
+      "reviewId": "e33b952d-7796-4aa1-939c-ab2e77631a2a",
+      "packageName": "com.watchfacestudio.crc041",
+      "title": "Digital Watch Face CRC041",
+      "wfId": "crc041",
+      "authorName": "Андрей Муратов",
       "starRating": 5,
-      "reviewerLanguage": "pt",
-      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
-      "text": "\tBeautiful",
-      "lastModified": "2026-10-11T08:50:25.000Z"
+      "reviewerLanguage": "ru",
+      "deviceMetadata": "pa2q (Galaxy S25+)",
+      "text": "\tСпасибо ) удобно, симпатично, практично, ничего лишнего )",
+      "lastModified": "2026-10-12T12:04:00.000Z"
     },
     {
-      "reviewId": "f9ee268e-89ec-4593-aa17-7e8afa798c76",
-      "packageName": "com.watchfacestudio.crc035",
-      "title": "Info Watch Face crc035",
-      "wfId": "crc035",
-      "authorName": "Emanuel Bruno Rocha Dias",
+      "reviewId": "90850d63-bb02-48b3-a589-8e1a64abb75a",
+      "packageName": "com.creation.cue136watchface",
+      "title": "Analog Watch Face CUE136",
+      "wfId": "cue136",
+      "authorName": "Lock Down",
       "starRating": 5,
-      "reviewerLanguage": "pt",
-      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
-      "text": "\tNice Watch Face",
-      "lastModified": "2026-10-11T08:49:36.000Z"
+      "reviewerLanguage": "en",
+      "deviceMetadata": "kansas (moto g - 2025)",
+      "text": "\tThanks! Easy to see and lots of customization options!!",
+      "lastModified": "2026-10-12T11:50:08.000Z"
     },
     {
-      "reviewId": "524b99a7-6f13-4bbf-a37d-bf2adecae1f1",
-      "packageName": "com.creationcue.crc044",
-      "title": "Digital Watch Face CRC044",
-      "wfId": "crc044",
-      "authorName": "Emanuel Bruno Rocha Dias",
+      "reviewId": "ee4ca3e3-b6da-4f16-ba4a-11cdfde0bdfd",
+      "packageName": "com.creation.cueinduswatchface",
+      "title": "Watch Face CUE Indus",
+      "wfId": "cueindus",
+      "authorName": "Lock Down",
       "starRating": 5,
-      "reviewerLanguage": "pt",
-      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
-      "text": "\tUnique Design watch face",
-      "lastModified": "2026-10-11T08:48:43.000Z"
-    },
-    {
-      "reviewId": "f64d4b4e-2462-45f7-a48a-728387b8d652",
-      "packageName": "com.creation.cue157watchface",
-      "title": "Watch Face CUE157",
-      "wfId": "cue157",
-      "authorName": "Giuseppe Filograsso",
-      "starRating": 3,
-      "reviewerLanguage": "it",
-      "deviceMetadata": "grizzly (Pixel 11 Pro)",
-      "text": "\tpoche combinazioni di colori a disposizione, barre inferiori inutili così come sono (se ci metto qualcosa, debbo poterlo vedere) altrimenti meglio non averle... le complication un po' piccole... speriamo in un aggiornamento futuro",
-      "lastModified": "2026-10-10T14:38:23.000Z"
+      "reviewerLanguage": "en",
+      "deviceMetadata": "kansas (moto g - 2025)",
+      "text": "\tThanks! Easy to see and lots of customization options!!",
+      "lastModified": "2026-10-12T11:49:28.000Z"
     }
   ]
 }
