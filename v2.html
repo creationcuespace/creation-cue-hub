@@ -2364,7 +2364,7 @@
         <nav>
           <ul class="nav-links" id="nav-links">
             <li><a href="#catalog" onclick="closeMobileMenu()">Watch Faces</a></li>
-            <li><a href="#free-faces" onclick="filterBy('free'); closeMobileMenu();">Free Faces (11)</a></li>
+            <li><a href="#catalog" onclick="filterBy('free', true); closeMobileMenu();">Free Faces (11)</a></li>
             <li>
               <a href="blog.html" class="nav-link-blog" onclick="closeMobileMenu()">
                 Blog <span class="nav-badge-pill">NEW</span>
@@ -3669,7 +3669,7 @@
     // --------------------------------------------------------
     // Filtering & Search
     // --------------------------------------------------------
-    function filterBy(filterName) {
+    function filterBy(filterName, shouldScroll = false) {
       currentFilter = (filterName || 'ALL').toUpperCase().trim();
       currentPage = 1;
       document.querySelectorAll('.filter-pill').forEach(btn => {
@@ -3677,6 +3677,10 @@
         btn.classList.toggle('active', btnFilter === currentFilter);
       });
       applyFilters();
+
+      if (shouldScroll) {
+        scrollToSection('catalog', true);
+      }
     }
 
     function handleSearch(val) {
