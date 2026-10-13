@@ -13,10 +13,13 @@
   <link rel="preload" as="image" href="images/cue177.webp" type="image/webp" fetchpriority="high">
   <link rel="preload" as="image" href="images/watch_frame_samsung.webp" type="image/webp" fetchpriority="high">
 
-  <!-- Google Fonts: Plus Jakarta Sans & Inter with font-display: swap -->
+  <!-- Google Fonts: Plus Jakarta Sans & Inter with font-display: swap (Asynchronously loaded to eliminate render blocking) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+  </noscript>
 
   <style>
     :root {
@@ -99,7 +102,7 @@
       font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: #334155;
       background: rgba(0,0,0,0.04);
       border: 1px solid var(--border);
       padding: 6px 16px;
@@ -117,7 +120,7 @@
       flex-shrink: 0;
     }
     .hero-badge-text {
-      color: var(--text-muted);
+      color: #334155;
       display: inline-block;
       font-size: 11px;
       font-weight: 700;
@@ -454,7 +457,8 @@
       padding-top: 24px;
       border-top: 1px solid var(--border-light);
     }
-    .stat-item h4 {
+    .stat-item h4,
+    .stat-item .stat-value {
       font-size: 24px;
       font-weight: 800;
       letter-spacing: -0.02em;
@@ -764,20 +768,21 @@
       border-radius: 99px;
       background: rgba(0, 0, 0, 0.05);
       border: 1px solid var(--border);
+      color: #1e293b;
     }
     .trust-badge-yt {
       background: rgba(239, 68, 68, 0.1);
-      color: #dc2626;
+      color: #b91c1c;
       border-color: rgba(239, 68, 68, 0.25);
     }
     .trust-badge-star {
       background: rgba(245, 158, 11, 0.12);
-      color: #b45309;
+      color: #92400e;
       border-color: rgba(245, 158, 11, 0.25);
     }
     .trust-badge-hw {
       background: rgba(220, 38, 38, 0.08);
-      color: #b91c1c;
+      color: #991b1b;
       border-color: rgba(220, 38, 38, 0.2);
     }
 
@@ -2203,7 +2208,8 @@
       .stat-item {
         text-align: center !important;
       }
-      .stat-item h4 {
+      .stat-item h4,
+      .stat-item .stat-value {
         font-size: 18px !important;
       }
       .stat-item p {
@@ -2488,7 +2494,8 @@
       </div>
     </div>
   </header>
-
+ 
+  <main id="main-content">
   <!-- HERO SECTION WITH WEAR OS SMARTWATCH SHOWCASE (WOW Space Style) -->
   <section class="hero">
     <div class="container">
@@ -2534,15 +2541,15 @@
           <!-- Live Stats (Downloads dynamically synced with play-versions) -->
           <div class="hero-stats">
             <div class="stat-item">
-              <h4 id="stat-count">115+</h4>
+              <div class="stat-value" id="stat-count">115+</div>
               <p>Watch Faces</p>
             </div>
             <div class="stat-item">
-              <h4 id="stat-installs">0.0K+</h4>
+              <div class="stat-value" id="stat-installs">0.0K+</div>
               <p id="stat-installs-label">Total Downloads</p>
             </div>
             <div class="stat-item">
-              <h4>100%</h4>
+              <div class="stat-value">100%</div>
               <p>WFF Battery Optimized</p>
             </div>
           </div>
@@ -2643,7 +2650,7 @@
           <h2 class="section-title collapse-section-title">Everything engineered for your wrist</h2>
           <p class="section-desc collapse-section-desc">From high-contrast digital dashboards to minimalist analog classics, every design is built for readability, battery life, and everyday comfort.</p>
         </div>
-        <button type="button" class="section-collapse-btn" id="btn-collapse-glance" aria-label="Toggle Features" tabindex="-1">
+        <button type="button" class="section-collapse-btn" id="btn-collapse-glance" tabindex="-1">
           <span class="collapse-pill-text">6 Features</span>
           <svg class="collapse-arrow-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
@@ -2700,7 +2707,7 @@
           <h2 class="section-title collapse-section-title">Tailored for every occasion & style</h2>
           <p class="section-desc collapse-section-desc">Whether you are heading to the gym, an executive board meeting, or an outdoor trek, choose the style that complements your outfit and day.</p>
         </div>
-        <button type="button" class="section-collapse-btn" id="btn-collapse-collections" aria-label="Toggle Curated Series" tabindex="-1">
+        <button type="button" class="section-collapse-btn" id="btn-collapse-collections" tabindex="-1">
           <span class="collapse-pill-text">3 Series</span>
           <svg class="collapse-arrow-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
@@ -3025,6 +3032,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -3841,7 +3849,7 @@
           ${displayBadge ? `<span class="${badgeClass}">${displayBadge}</span>` : ''}
           <img src="${imgSrc}" loading="lazy" decoding="async" width="512" height="512" alt="${f.title}" onerror="this.src='images/${f.id}.png'">
         </div>
-        <h4 class="watch-card-title">${f.title}</h4>
+        <h3 class="watch-card-title">${f.title}</h3>
         <p class="watch-card-desc">${f.description_en || 'Modern, customizable Wear OS watch face.'}</p>
         <div class="watch-card-actions">
           <button class="btn btn-preview" onclick="previewOnHeroWatch('${f.id}')" title="Preview on smartwatch">⌚ Preview</button>
