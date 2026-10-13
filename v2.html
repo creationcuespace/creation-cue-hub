@@ -303,10 +303,11 @@
       margin-top: 14px;
       margin-bottom: 18px;
       min-height: 2.3em; /* Locks 2 lines height constant across faces */
-      display: flex;
-      align-items: flex-start;
+      display: block;
+      text-align: left;
     }
     .hero-title span {
+      display: inline-block;
       background: linear-gradient(135deg, #111 20%, #666 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -1309,7 +1310,8 @@
         margin-top: 4px;
         margin-bottom: 12px;
         min-height: auto;
-        justify-content: center;
+        display: block;
+        text-align: center;
       }
       .hero-watch-col {
         order: 3;
@@ -1460,8 +1462,11 @@
         font-size: clamp(24px, 7vw, 36px) !important;
         letter-spacing: -0.025em !important;
         max-width: 100% !important;
-        word-break: break-word !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
         margin-bottom: 8px !important;
+        display: block !important;
+        text-align: center !important;
       }
       .hero-desc {
         font-size: 13px !important;
@@ -1590,8 +1595,6 @@
         <nav>
           <ul class="nav-links" id="nav-links">
             <li><a href="#catalog" onclick="closeMobileMenu()">Watch Faces</a></li>
-            <li><a href="#collections" onclick="closeMobileMenu()">Collections</a></li>
-            <li><a href="#glance" onclick="closeMobileMenu()">Features</a></li>
             <li><a href="#free-faces" onclick="filterBy('free'); closeMobileMenu();">Free Faces (11)</a></li>
             <li>
               <a href="blog.html" class="nav-link-blog" onclick="closeMobileMenu()">
@@ -1630,9 +1633,7 @@
             <span class="eyebrow-dot"></span>
             <span id="hero-badge-text" class="hero-badge-text">DYNAMIC COMPLICATIONS • CUE177</span>
           </div>
-          <h1 class="hero-title" id="hero-main-title">
-            INTELLIGENCE <br><span>ON YOUR WRIST</span>
-          </h1>
+          <h1 class="hero-title" id="hero-main-title">INTELLIGENCE<br><span>ON YOUR WRIST</span></h1>
           <p class="hero-desc" id="hero-main-tagline">
             Live weather, heart rate, step progress, battery monitor, and calendar events customized to fit your unique lifestyle on CUE177.
           </p>
@@ -2148,7 +2149,7 @@
         name: 'CUE177',
         file: 'images/cue177.png',
         badge: 'DYNAMIC COMPLICATIONS • CUE177',
-        title: 'INTELLIGENCE <br><span>ON YOUR WRIST</span>',
+        title: 'INTELLIGENCE<br><span>ON YOUR WRIST</span>',
         tagline: 'Live weather, heart rate, step progress, battery monitor, and calendar events customized to fit your unique lifestyle on CUE177.',
         play_store_url: 'https://play.google.com/store/apps/details?id=com.creation.cue177watchface'
       },
@@ -2157,7 +2158,7 @@
         name: 'CUE179',
         file: 'images/cue179.png',
         badge: 'NEW RELEASE • CUE179',
-        title: 'FUTURISTIC <br><span>CYBER POWER</span>',
+        title: 'FUTURISTIC<br><span>CYBER POWER</span>',
         tagline: 'Bold dual-color digital display, circuit board styling, 2 short text and 1 long text custom complications, and battery arc powered by CUE179.',
         play_store_url: 'https://play.google.com/store/apps/details?id=com.creation.cue179watchface'
       },
@@ -2166,7 +2167,7 @@
         name: 'CUE178',
         file: 'images/cue178.png',
         badge: 'NEW RELEASE • CUE178',
-        title: 'TIME, CRAFTED TO <br><span>PERFECTION</span>',
+        title: 'TIME, CRAFTED TO<br><span>PERFECTION</span>',
         tagline: 'Featuring the all-new CUE178 and 115+ precision-engineered watch faces for Samsung Galaxy Watch, Google Pixel Watch & all Wear OS smartwatches.',
         play_store_url: 'https://play.google.com/store/apps/details?id=com.creation.cue178watchface'
       },
@@ -2175,7 +2176,7 @@
         name: 'CUE003',
         file: 'images/cue003.png',
         badge: 'FLAGSHIP DESIGN • CUE003',
-        title: 'PURE <br><span>AMOLED DEPTH</span>',
+        title: 'PURE<br><span>AMOLED DEPTH</span>',
         tagline: 'Ultra battery-friendly aesthetics with deep contrast, custom indices, and high-readability typography powered by CUE003.',
         play_store_url: 'https://play.google.com/store/apps/details?id=com.creation.cue003watchface'
       },
@@ -2184,7 +2185,7 @@
         name: 'CUE176',
         file: 'images/cue176.png',
         badge: 'TACTICAL CHRONO • CUE176',
-        title: 'RUGGED <br><span>PRECISION</span>',
+        title: 'RUGGED<br><span>PRECISION</span>',
         tagline: 'Multi-ring chronometer layout engineered for extreme outdoor adventures and fitness tracking on CUE176.',
         play_store_url: 'https://play.google.com/store/apps/details?id=com.creation.cue176watchface'
       },
@@ -2193,7 +2194,7 @@
         name: 'CUE175',
         file: 'images/cue175.png',
         badge: 'MINIMAL ELEGANCE • CUE175',
-        title: 'REFINED <br><span>SIMPLICITY</span>',
+        title: 'REFINED<br><span>SIMPLICITY</span>',
         tagline: 'Clean geometry and modern aesthetics with subtle ambient always-on display styling on CUE175.',
         play_store_url: 'https://play.google.com/store/apps/details?id=com.creation.cue175watchface'
       }
@@ -2277,7 +2278,7 @@
           name: face.title || face.id.toUpperCase(),
           file: img,
           badge: badgePrefix + titleName,
-          title: `${titleName} <br><span>EDITION</span>`,
+          title: `${titleName}<br><span>EDITION</span>`,
           tagline: face.description_en ? face.description_en.replace(/[\r\n]+/g, ' ') : `Precision-engineered for Samsung Galaxy Watch, Google Pixel Watch & all Wear OS smartwatches.`,
           play_store_url: playLink
         };
