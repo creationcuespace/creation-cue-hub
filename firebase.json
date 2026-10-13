@@ -78,9 +78,13 @@
       "docs/**",
       "blog/images/**",
       "scratch/**",
-      "*backup*"
+      "*backup*",
+      "*.zip",
+      "*.pdf",
+      "dragon*",
+      "*.py"
     ],
-    "maxReleases": 5,
+    "maxReleases": 2,
     "headers": [
       {
         "source": "/",
