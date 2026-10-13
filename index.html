@@ -1736,20 +1736,39 @@
     /* 2 Columns on Mobile / Tablets <= 768px */
     @media (max-width: 768px) {
       .trust-strip {
-        padding: 12px 0 !important;
+        padding: 14px 0 !important;
       }
       .trust-grid {
         display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 10px 14px !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
       }
       .trust-item {
-        font-size: 11.5px !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        text-align: center !important;
         gap: 6px !important;
+        padding: 10px 8px !important;
+        background: var(--bg-alt, #fafafa);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        font-size: 11.5px !important;
+        line-height: 1.35 !important;
+        min-height: 72px;
+        box-sizing: border-box;
+      }
+      .trust-item > span:last-child {
+        display: block;
+        letter-spacing: normal;
       }
       .trust-badge-pill {
-        font-size: 9.5px !important;
-        padding: 2px 7px !important;
+        font-size: 10px !important;
+        padding: 3px 10px !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        display: inline-flex !important;
+        align-items: center;
+        line-height: 1.4;
       }
       .watch-grid {
         grid-template-columns: repeat(2, 1fr) !important;
