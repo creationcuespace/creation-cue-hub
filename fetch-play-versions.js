@@ -98,6 +98,14 @@ async function main() {
     let lastUpdatedDate = 'N/A';
     let playStoreTitle = wf.title;
     let downloads = 'N/A';
+    let rating = null;
+    let ratingCount = null;
+
+    const prevItem = existingMap.get(packageName);
+    if (prevItem) {
+      if (prevItem.rating !== undefined) rating = prevItem.rating;
+      if (prevItem.ratingCount !== undefined) ratingCount = prevItem.ratingCount;
+    }
 
     let editId = null;
     let editSuccess = false;
@@ -199,11 +207,22 @@ async function main() {
         downloads = downloadsMatch[1].trim();
       }
 
+      const ratingMatch = html.match(/aria-label="Rated\s+([0-9.]+)\s+stars?\s+out\s+of\s+five\s+stars?"/i);
+      if (ratingMatch) {
+        rating = parseFloat(ratingMatch[1]);
+      }
+
+      const reviewsRegex = /([0-9.,]+K?)\s*(?:reviews|ratings)/i;
+      const reviewsMatch = html.match(reviewsRegex);
+      if (reviewsMatch) {
+        ratingCount = reviewsMatch[1].trim();
+      }
+
     } catch (scrapeError) {
       lastUpdatedDate = 'Fetch Failed';
     }
 
-    console.log(`[${index}/${total}] Done: ${wf.id} (Companion: ${companionVersion}, Wear: ${wearVersion}, Updated: ${lastUpdatedDate}, Title: ${playStoreTitle})`);
+    console.log(`[${index}/${total}] Done: ${wf.id} (Companion: ${companionVersion}, Wear: ${wearVersion}, Updated: ${lastUpdatedDate}, Title: ${playStoreTitle}, Rating: ${rating ? rating + '★ (' + (ratingCount || '') + ')' : 'N/A'})`);
 
     // Fetch Unreplied Reviews
     try {
@@ -249,6 +268,8 @@ async function main() {
       wearVersion,
       lastUpdatedDate,
       downloads,
+      rating,
+      ratingCount,
     });
   }
 
@@ -273,10 +294,10 @@ async function main() {
   console.log('\n\n================================================================');
   console.log('## Google Play Store App Versions and Dates');
   console.log('================================================================\n');
-  console.log('| ID | Title | Package Name | Companion Version Code | Wear OS Version Code | Last Updated (Play Store) |');
-  console.log('| :--- | :--- | :--- | :--- | :--- | :--- |');
+  console.log('| ID | Title | Package Name | Companion Version Code | Wear OS Version Code | Last Updated (Play Store) | Downloads | Rating |');
+  console.log('| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |');
   for (const res of results) {
-    console.log(`| ${res.id} | ${res.title} | \`${res.packageName}\` | ${res.companionVersion} | ${res.wearVersion} | ${res.lastUpdatedDate} |`);
+    console.log(`| ${res.id} | ${res.title} | \`${res.packageName}\` | ${res.companionVersion} | ${res.wearVersion} | ${res.lastUpdatedDate} | ${res.downloads || 'N/A'} | ${res.rating ? res.rating + '★' : '—'} |`);
   }
   console.log('\n================================================================\n');
 

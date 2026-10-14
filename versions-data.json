@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-14T02:10:36.437Z",
+  "lastUpdated": "2026-10-14T12:44:53.840Z",
   "results": [
     {
       "id": "cue178",
@@ -9,7 +9,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue003",
@@ -19,7 +21,9 @@
       "companionVersion": "10000009 (6.1.0)",
       "wearVersion": "10999999 (1.5.0)",
       "lastUpdatedDate": "Aug 25, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue177",
@@ -29,7 +33,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "10000012 (2.1.0)",
       "lastUpdatedDate": "Oct 6, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue176",
@@ -39,7 +45,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "downloads": "50+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue175",
@@ -49,7 +57,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue174",
@@ -59,7 +69,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue173",
@@ -69,7 +81,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000025)",
       "wearVersion": "Wear OS SDK 35 Update (v10000024)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "downloads": "50+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue172",
@@ -79,7 +93,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000016)",
       "wearVersion": "Wear OS SDK 35 Update (v10000015)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue171",
@@ -89,7 +105,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "downloads": "50+",
+      "rating": 4.5,
+      "ratingCount": null
     },
     {
       "id": "cue170",
@@ -99,7 +117,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue169",
@@ -109,7 +129,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000015)",
       "wearVersion": "Wear OS SDK 35 Update (v10000014)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue168",
@@ -119,7 +141,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "downloads": "50+",
+      "rating": 4.5,
+      "ratingCount": null
     },
     {
       "id": "cue167",
@@ -129,7 +153,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue166",
@@ -139,7 +165,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "1K+"
+      "downloads": "1K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue165",
@@ -149,7 +177,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "downloads": "50+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue164",
@@ -159,7 +189,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "10000007 (1.3.0)",
       "lastUpdatedDate": "Aug 29, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue163",
@@ -169,7 +201,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue162",
@@ -179,7 +213,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue161",
@@ -189,7 +225,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue160",
@@ -199,7 +237,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue159",
@@ -209,7 +249,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue158",
@@ -219,7 +261,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue157",
@@ -229,7 +273,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue156",
@@ -239,7 +285,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue155",
@@ -249,7 +297,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue154",
@@ -259,7 +309,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "1K+"
+      "downloads": "1K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue153",
@@ -269,7 +321,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000015)",
       "wearVersion": "Wear OS SDK 35 Update (v10000014)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue152",
@@ -279,7 +333,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue151",
@@ -289,7 +345,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "1K+"
+      "downloads": "1K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue150",
@@ -299,7 +357,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "downloads": "50+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue149",
@@ -309,7 +369,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue148",
@@ -319,7 +381,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue147",
@@ -329,7 +393,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue146",
@@ -339,7 +405,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue145",
@@ -349,7 +417,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "1K+"
+      "downloads": "1K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue144",
@@ -359,7 +429,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue143",
@@ -369,7 +441,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": 4.9,
+      "ratingCount": null
     },
     {
       "id": "cue142",
@@ -379,7 +453,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "1K+"
+      "downloads": "1K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue141",
@@ -389,7 +465,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "N/A",
-      "downloads": "N/A"
+      "downloads": "N/A",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue140",
@@ -399,7 +477,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue139",
@@ -409,7 +489,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "downloads": "50+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue137",
@@ -419,7 +501,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue136",
@@ -429,7 +513,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50K+"
+      "downloads": "50K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue136_plus",
@@ -439,7 +525,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": 4.2,
+      "ratingCount": null
     },
     {
       "id": "cue135",
@@ -449,7 +537,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000014)",
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "1K+"
+      "downloads": "1K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue134",
@@ -459,7 +549,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue133",
@@ -469,7 +561,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue132",
@@ -479,7 +573,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "5K+"
+      "downloads": "5K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue131",
@@ -489,7 +585,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue130",
@@ -499,7 +597,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue129",
@@ -509,7 +609,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000007)",
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue128",
@@ -519,7 +621,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000016)",
       "wearVersion": "Wear OS SDK 35 Update (v10000015)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue127",
@@ -529,7 +633,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue126",
@@ -539,7 +645,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue125",
@@ -549,7 +657,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue124",
@@ -559,7 +669,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue123",
@@ -569,7 +681,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "downloads": "50+",
+      "rating": 4.6,
+      "ratingCount": null
     },
     {
       "id": "cue122",
@@ -579,7 +693,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000014)",
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": 4.5,
+      "ratingCount": null
     },
     {
       "id": "cue116",
@@ -589,7 +705,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000019)",
       "wearVersion": "Wear OS SDK 35 Update (v10000018)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "5K+"
+      "downloads": "5K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue115",
@@ -599,7 +717,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue114",
@@ -609,7 +729,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "downloads": "50+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue111",
@@ -619,7 +741,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000020)",
       "wearVersion": "Wear OS SDK 35 Update (v10000019)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "1K+"
+      "downloads": "1K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue110",
@@ -629,7 +753,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000018)",
       "wearVersion": "Wear OS SDK 35 Update (v10000017)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue109",
@@ -639,7 +765,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": 4.8,
+      "ratingCount": null
     },
     {
       "id": "cue107",
@@ -649,7 +777,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue106",
@@ -659,7 +789,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue105",
@@ -669,7 +801,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue104",
@@ -679,7 +813,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "1K+"
+      "downloads": "1K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue103",
@@ -689,7 +825,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000014)",
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue102",
@@ -699,7 +837,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue101",
@@ -709,7 +849,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000019)",
       "wearVersion": "Wear OS SDK 35 Update (v10000018)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": 4.2,
+      "ratingCount": null
     },
     {
       "id": "cue100",
@@ -719,7 +861,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue099",
@@ -729,7 +873,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "downloads": "50+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue098",
@@ -739,7 +885,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000047)",
       "wearVersion": "Wear OS SDK 35 Update (v10000046)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "downloads": "50+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue097",
@@ -749,7 +897,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000015)",
       "wearVersion": "10000017 (4.1.0)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc094",
@@ -759,7 +909,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "10999999 (6.0.1)",
       "lastUpdatedDate": "Aug 25, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc092",
@@ -769,7 +921,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50+"
+      "downloads": "50+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc091",
@@ -779,7 +933,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": 4.7,
+      "ratingCount": null
     },
     {
       "id": "crc090",
@@ -789,7 +945,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Fetch Failed",
-      "downloads": "N/A"
+      "downloads": "N/A",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc087",
@@ -799,7 +957,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000017)",
       "wearVersion": "Wear OS SDK 35 Update (v10000016)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc082",
@@ -809,7 +969,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "1K+"
+      "downloads": "1K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc081",
@@ -819,7 +981,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc080",
@@ -829,7 +993,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000025)",
       "wearVersion": "Wear OS SDK 35 Update (v10000024)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50K+"
+      "downloads": "50K+",
+      "rating": 4.9,
+      "ratingCount": "652"
     },
     {
       "id": "crc079",
@@ -839,7 +1005,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc072",
@@ -849,7 +1017,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "1K+"
+      "downloads": "1K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc071",
@@ -859,7 +1029,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000014)",
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc069",
@@ -869,7 +1041,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "10000011 (2.5.0)",
       "lastUpdatedDate": "Aug 27, 2026",
-      "downloads": "10K+"
+      "downloads": "10K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc068",
@@ -879,7 +1053,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "10999999 (4.0.1)",
       "lastUpdatedDate": "Aug 25, 2026",
-      "downloads": "10K+"
+      "downloads": "10K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc066",
@@ -889,7 +1065,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "10000014 (3.1.0)",
       "lastUpdatedDate": "Sep 15, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc065",
@@ -899,7 +1077,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000019)",
       "wearVersion": "Wear OS SDK 35 Update (v10000018)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc057",
@@ -909,7 +1089,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000013)",
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc050",
@@ -919,7 +1101,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000015)",
       "wearVersion": "Wear OS SDK 35 Update (v10000014)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": 4.4,
+      "ratingCount": null
     },
     {
       "id": "crc046",
@@ -929,7 +1113,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000020)",
       "wearVersion": "Wear OS SDK 35 Update (v10000019)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100K+"
+      "downloads": "100K+",
+      "rating": 5,
+      "ratingCount": "1.08K"
     },
     {
       "id": "crc044",
@@ -939,7 +1125,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc043",
@@ -949,7 +1137,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000017)",
       "wearVersion": "Wear OS SDK 35 Update (v10000016)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc042",
@@ -959,7 +1149,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000014)",
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "1K+"
+      "downloads": "1K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc041",
@@ -969,7 +1161,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "50K+"
+      "downloads": "50K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc039",
@@ -979,7 +1173,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000023)",
       "wearVersion": "10000022 (2.2.1)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc036",
@@ -989,7 +1185,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc035",
@@ -999,7 +1197,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000023)",
       "wearVersion": "10000022 (4.0.1)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc034",
@@ -1009,7 +1209,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000018)",
       "wearVersion": "Wear OS SDK 35 Update (v10000017)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc032",
@@ -1019,7 +1221,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000008)",
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc031",
@@ -1029,7 +1233,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc030",
@@ -1039,7 +1245,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000024)",
       "wearVersion": "Wear OS SDK 35 Update (v10000023)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc028",
@@ -1049,7 +1257,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "500+"
+      "downloads": "500+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc027",
@@ -1059,7 +1269,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "10+"
+      "downloads": "10+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cue024",
@@ -1069,7 +1281,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "10000012 (1.6.0)",
       "lastUpdatedDate": "Oct 9, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "crc023",
@@ -1079,7 +1293,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000020)",
       "wearVersion": "Wear OS SDK 35 Update (v10000019)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "5K+"
+      "downloads": "5K+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "ccwf022",
@@ -1089,7 +1305,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000016)",
       "wearVersion": "Wear OS SDK 35 Update (v10000015)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cc014",
@@ -1099,7 +1317,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000014)",
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cc010",
@@ -1109,7 +1329,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000023)",
       "wearVersion": "Wear OS SDK 35 Update (v10000022)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cc005",
@@ -1119,7 +1341,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000034)",
       "wearVersion": "10000033 (3.0.0)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     },
     {
       "id": "cueindus",
@@ -1129,7 +1353,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Fetch Failed",
-      "downloads": "N/A"
+      "downloads": "N/A",
+      "rating": 4.5,
+      "ratingCount": "294"
     },
     {
       "id": "cueindus_pro",
@@ -1139,7 +1365,9 @@
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": 4.5,
+      "ratingCount": null
     },
     {
       "id": "cue179",
@@ -1149,7 +1377,9 @@
       "companionVersion": "2 (6.1.0)",
       "wearVersion": "10000001 (1.0.0)",
       "lastUpdatedDate": "Sep 8, 2026",
-      "downloads": "100+"
+      "downloads": "100+",
+      "rating": null,
+      "ratingCount": null
     }
   ]
 }
