@@ -1314,13 +1314,11 @@ Links to claim your free code and the Play Store link are in the first comment b
         badge.textContent = 'No Coupons Set';
       }
 
-      // Initialize or prefill Cap input
+      // Initialize or prefill Cap input (only prefill if an explicit cap was already set on the promo)
       var capInput = document.getElementById('custom-cap-input');
       if (capInput) {
         if (item.cap && item.cap > 0) {
           capInput.value = item.cap;
-        } else if (item.remaining > 0) {
-          capInput.value = item.remaining;
         } else {
           capInput.value = '';
         }
