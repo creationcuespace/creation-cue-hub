@@ -2356,27 +2356,27 @@
           <option value="wear-desc">⌚ Wear OS Version</option>
           <option value="companion-desc">📱 Companion Version</option>
         </select>
-        <select class="filter-select" id="filter-notes">
-          <option value="all">All Notes Status</option>
-          <option value="has-notes">Has Notes</option>
-          <option value="no-notes">Needs Notes</option>
+        <select class="filter-select" id="filter-notes" title="Filter by Notes Status">
+          <option value="all">📝 All Notes</option>
+          <option value="has-notes">✅ Has Notes</option>
+          <option value="no-notes">⚠️ Needs Notes</option>
         </select>
-        <select class="filter-select" id="filter-price">
-          <option value="all">All Pricing</option>
-          <option value="free">Free Watch Faces</option>
-          <option value="paid">Paid Watch Faces</option>
+        <select class="filter-select" id="filter-price" title="Filter by Pricing">
+          <option value="all">🏷️ All Pricing</option>
+          <option value="free">🎁 Free Faces</option>
+          <option value="paid">💎 Paid Faces</option>
         </select>
-        <select class="filter-select" id="filter-rollout">
-          <option value="all">All Rollout Status</option>
-          <option value="staged">Staged Rollouts (<100%)</option>
-          <option value="completed">Completed (100%)</option>
+        <select class="filter-select" id="filter-rollout" title="Filter by Rollout Status">
+          <option value="all">🚀 All Rollout Status</option>
+          <option value="staged">⏳ Staged Rollouts (&lt;100%)</option>
+          <option value="completed">✅ Completed (100%)</option>
         </select>
-        <select class="filter-select" id="filter-api">
-          <option value="all">All API Status</option>
-          <option value="ok">API Normal</option>
-          <option value="error">API Error</option>
+        <select class="filter-select" id="filter-api" title="Filter by API Status">
+          <option value="all">⚡ All API Status</option>
+          <option value="ok">🟢 API Normal</option>
+          <option value="error">🔴 API Error</option>
         </select>
-        <button id="btn-clear-all" class="clear-all-btn">Reset Filters</button>
+        <button id="btn-clear-all" class="clear-all-btn" title="Reset all filters">↺ Reset Filters</button>
         <button id="btn-ai-query" class="ai-btn">💡 Ask AI</button>
         <div class="view-toggle-group">
           <button id="view-mode-list" type="button" class="view-toggle-btn active" onclick="switchViewMode('list')" title="List View (Table)">☰ List</button>
