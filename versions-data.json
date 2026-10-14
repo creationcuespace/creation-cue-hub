@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-13T03:53:42.656Z",
+  "lastUpdated": "2026-10-14T02:10:36.437Z",
   "results": [
     {
       "id": "cue178",
@@ -384,12 +384,12 @@
     {
       "id": "cue141",
       "title": "CUE141",
-      "playStoreTitle": "Watch Face CUE141",
+      "playStoreTitle": "Error 503 (Server Error)!!1",
       "packageName": "com.creation.cue141watchface",
       "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "lastUpdatedDate": "N/A",
+      "downloads": "N/A"
     },
     {
       "id": "cue140",
@@ -784,12 +784,12 @@
     {
       "id": "crc090",
       "title": "CRC090",
-      "playStoreTitle": "Digital Watch Face CRC090",
+      "playStoreTitle": "CRC090",
       "packageName": "com.creationcue.crc090watchface",
       "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "crc087",
@@ -1068,7 +1068,7 @@
       "packageName": "com.creation.cue024watchface",
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "10000012 (1.6.0)",
-      "lastUpdatedDate": "Aug 4, 2026",
+      "lastUpdatedDate": "Oct 9, 2026",
       "downloads": "100+"
     },
     {
@@ -1124,12 +1124,12 @@
     {
       "id": "cueindus",
       "title": "Cue Indus",
-      "playStoreTitle": "Watch Face CUE Indus",
+      "playStoreTitle": "Cue Indus",
       "packageName": "com.creation.cueinduswatchface",
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "10K+"
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A"
     },
     {
       "id": "cueindus_pro",
