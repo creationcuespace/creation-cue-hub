@@ -3716,11 +3716,28 @@
 
       // Fill basic details
       const codeBadge = document.getElementById('details-wf-code');
+      const titleEl = document.getElementById('details-title');
+      const codeStr = (wf.id || id || '').toUpperCase();
+
       if (codeBadge) {
-        codeBadge.textContent = (wf.id || id || '').toUpperCase();
+        codeBadge.textContent = codeStr;
       }
-      document.getElementById('details-title').textContent = wf.title;
-      document.getElementById('details-title').title = wf.title;
+
+      // Hide title if it is just a duplicate of the watch face code (e.g. CUE173)
+      const cleanTitle = (wf.title || '').trim();
+      const isDuplicate = cleanTitle.toUpperCase() === codeStr ||
+        cleanTitle.replace(/[^a-zA-Z0-9]/g, '').toUpperCase() === codeStr.replace(/[^a-zA-Z0-9]/g, '');
+
+      if (titleEl) {
+        if (!isDuplicate && cleanTitle) {
+          titleEl.textContent = cleanTitle;
+          titleEl.title = cleanTitle;
+          titleEl.style.display = 'block';
+        } else {
+          titleEl.textContent = '';
+          titleEl.style.display = 'none';
+        }
+      }
       document.getElementById('details-img').src = getOptimizedImageUrl(wf.imageUrl, 240);
       document.getElementById('details-companion-ver').textContent = wf.companionVersion;
       document.getElementById('details-wear-ver').textContent = wf.wearVersion;
