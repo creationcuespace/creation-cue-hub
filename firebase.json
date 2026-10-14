@@ -53,6 +53,10 @@
         "destination": "/blog.html"
       },
       {
+        "source": "/install",
+        "destination": "/install.html"
+      },
+      {
         "source": "/live",
         "destination": "/live.html"
       },

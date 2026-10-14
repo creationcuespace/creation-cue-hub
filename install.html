@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installation Guide | Creation Cue™ Wear OS Watch Faces</title>
+  <meta name="description" content="Step-by-step instructions to easily install Creation Cue watch faces on your Samsung Galaxy Watch, Google Pixel Watch, and Wear OS smartwatches.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://creationcue.web.app/install.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Wear OS Watch Face Installation Guide | Creation Cue™">
+  <meta property="og:description" content="Step-by-step guide on how to install and activate Wear OS watch faces from Google Play Store onto your smartwatch.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://creationcue.web.app/install.html">
+  <meta property="og:image" content="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/ccBanner1.webp">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png">
+  <link rel="shortcut icon" type="image/png" href="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png">
+  <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png">
+
+  <!-- Color Scheme & Dark Mode Initializer (Zero-Flicker) -->
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" id="meta-theme-color">
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('creationcue_theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark-mode');
+          var metaTheme = document.getElementById('meta-theme-color');
+          if (metaTheme) metaTheme.setAttribute('content', '#090a0c');
+        }
+      } catch(e) {}
+    })();
+  </script>
+
+  <!-- Plus Jakarta Sans Font (WOW Space Standard) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #fbfbfc;
+      --bg-alt: #f3f4f6;
+      --bg-card: #ffffff;
+      --text: #111114;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --border: #e2e8f0;
+      --border-light: #f1f5f9;
+      --primary: #111114;
+      --accent: #f59e0b;
+      --accent-glow: rgba(245, 158, 11, 0.15);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.09);
+      --max-width: 960px;
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --header-bg: rgba(255, 255, 255, 0.94);
+      --eyebrow-bg: rgba(0, 0, 0, 0.04);
+      --eyebrow-text: #334155;
+      --callout-bg: #f8fafc;
+    }
+
+    html.dark-mode {
+      --bg: #090a0c;
+      --bg-alt: #111216;
+      --bg-card: #15171c;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-light: #64748b;
+      --border: #232730;
+      --border-light: #1b1e26;
+      --primary: #ffffff;
+      --accent: #f59e0b;
+      --accent-glow: rgba(245, 158, 11, 0.22);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.35);
+      --shadow-hover: 0 12px 30px rgba(0,0,0,0.45);
+      --header-bg: rgba(9, 10, 12, 0.92);
+      --eyebrow-bg: rgba(255, 255, 255, 0.06);
+      --eyebrow-text: #cbd5e1;
+      --callout-bg: #111216;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      html:not(.light-mode) {
+        --bg: #090a0c;
+        --bg-alt: #111216;
+        --bg-card: #15171c;
+        --text: #f1f5f9;
+        --text-muted: #94a3b8;
+        --text-light: #64748b;
+        --border: #232730;
+        --border-light: #1b1e26;
+        --primary: #ffffff;
+        --accent: #f59e0b;
+        --accent-glow: rgba(245, 158, 11, 0.22);
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+        --shadow-md: 0 4px 20px rgba(0,0,0,0.35);
+        --shadow-hover: 0 12px 30px rgba(0,0,0,0.45);
+        --header-bg: rgba(9, 10, 12, 0.92);
+        --eyebrow-bg: rgba(255, 255, 255, 0.06);
+        --eyebrow-text: #cbd5e1;
+        --callout-bg: #111216;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      width: 100%;
+    }
+
+    /* HEADER */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--header-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-logo-img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      border-radius: 8px;
+      filter: grayscale(100%) contrast(1.15);
+      transition: transform 0.2s ease;
+    }
+    .brand:hover .brand-logo-img {
+      transform: scale(1.06);
+    }
+    .brand-name {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .brand-name span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+    }
+    .nav-link-blog {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text) !important;
+      font-weight: 700 !important;
+    }
+    .nav-badge-pill {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      padding: 2px 6px;
+      border-radius: 99px;
+      background: rgba(245, 158, 11, 0.15);
+      color: #b45309;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    html.dark-mode .nav-badge-pill {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+    }
+    .btn-play-text {
+      display: inline;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+    .btn-dark {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-dark:hover {
+      background: #2a2a2e;
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background: #fff;
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--text);
+      background: var(--bg-alt);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    /* HERO SECTION */
+    .install-hero {
+      padding: 60px 0 36px;
+      text-align: center;
+      background: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 70%);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--eyebrow-text);
+      background: var(--eyebrow-bg);
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      margin-bottom: 20px;
+    }
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .page-title {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -1.2px;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      color: var(--text);
+    }
+    .page-title span {
+      color: var(--accent);
+    }
+    .page-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* NOTICE BANNER */
+    .install-notice {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px dashed rgba(245, 158, 11, 0.35);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 36px;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .install-notice svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--accent);
+    }
+
+    /* INSTALL METHODS CARDS */
+    .install-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 30px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .install-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: rgba(245, 158, 11, 0.4);
+    }
+    .method-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .method-badge {
+      background: var(--accent);
+      color: #000000;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .method-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.4px;
+    }
+    .method-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+    @media (max-width: 800px) {
+      .method-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .steps-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .steps-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14.5px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .step-bullet {
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 16px;
+      line-height: 1.4;
+      flex-shrink: 0;
+    }
+    .steps-list code {
+      background: var(--bg-alt);
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      border: 1px solid var(--border);
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .method-visual {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      text-align: center;
+    }
+    .method-img {
+      max-width: 100%;
+      height: auto;
+      max-height: 260px;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: var(--shadow-sm);
+    }
+    .method-caption {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    /* ACTION BAR */
+    .install-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin: 40px 0 60px;
+    }
+    .install-actions-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .install-actions-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--border-light);
+      border-color: var(--text);
+      transform: rotate(15deg);
+    }
+    .theme-toggle-btn svg {
+      width: 17px;
+      height: 17px;
+    }
+    .theme-toggle-btn .icon-moon {
+      display: none;
+    }
+    .theme-toggle-btn .icon-sun {
+      display: block;
+    }
+    html.dark-mode .theme-toggle-btn .icon-moon,
+    html:not(.light-mode) .theme-toggle-btn .icon-moon {
+      display: block;
+    }
+    html.dark-mode .theme-toggle-btn .icon-sun,
+    html:not(.light-mode) .theme-toggle-btn .icon-sun {
+      display: none;
+    }
+    @media (prefers-color-scheme: light) {
+      html:not(.dark-mode) .theme-toggle-btn .icon-moon {
+        display: none !important;
+      }
+      html:not(.dark-mode) .theme-toggle-btn .icon-sun {
+        display: block !important;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      html:not(.light-mode) .theme-toggle-btn .icon-moon {
+        display: block !important;
+      }
+      html:not(.light-mode) .theme-toggle-btn .icon-sun {
+        display: none !important;
+      }
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+      .nav-links.mobile-open {
+        display: flex !important;
+        flex-direction: column !important;
+        position: fixed !important;
+        top: 72px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100vw !important;
+        background: var(--header-bg) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        padding: 20px 20px 28px !important;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25) !important;
+        border-bottom: 1px solid var(--border) !important;
+        gap: 10px !important;
+        z-index: 2000 !important;
+        box-sizing: border-box !important;
+      }
+      .nav-links.mobile-open li {
+        width: 100% !important;
+        list-style: none !important;
+      }
+      .nav-links.mobile-open li a {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        padding: 12px 16px !important;
+        border-radius: var(--radius-sm) !important;
+        color: var(--text) !important;
+        text-decoration: none !important;
+        background: var(--bg-alt) !important;
+        transition: background 0.2s, color 0.2s !important;
+      }
+      .nav-links.mobile-open li a:hover {
+        background: var(--primary) !important;
+        color: #fff !important;
+      }
+      .menu-toggle {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 8px !important;
+        background: var(--bg-alt) !important;
+        border: 1px solid var(--border) !important;
+        cursor: pointer !important;
+      }
+      .install-card {
+        padding: 24px 20px;
+      }
+      .page-title {
+        font-size: 30px;
+      }
+    }
+
+    /* FOOTER */
+    .footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 60px 0 40px;
+      margin-top: auto;
+    }
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 32px;
+      align-items: center;
+    }
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover {
+      color: var(--text);
+    }
+    .footer-social-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .footer-social-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .footer-social-icon:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Dark Mode Component Overrides */
+    html.dark-mode .header {
+      background: var(--header-bg);
+    }
+    html.dark-mode .brand-logo-img {
+      filter: grayscale(100%) invert(1) brightness(1.2);
+    }
+    html.dark-mode .brand-name span {
+      color: #fbbf24;
+    }
+    html.dark-mode .install-card,
+    html.dark-mode .install-actions {
+      background: var(--bg-card) !important;
+      border-color: var(--border) !important;
+    }
+    html.dark-mode .btn-outline {
+      background: transparent !important;
+      color: var(--text) !important;
+      border-color: var(--border) !important;
+    }
+    html.dark-mode .btn-outline:hover {
+      border-color: var(--text) !important;
+      background: var(--bg-alt) !important;
+    }
+    html.dark-mode .btn-dark {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+    html.dark-mode .btn-dark:hover {
+      background: #e2e8f0 !important;
+      color: #000000 !important;
+    }
+    html.dark-mode .nav-links.mobile-open {
+      background: rgba(9, 10, 12, 0.98) !important;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      html:not(.light-mode) .header {
+        background: var(--header-bg);
+      }
+      html:not(.light-mode) .brand-logo-img {
+        filter: grayscale(100%) invert(1) brightness(1.2);
+      }
+      html:not(.light-mode) .brand-name span {
+        color: #fbbf24;
+      }
+      html:not(.light-mode) .install-card,
+      html:not(.light-mode) .install-actions {
+        background: var(--bg-card) !important;
+        border-color: var(--border) !important;
+      }
+      html:not(.light-mode) .btn-outline {
+        background: transparent !important;
+        color: var(--text) !important;
+        border-color: var(--border) !important;
+      }
+      html:not(.light-mode) .btn-outline:hover {
+        border-color: var(--text) !important;
+        background: var(--bg-alt) !important;
+      }
+      html:not(.light-mode) .btn-dark {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      html:not(.light-mode) .btn-dark:hover {
+        background: #e2e8f0 !important;
+        color: #000000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY HEADER -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <!-- Brand with Grayscale Logo -->
+        <a href="/" class="brand">
+          <img src="images/logo.webp" onerror="this.src='images/logo.png'" width="36" height="36" class="brand-logo-img" alt="Creation Cue Logo">
+          <div class="brand-name">Creation<span>Cue</span>™</div>
+        </a>
+
+        <!-- Navigation Menu -->
+        <nav>
+          <ul class="nav-links" id="nav-links">
+            <li><a href="/#catalog" onclick="closeMobileMenu()">Watch Faces</a></li>
+            <li><a href="/#free-faces" onclick="closeMobileMenu()">Free Faces (11)</a></li>
+            <li>
+              <a href="blog.html" class="nav-link-blog" onclick="closeMobileMenu()">
+                Blog <span class="nav-badge-pill">NEW</span>
+              </a>
+            </li>
+            <li><a href="install.html" class="active" onclick="closeMobileMenu()">Installation</a></li>
+            <li><a href="/#faq" onclick="closeMobileMenu()">FAQ</a></li>
+            <li><a href="privacy.html" onclick="closeMobileMenu()">Privacy</a></li>
+            <li><a href="/#contact" onclick="closeMobileMenu()">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" onclick="cycleThemeMode()" aria-label="Toggle light or dark theme" title="Toggle theme">
+            <!-- Sun icon (shown when dark) -->
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <!-- Moon icon (shown when light) -->
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+          <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank" rel="noopener" class="btn btn-dark">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a2.385 2.385 0 0 1-.61-.954V2.768c.15-.36.368-.69.61-.954zm11.235 11.238l2.678 2.678-12.784 7.378 10.106-10.056zm0-2.104L4.738.892l12.784 7.378-2.678 2.678zm1.488 1.488l3.961-2.288a1.59 1.59 0 0 0 0-2.764l-3.961-2.288-1.745 1.745 1.745 1.745 3.961 3.85z"/></svg>
+            <span class="btn-play-text">Play Store</span>
+          </a>
+          <button type="button" class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Navigation" aria-expanded="false">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="install-hero">
+    <div class="container">
+      <div class="eyebrow"><span class="eyebrow-dot"></span> WEAR OS SETUP GUIDE</div>
+      <h1 class="page-title">How to Install <span>Wear OS</span> Watch Faces</h1>
+      <p class="page-desc">Complete walkthrough on downloading, installing, and activating your Creation Cue watch faces seamlessly across Samsung Galaxy Watch, Google Pixel Watch, and other Wear OS smartwatches.</p>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    <!-- Notice -->
+    <div class="install-notice">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <div>
+        <strong>Connection Checklist:</strong> Before beginning, make sure your smartwatch is turned on, has Bluetooth active, and is paired to your phone via the <strong>Galaxy Wearable</strong> (Samsung) or <strong>Google Pixel Watch</strong> application. Both devices must be signed into the same Google Account.
+      </div>
+    </div>
+
+    <!-- METHOD 1 -->
+    <section class="install-card" id="method-1">
+      <div class="method-header">
+        <span class="method-badge">1</span>
+        <h2 class="method-title">Method 1: Install from Phone or Browser (Recommended)</h2>
+      </div>
+      <div class="method-grid">
+        <ul class="steps-list">
+          <li>
+            <span class="step-bullet">◉</span>
+            <div>On the <strong>Google Play Store</strong> (phone app or desktop web), find your desired watch face and locate the install button.</div>
+          </li>
+          <li>
+            <span class="step-bullet">◉</span>
+            <div>Tap the <strong>dropdown install arrow</strong> right next to the "Install" or "Buy" button (or look for "Install on more devices").</div>
+          </li>
+          <li>
+            <span class="step-bullet">◉</span>
+            <div><strong>Choose your smartwatch device</strong> from the list instead of your phone, and tap Install.</div>
+          </li>
+          <li>
+            <span class="step-bullet">◉</span>
+            <div>Wait 1–3 minutes while the watch face downloads wirelessly to your smartwatch.</div>
+          </li>
+          <li>
+            <span class="step-bullet">◉</span>
+            <div><strong>Activation:</strong> On your smartphone, open <strong>Galaxy Wearable</strong> or <strong>Pixel Watch</strong> app &gt; go to <strong>Watch Faces</strong> &gt; scroll to <strong>Downloaded</strong> &gt; tap to activate!</div>
+          </li>
+        </ul>
+        <div class="method-visual">
+          <img class="method-img" src="https://wsrv.nl/?url=https://creationcue.space/wp-content/uploads/2024/09/instal.jpg&w=480&output=webp" alt="Select Smartwatch dropdown in Google Play Store" loading="lazy">
+          <div class="method-caption">Tap the arrow next to Install to select your smartwatch directly</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- METHOD 2 -->
+    <section class="install-card" id="method-2">
+      <div class="method-header">
+        <span class="method-badge">2</span>
+        <h2 class="method-title">Method 2: Install Directly from Your Smartwatch Screen</h2>
+      </div>
+      <div class="method-grid">
+        <ul class="steps-list">
+          <li>
+            <span class="step-bullet">◉</span>
+            <div>If you ever encounter an issue installing from your phone, install directly on your wrist:</div>
+          </li>
+          <li>
+            <span class="step-bullet">◉</span>
+            <div>On your <strong>smartwatch</strong>, open the <strong>Google Play Store</strong> app.</div>
+          </li>
+          <li>
+            <span class="step-bullet">◉</span>
+            <div>Tap the <strong>search icon</strong> (magnifying glass) and search for the watch face name or query: <code>cue</code>, <code>cc</code>, or <code>crc</code>.</div>
+          </li>
+          <li>
+            <span class="step-bullet">◉</span>
+            <div>Select the watch face from the results and tap <strong>Install</strong> directly on your watch display.</div>
+          </li>
+          <li>
+            <span class="step-bullet">◉</span>
+            <div><strong>Activation:</strong> Once installed, long-press your active watch face, swipe all the way to the right to tap <strong>Add Watch Face (+)</strong>, and select your new watch face.</div>
+          </li>
+        </ul>
+        <div class="method-visual" style="display:flex; flex-direction:column; justify-content:center; align-items:center; min-height:200px;">
+          <div style="width:72px; height:72px; border-radius:50%; background:var(--accent-glow); display:flex; align-items:center; justify-content:center; margin-bottom:14px; color:var(--accent);">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="7"></circle>
+              <polyline points="12 9 12 12 13.5 13.5"></polyline>
+              <path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"></path>
+            </svg>
+          </div>
+          <div style="font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px;">Direct On-Watch Install</div>
+          <div style="font-size:12px; color:var(--text-muted); max-width:240px;">No phone companion app needed. Downloads straight via smartwatch Wi-Fi or Bluetooth.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TROUBLESHOOTING & SHARING ACTIONS -->
+    <div class="install-actions">
+      <div class="install-actions-left">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <span>Need official OEM guides or want to share this page?</span>
+      </div>
+      <div class="install-actions-btn-group">
+        <button type="button" onclick="copyGuideLink()" class="btn btn-outline" id="copy-btn">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+          <span id="copy-btn-text">Copy Share Link</span>
+        </button>
+        <a href="https://developer.samsung.com/sdp/blog/en-us/2022/11/15/install-watch-faces-for-galaxy-watch5-and-one-ui-watch-45#link-A" target="_blank" rel="noopener" class="btn btn-outline">
+          Samsung Developer Guide ↗
+        </a>
+        <a href="/#catalog" class="btn btn-dark">
+          Explore Watch Faces →
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <div class="brand" style="margin-bottom: 8px;">
+            <img src="images/logo.webp" onerror="this.src='images/logo.png'" width="28" height="28" class="brand-logo-img" alt="Creation Cue Logo" style="width:28px; height:28px; border-radius:6px;">
+            <div class="brand-name" style="font-size: 16px;">Creation<span>Cue</span>™</div>
+          </div>
+          <p class="footer-copy">© 2026 Creation Cue™ Studio. Wear OS by Google. All rights reserved.</p>
+
+          <div class="footer-social-row">
+            <a href="https://www.youtube.com/@creationcue" target="_blank" rel="noopener" class="footer-social-icon" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.508 9.388.508 9.388.508s7.518 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/creation.cue/" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://www.tiktok.com/@creationcue" target="_blank" rel="noopener" class="footer-social-icon" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.525.02c1.31-.03 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.74-3.94-1.74-.22-.21-.42-.45-.6-.7v5.77c.06 1.77-.35 3.58-1.28 5.09-1.39 2.27-3.99 3.65-6.66 3.57-2.82-.09-5.54-1.72-6.75-4.28-1.46-3.08-1.01-7.1 1.25-9.67 1.83-2.09 4.67-3.05 7.42-2.5v4.07c-1.34-.41-2.91-.08-3.92.83-1.18 1.06-1.41 2.94-.65 4.36.78 1.45 2.51 2.3 4.15 2.12 1.61-.17 3.01-1.36 3.28-2.96.11-1.02.05-2.07.06-3.11V0z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=100089647182787" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.3c-4.6 0-5.7 3.4-5.7 5.5v1.4H5.4v3.7h3.1v10.8h4.5V11.2h4.3l.5-3.7z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <a href="/">Home</a>
+          <a href="blog.html">Blog & Guides</a>
+          <a href="install.html" style="color: var(--text); font-weight: 700;">Installation Guide</a>
+          <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank" rel="noopener">Google Play Store</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="/#faq">FAQ</a>
+          <a href="/#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const nav = document.getElementById('nav-links');
+      if (nav) nav.classList.toggle('mobile-open');
+    }
+
+    function closeMobileMenu() {
+      const nav = document.getElementById('nav-links');
+      if (nav) nav.classList.remove('mobile-open');
+    }
+
+    // Theme Management (Light / Dark / Auto System Preference)
+    function getSystemTheme() {
+      return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+
+    function applyTheme(theme) {
+      const root = document.documentElement;
+      const metaTheme = document.getElementById('meta-theme-color');
+      const effectiveTheme = (theme === 'auto' || !theme) ? getSystemTheme() : theme;
+
+      root.classList.remove('dark-mode', 'light-mode');
+      if (effectiveTheme === 'dark') {
+        root.classList.add('dark-mode');
+        if (metaTheme) metaTheme.setAttribute('content', '#090a0c');
+      } else {
+        root.classList.add('light-mode');
+        if (metaTheme) metaTheme.setAttribute('content', '#ffffff');
+      }
+
+      const toggleBtn = document.getElementById('theme-toggle-btn');
+      if (toggleBtn) {
+        const nextMode = effectiveTheme === 'dark' ? 'light' : 'dark';
+        toggleBtn.setAttribute('title', `Switch to ${nextMode} mode`);
+        toggleBtn.setAttribute('aria-label', `Switch to ${nextMode} mode`);
+      }
+    }
+
+    function setThemePreference(pref) {
+      if (pref === 'auto') {
+        localStorage.removeItem('creationcue_theme');
+      } else {
+        localStorage.setItem('creationcue_theme', pref);
+      }
+      applyTheme(pref);
+    }
+
+    function cycleThemeMode() {
+      const current = localStorage.getItem('creationcue_theme');
+      let effective = current;
+      if (!effective) {
+        effective = getSystemTheme();
+      }
+      const nextTheme = (effective === 'dark') ? 'light' : 'dark';
+      setThemePreference(nextTheme);
+    }
+
+    function initTheme() {
+      const saved = localStorage.getItem('creationcue_theme') || 'auto';
+      applyTheme(saved);
+
+      if (window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const listener = () => {
+          const userPref = localStorage.getItem('creationcue_theme');
+          if (!userPref || userPref === 'auto') {
+            applyTheme('auto');
+          }
+        };
+        if (mediaQuery.addEventListener) {
+          mediaQuery.addEventListener('change', listener);
+        } else if (mediaQuery.addListener) {
+          mediaQuery.addListener(listener);
+        }
+      }
+    }
+
+    initTheme();
+
+    // Copy link helper
+    function copyGuideLink() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        const btnText = document.getElementById('copy-btn-text');
+        if (btnText) {
+          const original = btnText.textContent;
+          btnText.textContent = 'Link Copied!';
+          setTimeout(() => {
+            btnText.textContent = original;
+          }, 2500);
+        }
+      }).catch(() => {
+        alert('Share link: ' + url);
+      });
+    }
+  </script>
+</body>
+</html>
