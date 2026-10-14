@@ -142,10 +142,10 @@
       "title": "CUE171",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue171.png",
       "play_store_url": "market://details?id=com.creation.cue171watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue171",
-      "description_en": "This is Hybrid Wear OS Watch face CUE171.\n✔️ Days until Full Moon (can be turned off) ✔️ alerts ✔️distance in km or mi (on/off) ✔️ HR and battery progress bars & alerts ✔️ custom complications and shortcuts ✔️ Multiple color themes.️",
-      "description_de": "Symmetrisches, rundes Hybrid-Zifferblatt mit gestaffelten Anzeigen und taktischem Erscheinungsbild.",
+      "description_en": "This is Digital Wear OS Watch face CUE171.\n✔️ Days until Full Moon (can be turned off) ✔️ alerts ✔️distance in km or mi (on/off) ✔️ HR and battery progress bars & alerts ✔️ custom complications and shortcuts ✔️ Multiple color themes.️",
+      "description_de": "Symmetrisches, rundes Digital-Zifferblatt mit gestaffelten Anzeigen und taktischem Erscheinungsbild.",
       "filters": [],
-      "type": "hybrid",
+      "type": "digital",
       "is_free": false
     },
     {
