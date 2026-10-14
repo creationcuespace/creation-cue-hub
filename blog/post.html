@@ -602,7 +602,7 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.95);
+      background: var(--bg-card);
       color: var(--text);
       border: 1px solid var(--border);
       width: 38px;
@@ -619,7 +619,7 @@
     }
     .carousel-nav:hover {
       background: var(--primary);
-      color: #ffffff;
+      color: var(--bg);
       border-color: var(--primary);
     }
     .carousel-nav.prev { left: -16px; }
@@ -998,6 +998,17 @@
     }
     html.dark-mode .link-preview-card:hover {
       border-color: var(--accent);
+    }
+    html.dark-mode .carousel-nav {
+      background: rgba(21, 23, 28, 0.94) !important;
+      border-color: #2e3340 !important;
+      color: #f1f5f9 !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+    }
+    html.dark-mode .carousel-nav:hover {
+      background: #ffffff !important;
+      border-color: #ffffff !important;
+      color: #000000 !important;
     }
   </style>
 </head>
