@@ -30,6 +30,9 @@
   <!-- Google Fonts: Plus Jakarta Sans & Inter with font-display: swap (Asynchronously loaded to eliminate render blocking) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://wsrv.nl" crossorigin>
+  <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+  <link rel="preconnect" href="https://creation-cue-manage.firebaseapp.com" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yygg_vb.woff2" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript>
@@ -566,6 +569,7 @@
        ======================================================== */
     .hero-watch-col {
       width: 100%;
+      min-height: 520px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1018,7 +1022,7 @@
       font-weight: 700;
       color: #475569;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
       font-family: inherit;
     }
     html.dark-mode .filter-pill,
@@ -1551,7 +1555,12 @@
       border-radius: var(--radius-lg);
       box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
       padding: 14px 18px;
-      animation: modalSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: bannerSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform, opacity;
+    }
+    @keyframes bannerSlideUp {
+      from { opacity: 0; transform: translate3d(-50%, 20px, 0); }
+      to { opacity: 1; transform: translate3d(-50%, 0, 0); }
     }
     .cookie-banner-inner {
       display: flex;
@@ -2306,6 +2315,7 @@
         order: 3;
         margin: 6px auto 16px;
         padding-top: 0;
+        min-height: min(420px, 120vw);
       }
       .hero-desc {
         order: 4;
@@ -2920,7 +2930,7 @@
       <div class="header-inner">
         <!-- Brand with Grayscale Logo -->
         <a href="/" class="brand">
-          <img src="images/logo.png" onerror="this.src='https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp'" width="36" height="36" class="brand-logo-img" alt="Creation Cue Logo">
+          <img src="images/logo.webp" onerror="this.src='images/logo.png'" width="36" height="36" class="brand-logo-img" alt="Creation Cue Logo">
           <div class="brand-name">Creation<span>Cue</span>™</div>
         </a>
 
@@ -3565,7 +3575,7 @@
         <div>
           <!-- Grayscale Logo in Footer -->
           <div class="brand" style="margin-bottom: 8px;">
-            <img src="images/logo.png" onerror="this.src='https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp'" width="28" height="28" class="brand-logo-img" alt="Creation Cue Logo" style="width:28px; height:28px; border-radius:6px;">
+            <img src="images/logo.webp" onerror="this.src='images/logo.png'" width="28" height="28" class="brand-logo-img" alt="Creation Cue Logo" style="width:28px; height:28px; border-radius:6px;">
             <div class="brand-name" style="font-size: 16px;">Creation<span>Cue</span>™</div>
           </div>
           <p class="footer-copy">© 2026 Creation Cue™ Studio. Wear OS by Google. All rights reserved.</p>
@@ -4362,7 +4372,10 @@
       const displayBadge = isFree ? '🎀 FREE' : (badge || (f.type || '').toUpperCase());
 
       const playLink = f.play_store_url ? f.play_store_url.replace('market://details?id=', 'https://play.google.com/store/apps/details?id=').split('&')[0] : 'https://play.google.com/store/apps/dev?id=7609098870161748513';
-      const imgSrc = f.image_url || `images/${f.id}.png`;
+      const rawImg = f.image_url || `images/${f.id}.png`;
+      const optimizedImg = rawImg.startsWith('http') && !rawImg.includes('wsrv.nl')
+        ? `https://wsrv.nl/?url=${encodeURIComponent(rawImg)}&w=340&output=webp&q=82`
+        : rawImg;
 
       const card = document.createElement('div');
       card.className = 'watch-card wow-card-enter';
@@ -4371,7 +4384,7 @@
       card.innerHTML = `
         <div class="watch-card-media" onclick="openModal('${f.id}')">
           ${displayBadge ? `<span class="${badgeClass}">${displayBadge}</span>` : ''}
-          <img src="${imgSrc}" loading="lazy" decoding="async" width="512" height="512" alt="${f.title}" onerror="this.src='images/${f.id}.png'">
+          <img src="${optimizedImg}" loading="lazy" decoding="async" width="340" height="340" alt="${f.title}" onerror="this.src='${rawImg}'">
         </div>
         <h3 class="watch-card-title">${f.title}</h3>
         <p class="watch-card-desc">${f.description_en || 'Modern, customizable Wear OS watch face.'}</p>
