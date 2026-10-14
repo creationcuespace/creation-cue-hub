@@ -22,6 +22,23 @@
   <link rel="shortcut icon" type="image/png" href="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png">
   <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png">
 
+  <!-- Color Scheme & Dark Mode Initializer (Zero-Flicker) -->
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" id="meta-theme-color">
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('creationcue_theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark-mode');
+          var metaTheme = document.getElementById('meta-theme-color');
+          if (metaTheme) metaTheme.setAttribute('content', '#090a0c');
+        }
+      } catch(e) {}
+    })();
+  </script>
+
   <!-- Plus Jakarta Sans Font (WOW Space Standard) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,6 +71,51 @@
       --shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.09);
       --max-width: 1140px;
       --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --header-bg: rgba(255, 255, 255, 0.94);
+      --eyebrow-bg: rgba(0, 0, 0, 0.04);
+      --eyebrow-text: #334155;
+    }
+
+    html.dark-mode {
+      --bg: #090a0c;
+      --bg-alt: #111216;
+      --bg-card: #15171c;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-light: #64748b;
+      --border: #232730;
+      --border-light: #1b1e26;
+      --primary: #ffffff;
+      --accent: #f59e0b;
+      --accent-glow: rgba(245, 158, 11, 0.22);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.35);
+      --shadow-hover: 0 12px 30px rgba(0,0,0,0.45);
+      --header-bg: rgba(9, 10, 12, 0.92);
+      --eyebrow-bg: rgba(255, 255, 255, 0.06);
+      --eyebrow-text: #cbd5e1;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      html:not(.light-mode) {
+        --bg: #090a0c;
+        --bg-alt: #111216;
+        --bg-card: #15171c;
+        --text: #f1f5f9;
+        --text-muted: #94a3b8;
+        --text-light: #64748b;
+        --border: #232730;
+        --border-light: #1b1e26;
+        --primary: #ffffff;
+        --accent: #f59e0b;
+        --accent-glow: rgba(245, 158, 11, 0.22);
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+        --shadow-md: 0 4px 20px rgba(0,0,0,0.35);
+        --shadow-hover: 0 12px 30px rgba(0,0,0,0.45);
+        --header-bg: rgba(9, 10, 12, 0.92);
+        --eyebrow-bg: rgba(255, 255, 255, 0.06);
+        --eyebrow-text: #cbd5e1;
+      }
     }
 
     * {
@@ -539,6 +601,209 @@
       transform: translateY(-2px);
     }
 
+    /* Theme Toggle Button */
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--border-light);
+      border-color: var(--text);
+      transform: rotate(15deg);
+    }
+    .theme-toggle-btn svg {
+      width: 17px;
+      height: 17px;
+    }
+    .theme-toggle-btn .icon-moon {
+      display: none;
+    }
+    .theme-toggle-btn .icon-sun {
+      display: block;
+    }
+    html.dark-mode .theme-toggle-btn .icon-moon,
+    html:not(.light-mode) .theme-toggle-btn .icon-moon {
+      display: block;
+    }
+    html.dark-mode .theme-toggle-btn .icon-sun,
+    html:not(.light-mode) .theme-toggle-btn .icon-sun {
+      display: none;
+    }
+    @media (prefers-color-scheme: light) {
+      html:not(.dark-mode) .theme-toggle-btn .icon-moon {
+        display: none !important;
+      }
+      html:not(.dark-mode) .theme-toggle-btn .icon-sun {
+        display: block !important;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      html:not(.light-mode) .theme-toggle-btn .icon-moon {
+        display: block !important;
+      }
+      html:not(.light-mode) .theme-toggle-btn .icon-sun {
+        display: none !important;
+      }
+    }
+
+    /* Mobile Drawer Theme Row */
+    .mobile-theme-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      margin-top: 4px;
+    }
+    .mobile-theme-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mobile-theme-pills {
+      display: inline-flex;
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 99px;
+      padding: 2px;
+      border: 1px solid var(--border);
+    }
+    html.dark-mode .mobile-theme-pills,
+    html:not(.light-mode) .mobile-theme-pills {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .mobile-theme-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 99px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .mobile-theme-pill.active {
+      background: var(--primary);
+      color: var(--bg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Dark Mode Component Overrides */
+    html.dark-mode .header {
+      background: var(--header-bg);
+    }
+    html.dark-mode .eyebrow {
+      background: var(--eyebrow-bg);
+      color: var(--eyebrow-text);
+    }
+    html.dark-mode .brand-logo-img {
+      filter: grayscale(100%) invert(1) brightness(1.2);
+    }
+    html.dark-mode .brand-name span {
+      color: #fbbf24;
+    }
+    html.dark-mode .blog-hero h1 span {
+      color: #fbbf24;
+    }
+    html.dark-mode .nav-badge-pill {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+    }
+    html.dark-mode .article-card,
+    html.dark-mode .article-card-small,
+    html.dark-mode .empty-blog {
+      background: var(--bg-card) !important;
+      border-color: var(--border) !important;
+    }
+    html.dark-mode .article-card:hover,
+    html.dark-mode .article-card-small:hover {
+      border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+    html.dark-mode .btn-outline {
+      background: transparent !important;
+      color: var(--text) !important;
+      border-color: var(--border) !important;
+    }
+    html.dark-mode .btn-outline:hover {
+      background: var(--bg-alt) !important;
+      border-color: var(--text) !important;
+    }
+    html.dark-mode .btn-dark {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+    html.dark-mode .btn-dark:hover {
+      background: #e2e8f0 !important;
+      color: #000000 !important;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      html:not(.light-mode) .header {
+        background: var(--header-bg);
+      }
+      html:not(.light-mode) .eyebrow {
+        background: var(--eyebrow-bg);
+        color: var(--eyebrow-text);
+      }
+      html:not(.light-mode) .brand-logo-img {
+        filter: grayscale(100%) invert(1) brightness(1.2);
+      }
+      html:not(.light-mode) .brand-name span {
+        color: #fbbf24;
+      }
+      html:not(.light-mode) .blog-hero h1 span {
+        color: #fbbf24;
+      }
+      html:not(.light-mode) .nav-badge-pill {
+        background: rgba(245, 158, 11, 0.2);
+        color: #fbbf24;
+      }
+      html:not(.light-mode) .article-card,
+      html:not(.light-mode) .article-card-small,
+      html:not(.light-mode) .empty-blog {
+        background: var(--bg-card) !important;
+        border-color: var(--border) !important;
+      }
+      html:not(.light-mode) .article-card:hover,
+      html:not(.light-mode) .article-card-small:hover {
+        border-color: rgba(255, 255, 255, 0.2) !important;
+      }
+      html:not(.light-mode) .btn-outline {
+        background: transparent !important;
+        color: var(--text) !important;
+        border-color: var(--border) !important;
+      }
+      html:not(.light-mode) .btn-outline:hover {
+        background: var(--bg-alt) !important;
+        border-color: var(--text) !important;
+      }
+      html:not(.light-mode) .btn-dark {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      html:not(.light-mode) .btn-dark:hover {
+        background: #e2e8f0 !important;
+        color: #000000 !important;
+      }
+    }
+
     /* RESPONSIVE DESIGN */
     @media (max-width: 900px) {
       .nav-links {
@@ -552,7 +817,7 @@
         left: 0 !important;
         right: 0 !important;
         bottom: 0 !important;
-        background: rgba(255, 255, 255, 0.98) !important;
+        background: var(--header-bg) !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
         padding: 24px 20px !important;
@@ -565,7 +830,7 @@
         width: 100% !important;
         list-style: none !important;
       }
-      .nav-links.mobile-open li a {
+      .nav-links.mobile-open li:not(.mobile-theme-li) a {
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
@@ -577,7 +842,7 @@
         text-decoration: none !important;
         background: var(--bg-alt) !important;
       }
-      .nav-links.mobile-open li a:hover {
+      .nav-links.mobile-open li:not(.mobile-theme-li) a:hover {
         background: var(--primary) !important;
         color: #fff !important;
       }
@@ -637,10 +902,43 @@
             </li>
             <li><a href="/#faq" onclick="closeMobileMenu()">FAQ</a></li>
             <li><a href="/#contact" onclick="closeMobileMenu()">Contact</a></li>
+            <li class="mobile-theme-li" style="margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--border);">
+              <div class="mobile-theme-row">
+                <span class="mobile-theme-label">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                  Theme
+                </span>
+                <div class="mobile-theme-pills">
+                  <button type="button" class="mobile-theme-pill" data-theme="light" onclick="setThemePreference('light')">Light</button>
+                  <button type="button" class="mobile-theme-pill" data-theme="auto" onclick="setThemePreference('auto')">Auto</button>
+                  <button type="button" class="mobile-theme-pill" data-theme="dark" onclick="setThemePreference('dark')">Dark</button>
+                </div>
+              </div>
+            </li>
           </ul>
         </nav>
 
         <div class="header-actions">
+          <!-- Quick Theme Toggle (Light / Dark) -->
+          <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" onclick="cycleThemeMode()" aria-label="Toggle dark/light theme" title="Toggle dark/light theme">
+            <!-- Moon icon (shown in light mode to switch to dark) -->
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <!-- Sun icon (shown in dark mode to switch to light) -->
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+
           <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank" rel="noopener" class="btn btn-dark">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a2.385 2.385 0 0 1-.61-.954V2.768c.15-.36.368-.69.61-.954zm11.235 11.238l2.678 2.678-12.784 7.378 10.106-10.056zm0-2.104L4.738.892l12.784 7.378-2.678 2.678zm1.488 1.488l3.961-2.288a1.59 1.59 0 0 0 0-2.764l-3.961-2.288-1.745 1.745 1.745 1.745 3.961 3.85z"/></svg>
             <span class="btn-play-text">Play Store</span>
@@ -765,7 +1063,82 @@
       window.location.href = 'admin.html';
     }
 
+    // Theme Management (Light / Dark / Auto System Preference)
+    function getSystemTheme() {
+      return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+
+    function applyTheme(theme) {
+      const root = document.documentElement;
+      const metaTheme = document.getElementById('meta-theme-color');
+      const effectiveTheme = (theme === 'auto' || !theme) ? getSystemTheme() : theme;
+
+      root.classList.remove('dark-mode', 'light-mode');
+      if (effectiveTheme === 'dark') {
+        root.classList.add('dark-mode');
+        if (metaTheme) metaTheme.setAttribute('content', '#090a0c');
+      } else {
+        root.classList.add('light-mode');
+        if (metaTheme) metaTheme.setAttribute('content', '#ffffff');
+      }
+
+      // Update mobile drawer pills active state
+      const currentSetting = theme || 'auto';
+      document.querySelectorAll('.mobile-theme-pill').forEach(pill => {
+        pill.classList.toggle('active', pill.getAttribute('data-theme') === currentSetting);
+      });
+
+      // Update desktop toggle button aria-label & title
+      const toggleBtn = document.getElementById('theme-toggle-btn');
+      if (toggleBtn) {
+        const nextMode = effectiveTheme === 'dark' ? 'light' : 'dark';
+        toggleBtn.setAttribute('title', `Switch to ${nextMode} mode`);
+        toggleBtn.setAttribute('aria-label', `Switch to ${nextMode} mode`);
+      }
+    }
+
+    function setThemePreference(pref) {
+      if (pref === 'auto') {
+        localStorage.removeItem('creationcue_theme');
+      } else {
+        localStorage.setItem('creationcue_theme', pref);
+      }
+      applyTheme(pref);
+    }
+
+    function cycleThemeMode() {
+      const current = localStorage.getItem('creationcue_theme');
+      let effective = current;
+      if (!effective) {
+        effective = getSystemTheme();
+      }
+      const nextTheme = (effective === 'dark') ? 'light' : 'dark';
+      setThemePreference(nextTheme);
+    }
+
+    function initTheme() {
+      const saved = localStorage.getItem('creationcue_theme') || 'auto';
+      applyTheme(saved);
+
+      if (window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const listener = (e) => {
+          const userPref = localStorage.getItem('creationcue_theme');
+          if (!userPref || userPref === 'auto') {
+            applyTheme('auto');
+          }
+        };
+        if (mediaQuery.addEventListener) {
+          mediaQuery.addEventListener('change', listener);
+        } else if (mediaQuery.addListener) {
+          mediaQuery.addListener(listener);
+        }
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+
       // Check for ?admin=true param
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('admin') === 'true') {
