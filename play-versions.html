@@ -2419,8 +2419,11 @@
   <div id="details-backdrop" onclick="closeDetailsPanel()"></div>
   <div id="details-panel">
     <div class="mobile-handle"></div>
-    <div class="details-header">
-      <div class="details-header-title" id="details-title">Watch Face Details</div>
+    <div class="details-header" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 10px; overflow: hidden; min-width: 0;">
+        <span id="details-wf-code" style="font-family: 'Teko', sans-serif; font-size: 26px; font-weight: 700; color: #000; background: var(--yellow); padding: 1px 10px; border-radius: 4px; letter-spacing: 1.5px; text-transform: uppercase; flex-shrink: 0; box-shadow: 0 2px 8px rgba(255, 184, 0, 0.35);">CUE000</span>
+        <div class="details-header-title" id="details-title" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 20px; color: var(--text);">Watch Face Details</div>
+      </div>
       <button class="details-close-btn" onclick="closeDetailsPanel()" title="Close Details">✕</button>
     </div>
     <div class="details-body">
@@ -3712,7 +3715,12 @@
       const rawWf = managerData.find(item => item.id === id) || {};
 
       // Fill basic details
+      const codeBadge = document.getElementById('details-wf-code');
+      if (codeBadge) {
+        codeBadge.textContent = (wf.id || id || '').toUpperCase();
+      }
       document.getElementById('details-title').textContent = wf.title;
+      document.getElementById('details-title').title = wf.title;
       document.getElementById('details-img').src = getOptimizedImageUrl(wf.imageUrl, 240);
       document.getElementById('details-companion-ver').textContent = wf.companionVersion;
       document.getElementById('details-wear-ver').textContent = wf.wearVersion;
