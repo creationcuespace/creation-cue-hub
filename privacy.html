@@ -187,8 +187,33 @@
       font-weight: 600;
       transition: color 0.2s;
     }
-    .nav-links a:hover {
+    .nav-links a:hover,
+    .nav-links a.active {
       color: var(--text);
+    }
+    .nav-link-blog {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text) !important;
+      font-weight: 700 !important;
+    }
+    .nav-badge-pill {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      padding: 2px 6px;
+      border-radius: 99px;
+      background: rgba(245, 158, 11, 0.15);
+      color: #b45309;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    html.dark-mode .nav-badge-pill {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+    }
+    .btn-play-text {
+      display: inline;
     }
 
     .header-actions {
@@ -714,11 +739,16 @@
         <!-- Navigation Menu -->
         <nav>
           <ul class="nav-links" id="nav-links">
-            <li><a href="/#catalog">Watch Faces</a></li>
-            <li><a href="/#glance">Features</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="/#faq">FAQ</a></li>
-            <li><a href="/#contact">Contact</a></li>
+            <li><a href="/#catalog" onclick="closeMobileMenu()">Watch Faces</a></li>
+            <li><a href="/#free-faces" onclick="closeMobileMenu()">Free Faces (11)</a></li>
+            <li>
+              <a href="blog.html" class="nav-link-blog" onclick="closeMobileMenu()">
+                Blog <span class="nav-badge-pill">NEW</span>
+              </a>
+            </li>
+            <li><a href="/#faq" onclick="closeMobileMenu()">FAQ</a></li>
+            <li><a href="privacy.html" class="active" onclick="closeMobileMenu()">Privacy</a></li>
+            <li><a href="/#contact" onclick="closeMobileMenu()">Contact</a></li>
           </ul>
         </nav>
 
@@ -743,7 +773,7 @@
           </button>
           <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank" class="btn btn-dark">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a2.385 2.385 0 0 1-.61-.954V2.768c.15-.36.368-.69.61-.954zm11.235 11.238l2.678 2.678-12.784 7.378 10.106-10.056zm0-2.104L4.738.892l12.784 7.378-2.678 2.678zm1.488 1.488l3.961-2.288a1.59 1.59 0 0 0 0-2.764l-3.961-2.288-1.745 1.745 1.745 1.745 3.961 3.85z"/></svg>
-            Play Store
+            <span class="btn-play-text">Play Store</span>
           </a>
           <button type="button" class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Navigation" aria-expanded="false">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
@@ -865,6 +895,11 @@
       const nav = document.getElementById('nav-links');
       if (!nav) return;
       nav.classList.toggle('mobile-open');
+    }
+
+    function closeMobileMenu() {
+      const nav = document.getElementById('nav-links');
+      if (nav) nav.classList.remove('mobile-open');
     }
 
     // Theme Management (Light / Dark / Auto System Preference)
