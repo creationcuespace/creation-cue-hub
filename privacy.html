@@ -635,8 +635,67 @@
       border-color: var(--text) !important;
       background: var(--bg-alt) !important;
     }
+    html.dark-mode .btn-dark {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+    html.dark-mode .btn-dark:hover {
+      background: #e2e8f0 !important;
+      color: #000000 !important;
+    }
     html.dark-mode .nav-links.mobile-open {
       background: rgba(9, 10, 12, 0.98) !important;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      html:not(.light-mode) .header {
+        background: var(--header-bg);
+      }
+      html:not(.light-mode) .eyebrow {
+        background: var(--eyebrow-bg);
+        color: var(--eyebrow-text);
+      }
+      html:not(.light-mode) .brand-logo-img {
+        filter: grayscale(100%) invert(1) brightness(1.2);
+      }
+      html:not(.light-mode) .brand-name span {
+        color: #fbbf24;
+      }
+      html:not(.light-mode) .policy-card {
+        background: var(--bg-card) !important;
+        border-color: var(--border) !important;
+      }
+      html:not(.light-mode) .policy-card h2 .num-badge {
+        background: var(--accent);
+        color: #000000;
+      }
+      html:not(.light-mode) .policy-callout {
+        background: var(--callout-bg) !important;
+        border-color: var(--border) !important;
+        border-left-color: var(--accent) !important;
+      }
+      html:not(.light-mode) .sub-note {
+        background: var(--bg-alt);
+        border-color: var(--border);
+        color: var(--text-muted);
+      }
+      html:not(.light-mode) .btn-outline {
+        background: transparent !important;
+        color: var(--text) !important;
+        border-color: var(--border) !important;
+      }
+      html:not(.light-mode) .btn-outline:hover {
+        border-color: var(--text) !important;
+        background: var(--bg-alt) !important;
+      }
+      html:not(.light-mode) .btn-dark {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      html:not(.light-mode) .btn-dark:hover {
+        background: #e2e8f0 !important;
+        color: #000000 !important;
+      }
     }
   </style>
 </head>

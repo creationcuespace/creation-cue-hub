@@ -999,6 +999,14 @@
     html.dark-mode .link-preview-card:hover {
       border-color: var(--accent);
     }
+    html.dark-mode .btn-dark {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+    html.dark-mode .btn-dark:hover {
+      background: #e2e8f0 !important;
+      color: #000000 !important;
+    }
     html.dark-mode .carousel-nav {
       background: rgba(21, 23, 28, 0.94) !important;
       border-color: #2e3340 !important;
@@ -1009,6 +1017,78 @@
       background: #ffffff !important;
       border-color: #ffffff !important;
       color: #000000 !important;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      html:not(.light-mode) .header {
+        background: var(--header-bg);
+      }
+      html:not(.light-mode) .brand-logo-img {
+        filter: grayscale(100%) invert(1) brightness(1.2);
+      }
+      html:not(.light-mode) .brand-name span {
+        color: #fbbf24;
+      }
+      html:not(.light-mode) .nav-badge-pill {
+        background: rgba(245, 158, 11, 0.2);
+        color: #fbbf24;
+      }
+      html:not(.light-mode) article,
+      html:not(.light-mode) .blog-sidebar,
+      html:not(.light-mode) .promo-section,
+      html:not(.light-mode) .related-card,
+      html:not(.light-mode) .admin-details-card {
+        background: var(--bg-card) !important;
+        border-color: var(--border) !important;
+      }
+      html:not(.light-mode) .related-card:hover {
+        border-color: rgba(255, 255, 255, 0.2) !important;
+      }
+      html:not(.light-mode) .btn-outline {
+        background: transparent !important;
+        color: var(--text) !important;
+        border-color: var(--border) !important;
+      }
+      html:not(.light-mode) .btn-outline:hover {
+        border-color: var(--text) !important;
+        background: var(--bg-alt) !important;
+      }
+      html:not(.light-mode) .btn-dark {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      html:not(.light-mode) .btn-dark:hover {
+        background: #e2e8f0 !important;
+        color: #000000 !important;
+      }
+      html:not(.light-mode) pre,
+      html:not(.light-mode) code {
+        background: var(--code-bg);
+        color: var(--code-color);
+      }
+      html:not(.light-mode) blockquote {
+        border-left-color: var(--accent);
+        background: var(--bg-alt);
+        color: var(--text);
+      }
+      html:not(.light-mode) .link-preview-card {
+        background: var(--bg-card);
+        border-color: var(--border);
+      }
+      html:not(.light-mode) .link-preview-card:hover {
+        border-color: var(--accent);
+      }
+      html:not(.light-mode) .carousel-nav {
+        background: rgba(21, 23, 28, 0.94) !important;
+        border-color: #2e3340 !important;
+        color: #f1f5f9 !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+      }
+      html:not(.light-mode) .carousel-nav:hover {
+        background: #ffffff !important;
+        border-color: #ffffff !important;
+        color: #000000 !important;
+      }
     }
   </style>
 </head>
