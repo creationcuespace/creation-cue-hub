@@ -2284,8 +2284,11 @@
           <div class="stat-label">Total Watch Faces</div>
           <div class="stat-value" id="stat-total">0</div>
         </div>
-        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">
-          <div class="stat-label">Total Downloads</div>
+        <div id="card-downloads-box" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: opacity 0.15s;" title="Click to sort by Downloads" onclick="onDownloadsCardClick()">
+          <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Total Downloads</span>
+            <span style="font-size: 10px; opacity: 0.75; color: var(--yellow);">⇅ Sort</span>
+          </div>
           <div class="stat-value" id="stat-downloads" style="font-size: 22px; color: #81c784;">0</div>
         </div>
       </div>
@@ -2339,6 +2342,20 @@
         <button id="search-clear-btn" class="search-clear-btn" title="Clear Search">✕</button>
       </div>
       <div class="filters-group">
+        <select class="filter-select" id="sort-select" onchange="onSortDropdownChange(this.value)" style="border-color: rgba(129, 199, 132, 0.4); color: #81c784;" title="Sort Watch Faces">
+          <option value="installs-desc">⬇️ Downloads (High → Low)</option>
+          <option value="installs-asc">⬆️ Downloads (Low → High)</option>
+          <option value="date-desc">📅 Last Updated (Newest)</option>
+          <option value="date-asc">📅 Last Updated (Oldest)</option>
+          <option value="id-asc">🔤 ID (Asc)</option>
+          <option value="id-desc">🔤 ID (Desc)</option>
+          <option value="title-asc">🅰️ Name (A → Z)</option>
+          <option value="title-desc">💤 Name (Z → A)</option>
+          <option value="price-desc">💎 Paid First</option>
+          <option value="price-asc">🎁 Free First</option>
+          <option value="wear-desc">⌚ Wear OS Version</option>
+          <option value="companion-desc">📱 Companion Version</option>
+        </select>
         <select class="filter-select" id="filter-notes">
           <option value="all">All Notes Status</option>
           <option value="has-notes">Has Notes</option>
@@ -2381,7 +2398,7 @@
             <th class="sortable-th" data-sort="companion-desc" data-sort-asc="companion-asc" data-sort-desc="companion-desc" title="Click to sort by Companion App version">Companion App <span class="sort-indicator" id="sort-ind-companion"></span></th>
             <th class="sortable-th" data-sort="wear-desc" data-sort-asc="wear-asc" data-sort-desc="wear-desc" title="Click to sort by Wear OS version">Wear OS App <span class="sort-indicator" id="sort-ind-wear"></span></th>
             <th class="sortable-th" data-sort="date-desc" data-sort-asc="date-asc" data-sort-desc="date-desc" title="Click to sort by Last Store Update">Last Store Update <span class="sort-indicator" id="sort-ind-date"></span></th>
-            <th class="sortable-th" data-sort="installs-desc" data-sort-asc="installs-asc" data-sort-desc="installs-desc" title="Click to sort by Installs">Installs <span class="sort-indicator" id="sort-ind-installs"></span></th>
+            <th class="sortable-th" data-sort="installs-desc" data-sort-asc="installs-asc" data-sort-desc="installs-desc" title="Click to sort by Downloads">Downloads <span class="sort-indicator" id="sort-ind-installs"></span></th>
             <th class="sortable-th" data-sort="price-desc" data-sort-asc="price-asc" data-sort-desc="price-desc" title="Click to sort by Pricing">Pricing <span class="sort-indicator" id="sort-ind-price"></span></th>
             <th>Developer Notes</th>
           </tr>
@@ -3170,7 +3187,8 @@
           }
           const iA = parseInstalls(a.downloads);
           const iB = parseInstalls(b.downloads);
-          return sortVal === 'installs-desc' ? iB - iA : iA - iB;
+          if (iA !== iB) return sortVal === 'installs-desc' ? iB - iA : iA - iB;
+          return a.id.localeCompare(b.id, undefined, { numeric: true, sensitivity: 'base' });
         }
         
         if (sortVal === 'price-desc') {
@@ -4920,6 +4938,7 @@
         { id: 'sort-ind-companion', asc: 'companion-asc', desc: 'companion-desc', thSort: 'companion-desc' },
         { id: 'sort-ind-wear',      asc: 'wear-asc',      desc: 'wear-desc',      thSort: 'wear-desc' },
         { id: 'sort-ind-date',      asc: 'date-asc',      desc: 'date-desc',      thSort: 'date-desc' },
+        { id: 'sort-ind-installs',  asc: 'installs-asc',  desc: 'installs-desc',  thSort: 'installs-desc' },
         { id: 'sort-ind-price',     asc: 'price-asc',     desc: 'price-desc',     thSort: 'price-desc' },
       ];
       cols.forEach(col => {
@@ -4932,6 +4951,28 @@
         ind.textContent = activeSort === col.asc ? '▲' : '▼';
         ind.style.opacity = '';
       });
+
+      // Synchronize toolbar sort dropdown
+      const sortSelect = document.getElementById('sort-select');
+      if (sortSelect && sortSelect.value !== activeSort) {
+        sortSelect.value = activeSort;
+      }
+    }
+
+    function onSortDropdownChange(val) {
+      window.currentSort = val;
+      updateSortIndicators(val);
+      renderDashboard();
+    }
+
+    function onDownloadsCardClick() {
+      if (window.currentSort === 'installs-desc') {
+        window.currentSort = 'installs-asc';
+      } else {
+        window.currentSort = 'installs-desc';
+      }
+      updateSortIndicators(window.currentSort);
+      renderDashboard();
     }
 
     document.querySelectorAll('.sortable-th').forEach(th => {
