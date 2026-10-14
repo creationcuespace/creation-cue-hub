@@ -1434,12 +1434,12 @@ Links to claim your free code and the Play Store link are in the first comment b
       var hasExplicitCap = (customLimit !== null && !isNaN(customLimit) && customLimit > 0);
 
       // Smart count rule:
-      // Only mention exact numbers when it builds urgency/FOMO (explicit cap set, or remaining balance <= 100).
-      // If remaining > 100 and no cap is set, avoid broadcasting huge numbers so the post doesn't look like mass dumping.
+      // Only mention exact numbers when it builds urgency/FOMO (explicit cap or remaining balance is <= 100).
+      // If remaining or cap > 100, avoid broadcasting huge numbers so the post doesn't look like mass dumping or spam.
       var shouldMentionNumber = false;
       var countToUse = 0;
 
-      if (hasExplicitCap) {
+      if (hasExplicitCap && customLimit <= 100) {
         shouldMentionNumber = true;
         countToUse = customLimit;
       } else if (item.remaining > 0 && item.remaining <= 100) {
