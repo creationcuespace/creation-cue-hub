@@ -110,30 +110,43 @@
     }
 
     /* Main Layout */
-    .container {
-      max-width: 900px;
-      margin: 30px auto;
-      padding: 0 20px;
+    .container, .dashboard-container {
+      max-width: 1140px;
+      margin: 12px auto;
+      padding: 0 16px;
       width: 100%;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .container, .dashboard-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .dash-col {
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 12px;
     }
 
     .card {
       background: var(--dark);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      border-radius: 10px;
+      padding: 14px 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
     }
 
     .card-title {
       font-family: 'Teko', sans-serif;
-      font-size: 24px;
+      font-size: 20px;
       letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -276,38 +289,43 @@
       background: #c81f16;
     }
 
+    .btn-sm {
+      padding: 5px 12px;
+      font-size: 12px;
+    }
+
     /* Recording Control Area */
     .recorder-hero {
       text-align: center;
-      padding: 30px 10px;
+      padding: 10px 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 10px;
     }
 
     .rec-btn-big {
-      width: 140px;
-      height: 140px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      border: 6px solid var(--mid);
+      border: 5px solid var(--mid);
       background: var(--red);
       color: white;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      box-shadow: 0 0 30px rgba(232, 40, 30, 0.4);
+      gap: 4px;
+      box-shadow: 0 0 25px rgba(232, 40, 30, 0.4);
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .rec-btn-big:hover:not(:disabled) {
       transform: scale(1.06);
-      box-shadow: 0 0 45px rgba(232, 40, 30, 0.7);
+      box-shadow: 0 0 35px rgba(232, 40, 30, 0.7);
     }
 
     .rec-btn-big.recording {
@@ -319,13 +337,14 @@
 
     @keyframes pulse-ring {
       0% { box-shadow: 0 0 0 0 rgba(232, 40, 30, 0.7); }
-      70% { box-shadow: 0 0 0 25px rgba(232, 40, 30, 0); }
+      70% { box-shadow: 0 0 0 20px rgba(232, 40, 30, 0); }
       100% { box-shadow: 0 0 0 0 rgba(232, 40, 30, 0); }
     }
 
     .rec-timer {
       font-family: 'Teko', sans-serif;
-      font-size: 42px;
+      font-size: 32px;
+      line-height: 1;
       letter-spacing: 2px;
       color: var(--muted);
     }
@@ -444,11 +463,11 @@
 
     .video-player {
       width: 100%;
-      max-width: 300px;
-      max-height: 300px;
+      max-width: 260px;
+      max-height: 200px;
       background: black;
       border-radius: 8px;
-      margin: 12px auto;
+      margin: 8px auto;
       display: block;
     }
 
@@ -501,20 +520,20 @@
 
     /* Side circular buttons (Screenshot & Settings) */
     .rec-side-btn {
-      width: 86px;
-      height: 86px;
+      width: 68px;
+      height: 68px;
       border-radius: 50%;
       background: var(--mid);
       border: 2px solid var(--border);
       color: var(--text);
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
+      gap: 3px;
       transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .rec-side-btn:hover:not(:disabled) {
@@ -527,11 +546,35 @@
       cursor: not-allowed;
     }
 
+    /* Pairing Collapsible */
+    .pairing-collapsible {
+      margin-top: 10px;
+      border-top: 1px dashed var(--border);
+      padding-top: 8px;
+    }
+    .pairing-toggle-btn {
+      background: none;
+      border: none;
+      color: var(--yellow);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0;
+      width: 100%;
+      text-align: left;
+    }
+    .pairing-toggle-btn:hover {
+      text-decoration: underline;
+    }
+
     /* Drag and Drop Installer */
     .drop-zone {
       border: 2px dashed var(--border);
-      border-radius: 10px;
-      padding: 26px 20px;
+      border-radius: 8px;
+      padding: 12px 14px;
       text-align: center;
       background: var(--mid);
       cursor: pointer;
@@ -571,183 +614,199 @@
 <body>
 
   <header class="header">
-    <a href="/" class="header-left">
-      <div class="logo-mark">
-        <span class="r"></span>
-        <span class="b"></span>
-        <span class="y"></span>
-      </div>
-      <div class="header-title">Creation <span>Cue</span></div>
-    </a>
-    <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <button id="headerBackBtn" class="btn btn-yellow" style="padding: 5px 12px; font-size: 13px; display: none;" onclick="closeMediaPreview()">← Back to Recorder</button>
+      <a href="/" class="header-left">
+        <div class="logo-mark">
+          <span class="r"></span>
+          <span class="b"></span>
+          <span class="y"></span>
+        </div>
+        <div class="header-title">Creation <span>Cue</span></div>
+      </a>
+    </div>
+    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
       <div id="headerBridgeStatus" class="header-status offline" title="Bridge Connection Status">
         <span class="status-dot"></span>
         <span id="headerBridgeText">Bridge: Offline</span>
       </div>
-      <a href="/WatchRecorder.zip" download class="btn btn-yellow" style="padding: 6px 14px; font-size: 13px; text-decoration: none;">💻 Download App (.exe)</a>
+      <button class="btn btn-sm" onclick="openPCFolder()" title="Open local Downloads folder">📁 Downloads</button>
+      <button class="btn btn-sm" onclick="toggleSettingsModal()" title="Adjust resolution, bitrate, or time limit">⚙️ Settings</button>
+      <a href="/WatchRecorder.zip" download class="btn btn-yellow" style="padding: 5px 12px; font-size: 12px; text-decoration: none;">💻 Download App (.exe)</a>
     </div>
   </header>
 
-  <div class="container">
+  <div class="dashboard-container">
 
-    <!-- Connection Card -->
-    <div class="card">
-      <div class="card-title">
-        <span>Smartwatch Connection</span>
-        <div id="statusBadge" class="status-badge offline">
-          <span class="status-dot"></span>
-          <span id="statusText">Checking Bridge...</span>
+    <!-- LEFT COLUMN: Connection & Tools -->
+    <div class="dash-col dash-left">
+
+      <!-- Connection Card -->
+      <div class="card">
+        <div class="card-title">
+          <span>Smartwatch Connection</span>
+          <div id="statusBadge" class="status-badge offline">
+            <span class="status-dot"></span>
+            <span id="statusText">Checking Bridge...</span>
+          </div>
         </div>
-      </div>
 
-      <p style="font-size: 14px; color: var(--muted);">Connect your Galaxy Watch or Wear OS device via Wi-Fi ADB or USB to start recording.</p>
+        <div class="recent-bar" style="margin-top: 2px; margin-bottom: 8px;">
+          <select id="savedDevicesSelect" class="input-field" style="flex: 1;" onchange="loadSavedDevice(this.value)">
+            <option value="">⭐ Saved Devices (Recent)...</option>
+          </select>
+          <button class="btn btn-sm" onclick="forgetSelectedSavedDevice()" title="Forget selected saved device">Forget</button>
+          <button class="btn btn-sm" onclick="refreshStatus()" title="Refresh connection status">🔄</button>
+        </div>
 
-      <div class="recent-bar">
-        <select id="savedDevicesSelect" class="input-field" style="max-width: 280px;" onchange="loadSavedDevice(this.value)">
-          <option value="">⭐ Saved Devices (Recent)...</option>
-        </select>
-        <button class="btn" style="padding: 8px 12px; font-size: 12px;" onclick="forgetSelectedSavedDevice()" title="Forget selected saved device">Forget</button>
-      </div>
-
-      <div class="connect-bar">
-        <select id="deviceSelect" class="input-field" style="max-width: 260px;">
+        <select id="deviceSelect" class="input-field" style="width: 100%; display: none; margin-bottom: 8px;">
           <option value="">Searching for connected watches...</option>
         </select>
-        
-        <div class="ip-box-group" id="connGroup" onkeydown="if(event.key==='Enter'){event.preventDefault(); connectDevice();}">
-          <input type="text" maxlength="3" class="ip-box" id="conn1" value="192" placeholder="192" oninput="handleIpInput(this, 'conn2', '')" onpaste="handleIpPaste(event, 'conn')">
-          <span class="ip-dot">.</span>
-          <input type="text" maxlength="3" class="ip-box" id="conn2" value="168" placeholder="168" oninput="handleIpInput(this, 'conn3', 'conn1')" onpaste="handleIpPaste(event, 'conn')">
-          <span class="ip-dot">.</span>
-          <input type="text" maxlength="3" class="ip-box" id="conn3" value="8" placeholder="8" oninput="handleIpInput(this, 'conn4', 'conn2')" onpaste="handleIpPaste(event, 'conn')">
-          <span class="ip-dot">.</span>
-          <input type="text" maxlength="3" class="ip-box" id="conn4" value="59" placeholder="59" oninput="handleIpInput(this, 'connPort', 'conn3')" onpaste="handleIpPaste(event, 'conn')">
-          <span class="ip-dot">:</span>
-          <input type="text" maxlength="5" class="port-box" id="connPort" placeholder="37673" onpaste="handleIpPaste(event, 'conn')">
-        </div>
 
-        <button id="connectBtn" class="btn" onclick="connectDevice()">Connect IP</button>
-        <button class="btn" onclick="disconnectDevice()">🔌 Disconnect</button>
-        <button class="btn" onclick="refreshStatus()">🔄 Refresh</button>
-      </div>
-
-      <!-- Wireless Pairing Section -->
-      <div style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px;">
-        <div style="font-weight: 600; font-size: 14px; color: var(--yellow); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
-          <span>🔑 Need Wireless Pairing? (Wear OS 3+)</span>
-          <button style="background: none; border: none; color: var(--muted); cursor: pointer; font-size: 13px;" onclick="togglePairingHelp()">ℹ️ How to pair?</button>
-        </div>
-        <div id="pairingHelp" style="display: none; background: var(--mid); padding: 12px; border-radius: 8px; font-size: 13px; color: #ccc; margin-bottom: 12px; line-height: 1.5;">
-          1. On your watch, go to <strong>Settings &gt; Developer options &gt; Wireless debugging</strong>.<br>
-          2. Tap <strong>"Pair new device"</strong>.<br>
-          3. Enter the <strong>Pairing IP &amp; Port</strong> and <strong>6-digit Pairing Code</strong> shown on your watch screen below, then click <strong>Pair Watch</strong>.
-        </div>
-        <div class="connect-bar">
-          <div class="ip-box-group" id="pairGroup" onkeydown="if(event.key==='Enter'){event.preventDefault(); pairDevice();}">
-            <input type="text" maxlength="3" class="ip-box" id="pair1" value="192" placeholder="192" oninput="handleIpInput(this, 'pair2', '')" onpaste="handleIpPaste(event, 'pair')">
+        <div class="connect-bar" style="margin-top: 0;">
+          <div class="ip-box-group" id="connGroup" onkeydown="if(event.key==='Enter'){event.preventDefault(); connectDevice();}">
+            <input type="text" maxlength="3" class="ip-box" id="conn1" value="192" placeholder="192" oninput="handleIpInput(this, 'conn2', '')" onpaste="handleIpPaste(event, 'conn')">
             <span class="ip-dot">.</span>
-            <input type="text" maxlength="3" class="ip-box" id="pair2" value="168" placeholder="168" oninput="handleIpInput(this, 'pair3', 'pair1')" onpaste="handleIpPaste(event, 'pair')">
+            <input type="text" maxlength="3" class="ip-box" id="conn2" value="168" placeholder="168" oninput="handleIpInput(this, 'conn3', 'conn1')" onpaste="handleIpPaste(event, 'conn')">
             <span class="ip-dot">.</span>
-            <input type="text" maxlength="3" class="ip-box" id="pair3" value="8" placeholder="8" oninput="handleIpInput(this, 'pair4', 'pair2')" onpaste="handleIpPaste(event, 'pair')">
+            <input type="text" maxlength="3" class="ip-box" id="conn3" value="8" placeholder="8" oninput="handleIpInput(this, 'conn4', 'conn2')" onpaste="handleIpPaste(event, 'conn')">
             <span class="ip-dot">.</span>
-            <input type="text" maxlength="3" class="ip-box" id="pair4" value="59" placeholder="59" oninput="handleIpInput(this, 'pairPort', 'pair3')" onpaste="handleIpPaste(event, 'pair')">
+            <input type="text" maxlength="3" class="ip-box" id="conn4" value="59" placeholder="59" oninput="handleIpInput(this, 'connPort', 'conn3')" onpaste="handleIpPaste(event, 'conn')">
             <span class="ip-dot">:</span>
-            <input type="text" maxlength="5" class="port-box" id="pairPort" placeholder="45597" onpaste="handleIpPaste(event, 'pair')">
+            <input type="text" maxlength="5" class="port-box" id="connPort" placeholder="37673" onpaste="handleIpPaste(event, 'conn')">
           </div>
-          <input type="text" id="pairCodeInput" class="input-field" placeholder="6-Digit Code (123456)" style="max-width: 170px;" onkeydown="if(event.key==='Enter'){event.preventDefault(); pairDevice();}">
-          <button id="pairBtn" class="btn btn-yellow" onclick="pairDevice()">🔑 Pair Watch</button>
+
+          <button id="connectBtn" class="btn btn-yellow" onclick="connectDevice()">Connect IP</button>
+          <button class="btn" onclick="disconnectDevice()" title="Disconnect watch">🔌 Disconnect</button>
         </div>
-      </div>
 
-      <!-- Warning if bridge is offline -->
-      <div id="bridgeNotice" class="bridge-warning" style="display: none; margin-top: 16px;">
-        <div>⚠️ <strong>Local Bridge Offline:</strong> Run <code>WatchRecorder.exe</code> on your computer to connect to your watch.</div>
-        <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-          <span>💻 Running this on your PC or Laptop?</span>
-          <a href="/WatchRecorder.zip" download class="btn btn-yellow" style="padding: 6px 14px; font-size: 13px; text-decoration: none;">📥 Download Standalone App (.exe)</a>
-          <a href="/watch-recorder-laptop.zip" download class="btn" style="padding: 6px 14px; font-size: 13px; text-decoration: none;">📦 Python Script Package (.zip)</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Recorder Card -->
-    <div class="card">
-      <div class="card-title">Watch Screen Recording</div>
-
-      <div class="recorder-hero">
-        <div id="timerDisplay" class="rec-timer">00:00</div>
-
-        <div style="display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap;">
-          <!-- Quick Screenshot Button -->
-          <button id="shotBtn" class="rec-side-btn" onclick="takeScreenshot()" disabled title="Capture instant watch screenshot for Play Store">
-            <span style="font-size: 26px;">📸</span>
-            <span>Screenshot</span>
+        <!-- Wireless Pairing Collapsible -->
+        <div class="pairing-collapsible">
+          <button type="button" class="pairing-toggle-btn" onclick="togglePairingSection()">
+            <span id="pairChevron">▸</span> 🔑 Need Wireless Pairing? (Wear OS 3+)
           </button>
-
-          <!-- REC Button -->
-          <button id="recBtn" class="rec-btn-big" onclick="toggleRecording()" disabled>
-            <span id="recIcon" style="font-size: 28px;">🔴</span>
-            <span id="recLabel">REC</span>
-          </button>
-
-          <!-- Recording Settings Button -->
-          <button id="settingsBtn" class="rec-side-btn" onclick="toggleSettingsModal()" title="Adjust resolution, bitrate, or time limit">
-            <span style="font-size: 26px;">⚙️</span>
-            <span>Settings</span>
-          </button>
+          <div id="pairingSection" style="display: none; margin-top: 8px;">
+            <div style="background: var(--mid); padding: 8px 10px; border-radius: 6px; font-size: 11px; color: #ccc; margin-bottom: 8px; line-height: 1.4;">
+              On watch: <strong>Settings &gt; Developer options &gt; Wireless debugging &gt; Pair new device</strong>.
+            </div>
+            <div class="connect-bar" style="margin-top: 0;">
+              <div class="ip-box-group" id="pairGroup" onkeydown="if(event.key==='Enter'){event.preventDefault(); pairDevice();}">
+                <input type="text" maxlength="3" class="ip-box" id="pair1" value="192" placeholder="192" oninput="handleIpInput(this, 'pair2', '')" onpaste="handleIpPaste(event, 'pair')">
+                <span class="ip-dot">.</span>
+                <input type="text" maxlength="3" class="ip-box" id="pair2" value="168" placeholder="168" oninput="handleIpInput(this, 'pair3', 'pair1')" onpaste="handleIpPaste(event, 'pair')">
+                <span class="ip-dot">.</span>
+                <input type="text" maxlength="3" class="ip-box" id="pair3" value="8" placeholder="8" oninput="handleIpInput(this, 'pair4', 'pair2')" onpaste="handleIpPaste(event, 'pair')">
+                <span class="ip-dot">.</span>
+                <input type="text" maxlength="3" class="ip-box" id="pair4" value="59" placeholder="59" oninput="handleIpInput(this, 'pairPort', 'pair3')" onpaste="handleIpPaste(event, 'pair')">
+                <span class="ip-dot">:</span>
+                <input type="text" maxlength="5" class="port-box" id="pairPort" placeholder="45597" onpaste="handleIpPaste(event, 'pair')">
+              </div>
+              <input type="text" id="pairCodeInput" class="input-field" placeholder="6-Digit Code" style="max-width: 120px;" onkeydown="if(event.key==='Enter'){event.preventDefault(); pairDevice();}">
+              <button id="pairBtn" class="btn btn-yellow" onclick="pairDevice()">Pair Watch</button>
+            </div>
+          </div>
         </div>
 
-        <p id="recHint" style="font-size: 13px; color: var(--muted);">Connect watch to enable recording</p>
-      </div>
-    </div>
-
-    <!-- Screenshot Output Card -->
-    <div id="screenshotCard" class="card" style="display: none;">
-      <div class="card-title">
-        <span>📸 Watch Screenshot Preview</span>
-        <span id="screenshotFilename" style="font-size: 14px; color: var(--muted); font-weight: normal;"></span>
-      </div>
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
-        <img id="screenshotImg" style="max-width: 280px; max-height: 280px; border-radius: 50%; border: 3px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.6); background: #000;" alt="Screenshot preview">
-        <div class="actions-bar" style="justify-content: center; gap: 10px; flex-wrap: wrap;">
-          <a id="screenshotDownloadBtn" class="btn btn-yellow" download style="text-decoration: none;">⬇️ Download PNG</a>
-          <button class="btn" onclick="openPCFolder()">📁 Open Downloads</button>
+        <!-- Warning if bridge is offline -->
+        <div id="bridgeNotice" class="bridge-warning" style="display: none; margin-top: 10px; padding: 10px;">
+          <div>⚠️ <strong>Local Bridge Offline:</strong> Run <code>WatchRecorder.exe</code> on your computer to connect.</div>
         </div>
       </div>
+
+      <!-- Drag-and-Drop Installer Card -->
+      <div class="card">
+        <div class="card-title" style="margin-bottom: 6px;">
+          <span>Drag &amp; Drop Watch Installer</span>
+          <span style="font-size: 11px; color: var(--muted); font-weight: normal;">APK or .wff watch face</span>
+        </div>
+        <div id="dropZone" class="drop-zone" onclick="document.getElementById('installerFileInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleFileDrop(event)">
+          <input type="file" id="installerFileInput" style="display: none;" accept=".apk,.wff,.zip" onchange="handleFileSelect(event)">
+          <div style="font-size: 24px; margin-bottom: 3px;">📦</div>
+          <div style="font-weight: 600; font-size: 13px;">Drop APK or Watch Face (.wff) here</div>
+          <div style="font-size: 11px; color: var(--muted);">or click to browse from computer</div>
+          <div id="installerStatus" style="display: none; margin-top: 6px; font-size: 12px; color: var(--yellow); font-weight: 600;"></div>
+        </div>
+      </div>
+
     </div>
 
-    <!-- Output Video Card -->
-    <div id="videoCard" class="card video-card">
-      <div class="card-title">
-        <span>Recorded Video Preview</span>
-        <span id="videoFilename" style="font-size: 14px; color: var(--muted); font-weight: normal;"></span>
+    <!-- RIGHT COLUMN: Recorder & Previews -->
+    <div class="dash-col dash-right">
+
+      <!-- Recorder Card -->
+      <div class="card">
+        <div class="card-title">
+          <span>Watch Screen Recording</span>
+          <span id="recModeBadge" style="font-size: 11px; color: var(--muted); font-weight: normal;">Ready</span>
+        </div>
+
+        <div class="recorder-hero">
+          <div id="timerDisplay" class="rec-timer">00:00</div>
+
+          <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
+            <!-- Quick Screenshot Button -->
+            <button id="shotBtn" class="rec-side-btn" onclick="takeScreenshot()" disabled title="Capture instant watch screenshot">
+              <span style="font-size: 22px;">📸</span>
+              <span>Screenshot</span>
+            </button>
+
+            <!-- REC Button -->
+            <button id="recBtn" class="rec-btn-big" onclick="toggleRecording()" disabled>
+              <span id="recIcon" style="font-size: 24px;">🔴</span>
+              <span id="recLabel">REC</span>
+            </button>
+
+            <!-- Settings Button -->
+            <button id="settingsBtn" class="rec-side-btn" onclick="toggleSettingsModal()" title="Recording Settings">
+              <span style="font-size: 22px;">⚙️</span>
+              <span>Settings</span>
+            </button>
+          </div>
+
+          <p id="recHint" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Connect watch to enable recording</p>
+        </div>
       </div>
 
-      <div style="display: flex; justify-content: center;">
-        <video id="videoElement" class="video-player" controls></video>
+      <!-- Video Output Card -->
+      <div id="videoCard" class="card video-card" style="display: none;">
+        <div class="card-title">
+          <span>🎬 Recorded Video Preview</span>
+          <button class="btn btn-sm" onclick="closeMediaPreview()" title="Go back to recorder">← Back to Recorder ✕</button>
+        </div>
+        <div id="videoFilename" style="font-size: 12px; color: var(--muted); margin-bottom: 6px; word-break: break-all;"></div>
+
+        <div style="display: flex; justify-content: center; background: #000; border-radius: 8px; padding: 4px;">
+          <video id="videoElement" class="video-player" controls style="max-height: 200px; max-width: 100%;"></video>
+        </div>
+
+        <div class="actions-bar" style="justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 10px;">
+          <button class="btn btn-yellow" onclick="openNativeVideo()" title="Open in default Windows video player">▶️ Open Video</button>
+          <a id="videoDownloadBtn" class="btn" download style="text-decoration: none;">⬇️ Download</a>
+          <button class="btn" onclick="renameCurrentVideo()">✏️ Rename</button>
+          <button class="btn btn-red" onclick="deleteCurrentVideo()">🗑️ Delete</button>
+          <button class="btn" onclick="openPCFolder()">📁 Downloads</button>
+          <button class="btn" onclick="closeMediaPreview()">← Back</button>
+        </div>
       </div>
 
-      <div class="actions-bar" style="justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 16px;">
-        <a id="videoDownloadBtn" class="btn btn-yellow" download style="text-decoration: none;">⬇️ Download Video</a>
-        <button class="btn" onclick="renameCurrentVideo()">✏️ Rename</button>
-        <button class="btn btn-red" onclick="deleteCurrentVideo()">🗑️ Delete</button>
-        <button class="btn" onclick="openPCFolder()">📁 Open Downloads</button>
-      </div>
-    </div>
+      <!-- Screenshot Output Card -->
+      <div id="screenshotCard" class="card" style="display: none;">
+        <div class="card-title">
+          <span>📸 Watch Screenshot</span>
+          <button class="btn btn-sm" onclick="closeMediaPreview()" title="Go back to recorder">← Back to Recorder ✕</button>
+        </div>
+        <div id="screenshotFilename" style="font-size: 12px; color: var(--muted); margin-bottom: 6px; word-break: break-all;"></div>
 
-    <!-- Drag-and-Drop Installer Card -->
-    <div class="card">
-      <div class="card-title">
-        <span>Drag &amp; Drop Watch Installer</span>
-        <span style="font-size: 13px; color: var(--muted); font-weight: normal;">Install APK or push .wff</span>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <img id="screenshotImg" style="max-width: 180px; max-height: 180px; border-radius: 50%; border: 3px solid var(--border); box-shadow: 0 4px 16px rgba(0,0,0,0.6); background: #000;" alt="Screenshot preview">
+          <div class="actions-bar" style="justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
+            <a id="screenshotDownloadBtn" class="btn btn-yellow" download style="text-decoration: none;">⬇️ Download PNG</a>
+            <button class="btn" onclick="openPCFolder()">📁 Downloads</button>
+            <button class="btn" onclick="closeMediaPreview()">← Back</button>
+          </div>
+        </div>
       </div>
-      <div id="dropZone" class="drop-zone" onclick="document.getElementById('installerFileInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleFileDrop(event)">
-        <input type="file" id="installerFileInput" style="display: none;" accept=".apk,.wff,.zip" onchange="handleFileSelect(event)">
-        <div style="font-size: 38px; margin-bottom: 8px;">📦</div>
-        <div style="font-weight: 600; font-size: 15px; margin-bottom: 4px;">Drag &amp; drop APK or Watch Face (.wff) here</div>
-        <div style="font-size: 13px; color: var(--muted);">or click to browse from computer</div>
-        <div id="installerStatus" style="display: none; margin-top: 12px; font-size: 13px; color: var(--yellow); font-weight: 600;"></div>
-      </div>
+
     </div>
 
   </div>
@@ -1158,6 +1217,15 @@
       }
     }
 
+    function togglePairingSection() {
+      const elem = document.getElementById('pairingSection');
+      const chev = document.getElementById('pairChevron');
+      if (!elem) return;
+      const isHidden = elem.style.display === 'none' || !elem.style.display;
+      elem.style.display = isHidden ? 'block' : 'none';
+      if (chev) chev.innerText = isHidden ? '▾' : '▸';
+    }
+
     function togglePairingHelp() {
       const elem = document.getElementById('pairingHelp');
       elem.style.display = elem.style.display === 'none' ? 'block' : 'none';
@@ -1184,9 +1252,17 @@
           document.getElementById('screenshotImg').src = data.download_url + '?t=' + Date.now();
           document.getElementById('screenshotDownloadBtn').href = data.download_url;
           document.getElementById('screenshotDownloadBtn').download = data.filename;
+
+          // Hide video card if open, show screenshot card
+          const vCard = document.getElementById('videoCard');
+          if (vCard) vCard.style.display = 'none';
           const card = document.getElementById('screenshotCard');
           card.style.display = 'block';
-          card.scrollIntoView({ behavior: 'smooth' });
+
+          // Show Back button in top header
+          const backBtn = document.getElementById('headerBackBtn');
+          if (backBtn) backBtn.style.display = 'inline-flex';
+
           showToast('📸 Screenshot captured and saved to Downloads!', 'success', 4000);
         } else {
           showToast('Screenshot Error: ' + (data.output || data.error || 'Failed'), 'error', 4000);
@@ -1295,15 +1371,57 @@
       currentVideoFilename = filename;
       currentVideoUrl = videoUrl;
 
+      // Hide screenshot card if open
+      const scCard = document.getElementById('screenshotCard');
+      if (scCard) scCard.style.display = 'none';
+
       const card = document.getElementById('videoCard');
       const video = document.getElementById('videoElement');
       document.getElementById('videoFilename').innerText = filename;
       document.getElementById('videoDownloadBtn').href = videoUrl;
       document.getElementById('videoDownloadBtn').download = filename;
 
-      video.src = videoUrl;
+      // Append inline=1 for embedded player stream
+      video.src = videoUrl + (videoUrl.includes('?') ? '&' : '?') + 'inline=1';
       card.style.display = 'block';
-      card.scrollIntoView({ behavior: 'smooth' });
+
+      // Show Back button in top header
+      const backBtn = document.getElementById('headerBackBtn');
+      if (backBtn) backBtn.style.display = 'inline-flex';
+    }
+
+    async function openNativeVideo() {
+      if (!currentVideoFilename) return;
+      try {
+        const res = await callBridge('/api/file/open', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename: currentVideoFilename })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('▶️ Video opened in media player', 'success');
+        } else {
+          showToast('Open failed: ' + (data.error || 'Failed'), 'error');
+        }
+      } catch (err) {
+        showToast('Open failed: ' + err.message, 'error');
+      }
+    }
+
+    function closeMediaPreview() {
+      const videoCard = document.getElementById('videoCard');
+      const screenshotCard = document.getElementById('screenshotCard');
+      const video = document.getElementById('videoElement');
+      if (video) {
+        try { video.pause(); } catch(e) {}
+        video.src = '';
+      }
+      if (videoCard) videoCard.style.display = 'none';
+      if (screenshotCard) screenshotCard.style.display = 'none';
+      const backBtn = document.getElementById('headerBackBtn');
+      if (backBtn) backBtn.style.display = 'none';
+      showToast('Returned to recorder', 'info', 1200);
     }
 
     function downloadCurrentVideo() {
@@ -1355,8 +1473,7 @@
         });
         const data = await res.json();
         if (data.success) {
-          document.getElementById('videoCard').style.display = 'none';
-          document.getElementById('videoElement').src = '';
+          closeMediaPreview();
           currentVideoFilename = '';
           currentVideoUrl = '';
           showToast('🗑️ Video deleted from Downloads folder', 'info');
@@ -1367,6 +1484,16 @@
         showToast('Delete error: ' + err.message, 'error');
       }
     }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeMediaPreview();
+        const settingsModal = document.getElementById('settingsModal');
+        if (settingsModal && settingsModal.style.display !== 'none') {
+          settingsModal.style.display = 'none';
+        }
+      }
+    });
 
     /* Drag & Drop Installer Functions */
     function handleDragOver(e) {

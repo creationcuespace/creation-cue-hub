@@ -153,9 +153,11 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
                     ".apk": "application/vnd.android.package-archive"
                 }
                 c_type = content_types.get(ext, "application/octet-stream")
+                query = parsed.query or ""
+                disposition = "inline" if ("inline=1" in query or ext in [".png", ".jpg", ".jpeg"]) else "attachment"
                 self.send_response(200)
                 self.send_header("Content-Type", c_type)
-                self.send_header("Content-Disposition", f'inline; filename="{filename}"')
+                self.send_header("Content-Disposition", f'{disposition}; filename="{filename}"')
                 self.send_header("Content-Length", str(os.path.getsize(file_path)))
                 self._send_cors_headers()
                 self.end_headers()
@@ -473,6 +475,23 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
             except Exception as e:
                 return self._send_json({"error": str(e)}, 500)
 
+        elif path == "/api/file/open":
+            content_length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(content_length).decode("utf-8") if content_length > 0 else "{}"
+            try:
+                data = json.loads(body) if body else {}
+            except Exception:
+                data = {}
+            filename = os.path.basename(data.get("filename", "").strip())
+            file_path = os.path.join(TEMP_DIR, filename)
+            if os.path.exists(file_path):
+                try:
+                    os.startfile(file_path)
+                    return self._send_json({"success": True})
+                except Exception as e:
+                    return self._send_json({"error": str(e)}, 500)
+            return self._send_json({"error": "File not found"}, 404)
+
         else:
             return self._send_json({"error": "Endpoint not found"}, 404)
 
@@ -589,7 +608,7 @@ def start_app():
         cmd = [
             browser_exe,
             f"--app={url}",
-            "--window-size=1020,900",
+            "--window-size=1180,780",
             f"--user-data-dir={profile_dir}",
             "--no-first-run",
             "--no-default-browser-check"
@@ -607,9 +626,9 @@ def start_app():
         webview.create_window(
             title="Creation Cue | Watch Screen Recorder",
             url=url,
-            width=1000,
-            height=880,
-            min_size=(720, 560),
+            width=1180,
+            height=780,
+            min_size=(820, 580),
             background_color="#141414"
         )
         webview.start()
