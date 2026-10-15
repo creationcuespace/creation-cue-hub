@@ -89,6 +89,75 @@ def get_downloads_dir():
 TEMP_DIR = get_downloads_dir()
 os.makedirs(TEMP_DIR, exist_ok=True)
 
+def open_folder_in_foreground(folder_path):
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path, exist_ok=True)
+
+    if sys.platform != "win32":
+        try:
+            os.startfile(folder_path)
+        except Exception:
+            subprocess.Popen(["xdg-open", folder_path])
+        return
+
+    import ctypes
+    user32 = ctypes.windll.user32
+
+    try:
+        user32.AllowSetForegroundWindow(-1)
+    except Exception:
+        pass
+
+    try:
+        subprocess.Popen(["explorer.exe", folder_path])
+    except Exception:
+        try:
+            os.startfile(folder_path)
+        except Exception:
+            pass
+
+    def _bring_to_front():
+        folder_name = os.path.basename(folder_path.rstrip(r"\/")).lower()
+        SWP_NOMOVE = 0x0002
+        SWP_NOSIZE = 0x0001
+        SWP_SHOWWINDOW = 0x0040
+        HWND_TOPMOST = -1
+        HWND_NOTOPMOST = -2
+
+        WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_void_p, ctypes.c_void_p)
+        matched_hwnds = []
+        all_explorer_hwnds = []
+
+        def callback(hwnd, extra):
+            class_buff = ctypes.create_unicode_buffer(256)
+            user32.GetClassNameW(hwnd, class_buff, 256)
+            if class_buff.value in ("CabinetWClass", "ExploreWClass"):
+                all_explorer_hwnds.append(hwnd)
+                length = user32.GetWindowTextLengthW(hwnd)
+                if length > 0:
+                    buff = ctypes.create_unicode_buffer(length + 1)
+                    user32.GetWindowTextW(hwnd, buff, length + 1)
+                    if folder_name in buff.value.lower():
+                        matched_hwnds.append(hwnd)
+            return True
+
+        for _ in range(15):
+            matched_hwnds.clear()
+            all_explorer_hwnds.clear()
+            user32.EnumWindows(WNDENUMPROC(callback), 0)
+            target_list = matched_hwnds if matched_hwnds else all_explorer_hwnds
+            if target_list:
+                for h in target_list:
+                    user32.ShowWindow(h, 9) # SW_RESTORE
+                    user32.SetWindowPos(h, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW)
+                    user32.SetWindowPos(h, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW)
+                    user32.BringWindowToTop(h)
+                    user32.SetForegroundWindow(h)
+                break
+            time.sleep(0.1)
+
+    threading.Thread(target=_bring_to_front, daemon=True).start()
+
 class ADBBridgeHandler(BaseHTTPRequestHandler):
     def _send_cors_headers(self):
         self.send_header("Access-Control-Allow-Origin", "*")
@@ -470,7 +539,7 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
 
         elif path == "/api/open-folder":
             try:
-                os.startfile(TEMP_DIR)
+                open_folder_in_foreground(TEMP_DIR)
                 return self._send_json({"success": True})
             except Exception as e:
                 return self._send_json({"error": str(e)}, 500)
@@ -486,6 +555,12 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
             file_path = os.path.join(TEMP_DIR, filename)
             if os.path.exists(file_path):
                 try:
+                    if sys.platform == "win32":
+                        import ctypes
+                        try:
+                            ctypes.windll.user32.AllowSetForegroundWindow(-1)
+                        except Exception:
+                            pass
                     os.startfile(file_path)
                     return self._send_json({"success": True})
                 except Exception as e:
