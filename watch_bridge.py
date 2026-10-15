@@ -3,6 +3,8 @@ import sys
 import json
 import time
 import subprocess
+import threading
+import webbrowser
 try:
     from http.server import ThreadingHTTPServer as ServerClass
 except ImportError:
@@ -20,9 +22,19 @@ CURRENT_RECORDING = {
     "start_time": None
 }
 
+if getattr(sys, 'frozen', False):
+    BUNDLE_DIR = getattr(sys, '_MEIPASS', os.path.dirname(sys.executable))
+    EXE_DIR = os.path.dirname(sys.executable)
+else:
+    BUNDLE_DIR = os.path.dirname(os.path.abspath(__file__))
+    EXE_DIR = BUNDLE_DIR
+
 # Auto-detect ADB executable
 POSSIBLE_ADB_PATHS = [
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), "adb.exe"),
+    os.path.join(BUNDLE_DIR, "adb.exe"),
+    os.path.join(BUNDLE_DIR, "bin_adb", "adb.exe"),
+    os.path.join(EXE_DIR, "adb.exe"),
+    os.path.join(EXE_DIR, "bin_adb", "adb.exe"),
     r"C:\Users\smash\.dronehacks\platform-tools\adb.exe",
     r"C:\Users\smash\Desktop\Mega\WATCHFACESTUDIO\platform-tools\adb.exe",
     r"C:\Users\User\Mega\WATCHFACESTUDIO\platform-tools\adb.exe",
@@ -90,7 +102,9 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
         path = parsed.path
 
         if path in ["/", "/watch-recorder", "/watch-recorder.html"]:
-            local_html = os.path.join(os.path.dirname(os.path.abspath(__file__)), "watch-recorder.html")
+            local_html = os.path.join(BUNDLE_DIR, "watch-recorder.html")
+            if not os.path.exists(local_html):
+                local_html = os.path.join(EXE_DIR, "watch-recorder.html")
             if os.path.exists(local_html):
                 self.send_response(200)
                 self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -506,5 +520,36 @@ def run_server():
         except Exception:
             time.sleep(0.5)
 
+def start_app():
+    if "--cli" in sys.argv or "--headless" in sys.argv or "-c" in sys.argv:
+        run_server()
+        return
+
+    # Start the HTTP server in a background daemon thread
+    server_thread = threading.Thread(target=run_server, daemon=True)
+    server_thread.start()
+    time.sleep(0.4)
+
+    # Try opening native desktop window via webview
+    try:
+        import webview
+        webview.create_window(
+            title="Creation Cue | Watch Screen Recorder",
+            url=f"http://127.0.0.1:{PORT}/",
+            width=1000,
+            height=880,
+            min_size=(720, 560),
+            background_color="#141414"
+        )
+        webview.start()
+    except Exception as e:
+        # Fallback to default browser
+        webbrowser.open(f"http://127.0.0.1:{PORT}/")
+        try:
+            while True:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            pass
+
 if __name__ == '__main__':
-    run_server()
+    start_app()

@@ -5,3 +5,7 @@ token.json
 node_modules/
 .firebase/
 docs/
+build/
+dist/
+__pycache__/
+*.spec
