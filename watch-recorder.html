@@ -2,668 +2,843 @@
 <html lang="en">
 
 <head>
-  <meta name="robots" content="noindex, nofollow">
-  <script>
-    if (location.hostname.includes("firebaseapp.com")) {
-      location.replace(location.href.replace(location.hostname, "creationcue.web.app"));
-    }
-  </script>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>Creation Cue | Watch Screen Recorder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creation Cue | Smartwatch Screen Recorder & Controller</title>
+  <meta name="description" content="Professional desktop audio/visual console for Wear OS smartwatches. Wireless screen recording, instant screenshot capture, APK and watch face deployment.">
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Teko:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Teko:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="/admin-bar.js?v=2.2"></script>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Crect width='24' height='24' rx='6' fill='%23e8281e'/%3E%3Ccircle cx='12' cy='12' r='6' fill='white'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23e8281e'/%3E%3C/svg%3E">
 
   <style>
     :root {
-      --red: #e8281e;
-      --blue: #1a3a6b;
-      --yellow: #f5c518;
-      --black: #141414;
-      --dark: #1e1e1e;
-      --mid: #2a2a2a;
-      --border: #3a3a3a;
-      --text: #f0f0f0;
-      --muted: #888;
-      --green: #4caf50;
-      --orange: #ff9800;
+      --chassis-bg: #0c0e13;
+      --bay-bg: #131620;
+      --panel-bg: #181c28;
+      --panel-border: #262d3f;
+      --panel-bevel: #343c54;
+      --lcd-bg: #07090e;
+      --neon-green: #00e676;
+      --neon-cyan: #00e5ff;
+      --neon-orange: #ff9100;
+      --neon-red: #ff334b;
+      --neon-yellow: #ffd600;
+      --text-main: #e4eaf7;
+      --text-dim: #758097;
+      --text-sub: #9ca6bd;
+      --btn-bg: #222736;
+      --btn-border: #353d54;
+      --btn-hover: #2b3245;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
-
-    body {
-      background: var(--black);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Header */
-    .header {
-      width: 100%;
-      background: var(--dark);
-      border-bottom: 2px solid var(--yellow);
-      padding: 14px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .logo-mark {
-      display: flex;
-      gap: 3px;
-      align-items: center;
-    }
-
-    .logo-mark span {
-      display: block;
-      width: 7px;
-      height: 22px;
-      border-radius: 1px;
-    }
-
-    .logo-mark .r { background: var(--red); }
-    .logo-mark .b { background: var(--blue); }
-    .logo-mark .y { background: var(--yellow); }
-
-    .header-title {
-      font-family: 'Teko', sans-serif;
-      font-size: 26px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      line-height: 1;
-    }
-
-    .header-title span { color: var(--yellow); }
-
-    .nav-link {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    .nav-link:hover {
-      color: var(--yellow);
-    }
-
-    /* Main Layout */
-    .container, .dashboard-container {
-      max-width: 1140px;
-      margin: 12px auto;
-      padding: 0 16px;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 14px;
-      align-items: start;
-    }
-
-    @media (max-width: 860px) {
-      .container, .dashboard-container {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .dash-col {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .card {
-      background: var(--dark);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
-    }
-
-    .card-title {
-      font-family: 'Teko', sans-serif;
-      font-size: 20px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    /* Connection Status Badge */
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
-    }
-
-    .status-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--muted);
-    }
-
-    .status-badge.online {
-      background: rgba(76, 175, 80, 0.15);
-      border-color: rgba(76, 175, 80, 0.4);
-      color: var(--green);
-    }
-
-    .status-badge.online .status-dot {
-      background: var(--green);
-      box-shadow: 0 0 10px var(--green);
-      animation: pulse 2s infinite;
-    }
-
-    .status-badge.connecting {
-      background: rgba(255, 152, 0, 0.15);
-      border-color: rgba(255, 152, 0, 0.4);
-      color: var(--orange);
-    }
-
-    .status-badge.connecting .status-dot {
-      background: var(--orange);
-      animation: pulse 1s infinite;
-    }
-
-    .status-badge.offline {
-      background: rgba(232, 40, 30, 0.15);
-      border-color: rgba(232, 40, 30, 0.4);
-      color: var(--red);
-    }
-
-    .status-badge.offline .status-dot {
-      background: var(--red);
-    }
-
-    @keyframes pulse {
-      0% { opacity: 0.4; }
-      50% { opacity: 1; }
-      100% { opacity: 0.4; }
-    }
-
-    /* Device Connection Row */
-    .connect-bar {
-      display: flex;
-      gap: 12px;
-      margin-top: 12px;
-      flex-wrap: wrap;
-    }
-
-    .input-field {
-      flex: 1;
-      min-width: 220px;
-      background: var(--mid);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 14px;
-      outline: none;
-    }
-
-    .input-field:focus {
-      border-color: var(--yellow);
-    }
-
-    select.input-field {
-      cursor: pointer;
-    }
-
-    .btn {
-      background: var(--mid);
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.2s;
-      text-decoration: none;
-    }
-
-    .btn:hover:not(:disabled) {
-      background: #333;
-      border-color: var(--yellow);
-    }
-
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .btn-yellow {
-      background: var(--yellow);
-      color: var(--black);
-      border: none;
-    }
-
-    .btn-yellow:hover:not(:disabled) {
-      background: #e5b60e;
-      color: var(--black);
-    }
-
-    .btn-red {
-      background: var(--red);
-      color: white;
-      border: none;
-    }
-
-    .btn-red:hover:not(:disabled) {
-      background: #c81f16;
-    }
-
-    .btn-sm {
-      padding: 5px 12px;
-      font-size: 12px;
-    }
-
-    /* Recording Control Area */
-    .recorder-hero {
-      text-align: center;
-      padding: 10px 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .rec-btn-big {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      border: 5px solid var(--mid);
-      background: var(--red);
-      color: white;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      box-shadow: 0 0 25px rgba(232, 40, 30, 0.4);
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .rec-btn-big:hover:not(:disabled) {
-      transform: scale(1.06);
-      box-shadow: 0 0 35px rgba(232, 40, 30, 0.7);
-    }
-
-    .rec-btn-big.recording {
-      background: #111;
-      border-color: var(--red);
-      box-shadow: 0 0 40px rgba(232, 40, 30, 0.9);
-      animation: pulse-ring 1.5s infinite;
-    }
-
-    @keyframes pulse-ring {
-      0% { box-shadow: 0 0 0 0 rgba(232, 40, 30, 0.7); }
-      70% { box-shadow: 0 0 0 20px rgba(232, 40, 30, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(232, 40, 30, 0); }
-    }
-
-    .rec-timer {
-      font-family: 'Teko', sans-serif;
-      font-size: 32px;
-      line-height: 1;
-      letter-spacing: 2px;
-      color: var(--muted);
-    }
-
-    .rec-timer.active {
-      color: var(--red);
-    }
-
-    .bridge-warning {
-      background: rgba(232, 40, 30, 0.1);
-      border: 1px solid var(--red);
-      padding: 16px;
-      border-radius: 8px;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .bridge-warning code {
-      background: var(--mid);
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: var(--yellow);
-    }
-
-    /* Toast Popups */
-    .toast-container {
-      position: fixed;
-      top: 80px;
-      right: 24px;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      pointer-events: none;
-    }
-
-    .toast {
-      background: #222;
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 14px 20px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      pointer-events: auto;
-      animation: slideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      transition: opacity 0.4s, transform 0.4s;
-    }
-
-    .toast.toast-success { border-left: 4px solid var(--green); }
-    .toast.toast-error { border-left: 4px solid var(--red); }
-    .toast.toast-info { border-left: 4px solid var(--yellow); }
-
-    .toast.fade-out {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(40px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    /* Segmented IP Input */
-    .ip-box-group {
-      display: inline-flex;
-      align-items: center;
-      background: var(--mid);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 4px 10px;
-      gap: 4px;
-      flex-wrap: nowrap;
-    }
-
-    .ip-box-group:focus-within {
-      border-color: var(--yellow);
-    }
-
-    .ip-box {
-      width: 40px;
-      background: transparent;
-      border: none;
-      color: var(--text);
-      text-align: center;
-      font-size: 14px;
-      font-weight: 600;
-      outline: none;
-    }
-
-    .ip-dot {
-      color: var(--muted);
-      font-weight: bold;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       user-select: none;
     }
 
-    .port-box {
-      width: 68px;
+    input, select, textarea {
+      user-select: text;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--chassis-bg);
+      color: var(--text-main);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      background: radial-gradient(circle at 50% 0%, #1c2230 0%, #0c0e14 100%);
+    }
+
+    /* Top Hardware Rack */
+    .top-rack {
+      height: 46px;
+      background: linear-gradient(180deg, #1d212c 0%, #12151e 100%);
+      border-bottom: 2px solid #282f42;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    .rack-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .rack-logo {
+      display: flex;
+      gap: 3px;
+      background: #090b0e;
+      padding: 5px 6px;
+      border-radius: 4px;
+      border: 1px solid #2a3040;
+    }
+
+    .rack-logo span {
+      width: 4px;
+      height: 14px;
+      border-radius: 2px;
+    }
+    .rack-logo .r { background: var(--neon-red); box-shadow: 0 0 6px var(--neon-red); }
+    .rack-logo .b { background: var(--neon-cyan); box-shadow: 0 0 6px var(--neon-cyan); }
+    .rack-logo .y { background: var(--neon-yellow); box-shadow: 0 0 6px var(--neon-yellow); }
+
+    .rack-title {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .rack-title span {
+      color: var(--neon-yellow);
+    }
+
+    .rack-model-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      background: #090b10;
+      border: 1px solid #283042;
+      border-radius: 3px;
+      color: var(--neon-cyan);
+      letter-spacing: 0.8px;
+    }
+
+    .rack-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Hardware Push Buttons */
+    .hw-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      background: linear-gradient(180deg, #272d3e 0%, #171b26 100%);
+      color: var(--text-main);
+      border: 1px solid var(--btn-border);
+      border-radius: 4px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 4px rgba(0,0,0,0.5);
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .hw-btn:hover:not(:disabled) {
+      background: linear-gradient(180deg, #323a4f 0%, #1f2534 100%);
+      border-color: #4b5575;
+      color: #fff;
+    }
+
+    .hw-btn:active:not(:disabled) {
+      transform: translateY(1px);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.7);
+    }
+
+    .hw-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      filter: grayscale(80%);
+    }
+
+    .hw-btn.btn-accent {
+      border-color: var(--neon-yellow);
+      color: var(--neon-yellow);
+      box-shadow: 0 0 10px rgba(255, 214, 0, 0.2);
+    }
+
+    .hw-btn.btn-cyan {
+      border-color: var(--neon-cyan);
+      color: var(--neon-cyan);
+    }
+
+    .hw-btn.btn-red {
+      border-color: var(--neon-red);
+      color: var(--neon-red);
+    }
+
+    /* Header bridge status LED */
+    .header-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #090b10;
+      border: 1px solid #232a3a;
+      border-radius: 4px;
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #555;
+    }
+
+    .header-status.online .status-dot {
+      background: var(--neon-green);
+      box-shadow: 0 0 8px var(--neon-green);
+    }
+    .header-status.online {
+      color: var(--neon-green);
+      border-color: rgba(0, 230, 118, 0.35);
+    }
+
+    .header-status.offline .status-dot {
+      background: var(--neon-red);
+      box-shadow: 0 0 8px var(--neon-red);
+    }
+    .header-status.offline {
+      color: var(--neon-red);
+      border-color: rgba(255, 51, 75, 0.35);
+    }
+
+    /* Main Console Grid */
+    .console-main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 10px 14px;
+      min-height: 0;
+      height: calc(100vh - 78px);
+      box-sizing: border-box;
+    }
+
+    /* Console Bay Modules */
+    .console-bay {
+      background: linear-gradient(180deg, #151822 0%, #10121a 100%);
+      border: 1px solid #262c3e;
+      border-radius: 8px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 24px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      padding: 10px 12px;
+      gap: 8px;
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Bay Module Header */
+    .bay-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #202636;
+      flex-shrink: 0;
+    }
+
+    .bay-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bay-led {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+    .bay-led.green { background: var(--neon-green); box-shadow: 0 0 8px var(--neon-green); }
+    .bay-led.orange { background: var(--neon-orange); box-shadow: 0 0 8px var(--neon-orange); }
+
+    .bay-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .bay-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 0;
+      justify-content: space-between;
+    }
+
+    /* Dual Circular Oscilloscope / Radar Core Dials */
+    .synth-scope-card {
+      background: radial-gradient(circle at 50% 50%, #121622 0%, #07080c 100%);
+      border: 1px solid #242b3b;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: inset 0 0 25px rgba(0,0,0,0.85);
+      flex: 1;
+      min-height: 190px;
+    }
+
+    .scope-dial-housing {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #181c28, #0a0c12);
+      border: 2px solid #30384c;
+      box-shadow: 0 0 22px rgba(0,0,0,0.85), inset 0 2px 4px rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: 2px 0;
+    }
+
+    .scope-dial-housing::before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255,255,255,0.15);
+      pointer-events: none;
+    }
+
+    /* Scope Bezel Calibration Ticks */
+    .scope-dial-ticks {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    /* Dial A: Telemetry Waveform Rings */
+    .dial-rings-green {
+      position: absolute;
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+      border: 2px solid rgba(0, 230, 118, 0.4);
+      box-shadow: 0 0 12px rgba(0, 230, 118, 0.2), inset 0 0 12px rgba(0, 230, 118, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dial-sweep-line {
+      position: absolute;
+      width: 126px;
+      height: 126px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent 0deg, transparent 310deg, rgba(0, 230, 118, 0.35) 360deg);
+      animation: radarSweep 3.5s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes radarSweep {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Dial B: Frequency Ring */
+    .dial-rings-orange {
+      position: absolute;
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 145, 0, 0.4);
+      box-shadow: 0 0 14px rgba(255, 145, 0, 0.25), inset 0 0 14px rgba(255, 145, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rec-pulse-ring {
+      position: absolute;
+      width: 126px;
+      height: 126px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 51, 75, 0.45);
+      pointer-events: none;
+    }
+
+    /* Core Big Tactile REC Button */
+    .rec-btn-big {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #2b1216, #14090b);
+      border: 3px solid #731e28;
+      box-shadow: 0 0 18px rgba(255, 51, 75, 0.3), inset 0 2px 5px rgba(255,255,255,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #fff;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .rec-btn-big:hover:not(:disabled) {
+      border-color: var(--neon-red);
+      box-shadow: 0 0 28px rgba(255, 51, 75, 0.65), inset 0 2px 8px rgba(255,255,255,0.3);
+      transform: scale(1.04);
+    }
+
+    .rec-btn-big:active:not(:disabled) {
+      transform: scale(0.97);
+    }
+
+    .rec-btn-big:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      border-color: #381e22;
+      box-shadow: none;
+    }
+
+    .rec-btn-big.recording {
+      background: linear-gradient(145deg, #b71c1c, #d32f2f);
+      border-color: #ff5252;
+      box-shadow: 0 0 35px rgba(255, 23, 68, 0.9);
+      animation: recPulse 1.2s infinite;
+    }
+
+    @keyframes recPulse {
+      0%, 100% { box-shadow: 0 0 22px rgba(255, 23, 68, 0.6); }
+      50% { box-shadow: 0 0 45px rgba(255, 23, 68, 1); }
+    }
+
+    #recIcon {
+      font-size: 20px;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    #recLabel {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+    }
+
+    /* Duration Readout (Teko / Digital) */
+    .rec-timer {
+      font-family: 'Teko', monospace, sans-serif;
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+      text-shadow: 0 0 6px rgba(0,0,0,0.8);
+    }
+
+    .rec-timer.active {
+      color: var(--neon-red);
+      text-shadow: 0 0 12px rgba(255, 51, 75, 0.7);
+    }
+
+    /* Sunken LCD Input Wells */
+    .ip-box-group {
+      display: flex;
+      align-items: center;
+      background: var(--lcd-bg);
+      border: 1px solid #272f42;
+      border-radius: 4px;
+      padding: 3px 6px;
+      box-shadow: inset 0 1px 4px rgba(0,0,0,0.7);
+    }
+
+    .ip-box {
+      width: 36px;
       background: transparent;
       border: none;
-      color: var(--yellow);
+      color: var(--neon-cyan);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
       text-align: center;
-      font-size: 14px;
-      font-weight: 600;
       outline: none;
     }
 
-    /* Video Preview */
-    .video-card {
-      display: none;
+    .ip-box:focus {
+      color: #fff;
+      background: rgba(0, 229, 255, 0.15);
+      border-radius: 2px;
+    }
+
+    .ip-dot {
+      color: #4b5673;
+      font-weight: bold;
+      padding: 0 1px;
+    }
+
+    .port-box {
+      width: 52px;
+      background: transparent;
+      border: none;
+      color: var(--neon-yellow);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+    }
+
+    .port-box:focus {
+      color: #fff;
+      background: rgba(255, 214, 0, 0.15);
+      border-radius: 2px;
+    }
+
+    .input-field {
+      background: var(--lcd-bg);
+      border: 1px solid #272f42;
+      border-radius: 4px;
+      color: var(--text-main);
+      padding: 5px 8px;
+      font-size: 11px;
+      font-weight: 500;
+      outline: none;
+      box-shadow: inset 0 1px 4px rgba(0,0,0,0.6);
+    }
+
+    .input-field:focus {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 6px rgba(0, 229, 255, 0.3);
+    }
+
+    /* Segmented Switches */
+    .segment-strip {
+      display: flex;
+      border: 1px solid #2a3144;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #090b10;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    .segment-btn {
+      flex: 1;
+      padding: 5px 6px;
+      background: linear-gradient(180deg, #222736 0%, #151822 100%);
+      border: none;
+      border-right: 1px solid #2a3144;
+      color: var(--text-dim);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .segment-btn:last-child {
+      border-right: none;
+    }
+
+    .segment-btn:hover {
+      color: #fff;
+      background: #2b3246;
+    }
+
+    .segment-btn.active {
+      color: var(--neon-cyan);
+      background: #192334;
+      box-shadow: inset 0 0 8px rgba(0, 229, 255, 0.25);
+    }
+
+    /* Status badge pill */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      background: #090b10;
+      border: 1px solid #232a3a;
+    }
+
+    .status-badge.online {
+      color: var(--neon-green);
+      border-color: rgba(0, 230, 118, 0.4);
+    }
+
+    .status-badge.offline {
+      color: var(--neon-red);
+      border-color: rgba(255, 51, 75, 0.4);
+    }
+
+    .status-badge.connecting {
+      color: var(--neon-yellow);
+      border-color: rgba(255, 214, 0, 0.4);
+    }
+
+    /* Drag & Drop Cartridge Slot */
+    .drop-zone {
+      background: linear-gradient(180deg, #12151e 0%, #0a0c12 100%);
+      border: 1px dashed #30374c;
+      border-radius: 6px;
+      padding: 8px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    .drop-zone:hover, .drop-zone.drag-active {
+      border-color: var(--neon-cyan);
+      background: #141c2b;
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.2), inset 0 0 10px rgba(0, 229, 255, 0.1);
+    }
+
+    /* OLED Monitor Card for Video & Screenshot Preview */
+    .oled-monitor-card {
+      background: radial-gradient(circle at 50% 50%, #0e1118 0%, #050608 100%);
+      border: 2px solid #2a3348;
+      border-radius: 8px;
+      padding: 8px 10px;
+      box-shadow: inset 0 0 25px rgba(0,0,0,0.9), 0 4px 16px rgba(0,0,0,0.7);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      position: relative;
+    }
+
+    .oled-screen-frame {
+      flex: 1;
+      background: #000;
+      border: 1px solid #1a202c;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      min-height: 130px;
     }
 
     .video-player {
       width: 100%;
-      max-width: 260px;
-      max-height: 200px;
-      background: black;
-      border-radius: 8px;
-      margin: 8px auto;
-      display: block;
+      height: 100%;
+      max-height: 180px;
+      object-fit: contain;
+      background: #000;
     }
 
-    .actions-bar {
-      display: flex;
-      gap: 12px;
-      margin-top: 16px;
-      justify-content: flex-end;
-    }
-
-    /* Header status indicator */
-    .header-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
-      transition: all 0.3s;
-    }
-    .header-status.online {
-      border-color: rgba(76, 175, 80, 0.4);
-      color: var(--green);
-    }
-    .header-status.online .status-dot {
-      background: var(--green);
-      box-shadow: 0 0 8px var(--green);
-    }
-    .header-status.offline {
-      border-color: rgba(232, 40, 30, 0.4);
-      color: var(--red);
-    }
-    .header-status.offline .status-dot {
-      background: var(--red);
-    }
-
-    /* Saved devices bar */
-    .recent-bar {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-top: 12px;
-      flex-wrap: wrap;
-    }
-
-    /* Side circular buttons (Screenshot & Settings) */
-    .rec-side-btn {
-      width: 68px;
-      height: 68px;
-      border-radius: 50%;
-      background: var(--mid);
-      border: 2px solid var(--border);
-      color: var(--text);
-      font-size: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    .rec-side-btn:hover:not(:disabled) {
-      border-color: var(--yellow);
-      transform: scale(1.06);
-      background: #333;
-    }
-    .rec-side-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    /* Pairing Collapsible */
-    .pairing-collapsible {
-      margin-top: 10px;
-      border-top: 1px dashed var(--border);
-      padding-top: 8px;
-    }
-    .pairing-toggle-btn {
-      background: none;
-      border: none;
-      color: var(--yellow);
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 600;
+    /* Bottom Utility Rack (Eliminating Dead Space) */
+    .bottom-rack {
+      height: 32px;
+      background: #0d0f16;
+      border-top: 1px solid #1f2533;
+      padding: 0 16px;
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 0;
-      width: 100%;
-      text-align: left;
-    }
-    .pairing-toggle-btn:hover {
-      text-decoration: underline;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-dim);
+      flex-shrink: 0;
     }
 
-    /* Drag and Drop Installer */
-    .drop-zone {
-      border: 2px dashed var(--border);
-      border-radius: 8px;
-      padding: 12px 14px;
-      text-align: center;
-      background: var(--mid);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .drop-zone:hover, .drop-zone.drag-active {
-      border-color: var(--yellow);
-      background: rgba(245, 197, 24, 0.05);
+    .bottom-rack a {
+      color: var(--neon-cyan);
+      text-decoration: none;
     }
 
-    /* Settings Modal */
+    /* Modals & Toasts */
     .modal-backdrop {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 1000;
       backdrop-filter: blur(4px);
     }
+
     .modal-card {
-      background: var(--dark);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
+      background: #171b26;
+      border: 1px solid #323b52;
+      border-radius: 8px;
+      padding: 20px;
       max-width: 440px;
       width: 90%;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.9);
+    }
+
+    .toast-container {
+      position: fixed;
+      bottom: 40px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 9999;
+    }
+
+    .toast {
+      background: #1b202c;
+      border: 1px solid #333d54;
+      border-radius: 5px;
+      padding: 9px 13px;
+      font-size: 12px;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+      animation: slideIn 0.2s ease;
+    }
+
+    .toast.toast-success { border-left: 3px solid var(--neon-green); }
+    .toast.toast-error { border-left: 3px solid var(--neon-red); }
+    .toast.toast-info { border-left: 3px solid var(--neon-cyan); }
+
+    @keyframes slideIn {
+      from { transform: translateX(30px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .toast.fade-out {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
     }
   </style>
 </head>
 
 <body>
 
-  <header class="header">
-    <div style="display: flex; align-items: center; gap: 12px;">
-      <button id="headerBackBtn" class="btn btn-yellow" style="padding: 5px 12px; font-size: 13px; display: none;" onclick="closeMediaPreview()">← Back to Recorder</button>
-      <a href="/" class="header-left">
-        <div class="logo-mark">
+  <!-- Top Hardware Rack -->
+  <header class="top-rack">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <button id="headerBackBtn" class="hw-btn btn-accent" style="display: none;" onclick="closeMediaPreview()">← Back to Recorder</button>
+      <a href="/" class="rack-brand">
+        <div class="rack-logo">
           <span class="r"></span>
           <span class="b"></span>
           <span class="y"></span>
         </div>
-        <div class="header-title">Creation <span>Cue</span></div>
+        <div class="rack-title">Creation <span>Cue</span></div>
       </a>
+      <span class="rack-model-tag">REC-CON // A/V SYNTH</span>
     </div>
-    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+
+    <div class="rack-controls">
       <div id="headerBridgeStatus" class="header-status offline" title="Bridge Connection Status">
         <span class="status-dot"></span>
         <span id="headerBridgeText">Bridge: Offline</span>
       </div>
-      <button class="btn btn-sm" onclick="openPCFolder()" title="Open local Downloads folder">📁 Downloads</button>
-      <button class="btn btn-sm" onclick="toggleSettingsModal()" title="Adjust resolution, bitrate, or time limit">⚙️ Settings</button>
-      <a href="/WatchRecorder.zip" download class="btn btn-yellow" style="padding: 5px 12px; font-size: 12px; text-decoration: none;">💻 Download App (.exe)</a>
+      <button class="hw-btn" onclick="openPCFolder()" title="Open local Downloads folder">📁 Downloads</button>
+      <button class="hw-btn" onclick="toggleSettingsModal()" title="Adjust resolution, bitrate, or time limit">⚙️ Config</button>
+      <a href="/WatchRecorder.zip" download class="hw-btn btn-accent" style="text-decoration: none;">💻 App (.exe)</a>
     </div>
   </header>
 
-  <div class="dashboard-container">
+  <!-- Dual-Bay Hardware Console -->
+  <main class="console-main">
 
-    <!-- LEFT COLUMN: Connection & Tools -->
-    <div class="dash-col dash-left">
-
-      <!-- Connection Card -->
-      <div class="card">
-        <div class="card-title">
-          <span>Smartwatch Connection</span>
-          <div id="statusBadge" class="status-badge offline">
-            <span class="status-dot"></span>
-            <span id="statusText">Checking Bridge...</span>
-          </div>
+    <!-- BAY A: Telemetry & Wireless Link Core -->
+    <section class="console-bay">
+      <div class="bay-header">
+        <div class="bay-title-wrap">
+          <span class="bay-led green"></span>
+          <span class="bay-title">BAY A // TELEMETRY &amp; LINK CORE</span>
         </div>
+        <div id="statusBadge" class="status-badge offline">
+          <span class="status-dot"></span>
+          <span id="statusText">Checking Bridge...</span>
+        </div>
+      </div>
 
-        <div class="recent-bar" style="margin-top: 2px; margin-bottom: 8px;">
+      <div class="bay-body">
+        <!-- Saved / Active Selector Bar -->
+        <div style="display: flex; gap: 6px; align-items: center;">
           <select id="savedDevicesSelect" class="input-field" style="flex: 1;" onchange="loadSavedDevice(this.value)">
             <option value="">⭐ Saved Devices (Recent)...</option>
           </select>
-          <button class="btn btn-sm" onclick="forgetSelectedSavedDevice()" title="Forget selected saved device">Forget</button>
-          <button class="btn btn-sm" onclick="refreshStatus()" title="Refresh connection status">🔄</button>
+          <button class="hw-btn" onclick="forgetSelectedSavedDevice()" title="Forget saved device">Forget</button>
+          <button class="hw-btn" onclick="refreshStatus()" title="Refresh connection status">🔄</button>
         </div>
 
-        <select id="deviceSelect" class="input-field" style="width: 100%; display: none; margin-bottom: 8px;">
+        <select id="deviceSelect" class="input-field" style="width: 100%; display: none;">
           <option value="">Searching for connected watches...</option>
         </select>
 
-        <div class="connect-bar" style="margin-top: 0;">
+        <!-- Dial A: Circular Radar / Waveform Scope -->
+        <div class="synth-scope-card">
+          <div class="scope-dial-housing">
+            <svg class="scope-dial-ticks" viewBox="0 0 160 160">
+              <circle cx="80" cy="80" r="76" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="2, 6"/>
+              <circle cx="80" cy="80" r="54" fill="none" stroke="rgba(0,230,118,0.15)" stroke-width="1"/>
+              <line x1="80" y1="2" x2="80" y2="10" stroke="rgba(0,230,118,0.5)" stroke-width="2"/>
+              <line x1="80" y1="150" x2="80" y2="158" stroke="rgba(0,230,118,0.5)" stroke-width="2"/>
+              <line x1="2" y1="80" x2="10" y2="80" stroke="rgba(0,230,118,0.5)" stroke-width="2"/>
+              <line x1="150" y1="80" x2="158" y2="80" stroke="rgba(0,230,118,0.5)" stroke-width="2"/>
+            </svg>
+            <div class="dial-rings-green">
+              <div class="dial-sweep-line"></div>
+              <div style="font-size: 26px; z-index: 5; margin-bottom: 2px;">⌚</div>
+              <div style="font-size: 9px; font-weight: 800; letter-spacing: 1.2px; color: var(--neon-green); z-index: 5;">RADAR LINK</div>
+            </div>
+          </div>
+          <div style="font-size: 10px; color: var(--text-dim); margin-top: 4px; letter-spacing: 0.8px;">STANDBY / AUTO-POLL 2.5s</div>
+        </div>
+
+        <!-- Segmented Preset Switch Bank -->
+        <div class="segment-strip">
+          <button class="segment-btn active" onclick="applyQuickPreset('', this)">NATIVE</button>
+          <button class="segment-btn" onclick="applyQuickPreset('450x450', this)">GW6/5 44mm</button>
+          <button class="segment-btn" onclick="applyQuickPreset('410x410', this)">GW 40mm</button>
+          <button class="segment-btn" onclick="applyQuickPreset('396x396', this)">GW4 40mm</button>
+          <button class="segment-btn" onclick="applyQuickPreset('480x480', this)">PIXEL</button>
+        </div>
+
+        <!-- Sunken LCD IP Connection Well -->
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
           <div class="ip-box-group" id="connGroup" onkeydown="if(event.key==='Enter'){event.preventDefault(); connectDevice();}">
             <input type="text" maxlength="3" class="ip-box" id="conn1" value="192" placeholder="192" oninput="handleIpInput(this, 'conn2', '')" onpaste="handleIpPaste(event, 'conn')">
             <span class="ip-dot">.</span>
@@ -676,20 +851,20 @@
             <input type="text" maxlength="5" class="port-box" id="connPort" placeholder="37673" onpaste="handleIpPaste(event, 'conn')">
           </div>
 
-          <button id="connectBtn" class="btn btn-yellow" onclick="connectDevice()">Connect IP</button>
-          <button class="btn" onclick="disconnectDevice()" title="Disconnect watch">🔌 Disconnect</button>
+          <button id="connectBtn" class="hw-btn btn-accent" onclick="connectDevice()">Connect IP</button>
+          <button class="hw-btn" onclick="disconnectDevice()" title="Disconnect watch">🔌 Disconnect</button>
         </div>
 
-        <!-- Wireless Pairing Collapsible -->
-        <div class="pairing-collapsible">
-          <button type="button" class="pairing-toggle-btn" onclick="togglePairingSection()">
-            <span id="pairChevron">▸</span> 🔑 Need Wireless Pairing? (Wear OS 3+)
+        <!-- Wireless Pairing Collapsible Tray -->
+        <div style="border-top: 1px solid #202636; padding-top: 6px;">
+          <button type="button" class="hw-btn" style="width: 100%; justify-content: flex-start; font-size: 10px;" onclick="togglePairingSection()">
+            <span id="pairChevron">▸</span> 🔑 Wireless Pairing (Wear OS 3+ Pair Code)
           </button>
-          <div id="pairingSection" style="display: none; margin-top: 8px;">
-            <div style="background: var(--mid); padding: 8px 10px; border-radius: 6px; font-size: 11px; color: #ccc; margin-bottom: 8px; line-height: 1.4;">
+          <div id="pairingSection" style="display: none; margin-top: 6px;">
+            <div style="background: #090b10; border: 1px solid #1f2536; padding: 6px 8px; border-radius: 4px; font-size: 10px; color: #a4b0c9; margin-bottom: 6px; line-height: 1.3;">
               On watch: <strong>Settings &gt; Developer options &gt; Wireless debugging &gt; Pair new device</strong>.
             </div>
-            <div class="connect-bar" style="margin-top: 0;">
+            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
               <div class="ip-box-group" id="pairGroup" onkeydown="if(event.key==='Enter'){event.preventDefault(); pairDevice();}">
                 <input type="text" maxlength="3" class="ip-box" id="pair1" value="192" placeholder="192" oninput="handleIpInput(this, 'pair2', '')" onpaste="handleIpPaste(event, 'pair')">
                 <span class="ip-dot">.</span>
@@ -701,126 +876,156 @@
                 <span class="ip-dot">:</span>
                 <input type="text" maxlength="5" class="port-box" id="pairPort" placeholder="45597" onpaste="handleIpPaste(event, 'pair')">
               </div>
-              <input type="text" id="pairCodeInput" class="input-field" placeholder="6-Digit Code" style="max-width: 120px;" onkeydown="if(event.key==='Enter'){event.preventDefault(); pairDevice();}">
-              <button id="pairBtn" class="btn btn-yellow" onclick="pairDevice()">Pair Watch</button>
+              <input type="text" id="pairCodeInput" class="input-field" placeholder="6-Digit Code" style="max-width: 100px; font-family: monospace;" onkeydown="if(event.key==='Enter'){event.preventDefault(); pairDevice();}">
+              <button id="pairBtn" class="hw-btn btn-accent" onclick="pairDevice()">Pair Watch</button>
             </div>
           </div>
         </div>
 
         <!-- Warning if bridge is offline -->
-        <div id="bridgeNotice" class="bridge-warning" style="display: none; margin-top: 10px; padding: 10px;">
-          <div>⚠️ <strong>Local Bridge Offline:</strong> Run <code>WatchRecorder.exe</code> on your computer to connect.</div>
+        <div id="bridgeNotice" style="display: none; background: #260e12; border: 1px solid var(--neon-red); border-radius: 4px; padding: 6px 10px; font-size: 11px; color: #ffb3ba;">
+          ⚠️ <strong>Local Bridge Offline:</strong> Run <code>WatchRecorder.exe</code> on your computer to connect.
         </div>
-      </div>
 
-      <!-- Drag-and-Drop Installer Card -->
-      <div class="card">
-        <div class="card-title" style="margin-bottom: 6px;">
-          <span>Drag &amp; Drop Watch Installer</span>
-          <span style="font-size: 11px; color: var(--muted); font-weight: normal;">APK or .wff watch face</span>
-        </div>
+        <!-- Drag & Drop Cartridge Slot -->
         <div id="dropZone" class="drop-zone" onclick="document.getElementById('installerFileInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleFileDrop(event)">
           <input type="file" id="installerFileInput" style="display: none;" accept=".apk,.wff,.zip" onchange="handleFileSelect(event)">
-          <div style="font-size: 24px; margin-bottom: 3px;">📦</div>
-          <div style="font-weight: 600; font-size: 13px;">Drop APK or Watch Face (.wff) here</div>
-          <div style="font-size: 11px; color: var(--muted);">or click to browse from computer</div>
-          <div id="installerStatus" style="display: none; margin-top: 6px; font-size: 12px; color: var(--yellow); font-weight: 600;"></div>
+          <div style="font-size: 16px; margin-bottom: 2px;">📦</div>
+          <div style="font-weight: 700; font-size: 11px; letter-spacing: 0.5px;">WFF / APK INGEST BAY</div>
+          <div style="font-size: 10px; color: var(--text-dim);">Drop .wff watch face or APK here to install</div>
+          <div id="installerStatus" style="display: none; margin-top: 4px; font-size: 11px; color: var(--neon-yellow); font-weight: 700;"></div>
         </div>
       </div>
+    </section>
 
-    </div>
-
-    <!-- RIGHT COLUMN: Recorder & Previews -->
-    <div class="dash-col dash-right">
-
-      <!-- Recorder Card -->
-      <div class="card">
-        <div class="card-title">
-          <span>Watch Screen Recording</span>
-          <span id="recModeBadge" style="font-size: 11px; color: var(--muted); font-weight: normal;">Ready</span>
+    <!-- BAY B: Capture Engine & High-Res OLED Monitor -->
+    <section class="console-bay">
+      <div class="bay-header">
+        <div class="bay-title-wrap">
+          <span class="bay-led orange"></span>
+          <span class="bay-title">BAY B // CAPTURE ENGINE &amp; MONITOR</span>
         </div>
+        <span id="recModeBadge" class="rack-model-tag" style="color: var(--neon-orange); border-color: rgba(255,145,0,0.3);">READY</span>
+      </div>
 
-        <div class="recorder-hero">
-          <div id="timerDisplay" class="rec-timer">00:00</div>
+      <div class="bay-body">
 
-          <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
-            <!-- Quick Screenshot Button -->
-            <button id="shotBtn" class="rec-side-btn" onclick="takeScreenshot()" disabled title="Capture instant watch screenshot">
-              <span style="font-size: 22px;">📸</span>
+        <!-- Standby / Recording Console View -->
+        <div id="recorderMainView" style="display: flex; flex-direction: column; flex: 1; gap: 8px; justify-content: space-between;">
+
+          <!-- Dial B: Circular Recording Core & Oscilloscope -->
+          <div class="synth-scope-card">
+            <div id="timerDisplay" class="rec-timer">00:00</div>
+            <div class="scope-dial-housing">
+              <svg class="scope-dial-ticks" viewBox="0 0 160 160">
+                <circle cx="80" cy="80" r="76" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="2, 6"/>
+                <circle cx="80" cy="80" r="54" fill="none" stroke="rgba(255,145,0,0.15)" stroke-width="1"/>
+                <line x1="80" y1="2" x2="80" y2="10" stroke="rgba(255,145,0,0.5)" stroke-width="2"/>
+                <line x1="80" y1="150" x2="80" y2="158" stroke="rgba(255,145,0,0.5)" stroke-width="2"/>
+                <line x1="2" y1="80" x2="10" y2="80" stroke="rgba(255,145,0,0.5)" stroke-width="2"/>
+                <line x1="150" y1="80" x2="158" y2="80" stroke="rgba(255,145,0,0.5)" stroke-width="2"/>
+              </svg>
+              <div class="dial-rings-orange">
+                <div class="rec-pulse-ring"></div>
+                <!-- REC Core Button -->
+                <button id="recBtn" class="rec-btn-big" onclick="toggleRecording()" disabled title="Start or Stop Screen Recording">
+                  <span id="recIcon">🔴</span>
+                  <span id="recLabel">REC</span>
+                </button>
+              </div>
+            </div>
+            <p id="recHint" style="font-size: 11px; color: var(--text-dim); margin-top: 4px; text-align: center;">Connect watch to enable recording</p>
+          </div>
+
+          <!-- Bitrate Segment Switch Bank -->
+          <div class="segment-strip">
+            <button class="segment-btn" onclick="applyBitratePreset('4000000', this)">4 Mbps</button>
+            <button class="segment-btn active" onclick="applyBitratePreset('8000000', this)">8 Mbps (HD)</button>
+            <button class="segment-btn" onclick="applyBitratePreset('16000000', this)">16 Mbps (Pro)</button>
+            <button class="segment-btn" onclick="applyBitratePreset('24000000', this)">24 Mbps (Ultra)</button>
+          </div>
+
+          <!-- Transport Hardware Action Buttons -->
+          <div style="display: flex; gap: 8px; justify-content: center;">
+            <button id="shotBtn" class="hw-btn" onclick="takeScreenshot()" disabled title="Instant Watch Screenshot" style="padding: 7px 14px;">
+              <span style="font-size: 14px;">📸</span>
               <span>Screenshot</span>
             </button>
-
-            <!-- REC Button -->
-            <button id="recBtn" class="rec-btn-big" onclick="toggleRecording()" disabled>
-              <span id="recIcon" style="font-size: 24px;">🔴</span>
-              <span id="recLabel">REC</span>
-            </button>
-
-            <!-- Settings Button -->
-            <button id="settingsBtn" class="rec-side-btn" onclick="toggleSettingsModal()" title="Recording Settings">
-              <span style="font-size: 22px;">⚙️</span>
+            <button id="settingsBtn" class="hw-btn" onclick="toggleSettingsModal()" title="Recording Settings" style="padding: 7px 14px;">
+              <span style="font-size: 14px;">⚙️</span>
               <span>Settings</span>
             </button>
+            <button class="hw-btn" onclick="openPCFolder()" title="Open local Downloads folder" style="padding: 7px 14px;">
+              <span style="font-size: 14px;">📁</span>
+              <span>Downloads</span>
+            </button>
           </div>
 
-          <p id="recHint" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Connect watch to enable recording</p>
-        </div>
-      </div>
-
-      <!-- Video Output Card -->
-      <div id="videoCard" class="card video-card" style="display: none;">
-        <div class="card-title">
-          <span>🎬 Recorded Video Preview</span>
-          <button class="btn btn-sm" onclick="closeMediaPreview()" title="Go back to recorder">← Back to Recorder ✕</button>
-        </div>
-        <div id="videoFilename" style="font-size: 12px; color: var(--muted); margin-bottom: 6px; word-break: break-all;"></div>
-
-        <div style="display: flex; justify-content: center; background: #000; border-radius: 8px; padding: 4px;">
-          <video id="videoElement" class="video-player" controls style="max-height: 200px; max-width: 100%;"></video>
         </div>
 
-        <div class="actions-bar" style="justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 10px;">
-          <button class="btn btn-yellow" onclick="openNativeVideo()" title="Open in default Windows video player">▶️ Open Video</button>
-          <a id="videoDownloadBtn" class="btn" download style="text-decoration: none;">⬇️ Download</a>
-          <button class="btn" onclick="renameCurrentVideo()">✏️ Rename</button>
-          <button class="btn btn-red" onclick="deleteCurrentVideo()">🗑️ Delete</button>
-          <button class="btn" onclick="openPCFolder()">📁 Downloads</button>
-          <button class="btn" onclick="closeMediaPreview()">← Back</button>
-        </div>
-      </div>
+        <!-- Video Output OLED Monitor Card -->
+        <div id="videoCard" class="oled-monitor-card" style="display: none;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+            <span style="font-size: 11px; font-weight: 700; color: var(--neon-cyan); letter-spacing: 1px;">🎬 OLED VIDEO MONITOR</span>
+            <button class="hw-btn" style="padding: 3px 8px; font-size: 10px;" onclick="closeMediaPreview()">← Back ✕</button>
+          </div>
+          <div id="videoFilename" style="font-size: 10px; font-family: monospace; color: var(--text-dim); margin-bottom: 6px; word-break: break-all;"></div>
 
-      <!-- Screenshot Output Card -->
-      <div id="screenshotCard" class="card" style="display: none;">
-        <div class="card-title">
-          <span>📸 Watch Screenshot</span>
-          <button class="btn btn-sm" onclick="closeMediaPreview()" title="Go back to recorder">← Back to Recorder ✕</button>
-        </div>
-        <div id="screenshotFilename" style="font-size: 12px; color: var(--muted); margin-bottom: 6px; word-break: break-all;"></div>
+          <div class="oled-screen-frame">
+            <video id="videoElement" class="video-player" controls></video>
+          </div>
 
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-          <img id="screenshotImg" style="max-width: 180px; max-height: 180px; border-radius: 50%; border: 3px solid var(--border); box-shadow: 0 4px 16px rgba(0,0,0,0.6); background: #000;" alt="Screenshot preview">
-          <div class="actions-bar" style="justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
-            <a id="screenshotDownloadBtn" class="btn btn-yellow" download style="text-decoration: none;">⬇️ Download PNG</a>
-            <button class="btn" onclick="openPCFolder()">📁 Downloads</button>
-            <button class="btn" onclick="closeMediaPreview()">← Back</button>
+          <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 8px;">
+            <button class="hw-btn btn-accent" onclick="openNativeVideo()" title="Open in default Windows player">▶️ Open Video</button>
+            <a id="videoDownloadBtn" class="hw-btn" download style="text-decoration: none;">⬇️ Download</a>
+            <button class="hw-btn" onclick="renameCurrentVideo()">✏️ Rename</button>
+            <button class="hw-btn btn-red" onclick="deleteCurrentVideo()">🗑️ Delete</button>
+            <button class="hw-btn" onclick="openPCFolder()">📁 Downloads</button>
+            <button class="hw-btn" onclick="closeMediaPreview()">← Back</button>
           </div>
         </div>
+
+        <!-- Screenshot Output OLED Monitor Card -->
+        <div id="screenshotCard" class="oled-monitor-card" style="display: none;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+            <span style="font-size: 11px; font-weight: 700; color: var(--neon-green); letter-spacing: 1px;">📸 WATCH SCREENSHOT SCOPE</span>
+            <button class="hw-btn" style="padding: 3px 8px; font-size: 10px;" onclick="closeMediaPreview()">← Back ✕</button>
+          </div>
+          <div id="screenshotFilename" style="font-size: 10px; font-family: monospace; color: var(--text-dim); margin-bottom: 6px; word-break: break-all;"></div>
+
+          <div class="oled-screen-frame">
+            <img id="screenshotImg" style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid #283348; object-fit: cover; background: #000; box-shadow: 0 0 20px rgba(0,230,118,0.25);" alt="Screenshot preview">
+          </div>
+
+          <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 8px;">
+            <a id="screenshotDownloadBtn" class="hw-btn btn-accent" download style="text-decoration: none;">⬇️ Download PNG</a>
+            <button class="hw-btn" onclick="openPCFolder()">📁 Downloads</button>
+            <button class="hw-btn" onclick="closeMediaPreview()">← Back</button>
+          </div>
+        </div>
+
       </div>
+    </section>
 
-    </div>
+  </main>
 
-  </div>
+  <!-- Bottom Utility Rack (Eliminates Blank Dead Space) -->
+  <footer class="bottom-rack">
+    <div>CREATION CUE // WATCH RECORDER &amp; CONTROLLER v2.4</div>
+    <div>ADB BRIDGE: ACTIVE ON 127.0.0.1:37380</div>
+    <div><a href="#" onclick="openPCFolder(); return false;">📂 SAVED TO DOWNLOADS</a></div>
+  </footer>
 
   <!-- Settings Modal -->
   <div id="settingsModal" class="modal-backdrop" style="display: none;" onclick="if(event.target===this) toggleSettingsModal()">
     <div class="modal-card">
-      <div class="card-title" style="margin-bottom: 14px;">
-        <span>⚙️ Recording Settings</span>
-        <button style="background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer;" onclick="toggleSettingsModal()">&times;</button>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid #283042; padding-bottom: 8px;">
+        <span style="font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 1px;">⚙️ RECORDING CONFIGURATION</span>
+        <button style="background: none; border: none; color: var(--text-dim); font-size: 18px; cursor: pointer;" onclick="toggleSettingsModal()">&times;</button>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div style="display: flex; flex-direction: column; gap: 12px;">
         <div>
-          <label style="font-size: 13px; color: var(--muted); display: block; margin-bottom: 6px;">Target Resolution (Screen Size):</label>
+          <label style="font-size: 11px; color: var(--text-sub); display: block; margin-bottom: 5px;">Target Resolution (Screen Size):</label>
           <select id="settingSize" class="input-field" style="width: 100%;">
             <option value="">Native Watch Resolution (Default)</option>
             <option value="450x450">450 x 450 (Galaxy Watch 4/5/6 44mm)</option>
@@ -830,7 +1035,7 @@
           </select>
         </div>
         <div>
-          <label style="font-size: 13px; color: var(--muted); display: block; margin-bottom: 6px;">Video Bitrate:</label>
+          <label style="font-size: 11px; color: var(--text-sub); display: block; margin-bottom: 5px;">Video Bitrate:</label>
           <select id="settingBitrate" class="input-field" style="width: 100%;">
             <option value="4000000">4 Mbps (Compact file)</option>
             <option value="8000000" selected>8 Mbps (Standard HD - Recommended)</option>
@@ -839,7 +1044,7 @@
           </select>
         </div>
         <div>
-          <label style="font-size: 13px; color: var(--muted); display: block; margin-bottom: 6px;">Auto-Stop Time Limit:</label>
+          <label style="font-size: 11px; color: var(--text-sub); display: block; margin-bottom: 5px;">Auto-Stop Time Limit:</label>
           <select id="settingLimit" class="input-field" style="width: 100%;">
             <option value="0">Unlimited (Stop manually)</option>
             <option value="15">15 Seconds</option>
@@ -848,14 +1053,38 @@
             <option value="180">180 Seconds (3 Minutes Max)</option>
           </select>
         </div>
-        <div style="display: flex; justify-content: flex-end; margin-top: 10px; gap: 10px;">
-          <button class="btn btn-yellow" onclick="saveSettings()">Save Settings</button>
+        <div style="display: flex; justify-content: flex-end; margin-top: 8px; gap: 8px;">
+          <button class="hw-btn btn-accent" onclick="saveSettings()">Save Configuration</button>
         </div>
       </div>
     </div>
   </div>
 
   <script>
+    function applyQuickPreset(sizeVal, btn) {
+      document.getElementById('settingSize').value = sizeVal;
+      const settings = getRecordingSettings();
+      settings.size = sizeVal;
+      localStorage.setItem('cc_rec_settings', JSON.stringify(settings));
+      if (btn && btn.parentElement) {
+        btn.parentElement.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+      showToast(sizeVal ? `Preset: ${sizeVal}` : 'Preset: Native Resolution', 'info', 1500);
+    }
+
+    function applyBitratePreset(bitrateVal, btn) {
+      document.getElementById('settingBitrate').value = bitrateVal;
+      const settings = getRecordingSettings();
+      settings.bitrate = bitrateVal;
+      localStorage.setItem('cc_rec_settings', JSON.stringify(settings));
+      if (btn && btn.parentElement) {
+        btn.parentElement.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+      showToast(`Bitrate: ${(parseInt(bitrateVal)/1000000)} Mbps`, 'info', 1500);
+    }
+
     let bridgeBase = (window.location.port === '37380') ? '' : 'http://127.0.0.1:37380';
 
     async function callBridge(path, options = {}) {
@@ -1114,6 +1343,23 @@
       document.getElementById('settingSize').value = settings.size || '';
       document.getElementById('settingBitrate').value = settings.bitrate || '8000000';
       document.getElementById('settingLimit').value = settings.limit || '0';
+
+      document.querySelectorAll('.segment-strip button').forEach(btn => {
+        const onclick = btn.getAttribute('onclick') || '';
+        if (onclick.includes('applyQuickPreset')) {
+          if (onclick.includes(" \ + (settings.size || ') + "\)) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        } else if (onclick.includes('applyBitratePreset')) {
+          if (onclick.includes(" + (settings.bitrate || 8000000) + "\)) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        }
+      });
     }
 
     function toggleSettingsModal() {
@@ -1253,11 +1499,13 @@
           document.getElementById('screenshotDownloadBtn').href = data.download_url;
           document.getElementById('screenshotDownloadBtn').download = data.filename;
 
-          // Hide video card if open, show screenshot card
+          // Hide video card and recorder view, show screenshot card
           const vCard = document.getElementById('videoCard');
           if (vCard) vCard.style.display = 'none';
+          const recView = document.getElementById('recorderMainView');
+          if (recView) recView.style.display = 'none';
           const card = document.getElementById('screenshotCard');
-          card.style.display = 'block';
+          card.style.display = 'flex';
 
           // Show Back button in top header
           const backBtn = document.getElementById('headerBackBtn');
@@ -1371,9 +1619,11 @@
       currentVideoFilename = filename;
       currentVideoUrl = videoUrl;
 
-      // Hide screenshot card if open
+      // Hide screenshot card and recorder view, show video card
       const scCard = document.getElementById('screenshotCard');
       if (scCard) scCard.style.display = 'none';
+      const recView = document.getElementById('recorderMainView');
+      if (recView) recView.style.display = 'none';
 
       const card = document.getElementById('videoCard');
       const video = document.getElementById('videoElement');
@@ -1412,6 +1662,7 @@
     function closeMediaPreview() {
       const videoCard = document.getElementById('videoCard');
       const screenshotCard = document.getElementById('screenshotCard');
+      const recView = document.getElementById('recorderMainView');
       const video = document.getElementById('videoElement');
       if (video) {
         try { video.pause(); } catch(e) {}
@@ -1419,6 +1670,7 @@
       }
       if (videoCard) videoCard.style.display = 'none';
       if (screenshotCard) screenshotCard.style.display = 'none';
+      if (recView) recView.style.display = 'flex';
       const backBtn = document.getElementById('headerBackBtn');
       if (backBtn) backBtn.style.display = 'none';
       showToast('Returned to recorder', 'info', 1200);

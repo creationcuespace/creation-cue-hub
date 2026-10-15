@@ -683,7 +683,7 @@ def start_app():
         cmd = [
             browser_exe,
             f"--app={url}",
-            "--window-size=1180,780",
+            "--window-size=1180,720",
             f"--user-data-dir={profile_dir}",
             "--no-first-run",
             "--no-default-browser-check"
@@ -702,7 +702,7 @@ def start_app():
             title="Creation Cue | Watch Screen Recorder",
             url=url,
             width=1180,
-            height=780,
+            height=720,
             min_size=(820, 580),
             background_color="#141414"
         )
