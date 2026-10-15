@@ -1784,7 +1784,7 @@
     </div>
     <div class="header-btns">
       <!-- Version badge -->
-      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.64</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.65</span>
       <!-- Firebase connection indicator dot & text -->
       <div id="header-sync-badge" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; flex-shrink: 0;">
         <span id="header-sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
@@ -2183,7 +2183,7 @@
 
   <!-- Footer -->
   <footer style="text-align: center; padding: 24px; font-size: 10px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: auto; font-family: var(--font-body); letter-spacing: 0.5px; opacity: 0.6;">
-    CreationCue™ Planner &bull; v2.64
+    CreationCue™ Planner &bull; v2.65
   </footer>
 
   <!-- Inline Override Dialog -->
@@ -5082,6 +5082,7 @@
       var dateTitleEl = document.getElementById('day-view-date-title');
       var todayBadgeEl = document.getElementById('day-view-today-badge');
       var navHeaderEl = document.getElementById('day-view-nav-header');
+      var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
       dateTitleEl.textContent = d.toLocaleDateString('en-US', options);
 
