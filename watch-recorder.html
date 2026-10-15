@@ -795,18 +795,26 @@
       </div>
 
       <div class="bay-body">
-        <!-- Saved / Active Selector Bar -->
-        <div style="display: flex; gap: 6px; align-items: center;">
-          <select id="savedDevicesSelect" class="input-field" style="flex: 1;" onchange="loadSavedDevice(this.value)">
-            <option value="">⭐ Saved Devices (Recent)...</option>
+        <!-- Active Wear Watch Dropdown -->
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.8px; color: var(--neon-cyan);">⌚ WEAR OS DEVICE:</span>
+            <div style="display: flex; gap: 4px;">
+              <button class="hw-btn" style="padding: 2px 7px; font-size: 10px;" onclick="refreshStatus()" title="Scan for connected watches">🔄 Scan</button>
+              <button class="hw-btn" style="padding: 2px 7px; font-size: 10px;" onclick="forgetSelectedSavedDevice()" title="Forget selected saved device">Forget</button>
+            </div>
+          </div>
+          <select id="deviceSelect" class="input-field" style="width: 100%; font-weight: 600; color: #fff;">
+            <option value="">⌚ WEAR OS: (No Watch Connected - Enter IP Below)</option>
           </select>
-          <button class="hw-btn" onclick="forgetSelectedSavedDevice()" title="Forget saved device">Forget</button>
-          <button class="hw-btn" onclick="refreshStatus()" title="Refresh connection status">🔄</button>
         </div>
 
-        <select id="deviceSelect" class="input-field" style="width: 100%; display: none;">
-          <option value="">Searching for connected watches...</option>
-        </select>
+        <!-- Saved Devices Bar (Quick Presets) -->
+        <div style="display: flex; gap: 6px; align-items: center;">
+          <select id="savedDevicesSelect" class="input-field" style="flex: 1; font-size: 10px;" onchange="loadSavedDevice(this.value)">
+            <option value="">⭐ Quick Load Recent Device...</option>
+          </select>
+        </div>
 
         <!-- Dial A: Circular Radar / Waveform Scope -->
         <div class="synth-scope-card">
@@ -822,7 +830,7 @@
             <div class="dial-rings-green">
               <div class="dial-sweep-line"></div>
               <div style="font-size: 26px; z-index: 5; margin-bottom: 2px;">⌚</div>
-              <div style="font-size: 9px; font-weight: 800; letter-spacing: 1.2px; color: var(--neon-green); z-index: 5;">RADAR LINK</div>
+              <div id="radarStatusText" style="font-size: 9px; font-weight: 800; letter-spacing: 1.2px; color: var(--neon-green); z-index: 5;">RADAR LINK</div>
             </div>
           </div>
           <div style="font-size: 10px; color: var(--text-dim); margin-top: 4px; letter-spacing: 0.8px;">STANDBY / AUTO-POLL 2.5s</div>
@@ -848,7 +856,7 @@
             <span class="ip-dot">.</span>
             <input type="text" maxlength="3" class="ip-box" id="conn4" value="59" placeholder="59" oninput="handleIpInput(this, 'connPort', 'conn3')" onpaste="handleIpPaste(event, 'conn')">
             <span class="ip-dot">:</span>
-            <input type="text" maxlength="5" class="port-box" id="connPort" placeholder="37673" onpaste="handleIpPaste(event, 'conn')">
+            <input type="text" maxlength="5" class="port-box" id="connPort" value="37673" placeholder="37673" onpaste="handleIpPaste(event, 'conn')">
           </div>
 
           <button id="connectBtn" class="hw-btn btn-accent" onclick="connectDevice()">Connect IP</button>
@@ -1134,7 +1142,10 @@
       const o2 = document.getElementById(`${prefix}2`).value.trim();
       const o3 = document.getElementById(`${prefix}3`).value.trim();
       const o4 = document.getElementById(`${prefix}4`).value.trim();
-      const port = document.getElementById(`${prefix}Port`).value.trim();
+      let port = document.getElementById(`${prefix}Port`).value.trim();
+      if (!port) {
+        port = (document.getElementById(`${prefix}Port`).placeholder || '').trim();
+      }
       if (!o1 || !o2 || !o3 || !o4 || !port) return '';
       return `${o1}.${o2}.${o3}.${o4}:${port}`;
     }
@@ -1168,26 +1179,60 @@
       setIpValue(prefix, pasted);
     }
 
-    // Attach Enter key event listener to trigger Connect IP
+    // Attach Enter key event listener to trigger Connect IP on all boxes and inputs
     ['conn1', 'conn2', 'conn3', 'conn4', 'connPort'].forEach(id => {
       const el = document.getElementById(id);
       if (el) {
         el.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
+          if (e.key === 'Enter' || e.keyCode === 13) {
             e.preventDefault();
+            e.stopPropagation();
             connectDevice();
           }
         });
       }
     });
 
+    const connGroupElem = document.getElementById('connGroup');
+    if (connGroupElem) {
+      connGroupElem.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+          e.preventDefault();
+          e.stopPropagation();
+          connectDevice();
+        }
+      });
+    }
+
+    const savedSelectElem = document.getElementById('savedDevicesSelect');
+    if (savedSelectElem) {
+      savedSelectElem.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+          e.preventDefault();
+          connectDevice();
+        }
+      });
+    }
+
+    const devSelectElem = document.getElementById('deviceSelect');
+    if (devSelectElem) {
+      devSelectElem.addEventListener('change', (e) => {
+        const devId = e.target.value;
+        if (devId) {
+          updateStatusBadge('online', `WEAR: ${devId}`);
+          showToast(`Selected Wear device: ${devId}`, 'info', 2000);
+        }
+      });
+    }
+
     // Attach Enter key event listener to trigger Pair Watch
     ['pair1', 'pair2', 'pair3', 'pair4', 'pairPort', 'pairCodeInput'].forEach(id => {
       const el = document.getElementById(id);
       if (el) {
         el.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
+          if (e.key === 'Enter' || e.keyCode === 13) {
             e.preventDefault();
+            e.stopPropagation();
             pairDevice();
           }
         });
@@ -1202,6 +1247,14 @@
     // Initialize UI on page load
     renderSavedDevices();
     initSettings();
+
+    // Auto-load most recent saved watch into IP boxes if available
+    try {
+      const saved = JSON.parse(localStorage.getItem('cc_saved_devices') || '[]');
+      if (saved && saved.length > 0 && saved[0]) {
+        setIpValue('conn', saved[0]);
+      }
+    } catch(e) {}
 
     // Start auto polling bridge status
     setInterval(refreshStatus, 2500);
@@ -1222,10 +1275,15 @@
         const select = document.getElementById('deviceSelect');
         const currentVal = select.value;
         select.innerHTML = '';
+        const radarText = document.getElementById('radarStatusText');
 
         if (connectedDevices.length === 0) {
-          select.innerHTML = '<option value="">No watches connected</option>';
+          select.innerHTML = '<option value="">⌚ WEAR OS: (No Watch Connected - Enter IP Below)</option>';
           updateStatusBadge('connecting', 'Bridge Active - Waiting for Watch');
+          if (radarText) {
+            radarText.innerText = 'RADAR LINK';
+            radarText.style.color = 'var(--neon-green)';
+          }
           document.getElementById('recBtn').disabled = !data.recording.active;
           document.getElementById('shotBtn').disabled = true;
           document.getElementById('recHint').innerText = 'Please connect your watch via Wi-Fi IP or USB';
@@ -1233,15 +1291,22 @@
           connectedDevices.forEach(dev => {
             const opt = document.createElement('option');
             opt.value = dev.id;
-            opt.innerText = `⌚ ${dev.model} (${dev.id})`;
+            opt.innerText = `⌚ WEAR OS: ${dev.model} (${dev.id})`;
             select.appendChild(opt);
           });
           if (currentVal && connectedDevices.some(d => d.id === currentVal)) {
             select.value = currentVal;
+          } else {
+            select.value = connectedDevices[0].id;
           }
           
           const activeDevId = select.value || connectedDevices[0].id;
           const activeDev = connectedDevices.find(d => d.id === activeDevId) || connectedDevices[0];
+
+          if (radarText) {
+            radarText.innerText = (activeDev.model && activeDev.model !== 'Smartwatch') ? activeDev.model.toUpperCase() : 'WEAR OS ACTIVE';
+            radarText.style.color = 'var(--neon-cyan)';
+          }
 
           if (activeDev && activeDev.status === 'unauthorized') {
             updateStatusBadge('connecting', `⚠️ Tap 'Allow' on Watch Screen`);
@@ -1249,11 +1314,11 @@
             document.getElementById('shotBtn').disabled = true;
             document.getElementById('recHint').innerText = 'Check your watch: Tap "Always allow from this computer"';
           } else {
-            updateStatusBadge('online', `Connected: ${activeDev ? activeDev.id : activeDevId}`);
+            updateStatusBadge('online', `WEAR: ${activeDev ? activeDev.id : activeDevId}`);
             document.getElementById('recBtn').disabled = false;
             document.getElementById('shotBtn').disabled = isRecording;
             if (!isRecording) {
-              document.getElementById('recHint').innerText = 'Click big RED button to record, or 📸 Screenshot';
+              document.getElementById('recHint').innerText = 'Ready! Click big RED REC button or 📸 Screenshot';
             }
           }
         }
@@ -1386,10 +1451,13 @@
       }
     }
 
+    let isConnecting = false;
     async function connectDevice() {
+      if (isConnecting) return;
       const ip = getIpValue('conn');
       if (!ip) return showToast('Please enter all 4 IP numbers and the Port', 'error');
 
+      isConnecting = true;
       const btn = document.getElementById('connectBtn');
       btn.disabled = true;
       btn.innerText = 'Connecting...';
@@ -1406,10 +1474,11 @@
           saveDeviceToHistory(ip);
         }
         showToast(data.output, connected ? 'success' : 'error', 4000);
-        refreshStatus();
+        await refreshStatus();
       } catch (err) {
         showToast('Could not connect to bridge: ' + err.message, 'error');
       } finally {
+        isConnecting = false;
         btn.disabled = false;
         btn.innerText = 'Connect IP';
       }
