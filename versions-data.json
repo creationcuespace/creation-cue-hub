@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-14T12:44:53.840Z",
+  "lastUpdated": "2026-10-15T01:51:37.525Z",
   "results": [
     {
       "id": "cue178",
@@ -10,8 +10,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.8,
+      "ratingCount": "14"
     },
     {
       "id": "cue003",
@@ -22,7 +22,7 @@
       "wearVersion": "10999999 (1.5.0)",
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -34,7 +34,7 @@
       "wearVersion": "10000012 (2.1.0)",
       "lastUpdatedDate": "Oct 6, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -46,7 +46,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -58,7 +58,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -70,7 +70,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -82,7 +82,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000024)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -94,7 +94,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000015)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -118,7 +118,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -130,7 +130,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000014)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -151,10 +151,10 @@
       "playStoreTitle": "Watch Face CUE167",
       "packageName": "com.creation.cue167watchface",
       "companionVersion": "Android 16 API & Design Update (v10000006)",
-      "wearVersion": "Wear OS SDK 35 Update (v10000005)",
+      "wearVersion": "10000007 (1.2.0)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -166,8 +166,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 5,
+      "ratingCount": "57"
     },
     {
       "id": "cue165",
@@ -178,7 +178,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -190,7 +190,7 @@
       "wearVersion": "10000007 (1.3.0)",
       "lastUpdatedDate": "Aug 29, 2026",
       "downloads": "500+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -202,7 +202,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -214,7 +214,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -226,8 +226,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.2,
+      "ratingCount": "14"
     },
     {
       "id": "cue160",
@@ -238,7 +238,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -250,7 +250,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -262,7 +262,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -274,7 +274,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -286,7 +286,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -298,7 +298,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -310,8 +310,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.8,
+      "ratingCount": "27"
     },
     {
       "id": "cue153",
@@ -322,8 +322,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000014)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.8,
+      "ratingCount": "24"
     },
     {
       "id": "cue152",
@@ -334,7 +334,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -346,8 +346,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.3,
+      "ratingCount": "52"
     },
     {
       "id": "cue150",
@@ -358,7 +358,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -370,8 +370,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.2,
+      "ratingCount": "13"
     },
     {
       "id": "cue148",
@@ -382,8 +382,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.2,
+      "ratingCount": "26"
     },
     {
       "id": "cue147",
@@ -394,7 +394,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -406,8 +406,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4,
+      "ratingCount": "20"
     },
     {
       "id": "cue145",
@@ -418,8 +418,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.7,
+      "ratingCount": "47"
     },
     {
       "id": "cue144",
@@ -430,8 +430,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.9,
+      "ratingCount": "19"
     },
     {
       "id": "cue143",
@@ -442,7 +442,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": 4.9,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -454,19 +454,19 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.6,
+      "ratingCount": "82"
     },
     {
       "id": "cue141",
       "title": "CUE141",
-      "playStoreTitle": "Error 503 (Server Error)!!1",
+      "playStoreTitle": "Watch Face CUE141",
       "packageName": "com.creation.cue141watchface",
       "companionVersion": "Android 16 API & Design Update (v10000009)",
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
-      "lastUpdatedDate": "N/A",
-      "downloads": "N/A",
-      "rating": null,
+      "lastUpdatedDate": "Aug 4, 2026",
+      "downloads": "100+",
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -478,8 +478,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.5,
+      "ratingCount": "14"
     },
     {
       "id": "cue139",
@@ -490,7 +490,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -502,7 +502,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -514,8 +514,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.6,
+      "ratingCount": "409"
     },
     {
       "id": "cue136_plus",
@@ -526,7 +526,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": 4.2,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -538,8 +538,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.6,
+      "ratingCount": "19"
     },
     {
       "id": "cue134",
@@ -550,7 +550,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -562,7 +562,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -574,7 +574,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -586,8 +586,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 5,
+      "ratingCount": "9"
     },
     {
       "id": "cue130",
@@ -598,7 +598,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -610,7 +610,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 3.4,
       "ratingCount": null
     },
     {
@@ -622,7 +622,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000015)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -634,7 +634,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -646,7 +646,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -658,7 +658,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -670,7 +670,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -682,7 +682,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
-      "rating": 4.6,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -706,8 +706,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000018)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.5,
+      "ratingCount": "92"
     },
     {
       "id": "cue115",
@@ -718,7 +718,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -730,7 +730,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
-      "rating": null,
+      "rating": 4.8,
       "ratingCount": null
     },
     {
@@ -742,8 +742,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000019)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.6,
+      "ratingCount": "48"
     },
     {
       "id": "cue110",
@@ -754,7 +754,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000017)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -766,7 +766,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": 4.8,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -775,10 +775,10 @@
       "playStoreTitle": "Digital Watch Face CUE107",
       "packageName": "com.creation.cue107watchface",
       "companionVersion": "Android 16 API & Design Update (v10000012)",
-      "wearVersion": "Wear OS SDK 35 Update (v10000011)",
+      "wearVersion": "10000013 (3.1.0)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -790,7 +790,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -802,7 +802,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -814,8 +814,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.3,
+      "ratingCount": "25"
     },
     {
       "id": "cue103",
@@ -826,7 +826,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -838,7 +838,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -850,7 +850,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000018)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": 4.2,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -862,7 +862,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -874,7 +874,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -886,7 +886,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000046)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -896,9 +896,9 @@
       "packageName": "com.creation.cue097watchface",
       "companionVersion": "Android 16 API & Design Update (v10000015)",
       "wearVersion": "10000017 (4.1.0)",
-      "lastUpdatedDate": "Aug 4, 2026",
+      "lastUpdatedDate": "Oct 11, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -910,7 +910,7 @@
       "wearVersion": "10999999 (6.0.1)",
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -922,7 +922,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -934,19 +934,19 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": 4.7,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
       "id": "crc090",
       "title": "CRC090",
-      "playStoreTitle": "CRC090",
+      "playStoreTitle": "Digital Watch Face CRC090",
       "packageName": "com.creationcue.crc090watchface",
       "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
-      "lastUpdatedDate": "Fetch Failed",
-      "downloads": "N/A",
-      "rating": null,
+      "lastUpdatedDate": "Aug 4, 2026",
+      "downloads": "100+",
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -958,7 +958,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000016)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -970,8 +970,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 3,
+      "ratingCount": "7"
     },
     {
       "id": "crc081",
@@ -982,7 +982,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -994,7 +994,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000024)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
-      "rating": 4.9,
+      "rating": 4.3,
       "ratingCount": "652"
     },
     {
@@ -1006,7 +1006,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1018,8 +1018,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.2,
+      "ratingCount": "20"
     },
     {
       "id": "crc071",
@@ -1030,7 +1030,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1040,10 +1040,10 @@
       "packageName": "com.creationcue.crc069watchface",
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "10000011 (2.5.0)",
-      "lastUpdatedDate": "Aug 27, 2026",
+      "lastUpdatedDate": "Aug 26, 2026",
       "downloads": "10K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.3,
+      "ratingCount": "85"
     },
     {
       "id": "crc068",
@@ -1054,8 +1054,8 @@
       "wearVersion": "10999999 (4.0.1)",
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "10K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.9,
+      "ratingCount": "61"
     },
     {
       "id": "crc066",
@@ -1066,7 +1066,7 @@
       "wearVersion": "10000014 (3.1.0)",
       "lastUpdatedDate": "Sep 15, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1078,8 +1078,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000018)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.8,
+      "ratingCount": "12"
     },
     {
       "id": "crc057",
@@ -1090,7 +1090,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000012)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1102,7 +1102,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000014)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": 4.4,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1114,7 +1114,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000019)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100K+",
-      "rating": 5,
+      "rating": 4.7,
       "ratingCount": "1.08K"
     },
     {
@@ -1126,7 +1126,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000008)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1138,7 +1138,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000016)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1150,7 +1150,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1162,8 +1162,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.2,
+      "ratingCount": "473"
     },
     {
       "id": "crc039",
@@ -1174,7 +1174,7 @@
       "wearVersion": "10000022 (2.2.1)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1186,7 +1186,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000011)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1198,7 +1198,7 @@
       "wearVersion": "10000022 (4.0.1)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1210,7 +1210,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000017)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1222,7 +1222,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000007)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1234,7 +1234,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1246,8 +1246,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000023)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.3,
+      "ratingCount": "20"
     },
     {
       "id": "crc028",
@@ -1258,8 +1258,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.8,
+      "ratingCount": "21"
     },
     {
       "id": "crc027",
@@ -1270,7 +1270,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1282,7 +1282,7 @@
       "wearVersion": "10000012 (1.6.0)",
       "lastUpdatedDate": "Oct 9, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1294,7 +1294,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000019)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1306,7 +1306,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000015)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1318,7 +1318,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000013)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1330,7 +1330,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000022)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1342,20 +1342,20 @@
       "wearVersion": "10000033 (3.0.0)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
       "id": "cueindus",
       "title": "Cue Indus",
-      "playStoreTitle": "Cue Indus",
+      "playStoreTitle": "Watch Face CUE Indus",
       "packageName": "com.creation.cueinduswatchface",
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "lastUpdatedDate": "Fetch Failed",
-      "downloads": "N/A",
+      "lastUpdatedDate": "Aug 4, 2026",
+      "downloads": "10K+",
       "rating": 4.5,
-      "ratingCount": "294"
+      "ratingCount": "298"
     },
     {
       "id": "cueindus_pro",
@@ -1378,7 +1378,7 @@
       "wearVersion": "10000001 (1.0.0)",
       "lastUpdatedDate": "Sep 8, 2026",
       "downloads": "100+",
-      "rating": null,
+      "rating": 4.5,
       "ratingCount": null
     }
   ]
