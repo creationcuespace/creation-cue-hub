@@ -42,10 +42,27 @@ POSSIBLE_ADB_PATHS = [
     "adb"
 ]
 
+def _win32_no_window_kwargs(kwargs):
+    if sys.platform == "win32":
+        if "creationflags" not in kwargs:
+            kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
+        if "startupinfo" not in kwargs:
+            si = subprocess.STARTUPINFO()
+            si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            si.wShowWindow = 0
+            kwargs["startupinfo"] = si
+    return kwargs
+
+def run_cmd(cmd, **kwargs):
+    return subprocess.run(cmd, **_win32_no_window_kwargs(kwargs))
+
+def popen_cmd(cmd, **kwargs):
+    return subprocess.Popen(cmd, **_win32_no_window_kwargs(kwargs))
+
 def find_adb():
     for path in POSSIBLE_ADB_PATHS:
         try:
-            res = subprocess.run([path, "version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=3)
+            res = run_cmd([path, "version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=3)
             if res.returncode == 0:
                 return path
         except Exception:
@@ -183,12 +200,12 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
                 lower_name = safe_filename.lower()
                 if lower_name.endswith(".apk"):
                     cmd = [ADB_PATH, "-s", device_id, "install", "-r", temp_dest]
-                    res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=120)
+                    res = run_cmd(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=120)
                     out = (res.stdout + res.stderr).strip()
                     success = "success" in out.lower()
                 else:
                     cmd = [ADB_PATH, "-s", device_id, "push", temp_dest, f"/sdcard/Download/{safe_filename}"]
-                    res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=60)
+                    res = run_cmd(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=60)
                     out = (res.stdout + res.stderr).strip()
                     success = res.returncode == 0
 
@@ -217,7 +234,7 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
             
             # Send pairing code via STDIN (required by standard adb pair)
             try:
-                p = subprocess.Popen([ADB_PATH, "pair", target], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                p = popen_cmd([ADB_PATH, "pair", target], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
                 out, err = p.communicate(input=f"{code}\n", timeout=12)
                 output = (out + err).strip()
             except Exception as e:
@@ -225,7 +242,7 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
             
             # Fallback for adb versions accepting positional arguments
             if "usage: adb pair" in output.lower():
-                res = subprocess.run([ADB_PATH, "pair", target, code], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                res = run_cmd([ADB_PATH, "pair", target, code], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
                 output = (res.stdout + res.stderr).strip()
 
             paired = "successfully paired" in output.lower() or "paired to" in output.lower()
@@ -235,7 +252,7 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
             target = data.get("target", "").strip()
             if not target:
                 return self._send_json({"error": "Missing IP/Address target"}, 400)
-            res = subprocess.run([ADB_PATH, "connect", target], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            res = run_cmd([ADB_PATH, "connect", target], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             output = res.stdout + res.stderr
             connected = "connected to" in output.lower() or "already connected" in output.lower()
             return self._send_json({"success": connected, "output": output.strip()})
@@ -243,9 +260,9 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
         elif path == "/api/disconnect":
             target = data.get("target", "").strip()
             if target:
-                res = subprocess.run([ADB_PATH, "disconnect", target], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                res = run_cmd([ADB_PATH, "disconnect", target], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             else:
-                res = subprocess.run([ADB_PATH, "disconnect"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                res = run_cmd([ADB_PATH, "disconnect"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             return self._send_json({"success": True, "output": (res.stdout + res.stderr).strip()})
 
         elif path == "/api/record/start":
@@ -289,7 +306,7 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
             cmd.append(remote_path)
 
             try:
-                RECORDING_PROCESS = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                RECORDING_PROCESS = popen_cmd(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 CURRENT_RECORDING = {
                     "active": True,
                     "device_id": device_id,
@@ -321,21 +338,21 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
             if device_id:
                 cmd_shot.extend(["-s", device_id])
             cmd_shot.extend(["shell", "screencap", "-p", remote_path])
-            res_shot = subprocess.run(cmd_shot, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=12)
+            res_shot = run_cmd(cmd_shot, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=12)
 
             # 2. Pull screenshot to local folder
             cmd_pull = [ADB_PATH]
             if device_id:
                 cmd_pull.extend(["-s", device_id])
             cmd_pull.extend(["pull", remote_path, local_path])
-            res_pull = subprocess.run(cmd_pull, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=12)
+            res_pull = run_cmd(cmd_pull, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=12)
 
             # 3. Clean up on watch
             cmd_rm = [ADB_PATH]
             if device_id:
                 cmd_rm.extend(["-s", device_id])
             cmd_rm.extend(["shell", "rm", remote_path])
-            subprocess.run(cmd_rm, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            run_cmd(cmd_rm, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
             success = os.path.exists(local_path) and os.path.getsize(local_path) > 0
             return self._send_json({
@@ -393,7 +410,7 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
             if device_id:
                 cmd_pid.extend(["-s", device_id])
             cmd_pid.extend(["shell", "pidof", "screenrecord"])
-            res_pid = subprocess.run(cmd_pid, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            res_pid = run_cmd(cmd_pid, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             pids = res_pid.stdout.strip().split()
 
             # Step 2: Send SIGINT (kill -2) to screenrecord PID on watch
@@ -403,7 +420,7 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
                     if device_id:
                         cmd_kill.extend(["-s", device_id])
                     cmd_kill.extend(["shell", "kill", "-2", pid])
-                    subprocess.run(cmd_kill, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    run_cmd(cmd_kill, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
             # Step 3: Wait gracefully for screenrecord process & local adb to flush moov atom
             if RECORDING_PROCESS:
@@ -422,14 +439,14 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
             if device_id:
                 cmd_pull.extend(["-s", device_id])
             cmd_pull.extend(["pull", remote_file, local_file])
-            res_pull = subprocess.run(cmd_pull, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            res_pull = run_cmd(cmd_pull, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
             # Step 5: Clean up file on watch
             cmd_rm = [ADB_PATH]
             if device_id:
                 cmd_rm.extend(["-s", device_id])
             cmd_rm.extend(["shell", "rm", remote_file])
-            subprocess.run(cmd_rm, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            run_cmd(cmd_rm, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
             CURRENT_RECORDING = {
                 "active": False,
@@ -461,7 +478,7 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
 
     def get_adb_devices(self):
         try:
-            res = subprocess.run([ADB_PATH, "devices", "-l"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=4)
+            res = run_cmd([ADB_PATH, "devices", "-l"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=4)
             lines = res.stdout.strip().split("\n")[1:]
             devices = []
             for line in lines:
@@ -480,9 +497,9 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
                     if state == "device":
                         # Only prune if connection socket is explicitly closed (e.g. Wireless Debugging toggled off)
                         try:
-                            ping_res = subprocess.run([ADB_PATH, "-s", dev_id, "shell", "echo", "1"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=3.5)
+                            ping_res = run_cmd([ADB_PATH, "-s", dev_id, "shell", "echo", "1"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=3.5)
                             if "closed" in ping_res.stderr.lower():
-                                subprocess.run([ADB_PATH, "disconnect", dev_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                                run_cmd([ADB_PATH, "disconnect", dev_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                                 continue
                         except Exception:
                             # Don't disconnect on transient Wi-Fi latency
@@ -520,6 +537,39 @@ def run_server():
         except Exception:
             time.sleep(0.5)
 
+def find_app_browser():
+    try:
+        import winreg
+        for root in (winreg.HKEY_CURRENT_USER, winreg.HKEY_LOCAL_MACHINE):
+            for app in ("chrome.exe", "msedge.exe", "brave.exe"):
+                try:
+                    with winreg.OpenKey(root, rf"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\{app}") as key:
+                        val = winreg.QueryValue(key, "")
+                        if val and os.path.exists(val):
+                            return val
+                except Exception:
+                    pass
+    except Exception:
+        pass
+
+    candidates = [
+        # Google Chrome
+        r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+        r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
+        os.path.expandvars(r"%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe"),
+        # Microsoft Edge
+        r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
+        r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
+        os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\Edge\Application\msedge.exe"),
+        # Brave
+        r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe",
+        os.path.expandvars(r"%LOCALAPPDATA%\BraveSoftware\Brave-Browser\Application\brave.exe"),
+    ]
+    for c in candidates:
+        if os.path.exists(c):
+            return c
+    return None
+
 def start_app():
     if "--cli" in sys.argv or "--headless" in sys.argv or "-c" in sys.argv:
         run_server()
@@ -530,26 +580,46 @@ def start_app():
     server_thread.start()
     time.sleep(0.4)
 
-    # Try opening native desktop window via webview
+    url = f"http://127.0.0.1:{PORT}/"
+    browser_exe = find_app_browser()
+
+    if browser_exe:
+        # Launch dedicated native app window (no address bar, no tabs, no bookmarks)
+        profile_dir = os.path.join(TEMP_DIR, "WatchRecorderAppData")
+        cmd = [
+            browser_exe,
+            f"--app={url}",
+            "--window-size=1020,900",
+            f"--user-data-dir={profile_dir}",
+            "--no-first-run",
+            "--no-default-browser-check"
+        ]
+        try:
+            proc = subprocess.Popen(cmd)
+            proc.wait()
+            return
+        except Exception:
+            pass
+
+    # Fallback to webview or default browser if app mode fails
     try:
         import webview
         webview.create_window(
             title="Creation Cue | Watch Screen Recorder",
-            url=f"http://127.0.0.1:{PORT}/",
+            url=url,
             width=1000,
             height=880,
             min_size=(720, 560),
             background_color="#141414"
         )
         webview.start()
-    except Exception as e:
-        # Fallback to default browser
-        webbrowser.open(f"http://127.0.0.1:{PORT}/")
-        try:
-            while True:
+    except Exception:
+        webbrowser.open(url)
+        while True:
+            try:
                 time.sleep(1)
-        except KeyboardInterrupt:
-            pass
+            except KeyboardInterrupt:
+                break
 
 if __name__ == '__main__':
     start_app()
