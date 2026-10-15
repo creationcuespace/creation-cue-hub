@@ -248,6 +248,17 @@
       }
     }
 
+    @keyframes pulse-glow {
+      0% {
+        box-shadow: 0 0 10px rgba(241, 179, 28, 0.25);
+        border-color: rgba(241, 179, 28, 0.6);
+      }
+      100% {
+        box-shadow: 0 0 22px rgba(241, 179, 28, 0.55);
+        border-color: rgba(241, 179, 28, 1);
+      }
+    }
+
     .pulse-highlight span {
       animation: pull-text-pulse 1.5s ease-in-out;
     }
@@ -1773,7 +1784,7 @@
     </div>
     <div class="header-btns">
       <!-- Version badge -->
-      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.62</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.63</span>
       <!-- Firebase connection indicator dot & text -->
       <div id="header-sync-badge" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; flex-shrink: 0;">
         <span id="header-sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
@@ -2114,7 +2125,7 @@
       <!-- Day View Container -->
       <div id="day-view-container" style="display: flex; flex-direction: column; gap: 20px; min-width: 0;">
         <!-- Day View Navigation Header -->
-        <div class="day-view-nav" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; background: var(--surface-color); border: 1px solid var(--border-color); padding: 16px 20px; border-radius: var(--border-radius-lg);">
+        <div id="day-view-nav-header" class="day-view-nav" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; background: var(--surface-color); border: 1px solid var(--border-color); padding: 16px 20px; border-radius: var(--border-radius-lg); transition: all 0.3s ease;">
           <button onclick="navigateDay(-1)" class="parallelogram-btn" style="padding: 12px 18px; font-size: 15px; font-weight: 700; flex: 1; min-width: 120px;">
             <div style="display: inline-flex; align-items: center; gap: 8px; justify-content: center; width: 100%;">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -2123,7 +2134,11 @@
           </button>
           
           <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; flex: 2; min-width: 200px;">
-            <h2 id="day-view-date-title" style="font-family: var(--font-display); font-size: 22px; font-weight: 700; margin: 0; color: var(--text-primary);"><script>(function(){var d=new Date();var options={weekday:'long',year:'numeric',month:'long',day:'numeric'};document.write(d.toLocaleDateString('en-US',options));})();</script></h2>
+            <div id="day-view-today-badge" style="display: none; align-items: center; gap: 6px; background: linear-gradient(135deg, rgba(241,179,28,0.2), rgba(241,179,28,0.08)); border: 1px solid var(--primary); color: var(--primary); font-size: 12px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; box-shadow: 0 0 15px rgba(241, 179, 28, 0.35); animation: pulse-glow 2s infinite alternate;">
+              <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 8px var(--primary);"></span>
+              TODAY
+            </div>
+            <h2 id="day-view-date-title" style="font-family: var(--font-display); font-size: 22px; font-weight: 700; margin: 0; color: var(--text-primary); transition: color 0.3s ease;"><script>(function(){var d=new Date();var options={weekday:'long',year:'numeric',month:'long',day:'numeric'};document.write(d.toLocaleDateString('en-US',options));})();</script></h2>
             <span id="day-view-holiday-badge" style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; margin-top: 4px; display: inline-block;"></span>
             <div id="day-progress-row" style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
               <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);" id="day-view-completed-stat">0/8 Completed</span>
@@ -2168,7 +2183,7 @@
 
   <!-- Footer -->
   <footer style="text-align: center; padding: 24px; font-size: 10px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: auto; font-family: var(--font-body); letter-spacing: 0.5px; opacity: 0.6;">
-    CreationCue™ Planner &bull; v2.62
+    CreationCue™ Planner &bull; v2.63
   </footer>
 
   <!-- Inline Override Dialog -->
@@ -5080,8 +5095,30 @@
       var dateStr = appState.activeDayStr;
       var parts = dateStr.split('-');
       var d = new Date(parts[0], parts[1] - 1, parts[2]);
-      var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('day-view-date-title').textContent = d.toLocaleDateString('en-US', options);
+      var isToday = (dateStr === getTodayDateString());
+      var dateTitleEl = document.getElementById('day-view-date-title');
+      var todayBadgeEl = document.getElementById('day-view-today-badge');
+      var navHeaderEl = document.getElementById('day-view-nav-header');
+
+      dateTitleEl.textContent = d.toLocaleDateString('en-US', options);
+
+      if (isToday) {
+        if (todayBadgeEl) todayBadgeEl.style.display = 'inline-flex';
+        dateTitleEl.style.color = 'var(--primary)';
+        dateTitleEl.style.textShadow = '0 0 16px rgba(241, 179, 28, 0.4)';
+        if (navHeaderEl) {
+          navHeaderEl.style.borderColor = 'var(--primary)';
+          navHeaderEl.style.boxShadow = '0 0 25px rgba(241, 179, 28, 0.15), inset 0 0 15px rgba(241, 179, 28, 0.05)';
+        }
+      } else {
+        if (todayBadgeEl) todayBadgeEl.style.display = 'none';
+        dateTitleEl.style.color = 'var(--text-primary)';
+        dateTitleEl.style.textShadow = 'none';
+        if (navHeaderEl) {
+          navHeaderEl.style.borderColor = 'var(--border-color)';
+          navHeaderEl.style.boxShadow = 'none';
+        }
+      }
 
       var offState = isHolidayOrWeekend(dateStr);
       var badgeEl = document.getElementById('day-view-holiday-badge');

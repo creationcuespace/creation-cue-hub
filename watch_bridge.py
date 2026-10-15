@@ -41,7 +41,23 @@ def find_adb():
     return "adb"
 
 ADB_PATH = find_adb()
-TEMP_DIR = os.path.join(os.path.expanduser("~"), "Downloads")
+
+def get_downloads_dir():
+    try:
+        import winreg
+        sub_key = r"Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders"
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, sub_key) as key:
+            val, _ = winreg.QueryValueEx(key, "{374DE290-123F-4565-9164-39C4925E467B}")
+            val = os.path.expandvars(val)
+            if os.path.exists(val):
+                return val
+    except Exception:
+        pass
+    if os.path.exists(r"D:\DOWNLOADs"):
+        return r"D:\DOWNLOADs"
+    return os.path.join(os.path.expanduser("~"), "Downloads")
+
+TEMP_DIR = get_downloads_dir()
 os.makedirs(TEMP_DIR, exist_ok=True)
 
 class ADBBridgeHandler(BaseHTTPRequestHandler):
