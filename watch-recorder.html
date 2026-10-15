@@ -847,16 +847,16 @@
 
         <!-- Sunken LCD IP Connection Well -->
         <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-          <div class="ip-box-group" id="connGroup" onkeydown="if(event.key==='Enter'){event.preventDefault(); connectDevice();}">
-            <input type="text" maxlength="3" class="ip-box" id="conn1" value="192" placeholder="192" oninput="handleIpInput(this, 'conn2', '')" onpaste="handleIpPaste(event, 'conn')">
+          <div class="ip-box-group" id="connGroup" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
+            <input type="text" maxlength="3" class="ip-box" id="conn1" value="192" placeholder="192" oninput="handleIpInput(this, 'conn2', '')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
             <span class="ip-dot">.</span>
-            <input type="text" maxlength="3" class="ip-box" id="conn2" value="168" placeholder="168" oninput="handleIpInput(this, 'conn3', 'conn1')" onpaste="handleIpPaste(event, 'conn')">
+            <input type="text" maxlength="3" class="ip-box" id="conn2" value="168" placeholder="168" oninput="handleIpInput(this, 'conn3', 'conn1')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
             <span class="ip-dot">.</span>
-            <input type="text" maxlength="3" class="ip-box" id="conn3" value="8" placeholder="8" oninput="handleIpInput(this, 'conn4', 'conn2')" onpaste="handleIpPaste(event, 'conn')">
+            <input type="text" maxlength="3" class="ip-box" id="conn3" value="8" placeholder="8" oninput="handleIpInput(this, 'conn4', 'conn2')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
             <span class="ip-dot">.</span>
-            <input type="text" maxlength="3" class="ip-box" id="conn4" value="59" placeholder="59" oninput="handleIpInput(this, 'connPort', 'conn3')" onpaste="handleIpPaste(event, 'conn')">
+            <input type="text" maxlength="3" class="ip-box" id="conn4" value="59" placeholder="59" oninput="handleIpInput(this, 'connPort', 'conn3')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
             <span class="ip-dot">:</span>
-            <input type="text" maxlength="5" class="port-box" id="connPort" value="37673" placeholder="37673" onpaste="handleIpPaste(event, 'conn')">
+            <input type="text" maxlength="5" class="port-box" id="connPort" value="37673" placeholder="37673" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
           </div>
 
           <button id="connectBtn" class="hw-btn btn-accent" onclick="connectDevice()">Connect IP</button>
@@ -1412,13 +1412,15 @@
       document.querySelectorAll('.segment-strip button').forEach(btn => {
         const onclick = btn.getAttribute('onclick') || '';
         if (onclick.includes('applyQuickPreset')) {
-          if (onclick.includes(" \ + (settings.size || ') + "\)) {
+          const target = "applyQuickPreset('" + (settings.size || '') + "'";
+          if (onclick.includes(target)) {
             btn.classList.add('active');
           } else {
             btn.classList.remove('active');
           }
         } else if (onclick.includes('applyBitratePreset')) {
-          if (onclick.includes(" + (settings.bitrate || 8000000) + "\)) {
+          const target = "applyBitratePreset('" + (settings.bitrate || '8000000') + "'";
+          if (onclick.includes(target)) {
             btn.classList.add('active');
           } else {
             btn.classList.remove('active');
@@ -1536,7 +1538,7 @@
       const elem = document.getElementById('pairingSection');
       const chev = document.getElementById('pairChevron');
       if (!elem) return;
-      const isHidden = elem.style.display === 'none' || !elem.style.display;
+      const isHidden = (elem.style.display === 'none' || getComputedStyle(elem).display === 'none');
       elem.style.display = isHidden ? 'block' : 'none';
       if (chev) chev.innerText = isHidden ? '▾' : '▸';
     }
