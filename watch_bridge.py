@@ -113,9 +113,18 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
             filename = os.path.basename(path.replace("/api/download/", ""))
             file_path = os.path.join(TEMP_DIR, filename)
             if os.path.exists(file_path):
+                ext = os.path.splitext(filename)[1].lower()
+                content_types = {
+                    ".mp4": "video/mp4",
+                    ".png": "image/png",
+                    ".jpg": "image/jpeg",
+                    ".jpeg": "image/jpeg",
+                    ".apk": "application/vnd.android.package-archive"
+                }
+                c_type = content_types.get(ext, "application/octet-stream")
                 self.send_response(200)
-                self.send_header("Content-Type", "video/mp4")
-                self.send_header("Content-Disposition", f'attachment; filename="{filename}"')
+                self.send_header("Content-Type", c_type)
+                self.send_header("Content-Disposition", f'inline; filename="{filename}"')
                 self.send_header("Content-Length", str(os.path.getsize(file_path)))
                 self._send_cors_headers()
                 self.end_headers()
@@ -127,15 +136,64 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
             self._send_json({"error": "Unknown endpoint"}, 404)
 
     def do_POST(self):
+        parsed = urlparse(self.path)
+        path = parsed.path
+
+        if path == "/api/install":
+            content_length = int(self.headers.get("Content-Length", 0))
+            if content_length <= 0:
+                return self._send_json({"error": "No file uploaded"}, 400)
+
+            raw_filename = self.headers.get("X-Filename", "upload.apk")
+            from urllib.parse import unquote
+            safe_filename = os.path.basename(unquote(raw_filename))
+            device_id = self.headers.get("X-Device-Id", "").strip()
+            if not device_id:
+                devs = self.get_adb_devices()
+                if devs:
+                    device_id = devs[0]["id"]
+                else:
+                    return self._send_json({"error": "No watch connected"}, 400)
+
+            temp_dest = os.path.join(TEMP_DIR, f"temp_{int(time.time())}_{safe_filename}")
+            try:
+                with open(temp_dest, "wb") as f:
+                    remaining = content_length
+                    while remaining > 0:
+                        chunk = self.rfile.read(min(remaining, 65536))
+                        if not chunk:
+                            break
+                        f.write(chunk)
+                        remaining -= len(chunk)
+
+                lower_name = safe_filename.lower()
+                if lower_name.endswith(".apk"):
+                    cmd = [ADB_PATH, "-s", device_id, "install", "-r", temp_dest]
+                    res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=120)
+                    out = (res.stdout + res.stderr).strip()
+                    success = "success" in out.lower()
+                else:
+                    cmd = [ADB_PATH, "-s", device_id, "push", temp_dest, f"/sdcard/Download/{safe_filename}"]
+                    res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=60)
+                    out = (res.stdout + res.stderr).strip()
+                    success = res.returncode == 0
+
+                try:
+                    if os.path.exists(temp_dest):
+                        os.remove(temp_dest)
+                except Exception:
+                    pass
+
+                return self._send_json({"success": success, "output": out, "filename": safe_filename})
+            except Exception as e:
+                return self._send_json({"error": str(e)}, 500)
+
         content_length = int(self.headers.get("Content-Length", 0))
         body_bytes = self.rfile.read(content_length) if content_length > 0 else b"{}"
         try:
             data = json.loads(body_bytes.decode("utf-8"))
         except Exception:
             data = {}
-
-        parsed = urlparse(self.path)
-        path = parsed.path
 
         if path == "/api/pair":
             target = data.get("target", "").strip()
@@ -198,10 +256,23 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
             remote_path = f"/sdcard/{filename}"
             local_path = os.path.join(TEMP_DIR, filename)
 
+            bitrate = data.get("bitrate")
+            size = data.get("size")
+            time_limit = data.get("time_limit")
+
             cmd = [ADB_PATH]
             if device_id:
                 cmd.extend(["-s", device_id])
-            cmd.extend(["shell", "screenrecord", remote_path])
+            cmd.extend(["shell", "screenrecord"])
+
+            if bitrate and str(bitrate).isdigit() and int(bitrate) > 0:
+                cmd.extend(["--bit-rate", str(bitrate)])
+            if size and "x" in str(size):
+                cmd.extend(["--size", str(size)])
+            if time_limit and str(time_limit).isdigit() and int(time_limit) > 0:
+                cmd.extend(["--time-limit", str(time_limit)])
+
+            cmd.append(remote_path)
 
             try:
                 RECORDING_PROCESS = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -214,6 +285,83 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
                     "start_time": time.time()
                 }
                 return self._send_json({"success": True, "recording": CURRENT_RECORDING})
+            except Exception as e:
+                return self._send_json({"error": str(e)}, 500)
+
+        elif path == "/api/screenshot":
+            device_id = data.get("device_id", "").strip()
+            if not device_id:
+                devs = self.get_adb_devices()
+                if devs:
+                    device_id = devs[0]["id"]
+                else:
+                    return self._send_json({"error": "No watch connected"}, 400)
+
+            timestamp = time.strftime("%Y%m%d_%H%M%S")
+            filename = f"watch_screenshot_{timestamp}.png"
+            remote_path = f"/sdcard/{filename}"
+            local_path = os.path.join(TEMP_DIR, filename)
+
+            # 1. Take screenshot on watch
+            cmd_shot = [ADB_PATH]
+            if device_id:
+                cmd_shot.extend(["-s", device_id])
+            cmd_shot.extend(["shell", "screencap", "-p", remote_path])
+            res_shot = subprocess.run(cmd_shot, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=12)
+
+            # 2. Pull screenshot to local folder
+            cmd_pull = [ADB_PATH]
+            if device_id:
+                cmd_pull.extend(["-s", device_id])
+            cmd_pull.extend(["pull", remote_path, local_path])
+            res_pull = subprocess.run(cmd_pull, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=12)
+
+            # 3. Clean up on watch
+            cmd_rm = [ADB_PATH]
+            if device_id:
+                cmd_rm.extend(["-s", device_id])
+            cmd_rm.extend(["shell", "rm", remote_path])
+            subprocess.run(cmd_rm, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+            success = os.path.exists(local_path) and os.path.getsize(local_path) > 0
+            return self._send_json({
+                "success": success,
+                "filename": filename,
+                "download_url": f"http://localhost:{PORT}/api/download/{filename}",
+                "local_path": local_path,
+                "output": (res_shot.stderr + res_pull.stderr).strip()
+            })
+
+        elif path == "/api/file/delete":
+            filename = os.path.basename(data.get("filename", "").strip())
+            if not filename:
+                return self._send_json({"error": "Missing filename"}, 400)
+            file_path = os.path.join(TEMP_DIR, filename)
+            if os.path.exists(file_path):
+                try:
+                    os.remove(file_path)
+                    return self._send_json({"success": True})
+                except Exception as e:
+                    return self._send_json({"error": str(e)}, 500)
+            return self._send_json({"error": "File not found"}, 404)
+
+        elif path == "/api/file/rename":
+            old_name = os.path.basename(data.get("old_name", "").strip())
+            new_name = os.path.basename(data.get("new_name", "").strip())
+            if not old_name or not new_name:
+                return self._send_json({"error": "Missing old or new filename"}, 400)
+            old_ext = os.path.splitext(old_name)[1]
+            if not os.path.splitext(new_name)[1] and old_ext:
+                new_name += old_ext
+            old_path = os.path.join(TEMP_DIR, old_name)
+            new_path = os.path.join(TEMP_DIR, new_name)
+            if not os.path.exists(old_path):
+                return self._send_json({"error": "Source file not found"}, 404)
+            if os.path.exists(new_path) and old_path != new_path:
+                return self._send_json({"error": "File with that name already exists"}, 400)
+            try:
+                os.rename(old_path, new_path)
+                return self._send_json({"success": True, "new_name": new_name, "download_url": f"http://localhost:{PORT}/api/download/{new_name}"})
             except Exception as e:
                 return self._send_json({"error": str(e)}, 500)
 

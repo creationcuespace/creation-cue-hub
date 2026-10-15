@@ -458,6 +458,113 @@
       margin-top: 16px;
       justify-content: flex-end;
     }
+
+    /* Header status indicator */
+    .header-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .header-status.online {
+      border-color: rgba(76, 175, 80, 0.4);
+      color: var(--green);
+    }
+    .header-status.online .status-dot {
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+    .header-status.offline {
+      border-color: rgba(232, 40, 30, 0.4);
+      color: var(--red);
+    }
+    .header-status.offline .status-dot {
+      background: var(--red);
+    }
+
+    /* Saved devices bar */
+    .recent-bar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Side circular buttons (Screenshot & Settings) */
+    .rec-side-btn {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: var(--mid);
+      border: 2px solid var(--border);
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .rec-side-btn:hover:not(:disabled) {
+      border-color: var(--yellow);
+      transform: scale(1.06);
+      background: #333;
+    }
+    .rec-side-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Drag and Drop Installer */
+    .drop-zone {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 26px 20px;
+      text-align: center;
+      background: var(--mid);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .drop-zone:hover, .drop-zone.drag-active {
+      border-color: var(--yellow);
+      background: rgba(245, 197, 24, 0.05);
+    }
+
+    /* Settings Modal */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+    }
+    .modal-card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 440px;
+      width: 90%;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    }
   </style>
 </head>
 
@@ -472,7 +579,11 @@
       </div>
       <div class="header-title">Creation <span>Cue</span></div>
     </a>
-    <div style="display: flex; gap: 16px; align-items: center;">
+    <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+      <div id="headerBridgeStatus" class="header-status offline" title="Bridge Connection Status">
+        <span class="status-dot"></span>
+        <span id="headerBridgeText">Bridge: Offline</span>
+      </div>
       <a href="/watch-recorder-laptop.zip" download class="btn btn-yellow" style="padding: 6px 14px; font-size: 13px; text-decoration: none;">💻 Download Laptop Package</a>
     </div>
   </header>
@@ -490,6 +601,13 @@
       </div>
 
       <p style="font-size: 14px; color: var(--muted);">Connect your Galaxy Watch or Wear OS device via Wi-Fi ADB or USB to start recording.</p>
+
+      <div class="recent-bar">
+        <select id="savedDevicesSelect" class="input-field" style="max-width: 280px;" onchange="loadSavedDevice(this.value)">
+          <option value="">⭐ Saved Devices (Recent)...</option>
+        </select>
+        <button class="btn" style="padding: 8px 12px; font-size: 12px;" onclick="forgetSelectedSavedDevice()" title="Forget selected saved device">Forget</button>
+      </div>
 
       <div class="connect-bar">
         <select id="deviceSelect" class="input-field" style="max-width: 260px;">
@@ -558,12 +676,42 @@
       <div class="recorder-hero">
         <div id="timerDisplay" class="rec-timer">00:00</div>
 
-        <button id="recBtn" class="rec-btn-big" onclick="toggleRecording()" disabled>
-          <span id="recIcon" style="font-size: 28px;">🔴</span>
-          <span id="recLabel">REC</span>
-        </button>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap;">
+          <!-- Quick Screenshot Button -->
+          <button id="shotBtn" class="rec-side-btn" onclick="takeScreenshot()" disabled title="Capture instant watch screenshot for Play Store">
+            <span style="font-size: 26px;">📸</span>
+            <span>Screenshot</span>
+          </button>
+
+          <!-- REC Button -->
+          <button id="recBtn" class="rec-btn-big" onclick="toggleRecording()" disabled>
+            <span id="recIcon" style="font-size: 28px;">🔴</span>
+            <span id="recLabel">REC</span>
+          </button>
+
+          <!-- Recording Settings Button -->
+          <button id="settingsBtn" class="rec-side-btn" onclick="toggleSettingsModal()" title="Adjust resolution, bitrate, or time limit">
+            <span style="font-size: 26px;">⚙️</span>
+            <span>Settings</span>
+          </button>
+        </div>
 
         <p id="recHint" style="font-size: 13px; color: var(--muted);">Connect watch to enable recording</p>
+      </div>
+    </div>
+
+    <!-- Screenshot Output Card -->
+    <div id="screenshotCard" class="card" style="display: none;">
+      <div class="card-title">
+        <span>📸 Watch Screenshot Preview</span>
+        <span id="screenshotFilename" style="font-size: 14px; color: var(--muted); font-weight: normal;"></span>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+        <img id="screenshotImg" style="max-width: 280px; max-height: 280px; border-radius: 50%; border: 3px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.6); background: #000;" alt="Screenshot preview">
+        <div class="actions-bar" style="justify-content: center; gap: 10px; flex-wrap: wrap;">
+          <a id="screenshotDownloadBtn" class="btn btn-yellow" download style="text-decoration: none;">⬇️ Download PNG</a>
+          <button class="btn" onclick="openPCFolder()">📁 Open Downloads</button>
+        </div>
       </div>
     </div>
 
@@ -574,13 +722,77 @@
         <span id="videoFilename" style="font-size: 14px; color: var(--muted); font-weight: normal;"></span>
       </div>
 
-      <video id="videoElement" class="video-player" controls></video>
+      <div style="display: flex; justify-content: center;">
+        <video id="videoElement" class="video-player" controls></video>
+      </div>
 
-      <div class="actions-bar" style="justify-content: center;">
-        <button class="btn btn-yellow" onclick="openPCFolder()">📁 Open Downloads Folder on PC</button>
+      <div class="actions-bar" style="justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 16px;">
+        <a id="videoDownloadBtn" class="btn btn-yellow" download style="text-decoration: none;">⬇️ Download Video</a>
+        <button class="btn" onclick="renameCurrentVideo()">✏️ Rename</button>
+        <button class="btn btn-red" onclick="deleteCurrentVideo()">🗑️ Delete</button>
+        <button class="btn" onclick="openPCFolder()">📁 Open Downloads</button>
       </div>
     </div>
 
+    <!-- Drag-and-Drop Installer Card -->
+    <div class="card">
+      <div class="card-title">
+        <span>Drag &amp; Drop Watch Installer</span>
+        <span style="font-size: 13px; color: var(--muted); font-weight: normal;">Install APK or push .wff</span>
+      </div>
+      <div id="dropZone" class="drop-zone" onclick="document.getElementById('installerFileInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleFileDrop(event)">
+        <input type="file" id="installerFileInput" style="display: none;" accept=".apk,.wff,.zip" onchange="handleFileSelect(event)">
+        <div style="font-size: 38px; margin-bottom: 8px;">📦</div>
+        <div style="font-weight: 600; font-size: 15px; margin-bottom: 4px;">Drag &amp; drop APK or Watch Face (.wff) here</div>
+        <div style="font-size: 13px; color: var(--muted);">or click to browse from computer</div>
+        <div id="installerStatus" style="display: none; margin-top: 12px; font-size: 13px; color: var(--yellow); font-weight: 600;"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal-backdrop" style="display: none;" onclick="if(event.target===this) toggleSettingsModal()">
+    <div class="modal-card">
+      <div class="card-title" style="margin-bottom: 14px;">
+        <span>⚙️ Recording Settings</span>
+        <button style="background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer;" onclick="toggleSettingsModal()">&times;</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div>
+          <label style="font-size: 13px; color: var(--muted); display: block; margin-bottom: 6px;">Target Resolution (Screen Size):</label>
+          <select id="settingSize" class="input-field" style="width: 100%;">
+            <option value="">Native Watch Resolution (Default)</option>
+            <option value="450x450">450 x 450 (Galaxy Watch 4/5/6 44mm)</option>
+            <option value="410x410">410 x 410 (Galaxy Watch 40mm)</option>
+            <option value="396x396">396 x 396 (Galaxy Watch 4 40mm)</option>
+            <option value="480x480">480 x 480 (TicWatch / Pixel Watch)</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size: 13px; color: var(--muted); display: block; margin-bottom: 6px;">Video Bitrate:</label>
+          <select id="settingBitrate" class="input-field" style="width: 100%;">
+            <option value="4000000">4 Mbps (Compact file)</option>
+            <option value="8000000" selected>8 Mbps (Standard HD - Recommended)</option>
+            <option value="16000000">16 Mbps (High Quality)</option>
+            <option value="24000000">24 Mbps (Ultra Master Quality)</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size: 13px; color: var(--muted); display: block; margin-bottom: 6px;">Auto-Stop Time Limit:</label>
+          <select id="settingLimit" class="input-field" style="width: 100%;">
+            <option value="0">Unlimited (Stop manually)</option>
+            <option value="15">15 Seconds</option>
+            <option value="30">30 Seconds</option>
+            <option value="60">60 Seconds (1 Minute)</option>
+            <option value="180">180 Seconds (3 Minutes Max)</option>
+          </select>
+        </div>
+        <div style="display: flex; justify-content: flex-end; margin-top: 10px; gap: 10px;">
+          <button class="btn btn-yellow" onclick="saveSettings()">Save Settings</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -693,6 +905,15 @@
       }
     });
 
+    let currentVideoFilename = '';
+    let currentVideoUrl = '';
+    let currentScreenshotFilename = '';
+    let currentScreenshotUrl = '';
+
+    // Initialize UI on page load
+    renderSavedDevices();
+    initSettings();
+
     // Start auto polling bridge status
     setInterval(refreshStatus, 2500);
     refreshStatus();
@@ -703,6 +924,9 @@
         const data = await res.json();
         
         document.getElementById('bridgeNotice').style.display = 'none';
+        document.getElementById('headerBridgeStatus').className = 'header-status online';
+        document.getElementById('headerBridgeText').innerText = 'Bridge: Online';
+
         connectedDevices = data.devices || [];
 
         // Update Device Selector
@@ -714,6 +938,7 @@
           select.innerHTML = '<option value="">No watches connected</option>';
           updateStatusBadge('connecting', 'Bridge Active - Waiting for Watch');
           document.getElementById('recBtn').disabled = !data.recording.active;
+          document.getElementById('shotBtn').disabled = true;
           document.getElementById('recHint').innerText = 'Please connect your watch via Wi-Fi IP or USB';
         } else {
           connectedDevices.forEach(dev => {
@@ -732,12 +957,14 @@
           if (activeDev && activeDev.status === 'unauthorized') {
             updateStatusBadge('connecting', `⚠️ Tap 'Allow' on Watch Screen`);
             document.getElementById('recBtn').disabled = true;
+            document.getElementById('shotBtn').disabled = true;
             document.getElementById('recHint').innerText = 'Check your watch: Tap "Always allow from this computer"';
           } else {
             updateStatusBadge('online', `Connected: ${activeDev ? activeDev.id : activeDevId}`);
             document.getElementById('recBtn').disabled = false;
+            document.getElementById('shotBtn').disabled = isRecording;
             if (!isRecording) {
-              document.getElementById('recHint').innerText = 'Click big RED button to start recording watch screen';
+              document.getElementById('recHint').innerText = 'Click big RED button to record, or 📸 Screenshot';
             }
           }
         }
@@ -751,8 +978,11 @@
 
       } catch (err) {
         document.getElementById('bridgeNotice').style.display = 'block';
+        document.getElementById('headerBridgeStatus').className = 'header-status offline';
+        document.getElementById('headerBridgeText').innerText = 'Bridge: Offline';
         updateStatusBadge('offline', 'Bridge Disconnected');
         document.getElementById('recBtn').disabled = true;
+        document.getElementById('shotBtn').disabled = true;
         document.getElementById('recHint').innerText = 'Run Start Watch Bridge.bat on your PC to connect';
       }
     }
@@ -762,6 +992,92 @@
       const textElem = document.getElementById('statusText');
       badge.className = `status-badge ${state}`;
       textElem.innerText = text;
+    }
+
+    /* Saved Devices Functions */
+    function renderSavedDevices() {
+      const select = document.getElementById('savedDevicesSelect');
+      if (!select) return;
+      select.innerHTML = '<option value="">⭐ Saved Devices (Recent)...</option>';
+      let saved = [];
+      try {
+        saved = JSON.parse(localStorage.getItem('cc_saved_devices') || '[]');
+      } catch(e) {}
+      saved.forEach(dev => {
+        const opt = document.createElement('option');
+        opt.value = dev;
+        opt.innerText = `⌚ ${dev}`;
+        select.appendChild(opt);
+      });
+    }
+
+    function loadSavedDevice(val) {
+      if (!val) return;
+      setIpValue('conn', val);
+      showToast(`Loaded device ${val}`, 'info', 2000);
+    }
+
+    function saveDeviceToHistory(target) {
+      if (!target) return;
+      let saved = [];
+      try {
+        saved = JSON.parse(localStorage.getItem('cc_saved_devices') || '[]');
+      } catch(e) {}
+      saved = saved.filter(d => d !== target);
+      saved.unshift(target);
+      if (saved.length > 8) saved = saved.slice(0, 8);
+      localStorage.setItem('cc_saved_devices', JSON.stringify(saved));
+      renderSavedDevices();
+    }
+
+    function forgetSelectedSavedDevice() {
+      const select = document.getElementById('savedDevicesSelect');
+      const val = select.value;
+      if (!val) return showToast('Please select a saved device from the dropdown to forget', 'error');
+      let saved = [];
+      try {
+        saved = JSON.parse(localStorage.getItem('cc_saved_devices') || '[]');
+      } catch(e) {}
+      saved = saved.filter(d => d !== val);
+      localStorage.setItem('cc_saved_devices', JSON.stringify(saved));
+      renderSavedDevices();
+      showToast(`Removed ${val} from saved list`, 'info');
+    }
+
+    /* Recording Settings */
+    function initSettings() {
+      let settings = { size: '', bitrate: '8000000', limit: '0' };
+      try {
+        const saved = JSON.parse(localStorage.getItem('cc_rec_settings') || '{}');
+        settings = { ...settings, ...saved };
+      } catch(e) {}
+      document.getElementById('settingSize').value = settings.size || '';
+      document.getElementById('settingBitrate').value = settings.bitrate || '8000000';
+      document.getElementById('settingLimit').value = settings.limit || '0';
+    }
+
+    function toggleSettingsModal() {
+      const modal = document.getElementById('settingsModal');
+      modal.style.display = (modal.style.display === 'none' || !modal.style.display) ? 'flex' : 'none';
+    }
+
+    function saveSettings() {
+      const settings = {
+        size: document.getElementById('settingSize').value,
+        bitrate: document.getElementById('settingBitrate').value,
+        limit: document.getElementById('settingLimit').value
+      };
+      localStorage.setItem('cc_rec_settings', JSON.stringify(settings));
+      toggleSettingsModal();
+      showToast('⚙️ Recording settings saved!', 'success');
+    }
+
+    function getRecordingSettings() {
+      try {
+        return JSON.parse(localStorage.getItem('cc_rec_settings') || '{"size":"","bitrate":"8000000","limit":"0"}');
+      } catch(e) {
+        return { size: '', bitrate: '8000000', limit: '0' };
+      }
     }
 
     async function connectDevice() {
@@ -780,6 +1096,9 @@
         });
         const data = await res.json();
         const connected = data.success || (data.output && (data.output.includes('connected to') || data.output.includes('already connected')));
+        if (connected) {
+          saveDeviceToHistory(ip);
+        }
         showToast(data.output, connected ? 'success' : 'error', 4000);
         refreshStatus();
       } catch (err) {
@@ -843,15 +1162,57 @@
       elem.style.display = elem.style.display === 'none' ? 'block' : 'none';
     }
 
+    /* Quick Screenshot */
+    async function takeScreenshot() {
+      const selectedDevice = document.getElementById('deviceSelect').value;
+      const btn = document.getElementById('shotBtn');
+      btn.disabled = true;
+      showToast('📸 Capturing watch screenshot...', 'info', 2500);
+
+      try {
+        const res = await callBridge('/api/screenshot', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ device_id: selectedDevice })
+        });
+        const data = await res.json();
+        if (data.success) {
+          currentScreenshotFilename = data.filename;
+          currentScreenshotUrl = data.download_url;
+          document.getElementById('screenshotFilename').innerText = data.filename;
+          document.getElementById('screenshotImg').src = data.download_url + '?t=' + Date.now();
+          document.getElementById('screenshotDownloadBtn').href = data.download_url;
+          document.getElementById('screenshotDownloadBtn').download = data.filename;
+          const card = document.getElementById('screenshotCard');
+          card.style.display = 'block';
+          card.scrollIntoView({ behavior: 'smooth' });
+          showToast('📸 Screenshot captured and saved to Downloads!', 'success', 4000);
+        } else {
+          showToast('Screenshot Error: ' + (data.output || data.error || 'Failed'), 'error', 4000);
+        }
+      } catch (err) {
+        showToast('Failed to capture screenshot: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    /* Recording Toggle */
     async function toggleRecording() {
       if (!isRecording) {
         // Start Recording
         const selectedDevice = document.getElementById('deviceSelect').value;
+        const settings = getRecordingSettings();
         try {
           const res = await callBridge('/api/record/start', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ device_id: selectedDevice })
+            body: JSON.stringify({
+              device_id: selectedDevice,
+              bitrate: settings.bitrate,
+              size: settings.size,
+              time_limit: settings.limit
+            })
           });
           const data = await res.json();
           if (data.success) {
@@ -895,9 +1256,11 @@
       const recIcon = document.getElementById('recIcon');
       const recLabel = document.getElementById('recLabel');
       const recHint = document.getElementById('recHint');
+      const shotBtn = document.getElementById('shotBtn');
       const timerDisplay = document.getElementById('timerDisplay');
 
       recBtn.disabled = false;
+      shotBtn.disabled = active;
 
       if (active) {
         recBtn.classList.add('recording');
@@ -913,7 +1276,7 @@
         recBtn.classList.remove('recording');
         recIcon.innerText = '🔴';
         recLabel.innerText = 'REC';
-        recHint.innerText = 'Click big RED button to start recording watch screen';
+        recHint.innerText = 'Click big RED button to record, or 📸 Screenshot';
         timerDisplay.classList.remove('active');
         timerDisplay.innerText = '00:00';
         clearInterval(timerInterval);
@@ -928,14 +1291,143 @@
     }
 
     function showVideoResult(videoUrl, filename) {
+      currentVideoFilename = filename;
+      currentVideoUrl = videoUrl;
+
       const card = document.getElementById('videoCard');
       const video = document.getElementById('videoElement');
       document.getElementById('videoFilename').innerText = filename;
+      document.getElementById('videoDownloadBtn').href = videoUrl;
+      document.getElementById('videoDownloadBtn').download = filename;
 
       video.src = videoUrl;
-
       card.style.display = 'block';
       card.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function downloadCurrentVideo() {
+      if (!currentVideoUrl) return;
+      const a = document.createElement('a');
+      a.href = currentVideoUrl;
+      a.download = currentVideoFilename || 'watch_recording.mp4';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    async function renameCurrentVideo() {
+      if (!currentVideoFilename) return;
+      const newName = prompt('Enter new filename for video (e.g., promo_banner.mp4):', currentVideoFilename);
+      if (!newName || newName.trim() === currentVideoFilename) return;
+
+      try {
+        const res = await callBridge('/api/file/rename', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ old_name: currentVideoFilename, new_name: newName.trim() })
+        });
+        const data = await res.json();
+        if (data.success) {
+          currentVideoFilename = data.new_name;
+          currentVideoUrl = data.download_url;
+          document.getElementById('videoFilename').innerText = data.new_name;
+          document.getElementById('videoDownloadBtn').href = data.download_url;
+          document.getElementById('videoDownloadBtn').download = data.new_name;
+          showToast(`✏️ Renamed to ${data.new_name}`, 'success');
+        } else {
+          showToast('Rename error: ' + (data.error || 'Failed'), 'error');
+        }
+      } catch(err) {
+        showToast('Rename error: ' + err.message, 'error');
+      }
+    }
+
+    async function deleteCurrentVideo() {
+      if (!currentVideoFilename) return;
+      if (!confirm(`Are you sure you want to delete ${currentVideoFilename}?`)) return;
+
+      try {
+        const res = await callBridge('/api/file/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename: currentVideoFilename })
+        });
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('videoCard').style.display = 'none';
+          document.getElementById('videoElement').src = '';
+          currentVideoFilename = '';
+          currentVideoUrl = '';
+          showToast('🗑️ Video deleted from Downloads folder', 'info');
+        } else {
+          showToast('Delete error: ' + (data.error || 'Failed'), 'error');
+        }
+      } catch(err) {
+        showToast('Delete error: ' + err.message, 'error');
+      }
+    }
+
+    /* Drag & Drop Installer Functions */
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById('dropZone').classList.add('drag-active');
+    }
+
+    function handleDragLeave(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById('dropZone').classList.remove('drag-active');
+    }
+
+    function handleFileDrop(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById('dropZone').classList.remove('drag-active');
+      if (e.dataTransfer && e.dataTransfer.files.length > 0) {
+        installUploadedFile(e.dataTransfer.files[0]);
+      }
+    }
+
+    function handleFileSelect(e) {
+      if (e.target && e.target.files.length > 0) {
+        installUploadedFile(e.target.files[0]);
+      }
+    }
+
+    async function installUploadedFile(file) {
+      if (!file) return;
+      const selectedDevice = document.getElementById('deviceSelect').value;
+      if (connectedDevices.length === 0) {
+        return showToast('Please connect your watch before installing files', 'error');
+      }
+
+      const statusElem = document.getElementById('installerStatus');
+      statusElem.style.display = 'block';
+      statusElem.innerText = `⏳ Installing / pushing ${file.name}... Please wait`;
+      showToast(`Pushing ${file.name} to watch...`, 'info', 5000);
+
+      try {
+        const res = await callBridge('/api/install', {
+          method: 'POST',
+          headers: {
+            'X-Filename': encodeURIComponent(file.name),
+            'X-Device-Id': selectedDevice || ''
+          },
+          body: file
+        });
+        const data = await res.json();
+        if (data.success) {
+          statusElem.innerText = `✅ Successfully installed ${file.name}!`;
+          showToast(`🎉 Installed ${file.name} successfully!`, 'success', 5000);
+        } else {
+          statusElem.innerText = `❌ Error: ${data.output || 'Installation failed'}`;
+          showToast(`Install failed: ${data.output || 'Unknown error'}`, 'error', 6000);
+        }
+      } catch(err) {
+        statusElem.innerText = `❌ Failed: ${err.message}`;
+        showToast('Installation request failed: ' + err.message, 'error');
+      }
     }
 
     async function openPCFolder() {
