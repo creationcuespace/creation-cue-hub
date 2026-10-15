@@ -1784,7 +1784,7 @@
     </div>
     <div class="header-btns">
       <!-- Version badge -->
-      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.63</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.64</span>
       <!-- Firebase connection indicator dot & text -->
       <div id="header-sync-badge" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; flex-shrink: 0;">
         <span id="header-sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
@@ -2183,7 +2183,7 @@
 
   <!-- Footer -->
   <footer style="text-align: center; padding: 24px; font-size: 10px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: auto; font-family: var(--font-body); letter-spacing: 0.5px; opacity: 0.6;">
-    CreationCue™ Planner &bull; v2.63
+    CreationCue™ Planner &bull; v2.64
   </footer>
 
   <!-- Inline Override Dialog -->
@@ -2427,8 +2427,68 @@
       debugLongPollingState = "Skipped (desktop user agent)";
     }
 
-    var auth = firebase.auth();
+    var isFirebaseDatabaseConnected = false;
+    var isRestConnected = false;
+    var _connectionListenerRef = null;
     var currentUser = null;
+
+    function updateSyncUI(hasWarning) {
+      var statusEl = document.getElementById('sync-status');
+      var emailEl = document.getElementById('sync-email');
+      
+      var headerDot = document.getElementById('header-sync-dot');
+      var headerText = document.getElementById('header-sync-text');
+      
+      var cardDot = document.getElementById('card-sync-dot');
+      var cardText = document.getElementById('card-sync-text');
+      
+      if (!statusEl && !headerText) return;
+
+      if (currentUser) {
+        if (hasWarning) {
+          if (statusEl) { statusEl.textContent = "Sync Error"; statusEl.style.color = "var(--warning)"; }
+          if (emailEl) { emailEl.textContent = currentUser.email || "Active User"; emailEl.style.display = "block"; }
+          if (headerDot) headerDot.style.background = "var(--warning)";
+          if (headerText) { headerText.textContent = "Sync Error"; headerText.style.color = "var(--warning)"; }
+          if (cardDot) cardDot.style.background = "var(--warning)";
+          if (cardText) { cardText.textContent = "Sync Error"; cardText.style.color = "var(--warning)"; }
+        } else if (!isFirebaseDatabaseConnected && !isRestConnected) {
+          if (statusEl) { statusEl.textContent = "Connecting..."; statusEl.style.color = "var(--warning)"; }
+          if (emailEl) { emailEl.textContent = currentUser.email || "Active User"; emailEl.style.display = "block"; }
+          if (headerDot) headerDot.style.background = "var(--warning)";
+          if (headerText) { headerText.textContent = "Connecting..."; headerText.style.color = "var(--warning)"; }
+          if (cardDot) cardDot.style.background = "var(--warning)";
+          if (cardText) { cardText.textContent = "Connecting..."; cardText.style.color = "var(--warning)"; }
+        } else {
+          if (statusEl) { statusEl.textContent = "Connected"; statusEl.style.color = "#3b90ff"; }
+          if (emailEl) { emailEl.textContent = currentUser.email || "Active User"; emailEl.style.display = "block"; }
+          if (headerDot) headerDot.style.background = "var(--success)";
+          if (headerText) { headerText.textContent = "Connected"; headerText.style.color = "var(--success)"; }
+          if (cardDot) cardDot.style.background = "var(--success)";
+          if (cardText) { cardText.textContent = "Connected"; cardText.style.color = "var(--success)"; }
+        }
+      } else {
+        if (statusEl) { statusEl.textContent = "Not Connected"; statusEl.style.color = "var(--danger)"; }
+        if (emailEl) { emailEl.style.display = "none"; }
+        if (headerDot) headerDot.style.background = "var(--danger)";
+        if (headerText) { headerText.textContent = "Offline"; headerText.style.color = "var(--danger)"; }
+        if (cardDot) cardDot.style.background = "var(--danger)";
+        if (cardText) { cardText.textContent = "Offline"; cardText.style.color = "var(--danger)"; }
+      }
+    }
+
+    // Attach .info/connected immediately so connection state is tracked from start
+    try {
+      _connectionListenerRef = firebase.database().ref(".info/connected");
+      _connectionListenerRef.on("value", function(snap) {
+        isFirebaseDatabaseConnected = (snap.val() === true);
+        updateSyncUI();
+      });
+    } catch (connErr) {
+      console.warn("Failed to attach initial .info/connected listener:", connErr);
+    }
+
+    var auth = firebase.auth();
     var isInitializing = true;
 
     // Handle Auth redirect result on page load
@@ -2896,9 +2956,6 @@
      // Firebase Cloud Sync Operations
     // -------------------------------------------------------------
     var _realtimeListenerRef = null;
-    var _connectionListenerRef = null;
-    var isFirebaseDatabaseConnected = false;
-    var isRestConnected = false;
     var _restPollIntervalId = null;
     var _lastRestDataString = null;
 
@@ -2977,11 +3034,13 @@
     }
 
     function startRESTPolling() {
-      if (!isMobile) return;
+      // Run REST polling if on mobile OR if the real-time SDK connection hasn't established yet
       if (_restPollIntervalId) clearInterval(_restPollIntervalId);
       
       _restPollIntervalId = setInterval(async function() {
         if (!currentUser || isSyncing || isInitializing) return;
+        // If WebSocket is already solidly connected, we don't need REST polling on desktop
+        if (isFirebaseDatabaseConnected && !isMobile) return;
         
         try {
           var data = await readStateFromFirebaseREST();
@@ -3133,14 +3192,22 @@
       try {
         var data = null;
         
-        // If SDK is not connected, use REST fallback
-        if (!isFirebaseDatabaseConnected) {
+        // If SDK is connected, try reading via SDK with a 4s timeout fallback
+        if (isFirebaseDatabaseConnected) {
+          try {
+            var timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("SDK Timeout")), 4000));
+            var readPromise = firebase.database().ref('work_planner/' + currentUser.uid).once('value');
+            var snapshot = await Promise.race([readPromise, timeoutPromise]);
+            data = snapshot.val();
+            console.log("Firebase sync: loaded state via SDK.");
+          } catch (sdkErr) {
+            console.warn("Firebase SDK read timed out or failed, using REST fallback:", sdkErr);
+            data = await readStateFromFirebaseREST();
+          }
+        } else {
+          // If SDK is not connected yet, use REST fallback directly
           data = await readStateFromFirebaseREST();
           console.log("Firebase sync: loaded state via REST fallback.");
-        } else {
-          var snapshot = await firebase.database().ref('work_planner/' + currentUser.uid).once('value');
-          data = snapshot.val();
-          console.log("Firebase sync: loaded state via SDK.");
         }
         
         var localHasData = (appState.customTasks && appState.customTasks.length > 0) || Object.keys(appState.dayStates).length > 0;
@@ -3274,90 +3341,6 @@
         if (logEl) {
           logEl.textContent = "Sync Error: " + err.message;
           logEl.style.display = "block";
-        }
-      }
-    }
-
-    function updateSyncUI(hasWarning) {
-      var statusEl = document.getElementById('sync-status');
-      var emailEl = document.getElementById('sync-email');
-      
-      var headerDot = document.getElementById('header-sync-dot');
-      var headerText = document.getElementById('header-sync-text');
-      
-      var cardDot = document.getElementById('card-sync-dot');
-      var cardText = document.getElementById('card-sync-text');
-      
-      if (!statusEl) return;
-
-      if (currentUser) {
-        if (hasWarning) {
-          statusEl.textContent = "Sync Error";
-          statusEl.style.color = "var(--warning)";
-          if (emailEl) {
-            emailEl.textContent = currentUser.email || "Active User";
-            emailEl.style.display = "block";
-          }
-          if (headerDot) headerDot.style.background = "var(--warning)";
-          if (headerText) {
-            headerText.textContent = "Sync Error";
-            headerText.style.color = "var(--warning)";
-          }
-          if (cardDot) cardDot.style.background = "var(--warning)";
-          if (cardText) {
-            cardText.textContent = "Sync Error";
-            cardText.style.color = "var(--warning)";
-          }
-        } else if (!isFirebaseDatabaseConnected && !isRestConnected) {
-          statusEl.textContent = "Connecting...";
-          statusEl.style.color = "var(--warning)";
-          if (emailEl) {
-            emailEl.textContent = currentUser.email || "Active User";
-            emailEl.style.display = "block";
-          }
-          if (headerDot) headerDot.style.background = "var(--warning)";
-          if (headerText) {
-            headerText.textContent = "Connecting...";
-            headerText.style.color = "var(--warning)";
-          }
-          if (cardDot) cardDot.style.background = "var(--warning)";
-          if (cardText) {
-            cardText.textContent = "Connecting...";
-            cardText.style.color = "var(--warning)";
-          }
-        } else {
-          statusEl.textContent = "Connected";
-          statusEl.style.color = "#3b90ff";
-          if (emailEl) {
-            emailEl.textContent = currentUser.email || "Active User";
-            emailEl.style.display = "block";
-          }
-          if (headerDot) headerDot.style.background = "var(--success)";
-          if (headerText) {
-            headerText.textContent = "Connected";
-            headerText.style.color = "var(--success)";
-          }
-          if (cardDot) cardDot.style.background = "var(--success)";
-          if (cardText) {
-            cardText.textContent = "Connected";
-            cardText.style.color = "var(--success)";
-          }
-        }
-      } else {
-        statusEl.textContent = "Not Connected";
-        statusEl.style.color = "var(--danger)";
-        if (emailEl) {
-          emailEl.style.display = "none";
-        }
-        if (headerDot) headerDot.style.background = "var(--danger)";
-        if (headerText) {
-          headerText.textContent = "Offline";
-          headerText.style.color = "var(--danger)";
-        }
-        if (cardDot) cardDot.style.background = "var(--danger)";
-        if (cardText) {
-          cardText.textContent = "Offline";
-          cardText.style.color = "var(--danger)";
         }
       }
     }
