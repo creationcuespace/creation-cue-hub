@@ -1274,9 +1274,12 @@
       "play_store_url": "market://details?id=com.watchfacestudio.crc027&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc027",
       "description_en": "CRC027 is a sleek digital watch face with a modern look and a well-organized complication layout.",
       "description_de": "CRC027 ist ein schlankes digitales Zifferblatt mit modernem Look und übersichtlich angeordneten Komplikationen.",
-      "filters": [],
+      "filters": [
+        "FREE"
+      ],
       "type": "digital",
-      "is_free": false
+      "is_free": true,
+      "badge_text": "🎀 FREE"
     },
     {
       "id": "cue024",
