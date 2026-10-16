@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-15T01:51:37.525Z",
+  "lastUpdated": "2026-10-16T01:40:18.552Z",
   "results": [
     {
       "id": "cue178",
@@ -46,7 +46,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
-      "rating": 4.5,
+      "rating": 4.9,
       "ratingCount": null
     },
     {
@@ -388,12 +388,12 @@
     {
       "id": "cue147",
       "title": "CUE147",
-      "playStoreTitle": "Watch Face CUE147",
+      "playStoreTitle": "CUE147",
       "packageName": "com.creation.cue147watchface",
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+",
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A",
       "rating": 4.5,
       "ratingCount": null
     },
@@ -442,7 +442,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": 4.5,
+      "rating": 4.3,
       "ratingCount": null
     },
     {
@@ -515,7 +515,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.6,
-      "ratingCount": "409"
+      "ratingCount": "411"
     },
     {
       "id": "cue136_plus",
@@ -598,7 +598,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000005)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": 4.5,
+      "rating": 4.9,
       "ratingCount": null
     },
     {
@@ -610,7 +610,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000006)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": 3.4,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -730,7 +730,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
-      "rating": 4.8,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -940,12 +940,12 @@
     {
       "id": "crc090",
       "title": "CRC090",
-      "playStoreTitle": "Digital Watch Face CRC090",
+      "playStoreTitle": "CRC090",
       "packageName": "com.creationcue.crc090watchface",
       "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
-      "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "100+",
+      "lastUpdatedDate": "Fetch Failed",
+      "downloads": "N/A",
       "rating": 4.5,
       "ratingCount": null
     },
@@ -1040,7 +1040,7 @@
       "packageName": "com.creationcue.crc069watchface",
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "10000011 (2.5.0)",
-      "lastUpdatedDate": "Aug 26, 2026",
+      "lastUpdatedDate": "Aug 27, 2026",
       "downloads": "10K+",
       "rating": 4.3,
       "ratingCount": "85"
@@ -1355,7 +1355,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
       "rating": 4.5,
-      "ratingCount": "298"
+      "ratingCount": "299"
     },
     {
       "id": "cueindus_pro",

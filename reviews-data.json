@@ -1,29 +1,17 @@
 {
-  "lastUpdated": "2026-10-14T12:44:53.844Z",
+  "lastUpdated": "2026-10-16T01:40:18.553Z",
   "reviews": [
     {
-      "reviewId": "89e8711c-2fbe-4c17-9e9c-0506f7d11f84",
-      "packageName": "com.creation.cue177watchface",
-      "title": "Analog Watch Face CUE177",
-      "wfId": "cue177",
-      "authorName": "Giuseppe Filograsso",
-      "starRating": 2,
-      "reviewerLanguage": "it",
-      "deviceMetadata": "grizzly (Pixel 11 Pro)",
-      "text": "\tpoche combinazioni di colori, ma soprattutto dovrebbero essere a 3 consentendo anche ai numeri 3 6 9 12 di cambiare colore... data piccola e con nome mese anziché più utile il nome del giorno... da togliere il ventaglio dei giorni e ingrandire passi + distanza... insomma da migliorarlo e renderlo più simile al cue155",
-      "lastModified": "2026-10-13T15:46:23.000Z"
-    },
-    {
-      "reviewId": "52a89406-24aa-4f15-a9c4-1e41cf62c9a0",
-      "packageName": "com.creation.cue132watchface",
-      "title": "Analog Watch Face CUE132",
-      "wfId": "cue132",
-      "authorName": "RD",
-      "starRating": 4,
-      "reviewerLanguage": "fr",
-      "deviceMetadata": "OP4F0BL1 (CPH2207)",
-      "text": "\t👍",
-      "lastModified": "2026-10-13T11:53:24.000Z"
+      "reviewId": "5eea7172-a6cf-4c5d-a1ef-499abb01e0e1",
+      "packageName": "com.creation.cue107watchface",
+      "title": "Digital Watch Face CUE107",
+      "wfId": "cue107",
+      "authorName": "Daniel Petti",
+      "starRating": 5,
+      "reviewerLanguage": "es",
+      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
+      "text": "\texcelente",
+      "lastModified": "2026-10-15T13:40:35.000Z"
     }
   ]
 }
