@@ -1369,8 +1369,8 @@
       var input = document.getElementById('token-input-' + tokenId);
       var link = input ? input.value : '';
       var wfName = document.getElementById('promo-name').value.trim() || (promoData ? promoData.name : '') || 'the watch face';
-      var textToCopy = "Here is your Google Play Gift Card for " + wfName + ":\n" + link + "\n\n⭐ A review is appreciated!";
-      var htmlToCopy = `<div>Here is your Google Play Gift Card for <strong>${wfName}</strong>:<br><a href="${link}">${link}</a><br><br>⭐ A review is appreciated!</div>`;
+      var textToCopy = "Here is your Google Play Coupon for " + wfName + ":\n" + link + "\n\n⭐ A review is appreciated!";
+      var htmlToCopy = `<div>Here is your Google Play Coupon for <strong>${wfName}</strong>:<br><a href="${link}">${link}</a><br><br>⭐ A review is appreciated!</div>`;
 
       if (navigator.clipboard && window.ClipboardItem) {
         var textBlob = new Blob([textToCopy], { type: 'text/plain' });
