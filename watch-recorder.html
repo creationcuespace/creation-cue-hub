@@ -4,35 +4,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Creation Cue | Smartwatch Screen Recorder & Controller</title>
-  <meta name="description" content="Professional desktop audio/visual console for Wear OS smartwatches. Wireless screen recording, instant screenshot capture, APK and watch face deployment.">
+  <title>Creation Cue | Smartwatch Screen Recorder</title>
+  <meta name="description" content="Clean desktop screen recorder and companion controller for Wear OS smartwatches. Instant recording, screenshot capture, and APK deployment.">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Teko:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Teko:wght@500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
   <script src="/admin-bar.js?v=2.2"></script>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Crect width='24' height='24' rx='6' fill='%23e8281e'/%3E%3Ccircle cx='12' cy='12' r='6' fill='white'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23e8281e'/%3E%3C/svg%3E">
 
   <style>
     :root {
-      --chassis-bg: #0c0e13;
-      --bay-bg: #131620;
-      --panel-bg: #181c28;
-      --panel-border: #262d3f;
-      --panel-bevel: #343c54;
-      --lcd-bg: #07090e;
-      --neon-green: #00e676;
-      --neon-cyan: #00e5ff;
-      --neon-orange: #ff9100;
-      --neon-red: #ff334b;
-      --neon-yellow: #ffd600;
-      --text-main: #e4eaf7;
-      --text-dim: #758097;
-      --text-sub: #9ca6bd;
-      --btn-bg: #222736;
-      --btn-border: #353d54;
-      --btn-hover: #2b3245;
+      --bg-chassis: #0d0f15;
+      --card-bg: #151822;
+      --card-border: #272e3f;
+      --card-hover: #1c212f;
+      --input-bg: #090b10;
+      --input-border: #2c3547;
+      --text-main: #f0f3fa;
+      --text-muted: #8c97ad;
+      --text-dim: #606b80;
+      --accent-red: #e53935;
+      --accent-yellow: #f5c518;
+      --accent-cyan: #00e5ff;
+      --accent-green: #00e676;
     }
 
     * {
@@ -51,573 +47,349 @@
       width: 100%;
       height: 100vh;
       overflow: hidden;
-      background: var(--chassis-bg);
+      background: var(--bg-chassis);
       color: var(--text-main);
     }
 
     body {
       display: flex;
       flex-direction: column;
-      background: radial-gradient(circle at 50% 0%, #1c2230 0%, #0c0e14 100%);
+      background: radial-gradient(circle at 50% 0%, #1a202d 0%, #0a0c10 100%);
     }
 
-    /* Top Hardware Rack */
-    .top-rack {
-      height: 46px;
-      background: linear-gradient(180deg, #1d212c 0%, #12151e 100%);
-      border-bottom: 2px solid #282f42;
-      padding: 0 16px;
+    /* Top Navigation Header */
+    .app-header {
+      height: 48px;
+      background: #12151e;
+      border-bottom: 1px solid var(--card-border);
+      padding: 0 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.6);
-      z-index: 100;
       flex-shrink: 0;
+      z-index: 100;
     }
 
-    .rack-brand {
+    .brand-wrap {
       display: flex;
       align-items: center;
       gap: 12px;
       text-decoration: none;
-      color: var(--text-main);
+      color: #fff;
     }
 
-    .rack-logo {
+    .brand-logo {
       display: flex;
       gap: 3px;
-      background: #090b0e;
-      padding: 5px 6px;
+      background: #090a0f;
+      padding: 5px;
       border-radius: 4px;
-      border: 1px solid #2a3040;
+      border: 1px solid #232a3a;
     }
 
-    .rack-logo span {
+    .brand-logo span {
       width: 4px;
       height: 14px;
       border-radius: 2px;
     }
-    .rack-logo .r { background: var(--neon-red); box-shadow: 0 0 6px var(--neon-red); }
-    .rack-logo .b { background: var(--neon-cyan); box-shadow: 0 0 6px var(--neon-cyan); }
-    .rack-logo .y { background: var(--neon-yellow); box-shadow: 0 0 6px var(--neon-yellow); }
+    .brand-logo .r { background: var(--accent-red); box-shadow: 0 0 6px var(--accent-red); }
+    .brand-logo .b { background: var(--accent-cyan); box-shadow: 0 0 6px var(--accent-cyan); }
+    .brand-logo .y { background: var(--accent-yellow); box-shadow: 0 0 6px var(--accent-yellow); }
 
-    .rack-title {
-      font-size: 13px;
+    .brand-title {
+      font-size: 14px;
       font-weight: 800;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       text-transform: uppercase;
       color: #fff;
+    }
+    .brand-title span { color: var(--accent-yellow); }
+
+    .header-actions {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 10px;
     }
 
-    .rack-title span {
-      color: var(--neon-yellow);
-    }
-
-    .rack-model-tag {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 6px;
-      background: #090b10;
-      border: 1px solid #283042;
-      border-radius: 3px;
-      color: var(--neon-cyan);
-      letter-spacing: 0.8px;
-    }
-
-    .rack-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* Hardware Push Buttons */
-    .hw-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      background: linear-gradient(180deg, #272d3e 0%, #171b26 100%);
-      color: var(--text-main);
-      border: 1px solid var(--btn-border);
-      border-radius: 4px;
-      padding: 5px 12px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      text-decoration: none;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 4px rgba(0,0,0,0.5);
-      transition: all 0.15s ease;
-      white-space: nowrap;
-    }
-
-    .hw-btn:hover:not(:disabled) {
-      background: linear-gradient(180deg, #323a4f 0%, #1f2534 100%);
-      border-color: #4b5575;
-      color: #fff;
-    }
-
-    .hw-btn:active:not(:disabled) {
-      transform: translateY(1px);
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.7);
-    }
-
-    .hw-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      filter: grayscale(80%);
-    }
-
-    .hw-btn.btn-accent {
-      border-color: var(--neon-yellow);
-      color: var(--neon-yellow);
-      box-shadow: 0 0 10px rgba(255, 214, 0, 0.2);
-    }
-
-    .hw-btn.btn-cyan {
-      border-color: var(--neon-cyan);
-      color: var(--neon-cyan);
-    }
-
-    .hw-btn.btn-red {
-      border-color: var(--neon-red);
-      color: var(--neon-red);
-    }
-
-    /* Header bridge status LED */
+    /* Status indicator */
     .header-status {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       background: #090b10;
       border: 1px solid #232a3a;
-      border-radius: 4px;
-      padding: 4px 9px;
-      font-size: 11px;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.5px;
     }
 
     .status-dot {
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: #555;
     }
 
     .header-status.online .status-dot {
-      background: var(--neon-green);
-      box-shadow: 0 0 8px var(--neon-green);
+      background: var(--accent-green);
+      box-shadow: 0 0 8px var(--accent-green);
     }
     .header-status.online {
-      color: var(--neon-green);
+      color: var(--accent-green);
       border-color: rgba(0, 230, 118, 0.35);
     }
 
     .header-status.offline .status-dot {
-      background: var(--neon-red);
-      box-shadow: 0 0 8px var(--neon-red);
+      background: var(--accent-red);
+      box-shadow: 0 0 8px var(--accent-red);
     }
     .header-status.offline {
-      color: var(--neon-red);
-      border-color: rgba(255, 51, 75, 0.35);
+      color: var(--accent-red);
+      border-color: rgba(229, 57, 53, 0.35);
     }
 
-    /* Main Console Grid */
-    .console-main {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      padding: 10px 14px;
-      min-height: 0;
-      height: calc(100vh - 78px);
-      box-sizing: border-box;
-    }
-
-    /* Console Bay Modules */
-    .console-bay {
-      background: linear-gradient(180deg, #151822 0%, #10121a 100%);
-      border: 1px solid #262c3e;
-      border-radius: 8px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 24px rgba(0,0,0,0.6);
-      display: flex;
-      flex-direction: column;
-      padding: 10px 12px;
-      gap: 8px;
-      min-height: 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Bay Module Header */
-    .bay-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 6px;
-      border-bottom: 1px solid #202636;
-      flex-shrink: 0;
-    }
-
-    .bay-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .bay-led {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-    }
-    .bay-led.green { background: var(--neon-green); box-shadow: 0 0 8px var(--neon-green); }
-    .bay-led.orange { background: var(--neon-orange); box-shadow: 0 0 8px var(--neon-orange); }
-
-    .bay-title {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: #fff;
-    }
-
-    .bay-body {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      min-height: 0;
-      justify-content: space-between;
-    }
-
-    /* Dual Circular Oscilloscope / Radar Core Dials */
-    .synth-scope-card {
-      background: radial-gradient(circle at 50% 50%, #121622 0%, #07080c 100%);
-      border: 1px solid #242b3b;
-      border-radius: 8px;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
+    /* Standard Action Buttons */
+    .btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      box-shadow: inset 0 0 25px rgba(0,0,0,0.85);
-      flex: 1;
-      min-height: 190px;
-    }
-
-    .scope-dial-housing {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #181c28, #0a0c12);
-      border: 2px solid #30384c;
-      box-shadow: 0 0 22px rgba(0,0,0,0.85), inset 0 2px 4px rgba(255,255,255,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      margin: 2px 0;
-    }
-
-    .scope-dial-housing::before {
-      content: '';
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      right: 5px;
-      bottom: 5px;
-      border-radius: 50%;
-      border: 1px dashed rgba(255,255,255,0.15);
-      pointer-events: none;
-    }
-
-    /* Scope Bezel Calibration Ticks */
-    .scope-dial-ticks {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-
-    /* Dial A: Telemetry Waveform Rings */
-    .dial-rings-green {
-      position: absolute;
-      width: 132px;
-      height: 132px;
-      border-radius: 50%;
-      border: 2px solid rgba(0, 230, 118, 0.4);
-      box-shadow: 0 0 12px rgba(0, 230, 118, 0.2), inset 0 0 12px rgba(0, 230, 118, 0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .dial-sweep-line {
-      position: absolute;
-      width: 126px;
-      height: 126px;
-      border-radius: 50%;
-      background: conic-gradient(from 0deg, transparent 0deg, transparent 310deg, rgba(0, 230, 118, 0.35) 360deg);
-      animation: radarSweep 3.5s linear infinite;
-      pointer-events: none;
-    }
-
-    @keyframes radarSweep {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    /* Dial B: Frequency Ring */
-    .dial-rings-orange {
-      position: absolute;
-      width: 132px;
-      height: 132px;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 145, 0, 0.4);
-      box-shadow: 0 0 14px rgba(255, 145, 0, 0.25), inset 0 0 14px rgba(255, 145, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .rec-pulse-ring {
-      position: absolute;
-      width: 126px;
-      height: 126px;
-      border-radius: 50%;
-      border: 1px dashed rgba(255, 51, 75, 0.45);
-      pointer-events: none;
-    }
-
-    /* Core Big Tactile REC Button */
-    .rec-btn-big {
-      width: 82px;
-      height: 82px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #2b1216, #14090b);
-      border: 3px solid #731e28;
-      box-shadow: 0 0 18px rgba(255, 51, 75, 0.3), inset 0 2px 5px rgba(255,255,255,0.2);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: #fff;
-      transition: all 0.2s ease;
-      z-index: 10;
-    }
-
-    .rec-btn-big:hover:not(:disabled) {
-      border-color: var(--neon-red);
-      box-shadow: 0 0 28px rgba(255, 51, 75, 0.65), inset 0 2px 8px rgba(255,255,255,0.3);
-      transform: scale(1.04);
-    }
-
-    .rec-btn-big:active:not(:disabled) {
-      transform: scale(0.97);
-    }
-
-    .rec-btn-big:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-      border-color: #381e22;
-      box-shadow: none;
-    }
-
-    .rec-btn-big.recording {
-      background: linear-gradient(145deg, #b71c1c, #d32f2f);
-      border-color: #ff5252;
-      box-shadow: 0 0 35px rgba(255, 23, 68, 0.9);
-      animation: recPulse 1.2s infinite;
-    }
-
-    @keyframes recPulse {
-      0%, 100% { box-shadow: 0 0 22px rgba(255, 23, 68, 0.6); }
-      50% { box-shadow: 0 0 45px rgba(255, 23, 68, 1); }
-    }
-
-    #recIcon {
-      font-size: 20px;
-      line-height: 1;
-      margin-bottom: 2px;
-    }
-
-    #recLabel {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-    }
-
-    /* Duration Readout (Teko / Digital) */
-    .rec-timer {
-      font-family: 'Teko', monospace, sans-serif;
-      font-size: 32px;
-      line-height: 1;
-      font-weight: 600;
-      letter-spacing: 2px;
-      color: var(--text-dim);
-      margin-bottom: 4px;
-      text-shadow: 0 0 6px rgba(0,0,0,0.8);
-    }
-
-    .rec-timer.active {
-      color: var(--neon-red);
-      text-shadow: 0 0 12px rgba(255, 51, 75, 0.7);
-    }
-
-    /* Sunken LCD Input Wells */
-    .ip-box-group {
-      display: flex;
-      align-items: center;
-      background: var(--lcd-bg);
-      border: 1px solid #272f42;
-      border-radius: 4px;
-      padding: 3px 6px;
-      box-shadow: inset 0 1px 4px rgba(0,0,0,0.7);
-    }
-
-    .ip-box {
-      width: 36px;
-      background: transparent;
-      border: none;
-      color: var(--neon-cyan);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      font-weight: 700;
-      text-align: center;
-      outline: none;
-    }
-
-    .ip-box:focus {
-      color: #fff;
-      background: rgba(0, 229, 255, 0.15);
-      border-radius: 2px;
-    }
-
-    .ip-dot {
-      color: #4b5673;
-      font-weight: bold;
-      padding: 0 1px;
-    }
-
-    .port-box {
-      width: 52px;
-      background: transparent;
-      border: none;
-      color: var(--neon-yellow);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      font-weight: 700;
-      text-align: center;
-      outline: none;
-    }
-
-    .port-box:focus {
-      color: #fff;
-      background: rgba(255, 214, 0, 0.15);
-      border-radius: 2px;
-    }
-
-    .input-field {
-      background: var(--lcd-bg);
-      border: 1px solid #272f42;
-      border-radius: 4px;
+      gap: 6px;
+      background: #202636;
       color: var(--text-main);
-      padding: 5px 8px;
-      font-size: 11px;
-      font-weight: 500;
-      outline: none;
-      box-shadow: inset 0 1px 4px rgba(0,0,0,0.6);
-    }
-
-    .input-field:focus {
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 6px rgba(0, 229, 255, 0.3);
-    }
-
-    /* Segmented Switches */
-    .segment-strip {
-      display: flex;
-      border: 1px solid #2a3144;
-      border-radius: 4px;
-      overflow: hidden;
-      background: #090b10;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-    }
-
-    .segment-btn {
-      flex: 1;
-      padding: 5px 6px;
-      background: linear-gradient(180deg, #222736 0%, #151822 100%);
-      border: none;
-      border-right: 1px solid #2a3144;
-      color: var(--text-dim);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.6px;
+      border: 1px solid #343e54;
+      border-radius: 6px;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 600;
       cursor: pointer;
-      text-align: center;
+      text-decoration: none;
       transition: all 0.15s ease;
       white-space: nowrap;
     }
 
-    .segment-btn:last-child {
-      border-right: none;
-    }
-
-    .segment-btn:hover {
+    .btn:hover:not(:disabled) {
+      background: #2b3348;
+      border-color: #4b5978;
       color: #fff;
-      background: #2b3246;
     }
 
-    .segment-btn.active {
-      color: var(--neon-cyan);
-      background: #192334;
-      box-shadow: inset 0 0 8px rgba(0, 229, 255, 0.25);
+    .btn:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      filter: grayscale(80%);
+    }
+
+    .btn-yellow {
+      background: var(--accent-yellow);
+      color: #000;
+      border-color: #ffca28;
+      font-weight: 700;
+    }
+    .btn-yellow:hover:not(:disabled) {
+      background: #ffd54f;
+      border-color: #ffe082;
+      color: #000;
+    }
+
+    .btn-red {
+      background: #2b1216;
+      border-color: var(--accent-red);
+      color: #ff6b78;
+    }
+    .btn-red:hover:not(:disabled) {
+      background: #3d171e;
+      color: #fff;
+    }
+
+    /* Main Grid Layout */
+    .main-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 16px;
+      padding: 14px 18px;
+      min-height: 0;
+      height: calc(100vh - 76px);
+      box-sizing: border-box;
+    }
+
+    .col-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
+      overflow-y: auto;
+    }
+
+    /* Clean Studio Cards */
+    .panel-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     /* Status badge pill */
     .status-badge {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 10px;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.5px;
       background: #090b10;
       border: 1px solid #232a3a;
     }
 
     .status-badge.online {
-      color: var(--neon-green);
+      color: var(--accent-green);
       border-color: rgba(0, 230, 118, 0.4);
     }
 
     .status-badge.offline {
-      color: var(--neon-red);
-      border-color: rgba(255, 51, 75, 0.4);
+      color: var(--accent-red);
+      border-color: rgba(229, 57, 53, 0.4);
     }
 
     .status-badge.connecting {
-      color: var(--neon-yellow);
-      border-color: rgba(255, 214, 0, 0.4);
+      color: var(--accent-yellow);
+      border-color: rgba(245, 197, 24, 0.4);
     }
 
-    /* Drag & Drop Cartridge Slot */
-    .drop-zone {
-      background: linear-gradient(180deg, #12151e 0%, #0a0c12 100%);
-      border: 1px dashed #30374c;
+    /* Input Fields */
+    .input-field {
+      width: 100%;
+      height: 40px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
       border-radius: 6px;
-      padding: 8px 10px;
+      color: var(--text-main);
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 500;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .input-field:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 8px rgba(0, 229, 255, 0.25);
+    }
+
+    /* IP Box Group (Big & Clean) */
+    .ip-box-group {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 6px;
+      padding: 0 8px;
+      box-shadow: inset 0 1px 4px rgba(0,0,0,0.6);
+    }
+
+    .ip-box {
+      width: 44px;
+      background: transparent;
+      border: none;
+      color: var(--accent-cyan);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+    }
+
+    .ip-box:focus {
+      background: rgba(0, 229, 255, 0.15);
+      border-radius: 3px;
+    }
+
+    .ip-dot {
+      color: #586682;
+      font-weight: 800;
+      padding: 0 2px;
+      font-size: 16px;
+    }
+
+    .port-box {
+      width: 66px;
+      background: transparent;
+      border: none;
+      color: var(--accent-yellow);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+    }
+
+    .port-box:focus {
+      background: rgba(245, 197, 24, 0.15);
+      border-radius: 3px;
+    }
+
+    /* Collapsible Drawers */
+    .collapse-btn {
+      width: 100%;
+      height: 40px;
+      background: #171c26;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      color: var(--text-main);
+      padding: 0 14px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .collapse-btn:hover {
+      background: #202736;
+      border-color: #3b465e;
+    }
+
+    .collapse-content {
+      background: #0f121a;
+      border: 1px solid #202737;
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Drag & Drop Installer Area */
+    .drop-zone {
+      background: #090b10;
+      border: 2px dashed #2d364a;
+      border-radius: 8px;
+      padding: 18px 12px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -625,56 +397,192 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
+      gap: 4px;
     }
 
     .drop-zone:hover, .drop-zone.drag-active {
-      border-color: var(--neon-cyan);
-      background: #141c2b;
-      box-shadow: 0 0 12px rgba(0, 229, 255, 0.2), inset 0 0 10px rgba(0, 229, 255, 0.1);
+      border-color: var(--accent-cyan);
+      background: #0e1522;
+      box-shadow: 0 0 14px rgba(0, 229, 255, 0.2);
     }
 
-    /* OLED Monitor Card for Video & Screenshot Preview */
-    .oled-monitor-card {
-      background: radial-gradient(circle at 50% 50%, #0e1118 0%, #050608 100%);
-      border: 2px solid #2a3348;
-      border-radius: 8px;
-      padding: 8px 10px;
-      box-shadow: inset 0 0 25px rgba(0,0,0,0.9), 0 4px 16px rgba(0,0,0,0.7);
+    /* HERO CAPTURE DECK (Right Column Top) */
+    .hero-capture-card {
+      background: linear-gradient(180deg, #181d29 0%, #12151f 100%);
+      border: 1px solid #2d3548;
+      border-radius: 12px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
-      flex: 1;
-      min-height: 0;
-      position: relative;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.5);
     }
 
-    .oled-screen-frame {
+    /* Large Digital Timer */
+    .rec-timer {
+      font-family: 'Teko', monospace, sans-serif;
+      font-size: 48px;
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #6d7890;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+
+    .rec-timer.active {
+      color: var(--accent-red);
+      text-shadow: 0 0 16px rgba(229, 57, 53, 0.7);
+    }
+
+    /* Permanent Hero Buttons Row (Record & Screenshot) */
+    .hero-buttons-row {
+      width: 100%;
+      display: flex;
+      gap: 14px;
+    }
+
+    /* Big Permanent Record Button */
+    .hero-rec-btn {
       flex: 1;
-      background: #000;
-      border: 1px solid #1a202c;
-      border-radius: 6px;
+      height: 58px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #d32f2f, #b71c1c);
+      border: 2px solid #ef5350;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-      position: relative;
-      min-height: 130px;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(211, 47, 47, 0.4);
+      transition: all 0.15s ease;
     }
 
-    .video-player {
+    .hero-rec-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #f44336, #c62828);
+      border-color: #ff7961;
+      box-shadow: 0 6px 24px rgba(244, 67, 54, 0.6);
+      transform: translateY(-1px);
+    }
+
+    .hero-rec-btn:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    .hero-rec-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      filter: grayscale(80%);
+      box-shadow: none;
+    }
+
+    .hero-rec-btn.recording {
+      background: linear-gradient(135deg, #f44336, #d32f2f);
+      border-color: #ffffff;
+      box-shadow: 0 0 30px rgba(244, 67, 54, 0.9);
+      animation: pulseHeroRec 1.2s infinite;
+    }
+
+    @keyframes pulseHeroRec {
+      0%, 100% { box-shadow: 0 0 20px rgba(244, 67, 54, 0.6); }
+      50% { box-shadow: 0 0 38px rgba(244, 67, 54, 1); }
+    }
+
+    /* Big Permanent Screenshot Button */
+    .hero-shot-btn {
+      flex: 1;
+      height: 58px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #242c3d, #171d29);
+      border: 2px solid #3b465e;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+      transition: all 0.15s ease;
+    }
+
+    .hero-shot-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #2e374c, #1d2534);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 6px 24px rgba(0, 229, 255, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .hero-shot-btn:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    .hero-shot-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      filter: grayscale(80%);
+      box-shadow: none;
+    }
+
+    /* Media Output Display Area */
+    .media-card {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 0;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+    }
+
+    .media-placeholder {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--text-dim);
+      border: 1px dashed #242b3c;
+      border-radius: 8px;
+      padding: 24px;
+      background: #090b10;
+    }
+
+    .video-preview-player {
       width: 100%;
       height: 100%;
-      max-height: 180px;
-      object-fit: contain;
+      max-height: 200px;
       background: #000;
+      border-radius: 6px;
+      object-fit: contain;
     }
 
-    /* Bottom Utility Rack (Eliminating Dead Space) */
-    .bottom-rack {
-      height: 32px;
-      background: #0d0f16;
-      border-top: 1px solid #1f2533;
-      padding: 0 16px;
+    .screenshot-preview-img {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      border: 3px solid #283348;
+      object-fit: cover;
+      background: #000;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.25);
+    }
+
+    /* Bottom Status Rail */
+    .app-footer {
+      height: 28px;
+      background: #090b10;
+      border-top: 1px solid #1a202c;
+      padding: 0 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -683,12 +591,12 @@
       flex-shrink: 0;
     }
 
-    .bottom-rack a {
-      color: var(--neon-cyan);
+    .app-footer a {
+      color: var(--accent-cyan);
       text-decoration: none;
     }
 
-    /* Modals & Toasts */
+    /* Modal Backdrop */
     .modal-backdrop {
       position: fixed;
       top: 0;
@@ -704,18 +612,19 @@
     }
 
     .modal-card {
-      background: #171b26;
+      background: #161a24;
       border: 1px solid #323b52;
-      border-radius: 8px;
-      padding: 20px;
+      border-radius: 10px;
+      padding: 22px;
       max-width: 440px;
       width: 90%;
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.9);
     }
 
+    /* Toast Container */
     .toast-container {
       position: fixed;
-      bottom: 40px;
+      bottom: 36px;
       right: 20px;
       display: flex;
       flex-direction: column;
@@ -724,19 +633,19 @@
     }
 
     .toast {
-      background: #1b202c;
+      background: #1a202c;
       border: 1px solid #333d54;
-      border-radius: 5px;
-      padding: 9px 13px;
-      font-size: 12px;
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: 13px;
       color: #fff;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.6);
       animation: slideIn 0.2s ease;
     }
 
-    .toast.toast-success { border-left: 3px solid var(--neon-green); }
-    .toast.toast-error { border-left: 3px solid var(--neon-red); }
-    .toast.toast-info { border-left: 3px solid var(--neon-cyan); }
+    .toast.toast-success { border-left: 4px solid var(--accent-green); }
+    .toast.toast-error { border-left: 4px solid var(--accent-red); }
+    .toast.toast-info { border-left: 4px solid var(--accent-cyan); }
 
     @keyframes slideIn {
       from { transform: translateX(30px); opacity: 0; }
@@ -752,274 +661,234 @@
 
 <body>
 
-  <!-- Top Hardware Rack -->
-  <header class="top-rack">
-    <div style="display: flex; align-items: center; gap: 10px;">
-      <button id="headerBackBtn" class="hw-btn btn-accent" style="display: none;" onclick="closeMediaPreview()">← Back to Recorder</button>
-      <a href="/" class="rack-brand">
-        <div class="rack-logo">
+  <!-- App Header -->
+  <header class="app-header">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <button id="headerBackBtn" class="btn btn-yellow" style="display: none;" onclick="closeMediaPreview()">← Back to Recorder</button>
+      <a href="/" class="brand-wrap">
+        <div class="brand-logo">
           <span class="r"></span>
           <span class="b"></span>
           <span class="y"></span>
         </div>
-        <div class="rack-title">Creation <span>Cue</span></div>
+        <div class="brand-title">Creation <span>Cue</span> // Watch Recorder</div>
       </a>
-      <span class="rack-model-tag">REC-CON // A/V SYNTH</span>
     </div>
 
-    <div class="rack-controls">
+    <div class="header-actions">
       <div id="headerBridgeStatus" class="header-status offline" title="Bridge Connection Status">
         <span class="status-dot"></span>
         <span id="headerBridgeText">Bridge: Offline</span>
       </div>
-      <button class="hw-btn" onclick="openPCFolder()" title="Open local Downloads folder">📁 Downloads</button>
-      <button class="hw-btn" onclick="toggleSettingsModal()" title="Adjust resolution, bitrate, or time limit">⚙️ Config</button>
-      <a href="/WatchRecorder.zip" download class="hw-btn btn-accent" style="text-decoration: none;">💻 App (.exe)</a>
+      <button class="btn" onclick="openPCFolder()" title="Open local Downloads folder">📁 Downloads</button>
+      <button class="btn" onclick="toggleSettingsModal()" title="Adjust resolution, bitrate, or time limit">⚙️ Settings</button>
+      <a href="/WatchRecorder.zip" download class="btn btn-yellow" style="text-decoration: none;">💻 App (.exe)</a>
     </div>
   </header>
 
-  <!-- Dual-Bay Hardware Console -->
-  <main class="console-main">
+  <!-- Main 2-Column Grid -->
+  <main class="main-grid">
 
-    <!-- BAY A: Telemetry & Wireless Link Core -->
-    <section class="console-bay">
-      <div class="bay-header">
-        <div class="bay-title-wrap">
-          <span class="bay-led green"></span>
-          <span class="bay-title">BAY A // TELEMETRY &amp; LINK CORE</span>
-        </div>
-        <div id="statusBadge" class="status-badge offline">
-          <span class="status-dot"></span>
-          <span id="statusText">Checking Bridge...</span>
-        </div>
-      </div>
+    <!-- LEFT COLUMN: Connection & Collapsed Tools -->
+    <div class="col-pane">
 
-      <div class="bay-body">
-        <!-- Active Wear Watch Dropdown -->
+      <!-- Main Connection Card -->
+      <section class="panel-card">
+        <div class="card-title">
+          <span>Smartwatch Connection</span>
+          <div id="statusBadge" class="status-badge offline">
+            <span class="status-dot"></span>
+            <span id="statusText">Checking Bridge...</span>
+          </div>
+        </div>
+
+        <!-- Connected Watch Selector Dropdown -->
         <div style="display: flex; flex-direction: column; gap: 4px;">
-          <div style="display: flex; align-items: center; justify-content: space-between;">
-            <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.8px; color: var(--neon-cyan);">⌚ WEAR OS DEVICE:</span>
-            <div style="display: flex; gap: 4px;">
-              <button class="hw-btn" style="padding: 2px 7px; font-size: 10px;" onclick="refreshStatus()" title="Scan for connected watches">🔄 Scan</button>
-              <button class="hw-btn" style="padding: 2px 7px; font-size: 10px;" onclick="forgetSelectedSavedDevice()" title="Forget selected saved device">Forget</button>
-            </div>
-          </div>
-          <select id="deviceSelect" class="input-field" style="width: 100%; font-weight: 600; color: #fff;">
-            <option value="">⌚ WEAR OS: (No Watch Connected - Enter IP Below)</option>
+          <label style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+            Connected Watch:
+          </label>
+          <select id="deviceSelect" class="input-field" style="font-weight: 600;">
+            <option value="">⌚ Searching for connected watches...</option>
           </select>
         </div>
 
-        <!-- Saved Devices Bar (Quick Presets) -->
+        <!-- Saved Devices Bar (Quick Switch) -->
         <div style="display: flex; gap: 6px; align-items: center;">
-          <select id="savedDevicesSelect" class="input-field" style="flex: 1; font-size: 10px;" onchange="loadSavedDevice(this.value)">
-            <option value="">⭐ Quick Load Recent Device...</option>
+          <select id="savedDevicesSelect" class="input-field" style="flex: 1;" onchange="loadSavedDevice(this.value)">
+            <option value="">⭐ Recent Saved Devices...</option>
           </select>
+          <button class="btn" onclick="forgetSelectedSavedDevice()" title="Forget saved device">Forget</button>
+          <button class="btn" onclick="refreshStatus()" title="Refresh connection status">🔄 Scan</button>
         </div>
 
-        <!-- Dial A: Circular Radar / Waveform Scope -->
-        <div class="synth-scope-card">
-          <div class="scope-dial-housing">
-            <svg class="scope-dial-ticks" viewBox="0 0 160 160">
-              <circle cx="80" cy="80" r="76" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="2, 6"/>
-              <circle cx="80" cy="80" r="54" fill="none" stroke="rgba(0,230,118,0.15)" stroke-width="1"/>
-              <line x1="80" y1="2" x2="80" y2="10" stroke="rgba(0,230,118,0.5)" stroke-width="2"/>
-              <line x1="80" y1="150" x2="80" y2="158" stroke="rgba(0,230,118,0.5)" stroke-width="2"/>
-              <line x1="2" y1="80" x2="10" y2="80" stroke="rgba(0,230,118,0.5)" stroke-width="2"/>
-              <line x1="150" y1="80" x2="158" y2="80" stroke="rgba(0,230,118,0.5)" stroke-width="2"/>
-            </svg>
-            <div class="dial-rings-green">
-              <div class="dial-sweep-line"></div>
-              <div style="font-size: 26px; z-index: 5; margin-bottom: 2px;">⌚</div>
-              <div id="radarStatusText" style="font-size: 9px; font-weight: 800; letter-spacing: 1.2px; color: var(--neon-green); z-index: 5;">RADAR LINK</div>
+        <!-- Direct IP Connect Bar -->
+        <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 2px;">
+          <label style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+            Connect via IP &amp; Port:
+          </label>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <div class="ip-box-group" id="connGroup" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
+              <input type="text" maxlength="3" class="ip-box" id="conn1" value="192" placeholder="192" oninput="handleIpInput(this, 'conn2', '')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
+              <span class="ip-dot">.</span>
+              <input type="text" maxlength="3" class="ip-box" id="conn2" value="168" placeholder="168" oninput="handleIpInput(this, 'conn3', 'conn1')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
+              <span class="ip-dot">.</span>
+              <input type="text" maxlength="3" class="ip-box" id="conn3" value="8" placeholder="8" oninput="handleIpInput(this, 'conn4', 'conn2')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
+              <span class="ip-dot">.</span>
+              <input type="text" maxlength="3" class="ip-box" id="conn4" value="59" placeholder="59" oninput="handleIpInput(this, 'connPort', 'conn3')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
+              <span class="ip-dot">:</span>
+              <input type="text" maxlength="5" class="port-box" id="connPort" value="37673" placeholder="37673" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
             </div>
-          </div>
-          <div style="font-size: 10px; color: var(--text-dim); margin-top: 4px; letter-spacing: 0.8px;">STANDBY / AUTO-POLL 2.5s</div>
-        </div>
 
-        <!-- Segmented Preset Switch Bank -->
-        <div class="segment-strip">
-          <button class="segment-btn active" onclick="applyQuickPreset('', this)">NATIVE</button>
-          <button class="segment-btn" onclick="applyQuickPreset('450x450', this)">GW6/5 44mm</button>
-          <button class="segment-btn" onclick="applyQuickPreset('410x410', this)">GW 40mm</button>
-          <button class="segment-btn" onclick="applyQuickPreset('396x396', this)">GW4 40mm</button>
-          <button class="segment-btn" onclick="applyQuickPreset('480x480', this)">PIXEL</button>
-        </div>
-
-        <!-- Sunken LCD IP Connection Well -->
-        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-          <div class="ip-box-group" id="connGroup" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
-            <input type="text" maxlength="3" class="ip-box" id="conn1" value="192" placeholder="192" oninput="handleIpInput(this, 'conn2', '')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
-            <span class="ip-dot">.</span>
-            <input type="text" maxlength="3" class="ip-box" id="conn2" value="168" placeholder="168" oninput="handleIpInput(this, 'conn3', 'conn1')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
-            <span class="ip-dot">.</span>
-            <input type="text" maxlength="3" class="ip-box" id="conn3" value="8" placeholder="8" oninput="handleIpInput(this, 'conn4', 'conn2')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
-            <span class="ip-dot">.</span>
-            <input type="text" maxlength="3" class="ip-box" id="conn4" value="59" placeholder="59" oninput="handleIpInput(this, 'connPort', 'conn3')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
-            <span class="ip-dot">:</span>
-            <input type="text" maxlength="5" class="port-box" id="connPort" value="37673" placeholder="37673" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
-          </div>
-
-          <button id="connectBtn" class="hw-btn btn-accent" onclick="connectDevice()">Connect IP</button>
-          <button class="hw-btn" onclick="disconnectDevice()" title="Disconnect watch">🔌 Disconnect</button>
-        </div>
-
-        <!-- Wireless Pairing Collapsible Tray -->
-        <div style="border-top: 1px solid #202636; padding-top: 6px;">
-          <button type="button" class="hw-btn" style="width: 100%; justify-content: flex-start; font-size: 10px;" onclick="togglePairingSection()">
-            <span id="pairChevron">▸</span> 🔑 Wireless Pairing (Wear OS 3+ Pair Code)
-          </button>
-          <div id="pairingSection" style="display: none; margin-top: 6px;">
-            <div style="background: #090b10; border: 1px solid #1f2536; padding: 6px 8px; border-radius: 4px; font-size: 10px; color: #a4b0c9; margin-bottom: 6px; line-height: 1.3;">
-              On watch: <strong>Settings &gt; Developer options &gt; Wireless debugging &gt; Pair new device</strong>.
-            </div>
-            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-              <div class="ip-box-group" id="pairGroup" onkeydown="if(event.key==='Enter'){event.preventDefault(); pairDevice();}">
-                <input type="text" maxlength="3" class="ip-box" id="pair1" value="192" placeholder="192" oninput="handleIpInput(this, 'pair2', '')" onpaste="handleIpPaste(event, 'pair')">
-                <span class="ip-dot">.</span>
-                <input type="text" maxlength="3" class="ip-box" id="pair2" value="168" placeholder="168" oninput="handleIpInput(this, 'pair3', 'pair1')" onpaste="handleIpPaste(event, 'pair')">
-                <span class="ip-dot">.</span>
-                <input type="text" maxlength="3" class="ip-box" id="pair3" value="8" placeholder="8" oninput="handleIpInput(this, 'pair4', 'pair2')" onpaste="handleIpPaste(event, 'pair')">
-                <span class="ip-dot">.</span>
-                <input type="text" maxlength="3" class="ip-box" id="pair4" value="59" placeholder="59" oninput="handleIpInput(this, 'pairPort', 'pair3')" onpaste="handleIpPaste(event, 'pair')">
-                <span class="ip-dot">:</span>
-                <input type="text" maxlength="5" class="port-box" id="pairPort" placeholder="45597" onpaste="handleIpPaste(event, 'pair')">
-              </div>
-              <input type="text" id="pairCodeInput" class="input-field" placeholder="6-Digit Code" style="max-width: 100px; font-family: monospace;" onkeydown="if(event.key==='Enter'){event.preventDefault(); pairDevice();}">
-              <button id="pairBtn" class="hw-btn btn-accent" onclick="pairDevice()">Pair Watch</button>
-            </div>
+            <button id="connectBtn" class="btn btn-yellow" style="height: 44px; padding: 0 16px; font-size: 13px;" onclick="connectDevice()">Connect IP</button>
+            <button class="btn" style="height: 44px; padding: 0 12px;" onclick="disconnectDevice()" title="Disconnect watch">🔌</button>
           </div>
         </div>
 
         <!-- Warning if bridge is offline -->
-        <div id="bridgeNotice" style="display: none; background: #260e12; border: 1px solid var(--neon-red); border-radius: 4px; padding: 6px 10px; font-size: 11px; color: #ffb3ba;">
+        <div id="bridgeNotice" style="display: none; background: #260e12; border: 1px solid var(--accent-red); border-radius: 6px; padding: 8px 12px; font-size: 12px; color: #ffb3ba;">
           ⚠️ <strong>Local Bridge Offline:</strong> Run <code>WatchRecorder.exe</code> on your computer to connect.
         </div>
+      </section>
 
-        <!-- Drag & Drop Cartridge Slot -->
-        <div id="dropZone" class="drop-zone" onclick="document.getElementById('installerFileInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleFileDrop(event)">
-          <input type="file" id="installerFileInput" style="display: none;" accept=".apk,.wff,.zip" onchange="handleFileSelect(event)">
-          <div style="font-size: 16px; margin-bottom: 2px;">📦</div>
-          <div style="font-weight: 700; font-size: 11px; letter-spacing: 0.5px;">WFF / APK INGEST BAY</div>
-          <div style="font-size: 10px; color: var(--text-dim);">Drop .wff watch face or APK here to install</div>
-          <div id="installerStatus" style="display: none; margin-top: 4px; font-size: 11px; color: var(--neon-yellow); font-weight: 700;"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BAY B: Capture Engine & High-Res OLED Monitor -->
-    <section class="console-bay">
-      <div class="bay-header">
-        <div class="bay-title-wrap">
-          <span class="bay-led orange"></span>
-          <span class="bay-title">BAY B // CAPTURE ENGINE &amp; MONITOR</span>
-        </div>
-        <span id="recModeBadge" class="rack-model-tag" style="color: var(--neon-orange); border-color: rgba(255,145,0,0.3);">READY</span>
-      </div>
-
-      <div class="bay-body">
-
-        <!-- Standby / Recording Console View -->
-        <div id="recorderMainView" style="display: flex; flex-direction: column; flex: 1; gap: 8px; justify-content: space-between;">
-
-          <!-- Dial B: Circular Recording Core & Oscilloscope -->
-          <div class="synth-scope-card">
-            <div id="timerDisplay" class="rec-timer">00:00</div>
-            <div class="scope-dial-housing">
-              <svg class="scope-dial-ticks" viewBox="0 0 160 160">
-                <circle cx="80" cy="80" r="76" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="2, 6"/>
-                <circle cx="80" cy="80" r="54" fill="none" stroke="rgba(255,145,0,0.15)" stroke-width="1"/>
-                <line x1="80" y1="2" x2="80" y2="10" stroke="rgba(255,145,0,0.5)" stroke-width="2"/>
-                <line x1="80" y1="150" x2="80" y2="158" stroke="rgba(255,145,0,0.5)" stroke-width="2"/>
-                <line x1="2" y1="80" x2="10" y2="80" stroke="rgba(255,145,0,0.5)" stroke-width="2"/>
-                <line x1="150" y1="80" x2="158" y2="80" stroke="rgba(255,145,0,0.5)" stroke-width="2"/>
-              </svg>
-              <div class="dial-rings-orange">
-                <div class="rec-pulse-ring"></div>
-                <!-- REC Core Button -->
-                <button id="recBtn" class="rec-btn-big" onclick="toggleRecording()" disabled title="Start or Stop Screen Recording">
-                  <span id="recIcon">🔴</span>
-                  <span id="recLabel">REC</span>
-                </button>
-              </div>
+      <!-- Collapsible Drawer 1: Wireless Pairing (Wear OS 3+) -->
+      <div>
+        <button type="button" class="collapse-btn" onclick="togglePairingSection()">
+          <span><span id="pairChevron">▸</span> 🔑 Wireless Pairing (Wear OS 3+ Pair Code)</span>
+          <span style="font-size: 11px; color: var(--text-dim);">Expand</span>
+        </button>
+        <div id="pairingSection" class="collapse-content" style="display: none;">
+          <div style="background: #090b10; border: 1px solid #1f2536; padding: 8px 10px; border-radius: 4px; font-size: 11px; color: #a4b0c9; line-height: 1.4;">
+            On watch: <strong>Settings &gt; Developer options &gt; Wireless debugging &gt; Pair new device</strong>.
+          </div>
+          <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+            <div class="ip-box-group" id="pairGroup" style="height: 38px;" onkeydown="if(event.key==='Enter'){event.preventDefault(); pairDevice();}">
+              <input type="text" maxlength="3" class="ip-box" id="pair1" value="192" placeholder="192" oninput="handleIpInput(this, 'pair2', '')" onpaste="handleIpPaste(event, 'pair')">
+              <span class="ip-dot">.</span>
+              <input type="text" maxlength="3" class="ip-box" id="pair2" value="168" placeholder="168" oninput="handleIpInput(this, 'pair3', 'pair1')" onpaste="handleIpPaste(event, 'pair')">
+              <span class="ip-dot">.</span>
+              <input type="text" maxlength="3" class="ip-box" id="pair3" value="8" placeholder="8" oninput="handleIpInput(this, 'pair4', 'pair2')" onpaste="handleIpPaste(event, 'pair')">
+              <span class="ip-dot">.</span>
+              <input type="text" maxlength="3" class="ip-box" id="pair4" value="59" placeholder="59" oninput="handleIpInput(this, 'pairPort', 'pair3')" onpaste="handleIpPaste(event, 'pair')">
+              <span class="ip-dot">:</span>
+              <input type="text" maxlength="5" class="port-box" id="pairPort" placeholder="45597" onpaste="handleIpPaste(event, 'pair')">
             </div>
-            <p id="recHint" style="font-size: 11px; color: var(--text-dim); margin-top: 4px; text-align: center;">Connect watch to enable recording</p>
-          </div>
-
-          <!-- Bitrate Segment Switch Bank -->
-          <div class="segment-strip">
-            <button class="segment-btn" onclick="applyBitratePreset('4000000', this)">4 Mbps</button>
-            <button class="segment-btn active" onclick="applyBitratePreset('8000000', this)">8 Mbps (HD)</button>
-            <button class="segment-btn" onclick="applyBitratePreset('16000000', this)">16 Mbps (Pro)</button>
-            <button class="segment-btn" onclick="applyBitratePreset('24000000', this)">24 Mbps (Ultra)</button>
-          </div>
-
-          <!-- Transport Hardware Action Buttons -->
-          <div style="display: flex; gap: 8px; justify-content: center;">
-            <button id="shotBtn" class="hw-btn" onclick="takeScreenshot()" disabled title="Instant Watch Screenshot" style="padding: 7px 14px;">
-              <span style="font-size: 14px;">📸</span>
-              <span>Screenshot</span>
-            </button>
-            <button id="settingsBtn" class="hw-btn" onclick="toggleSettingsModal()" title="Recording Settings" style="padding: 7px 14px;">
-              <span style="font-size: 14px;">⚙️</span>
-              <span>Settings</span>
-            </button>
-            <button class="hw-btn" onclick="openPCFolder()" title="Open local Downloads folder" style="padding: 7px 14px;">
-              <span style="font-size: 14px;">📁</span>
-              <span>Downloads</span>
-            </button>
-          </div>
-
-        </div>
-
-        <!-- Video Output OLED Monitor Card -->
-        <div id="videoCard" class="oled-monitor-card" style="display: none;">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-            <span style="font-size: 11px; font-weight: 700; color: var(--neon-cyan); letter-spacing: 1px;">🎬 OLED VIDEO MONITOR</span>
-            <button class="hw-btn" style="padding: 3px 8px; font-size: 10px;" onclick="closeMediaPreview()">← Back ✕</button>
-          </div>
-          <div id="videoFilename" style="font-size: 10px; font-family: monospace; color: var(--text-dim); margin-bottom: 6px; word-break: break-all;"></div>
-
-          <div class="oled-screen-frame">
-            <video id="videoElement" class="video-player" controls></video>
-          </div>
-
-          <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 8px;">
-            <button class="hw-btn btn-accent" onclick="openNativeVideo()" title="Open in default Windows player">▶️ Open Video</button>
-            <a id="videoDownloadBtn" class="hw-btn" download style="text-decoration: none;">⬇️ Download</a>
-            <button class="hw-btn" onclick="renameCurrentVideo()">✏️ Rename</button>
-            <button class="hw-btn btn-red" onclick="deleteCurrentVideo()">🗑️ Delete</button>
-            <button class="hw-btn" onclick="openPCFolder()">📁 Downloads</button>
-            <button class="hw-btn" onclick="closeMediaPreview()">← Back</button>
+            <input type="text" id="pairCodeInput" class="input-field" placeholder="6-Digit Code" style="height: 38px; width: 100px; font-family: monospace;" onkeydown="if(event.key==='Enter'){event.preventDefault(); pairDevice();}">
+            <button id="pairBtn" class="btn btn-yellow" style="height: 38px;" onclick="pairDevice()">Pair</button>
           </div>
         </div>
-
-        <!-- Screenshot Output OLED Monitor Card -->
-        <div id="screenshotCard" class="oled-monitor-card" style="display: none;">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-            <span style="font-size: 11px; font-weight: 700; color: var(--neon-green); letter-spacing: 1px;">📸 WATCH SCREENSHOT SCOPE</span>
-            <button class="hw-btn" style="padding: 3px 8px; font-size: 10px;" onclick="closeMediaPreview()">← Back ✕</button>
-          </div>
-          <div id="screenshotFilename" style="font-size: 10px; font-family: monospace; color: var(--text-dim); margin-bottom: 6px; word-break: break-all;"></div>
-
-          <div class="oled-screen-frame">
-            <img id="screenshotImg" style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid #283348; object-fit: cover; background: #000; box-shadow: 0 0 20px rgba(0,230,118,0.25);" alt="Screenshot preview">
-          </div>
-
-          <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 8px;">
-            <a id="screenshotDownloadBtn" class="hw-btn btn-accent" download style="text-decoration: none;">⬇️ Download PNG</a>
-            <button class="hw-btn" onclick="openPCFolder()">📁 Downloads</button>
-            <button class="hw-btn" onclick="closeMediaPreview()">← Back</button>
-          </div>
-        </div>
-
       </div>
-    </section>
+
+      <!-- Collapsible Drawer 2: Drag & Drop Installer -->
+      <div>
+        <button type="button" class="collapse-btn" onclick="toggleInstallerSection()">
+          <span><span id="installerChevron">▸</span> 📦 Install Watch Face (.wff) or APK</span>
+          <span style="font-size: 11px; color: var(--text-dim);">Expand</span>
+        </button>
+        <div id="installerSection" class="collapse-content" style="display: none;">
+          <div id="dropZone" class="drop-zone" onclick="document.getElementById('installerFileInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleFileDrop(event)">
+            <input type="file" id="installerFileInput" style="display: none;" accept=".apk,.wff,.zip" onchange="handleFileSelect(event)">
+            <div style="font-size: 26px;">📦</div>
+            <div style="font-weight: 700; font-size: 13px;">Drop .wff watch face or APK file here</div>
+            <div style="font-size: 11px; color: var(--text-dim);">or click to browse from computer</div>
+            <div id="installerStatus" style="display: none; margin-top: 6px; font-size: 12px; color: var(--accent-yellow); font-weight: 700;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: Capture Deck & Media Output -->
+    <div class="col-pane">
+
+      <!-- PERMANENT CAPTURE DECK (Record & Screenshot permanently visible!) -->
+      <section class="hero-capture-card">
+        <!-- Big Digital Timer -->
+        <div id="timerDisplay" class="rec-timer">00:00</div>
+
+        <!-- PERMANENT SIDE-BY-SIDE HERO BUTTONS -->
+        <div class="hero-buttons-row">
+          <!-- Permanent Record Button -->
+          <button id="recBtn" class="hero-rec-btn" onclick="toggleRecording()" disabled title="Start or Stop Screen Recording">
+            <span id="recIcon" style="font-size: 20px;">🔴</span>
+            <span id="recLabel">START RECORDING</span>
+          </button>
+
+          <!-- Permanent Screenshot Button (Beside Record) -->
+          <button id="shotBtn" class="hero-shot-btn" onclick="takeScreenshot()" disabled title="Capture instant watch screenshot">
+            <span style="font-size: 20px;">📸</span>
+            <span>TAKE SCREENSHOT</span>
+          </button>
+        </div>
+
+        <!-- Legible Status Hint -->
+        <p id="recHint" style="font-size: 13px; color: var(--text-muted); text-align: center;">Connect watch to enable recording</p>
+
+        <!-- Action Shortcuts -->
+        <div style="display: flex; gap: 8px; justify-content: center; width: 100%;">
+          <button class="btn" style="flex: 1;" onclick="openPCFolder()" title="Open local Downloads folder">📁 Open Downloads</button>
+          <button id="settingsBtn" class="btn" style="flex: 1;" onclick="toggleSettingsModal()" title="Recording Settings">⚙️ Video Settings</button>
+        </div>
+      </section>
+
+      <!-- MEDIA OUTPUT CARD -->
+      <section class="media-card">
+        <!-- Idle Placeholder (Visible when no recording is active) -->
+        <div id="mediaPlaceholder" class="media-placeholder">
+          <div style="font-size: 32px; opacity: 0.4;">🎬</div>
+          <div style="font-size: 14px; font-weight: 600; color: var(--text-muted);">Media Preview Deck</div>
+          <div style="font-size: 12px; color: var(--text-dim); text-align: center;">
+            Recorded watch videos and captured screenshots will appear right here.
+          </div>
+        </div>
+
+        <!-- Video Output View -->
+        <div id="videoCard" style="display: none; flex-direction: column; gap: 8px; flex: 1;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 12px; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase;">🎬 Recorded Video</span>
+            <button class="btn" style="padding: 2px 8px; font-size: 11px;" onclick="closeMediaPreview()">✕ Close</button>
+          </div>
+          <div id="videoFilename" style="font-size: 11px; font-family: monospace; color: var(--text-muted); word-break: break-all;"></div>
+
+          <div style="display: flex; justify-content: center; background: #000; border-radius: 6px; padding: 4px;">
+            <video id="videoElement" class="video-preview-player" controls></video>
+          </div>
+
+          <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 4px;">
+            <button class="btn btn-yellow" onclick="openNativeVideo()" title="Open in Windows video player">▶️ Open Video</button>
+            <a id="videoDownloadBtn" class="btn" download style="text-decoration: none;">⬇️ Download</a>
+            <button class="btn" onclick="renameCurrentVideo()">✏️ Rename</button>
+            <button class="btn btn-red" onclick="deleteCurrentVideo()">🗑️ Delete</button>
+            <button class="btn" onclick="openPCFolder()">📁 Downloads</button>
+          </div>
+        </div>
+
+        <!-- Screenshot Output View -->
+        <div id="screenshotCard" style="display: none; flex-direction: column; align-items: center; gap: 8px; flex: 1;">
+          <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 12px; font-weight: 700; color: var(--accent-green); text-transform: uppercase;">📸 Watch Screenshot</span>
+            <button class="btn" style="padding: 2px 8px; font-size: 11px;" onclick="closeMediaPreview()">✕ Close</button>
+          </div>
+          <div id="screenshotFilename" style="font-size: 11px; font-family: monospace; color: var(--text-muted); word-break: break-all;"></div>
+
+          <div style="display: flex; justify-content: center; padding: 6px;">
+            <img id="screenshotImg" class="screenshot-preview-img" alt="Screenshot preview">
+          </div>
+
+          <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;">
+            <a id="screenshotDownloadBtn" class="btn btn-yellow" download style="text-decoration: none;">⬇️ Download PNG</a>
+            <button class="btn" onclick="openPCFolder()">📁 Downloads</button>
+            <button class="btn" onclick="closeMediaPreview()">✕ Close</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
 
   </main>
 
-  <!-- Bottom Utility Rack (Eliminates Blank Dead Space) -->
-  <footer class="bottom-rack">
-    <div>CREATION CUE // WATCH RECORDER &amp; CONTROLLER v2.4</div>
+  <!-- App Footer -->
+  <footer class="app-footer">
+    <div>CREATION CUE // WATCH RECORDER &amp; CONTROLLER v2.5</div>
     <div>ADB BRIDGE: ACTIVE ON 127.0.0.1:37380</div>
     <div><a href="#" onclick="openPCFolder(); return false;">📂 SAVED TO DOWNLOADS</a></div>
   </footer>
@@ -1027,15 +896,15 @@
   <!-- Settings Modal -->
   <div id="settingsModal" class="modal-backdrop" style="display: none;" onclick="if(event.target===this) toggleSettingsModal()">
     <div class="modal-card">
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid #283042; padding-bottom: 8px;">
-        <span style="font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 1px;">⚙️ RECORDING CONFIGURATION</span>
-        <button style="background: none; border: none; color: var(--text-dim); font-size: 18px; cursor: pointer;" onclick="toggleSettingsModal()">&times;</button>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 1px solid #283042; padding-bottom: 10px;">
+        <span style="font-size: 14px; font-weight: 700; color: #fff;">⚙️ RECORDING SETTINGS</span>
+        <button style="background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer;" onclick="toggleSettingsModal()">&times;</button>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; flex-direction: column; gap: 14px;">
         <div>
-          <label style="font-size: 11px; color: var(--text-sub); display: block; margin-bottom: 5px;">Target Resolution (Screen Size):</label>
+          <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px;">Target Resolution (Screen Size):</label>
           <select id="settingSize" class="input-field" style="width: 100%;">
-            <option value="">Native Watch Resolution (Default)</option>
+            <option value="">Native Watch Resolution (Default - Recommended)</option>
             <option value="450x450">450 x 450 (Galaxy Watch 4/5/6 44mm)</option>
             <option value="410x410">410 x 410 (Galaxy Watch 40mm)</option>
             <option value="396x396">396 x 396 (Galaxy Watch 4 40mm)</option>
@@ -1043,7 +912,7 @@
           </select>
         </div>
         <div>
-          <label style="font-size: 11px; color: var(--text-sub); display: block; margin-bottom: 5px;">Video Bitrate:</label>
+          <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px;">Video Bitrate:</label>
           <select id="settingBitrate" class="input-field" style="width: 100%;">
             <option value="4000000">4 Mbps (Compact file)</option>
             <option value="8000000" selected>8 Mbps (Standard HD - Recommended)</option>
@@ -1052,7 +921,7 @@
           </select>
         </div>
         <div>
-          <label style="font-size: 11px; color: var(--text-sub); display: block; margin-bottom: 5px;">Auto-Stop Time Limit:</label>
+          <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px;">Auto-Stop Time Limit:</label>
           <select id="settingLimit" class="input-field" style="width: 100%;">
             <option value="0">Unlimited (Stop manually)</option>
             <option value="15">15 Seconds</option>
@@ -1061,38 +930,14 @@
             <option value="180">180 Seconds (3 Minutes Max)</option>
           </select>
         </div>
-        <div style="display: flex; justify-content: flex-end; margin-top: 8px; gap: 8px;">
-          <button class="hw-btn btn-accent" onclick="saveSettings()">Save Configuration</button>
+        <div style="display: flex; justify-content: flex-end; margin-top: 10px; gap: 10px;">
+          <button class="btn btn-yellow" onclick="saveSettings()">Save Settings</button>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    function applyQuickPreset(sizeVal, btn) {
-      document.getElementById('settingSize').value = sizeVal;
-      const settings = getRecordingSettings();
-      settings.size = sizeVal;
-      localStorage.setItem('cc_rec_settings', JSON.stringify(settings));
-      if (btn && btn.parentElement) {
-        btn.parentElement.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      }
-      showToast(sizeVal ? `Preset: ${sizeVal}` : 'Preset: Native Resolution', 'info', 1500);
-    }
-
-    function applyBitratePreset(bitrateVal, btn) {
-      document.getElementById('settingBitrate').value = bitrateVal;
-      const settings = getRecordingSettings();
-      settings.bitrate = bitrateVal;
-      localStorage.setItem('cc_rec_settings', JSON.stringify(settings));
-      if (btn && btn.parentElement) {
-        btn.parentElement.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      }
-      showToast(`Bitrate: ${(parseInt(bitrateVal)/1000000)} Mbps`, 'info', 1500);
-    }
-
     let bridgeBase = (window.location.port === '37380') ? '' : 'http://127.0.0.1:37380';
 
     async function callBridge(path, options = {}) {
@@ -1219,8 +1064,8 @@
       devSelectElem.addEventListener('change', (e) => {
         const devId = e.target.value;
         if (devId) {
-          updateStatusBadge('online', `WEAR: ${devId}`);
-          showToast(`Selected Wear device: ${devId}`, 'info', 2000);
+          updateStatusBadge('online', `Connected: ${devId}`);
+          showToast(`Active watch: ${devId}`, 'info', 2000);
         }
       });
     }
@@ -1275,23 +1120,18 @@
         const select = document.getElementById('deviceSelect');
         const currentVal = select.value;
         select.innerHTML = '';
-        const radarText = document.getElementById('radarStatusText');
 
         if (connectedDevices.length === 0) {
-          select.innerHTML = '<option value="">⌚ WEAR OS: (No Watch Connected - Enter IP Below)</option>';
-          updateStatusBadge('connecting', 'Bridge Active - Waiting for Watch');
-          if (radarText) {
-            radarText.innerText = 'RADAR LINK';
-            radarText.style.color = 'var(--neon-green)';
-          }
+          select.innerHTML = '<option value="">⌚ No Watch Connected (Enter IP & Port below)</option>';
+          updateStatusBadge('connecting', 'Waiting for Watch');
           document.getElementById('recBtn').disabled = !data.recording.active;
           document.getElementById('shotBtn').disabled = true;
-          document.getElementById('recHint').innerText = 'Please connect your watch via Wi-Fi IP or USB';
+          document.getElementById('recHint').innerText = 'Connect your watch via Wi-Fi IP or USB to enable recording';
         } else {
           connectedDevices.forEach(dev => {
             const opt = document.createElement('option');
             opt.value = dev.id;
-            opt.innerText = `⌚ WEAR OS: ${dev.model} (${dev.id})`;
+            opt.innerText = `⌚ ${dev.model} (${dev.id})`;
             select.appendChild(opt);
           });
           if (currentVal && connectedDevices.some(d => d.id === currentVal)) {
@@ -1303,22 +1143,17 @@
           const activeDevId = select.value || connectedDevices[0].id;
           const activeDev = connectedDevices.find(d => d.id === activeDevId) || connectedDevices[0];
 
-          if (radarText) {
-            radarText.innerText = (activeDev.model && activeDev.model !== 'Smartwatch') ? activeDev.model.toUpperCase() : 'WEAR OS ACTIVE';
-            radarText.style.color = 'var(--neon-cyan)';
-          }
-
           if (activeDev && activeDev.status === 'unauthorized') {
             updateStatusBadge('connecting', `⚠️ Tap 'Allow' on Watch Screen`);
             document.getElementById('recBtn').disabled = true;
             document.getElementById('shotBtn').disabled = true;
-            document.getElementById('recHint').innerText = 'Check your watch: Tap "Always allow from this computer"';
+            document.getElementById('recHint').innerText = 'Check watch screen: Tap "Always allow from this computer"';
           } else {
-            updateStatusBadge('online', `WEAR: ${activeDev ? activeDev.id : activeDevId}`);
+            updateStatusBadge('online', `Connected: ${activeDev ? activeDev.model : activeDevId}`);
             document.getElementById('recBtn').disabled = false;
             document.getElementById('shotBtn').disabled = isRecording;
             if (!isRecording) {
-              document.getElementById('recHint').innerText = 'Ready! Click big RED REC button or 📸 Screenshot';
+              document.getElementById('recHint').innerText = 'Ready! Click START RECORDING or TAKE SCREENSHOT';
             }
           }
         }
@@ -1337,7 +1172,7 @@
         updateStatusBadge('offline', 'Bridge Disconnected');
         document.getElementById('recBtn').disabled = true;
         document.getElementById('shotBtn').disabled = true;
-        document.getElementById('recHint').innerText = 'Run Start Watch Bridge.bat on your PC to connect';
+        document.getElementById('recHint').innerText = 'Run WatchRecorder.exe on your PC to connect';
       }
     }
 
@@ -1352,7 +1187,7 @@
     function renderSavedDevices() {
       const select = document.getElementById('savedDevicesSelect');
       if (!select) return;
-      select.innerHTML = '<option value="">⭐ Saved Devices (Recent)...</option>';
+      select.innerHTML = '<option value="">⭐ Recent Saved Devices...</option>';
       let saved = [];
       try {
         saved = JSON.parse(localStorage.getItem('cc_saved_devices') || '[]');
@@ -1368,7 +1203,8 @@
     function loadSavedDevice(val) {
       if (!val) return;
       setIpValue('conn', val);
-      showToast(`Loaded device ${val}`, 'info', 2000);
+      showToast(`Loaded device ${val}. Press Enter to connect!`, 'info', 2500);
+      document.getElementById('connPort').focus();
     }
 
     function saveDeviceToHistory(target) {
@@ -1387,7 +1223,7 @@
     function forgetSelectedSavedDevice() {
       const select = document.getElementById('savedDevicesSelect');
       const val = select.value;
-      if (!val) return showToast('Please select a saved device from the dropdown to forget', 'error');
+      if (!val) return showToast('Please select a device from the dropdown to forget', 'error');
       let saved = [];
       try {
         saved = JSON.parse(localStorage.getItem('cc_saved_devices') || '[]');
@@ -1408,25 +1244,6 @@
       document.getElementById('settingSize').value = settings.size || '';
       document.getElementById('settingBitrate').value = settings.bitrate || '8000000';
       document.getElementById('settingLimit').value = settings.limit || '0';
-
-      document.querySelectorAll('.segment-strip button').forEach(btn => {
-        const onclick = btn.getAttribute('onclick') || '';
-        if (onclick.includes('applyQuickPreset')) {
-          const target = "applyQuickPreset('" + (settings.size || '') + "'";
-          if (onclick.includes(target)) {
-            btn.classList.add('active');
-          } else {
-            btn.classList.remove('active');
-          }
-        } else if (onclick.includes('applyBitratePreset')) {
-          const target = "applyBitratePreset('" + (settings.bitrate || '8000000') + "'";
-          if (onclick.includes(target)) {
-            btn.classList.add('active');
-          } else {
-            btn.classList.remove('active');
-          }
-        }
-      });
     }
 
     function toggleSettingsModal() {
@@ -1521,7 +1338,7 @@
           const ipOnly = target.split(':')[0];
           setIpValue('conn', `${ipOnly}:`);
           document.getElementById('connPort').focus();
-          showToast(`🎉 PAIRING SUCCESSFUL! Now enter your Connection Port in the yellow box above and click Connect IP`, 'success', 6000);
+          showToast(`🎉 PAIRING SUCCESSFUL! Enter Connection Port in the boxes above and click Connect IP`, 'success', 6000);
         } else {
           showToast('Pairing Error: ' + (data.output || data.error), 'error', 5000);
         }
@@ -1530,7 +1347,7 @@
         showToast('Failed to send pairing request: ' + err.message, 'error');
       } finally {
         btn.disabled = false;
-        btn.innerText = '🔑 Pair Watch';
+        btn.innerText = 'Pair Watch';
       }
     }
 
@@ -1543,9 +1360,13 @@
       if (chev) chev.innerText = isHidden ? '▾' : '▸';
     }
 
-    function togglePairingHelp() {
-      const elem = document.getElementById('pairingHelp');
-      elem.style.display = elem.style.display === 'none' ? 'block' : 'none';
+    function toggleInstallerSection() {
+      const elem = document.getElementById('installerSection');
+      const chev = document.getElementById('installerChevron');
+      if (!elem) return;
+      const isHidden = (elem.style.display === 'none' || getComputedStyle(elem).display === 'none');
+      elem.style.display = isHidden ? 'block' : 'none';
+      if (chev) chev.innerText = isHidden ? '▾' : '▸';
     }
 
     /* Quick Screenshot */
@@ -1570,11 +1391,13 @@
           document.getElementById('screenshotDownloadBtn').href = data.download_url;
           document.getElementById('screenshotDownloadBtn').download = data.filename;
 
-          // Hide video card and recorder view, show screenshot card
+          // Hide video card & placeholder, show screenshot card
           const vCard = document.getElementById('videoCard');
           if (vCard) vCard.style.display = 'none';
-          const recView = document.getElementById('recorderMainView');
-          if (recView) recView.style.display = 'none';
+
+          const placeholder = document.getElementById('mediaPlaceholder');
+          if (placeholder) placeholder.style.display = 'none';
+
           const card = document.getElementById('screenshotCard');
           card.style.display = 'flex';
 
@@ -1582,7 +1405,7 @@
           const backBtn = document.getElementById('headerBackBtn');
           if (backBtn) backBtn.style.display = 'inline-flex';
 
-          showToast('📸 Screenshot captured and saved to Downloads!', 'success', 4000);
+          showToast('📸 Screenshot saved to Downloads!', 'success', 4000);
         } else {
           showToast('Screenshot Error: ' + (data.output || data.error || 'Failed'), 'error', 4000);
         }
@@ -1635,7 +1458,7 @@
 
           if (data.success) {
             showVideoResult(data.download_url, data.filename);
-            showToast('✅ Video saved and ready!', 'success');
+            showToast('✅ Video saved to Downloads!', 'success');
           } else {
             showToast('Stop Error: Video file could not be pulled from watch.', 'error');
           }
@@ -1661,8 +1484,8 @@
       if (active) {
         recBtn.classList.add('recording');
         recIcon.innerText = '⏹️';
-        recLabel.innerText = 'STOP';
-        recHint.innerText = 'Recording in progress... Click STOP when done';
+        recLabel.innerText = 'STOP RECORDING';
+        recHint.innerText = '🔴 Recording in progress... Click STOP RECORDING when finished';
         timerDisplay.classList.add('active');
 
         startTime = serverStartTime ? (serverStartTime * 1000) : Date.now();
@@ -1671,8 +1494,8 @@
       } else {
         recBtn.classList.remove('recording');
         recIcon.innerText = '🔴';
-        recLabel.innerText = 'REC';
-        recHint.innerText = 'Click big RED button to record, or 📸 Screenshot';
+        recLabel.innerText = 'START RECORDING';
+        recHint.innerText = 'Click START RECORDING or TAKE SCREENSHOT';
         timerDisplay.classList.remove('active');
         timerDisplay.innerText = '00:00';
         clearInterval(timerInterval);
@@ -1690,11 +1513,12 @@
       currentVideoFilename = filename;
       currentVideoUrl = videoUrl;
 
-      // Hide screenshot card and recorder view, show video card
+      // Hide screenshot card & placeholder, show video card
       const scCard = document.getElementById('screenshotCard');
       if (scCard) scCard.style.display = 'none';
-      const recView = document.getElementById('recorderMainView');
-      if (recView) recView.style.display = 'none';
+
+      const placeholder = document.getElementById('mediaPlaceholder');
+      if (placeholder) placeholder.style.display = 'none';
 
       const card = document.getElementById('videoCard');
       const video = document.getElementById('videoElement');
@@ -1704,7 +1528,7 @@
 
       // Append inline=1 for embedded player stream
       video.src = videoUrl + (videoUrl.includes('?') ? '&' : '?') + 'inline=1';
-      card.style.display = 'block';
+      card.style.display = 'flex';
 
       // Show Back button in top header
       const backBtn = document.getElementById('headerBackBtn');
@@ -1733,7 +1557,6 @@
     function closeMediaPreview() {
       const videoCard = document.getElementById('videoCard');
       const screenshotCard = document.getElementById('screenshotCard');
-      const recView = document.getElementById('recorderMainView');
       const video = document.getElementById('videoElement');
       if (video) {
         try { video.pause(); } catch(e) {}
@@ -1741,10 +1564,13 @@
       }
       if (videoCard) videoCard.style.display = 'none';
       if (screenshotCard) screenshotCard.style.display = 'none';
-      if (recView) recView.style.display = 'flex';
+
+      const placeholder = document.getElementById('mediaPlaceholder');
+      if (placeholder) placeholder.style.display = 'flex';
+
       const backBtn = document.getElementById('headerBackBtn');
       if (backBtn) backBtn.style.display = 'none';
-      showToast('Returned to recorder', 'info', 1200);
+      showToast('Preview closed', 'info', 1200);
     }
 
     function downloadCurrentVideo() {
