@@ -76,6 +76,10 @@
       ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
       ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')"
     },
+    "watch_face_review_status": {
+      ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
+      ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')"
+    },
     "github_config": {
       ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
       ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')"

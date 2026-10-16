@@ -992,6 +992,39 @@
       cursor: help;
     }
 
+    .in-review-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      color: #fbbf24;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      vertical-align: middle;
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.2);
+    }
+
+    .grid-card-review-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: #f59e0b;
+      color: #000;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 3px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      z-index: 2;
+    }
+
     .note-textarea {
       width: 100%;
       background: var(--mid);
@@ -2300,6 +2333,14 @@
         <div class="stat-value" id="stat-avg-rating" style="color: #f5c518;">0.0 ★</div>
         <div style="font-size: 11px; color: var(--muted); margin-top: 2px;" id="stat-rating-sub">0 rated faces</div>
       </div>
+      <div class="stat-card clickable-card" id="card-in-review" title="Click to filter by In Review only" onclick="onInReviewCardClick()" style="border-left-color: #f59e0b;">
+        <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
+          <span>Changes In Review</span>
+          <span style="font-size: 10px; opacity: 0.75; color: #f59e0b;">🔍 Filter</span>
+        </div>
+        <div class="stat-value" id="stat-in-review" style="color: #f59e0b;">0</div>
+        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;" id="stat-in-review-sub">0 awaiting approval</div>
+      </div>
       <div class="stat-card" style="display: flex; flex-direction: column; gap: 8px; padding: 12px 16px;">
         <div class="stat-label" style="margin-bottom: 2px;">Quick Copier</div>
         <div style="display: flex; flex-direction: column; gap: 6px; font-size: 11px; flex: 1; justify-content: center;">
@@ -2376,8 +2417,9 @@
           <option value="free">🎁 Free Faces</option>
           <option value="paid">💎 Paid Faces</option>
         </select>
-        <select class="filter-select" id="filter-rollout" title="Filter by Rollout Status">
-          <option value="all">🚀 All Rollout Status</option>
+        <select class="filter-select" id="filter-rollout" title="Filter by Rollout / Review Status">
+          <option value="all">🚀 All Status</option>
+          <option value="in-review">⏳ In Review (Pending)</option>
           <option value="staged">⏳ Staged Rollouts (&lt;100%)</option>
           <option value="completed">✅ Completed (100%)</option>
         </select>
@@ -2459,6 +2501,17 @@
            onmouseover="this.style.background='rgba(16,185,129,0.22)';this.style.borderColor='rgba(16,185,129,0.6)'"
            onmouseout="this.style.background='rgba(16,185,129,0.12)';this.style.borderColor='rgba(16,185,129,0.35)'">
           ⭐ Copy Review Request Link
+        </button>
+      </div>
+
+      <!-- Google Store Review Status Banner -->
+      <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 8px; padding: 10px 14px; margin-top: 6px; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #f59e0b; letter-spacing: 0.5px;">Google Store Review</span>
+          <span id="details-review-status-text" style="font-size: 13px; font-weight: 600; color: #fff;">✅ Live on Store (Published)</span>
+        </div>
+        <button id="details-toggle-review-btn" type="button" onclick="toggleDrawerReviewStatus()" class="header-btn" style="font-size: 11px; padding: 6px 12px; margin: 0; line-height: 1.2; border-color: rgba(245, 158, 11, 0.5); color: #f59e0b;">
+          ⏳ Mark In Review
         </button>
       </div>
       
@@ -2621,6 +2674,8 @@
     <span class="toolbar-count" id="toolbar-count">0 selected</span>
     <div class="toolbar-divider"></div>
     <button class="toolbar-btn-create" onclick="openTaskModal()">📅 Create Planner Tasks</button>
+    <button class="toolbar-btn-create" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: #fbbf24;" onclick="batchSetReviewStatus(true)" title="Mark selected watch faces as In Review">⏳ Mark In Review</button>
+    <button class="toolbar-btn-create" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #34d399;" onclick="batchSetReviewStatus(false)" title="Mark selected watch faces as Published / Approved">✅ Mark Published</button>
     <button class="toolbar-btn-clear" onclick="clearSelection()" title="Clear selection">✕</button>
   </div>
 
@@ -2796,6 +2851,7 @@
     var unrepliedReviews = [];
     var notesData = {};
     var companionReleaseNotes = {};
+    var reviewStatusData = {};
 
     function setupAutoRefresh() {
       // Check every 60 seconds if it's 7:30 AM local time
@@ -2889,6 +2945,12 @@
           const versionsList = versionsResponse.results || [];
           versionsList.forEach(item => {
             versionsData[item.packageName] = item;
+            if (item.inReview && !reviewStatusData[item.id]) {
+              reviewStatusData[item.id] = {
+                inReview: true,
+                submittedAt: item.submittedAt || null
+              };
+            }
           });
         } catch (e) {
           console.warn("Could not load versions-data.json", e);
@@ -3012,6 +3074,18 @@
             companionReleaseNotes = {};
           });
 
+          // Connect to Realtime Database to load Review Status (Changes In Review)
+          db.ref('watch_face_review_status').on('value', function(snapshot) {
+            reviewStatusData = snapshot.val() || {};
+            buildCombinedData();
+            renderDashboard();
+            if (activeDetailsWfId) {
+              updateDrawerReviewStatus(activeDetailsWfId);
+            }
+          }, function(err) {
+            console.warn("Could not load review status from database:", err);
+          });
+
       } catch (err) {
         console.error("Dashboard initialization error:", err);
         document.getElementById('loading-overlay').innerHTML = `<div style="color:var(--red); font-weight:bold; padding:20px;">Failed to initialize: ${err.message}</div>`;
@@ -3078,7 +3152,9 @@
           ratingCount: playInfo.ratingCount || null,
           playStoreTitle: playInfo.playStoreTitle || '',
           isFree: wf.is_free || false,
-          note: notesData[wf.id] || ''
+          note: notesData[wf.id] || '',
+          inReview: !!(reviewStatusData[wf.id] && reviewStatusData[wf.id].inReview),
+          reviewDetails: reviewStatusData[wf.id] || null
         };
       });
     }
@@ -3116,6 +3192,10 @@
       if (cardRollouts) {
         cardRollouts.classList.toggle('active-filter', rolloutFilter === 'staged');
       }
+      const cardInReview = document.getElementById('card-in-review');
+      if (cardInReview) {
+        cardInReview.classList.toggle('active-filter', rolloutFilter === 'in-review');
+      }
 
       const sortVal = window.currentSort || 'id-asc';
 
@@ -3139,7 +3219,9 @@
 
         // Rollout filter
         let matchRollout = true;
-        if (rolloutFilter === 'staged') {
+        if (rolloutFilter === 'in-review') {
+          matchRollout = !!wf.inReview;
+        } else if (rolloutFilter === 'staged') {
           const companionStaged = wf.companionRollout && wf.companionRollout !== '100%' && wf.companionRollout !== 'N/A';
           const wearStaged = wf.wearRollout && wf.wearRollout !== '100%' && wf.wearRollout !== 'N/A';
           matchRollout = companionStaged || wearStaged;
@@ -3326,6 +3408,18 @@
         statRolloutsEl.style.color = stagedCount > 0 ? 'var(--yellow)' : 'var(--green)';
       }
 
+      // Count in-review items
+      const inReviewCount = combinedData.filter(wf => wf.inReview).length;
+      const statInReviewEl = document.getElementById('stat-in-review');
+      if (statInReviewEl) {
+        statInReviewEl.textContent = inReviewCount;
+        statInReviewEl.style.color = inReviewCount > 0 ? '#f59e0b' : 'var(--muted)';
+      }
+      const statInReviewSubEl = document.getElementById('stat-in-review-sub');
+      if (statInReviewSubEl) {
+        statInReviewSubEl.textContent = inReviewCount > 0 ? `${inReviewCount} pending approval` : 'No submissions pending';
+      }
+
       // Set last scan date and time
       if (window.lastScanDateStr) {
         const scanDate = new Date(window.lastScanDateStr);
@@ -3377,6 +3471,7 @@
                 <div class="grid-card-img-wrapper">
                   <img src="${getOptimizedImageUrl(wf.imageUrl, 240)}" alt="${wf.id}" class="grid-card-img" loading="lazy">
                   <span class="grid-card-badge-top">${wf.id.toUpperCase()}</span>
+                  ${wf.inReview ? `<span class="grid-card-review-badge">⏳ IN REVIEW</span>` : ''}
                 </div>
                 <div class="grid-card-info">
                   <div class="grid-card-title" title="${wf.title}">${wf.title}</div>
@@ -3581,6 +3676,7 @@
               <div class="wf-details">
                 <span class="wf-title">${watchFaceName}</span>
                 <span class="wf-id">${wf.id}</span>
+                ${wf.inReview ? `<span class="in-review-badge">⏳ IN REVIEW</span>` : ''}
               </div>
             </div>
           </td>
@@ -3949,6 +4045,9 @@
       document.getElementById('details-wear-rollout').textContent = wf.wearRollout || '100%';
       document.getElementById('details-wear-notes').textContent = wf.wearNotes || 'None';
 
+      // Update Google Store Review Status in drawer
+      updateDrawerReviewStatus(id);
+
       // Open drawer & backdrop
       document.getElementById('details-panel').classList.add('open');
       document.getElementById('details-backdrop').classList.add('open');
@@ -3958,6 +4057,65 @@
       activeDetailsWfId = null;
       document.getElementById('details-panel').classList.remove('open');
       document.getElementById('details-backdrop').classList.remove('open');
+    }
+
+    function updateDrawerReviewStatus(id) {
+      const statusText = document.getElementById('details-review-status-text');
+      const toggleBtn = document.getElementById('details-toggle-review-btn');
+      if (!statusText || !toggleBtn) return;
+
+      const revData = reviewStatusData[id];
+      const isInReview = !!(revData && revData.inReview);
+
+      if (isInReview) {
+        const dateStr = revData.submittedAt ? new Date(revData.submittedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+        statusText.innerHTML = `⏳ <span style="color: #f59e0b; font-weight:700;">In Google Review</span> ${dateStr ? `<span style="font-size:11px; color:var(--muted); font-weight:normal;">(submitted ${dateStr})</span>` : ''}`;
+        toggleBtn.innerHTML = `✅ Mark Published`;
+        toggleBtn.style.color = `#34d399`;
+        toggleBtn.style.borderColor = `rgba(52, 211, 153, 0.5)`;
+      } else {
+        statusText.innerHTML = `✅ <span style="color: #34d399; font-weight:600;">Live on Store (Published)</span>`;
+        toggleBtn.innerHTML = `⏳ Mark In Review`;
+        toggleBtn.style.color = `#f59e0b`;
+        toggleBtn.style.borderColor = `rgba(245, 158, 11, 0.5)`;
+      }
+    }
+
+    function toggleDrawerReviewStatus() {
+      if (!activeDetailsWfId) return;
+      const id = activeDetailsWfId;
+      const currentRev = reviewStatusData[id];
+      const willBeInReview = !(currentRev && currentRev.inReview);
+
+      const updatePayload = willBeInReview ? {
+        inReview: true,
+        submittedAt: new Date().toISOString()
+      } : {
+        inReview: false,
+        approvedAt: new Date().toISOString()
+      };
+
+      db.ref('watch_face_review_status/' + id).set(updatePayload).then(() => {
+        reviewStatusData[id] = updatePayload;
+        buildCombinedData();
+        renderDashboard();
+        updateDrawerReviewStatus(id);
+        showToast(willBeInReview ? `Marked ${id.toUpperCase()} as In Review` : `Marked ${id.toUpperCase()} as Published`);
+      }).catch(err => {
+        console.error("Error updating review status:", err);
+        showToast('Failed to update review status: ' + err.message, 'error');
+      });
+    }
+
+    function onInReviewCardClick() {
+      const selectEl = document.getElementById('filter-rollout');
+      if (!selectEl) return;
+      if (selectEl.value === 'in-review') {
+        selectEl.value = 'all';
+      } else {
+        selectEl.value = 'in-review';
+      }
+      renderDashboard();
     }
 
     // Copy input field contents to clipboard helper
@@ -4489,6 +4647,38 @@
       selectedFaceIds.clear();
       updateSelectionToolbar();
       renderDashboard();
+    }
+
+    function batchSetReviewStatus(inReview) {
+      if (selectedFaceIds.size === 0) {
+        showToast('No watch faces selected', 'warning');
+        return;
+      }
+      const count = selectedFaceIds.size;
+      const updates = {};
+      const nowIso = new Date().toISOString();
+      selectedFaceIds.forEach(id => {
+        updates[id] = inReview ? {
+          inReview: true,
+          submittedAt: nowIso
+        } : {
+          inReview: false,
+          approvedAt: nowIso
+        };
+      });
+
+      db.ref('watch_face_review_status').update(updates).then(() => {
+        Object.assign(reviewStatusData, updates);
+        buildCombinedData();
+        renderDashboard();
+        if (activeDetailsWfId) {
+          updateDrawerReviewStatus(activeDetailsWfId);
+        }
+        showToast(`Updated ${count} watch face${count > 1 ? 's' : ''} to ${inReview ? 'In Review' : 'Published'}`);
+      }).catch(err => {
+        console.error("Error in batchSetReviewStatus:", err);
+        showToast('Failed to update review status: ' + err.message, 'error');
+      });
     }
 
     function buildTaskTitle(template, wf) {

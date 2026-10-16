@@ -259,7 +259,23 @@ async function main() {
       // but you can log them if needed. We'll just silently skip to not break version fetching.
     }
 
-    results.push({
+    let inReview = false;
+    let submittedAt = null;
+    if (prevItem && prevItem.inReview) {
+      const dateChanged = prevItem.lastUpdatedDate && lastUpdatedDate && prevItem.lastUpdatedDate !== lastUpdatedDate && lastUpdatedDate !== 'N/A' && lastUpdatedDate !== 'Fetch Failed';
+      const companionChanged = prevItem.companionVersion && companionVersion && prevItem.companionVersion !== companionVersion && companionVersion !== 'N/A' && !companionVersion.includes('API Error');
+      const wearChanged = prevItem.wearVersion && wearVersion && prevItem.wearVersion !== wearVersion && wearVersion !== 'N/A' && !wearVersion.includes('API Error');
+
+      if (dateChanged || companionChanged || wearChanged) {
+        console.log(`[Review Approval Detected] ${wf.id} (${packageName}) updated on Play Store! Auto-clearing In-Review status.`);
+        inReview = false;
+      } else {
+        inReview = true;
+        submittedAt = prevItem.submittedAt || null;
+      }
+    }
+
+    const itemResult = {
       id: wf.id,
       title: wf.title,
       playStoreTitle,
@@ -270,7 +286,13 @@ async function main() {
       downloads,
       rating,
       ratingCount,
-    });
+    };
+    if (inReview) {
+      itemResult.inReview = true;
+      if (submittedAt) itemResult.submittedAt = submittedAt;
+    }
+
+    results.push(itemResult);
   }
 
   let activeIndex = 0;
