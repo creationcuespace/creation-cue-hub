@@ -200,6 +200,34 @@ class ADBBridgeHandler(BaseHTTPRequestHandler):
                     self.wfile.write(f.read())
                 return
 
+        if path in ["/images/recorder_logo.png", "/recorder_logo.png"]:
+            local_img = os.path.join(BUNDLE_DIR, "images", "recorder_logo.png")
+            if not os.path.exists(local_img):
+                local_img = os.path.join(BUNDLE_DIR, "recorder_logo.png")
+            if not os.path.exists(local_img):
+                local_img = os.path.join(EXE_DIR, "images", "recorder_logo.png")
+            if os.path.exists(local_img):
+                self.send_response(200)
+                self.send_header("Content-Type", "image/png")
+                self._send_cors_headers()
+                self.end_headers()
+                with open(local_img, "rb") as f:
+                    self.wfile.write(f.read())
+                return
+
+        if path in ["/favicon.ico"]:
+            local_ico = os.path.join(BUNDLE_DIR, "favicon.ico")
+            if not os.path.exists(local_ico):
+                local_ico = os.path.join(EXE_DIR, "favicon.ico")
+            if os.path.exists(local_ico):
+                self.send_response(200)
+                self.send_header("Content-Type", "image/x-icon")
+                self._send_cors_headers()
+                self.end_headers()
+                with open(local_ico, "rb") as f:
+                    self.wfile.write(f.read())
+                return
+
         if path == "/api/status":
             devices = self.get_adb_devices()
             self._send_json({
