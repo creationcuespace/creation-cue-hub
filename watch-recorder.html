@@ -206,7 +206,17 @@
       color: #fff;
     }
 
-    /* Main Grid Layout */
+    /* Hide all scrollbars cleanly */
+    * {
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    *::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
     .main-grid {
       flex: 1;
       display: grid;
@@ -216,6 +226,7 @@
       min-height: 0;
       height: calc(100vh - 76px);
       box-sizing: border-box;
+      overflow: hidden !important;
     }
 
     .col-pane {
@@ -223,6 +234,7 @@
       flex-direction: column;
       gap: 12px;
       min-height: 0;
+      overflow-x: hidden !important;
       overflow-y: auto;
     }
 
@@ -300,6 +312,7 @@
     /* IP Box Group (Big & Clean) */
     .ip-box-group {
       height: 44px;
+      width: 100%;
       display: flex;
       align-items: center;
       background: var(--input-bg);
@@ -307,15 +320,17 @@
       border-radius: 6px;
       padding: 0 8px;
       box-shadow: inset 0 1px 4px rgba(0,0,0,0.6);
+      box-sizing: border-box;
     }
 
     .ip-box {
-      width: 44px;
+      flex: 1;
+      min-width: 0;
       background: transparent;
       border: none;
       color: var(--accent-cyan);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       text-align: center;
       outline: none;
@@ -329,17 +344,19 @@
     .ip-dot {
       color: #586682;
       font-weight: 800;
-      padding: 0 2px;
-      font-size: 16px;
+      padding: 0 1px;
+      font-size: 15px;
+      user-select: none;
     }
 
     .port-box {
-      width: 66px;
+      flex: 1.4;
+      min-width: 0;
       background: transparent;
       border: none;
       color: var(--accent-yellow);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       text-align: center;
       outline: none;
@@ -722,25 +739,25 @@
         </div>
 
         <!-- Direct IP Connect Bar -->
-        <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 2px;">
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 2px;">
           <label style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
             Connect via IP &amp; Port:
           </label>
-          <div style="display: flex; gap: 8px; align-items: center;">
-            <div class="ip-box-group" id="connGroup" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
-              <input type="text" maxlength="3" class="ip-box" id="conn1" value="192" placeholder="192" oninput="handleIpInput(this, 'conn2', '')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
-              <span class="ip-dot">.</span>
-              <input type="text" maxlength="3" class="ip-box" id="conn2" value="168" placeholder="168" oninput="handleIpInput(this, 'conn3', 'conn1')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
-              <span class="ip-dot">.</span>
-              <input type="text" maxlength="3" class="ip-box" id="conn3" value="8" placeholder="8" oninput="handleIpInput(this, 'conn4', 'conn2')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
-              <span class="ip-dot">.</span>
-              <input type="text" maxlength="3" class="ip-box" id="conn4" value="59" placeholder="59" oninput="handleIpInput(this, 'connPort', 'conn3')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
-              <span class="ip-dot">:</span>
-              <input type="text" maxlength="5" class="port-box" id="connPort" value="37673" placeholder="37673" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
-            </div>
+          <div class="ip-box-group" id="connGroup" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
+            <input type="text" maxlength="3" class="ip-box" id="conn1" value="192" placeholder="192" oninput="handleIpInput(this, 'conn2', '')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
+            <span class="ip-dot">.</span>
+            <input type="text" maxlength="3" class="ip-box" id="conn2" value="168" placeholder="168" oninput="handleIpInput(this, 'conn3', 'conn1')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
+            <span class="ip-dot">.</span>
+            <input type="text" maxlength="3" class="ip-box" id="conn3" value="8" placeholder="8" oninput="handleIpInput(this, 'conn4', 'conn2')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
+            <span class="ip-dot">.</span>
+            <input type="text" maxlength="3" class="ip-box" id="conn4" value="59" placeholder="59" oninput="handleIpInput(this, 'connPort', 'conn3')" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
+            <span class="ip-dot">:</span>
+            <input type="text" maxlength="5" class="port-box" id="connPort" value="37673" placeholder="37673" onpaste="handleIpPaste(event, 'conn')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); connectDevice();}">
+          </div>
 
-            <button id="connectBtn" class="btn btn-yellow" style="height: 44px; padding: 0 16px; font-size: 13px;" onclick="connectDevice()">Connect IP</button>
-            <button class="btn" style="height: 44px; padding: 0 12px;" onclick="disconnectDevice()" title="Disconnect watch">🔌</button>
+          <div style="display: flex; gap: 8px; width: 100%;">
+            <button id="connectBtn" class="btn btn-yellow" style="flex: 1; height: 42px; font-size: 13px; font-weight: 700;" onclick="connectDevice()">Connect IP</button>
+            <button class="btn" style="height: 42px; padding: 0 16px; font-size: 13px;" onclick="disconnectDevice()" title="Disconnect watch">🔌 Disconnect</button>
           </div>
         </div>
 
@@ -760,20 +777,22 @@
           <div style="background: #090b10; border: 1px solid #1f2536; padding: 8px 10px; border-radius: 4px; font-size: 11px; color: #a4b0c9; line-height: 1.4;">
             On watch: <strong>Settings &gt; Developer options &gt; Wireless debugging &gt; Pair new device</strong>.
           </div>
-          <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-            <div class="ip-box-group" id="pairGroup" style="height: 38px;" onkeydown="if(event.key==='Enter'){event.preventDefault(); pairDevice();}">
-              <input type="text" maxlength="3" class="ip-box" id="pair1" value="192" placeholder="192" oninput="handleIpInput(this, 'pair2', '')" onpaste="handleIpPaste(event, 'pair')">
+          <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+            <div class="ip-box-group" id="pairGroup" style="height: 40px; width: 100%;" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); pairDevice();}">
+              <input type="text" maxlength="3" class="ip-box" id="pair1" value="192" placeholder="192" oninput="handleIpInput(this, 'pair2', '')" onpaste="handleIpPaste(event, 'pair')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); pairDevice();}">
               <span class="ip-dot">.</span>
-              <input type="text" maxlength="3" class="ip-box" id="pair2" value="168" placeholder="168" oninput="handleIpInput(this, 'pair3', 'pair1')" onpaste="handleIpPaste(event, 'pair')">
+              <input type="text" maxlength="3" class="ip-box" id="pair2" value="168" placeholder="168" oninput="handleIpInput(this, 'pair3', 'pair1')" onpaste="handleIpPaste(event, 'pair')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); pairDevice();}">
               <span class="ip-dot">.</span>
-              <input type="text" maxlength="3" class="ip-box" id="pair3" value="8" placeholder="8" oninput="handleIpInput(this, 'pair4', 'pair2')" onpaste="handleIpPaste(event, 'pair')">
+              <input type="text" maxlength="3" class="ip-box" id="pair3" value="8" placeholder="8" oninput="handleIpInput(this, 'pair4', 'pair2')" onpaste="handleIpPaste(event, 'pair')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); pairDevice();}">
               <span class="ip-dot">.</span>
-              <input type="text" maxlength="3" class="ip-box" id="pair4" value="59" placeholder="59" oninput="handleIpInput(this, 'pairPort', 'pair3')" onpaste="handleIpPaste(event, 'pair')">
+              <input type="text" maxlength="3" class="ip-box" id="pair4" value="59" placeholder="59" oninput="handleIpInput(this, 'pairPort', 'pair3')" onpaste="handleIpPaste(event, 'pair')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); pairDevice();}">
               <span class="ip-dot">:</span>
-              <input type="text" maxlength="5" class="port-box" id="pairPort" placeholder="45597" onpaste="handleIpPaste(event, 'pair')">
+              <input type="text" maxlength="5" class="port-box" id="pairPort" placeholder="45597" onpaste="handleIpPaste(event, 'pair')" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); pairDevice();}">
             </div>
-            <input type="text" id="pairCodeInput" class="input-field" placeholder="6-Digit Code" style="height: 38px; width: 100px; font-family: monospace;" onkeydown="if(event.key==='Enter'){event.preventDefault(); pairDevice();}">
-            <button id="pairBtn" class="btn btn-yellow" style="height: 38px;" onclick="pairDevice()">Pair</button>
+            <div style="display: flex; gap: 8px; width: 100%;">
+              <input type="text" id="pairCodeInput" class="input-field" placeholder="6-Digit Pairing Code" style="height: 40px; flex: 1; font-family: monospace; font-size: 13px;" onkeydown="if(event.key==='Enter'||event.keyCode===13){event.preventDefault(); pairDevice();}">
+              <button id="pairBtn" class="btn btn-yellow" style="height: 40px; padding: 0 16px; font-weight: 700;" onclick="pairDevice()">Pair Watch</button>
+            </div>
           </div>
         </div>
       </div>
