@@ -1,17 +1,17 @@
 {
-  "lastUpdated": "2026-10-16T01:40:18.553Z",
+  "lastUpdated": "2026-10-17T01:33:51.543Z",
   "reviews": [
     {
-      "reviewId": "5eea7172-a6cf-4c5d-a1ef-499abb01e0e1",
-      "packageName": "com.creation.cue107watchface",
-      "title": "Digital Watch Face CUE107",
-      "wfId": "cue107",
-      "authorName": "Daniel Petti",
+      "reviewId": "032d1b9b-6fe9-455f-bc27-48610df27963",
+      "packageName": "com.creation.cue179watchface",
+      "title": "Watch Face CUE179",
+      "wfId": "cue179",
+      "authorName": "Fernando Rosero",
       "starRating": 5,
       "reviewerLanguage": "es",
-      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
-      "text": "\texcelente",
-      "lastModified": "2026-10-15T13:40:35.000Z"
+      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
+      "text": "\tSmoooth!",
+      "lastModified": "2026-10-16T14:20:49.000Z"
     }
   ]
 }
