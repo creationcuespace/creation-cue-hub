@@ -743,5 +743,107 @@ def start_app():
             except KeyboardInterrupt:
                 break
 
+SINGLE_INSTANCE_MUTEX = None
+
+def bring_existing_window_to_front():
+    if sys.platform != "win32":
+        return False
+
+    import ctypes
+    user32 = ctypes.windll.user32
+
+    try:
+        user32.AllowSetForegroundWindow(-1)
+    except Exception:
+        pass
+
+    target_keywords = [
+        "smartwatch screen recorder",
+        "watch screen recorder",
+        "creation cue // watch recorder",
+        "watch recorder"
+    ]
+
+    SWP_NOMOVE = 0x0002
+    SWP_NOSIZE = 0x0001
+    SWP_SHOWWINDOW = 0x0040
+    HWND_TOPMOST = -1
+    HWND_NOTOPMOST = -2
+    SW_RESTORE = 9
+
+    matched_hwnds = []
+
+    def enum_cb(hwnd, lparam):
+        if user32.IsWindowVisible(hwnd):
+            length = user32.GetWindowTextLengthW(hwnd)
+            if length > 0:
+                buff = ctypes.create_unicode_buffer(length + 1)
+                user32.GetWindowTextW(hwnd, buff, length + 1)
+                title = buff.value.lower()
+                for kw in target_keywords:
+                    if kw in title:
+                        matched_hwnds.append(hwnd)
+                        break
+        return True
+
+    WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_void_p, ctypes.c_void_p)
+    cb_func = WNDENUMPROC(enum_cb)
+
+    # Try several times in case the first instance was in the middle of launching its window
+    for _ in range(8):
+        matched_hwnds.clear()
+        user32.EnumWindows(cb_func, 0)
+        if matched_hwnds:
+            for h in matched_hwnds:
+                try:
+                    user32.ShowWindow(h, SW_RESTORE)
+                    user32.SetWindowPos(h, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW)
+                    user32.SetWindowPos(h, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW)
+                    user32.BringWindowToTop(h)
+                    user32.SetForegroundWindow(h)
+                except Exception:
+                    pass
+            return True
+        time.sleep(0.15)
+    return False
+
+def enforce_single_instance():
+    global SINGLE_INSTANCE_MUTEX
+    is_cli = "--cli" in sys.argv or "--headless" in sys.argv or "-c" in sys.argv
+
+    if sys.platform == "win32":
+        import ctypes
+        ERROR_ALREADY_EXISTS = 183
+        MUTEX_NAME = r"Local\CreationCueWatchRecorderSingleInstanceMutex"
+        try:
+            kernel32 = ctypes.windll.kernel32
+            mutex = kernel32.CreateMutexW(None, False, MUTEX_NAME)
+            last_error = kernel32.GetLastError()
+            if last_error == ERROR_ALREADY_EXISTS:
+                if not is_cli:
+                    bring_existing_window_to_front()
+                else:
+                    print("WatchRecorder is already running in another process.")
+                sys.exit(0)
+            SINGLE_INSTANCE_MUTEX = mutex
+            return
+        except Exception:
+            pass
+
+    # Secondary check: port availability
+    import socket
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.settimeout(0.4)
+            if s.connect_ex(('127.0.0.1', PORT)) == 0:
+                if not is_cli:
+                    bring_existing_window_to_front()
+                else:
+                    print(f"WatchRecorder bridge server is already active on port {PORT}.")
+                sys.exit(0)
+    except Exception:
+        pass
+
 if __name__ == '__main__':
+    enforce_single_instance()
     start_app()
