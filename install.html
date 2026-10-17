@@ -528,54 +528,6 @@
       }
     }
 
-    /* Mobile Drawer Theme Row */
-    .mobile-theme-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      border-radius: var(--radius-sm);
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
-      margin-top: 4px;
-    }
-    .mobile-theme-label {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .mobile-theme-pills {
-      display: inline-flex;
-      background: rgba(0, 0, 0, 0.05);
-      border-radius: 99px;
-      padding: 2px;
-      border: 1px solid var(--border);
-    }
-    html.dark-mode .mobile-theme-pills,
-    html:not(.light-mode) .mobile-theme-pills {
-      background: rgba(255, 255, 255, 0.05);
-    }
-    .mobile-theme-pill {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 99px;
-      border: none;
-      background: transparent;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
-    }
-    .mobile-theme-pill.active {
-      background: var(--primary);
-      color: var(--bg);
-      box-shadow: var(--shadow-sm);
-    }
-
     /* RESPONSIVE DESIGN */
     @media (max-width: 900px) {
       .nav-links {
@@ -841,19 +793,6 @@
             <li><a href="/#faq" onclick="closeMobileMenu()">FAQ</a></li>
             <li><a href="privacy.html" onclick="closeMobileMenu()">Privacy</a></li>
             <li><a href="/#contact" onclick="closeMobileMenu()">Contact</a></li>
-            <li class="mobile-social-drawer">
-              <div class="mobile-theme-row">
-                <span class="mobile-theme-label">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                  Theme
-                </span>
-                <div class="mobile-theme-pills">
-                  <button type="button" class="mobile-theme-pill" data-theme="light" onclick="setThemePreference('light')">Light</button>
-                  <button type="button" class="mobile-theme-pill" data-theme="auto" onclick="setThemePreference('auto')">Auto</button>
-                  <button type="button" class="mobile-theme-pill" data-theme="dark" onclick="setThemePreference('dark')">Dark</button>
-                </div>
-              </div>
-            </li>
           </ul>
         </nav>
 
@@ -1084,12 +1023,6 @@
         root.classList.add('light-mode');
         if (metaTheme) metaTheme.setAttribute('content', '#ffffff');
       }
-
-      // Update mobile drawer pills active state
-      const currentSetting = theme || 'auto';
-      document.querySelectorAll('.mobile-theme-pill').forEach(pill => {
-        pill.classList.toggle('active', pill.getAttribute('data-theme') === currentSetting);
-      });
 
       const toggleBtn = document.getElementById('theme-toggle-btn');
       if (toggleBtn) {
