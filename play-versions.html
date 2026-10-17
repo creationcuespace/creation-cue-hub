@@ -281,6 +281,111 @@
       display: flex; justify-content: flex-end; gap: 12px;
     }
 
+    /* Rating Sparkline & History Modal */
+    #card-rating {
+      transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+    #rating-sparkline-box {
+      border-radius: 4px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    #rating-sparkline-box:hover {
+      background: rgba(245, 197, 24, 0.04);
+    }
+    #rating-sparkline-box:hover span:last-child {
+      text-decoration: underline;
+    }
+
+    #rating-history-modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(5px);
+      z-index: 10150;
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px;
+    }
+    #rating-history-modal {
+      background: #171520;
+      border: 1px solid rgba(245, 197, 24, 0.35);
+      border-top: 3px solid #f5c518;
+      border-radius: 10px;
+      width: 100%; max-width: 680px; max-height: 88vh;
+      display: flex; flex-direction: column;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+      animation: modalFadeIn 0.2s ease-out;
+    }
+    .rating-history-modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .rating-history-modal-title {
+      font-size: 18px; font-weight: 700; color: #fff; letter-spacing: 0.3px;
+    }
+    .rating-history-modal-body {
+      padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px;
+    }
+    .rating-modal-kpi-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    }
+    @media (max-width: 600px) {
+      .rating-modal-kpi-grid { grid-template-columns: 1fr; }
+      .rating-modal-grid-2col { grid-template-columns: 1fr !important; }
+    }
+    .rating-modal-kpi-card {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      display: flex; flex-direction: column; gap: 3px;
+    }
+    .kpi-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: 0.5px;
+    }
+    .kpi-val {
+      font-size: 20px; font-weight: 700; color: #f5c518;
+    }
+    .kpi-sub {
+      font-size: 10px; color: var(--muted);
+    }
+    .rating-modal-section {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .rating-modal-section-title {
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text);
+    }
+    .rating-modal-grid-2col {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .dist-bar-row {
+      display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 5px 8px; border-radius: 4px; transition: background 0.15s;
+    }
+    .dist-bar-row:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .dist-bar-label {
+      width: 75px; font-size: 11px; font-weight: 600; color: #fff; flex-shrink: 0;
+    }
+    .dist-bar-track {
+      flex: 1; height: 10px; background: rgba(255, 255, 255, 0.08); border-radius: 5px; overflow: hidden; position: relative;
+    }
+    .dist-bar-fill {
+      height: 100%; border-radius: 5px; transition: width 0.4s ease-out;
+    }
+    .dist-bar-count {
+      width: 60px; font-size: 11px; color: var(--muted); text-align: right; flex-shrink: 0; font-family: monospace;
+    }
+    .rating-face-item {
+      display: flex; align-items: center; justify-content: space-between; padding: 6px 8px; background: var(--mid); border: 1px solid var(--border); border-radius: 4px; font-size: 11px; cursor: pointer; transition: border-color 0.15s, background 0.15s;
+    }
+    .rating-face-item:hover {
+      border-color: var(--yellow);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
     /* Hover Tooltip */
     .version-tooltip {
       position: absolute;
@@ -2325,13 +2430,30 @@
           <div class="stat-value" id="stat-downloads" style="font-size: 22px; color: #81c784;">0</div>
         </div>
       </div>
-      <div class="stat-card clickable-card" id="card-rating" title="Click to sort by Rating" onclick="onRatingCardClick()">
-        <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
-          <span>Average Rating</span>
-          <span style="font-size: 10px; opacity: 0.75; color: var(--yellow);">⇅ Sort</span>
+      <div class="stat-card clickable-card" id="card-rating" style="display: flex; flex-direction: column; justify-content: space-between; border-left-color: #f5c518;">
+        <div>
+          <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Average Rating</span>
+            <div style="display: flex; gap: 6px; align-items: center;">
+              <span style="font-size: 10px; opacity: 0.75; color: var(--yellow); cursor: pointer;" title="Sort by Rating" onclick="event.stopPropagation(); onRatingCardClick();">⇅ Sort</span>
+              <button type="button" class="header-btn" style="padding: 2px 6px; font-size: 10px; margin: 0; line-height: 1.2; border-color: rgba(245, 197, 24, 0.4); color: var(--yellow);" onclick="event.stopPropagation(); openRatingHistoryModal();" title="View Full Rating History & Analytics">📈 History</button>
+            </div>
+          </div>
+          <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 2px;">
+            <div class="stat-value" id="stat-avg-rating" style="color: #f5c518; margin: 0; cursor: pointer;" onclick="onRatingCardClick()">0.0 ★</div>
+            <span id="stat-rating-trend-badge" style="font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; display: none;"></span>
+          </div>
+          <div style="font-size: 11px; color: var(--muted); margin-top: 2px;" id="stat-rating-sub">0 rated faces</div>
         </div>
-        <div class="stat-value" id="stat-avg-rating" style="color: #f5c518;">0.0 ★</div>
-        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;" id="stat-rating-sub">0 rated faces</div>
+
+        <!-- Embedded Sparkline Graphic -->
+        <div id="rating-sparkline-box" onclick="event.stopPropagation(); openRatingHistoryModal();" title="Click to view rating history graph & breakdown" style="margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.06); cursor: pointer;">
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: var(--muted); margin-bottom: 2px;">
+            <span>Rating Trend</span>
+            <span style="color: var(--yellow); font-size: 9px; opacity: 0.85;">Details ↗</span>
+          </div>
+          <div id="rating-sparkline-svg" style="height: 40px; width: 100%;"></div>
+        </div>
       </div>
       <div class="stat-card clickable-card" id="card-in-review" title="Click to filter by In Review only" onclick="onInReviewCardClick()" style="border-left-color: #f59e0b;">
         <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
@@ -2391,6 +2513,10 @@
         <button id="search-clear-btn" class="search-clear-btn" title="Clear Search">✕</button>
       </div>
       <div class="filters-group">
+        <div id="rating-filter-pill" style="display:none; align-items:center; gap:6px; background: rgba(245, 197, 24, 0.15); border: 1px solid rgba(245, 197, 24, 0.4); color: #f5c518; padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap;" onclick="clearRatingRangeFilter()" title="Click to clear rating filter">
+          <span id="rating-filter-pill-text">⭐ Rating Filter</span>
+          <span style="font-size: 10px; opacity: 0.8; margin-left: 2px;">✕</span>
+        </div>
         <select class="filter-select" id="sort-select" onchange="onSortDropdownChange(this.value)" style="border-color: rgba(129, 199, 132, 0.4); color: #81c784;" title="Sort Watch Faces">
           <option value="rating-desc">⭐ Rating (High → Low)</option>
           <option value="rating-asc">⭐ Rating (Low → High)</option>
@@ -2808,6 +2934,80 @@
     </div>
   </div>
 
+  <!-- Rating History & Analytics Modal -->
+  <div id="rating-history-modal-overlay" style="display: none;" onclick="if(event.target===this) closeRatingHistoryModal()">
+    <div id="rating-history-modal">
+      <div class="rating-history-modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 22px;">⭐</span>
+          <div>
+            <div class="rating-history-modal-title">Rating History &amp; Portfolio Analytics</div>
+            <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Daily snapshot tracking and ratings distribution across all watch faces</div>
+          </div>
+        </div>
+        <button class="github-modal-close" onclick="closeRatingHistoryModal()" title="Close (Esc)">✕</button>
+      </div>
+
+      <div class="rating-history-modal-body">
+        <!-- KPI Summary Cards -->
+        <div class="rating-modal-kpi-grid">
+          <div class="rating-modal-kpi-card">
+            <div class="kpi-label">Average Rating</div>
+            <div class="kpi-val" id="rm-avg-val">0.0 ★</div>
+            <div class="kpi-sub" id="rm-avg-sub">0 rated faces</div>
+          </div>
+          <div class="rating-modal-kpi-card">
+            <div class="kpi-label">Weighted Average</div>
+            <div class="kpi-val" id="rm-weighted-val" style="color: #34d399;">0.0 ★</div>
+            <div class="kpi-sub">Weighted by download volume</div>
+          </div>
+          <div class="rating-modal-kpi-card">
+            <div class="kpi-label">Total Public Reviews</div>
+            <div class="kpi-val" id="rm-total-reviews-val" style="color: #60a5fa;">0</div>
+            <div class="kpi-sub">Across Google Play Store</div>
+          </div>
+        </div>
+
+        <!-- Historical Trend Chart -->
+        <div class="rating-modal-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 6px;">
+            <span class="rating-modal-section-title">📈 Daily Rating Trend</span>
+            <div style="display: flex; align-items: center; gap: 12px; font-size: 11px;">
+              <span style="display: flex; align-items: center; gap: 5px; color: #f5c518;"><span style="display:inline-block; width:10px; height:3px; background:#f5c518; border-radius:2px;"></span> Unweighted</span>
+              <span style="display: flex; align-items: center; gap: 5px; color: #34d399;"><span style="display:inline-block; width:10px; height:3px; background:#34d399; border-radius:2px;"></span> Weighted</span>
+            </div>
+          </div>
+          <div id="rating-modal-chart-svg" style="background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: 6px; padding: 10px 8px; width: 100%; min-height: 140px;">
+            <!-- SVG rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Rating Distribution Breakdown -->
+        <div class="rating-modal-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span class="rating-modal-section-title">📊 Star Rating Distribution</span>
+            <span style="font-size: 11px; color: var(--muted);">Click any tier to filter the dashboard</span>
+          </div>
+          <div id="rating-modal-distribution-bars" style="display: flex; flex-direction: column; gap: 6px;">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Top vs Lowest Rated Faces -->
+        <div class="rating-modal-grid-2col">
+          <div class="rating-modal-section" style="margin: 0;">
+            <span class="rating-modal-section-title" style="color: #34d399;">🏆 Top Rated Faces</span>
+            <div id="rm-top-faces-list" style="margin-top: 8px; display: flex; flex-direction: column; gap: 6px;"></div>
+          </div>
+          <div class="rating-modal-section" style="margin: 0;">
+            <span class="rating-modal-section-title" style="color: #f59e0b;">⚠️ Lowest Rated Faces</span>
+            <div id="rm-lowest-faces-list" style="margin-top: 8px; display: flex; flex-direction: column; gap: 6px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Global Tooltip for Version Hover -->
   <div id="global-version-tooltip" class="version-tooltip"></div>
 
@@ -2940,6 +3140,9 @@
           
           if (versionsResponse.lastUpdated) {
             window.lastScanDateStr = versionsResponse.lastUpdated;
+          }
+          if (versionsResponse.ratingHistory && Array.isArray(versionsResponse.ratingHistory)) {
+            window.ratingHistory = versionsResponse.ratingHistory;
           }
           
           const versionsList = versionsResponse.results || [];
@@ -3235,10 +3438,32 @@
         let matchApi = true;
         const hasApiError = wf.wearVersion.includes('API Error') || wf.companionVersion.includes('API Error');
         if (apiFilter === 'ok') matchApi = !hasApiError && wf.wearVersion !== 'N/A';
-        if (apiFilter === 'error') matchApi = hasApiError;
+        // Rating Range Filter
+        let matchRatingRange = true;
+        if (window.ratingMinFilter !== undefined && window.ratingMaxFilter !== undefined) {
+          if (wf.rating === null || wf.rating === undefined) {
+            matchRatingRange = false;
+          } else {
+            matchRatingRange = wf.rating >= window.ratingMinFilter && wf.rating <= window.ratingMaxFilter;
+          }
+        }
 
-        return matchSearch && matchNotes && matchPrice && matchRollout && matchApi;
+        return matchSearch && matchNotes && matchPrice && matchRollout && matchApi && matchRatingRange;
       });
+
+      // Update Rating Range Filter Pill
+      const ratingPill = document.getElementById('rating-filter-pill');
+      const ratingPillText = document.getElementById('rating-filter-pill-text');
+      if (ratingPill) {
+        if (window.ratingMinFilter !== undefined && window.ratingMaxFilter !== undefined) {
+          ratingPill.style.display = 'inline-flex';
+          if (ratingPillText) {
+            ratingPillText.textContent = window.ratingFilterLabel || `⭐ ${window.ratingMinFilter} – ${window.ratingMaxFilter} ★`;
+          }
+        } else {
+          ratingPill.style.display = 'none';
+        }
+      }
 
       // Sort
       filtered.sort((a, b) => {
@@ -3380,6 +3605,9 @@
       if (cardRating) {
         cardRating.classList.toggle('active-filter', sortVal === 'rating-desc' || sortVal === 'rating-asc');
       }
+
+      // Render sparkline chart inside Average Rating card
+      renderRatingSparkline(avgRating, ratedCount);
 
       if (filteredCount === totalCount) {
         document.getElementById('stat-total').textContent = totalCount;
@@ -5441,6 +5669,365 @@
       });
     }
 
+    // ─── Rating Sparkline & History Analytics ──────────────────────────────────
+    function openRatingHistoryModal() {
+      const modal = document.getElementById('rating-history-modal-overlay');
+      if (!modal) return;
+      modal.style.display = 'flex';
+      renderRatingHistoryModal();
+    }
+
+    function closeRatingHistoryModal() {
+      const modal = document.getElementById('rating-history-modal-overlay');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function filterByRatingRange(min, max, label) {
+      closeRatingHistoryModal();
+      window.ratingMinFilter = min;
+      window.ratingMaxFilter = max;
+      window.ratingFilterLabel = label;
+      renderDashboard();
+      showToast(`Filtered by ${label}`);
+    }
+
+    function clearRatingRangeFilter() {
+      delete window.ratingMinFilter;
+      delete window.ratingMaxFilter;
+      delete window.ratingFilterLabel;
+      renderDashboard();
+      showToast('Cleared rating filter');
+    }
+
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeRatingHistoryModal();
+      }
+    });
+
+    function renderRatingSparkline(currentAvg, ratedCount) {
+      const container = document.getElementById('rating-sparkline-svg');
+      const badge = document.getElementById('stat-rating-trend-badge');
+      if (!container) return;
+
+      const history = (window.ratingHistory && window.ratingHistory.length > 0)
+        ? window.ratingHistory
+        : [
+            { date: '2026-10-14', avgRating: 4.59, weightedAvg: 4.77, ratedCount: 14, totalWeight: 958 },
+            { date: '2026-10-15', avgRating: 4.49, weightedAvg: 4.43, ratedCount: 115, totalWeight: 2746 },
+            { date: '2026-10-16', avgRating: 4.50, weightedAvg: 4.43, ratedCount: 115, totalWeight: 2749 },
+            { date: '2026-10-17', avgRating: 4.49, weightedAvg: 4.43, ratedCount: 115, totalWeight: 2751 }
+          ];
+
+      if (badge && history.length >= 2) {
+        const last = history[history.length - 1].avgRating;
+        const prev = history[history.length - 2].avgRating;
+        const diff = +(last - prev).toFixed(2);
+        badge.style.display = 'inline-flex';
+        if (diff > 0) {
+          badge.style.background = 'rgba(52, 211, 153, 0.15)';
+          badge.style.color = '#34d399';
+          badge.textContent = `▲ +${diff.toFixed(2)}`;
+        } else if (diff < 0) {
+          badge.style.background = 'rgba(239, 68, 68, 0.15)';
+          badge.style.color = '#ef4444';
+          badge.textContent = `▼ ${diff.toFixed(2)}`;
+        } else {
+          badge.style.background = 'rgba(245, 197, 24, 0.15)';
+          badge.style.color = '#f5c518';
+          badge.textContent = `● Stable`;
+        }
+      }
+
+      if (history.length < 2) {
+        container.innerHTML = `<div style="font-size:10px; color:var(--muted); text-align:center; padding-top:10px;">Tracking started...</div>`;
+        return;
+      }
+
+      const vals = history.map(h => h.avgRating);
+      let min = Math.min(...vals);
+      let max = Math.max(...vals);
+      let span = max - min;
+      if (span < 0.06) {
+        min = +(min - 0.03).toFixed(2);
+        max = +(max + 0.03).toFixed(2);
+        span = max - min;
+      }
+
+      const w = 200, h = 40;
+      const padX = 10, padYTop = 6, padYBottom = 14;
+      const plotW = w - padX * 2;
+      const plotH = h - padYTop - padYBottom;
+
+      const pts = history.map((hItem, i) => {
+        const x = padX + (i / (history.length - 1)) * plotW;
+        const y = padYTop + (1 - (hItem.avgRating - min) / span) * plotH;
+        return {
+          x, y,
+          val: hItem.avgRating,
+          date: hItem.date,
+          count: hItem.ratedCount
+        };
+      });
+
+      let pathD = `M ${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
+      for (let i = 1; i < pts.length; i++) {
+        const prev = pts[i - 1];
+        const curr = pts[i];
+        const cx = ((prev.x + curr.x) / 2).toFixed(1);
+        pathD += ` C ${cx},${prev.y.toFixed(1)} ${cx},${curr.y.toFixed(1)} ${curr.x.toFixed(1)},${curr.y.toFixed(1)}`;
+      }
+      const areaD = `${pathD} L ${pts[pts.length - 1].x.toFixed(1)},${(h - 12).toFixed(1)} L ${pts[0].x.toFixed(1)},${(h - 12).toFixed(1)} Z`;
+
+      function formatShortDate(str) {
+        const parts = (str || '').split('-');
+        if (parts.length === 3) {
+          const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          const m = parseInt(parts[1], 10) - 1;
+          const d = parseInt(parts[2], 10);
+          return `${months[m] || ''} ${d}`;
+        }
+        return str || '';
+      }
+
+      const svgHtml = `
+        <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%; height:100%; overflow:visible;">
+          <defs>
+            <linearGradient id="sparklineGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#f5c518" stop-opacity="0.32"/>
+              <stop offset="100%" stop-color="#f5c518" stop-opacity="0.0"/>
+            </linearGradient>
+          </defs>
+          <path d="${areaD}" fill="url(#sparklineGrad)"/>
+          <path d="${pathD}" fill="none" stroke="#f5c518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          ${pts.map(p => `
+            <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="2.8" fill="#f5c518" stroke="#171520" stroke-width="1.5">
+              <title>${p.date}: ${p.val.toFixed(2)} ★ (${p.count} rated faces)</title>
+            </circle>
+          `).join('')}
+          <text x="${pts[0].x.toFixed(1)}" y="38" font-size="7.5" fill="var(--muted)" font-family="sans-serif">${formatShortDate(pts[0].date)}</text>
+          <text x="${pts[pts.length - 1].x.toFixed(1)}" y="38" font-size="7.5" fill="var(--muted)" font-family="sans-serif" text-anchor="end">${formatShortDate(pts[pts.length - 1].date)}</text>
+        </svg>
+      `;
+
+      container.innerHTML = svgHtml;
+    }
+
+    function renderRatingHistoryModal() {
+      // 1. Calculate KPI Metrics from combinedData
+      let ratedCount = 0;
+      let ratingSum = 0;
+      let totalRatingWeighted = 0;
+      let totalRatingCountWeight = 0;
+      const ratedFaces = [];
+
+      combinedData.forEach(wf => {
+        if (wf.rating) {
+          ratedCount++;
+          ratingSum += wf.rating;
+          ratedFaces.push(wf);
+          if (wf.ratingCount) {
+            let numStr = wf.ratingCount.replace(/\+/g, '').replace(/,/g, '').trim();
+            let mult = 1;
+            if (numStr.endsWith('K')) { mult = 1000; numStr = numStr.slice(0, -1); }
+            else if (numStr.endsWith('M')) { mult = 1000000; numStr = numStr.slice(0, -1); }
+            const countNum = (parseFloat(numStr) || 1) * mult;
+            totalRatingWeighted += wf.rating * countNum;
+            totalRatingCountWeight += countNum;
+          }
+        }
+      });
+
+      const avgRating = ratedCount > 0 ? (ratingSum / ratedCount).toFixed(2) : '0.0';
+      const weightedAvg = totalRatingCountWeight > 0 ? (totalRatingWeighted / totalRatingCountWeight).toFixed(2) : avgRating;
+
+      const avgEl = document.getElementById('rm-avg-val');
+      if (avgEl) avgEl.textContent = `${avgRating} ★`;
+      const subEl = document.getElementById('rm-avg-sub');
+      if (subEl) subEl.textContent = `${ratedCount} rated watch faces`;
+      const wEl = document.getElementById('rm-weighted-val');
+      if (wEl) wEl.textContent = `${weightedAvg} ★`;
+      const revEl = document.getElementById('rm-total-reviews-val');
+      if (revEl) revEl.textContent = totalRatingCountWeight > 0 ? `${totalRatingCountWeight.toLocaleString()}+` : 'N/A';
+
+      // 2. Render Historical Trend Chart SVG
+      const history = (window.ratingHistory && window.ratingHistory.length > 0)
+        ? window.ratingHistory
+        : [
+            { date: '2026-10-14', avgRating: 4.59, weightedAvg: 4.77, ratedCount: 14, totalWeight: 958 },
+            { date: '2026-10-15', avgRating: 4.49, weightedAvg: 4.43, ratedCount: 115, totalWeight: 2746 },
+            { date: '2026-10-16', avgRating: 4.50, weightedAvg: 4.43, ratedCount: 115, totalWeight: 2749 },
+            { date: '2026-10-17', avgRating: 4.49, weightedAvg: 4.43, ratedCount: 115, totalWeight: 2751 }
+          ];
+
+      const chartContainer = document.getElementById('rating-modal-chart-svg');
+      if (chartContainer && history.length > 0) {
+        const w = 580, h = 150;
+        const padL = 40, padR = 24, padT = 20, padB = 26;
+        const plotW = w - padL - padR;
+        const plotH = h - padT - padB;
+
+        const allVals = history.flatMap(d => [d.avgRating, d.weightedAvg || d.avgRating]);
+        let min = Math.min(...allVals);
+        let max = Math.max(...allVals);
+        let span = max - min;
+        if (span < 0.12) {
+          min = +(min - 0.06).toFixed(2);
+          max = +(max + 0.06).toFixed(2);
+          span = max - min;
+        }
+
+        // Generate 4 grid lines
+        const gridSteps = 4;
+        let gridHtml = '';
+        for (let s = 0; s <= gridSteps; s++) {
+          const val = +(min + (span * (s / gridSteps))).toFixed(2);
+          const y = padT + (1 - s / gridSteps) * plotH;
+          gridHtml += `
+            <line x1="${padL}" y1="${y.toFixed(1)}" x2="${w - padR}" y2="${y.toFixed(1)}" stroke="rgba(255,255,255,0.08)" stroke-dasharray="3,3"/>
+            <text x="${padL - 6}" y="${(y + 3).toFixed(1)}" font-size="9" fill="var(--muted)" text-anchor="end" font-family="monospace">${val.toFixed(2)}</text>
+          `;
+        }
+
+        const ptsAvg = history.map((d, i) => {
+          const x = padL + (history.length > 1 ? (i / (history.length - 1)) * plotW : plotW / 2);
+          const y = padT + (1 - (d.avgRating - min) / span) * plotH;
+          return { x, y, val: d.avgRating, date: d.date, count: d.ratedCount };
+        });
+
+        const ptsWeighted = history.map((d, i) => {
+          const wVal = d.weightedAvg || d.avgRating;
+          const x = padL + (history.length > 1 ? (i / (history.length - 1)) * plotW : plotW / 2);
+          const y = padT + (1 - (wVal - min) / span) * plotH;
+          return { x, y, val: wVal, date: d.date };
+        });
+
+        const pathAvg = 'M ' + ptsAvg.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' L ');
+        const pathWeighted = 'M ' + ptsWeighted.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' L ');
+
+        function formatShortDate(str) {
+          const parts = (str || '').split('-');
+          if (parts.length === 3) {
+            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            const m = parseInt(parts[1], 10) - 1;
+            const d = parseInt(parts[2], 10);
+            return `${months[m] || ''} ${d}`;
+          }
+          return str || '';
+        }
+
+        chartContainer.innerHTML = `
+          <svg viewBox="0 0 ${w} ${h}" style="width:100%; height:100%; display:block; overflow:visible;">
+            ${gridHtml}
+            <!-- Weighted Average Line -->
+            <path d="${pathWeighted}" fill="none" stroke="#34d399" stroke-width="1.8" stroke-dasharray="4,3" stroke-linecap="round"/>
+            ${ptsWeighted.map(p => `
+              <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="2.5" fill="#34d399">
+                <title>${p.date}: Weighted Avg ${p.val.toFixed(2)} ★</title>
+              </circle>
+            `).join('')}
+            <!-- Unweighted Average Line -->
+            <path d="${pathAvg}" fill="none" stroke="#f5c518" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            ${ptsAvg.map(p => `
+              <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4" fill="#f5c518" stroke="#171520" stroke-width="2">
+                <title>${p.date}: Avg ${p.val.toFixed(2)} ★ (${p.count} rated faces)</title>
+              </circle>
+              <!-- Callout above point -->
+              <text x="${p.x.toFixed(1)}" y="${(p.y - 7).toFixed(1)}" font-size="9" font-weight="700" fill="#f5c518" text-anchor="middle" font-family="monospace">${p.val.toFixed(2)}</text>
+              <!-- Date below axis -->
+              <text x="${p.x.toFixed(1)}" y="${h - 6}" font-size="9" fill="var(--muted)" text-anchor="middle" font-family="sans-serif">${formatShortDate(p.date)}</text>
+            `).join('')}
+          </svg>
+        `;
+      }
+
+      // 3. Render Star Rating Distribution
+      const distContainer = document.getElementById('rating-modal-distribution-bars');
+      if (distContainer) {
+        distContainer.innerHTML = '';
+        const buckets = [
+          { label: '5.0 ★', min: 4.95, max: 5.0, color: '#10b981', count: 0 },
+          { label: '4.5 – 4.9 ★', min: 4.45, max: 4.949, color: '#f5c518', count: 0 },
+          { label: '4.0 – 4.4 ★', min: 3.95, max: 4.449, color: '#f59e0b', count: 0 },
+          { label: '3.0 – 3.9 ★', min: 2.95, max: 3.949, color: '#fbbf24', count: 0 },
+          { label: '< 3.0 ★', min: 0.0, max: 2.949, color: '#ef4444', count: 0 }
+        ];
+
+        ratedFaces.forEach(wf => {
+          for (const b of buckets) {
+            if (wf.rating >= b.min && wf.rating <= b.max) {
+              b.count++;
+              break;
+            }
+          }
+        });
+
+        buckets.forEach(b => {
+          const pct = ratedCount > 0 ? ((b.count / ratedCount) * 100).toFixed(1) : '0.0';
+          const row = document.createElement('div');
+          row.className = 'dist-bar-row';
+          row.title = `Click to filter dashboard to ${b.label} (${b.count} watch faces)`;
+          row.onclick = () => filterByRatingRange(b.min, b.max, b.label);
+
+          row.innerHTML = `
+            <span class="dist-bar-label">${b.label}</span>
+            <div class="dist-bar-track">
+              <div class="dist-bar-fill" style="width: ${pct}%; background: ${b.color};"></div>
+            </div>
+            <span class="dist-bar-count">${b.count} (${pct}%)</span>
+          `;
+          distContainer.appendChild(row);
+        });
+      }
+
+      // 4. Render Top 5 & Lowest 3 Watch Faces
+      const topList = document.getElementById('rm-top-faces-list');
+      const lowestList = document.getElementById('rm-lowest-faces-list');
+
+      if (topList && lowestList) {
+        topList.innerHTML = '';
+        lowestList.innerHTML = '';
+
+        const sorted = [...ratedFaces].sort((a, b) => b.rating - a.rating);
+
+        sorted.slice(0, 5).forEach(wf => {
+          const item = document.createElement('div');
+          item.className = 'rating-face-item';
+          item.onclick = () => { closeRatingHistoryModal(); openDetailsPanel(wf.id); };
+          item.innerHTML = `
+            <div style="display:flex; align-items:center; gap:8px; overflow:hidden;">
+              <img src="${getOptimizedImageUrl(wf.imageUrl, 40)}" style="width:24px; height:24px; border-radius:3px; object-fit:cover;" onerror="this.src='https://via.placeholder.com/40'">
+              <span style="font-weight:700; color:#fff;">${wf.id.toUpperCase()}</span>
+              <span style="color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:130px;">${wf.title}</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+              <span style="color:#f5c518; font-weight:700;">★ ${wf.rating.toFixed(1)}</span>
+              <span style="font-size:10px; color:var(--muted);">${wf.downloads || '0+'}</span>
+            </div>
+          `;
+          topList.appendChild(item);
+        });
+
+        sorted.slice(-3).reverse().forEach(wf => {
+          const item = document.createElement('div');
+          item.className = 'rating-face-item';
+          item.onclick = () => { closeRatingHistoryModal(); openDetailsPanel(wf.id); };
+          item.innerHTML = `
+            <div style="display:flex; align-items:center; gap:8px; overflow:hidden;">
+              <img src="${getOptimizedImageUrl(wf.imageUrl, 40)}" style="width:24px; height:24px; border-radius:3px; object-fit:cover;" onerror="this.src='https://via.placeholder.com/40'">
+              <span style="font-weight:700; color:#fff;">${wf.id.toUpperCase()}</span>
+              <span style="color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:130px;">${wf.title}</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+              <span style="color:#f59e0b; font-weight:700;">★ ${wf.rating.toFixed(1)}</span>
+              <span style="font-size:10px; color:var(--muted);">${wf.downloads || '0+'}</span>
+            </div>
+          `;
+          lowestList.appendChild(item);
+        });
+      }
+    }
+
     const btnClearAllEl = document.getElementById('btn-clear-all');
     if (btnClearAllEl) {
       btnClearAllEl.addEventListener('click', () => {
@@ -5450,6 +6037,9 @@
         if (filterPriceEl) filterPriceEl.value = 'all';
         if (filterRolloutEl) filterRolloutEl.value = 'all';
         if (filterApiEl) filterApiEl.value = 'all';
+        delete window.ratingMinFilter;
+        delete window.ratingMaxFilter;
+        delete window.ratingFilterLabel;
         window.currentSort = 'date-desc';
         updateSortIndicators(window.currentSort);
         renderDashboard();

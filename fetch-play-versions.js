@@ -344,8 +344,59 @@ async function main() {
     }
   }
 
+  let ratingHistory = [];
+  if (fs.existsSync(versionsDataPath)) {
+    try {
+      const existingData = JSON.parse(fs.readFileSync(versionsDataPath, 'utf8'));
+      ratingHistory = existingData.ratingHistory || [];
+    } catch (e) {}
+  }
+
+  // Calculate current ratings stats for history tracking
+  let countRated = 0, sumRating = 0, weightedRatingSum = 0, totalRatingWeight = 0;
+  for (const r of finalResults) {
+    if (r.rating) {
+      countRated++;
+      sumRating += r.rating;
+      let w = 1;
+      if (r.ratingCount) {
+        let numStr = r.ratingCount.replace(/\+/g, '').replace(/,/g, '').trim();
+        let mult = 1;
+        if (numStr.endsWith('K')) { mult = 1000; numStr = numStr.slice(0, -1); }
+        else if (numStr.endsWith('M')) { mult = 1000000; numStr = numStr.slice(0, -1); }
+        w = (parseFloat(numStr) || 1) * mult;
+      }
+      weightedRatingSum += r.rating * w;
+      totalRatingWeight += w;
+    }
+  }
+
+  if (countRated > 0) {
+    const todayKey = new Date().toISOString().slice(0, 10);
+    const todayEntry = {
+      date: todayKey,
+      timestamp: new Date().toISOString(),
+      avgRating: +(sumRating / countRated).toFixed(2),
+      weightedAvg: totalRatingWeight > 0 ? +(weightedRatingSum / totalRatingWeight).toFixed(2) : 0,
+      ratedCount: countRated,
+      totalWeight: Math.round(totalRatingWeight)
+    };
+
+    const existingIdx = ratingHistory.findIndex(h => h.date === todayKey);
+    if (existingIdx >= 0) {
+      ratingHistory[existingIdx] = todayEntry;
+    } else {
+      ratingHistory.push(todayEntry);
+    }
+    // Keep up to 90 days of daily rating snapshots
+    if (ratingHistory.length > 90) {
+      ratingHistory = ratingHistory.slice(-90);
+    }
+  }
+
   const outputData = {
     lastUpdated: new Date().toISOString(),
+    ratingHistory,
     results: finalResults
   };
   fs.writeFileSync(versionsDataPath, JSON.stringify(outputData, null, 2), 'utf8');

@@ -1381,5 +1381,39 @@
       "rating": 4.5,
       "ratingCount": null
     }
+  ],
+  "ratingHistory": [
+    {
+      "date": "2026-10-14",
+      "timestamp": "2026-10-14T15:45:48+03:00",
+      "avgRating": 4.59,
+      "weightedAvg": 4.77,
+      "ratedCount": 14,
+      "totalWeight": 958
+    },
+    {
+      "date": "2026-10-15",
+      "timestamp": "2026-10-15T01:51:37.525Z",
+      "avgRating": 4.49,
+      "weightedAvg": 4.43,
+      "ratedCount": 115,
+      "totalWeight": 2746
+    },
+    {
+      "date": "2026-10-16",
+      "timestamp": "2026-10-16T01:40:18.552Z",
+      "avgRating": 4.5,
+      "weightedAvg": 4.43,
+      "ratedCount": 115,
+      "totalWeight": 2749
+    },
+    {
+      "date": "2026-10-17",
+      "timestamp": "2026-10-17T01:33:51.541Z",
+      "avgRating": 4.49,
+      "weightedAvg": 4.43,
+      "ratedCount": 115,
+      "totalWeight": 2751
+    }
   ]
 }
