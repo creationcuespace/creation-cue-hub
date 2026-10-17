@@ -57,14 +57,38 @@
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>'
     },
     {
-      id: 'coupons',
-      label: 'Coupons',
-      href: 'https://creationcue.web.app/manage-coupons.html',
+      id: 'planner',
+      label: 'Planner',
+      href: 'https://creationcue.web.app/month-planner.html',
       color: '#fbbf24',
       bg: 'rgba(251, 191, 36, 0.14)',
       border: 'rgba(251, 191, 36, 0.32)',
       hoverBg: 'rgba(251, 191, 36, 0.25)',
       activeBg: 'rgba(251, 191, 36, 0.35)',
+      icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>',
+      slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>'
+    },
+    {
+      id: 'versions',
+      label: 'Versions',
+      href: 'https://creationcue.web.app/play-versions.html',
+      color: '#60a5fa',
+      bg: 'rgba(96, 165, 250, 0.14)',
+      border: 'rgba(96, 165, 250, 0.32)',
+      hoverBg: 'rgba(96, 165, 250, 0.25)',
+      activeBg: 'rgba(96, 165, 250, 0.35)',
+      icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="11" height="11" rx="2" ry="2"></rect></svg>',
+      slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="11" height="11" rx="2" ry="2"></rect></svg>'
+    },
+    {
+      id: 'coupons',
+      label: 'Coupons',
+      href: 'https://creationcue.web.app/manage-coupons.html',
+      color: '#4ade80',
+      bg: 'rgba(74, 222, 128, 0.14)',
+      border: 'rgba(74, 222, 128, 0.32)',
+      hoverBg: 'rgba(74, 222, 128, 0.25)',
+      activeBg: 'rgba(74, 222, 128, 0.35)',
       icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>',
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>'
     },
@@ -105,30 +129,6 @@
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>'
     },
     {
-      id: 'planner',
-      label: 'Planner',
-      href: 'https://creationcue.web.app/month-planner.html',
-      color: '#2dd4bf',
-      bg: 'rgba(45, 212, 191, 0.14)',
-      border: 'rgba(45, 212, 191, 0.32)',
-      hoverBg: 'rgba(45, 212, 191, 0.25)',
-      activeBg: 'rgba(45, 212, 191, 0.35)',
-      icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>',
-      slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>'
-    },
-    {
-      id: 'versions',
-      label: 'Versions',
-      href: 'https://creationcue.web.app/play-versions.html',
-      color: '#60a5fa',
-      bg: 'rgba(96, 165, 250, 0.14)',
-      border: 'rgba(96, 165, 250, 0.32)',
-      hoverBg: 'rgba(96, 165, 250, 0.25)',
-      activeBg: 'rgba(96, 165, 250, 0.35)',
-      icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="11" height="11" rx="2" ry="2"></rect></svg>',
-      slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="11" height="11" rx="2" ry="2"></rect></svg>'
-    },
-    {
       id: 'deploy',
       label: 'Deploy',
       href: 'https://creationcue.web.app/play-deploy.html',
@@ -151,18 +151,6 @@
       activeBg: 'rgba(163, 230, 53, 0.35)',
       icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>',
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>'
-    },
-    {
-      id: 'watch-recorder',
-      label: 'Watch Recorder',
-      href: 'https://creationcue.web.app/watch-recorder.html',
-      color: '#fb923c',
-      bg: 'rgba(251, 146, 60, 0.14)',
-      border: 'rgba(251, 146, 60, 0.32)',
-      hoverBg: 'rgba(251, 146, 60, 0.25)',
-      activeBg: 'rgba(251, 146, 60, 0.35)',
-      icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>',
-      slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>'
     }
   ];
 
@@ -1202,7 +1190,7 @@
     renderAdminBar();
     setupAuth();
     handleUrlParams();
-    console.log('[Creation Cue] Admin Bar v2.2 loaded');
+    console.log('[Creation Cue] Admin Bar v2.3 loaded');
   }
 
   if (document.readyState === 'loading') {
