@@ -1,17 +1,29 @@
 {
-  "lastUpdated": "2026-10-17T01:33:51.543Z",
+  "lastUpdated": "2026-10-18T01:32:39.231Z",
   "reviews": [
     {
-      "reviewId": "032d1b9b-6fe9-455f-bc27-48610df27963",
-      "packageName": "com.creation.cue179watchface",
-      "title": "Watch Face CUE179",
-      "wfId": "cue179",
-      "authorName": "Fernando Rosero",
+      "reviewId": "37ccd28d-f032-41ec-bae6-52e1200fd341",
+      "packageName": "com.creationcue.crc068watchface",
+      "title": "Digital Watch Face CRC068",
+      "wfId": "crc068",
+      "authorName": "Dimitrios Kamposioris",
       "starRating": 5,
-      "reviewerLanguage": "es",
-      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
-      "text": "\tSmoooth!",
-      "lastModified": "2026-10-16T14:20:49.000Z"
+      "reviewerLanguage": "el",
+      "deviceMetadata": "pa2q (Galaxy S25+)",
+      "text": "\tΑπλό και όμορφο συγχαρητήρια",
+      "lastModified": "2026-10-17T12:21:25.000Z"
+    },
+    {
+      "reviewId": "eebc94bd-a082-4270-84c4-318dcf44894a",
+      "packageName": "com.creation.cueinduswatchface",
+      "title": "Watch Face CUE Indus",
+      "wfId": "cueindus",
+      "authorName": "Yaa Kritsada PM",
+      "starRating": 4,
+      "reviewerLanguage": "th",
+      "deviceMetadata": "a53x (Galaxy A53 5G)",
+      "text": "\tNice",
+      "lastModified": "2026-10-17T02:35:17.000Z"
     }
   ]
 }
