@@ -1232,7 +1232,7 @@
                     </div>
                 </div>
                 <div style="display:flex; align-items:center; gap:10px;">
-                    <span class="tag-pill blue" style="font-size:11px;">Τακτικός Έλεγχος (1η &amp; 15η κάθε μήνα)</span>
+                    <span class="tag-pill blue" style="font-size:11px;">Εβδομαδιαίος Έλεγχος (Κάθε Δευτέρα 10:00 π.μ.)</span>
                 </div>
             </div>
 
@@ -1254,6 +1254,9 @@
                     <span class="tag-pill green" style="font-size:10px;">100% Εξαγωγές (Google)</span>
                 </div>
             </div>
+
+            <!-- Active Expiry Alerts Banner (Dynamic) -->
+            <div id="subsidy-expiry-alerts-banner" style="display:none; margin-bottom: 20px;"></div>
 
             <!-- Eligible Programs Grid -->
             <div id="subsidies-cards-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:18px; margin-bottom:22px;">
@@ -1514,10 +1517,52 @@
                 if (document.getElementById("subsidy-next-check") && sm.nextCheck) {
                     document.getElementById("subsidy-next-check").textContent = sm.nextCheck;
                 }
+                // Render Active Expiry Alerts Banner
+                const alertsBanner = document.getElementById("subsidy-expiry-alerts-banner");
+                if (alertsBanner) {
+                    if (sm.activeExpiryAlerts && sm.activeExpiryAlerts.length > 0) {
+                        alertsBanner.style.display = "block";
+                        alertsBanner.innerHTML = `
+                            <div style="background:linear-gradient(90deg, rgba(231,76,60,0.15) 0%, rgba(230,126,34,0.12) 100%); border:1px solid #e74c3c; border-radius:var(--radius-sm); padding:14px 18px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+                                <div style="display:flex; align-items:center; gap:12px;">
+                                    <span style="font-size:22px;">⏳</span>
+                                    <div>
+                                        <div style="font-size:13px; font-weight:800; color:#ff7675; text-transform:uppercase; letter-spacing:0.5px;">
+                                            Επικείμενη Λήξη Επιδοτούμενων Προγραμμάτων!
+                                        </div>
+                                        <div style="font-size:12px; color:var(--text-main); margin-top:3px;">
+                                            ${sm.activeExpiryAlerts.map(a => `<strong>${a.title}</strong>: Απομένουν <strong>${a.daysRemaining} ημέρες</strong> (Λήξη: ${a.deadline})`).join(" &bull; ")}
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="tag-pill red" style="font-size:11px; font-weight:700;">Προσοχή στις Προθεσμίες</span>
+                            </div>
+                        `;
+                    } else {
+                        alertsBanner.style.display = "none";
+                    }
+                }
+
                 const cardsContainer = document.getElementById("subsidies-cards-container");
                 if (cardsContainer && sm.eligiblePrograms) {
                     cardsContainer.innerHTML = "";
                     sm.eligiblePrograms.forEach(prog => {
+                        let expiryBadgeHtml = "";
+                        if (prog.expiryAlert) {
+                            const isCritical = prog.urgency === "CRITICAL";
+                            const isWarning = prog.urgency === "WARNING";
+                            const bg = isCritical ? "rgba(231,76,60,0.15)" : (isWarning ? "rgba(230,126,34,0.15)" : "rgba(46,204,113,0.1)");
+                            const border = isCritical ? "rgba(231,76,60,0.5)" : (isWarning ? "rgba(230,126,34,0.4)" : "rgba(46,204,113,0.3)");
+                            const color = isCritical ? "#ff7675" : (isWarning ? "#f39c12" : "#2ecc71");
+                            const icon = isCritical ? "🚨" : (isWarning ? "⏳" : "⏱️");
+                            expiryBadgeHtml = `
+                                <div style="background:${bg}; border:1px solid ${border}; border-radius:4px; padding:6px 10px; font-size:11px; font-weight:700; color:${color}; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+                                    <span>${icon}</span>
+                                    <span>${prog.expiryAlert}</span>
+                                </div>
+                            `;
+                        }
+
                         const card = document.createElement("div");
                         card.style.cssText = "background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:var(--radius-md); padding:20px; display:flex; flex-direction:column; justify-content:space-between;";
                         card.innerHTML = `
@@ -1526,6 +1571,7 @@
                                     <h4 style="font-family:'Outfit', sans-serif; font-size:16px; font-weight:700; color:var(--text-main);">${prog.title}</h4>
                                     <span class="tag-pill ${prog.badgeColor || 'gold'}" style="font-size:10px; white-space:nowrap;">${prog.badge}</span>
                                 </div>
+                                ${expiryBadgeHtml}
                                 <div style="font-size:11px; color:var(--text-muted); margin-bottom:8px;">
                                     🏛️ <strong>Φορέας:</strong> ${prog.agency} | <strong>Κατάσταση:</strong> <span style="color:var(--success); font-weight:600;">${prog.status}</span>
                                 </div>
