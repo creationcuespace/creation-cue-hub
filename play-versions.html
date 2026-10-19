@@ -2441,13 +2441,13 @@
       <div class="header-update-widget">
         <div style="display: flex; flex-direction: column; line-height: 1.15; text-align: right; padding-right: 2px;">
           <span class="header-update-widget-label" style="font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); white-space: nowrap;">Last Dashboard Update</span>
-          <span id="header-scan-date" style="font-size: 11px; font-weight: 600; color: #fff; white-space: nowrap;">N/A</span>
+          <span id="stat-scan-date" style="font-size: 11px; font-weight: 600; color: #fff; white-space: nowrap;">N/A</span>
         </div>
         <div style="display: flex; gap: 5px; align-items: center;">
-          <button id="btn-cloud-update-header" class="cloud-update-btn cloud-update-trigger-btn" style="font-size: 11px; padding: 4px 9px; height: 28px; white-space: nowrap; flex: none;" title="Trigger full catalog update on GitHub">☁️ Update All</button>
-          <button id="btn-cloud-config-header" class="cloud-config-btn cloud-config-trigger-btn" style="font-size: 11px; padding: 4px 7px; height: 28px; flex: none;" title="Configure GitHub Integration">⚙️</button>
+          <button id="btn-cloud-update" class="cloud-update-btn cloud-update-trigger-btn" style="font-size: 11px; padding: 4px 9px; height: 28px; white-space: nowrap; flex: none;" title="Trigger full catalog update on GitHub">☁️ Update All</button>
+          <button id="btn-cloud-config" class="cloud-config-btn cloud-config-trigger-btn" style="font-size: 11px; padding: 4px 7px; height: 28px; flex: none;" title="Configure GitHub Integration">⚙️</button>
         </div>
-        <button id="btn-cloud-update-selected-header" class="cloud-update-btn cloud-update-selected-trigger-btn" style="display: none; font-size: 11px; padding: 4px 9px; height: 28px; background: rgba(245, 197, 24, 0.1); border-color: rgba(245, 197, 24, 0.3); color: var(--yellow); white-space: nowrap; flex: none;">☁️ Sync Selected (0)</button>
+        <button id="btn-cloud-update-selected" class="cloud-update-btn cloud-update-selected-trigger-btn" style="display: none; font-size: 11px; padding: 4px 9px; height: 28px; background: rgba(245, 197, 24, 0.1); border-color: rgba(245, 197, 24, 0.3); color: var(--yellow); white-space: nowrap; flex: none;">☁️ Sync Selected (0)</button>
       </div>
 
       <button onclick="handleLogout()" class="header-btn" style="display: none;">Logout</button>
@@ -2566,17 +2566,6 @@
       <div class="stat-card clickable-card" id="card-rollouts" title="Click to filter by Staged Rollouts (<100%) only">
         <div class="stat-label">Staged Rollouts (&lt;100%)</div>
         <div class="stat-value" id="stat-rollouts" style="color: var(--yellow);">0</div>
-      </div>
-      <div class="stat-card" style="display: flex; flex-direction: column;">
-        <div class="stat-label">Last Dashboard Update</div>
-        <div class="stat-value" id="stat-scan-date" style="font-size: 16px; flex: 1;">N/A</div>
-        <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; width: 100%;">
-          <div style="display: flex; gap: 6px; align-items: center; width: 100%;">
-            <button id="btn-cloud-update" class="cloud-update-btn" style="flex: 1;">☁️ Update All</button>
-            <button id="btn-cloud-config" class="cloud-config-btn" title="Configure GitHub Integration">⚙️</button>
-          </div>
-          <button id="btn-cloud-update-selected" class="cloud-update-btn" style="display: none; width: 100%; background: rgba(245, 197, 24, 0.1); border-color: rgba(245, 197, 24, 0.3); color: var(--yellow);">☁️ Sync Selected (0)</button>
-        </div>
       </div>
     </div>
 
@@ -5023,7 +5012,7 @@
       const selBtns = document.querySelectorAll('#btn-cloud-update-selected, #btn-cloud-update-selected-header');
       selBtns.forEach(selBtn => {
         if (count > 0) {
-          selBtn.style.display = selBtn.id.includes('header') ? 'inline-flex' : 'block';
+          selBtn.style.display = (selBtn.id.includes('header') || selBtn.closest('.header-update-widget')) ? 'inline-flex' : 'block';
           selBtn.textContent = `☁️ Sync Selected (${count})`;
         } else {
           selBtn.style.display = 'none';
