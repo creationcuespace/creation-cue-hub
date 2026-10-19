@@ -1,29 +1,4 @@
 {
-  "lastUpdated": "2026-10-19T01:43:23.815Z",
-  "reviews": [
-    {
-      "reviewId": "37ccd28d-f032-41ec-bae6-52e1200fd341",
-      "packageName": "com.creationcue.crc068watchface",
-      "title": "Digital Watch Face CRC068",
-      "wfId": "crc068",
-      "authorName": "Dimitrios Kamposioris",
-      "starRating": 5,
-      "reviewerLanguage": "el",
-      "deviceMetadata": "pa2q (Galaxy S25+)",
-      "text": "\tΑπλό και όμορφο συγχαρητήρια",
-      "lastModified": "2026-10-17T12:21:25.000Z"
-    },
-    {
-      "reviewId": "eebc94bd-a082-4270-84c4-318dcf44894a",
-      "packageName": "com.creation.cueinduswatchface",
-      "title": "Watch Face CUE Indus",
-      "wfId": "cueindus",
-      "authorName": "Yaa Kritsada PM",
-      "starRating": 4,
-      "reviewerLanguage": "th",
-      "deviceMetadata": "a53x (Galaxy A53 5G)",
-      "text": "\tNice",
-      "lastModified": "2026-10-17T02:35:17.000Z"
-    }
-  ]
+  "lastUpdated": "2026-10-19T06:05:00.000Z",
+  "reviews": []
 }
