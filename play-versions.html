@@ -2473,38 +2473,48 @@
         <div id="card-downloads-box" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: opacity 0.15s;" title="Click to sort by Downloads" onclick="onDownloadsCardClick()">
           <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
             <span>Total Downloads</span>
-            <span style="font-size: 10px; opacity: 0.75; color: var(--yellow);">⇅ Sort</span>
+            <div style="display: flex; gap: 6px; align-items: center;">
+              <span style="font-size: 10px; opacity: 0.75; color: var(--yellow);">⇅ Sort</span>
+              <button id="btn-toggle-dl-breakdown" type="button" class="header-btn" style="padding: 2px 6px; font-size: 10px; margin: 0; line-height: 1.2; border-color: rgba(129, 199, 132, 0.35); color: #81c784;" onclick="event.stopPropagation(); toggleDlBreakdown();" title="Toggle Paid vs Free Downloads breakdown">📊 Paid / Free ▾</button>
+            </div>
           </div>
           <div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 2px;">
             <div class="stat-value" id="stat-downloads" style="font-size: 22px; color: #81c784;">0</div>
-            <span style="font-size: 10px; color: var(--muted);" id="stat-dl-ratio-label">0% paid · 0% free</span>
           </div>
 
-          <!-- Proportional Downloads Bar -->
-          <div style="display: flex; height: 4px; border-radius: 2px; overflow: hidden; background: rgba(255,255,255,0.06); margin-top: 6px;" id="stat-dl-ratio-bar">
-            <div id="stat-paid-bar" style="background: #90caf9; width: 0%; transition: width 0.3s;" title="Paid Downloads"></div>
-            <div id="stat-free-bar" style="background: #81c784; width: 0%; transition: width 0.3s;" title="Free Downloads"></div>
-          </div>
-
-          <!-- Paid vs Free Downloads Breakdown -->
-          <div style="display: flex; gap: 8px; margin-top: 8px;">
-            <!-- Paid -->
-            <div id="stat-paid-dl-box" class="dl-sub-box" onclick="event.stopPropagation(); togglePriceFilter('paid');" title="Click to filter Paid watch faces" style="flex: 1; min-width: 0; background: rgba(33, 150, 243, 0.08); border: 1px solid rgba(33, 150, 243, 0.25); border-radius: 6px; padding: 6px 8px;">
-              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;">
-                <span style="font-size: 10px; font-weight: 700; color: #90caf9; text-transform: uppercase; letter-spacing: 0.5px;">Paid</span>
-                <span id="stat-paid-pct" style="font-size: 9px; color: #90caf9; opacity: 0.85;">0%</span>
-              </div>
-              <div id="stat-paid-downloads" style="font-family: 'Teko', sans-serif; font-size: 20px; font-weight: 600; color: #90caf9; line-height: 1.1; margin-top: 2px;">0</div>
-              <div id="stat-paid-count" style="font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">0 faces</div>
+          <!-- Collapsible Breakdown Container (hidden by default so it's not visible at a glance) -->
+          <div id="stat-dl-breakdown-container" style="display: none; margin-top: 8px;" onclick="event.stopPropagation();">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">Paid vs Free</span>
+              <span style="font-size: 10px; color: var(--muted);" id="stat-dl-ratio-label">0% paid · 0% free</span>
             </div>
-            <!-- Free -->
-            <div id="stat-free-dl-box" class="dl-sub-box" onclick="event.stopPropagation(); togglePriceFilter('free');" title="Click to filter Free watch faces" style="flex: 1; min-width: 0; background: rgba(76, 175, 80, 0.08); border: 1px solid rgba(76, 175, 80, 0.25); border-radius: 6px; padding: 6px 8px;">
-              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;">
-                <span style="font-size: 10px; font-weight: 700; color: #81c784; text-transform: uppercase; letter-spacing: 0.5px;">Free</span>
-                <span id="stat-free-pct" style="font-size: 9px; color: #81c784; opacity: 0.85;">0%</span>
+
+            <!-- Proportional Downloads Bar -->
+            <div style="display: flex; height: 4px; border-radius: 2px; overflow: hidden; background: rgba(255,255,255,0.06); margin-bottom: 8px;" id="stat-dl-ratio-bar">
+              <div id="stat-paid-bar" style="background: #90caf9; width: 0%; transition: width 0.3s;" title="Paid Downloads"></div>
+              <div id="stat-free-bar" style="background: #81c784; width: 0%; transition: width 0.3s;" title="Free Downloads"></div>
+            </div>
+
+            <!-- Paid vs Free Downloads Breakdown -->
+            <div style="display: flex; gap: 8px;">
+              <!-- Paid -->
+              <div id="stat-paid-dl-box" class="dl-sub-box" onclick="event.stopPropagation(); togglePriceFilter('paid');" title="Click to filter Paid watch faces" style="flex: 1; min-width: 0; background: rgba(33, 150, 243, 0.08); border: 1px solid rgba(33, 150, 243, 0.25); border-radius: 6px; padding: 6px 8px; cursor: pointer;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;">
+                  <span style="font-size: 10px; font-weight: 700; color: #90caf9; text-transform: uppercase; letter-spacing: 0.5px;">Paid</span>
+                  <span id="stat-paid-pct" style="font-size: 9px; color: #90caf9; opacity: 0.85;">0%</span>
+                </div>
+                <div id="stat-paid-downloads" style="font-family: 'Teko', sans-serif; font-size: 20px; font-weight: 600; color: #90caf9; line-height: 1.1; margin-top: 2px;">0</div>
+                <div id="stat-paid-count" style="font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">0 faces</div>
               </div>
-              <div id="stat-free-downloads" style="font-family: 'Teko', sans-serif; font-size: 20px; font-weight: 600; color: #81c784; line-height: 1.1; margin-top: 2px;">0</div>
-              <div id="stat-free-count" style="font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">0 faces</div>
+              <!-- Free -->
+              <div id="stat-free-dl-box" class="dl-sub-box" onclick="event.stopPropagation(); togglePriceFilter('free');" title="Click to filter Free watch faces" style="flex: 1; min-width: 0; background: rgba(76, 175, 80, 0.08); border: 1px solid rgba(76, 175, 80, 0.25); border-radius: 6px; padding: 6px 8px; cursor: pointer;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;">
+                  <span style="font-size: 10px; font-weight: 700; color: #81c784; text-transform: uppercase; letter-spacing: 0.5px;">Free</span>
+                  <span id="stat-free-pct" style="font-size: 9px; color: #81c784; opacity: 0.85;">0%</span>
+                </div>
+                <div id="stat-free-downloads" style="font-family: 'Teko', sans-serif; font-size: 20px; font-weight: 600; color: #81c784; line-height: 1.1; margin-top: 2px;">0</div>
+                <div id="stat-free-count" style="font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">0 faces</div>
+              </div>
             </div>
           </div>
         </div>
@@ -3730,6 +3740,24 @@
         freeBox.style.borderColor = isFreeActive ? '#81c784' : 'rgba(76, 175, 80, 0.25)';
         freeBox.style.background = isFreeActive ? 'rgba(76, 175, 80, 0.2)' : 'rgba(76, 175, 80, 0.08)';
         freeBox.style.boxShadow = isFreeActive ? '0 0 8px rgba(76, 175, 80, 0.3)' : 'none';
+      }
+
+      const toggleDlBtn = document.getElementById('btn-toggle-dl-breakdown');
+      const dlBreakdownContainer = document.getElementById('stat-dl-breakdown-container');
+      if (toggleDlBtn) {
+        const isExpanded = dlBreakdownContainer && dlBreakdownContainer.style.display !== 'none';
+        const prefix = currentPriceFilter === 'paid' ? '📊 Paid Active' : (currentPriceFilter === 'free' ? '📊 Free Active' : '📊 Paid / Free');
+        toggleDlBtn.innerHTML = isExpanded ? `${prefix} ▴` : `${prefix} ▾`;
+        if (currentPriceFilter === 'paid') {
+          toggleDlBtn.style.color = '#90caf9';
+          toggleDlBtn.style.borderColor = '#90caf9';
+        } else if (currentPriceFilter === 'free') {
+          toggleDlBtn.style.color = '#81c784';
+          toggleDlBtn.style.borderColor = '#81c784';
+        } else {
+          toggleDlBtn.style.color = '#81c784';
+          toggleDlBtn.style.borderColor = isExpanded ? '#81c784' : 'rgba(129, 199, 132, 0.35)';
+        }
       }
 
       const avgRating = ratedCount > 0 ? (ratingSum / ratedCount).toFixed(2) : null;
@@ -5656,6 +5684,20 @@
         el.value = type;
       }
       renderDashboard();
+    };
+
+    window.toggleDlBreakdown = function() {
+      const container = document.getElementById('stat-dl-breakdown-container');
+      const btn = document.getElementById('btn-toggle-dl-breakdown');
+      if (!container) return;
+      const isHidden = (container.style.display === 'none' || getComputedStyle(container).display === 'none');
+      container.style.display = isHidden ? 'block' : 'none';
+      if (btn) {
+        const filterVal = (document.getElementById('filter-price') ? document.getElementById('filter-price').value : 'all');
+        const prefix = filterVal === 'paid' ? '📊 Paid Active' : (filterVal === 'free' ? '📊 Free Active' : '📊 Paid / Free');
+        btn.innerHTML = isHidden ? `${prefix} ▴` : `${prefix} ▾`;
+        btn.style.background = isHidden ? 'rgba(129, 199, 132, 0.15)' : 'transparent';
+      }
     };
 
     function onRatingCardClick() {
