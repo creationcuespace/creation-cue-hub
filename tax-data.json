@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-19T10:15:22+03:00",
+  "lastUpdated": "2026-10-19T10:40:33+03:00",
   "taxpayer": {
     "name": "Σωτήριος Λιόντος του Κωνσταντίνου",
     "afm": "047155049",
@@ -315,6 +315,12 @@
     "lastCheck": "19/10/2026",
     "nextCheck": "26/10/2026",
     "checkFrequency": "Εβδομαδιαίος Έλεγχος (Κάθε Δευτέρα στις 10:00 π.μ.)",
+    "mobileNotificationChannel": {
+      "service": "ntfy.sh",
+      "topic": "antigravity-sot-alerts",
+      "status": "Ενεργό",
+      "url": "https://ntfy.sh/antigravity-sot-alerts"
+    },
     "profileSummary": {
       "afm": "047155049",
       "legalForm": "Ατομική Επιχείρηση (Πολύ Μικρή)",
@@ -411,22 +417,22 @@
       "kinoume-ilektrika-3": {
         "url": "https://kinoumeilektrika3.gov.gr",
         "online": true,
-        "checkedAt": "19/10/2026 10:15"
+        "checkedAt": "19/10/2026 10:40"
       },
       "espa-digital-sme": {
         "url": "https://www.espa.gr",
         "online": true,
-        "checkedAt": "19/10/2026 10:15"
+        "checkedAt": "19/10/2026 10:40"
       },
       "pep-epirus-2021-2027": {
         "url": "https://espa-epirus.gr",
         "online": true,
-        "checkedAt": "19/10/2026 10:15"
+        "checkedAt": "19/10/2026 10:40"
       },
       "innovation-export-fund": {
         "url": "https://www.espa.gr",
         "online": true,
-        "checkedAt": "19/10/2026 10:15"
+        "checkedAt": "19/10/2026 10:40"
       }
     },
     "activeExpiryAlerts": [
