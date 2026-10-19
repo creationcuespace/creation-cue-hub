@@ -908,9 +908,27 @@ Links to claim your free code and the Play Store link are in the first comment b
               Copy Comment
             </button>
           </div>
-          <textarea id="output-comment" class="text-output-area" rows="12" placeholder="Full comment will appear here with direct claim URL..."></textarea>
+          <textarea id="output-comment" class="text-output-area" rows="11" placeholder="Full comment will appear here with direct claim URL..."></textarea>
           <div class="help-hint">
             ✓ Uses clean direct <code>creationcue.web.app/claim?p=...</code> (no shorteners like spoo.me/bitly, completely Reddit-safe).
+          </div>
+        </div>
+
+        <!-- Step 4: After Coupons Expire (1-Click Update Note) -->
+        <div class="section-box" style="border-left: 3px solid var(--reddit-orange);">
+          <div class="section-title-row">
+            <span class="section-title" style="color: #ff8b60;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Step 4: When Coupons Are Gone (Edit into your top comment or reply)
+            </span>
+            <button class="copy-btn" onclick="copyField('output-expired', 'Expired Message')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              Copy Expired Notice
+            </button>
+          </div>
+          <textarea id="output-expired" class="text-output-area" rows="6" placeholder="Ready-to-paste expired notice..."></textarea>
+          <div class="help-hint">
+            💡 When codes hit 0, edit this notice to the top of your 1st comment to stop code requests and funnel late traffic straight to Google Play!
           </div>
         </div>
 
@@ -1497,6 +1515,13 @@ Links to claim your free code and the Play Store link are in the first comment b
       var commentText = `Hey everyone!\n\n${commentIntro} for **${name}** Wear OS watch face.\n\n🎁 **Claim your free coupon code here:**\n${claimUrl}\n\n🏪 **Google Play Store Link:**\n${playStoreUrl}\n\n**Features:**\n${featuresList}\n\nIf you like the watch face, a rating or review on Google Play would be greatly appreciated! Enjoy!`;
 
       document.getElementById('output-comment').value = commentText;
+
+      // 5. Formatted Expired Notice (Ready to edit into comment or post)
+      var expiredCountText = shouldMentionNumber && countToUse > 0 ? `All ${countToUse}` : `All`;
+      var expiredNotice = `🚨 **[UPDATE: ${expiredCountText} promotional coupons have now been claimed!]**\n\nThank you so much to everyone who grabbed a code! If you missed out, you can get ${name} directly on Google Play below:\n\n🏪 **Google Play Store Link:**\n${playStoreUrl}\n\nTo everyone who claimed a code: I really hope you enjoy ${name} on your wrist! A rating or brief review on the Play Store means the world to an independent designer! 🙏`;
+
+      var expiredField = document.getElementById('output-expired');
+      if (expiredField) expiredField.value = expiredNotice;
     }
 
     // Helper to format clean bullet points
