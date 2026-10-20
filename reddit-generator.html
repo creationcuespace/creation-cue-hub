@@ -769,17 +769,32 @@
         <span style="font-size:12px; color:var(--muted);">Opens the submit page in a new tab ready to paste your copied texts.</span>
       </div>
       <div class="launch-btns">
-        <a href="https://www.reddit.com/r/GalaxyWatchFace/submit" target="_blank" class="reddit-btn">
-          <span>Open r/GalaxyWatchFace ↗</span>
-          <span style="font-size: 10.5px; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 10px; font-weight: 600; opacity: 0.95;">52k members</span>
+        <a href="https://www.reddit.com/r/GalaxyWatchFace/submit" target="_blank" class="reddit-btn" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:8px;">
+            <span>Open r/GalaxyWatchFace ↗</span>
+            <span style="font-size: 10px; background: rgba(0,0,0,0.3); padding: 1px 6px; border-radius: 10px; font-weight: 600; opacity: 0.95;">52k</span>
+          </div>
+          <div id="badge-gwf-history" style="font-size: 10.5px; color: #fde047; font-weight: 500; display: flex; align-items: center; gap: 4px;">
+            <span>Last posted: Oct 16 (CUE179 • 1x)</span>
+          </div>
         </a>
-        <a href="https://www.reddit.com/r/WearOSFaces/submit" target="_blank" class="reddit-btn secondary">
-          <span>Open r/WearOSFaces ↗</span>
-          <span style="font-size: 10.5px; background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 10px; font-weight: 600; color: var(--yellow);">126k members</span>
+        <a href="https://www.reddit.com/r/WearOSFaces/submit" target="_blank" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: rgba(255, 197, 24, 0.4);">
+          <div style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:8px;">
+            <span style="color:var(--yellow); font-weight:700;">Open r/WearOSFaces ↗</span>
+            <span style="font-size: 10px; background: rgba(255,255,255,0.1); padding: 1px 6px; border-radius: 10px; font-weight: 600; color: var(--yellow);">126k</span>
+          </div>
+          <div id="badge-wearos-history" style="font-size: 10.5px; color: #4ade80; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+            <span>✨ Fresh! 0 posts yet (Recommended Next)</span>
+          </div>
         </a>
-        <a href="https://www.reddit.com/r/androidwatchfaces/submit" target="_blank" class="reddit-btn secondary">
-          <span>Open r/AndroidWatchFaces ↗</span>
-          <span style="font-size: 10.5px; background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 10px; font-weight: 600; color: var(--muted);">10k members</span>
+        <a href="https://www.reddit.com/r/androidwatchfaces/submit" target="_blank" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:8px;">
+            <span>Open r/AndroidWatchFaces ↗</span>
+            <span style="font-size: 10px; background: rgba(255,255,255,0.08); padding: 1px 6px; border-radius: 10px; font-weight: 600; color: var(--muted);">10k</span>
+          </div>
+          <div id="badge-awf-history" style="font-size: 10.5px; color: #94a3b8; font-weight: 500; display: flex; align-items: center; gap: 4px;">
+            <span>Last posted: Today Oct 20 (CUE097 • 2x total)</span>
+          </div>
         </a>
       </div>
     </div>
@@ -1831,7 +1846,68 @@ Links to claim your free code and the Play Store link are in the first comment b
     }
 
     // Initialize on load
+    // Dynamically calculate and display past posting activity per subreddit
+    function updateSubredditBadges() {
+      fetch('marketing_campaigns.json?v=' + Date.now())
+        .then(function(r) { return r.json(); })
+        .then(function(campaigns) {
+          if (!Array.isArray(campaigns)) return;
+
+          var subs = {
+            'GalaxyWatchFace': { count: 0, lastDate: null, lastFace: '' },
+            'WearOSFaces': { count: 0, lastDate: null, lastFace: '' },
+            'androidwatchfaces': { count: 0, lastDate: null, lastFace: '' }
+          };
+
+          campaigns.forEach(function(c) {
+            var subLower = (c.subreddit || '').toLowerCase();
+            for (var key in subs) {
+              if (subLower.includes(key.toLowerCase())) {
+                subs[key].count++;
+                var cTime = new Date(c.createdAt).getTime();
+                if (!subs[key].lastDate || cTime > subs[key].lastDate) {
+                  subs[key].lastDate = cTime;
+                  subs[key].lastFace = c.faceName || (c.promoId ? c.promoId.toUpperCase() : '');
+                }
+              }
+            }
+          });
+
+          // Format relative time helper
+          function formatSubInfo(subKey, elId, isRecommendedIfZero) {
+            var data = subs[subKey];
+            var el = document.getElementById(elId);
+            if (!el) return;
+
+            if (data.count === 0) {
+              if (isRecommendedIfZero) {
+                el.innerHTML = '<span style="color:#4ade80;">✨ Fresh! 0 posts yet (Recommended Next)</span>';
+              } else {
+                el.innerHTML = '<span style="color:var(--muted);">No posts logged yet</span>';
+              }
+              return;
+            }
+
+            var d = new Date(data.lastDate);
+            var dateStr = d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+            var now = new Date();
+            var diffDays = Math.floor((now - d) / (1000 * 60 * 60 * 24));
+            var timeAgoStr = diffDays === 0 ? "Today" : (diffDays === 1 ? "Yesterday" : (diffDays + "d ago"));
+
+            el.innerHTML = '<span>Last: ' + timeAgoStr + ' (' + dateStr + ' • ' + data.lastFace + ' • ' + data.count + 'x total)</span>';
+          }
+
+          formatSubInfo('GalaxyWatchFace', 'badge-gwf-history', false);
+          formatSubInfo('WearOSFaces', 'badge-wearos-history', true);
+          formatSubInfo('androidwatchfaces', 'badge-awf-history', false);
+        })
+        .catch(function(e) {
+          console.warn("Could not sync subreddit badges:", e);
+        });
+    }
+
     function startApp() {
+      updateSubredditBadges();
       loadCatalog().then(function() {
         loadPromotions();
       }).catch(function() {
