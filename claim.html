@@ -833,11 +833,39 @@
     var NTFY_TOPIC = "creationcue-alerts-9873";
 
     function triggerCompletedNotification(promoName, promoId, total) {
-      if (!NTFY_TOPIC) return;
       var name = promoName || (promoId ? promoId.toUpperCase() : 'Watch Face');
+
+      // 1. Calculate depletion speed automatically & update campaign record
+      var now = Date.now();
+      var depletionText = "";
+      try {
+        db.ref('promotions/' + promoId + '/public/active_campaign').once('value').then(function(snap) {
+          var camp = snap.val();
+          if (camp && camp.startedAt) {
+            var diffMs = now - camp.startedAt;
+            var mins = Math.max(1, Math.round(diffMs / 60000));
+            var speedStr = mins < 60 ? (mins + " mins") : ((mins / 60).toFixed(1) + " hours");
+            depletionText = " (Claimed in ~" + speedStr + ")";
+            
+            // Mark completed in database
+            db.ref('promotions/' + promoId + '/public/active_campaign/depletionMinutes').set(mins);
+            db.ref('promotions/' + promoId + '/public/active_campaign/completedAt').set(now);
+            db.ref('promotions/' + promoId + '/public/active_campaign/status').set('completed');
+          }
+          dispatchNtfyAlert(name, depletionText);
+        }).catch(function() {
+          dispatchNtfyAlert(name, "");
+        });
+      } catch (e) {
+        dispatchNtfyAlert(name, "");
+      }
+    }
+
+    function dispatchNtfyAlert(name, extraText) {
+      if (!NTFY_TOPIC) return;
       fetch("https://ntfy.sh/" + NTFY_TOPIC, {
         method: "POST",
-        body: 'All giveaway coupons for "' + name + '" have been claimed!\n\nReddit Generator: https://creationcue.web.app/reddit-generator',
+        body: 'All giveaway coupons for "' + name + '" have been claimed!' + extraText + '\n\nReddit Generator: https://creationcue.web.app/reddit-generator',
         headers: {
           "Title": "🚨 COUPONS GONE: " + name + "!",
           "Priority": "urgent",

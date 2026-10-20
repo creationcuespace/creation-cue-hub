@@ -1745,7 +1745,16 @@ Links to claim your free code and the Play Store link are in the first comment b
 
         if (user) {
           var updates = {};
+          campaignRecord.startedAt = Date.now();
           updates['promotions/' + promoId + '/public/campaigns/' + campaignRecord.id] = campaignRecord;
+          // Store as active campaign on promotion so claim.html can measure depletion automatically
+          updates['promotions/' + promoId + '/public/active_campaign'] = {
+            id: campaignRecord.id,
+            startedAt: Date.now(),
+            couponsAllocated: couponsCount,
+            subreddit: subreddit,
+            status: "active"
+          };
           await db.ref().update(updates);
         }
 
