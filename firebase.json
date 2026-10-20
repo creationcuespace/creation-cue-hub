@@ -91,6 +91,10 @@
       "*.pdf",
       "dragon*",
       "*.py",
+      "*.exe",
+      "*.zip",
+      "*.pkg",
+      "*.pyz",
       "all_found_promotions.json",
       "promotions_summary.json"
     ],
