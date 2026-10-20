@@ -253,9 +253,15 @@
 
       body.admin-mode .header,
       body.admin-mode header.header,
+      body.admin-mode .top-header,
       body.admin-mode .top-brand-header,
       body.admin-mode .sticky-header {
         top: 40px !important;
+      }
+
+      body.admin-mode .toast {
+        top: 54px !important;
+        z-index: 100001 !important;
       }
 
       body.admin-mode .search-filter-row {
