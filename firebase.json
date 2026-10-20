@@ -68,6 +68,10 @@
     "ignore": [
       "firebase.json",
       "**/.*",
+      ".*",
+      ".git/**",
+      ".gemini/**",
+      "node_modules/**",
       "**/node_modules/**",
       "package.json",
       "package-lock.json",
@@ -95,6 +99,7 @@
       "*.zip",
       "*.pkg",
       "*.pyz",
+      "lighthouse*.json",
       "all_found_promotions.json",
       "promotions_summary.json"
     ],
