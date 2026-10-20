@@ -1350,11 +1350,16 @@ Links to claim your free code and the Play Store link are in the first comment b
       if (item.remaining > 0) {
         badge.style.display = 'inline-block';
         badge.className = 'coupons-count-badge badge-active';
-        badge.textContent = item.remaining + ' Coupons Available';
+        var totalStockLeft = Math.max(0, (item.total || 0) - (item.claimed || 0));
+        if (item.cap && item.cap > 0) {
+          badge.textContent = item.remaining + ' / ' + item.cap + ' Cap Left (' + totalStockLeft + ' Total in Bank)';
+        } else {
+          badge.textContent = item.remaining + ' Coupons Available';
+        }
       } else {
         badge.style.display = 'inline-block';
         badge.className = 'coupons-count-badge badge-empty';
-        badge.textContent = 'No Coupons Set';
+        badge.textContent = '0 Coupons Left';
       }
 
       // Initialize or prefill Cap input (only prefill if an explicit cap was already set on the promo)
