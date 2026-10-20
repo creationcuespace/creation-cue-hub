@@ -858,6 +858,10 @@
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
               <span>Test Alert</span>
             </button>
+            <button id="btn-log-campaign" onclick="logCampaignToAnalytics()" class="header-btn" style="font-size: 12px; padding: 5px 10px; background: rgba(255, 69, 0, 0.15); border-color: rgba(255, 69, 0, 0.5); color: #ff8b60; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;" title="Log this giveaway into Analytics Marketing History">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+              <span>Log to Analytics</span>
+            </button>
             <span class="coupons-count-badge badge-active" id="selected-coupons-badge" style="display:none;">489 Coupons Available</span>
           </div>
         </div>
@@ -1680,6 +1684,87 @@ Links to claim your free code and the Play Store link are in the first comment b
       }).catch(function() {
         showToast(label + ' copied!');
       });
+    }
+
+    // Log active giveaway campaign to Marketing History / Analytics
+    async function logCampaignToAnalytics() {
+      if (!selectedItem) {
+        showToast("Please select a watch face first.");
+        return;
+      }
+
+      var capInput = document.getElementById('custom-cap-input');
+      var couponsCount = capInput && capInput.value ? parseInt(capInput.value, 10) : (selectedItem.remaining || 50);
+      var promoId = selectedItem.promoId.toLowerCase();
+      var name = selectedItem.name || promoId.toUpperCase();
+
+      var postUrl = prompt("Enter the Reddit Post URL for this campaign (or leave blank if posting now):", "");
+      if (postUrl === null) return; // User cancelled
+
+      var subreddit = "Reddit";
+      if (postUrl) {
+        var subMatch = postUrl.match(/r/([a-zA-Z0-9_]+)/i);
+        if (subMatch && subMatch[1]) {
+          subreddit = "r/" + subMatch[1];
+        }
+      }
+
+      var btn = document.getElementById('btn-log-campaign');
+      var origText = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = 'Logging...';
+      }
+
+      try {
+        var campaignRecord = {
+          id: "reddit-" + promoId + "-" + Date.now(),
+          channel: "reddit",
+          subreddit: subreddit,
+          promoId: promoId,
+          faceName: name,
+          postUrl: postUrl || ("https://www.reddit.com/" + subreddit),
+          title: document.getElementById('output-title').value || ("[Wear OS] " + name + " Giveaway"),
+          couponsAllocated: couponsCount,
+          createdAt: new Date().toISOString(),
+          status: "active",
+          notes: "Logged directly from Reddit Generator."
+        };
+
+        // Also save into Firebase RTDB under promotions/{promoId}/public/campaigns
+        var user = auth.currentUser;
+        if (!user) {
+          try {
+            var provider = new firebase.auth.GoogleAuthProvider();
+            var cred = await auth.signInWithPopup(provider);
+            user = cred.user;
+          } catch(e) {
+            console.warn("Auth note for campaign log:", e);
+          }
+        }
+
+        if (user) {
+          var updates = {};
+          updates['promotions/' + promoId + '/public/campaigns/' + campaignRecord.id] = campaignRecord;
+          await db.ref().update(updates);
+        }
+
+        showToast("✓ Campaign logged to Analytics history!");
+        if (btn) {
+          btn.innerHTML = '✓ Logged!';
+          setTimeout(function() {
+            btn.innerHTML = origText;
+            btn.disabled = false;
+          }, 2500);
+        }
+      } catch(err) {
+        console.error("Failed to log campaign:", err);
+        showToast("Logged locally. Firebase sync: " + err.message);
+        if (btn) {
+          btn.innerHTML = origText;
+          btn.disabled = false;
+        }
+      }
     }
 
     // Test push alert to phone via ntfy
