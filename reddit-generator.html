@@ -1793,6 +1793,11 @@ Links to claim your free code and the Play Store link are in the first comment b
             subreddit: subreddit,
             status: "active"
           };
+          // Guarantee visibility is public so Reddit users can claim their coupons without private block
+          updates['promotions/' + promoId + '/public/visibility'] = 'public';
+          if (promotionsData[promoId] && promotionsData[promoId].public) {
+            promotionsData[promoId].public.visibility = 'public';
+          }
           await db.ref().update(updates);
         }
 
