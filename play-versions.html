@@ -3127,6 +3127,15 @@
     var managerData = [];
     var versionsData = {};
     var unrepliedReviews = [];
+    var rawReviewsCache = [];
+    var firebaseRepliedReviews = {};
+
+    function encodeFirebaseKey(str) {
+      return (str || '').replace(/[.#$\[\]/]/g, c => '%' + c.charCodeAt(0).toString(16).toUpperCase());
+    }
+    function decodeFirebaseKey(str) {
+      return (str || '').replace(/%[0-9A-Fa-f]{2}/g, match => String.fromCharCode(parseInt(match.slice(1), 16)));
+    }
     var notesData = {};
     var companionReleaseNotes = {};
     var reviewStatusData = {};
@@ -3240,36 +3249,8 @@
         // Load reviews-data.json
         try {
           const reviewsResponse = await fetchLiveData('reviews-data.json');
-          let rawReviews = reviewsResponse.reviews || [];
-          
-          // Filter out ignored reviews from localStorage
-          let ignoredReviewIds = [];
-          try {
-            ignoredReviewIds = JSON.parse(localStorage.getItem('ignored_reviews') || '[]');
-          } catch(e) {}
-          
-          rawReviews = rawReviews.filter(r => !ignoredReviewIds.includes(r.reviewId));
-
-          // Deduplicate by author (r.title) and packageName, taking the most recently modified
-          const reviewMap = new Map();
-          rawReviews.forEach(r => {
-            const key = `${r.packageName}_${r.title}`;
-            if (!reviewMap.has(key)) {
-              reviewMap.set(key, r);
-            } else {
-              const existing = reviewMap.get(key);
-              const rDate = new Date(r.lastModified).getTime() || 0;
-              const eDate = new Date(existing.lastModified).getTime() || 0;
-              if (rDate > eDate) {
-                reviewMap.set(key, r);
-              }
-            }
-          });
-          
-          unrepliedReviews = Array.from(reviewMap.values());
-          unrepliedReviews.sort((a, b) => new Date(a.lastModified).getTime() - new Date(b.lastModified).getTime());
-          
-          updateReviewsBadgeCount();
+          rawReviewsCache = reviewsResponse.reviews || [];
+          recomputeUnrepliedReviews();
         } catch (e) {
           console.warn("Could not load reviews-data.json", e);
         }
@@ -3365,6 +3346,38 @@
             }
           }, function(err) {
             console.warn("Could not load review status from database:", err);
+          });
+
+          // Connect to Realtime Database to load Replied Reviews (cross-device sync)
+          db.ref('watch_face_replied_reviews').on('value', function(snapshot) {
+            firebaseRepliedReviews = snapshot.val() || {};
+
+            // Auto-migrate any local ignored reviews to Firebase so other devices pick them up
+            try {
+              const localIgnored = JSON.parse(localStorage.getItem('ignored_reviews') || '[]');
+              if (localIgnored.length > 0) {
+                const updates = {};
+                let hasNew = false;
+                localIgnored.forEach(id => {
+                  const k = encodeFirebaseKey(id);
+                  if (!firebaseRepliedReviews[k] && !firebaseRepliedReviews[id]) {
+                    updates['watch_face_replied_reviews/' + k] = {
+                      dismissedAt: new Date().toISOString(),
+                      reviewId: id,
+                      migratedFromLocal: true
+                    };
+                    hasNew = true;
+                  }
+                });
+                if (hasNew) {
+                  db.ref().update(updates).catch(e => console.warn("Could not auto-migrate local reviews to Firebase:", e));
+                }
+              }
+            } catch (e) {}
+
+            recomputeUnrepliedReviews();
+          }, function(err) {
+            console.warn("Could not load replied reviews from database:", err);
           });
 
       } catch (err) {
@@ -5379,6 +5392,46 @@
       }
     }
 
+    function recomputeUnrepliedReviews() {
+      if (!rawReviewsCache || rawReviewsCache.length === 0) {
+        unrepliedReviews = [];
+        updateReviewsBadgeCount();
+        return;
+      }
+
+      let localIgnored = [];
+      try {
+        localIgnored = JSON.parse(localStorage.getItem('ignored_reviews') || '[]');
+      } catch(e) {}
+
+      let activeReviews = rawReviewsCache.filter(r => {
+        if (!r || !r.reviewId) return false;
+        if (localIgnored.includes(r.reviewId)) return false;
+        const fbKey = encodeFirebaseKey(r.reviewId);
+        if (firebaseRepliedReviews && (firebaseRepliedReviews[fbKey] || firebaseRepliedReviews[r.reviewId])) return false;
+        return true;
+      });
+
+      const reviewMap = new Map();
+      activeReviews.forEach(r => {
+        const key = `${r.packageName}_${r.title}`;
+        if (!reviewMap.has(key)) {
+          reviewMap.set(key, r);
+        } else {
+          const existing = reviewMap.get(key);
+          const rDate = new Date(r.lastModified).getTime() || 0;
+          const eDate = new Date(existing.lastModified).getTime() || 0;
+          if (rDate > eDate) {
+            reviewMap.set(key, r);
+          }
+        }
+      });
+
+      unrepliedReviews = Array.from(reviewMap.values());
+      unrepliedReviews.sort((a, b) => new Date(a.lastModified).getTime() - new Date(b.lastModified).getTime());
+      updateReviewsBadgeCount();
+    }
+
     function updateReviewsBadgeCount() {
       const badge = document.getElementById('reviews-badge');
       const bellBtn = document.getElementById('reviews-bell-btn');
@@ -5417,11 +5470,26 @@
       } catch(e) {}
       if (!ignoredReviewIds.includes(reviewId)) {
         ignoredReviewIds.push(reviewId);
-        if (ignoredReviewIds.length > 200) ignoredReviewIds = ignoredReviewIds.slice(-200);
+        if (ignoredReviewIds.length > 300) ignoredReviewIds = ignoredReviewIds.slice(-300);
         localStorage.setItem('ignored_reviews', JSON.stringify(ignoredReviewIds));
       }
-      unrepliedReviews = unrepliedReviews.filter(r => r.reviewId !== reviewId);
-      updateReviewsBadgeCount();
+
+      // Sync to Firebase Realtime Database so other tabs/devices update immediately
+      const fbKey = encodeFirebaseKey(reviewId);
+      if (!firebaseRepliedReviews) firebaseRepliedReviews = {};
+      firebaseRepliedReviews[fbKey] = {
+        dismissedAt: new Date().toISOString(),
+        reviewId: reviewId
+      };
+
+      if (typeof db !== 'undefined' && db) {
+        db.ref('watch_face_replied_reviews/' + fbKey).set({
+          dismissedAt: new Date().toISOString(),
+          reviewId: reviewId
+        }).catch(err => console.warn("Could not sync dismissed review to Firebase:", err));
+      }
+
+      recomputeUnrepliedReviews();
       if (unrepliedReviews.length === 0) {
         setTimeout(() => {
           const panel = document.getElementById('reviews-panel');
@@ -5608,6 +5676,18 @@
         if (response.ok || response.status === 204) {
           btn.innerText = 'Sent!';
           btn.style.background = 'var(--green)';
+
+          // Record reply immediately to Firebase Realtime Database
+          const fbKey = encodeFirebaseKey(reviewId);
+          if (typeof db !== 'undefined' && db) {
+            db.ref('watch_face_replied_reviews/' + fbKey).set({
+              repliedAt: new Date().toISOString(),
+              reviewId: reviewId,
+              packageName: packageName,
+              replyText: replyText
+            }).catch(err => console.warn("Could not sync reply to Firebase:", err));
+          }
+
           setTimeout(() => {
             ignoreReview(reviewId, true);
           }, 1200);
