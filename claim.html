@@ -830,17 +830,19 @@
     }
 
     // ntfy.sh Topic for completed promotion push alerts (leave empty to disable)
-    var NTFY_TOPIC = "";
+    var NTFY_TOPIC = "creationcue-alerts-9873";
 
     function triggerCompletedNotification(promoName, promoId, total) {
       if (!NTFY_TOPIC) return;
+      var name = promoName || (promoId ? promoId.toUpperCase() : 'Watch Face');
       fetch("https://ntfy.sh/" + NTFY_TOPIC, {
         method: "POST",
-        body: 'All ' + total + ' coupons for watch face "' + promoName + '" (' + promoId + ') have been claimed!',
+        body: 'All giveaway coupons for "' + name + '" have been claimed!\n\nReddit Generator: https://creationcue.web.app/reddit-generator',
         headers: {
-          "Title": "Promotion Completed! 🎉",
-          "Priority": "high",
-          "Tags": "tada,warning"
+          "Title": "🚨 COUPONS GONE: " + name + "!",
+          "Priority": "urgent",
+          "Tags": "rotating_light,checkered_flag,ticket",
+          "Click": "https://creationcue.web.app/reddit-generator"
         }
       }).then(function() {
         console.log("Push notification sent to ntfy.");
