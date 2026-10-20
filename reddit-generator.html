@@ -769,31 +769,37 @@
         <span style="font-size:12px; color:var(--muted);">Opens the submit page in a new tab ready to paste your copied texts.</span>
       </div>
       <div class="launch-btns">
-        <a href="https://www.reddit.com/r/GalaxyWatchFace/submit" target="_blank" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: var(--border);">
+        <a href="https://www.reddit.com/r/GalaxyWatchFace/submit" target="_blank" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: rgba(255, 255, 255, 0.15);">
           <div style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:8px;">
             <span style="font-weight:700; color:#fff;">Open r/GalaxyWatchFace ↗</span>
             <span style="font-size: 10px; background: rgba(255,255,255,0.08); padding: 1px 6px; border-radius: 10px; font-weight: 600; color: var(--muted);">52k members</span>
           </div>
-          <div id="badge-gwf-history" style="font-size: 10.5px; color: #fde047; font-weight: 500; display: flex; align-items: center; gap: 4px;">
-            <span>Loading activity...</span>
+          <div id="badge-gwf-history" style="font-size: 10.5px; display: flex; align-items: center; gap: 4px;">
+            <div style="display:flex; flex-direction:column; gap:2px;">
+              <span style="color:#4ade80; font-weight:700;">🟢 READY TO POST (4d ago)</span>
+              <span style="font-size:10px; color:var(--muted);">Oct 16 • CUE179 (1x total)</span>
+            </div>
           </div>
         </a>
-        <a href="https://www.reddit.com/r/WearOSFaces/submit" target="_blank" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: rgba(255, 197, 24, 0.4);">
+        <a href="https://www.reddit.com/r/WearOSFaces/submit" target="_blank" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: rgba(255, 197, 24, 0.5); background: rgba(255, 197, 24, 0.04);">
           <div style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:8px;">
             <span style="font-weight:700; color:var(--yellow);">Open r/WearOSFaces ↗</span>
-            <span style="font-size: 10px; background: rgba(255,255,255,0.1); padding: 1px 6px; border-radius: 10px; font-weight: 600; color: var(--yellow);">126k members</span>
+            <span style="font-size: 10px; background: rgba(255, 197, 24, 0.15); padding: 1px 6px; border-radius: 10px; font-weight: 600; color: var(--yellow);">126k members</span>
           </div>
-          <div id="badge-wearos-history" style="font-size: 10.5px; color: #4ade80; font-weight: 600; display: flex; align-items: center; gap: 4px;">
-            <span>Loading activity...</span>
+          <div id="badge-wearos-history" style="font-size: 10.5px; display: flex; align-items: center; gap: 4px;">
+            <span style="color:#4ade80; font-weight:700;">🟢 READY TO POST: Fresh audience (0 posts yet)</span>
           </div>
         </a>
-        <a href="https://www.reddit.com/r/androidwatchfaces/submit" target="_blank" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: var(--border);">
+        <a href="https://www.reddit.com/r/androidwatchfaces/submit" target="_blank" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: rgba(255, 255, 255, 0.15);">
           <div style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:8px;">
             <span style="font-weight:700; color:#fff;">Open r/AndroidWatchFaces ↗</span>
             <span style="font-size: 10px; background: rgba(255,255,255,0.08); padding: 1px 6px; border-radius: 10px; font-weight: 600; color: var(--muted);">10k members</span>
           </div>
-          <div id="badge-awf-history" style="font-size: 10.5px; color: #94a3b8; font-weight: 500; display: flex; align-items: center; gap: 4px;">
-            <span>Loading activity...</span>
+          <div id="badge-awf-history" style="font-size: 10.5px; display: flex; align-items: center; gap: 4px;">
+            <div style="display:flex; flex-direction:column; gap:2px;">
+              <span style="color:#f87171; font-weight:700;">🔴 Too Early (Posted Today - wait 2-3d)</span>
+              <span style="font-size:10px; color:var(--muted);">Oct 20 • CUE097 (2x total)</span>
+            </div>
           </div>
         </a>
       </div>
@@ -1848,7 +1854,7 @@ Links to claim your free code and the Play Store link are in the first comment b
     // Initialize on load
     // Dynamically calculate and display past posting activity per subreddit
     function updateSubredditBadges() {
-      fetch('marketing_campaigns.json?v=' + Date.now())
+      fetch('/marketing_campaigns.json?v=' + Date.now())
         .then(function(r) { return r.json(); })
         .then(function(campaigns) {
           if (!Array.isArray(campaigns)) return;
