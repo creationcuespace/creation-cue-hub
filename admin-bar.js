@@ -60,6 +60,7 @@
       id: 'planner',
       label: 'Planner',
       href: 'https://creationcue.web.app/month-planner.html',
+      target: '_blank',
       color: '#fbbf24',
       bg: 'rgba(251, 191, 36, 0.14)',
       border: 'rgba(251, 191, 36, 0.32)',
@@ -72,6 +73,7 @@
       id: 'versions',
       label: 'Versions',
       href: 'https://creationcue.web.app/play-versions.html',
+      target: '_blank',
       color: '#60a5fa',
       bg: 'rgba(96, 165, 250, 0.14)',
       border: 'rgba(96, 165, 250, 0.32)',
@@ -84,6 +86,7 @@
       id: 'coupons',
       label: 'Coupons',
       href: 'https://creationcue.web.app/manage-coupons.html',
+      target: '_blank',
       color: '#4ade80',
       bg: 'rgba(74, 222, 128, 0.14)',
       border: 'rgba(74, 222, 128, 0.32)',
@@ -96,6 +99,7 @@
       id: 'reddit',
       label: 'Reddit',
       href: 'https://creationcue.web.app/reddit-generator.html',
+      target: '_blank',
       color: '#ff652f',
       bg: 'rgba(255, 101, 47, 0.14)',
       border: 'rgba(255, 101, 47, 0.32)',
@@ -108,6 +112,7 @@
       id: 'socials',
       label: 'Socials',
       href: 'https://creationcue.web.app/social-generator.html',
+      target: '_blank',
       color: '#f472b6',
       bg: 'rgba(244, 114, 182, 0.14)',
       border: 'rgba(244, 114, 182, 0.32)',
@@ -120,6 +125,7 @@
       id: 'batch',
       label: 'Batch Update',
       href: 'https://creationcue.web.app/batchUpdates.html',
+      target: '_blank',
       color: '#c084fc',
       bg: 'rgba(192, 132, 252, 0.14)',
       border: 'rgba(192, 132, 252, 0.32)',
@@ -132,6 +138,7 @@
       id: 'deploy',
       label: 'Deploy',
       href: 'https://creationcue.web.app/play-deploy.html',
+      target: '_blank',
       color: '#fb7185',
       bg: 'rgba(251, 113, 133, 0.14)',
       border: 'rgba(251, 113, 133, 0.32)',
@@ -144,6 +151,7 @@
       id: 'blog',
       label: 'Blog',
       href: 'https://creationcue.web.app/admin.html',
+      target: '_blank',
       color: '#a3e635',
       bg: 'rgba(163, 230, 53, 0.14)',
       border: 'rgba(163, 230, 53, 0.32)',
@@ -185,16 +193,7 @@
   }
 
   function getLinkTarget(item) {
-    if (!item.target) return '';
-    try {
-      const targetUrl = new URL(item.href, window.location.origin);
-      if (targetUrl.hostname.toLowerCase() === window.location.hostname.toLowerCase()) {
-        return '';
-      }
-      return item.target;
-    } catch (e) {
-      return item.target;
-    }
+    return (item && item.target) ? item.target : '_blank';
   }
 
   function isCurrentPath(href) {
@@ -736,7 +735,7 @@
     const navLinksHtml = ADMIN_MENU_CONFIG.map(function (item) {
       const activeClass = isCurrentPath(item.href) ? ' active' : '';
       const target = getLinkTarget(item);
-      const targetAttr = target ? ` target="${target}"` : '';
+      const targetAttr = target ? ` target="${target}" rel="noopener noreferrer"` : '';
       const href = resolveHref(item.href);
       const styleAttr = `style="--tab-color:${item.color}; --tab-bg:${item.bg}; --tab-border:${item.border}; --tab-hover-bg:${item.hoverBg}; --tab-active-bg:${item.activeBg};"`;
       return `
@@ -751,7 +750,7 @@
 
     bar.innerHTML = `
       <div class="admin-bar-left">
-        <a href="${resolveHref('https://creationcue.web.app/index.html')}" class="admin-bar-brand" title="Creation Cue Admin Panel">
+        <a href="${resolveHref('https://creationcue.web.app/index.html')}" class="admin-bar-brand" title="Creation Cue Admin Panel" target="_blank" rel="noopener noreferrer">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
           <span class="admin-bar-title-text">Admin Panel</span>
         </a>
@@ -990,7 +989,7 @@
       container.innerHTML = ADMIN_MENU_CONFIG.map(function (item) {
         const activeClass = isCurrentPath(item.href) ? ' active' : '';
         const target = getLinkTarget(item);
-        const targetAttr = target ? ` target="${target}"` : '';
+        const targetAttr = target ? ` target="${target}" rel="noopener noreferrer"` : '';
         const href = resolveHref(item.href);
         const styleAttr = `style="--tab-color:${item.color}; --tab-bg:${item.bg}; --tab-border:${item.border};"`;
         return `
@@ -1133,8 +1132,8 @@
 
   // Check auth state
   function setupAuth() {
-    // If stored admin session exists, show bar immediately for seamless navigation
-    const storedAdmin = localStorage.getItem('cc_is_admin') === 'true';
+    // If stored admin session exists or on dedicated admin page, show bar immediately for seamless navigation
+    const storedAdmin = localStorage.getItem('cc_is_admin') === 'true' || isCurrentAdminPage();
     if (storedAdmin) {
       showAdminBar({ email: localStorage.getItem('cc_admin_email') || 'Admin' });
     }
@@ -1190,7 +1189,7 @@
     renderAdminBar();
     setupAuth();
     handleUrlParams();
-    console.log('[Creation Cue] Admin Bar v2.3 loaded');
+    console.log('[Creation Cue] Admin Bar v2.4 loaded');
   }
 
   if (document.readyState === 'loading') {
