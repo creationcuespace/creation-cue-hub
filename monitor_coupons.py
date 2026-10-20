@@ -1,7 +1,7 @@
 """
 Coupon Depletion Monitor for Creation Cue Promotions
 Monitors Firebase RTDB for promotion claims and sends push notifications to ntfy.sh/creationcue-alerts-9873
-when coupons are running low or completely gone.
+when giveaway coupons are running low or completely gone.
 """
 
 import sys
@@ -38,12 +38,10 @@ def get_promo_status(promo_id: str):
     with urllib.request.urlopen(req, timeout=10) as resp:
         return json.loads(resp.read().decode("utf-8"))
 
-def monitor_promo(promo_id: str, poll_interval: int = 15):
+def monitor_promo(promo_id: str, poll_interval: int = 10):
     print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] Starting coupon depletion monitor for '{promo_id.upper()}'...")
     print(f"Notifications will be pushed to {NTFY_URL}")
-    print(f"Polling interval: {poll_interval}s")
 
-    # Initial check
     status = get_promo_status(promo_id)
     if not status:
         print(f"Error: Promo '{promo_id}' not found in database.", file=sys.stderr)
@@ -55,15 +53,10 @@ def monitor_promo(promo_id: str, poll_interval: int = 15):
     limit = cap if (cap is not None and cap > 0) else total
     remaining = max(0, limit - claimed)
 
-    print(f"Initial State: Claimed = {claimed}, Cap/Limit = {limit}, Remaining for giveaway = {remaining}")
+    # Initial start count of claimed codes at the moment monitor was launched
+    start_claimed = claimed
 
-    send_ntfy(
-        title=f"👀 Monitor Active: {promo_id.upper()} Giveaway",
-        message=f"Monitoring started for {promo_id.upper()}.\nGiveaway Cap: {limit} | Claimed so far: {claimed} | Available: {remaining} coupons.",
-        priority="low",
-        tags=["eyes", "ticket"],
-        click_url="https://creationcue.web.app/reddit-generator"
-    )
+    print(f"Status: Total Claimed = {claimed}, Cap = {limit}, Remaining for giveaway = {remaining}")
 
     alerted_low = False
     alerted_depleted = False
@@ -83,10 +76,10 @@ def monitor_promo(promo_id: str, poll_interval: int = 15):
 
             # Check depleted (0 coupons left)
             if remaining == 0 and not alerted_depleted:
-                print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] ALL COUPONS DEPLETED! Claimed = {claimed}/{limit}")
+                print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] ALL GIVEAWAY COUPONS DEPLETED! (Reached Cap #{limit})")
                 send_ntfy(
                     title=f"🚨 COUPONS GONE: {promo_id.upper()}!",
-                    message=f"All {limit} coupons for {promo_id.upper()} have been claimed!\n\nRemember to post the 'Giveaway Ended' expired template or update the Reddit post flair.\n\nMonitor has finished and exited.",
+                    message=f"All giveaway coupons for {promo_id.upper()} have been claimed!\n\nOpen Reddit generator to post the 'Giveaway Ended' template.",
                     priority="urgent",
                     tags=["rotating_light", "warning", "checkered_flag"],
                     click_url="https://creationcue.web.app/reddit-generator"
@@ -100,7 +93,7 @@ def monitor_promo(promo_id: str, poll_interval: int = 15):
                 print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] LOW STOCK ALERT! Only {remaining} remaining.")
                 send_ntfy(
                     title=f"⚠️ Low Coupons: {promo_id.upper()} ({remaining} left)",
-                    message=f"Only {remaining} coupons remaining out of {limit} for {promo_id.upper()}! (Claimed: {claimed})",
+                    message=f"Only {remaining} coupons left for the {promo_id.upper()} giveaway!",
                     priority="high",
                     tags=["warning", "hourglass_flowing_sand"],
                     click_url="https://creationcue.web.app/reddit-generator"
@@ -114,11 +107,11 @@ def monitor_promo(promo_id: str, poll_interval: int = 15):
                 alerted_depleted = False
 
         except Exception as e:
-            print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] Poll error: {e}", file=sys.stderr)
+            pass
 
         time.sleep(poll_interval)
 
 if __name__ == "__main__":
     promo = sys.argv[1] if len(sys.argv) > 1 else "cue097"
-    interval = int(sys.argv[2]) if len(sys.argv) > 2 else 15
+    interval = int(sys.argv[2]) if len(sys.argv) > 2 else 10
     monitor_promo(promo, interval)
