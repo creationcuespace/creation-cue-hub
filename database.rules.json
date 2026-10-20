@@ -59,6 +59,7 @@
       }
     },
     "one_time_tokens": {
+      ".indexOn": ["promoId"],
       ".read": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992')",
       ".write": "auth != null && (auth.token.email == 'sotsor@gmail.com' || auth.uid == 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || auth.uid == 'JKq9NWxPshRbCEXjV2eTUVV6A992' || (data.exists() && newData.exists() && ((data.child('claimed').val() == false && newData.child('claimed').val() == true && newData.child('claimedBy').val() == auth.uid) || (data.child('claimedBy').val() == auth.uid && newData.child('claimedBy').val() == auth.uid))))",
       "$tokenId": {

@@ -261,7 +261,11 @@
 
       body.admin-mode .toast {
         top: 54px !important;
+        bottom: auto !important;
+        height: auto !important;
+        max-width: 90vw !important;
         z-index: 100001 !important;
+        pointer-events: none !important;
       }
 
       body.admin-mode .search-filter-row {
