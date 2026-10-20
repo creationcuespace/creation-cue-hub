@@ -959,6 +959,55 @@ Links to claim your free code and the Play Store link are in the first comment b
           </div>
         </div>
 
+        <!-- Step 5: Fast Reply Helper for Common Comment Issues -->
+        <div class="section-box" style="border-left: 3px solid #3b82f6;">
+          <div class="section-title-row">
+            <span class="section-title" style="color: #60a5fa;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              Step 5: Quick Replies for Comment Issues (1-Click Copy)
+            </span>
+          </div>
+          <div class="help-hint" style="margin-bottom: 12px;">
+            💬 Pre-written friendly answers when users comment with common questions or mobile issues:
+          </div>
+
+          <!-- Problem 1: Link won't load / keeps spinning / claim button stuck -->
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; margin-bottom: 12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
+              <span style="font-size:12px; font-weight:700; color:#fff;">⚠️ When user says: "Link won't load / button not working"</span>
+              <button class="copy-btn" onclick="copyField('reply-loading-stuck', 'Browser Fix Reply')">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy Reply
+              </button>
+            </div>
+            <textarea id="reply-loading-stuck" class="text-output-area" rows="4" readonly style="font-size:12px; line-height:1.45;"></textarea>
+          </div>
+
+          <!-- Problem 2: Late user asking for code after giveaway ended -->
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; margin-bottom: 12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
+              <span style="font-size:12px; font-weight:700; color:#fff;">⏳ When user says: "Any codes left? / Missed out"</span>
+              <button class="copy-btn" onclick="copyField('reply-missed-out', 'Missed Out Reply')">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy Reply
+              </button>
+            </div>
+            <textarea id="reply-missed-out" class="text-output-area" rows="3" readonly style="font-size:12px; line-height:1.45;"></textarea>
+          </div>
+
+          <!-- Problem 3: Thank You response -->
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
+              <span style="font-size:12px; font-weight:700; color:#fff;">💖 When user says: "Thank you / Great watch face!"</span>
+              <button class="copy-btn" onclick="copyField('reply-thank-you', 'Thank You Reply')">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy Reply
+              </button>
+            </div>
+            <textarea id="reply-thank-you" class="text-output-area" rows="2" readonly style="font-size:12px; line-height:1.45;"></textarea>
+          </div>
+        </div>
+
         <!-- Posting Walkthrough Guide -->
         <div class="guide-box">
           <strong>📋 Summary of Safe Posting Rules:</strong>
@@ -1580,6 +1629,19 @@ Links to claim your free code and the Play Store link are in the first comment b
 
       var expiredField = document.getElementById('output-expired');
       if (expiredField) expiredField.value = expiredNotice;
+
+      // 6. Quick Replies
+      var directClaimUrl = `https://creationcue.web.app/claim?p=${item.promoId}`;
+      var replyLoading = `Hi! The Reddit mobile app's built-in browser sometimes blocks the secure Google connection needed to generate your unique code.\n\nQuick 5-second fix: Tap the 3 dots (...) in the top right corner and choose 'Open in external browser' (Chrome, Safari, Samsung Internet, etc.), or open this link directly:\n${directClaimUrl}\n\nIf you still have any trouble, let me know and I'll send you a working code directly via Reddit Chat! 🙂`;
+      var replyMissed = `Hi! All promotional giveaway codes have been claimed for this round. You can still check out ${name} directly on Google Play here:\n${playStoreUrl}\n\nStay tuned for upcoming watch faces and giveaways! Thank you for the support!`;
+      var replyThanks = `Thank you so much! Really glad you like it. I hope you enjoy wearing ${name}! A quick rating or review on Google Play would mean the world to an independent designer! 😊`;
+
+      var rLoadingEl = document.getElementById('reply-loading-stuck');
+      if (rLoadingEl) rLoadingEl.value = replyLoading;
+      var rMissedEl = document.getElementById('reply-missed-out');
+      if (rMissedEl) rMissedEl.value = replyMissed;
+      var rThanksEl = document.getElementById('reply-thank-you');
+      if (rThanksEl) rThanksEl.value = replyThanks;
     }
 
     // Helper to format clean bullet points
