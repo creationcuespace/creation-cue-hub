@@ -844,8 +844,8 @@
           </div>
           <div id="selected-face-stats" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px;">
-              <label for="custom-cap-input" style="font-size: 11px; font-weight: 700; color: var(--yellow); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Giveaway Cap:</label>
-              <input type="number" id="custom-cap-input" min="1" max="1000" placeholder="e.g. 100" style="width: 75px; background: var(--black); border: 1px solid var(--border); border-radius: 4px; color: #fff; font-size: 13px; font-weight: 700; padding: 4px 6px; text-align: center;" oninput="onCapInputChange()">
+              <label for="custom-cap-input" style="font-size: 11px; font-weight: 700; color: var(--yellow); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Coupons to Give:</label>
+              <input type="number" id="custom-cap-input" min="1" max="1000" placeholder="e.g. 60" style="width: 75px; background: var(--black); border: 1px solid var(--border); border-radius: 4px; color: #fff; font-size: 13px; font-weight: 700; padding: 4px 6px; text-align: center;" oninput="onCapInputChange()">
               <button id="btn-save-cap" class="btn-save-cap" onclick="saveCapToFirebase()" title="Save cap directly to Firebase database so promo-details & claim page are updated">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                 Save
@@ -1362,19 +1362,22 @@ Links to claim your free code and the Play Store link are in the first comment b
         badge.textContent = '0 Coupons Left';
       }
 
-      // Initialize or prefill Cap input (only prefill if an explicit cap was already set on the promo)
+      // Initialize or prefill "Coupons to Give" input
+      // If an explicit cap is already set in DB that exceeds claimed, pre-fill with remaining coupons in this giveaway (cap - claimed)
       var capInput = document.getElementById('custom-cap-input');
       var capWarn = document.getElementById('cap-warning-banner');
       var capSaved = document.getElementById('cap-saved-banner');
       var capSavedNum = document.getElementById('cap-saved-number');
 
+      var activeGiveawayLeft = (item.cap && item.cap > (item.claimed || 0)) ? (item.cap - (item.claimed || 0)) : null;
+
       if (capInput) {
-        if (item.cap && item.cap > 0) {
-          capInput.value = item.cap;
+        if (activeGiveawayLeft !== null && activeGiveawayLeft > 0) {
+          capInput.value = activeGiveawayLeft;
           if (capWarn) capWarn.style.display = 'none';
           if (capSaved) {
             capSaved.style.display = 'flex';
-            if (capSavedNum) capSavedNum.textContent = item.cap;
+            if (capSavedNum) capSavedNum.textContent = activeGiveawayLeft + ' coupons remaining (cutoff at claim #' + item.cap + ')';
           }
         } else {
           capInput.value = '';
@@ -1420,7 +1423,12 @@ Links to claim your free code and the Play Store link are in the first comment b
       var promoId = selectedItem.promoId;
       var capInput = document.getElementById('custom-cap-input');
       var val = capInput ? capInput.value.trim() : '';
-      var newCap = val ? parseInt(val, 10) : null;
+      var couponsToGive = val ? parseInt(val, 10) : null;
+      var currentClaimed = selectedItem.claimed || 0;
+
+      // In database, claimsCap is the cumulative cutoff index:
+      // If user specifies 60 coupons to give, claimsCap = claimedCount + 60.
+      var newCap = (couponsToGive && couponsToGive > 0) ? (currentClaimed + couponsToGive) : null;
 
       var btn = document.getElementById('btn-save-cap');
       var origHtml = btn.innerHTML;
