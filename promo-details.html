@@ -808,6 +808,7 @@
             <div id="danger-zone-body" style="display:none; flex-direction:column; gap:10px; padding:16px 20px; border-top:1px solid rgba(232, 40, 30, 0.15);">
               <button class="btn ghost" id="btn-pause-promo" style="width:100%;">PAUSE PROMOTION</button>
               <button class="btn" id="btn-duplicate-promo" style="width:100%; background:var(--blue); color:white;">DUPLICATE PROMOTION</button>
+              <button class="btn ghost" id="btn-set-all-private-detail" onclick="setAllPromotionsPrivate()" style="width:100%; color:var(--red); border-color:rgba(232, 40, 30, 0.3);">🔒 SET ALL PROMOTIONS TO PRIVATE</button>
               <button class="btn red" id="btn-delete-promo" style="width:100%;">DELETE PROMOTION PERMANENTLY</button>
             </div>
           </div>
@@ -893,6 +894,73 @@
       t.classList.add('show');
       setTimeout(function () { t.classList.remove('show'); }, 2200);
     }
+
+
+    window.setAllPromotionsPrivate = function() {
+      if (!confirm("Are you sure you want to set ALL promotions to Private?\n\nThis will immediately block public claim links for all promotions. Only one-time claim links will work.")) {
+        return;
+      }
+
+      var btn = document.getElementById('btn-set-all-private') || document.getElementById('btn-set-all-private-detail');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = '🔒 Updating...';
+      }
+
+      db.ref('promotions').once('value').then(function(snapshot) {
+        var promos = snapshot.val();
+        if (!promos) {
+          showToast("No promotions found.");
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = '🔒 Set All to Private';
+          }
+          return;
+        }
+
+        var updates = {};
+        var count = 0;
+        var promoKeys = Object.keys(promos);
+        promoKeys.forEach(function(key) {
+          if (promos[key] && promos[key].public) {
+            updates[key + '/public/visibility'] = 'private';
+            count++;
+          }
+        });
+
+        if (count === 0) {
+          showToast("No promotions to update.");
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = '🔒 Set All to Private';
+          }
+          return;
+        }
+
+        db.ref('promotions').update(updates).then(function() {
+          showToast("All " + count + " promotions set to Private!");
+          if (typeof loadPromotions === 'function') loadPromotions();
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = '🔒 Set All to Private';
+          }
+        }).catch(function(err) {
+          console.error("Error setting all private:", err);
+          alert("Error: " + err.message);
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = '🔒 Set All to Private';
+          }
+        });
+      }).catch(function(err) {
+        console.error("Error loading promotions:", err);
+        alert("Error: " + err.message);
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = '🔒 Set All to Private';
+        }
+      });
+    };
 
     window.copyDirectRedeemLink = function(e) {
       if (e) e.stopPropagation();

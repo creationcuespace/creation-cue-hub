@@ -1060,9 +1060,14 @@ AAAA-BBBB-CCCC"></textarea>
         </div>
 
         <div class="card">
-          <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="card-title" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <span>Active Promotions</span>
-            <button class="btn small" onclick="loadPromotions()" style="background:rgba(255,255,255,0.1); border:none; padding:4px 8px; font-size:10px;">Refresh</button>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <button class="btn small" id="btn-set-all-private" onclick="setAllPromotionsPrivate()" style="background:rgba(232,40,30,0.12); color:var(--red); border:1px solid rgba(232,40,30,0.3); font-size:11px; padding:4px 10px; display:flex; align-items:center; gap:5px; cursor:pointer;" title="Set visibility to Private for all promotions (blocks public links)">
+                🔒 Set All to Private
+              </button>
+              <button class="btn small" onclick="loadPromotions()" style="background:rgba(255,255,255,0.1); border:none; padding:4px 8px; font-size:10px;">Refresh</button>
+            </div>
           </div>
           <div style="margin-top: -6px; margin-bottom: 2px;">
             <input class="input-text" id="promotions-search" type="text" placeholder="Search promotions by name, ID, or description..." oninput="filterPromotions()">
@@ -1190,6 +1195,73 @@ AAAA-BBBB-CCCC"></textarea>
       t.classList.add('show');
       setTimeout(function () { t.classList.remove('show'); }, 2200);
     }
+
+
+    window.setAllPromotionsPrivate = function() {
+      if (!confirm("Are you sure you want to set ALL promotions to Private?\n\nThis will immediately block public claim links for all promotions. Only one-time claim links will work.")) {
+        return;
+      }
+
+      var btn = document.getElementById('btn-set-all-private') || document.getElementById('btn-set-all-private-detail');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = '🔒 Updating...';
+      }
+
+      db.ref('promotions').once('value').then(function(snapshot) {
+        var promos = snapshot.val();
+        if (!promos) {
+          showToast("No promotions found.");
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = '🔒 Set All to Private';
+          }
+          return;
+        }
+
+        var updates = {};
+        var count = 0;
+        var promoKeys = Object.keys(promos);
+        promoKeys.forEach(function(key) {
+          if (promos[key] && promos[key].public) {
+            updates[key + '/public/visibility'] = 'private';
+            count++;
+          }
+        });
+
+        if (count === 0) {
+          showToast("No promotions to update.");
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = '🔒 Set All to Private';
+          }
+          return;
+        }
+
+        db.ref('promotions').update(updates).then(function() {
+          showToast("All " + count + " promotions set to Private!");
+          if (typeof loadPromotions === 'function') loadPromotions();
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = '🔒 Set All to Private';
+          }
+        }).catch(function(err) {
+          console.error("Error setting all private:", err);
+          alert("Error: " + err.message);
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = '🔒 Set All to Private';
+          }
+        });
+      }).catch(function(err) {
+        console.error("Error loading promotions:", err);
+        alert("Error: " + err.message);
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = '🔒 Set All to Private';
+        }
+      });
+    };
 
     window.copyDirectRedeemLink = function(e) {
       if (e) e.stopPropagation();
@@ -1632,6 +1704,11 @@ AAAA-BBBB-CCCC"></textarea>
           activeStatusHtml = '<span style="color:var(--green); font-size:11px; font-weight:bold; background:rgba(76,175,80,0.1); padding:4px 8px; border-radius:3px;">● ACTIVE</span>';
         }
 
+        var isPrivate = promo.visibility === 'private';
+        var visibilityBadge = isPrivate
+          ? '<span style="color:var(--muted); font-size:10px; font-weight:bold; background:rgba(255,255,255,0.06); padding:4px 8px; border-radius:3px; border:1px solid rgba(255,255,255,0.12);" title="Private: Public claims blocked">🔒 PRIVATE</span>'
+          : '<span style="color:var(--blue); font-size:10px; font-weight:bold; background:rgba(37,99,235,0.12); padding:4px 8px; border-radius:3px; border:1px solid rgba(37,99,235,0.25);" title="Public: Open claim page">🌐 PUBLIC</span>';
+
         block.innerHTML = `
           <!-- Clickable Header Bar (opens details page) -->
           <div class="promo-toggle-header" onclick="window.location.href = 'promo-details.html?p=${key}'" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none;">
@@ -1654,7 +1731,8 @@ AAAA-BBBB-CCCC"></textarea>
                 <span style="font-size: 11px; color: var(--yellow); font-weight: 600; display: block; margin: 0;">(left ${remaining} from ${cap && cap > 0 ? 'cap ' + cap + ' (total ' + total + ')' : total})</span>
               </div>
             </div>
-            <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end;">
+              ${visibilityBadge}
               ${activeStatusHtml}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="9 18 15 12 9 6"></polyline>
