@@ -1662,13 +1662,13 @@ Links to claim your free code and the Play Store link are in the first comment b
       var commentIntro = shouldMentionNumber && countToUse > 0 
         ? `Giving away ${countToUse} free Google Play promo codes` 
         : `Giving away free Google Play promo codes`;
-      var commentText = `Hey everyone!\n\n${commentIntro} for **${name}** Wear OS watch face.\n\n🎁 **Claim your free coupon code here:**\n${claimUrl}\n\n🏪 **Google Play Store Link:**\n${playStoreUrl}\n\n**Features:**\n${featuresList}\n\nIf you like the watch face, a rating or review on Google Play would be greatly appreciated! Enjoy!`;
+      var commentText = `Hey everyone!\n\n${commentIntro} for **${name}** Wear OS watch face.\n\n🎁 **Claim your free coupon code here:**\n${claimUrl}\n\n🏪 **Google Play Store Link:**\n${playStoreUrl}\n\n**Key Features:**\n${featuresList}\n\nIf you grab a code and like the watch face, a rating or review on Google Play is greatly appreciated! Enjoy! ⌚`;
 
       document.getElementById('output-comment').value = commentText;
 
       // 5. Formatted Expired Notice (Ready to edit into comment or post)
       var expiredCountText = shouldMentionNumber && countToUse > 0 ? `All ${countToUse}` : `All`;
-      var expiredNotice = `🚨 **[UPDATE: ${expiredCountText} promotional coupons have now been claimed!]**\n\nThank you so much to everyone who grabbed a code! If you missed out, you can get ${name} directly on Google Play below:\n\n🏪 **Google Play Store Link:**\n${playStoreUrl}\n\nTo everyone who claimed a code: I really hope you enjoy ${name} on your wrist! A rating or brief review on the Play Store means the world to an independent designer! 🙏`;
+      var expiredNotice = `🚨 **[UPDATE: ${expiredCountText} promotional coupons have now been claimed!]**\n\nThank you so much to everyone who grabbed a code! If you missed out, you can find ${name} directly on Google Play below:\n\n🏪 **Google Play Store Link:**\n${playStoreUrl}\n\nTo everyone who claimed a code: I really hope you enjoy ${name} on your wrist! A rating or review on the Play Store is greatly appreciated! Enjoy your new watch face! ⌚`;
 
       var expiredField = document.getElementById('output-expired');
       if (expiredField) expiredField.value = expiredNotice;
@@ -1676,8 +1676,8 @@ Links to claim your free code and the Play Store link are in the first comment b
       // 6. Quick Replies
       var directClaimUrl = `https://creationcue.web.app/claim?p=${item.promoId}`;
       var replyLoading = `Hi! The Reddit mobile app's built-in browser sometimes blocks the secure Google connection needed to generate your unique code.\n\nQuick 5-second fix: Tap the 3 dots (...) in the top right corner and choose 'Open in external browser' (Chrome, Safari, Samsung Internet, etc.), or open this link directly:\n${directClaimUrl}\n\nIf you still have any trouble, let me know and I'll send you a working code directly via Reddit Chat! 🙂`;
-      var replyMissed = `Hi! All promotional giveaway codes have been claimed for this round. You can still check out ${name} directly on Google Play here:\n${playStoreUrl}\n\nStay tuned for upcoming watch faces and giveaways! Thank you for the support!`;
-      var replyThanks = `Thank you so much! Really glad you like it. I hope you enjoy wearing ${name}! A quick rating or review on Google Play would mean the world to an independent designer! 😊`;
+      var replyMissed = `Hi! All promotional giveaway codes have been claimed for this round. You can still check out ${name} directly on Google Play here:\n${playStoreUrl}\n\nStay tuned for upcoming watch faces and giveaways! Thank you for following along and checking out my designs!`;
+      var replyThanks = `Thank you so much! Really glad you like it. I hope you enjoy wearing ${name}! A rating or review on Google Play means the world to an independent designer! 😊`;
 
       var rLoadingEl = document.getElementById('reply-loading-stuck');
       if (rLoadingEl) rLoadingEl.value = replyLoading;
