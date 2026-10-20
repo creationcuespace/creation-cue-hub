@@ -1,4 +1,41 @@
 {
-  "lastUpdated": "2026-10-19T06:05:00.000Z",
-  "reviews": []
+  "lastUpdated": "2026-10-20T02:05:49.525Z",
+  "reviews": [
+    {
+      "reviewId": "99aa9e26-299c-4077-a271-596a51ed57aa",
+      "packageName": "com.creation.cue097watchface",
+      "title": "Digital Watch Face CUE097",
+      "wfId": "cue097",
+      "authorName": "Noureddine Damous",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "OP611FL1 (OnePlus 15)",
+      "text": "\tI really love this interface, especially the color scheme and customization options. Thank you for your excellent work.",
+      "lastModified": "2026-10-19T19:22:06.000Z"
+    },
+    {
+      "reviewId": "7156a13f-68a2-444a-a8c1-ccf566f22f49",
+      "packageName": "com.creation.cue179watchface",
+      "title": "Watch Face CUE179",
+      "wfId": "cue179",
+      "authorName": "Troy Lyman",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
+      "text": "\tgreat little watch face. I love the big numbers and it has the perfect amount of compilations.",
+      "lastModified": "2026-10-19T18:15:38.000Z"
+    },
+    {
+      "reviewId": "d3be67d6-88b1-40e4-b305-b7061c89d50c",
+      "packageName": "com.creationcue.crc068watchface",
+      "title": "Digital Watch Face CRC068",
+      "wfId": "crc068",
+      "authorName": "Pedro Avellar",
+      "starRating": 3,
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "sabahl (moto e13)",
+      "text": "\tbom app mas limitado.",
+      "lastModified": "2026-10-19T02:06:32.000Z"
+    }
+  ]
 }
