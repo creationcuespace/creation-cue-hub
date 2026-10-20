@@ -38,5 +38,18 @@
     "depletionMinutes": 68,
     "status": "completed",
     "notes": "Hybrid watch face with two hand styles, moon phase, distance km/miles switch, and 4 complications. All 60 claimed in ~68 minutes."
+  },
+  {
+    "id": "reddit-cue116-20261020",
+    "channel": "reddit",
+    "subreddit": "r/WearOSFaces",
+    "promoId": "cue116",
+    "faceName": "CUE116",
+    "postUrl": "https://www.reddit.com/r/wearosfaces/comments/1xaxzq7/wear_os_cue116_minimalist_watch_face_70_free/",
+    "title": "[Wear OS] CUE116 Minimalist Watch Face – 70 Free Coupon Codes Giveaway!",
+    "couponsAllocated": 70,
+    "createdAt": "2026-10-20T17:15:00Z",
+    "status": "active",
+    "notes": "Minimalist true-black OLED watch face. Top-rated bestseller. 70 coupons allocated on r/WearOSFaces."
   }
 ]
