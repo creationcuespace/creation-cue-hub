@@ -866,6 +866,23 @@
           </div>
         </div>
 
+        <!-- Discrete Automation & Analytics Tracking Flow Note -->
+        <details style="margin-top: 10px; border: 1px solid rgba(255, 69, 0, 0.25); border-radius: 6px; background: rgba(255, 69, 0, 0.03); padding: 6px 12px; font-size: 11.5px; color: var(--muted); cursor: pointer;">
+          <summary style="font-weight: 600; color: #ff8b60; display: inline-flex; align-items: center; gap: 6px; user-select: none;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            How the automated giveaway & speed tracking flow works (Click to view)
+          </summary>
+          <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.05); line-height: 1.5; color: var(--text); opacity: 0.9; cursor: default;">
+            <ol style="padding-left: 18px; margin: 0; display: flex; flex-direction: column; gap: 4px;">
+              <li><strong>Launch Giveaway on Reddit:</strong> Post your title, banner image, and drop the comment with the claim link.</li>
+              <li><strong>Click "Log to Analytics" above:</strong> Starts the stopwatch timer in the database (<code>startedAt</code>) and logs the campaign.</li>
+              <li><strong>Users Claim Coupons:</strong> Real-time claims count down on <code>creationcue.web.app/claim</code> until your cap is hit.</li>
+              <li><strong>Automatic Depletion Calculation:</strong> When the last coupon is taken, the system instantly computes total elapsed time, attaches it to your <strong>ntfy phone alert</strong> (e.g. <em>"🚨 COUPONS GONE: CUE097! (Claimed in ~68 mins)"</em>), and writes the depletion minutes.</li>
+              <li><strong>Visible in Analytics:</strong> Shows up on <a href="https://cue-earnings.sotsor.workers.dev/analytics" target="_blank" style="color:#60a5fa; text-decoration:none;">cue-earnings Analytics ↗</a> with the <span style="background:rgba(16,185,129,0.15); color:#34d399; padding:1px 6px; border-radius:3px; font-weight:700;">⚡ Depleted in X mins</span> speed badge.</li>
+            </ol>
+          </div>
+        </details>
+
         <!-- Warning banner for unsaved giveaway cap -->
         <div id="cap-warning-banner" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; border-radius: 8px; padding: 10px 14px; margin-top: 14px; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
           <div style="display: flex; align-items: center; gap: 8px; color: #fca5a5; font-size: 12.5px; font-weight: 600;">
