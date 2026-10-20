@@ -1873,18 +1873,14 @@ Links to claim your free code and the Play Store link are in the first comment b
             }
           });
 
-          // Format relative time helper
+          // Format relative time helper & timing safety advisory
           function formatSubInfo(subKey, elId, isRecommendedIfZero) {
             var data = subs[subKey];
             var el = document.getElementById(elId);
             if (!el) return;
 
             if (data.count === 0) {
-              if (isRecommendedIfZero) {
-                el.innerHTML = '<span style="color:#4ade80;">✨ Fresh! 0 posts yet (Recommended Next)</span>';
-              } else {
-                el.innerHTML = '<span style="color:var(--muted);">No posts logged yet</span>';
-              }
+              el.innerHTML = '<span style="color:#4ade80; font-weight:700;">🟢 READY TO POST: Fresh audience (0 posts yet)</span>';
               return;
             }
 
@@ -1894,7 +1890,23 @@ Links to claim your free code and the Play Store link are in the first comment b
             var diffDays = Math.floor((now - d) / (1000 * 60 * 60 * 24));
             var timeAgoStr = diffDays === 0 ? "Today" : (diffDays === 1 ? "Yesterday" : (diffDays + "d ago"));
 
-            el.innerHTML = '<span>Last: ' + timeAgoStr + ' (' + dateStr + ' • ' + data.lastFace + ' • ' + data.count + 'x total)</span>';
+            // Timing health rules:
+            // 0 - 2 days: Too early (risk of community fatigue / spam flag)
+            // 3 - 4 days: Fair / Ready (good gap)
+            // 5+ days: Optimal / Green light
+            var timingBadge = '';
+            if (diffDays < 2) {
+              timingBadge = '<span style="color:#f87171; font-weight:700;">🔴 Too Early (Posted ' + timeAgoStr + ' - wait 2-3d)</span>';
+            } else if (diffDays >= 2 && diffDays < 4) {
+              timingBadge = '<span style="color:#fde047; font-weight:700;">🟡 Fair Window (' + timeAgoStr + ')</span>';
+            } else {
+              timingBadge = '<span style="color:#4ade80; font-weight:700;">🟢 READY TO POST (' + timeAgoStr + ')</span>';
+            }
+
+            el.innerHTML = '<div style="display:flex; flex-direction:column; gap:2px;">' +
+              timingBadge +
+              '<span style="font-size:10px; color:var(--muted);">' + dateStr + ' • ' + data.lastFace + ' (' + data.count + 'x total)</span>' +
+              '</div>';
           }
 
           formatSubInfo('GalaxyWatchFace', 'badge-gwf-history', false);
