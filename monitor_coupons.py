@@ -86,13 +86,14 @@ def monitor_promo(promo_id: str, poll_interval: int = 15):
                 print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] ALL COUPONS DEPLETED! Claimed = {claimed}/{limit}")
                 send_ntfy(
                     title=f"🚨 COUPONS GONE: {promo_id.upper()}!",
-                    message=f"All {limit} coupons for {promo_id.upper()} have been claimed!\n\nRemember to post the 'Giveaway Ended' expired template or update the Reddit post flair.",
+                    message=f"All {limit} coupons for {promo_id.upper()} have been claimed!\n\nRemember to post the 'Giveaway Ended' expired template or update the Reddit post flair.\n\nMonitor has finished and exited.",
                     priority="urgent",
                     tags=["rotating_light", "warning", "checkered_flag"],
                     click_url="https://creationcue.web.app/reddit-generator"
                 )
                 alerted_depleted = True
-                print("Alert sent. Monitor will keep watching in case cap is increased.")
+                print("Final alert sent. Campaign completed. Monitor shutting down cleanly.")
+                break
 
             # Check low stock (<= 5 remaining)
             elif remaining <= 5 and remaining > 0 and not alerted_low:
