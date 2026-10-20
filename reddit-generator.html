@@ -1667,8 +1667,7 @@ Links to claim your free code and the Play Store link are in the first comment b
       document.getElementById('output-comment').value = commentText;
 
       // 5. Formatted Expired Notice (Ready to edit into comment or post)
-      var expiredCountText = shouldMentionNumber && countToUse > 0 ? `All ${countToUse}` : `All`;
-      var expiredNotice = `🚨 **[UPDATE: ${expiredCountText} promotional coupons have now been claimed!]**\n\nThank you so much to everyone who grabbed a code! If you missed out, you can find ${name} directly on Google Play below:\n\n🏪 **Google Play Store Link:**\n${playStoreUrl}\n\nTo everyone who claimed a code: I really hope you enjoy ${name} on your wrist! A rating or review on the Play Store is greatly appreciated! Enjoy your new watch face! ⌚`;
+      var expiredNotice = `🚨 **[UPDATE: All promotional coupons have now been claimed!]**\n\nThank you so much to everyone who grabbed a code! If you missed out, you can find ${name} directly on Google Play below:\n\n🏪 **Google Play Store Link:**\n${playStoreUrl}\n\nTo everyone who claimed a code: I really hope you enjoy ${name} on your wrist! A rating or review on the Play Store is greatly appreciated! Enjoy your new watch face! ⌚`;
 
       var expiredField = document.getElementById('output-expired');
       if (expiredField) expiredField.value = expiredNotice;
