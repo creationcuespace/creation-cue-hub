@@ -1,41 +1,137 @@
 {
-  "lastUpdated": "2026-10-20T02:05:49.525Z",
+  "lastUpdated": "2026-10-21T02:03:20.521Z",
   "reviews": [
     {
-      "reviewId": "99aa9e26-299c-4077-a271-596a51ed57aa",
+      "reviewId": "acd1e836-4b5b-4fff-8581-abe9bd0ac0b1",
+      "packageName": "com.creationcue.crc072watchface",
+      "title": "Hybrid Watch Face CRC072",
+      "wfId": "crc072",
+      "authorName": "Isaías MSILVA",
+      "starRating": 5,
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "beyond2 (Galaxy S10+)",
+      "text": "\tlindo relógio",
+      "lastModified": "2026-10-20T23:45:19.000Z"
+    },
+    {
+      "reviewId": "0c804628-56b6-493f-a5ff-0cdf16ed7db9",
       "packageName": "com.creation.cue097watchface",
       "title": "Digital Watch Face CUE097",
       "wfId": "cue097",
-      "authorName": "Noureddine Damous",
+      "authorName": "Jeff Bouchard",
       "starRating": 5,
       "reviewerLanguage": "en",
-      "deviceMetadata": "OP611FL1 (OnePlus 15)",
-      "text": "\tI really love this interface, especially the color scheme and customization options. Thank you for your excellent work.",
-      "lastModified": "2026-10-19T19:22:06.000Z"
+      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
+      "text": "\tGreat looking and super functional. My new favorite!",
+      "lastModified": "2026-10-20T19:36:56.000Z"
     },
     {
-      "reviewId": "7156a13f-68a2-444a-a8c1-ccf566f22f49",
-      "packageName": "com.creation.cue179watchface",
-      "title": "Watch Face CUE179",
-      "wfId": "cue179",
-      "authorName": "Troy Lyman",
+      "reviewId": "592132cc-5716-4de8-9ad5-dedb3f6550c7",
+      "packageName": "com.creation.cue116watchface",
+      "title": "Digital Watch Face CUE116",
+      "wfId": "cue116",
+      "authorName": "Rot Rose",
       "starRating": 5,
       "reviewerLanguage": "en",
-      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
-      "text": "\tgreat little watch face. I love the big numbers and it has the perfect amount of compilations.",
-      "lastModified": "2026-10-19T18:15:38.000Z"
+      "deviceMetadata": "toco (Mi Note 10 Lite)",
+      "text": "\tyou have always premium and elegant watch faces thank you so much",
+      "lastModified": "2026-10-20T19:30:18.000Z"
     },
     {
-      "reviewId": "d3be67d6-88b1-40e4-b305-b7061c89d50c",
+      "reviewId": "648096aa-73fd-42b5-b33d-717ead49e043",
+      "packageName": "com.creation.cue097watchface",
+      "title": "Digital Watch Face CUE097",
+      "wfId": "cue097",
+      "authorName": "Pablo Gallucci",
+      "starRating": 5,
+      "reviewerLanguage": "es",
+      "deviceMetadata": "tundra (moto S30)",
+      "text": "\tFantástica. Muy vistosa e informativa cara de reloj",
+      "lastModified": "2026-10-20T19:23:12.000Z"
+    },
+    {
+      "reviewId": "cf806f94-c1e5-47f0-a491-7e2180625907",
+      "packageName": "com.creation.cue116watchface",
+      "title": "Digital Watch Face CUE116",
+      "wfId": "cue116",
+      "authorName": "sonia Pangalos",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "e2s (Galaxy S24+)",
+      "text": "\tSimple and beautiful watch face 😍, easy to customise 👌🏻",
+      "lastModified": "2026-10-20T18:06:45.000Z"
+    },
+    {
+      "reviewId": "2504283d-486d-439b-8971-8a7878d8afc9",
       "packageName": "com.creationcue.crc068watchface",
       "title": "Digital Watch Face CRC068",
       "wfId": "crc068",
-      "authorName": "Pedro Avellar",
+      "authorName": "Роман Липатов",
       "starRating": 3,
-      "reviewerLanguage": "pt",
-      "deviceMetadata": "sabahl (moto e13)",
-      "text": "\tbom app mas limitado.",
-      "lastModified": "2026-10-19T02:06:32.000Z"
+      "reviewerLanguage": "ru",
+      "deviceMetadata": "RE60ADL1 (RMX5061)",
+      "text": "\tНевозможно отключить нижний блок с с зарядом батареи. как раз в том месте, где оно перекрывается фоновым таймером на Galaxy watch 8. Невозможно сменить цвет. Только оранжевый.",
+      "lastModified": "2026-10-20T13:41:48.000Z"
+    },
+    {
+      "reviewId": "b07b49ca-59e6-4dc0-9f29-ff9fb9ac9570",
+      "packageName": "com.creation.cue097watchface",
+      "title": "Digital Watch Face CUE097",
+      "wfId": "cue097",
+      "authorName": "Grigorescu Ionut",
+      "starRating": 5,
+      "reviewerLanguage": "ro",
+      "deviceMetadata": "HNBVL (HONOR Magic6 Pro)",
+      "text": "\tWauuu I say wauuu, love it,Awsome design, very useful .. recommend it from the bottom of my heart ❤️",
+      "lastModified": "2026-10-20T12:37:41.000Z"
+    },
+    {
+      "reviewId": "013a170f-2949-4526-9d10-852a33b28994",
+      "packageName": "com.creation.cue097watchface",
+      "title": "Digital Watch Face CUE097",
+      "wfId": "cue097",
+      "authorName": "Don Quixot",
+      "starRating": 5,
+      "reviewerLanguage": "fr",
+      "deviceMetadata": "Unknown",
+      "text": "\tSuperbe, complet et lisible, Efficace",
+      "lastModified": "2026-10-20T09:54:38.000Z"
+    },
+    {
+      "reviewId": "54665bd8-84e2-4e82-9daa-eba2c8163c38",
+      "packageName": "com.creation.cue097watchface",
+      "title": "Digital Watch Face CUE097",
+      "wfId": "cue097",
+      "authorName": "刘朋",
+      "starRating": 5,
+      "reviewerLanguage": "zh-Hans",
+      "deviceMetadata": "pa1q (Galaxy S25)",
+      "text": "\tVery good design, five-star praise.",
+      "lastModified": "2026-10-20T09:19:12.000Z"
+    },
+    {
+      "reviewId": "a284386f-0c81-43ac-9a4a-c25257054e9e",
+      "packageName": "com.creation.cue097watchface",
+      "title": "Digital Watch Face CUE097",
+      "wfId": "cue097",
+      "authorName": "Karlheinz M",
+      "starRating": 5,
+      "reviewerLanguage": "de",
+      "deviceMetadata": "OP611FL1 (OnePlus 15)",
+      "text": "\tunkonventionell gut👍",
+      "lastModified": "2026-10-20T09:12:42.000Z"
+    },
+    {
+      "reviewId": "34edd454-51cf-4b0a-abc4-ee59f9b7ffde",
+      "packageName": "com.creation.cue097watchface",
+      "title": "Digital Watch Face CUE097",
+      "wfId": "cue097",
+      "authorName": "SuperMan Bat",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
+      "text": "\tperfect design 👌",
+      "lastModified": "2026-10-20T08:10:34.000Z"
     }
   ]
 }
