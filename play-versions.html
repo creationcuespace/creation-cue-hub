@@ -5457,9 +5457,12 @@
         return true;
       });
 
+      // Deduplicate by author or unique reviewId (never squash different reviews for the same app!)
       const reviewMap = new Map();
       activeReviews.forEach(r => {
-        const key = `${r.packageName}_${r.title}`;
+        if (!r.reviewId) return;
+        const author = (r.authorName && r.authorName !== 'Google User') ? r.authorName.toLowerCase().trim() : '';
+        const key = author ? `${r.packageName}_${author}` : r.reviewId;
         if (!reviewMap.has(key)) {
           reviewMap.set(key, r);
         } else {
@@ -5473,7 +5476,7 @@
       });
 
       unrepliedReviews = Array.from(reviewMap.values());
-      unrepliedReviews.sort((a, b) => new Date(a.lastModified).getTime() - new Date(b.lastModified).getTime());
+      unrepliedReviews.sort((a, b) => new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime());
       updateReviewsBadgeCount();
     }
 
