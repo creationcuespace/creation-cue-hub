@@ -1383,6 +1383,27 @@
       visibility: visible !important;
     }
 
+    .canned-reply-btn {
+      text-align: left;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      padding: 6px 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .canned-reply-btn:hover {
+      background: rgba(255, 255, 255, 0.09) !important;
+      border-color: rgba(245, 197, 24, 0.5) !important;
+      transform: translateY(-1px);
+    }
+    .canned-reply-btn:active {
+      transform: translateY(0);
+    }
+
     @keyframes pulse-badge {
       0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.9); }
       50% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
@@ -5500,6 +5521,72 @@
       }
     }
 
+    const CANNED_REVIEW_REPLIES = [
+      {
+        title: '⭐ Glad you like it',
+        text: 'Thank you so much! Glad you like it! 😊'
+      },
+      {
+        title: '👍 Thanks & support',
+        text: 'Thank you for the review and your support! Have a great day! 👍'
+      },
+      {
+        title: '🖐️ Hands only',
+        text: 'Thank you! You can choose the Hands Only option by long-pressing the watch face and tapping Customize.'
+      },
+      {
+        title: '⏱️ Line hand only',
+        text: 'Thank you! You can switch to line hands only or remove hands by long-pressing and tapping Customize.'
+      },
+      {
+        title: '💡 Feature requests',
+        text: 'Thanks for the review! Let me know if you have any feature requests or suggestions!'
+      },
+      {
+        title: '⚙️ Customize & Complications',
+        text: 'Thank you! You can customize complications, colors, and styles by long-pressing the watch face.'
+      },
+      {
+        title: '📧 Support & Help',
+        text: 'Thanks for your feedback! If you need any assistance or have questions, please email creationcuespace@gmail.com!'
+      },
+      {
+        title: '🙏 Appreciate feedback',
+        text: 'I really appreciate your kind feedback! Thank you for supporting independent design!'
+      },
+      {
+        title: '✍️ Hand only (Type custom)',
+        text: '',
+        isManual: true
+      }
+    ];
+
+    function applyCannedReply(reviewId, idx) {
+      const item = CANNED_REVIEW_REPLIES[idx];
+      if (!item) return;
+      const el = document.getElementById(`reply-text-${reviewId}`);
+      const counterEl = document.getElementById(`reply-char-count-${reviewId}`);
+      if (!el) return;
+      
+      el.value = item.text;
+      el.dispatchEvent(new Event('input'));
+      el.focus();
+      if (counterEl) counterEl.innerText = el.value.length + '/350';
+
+      const replyBox = document.getElementById(`reply-box-${reviewId}`);
+      if (replyBox) {
+        replyBox.querySelectorAll('.canned-reply-btn').forEach((b, i) => {
+          if (i === idx) {
+            b.style.borderColor = 'var(--yellow)';
+            b.style.background = 'rgba(245, 197, 24, 0.15)';
+          } else {
+            b.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+            b.style.background = 'rgba(255, 255, 255, 0.04)';
+          }
+        });
+      }
+    }
+
     function renderReviews() {
       try {
         const content = document.getElementById('reviews-content');
@@ -5540,10 +5627,15 @@
           }
           const iconImgHtml = iconUrl ? `<img src="${getOptimizedImageUrl(iconUrl, 48)}" style="width: 28px; height: 28px; border-radius: 4px; object-fit: cover; box-shadow: 0 1px 3px rgba(0,0,0,0.3);" alt="icon">` : '';
 
-          const canned1 = "Thank you so much! Glad you like it! 😊";
-          const canned2 = "Thanks for the review! Let me know if you have any feature requests!";
-          const canned3 = "I appreciate your feedback! Have a great day!";
-          const canned4 = "Thank you! 👍";
+          const cannedButtonsHtml = CANNED_REVIEW_REPLIES.map((c, idx) => {
+            const previewText = c.text ? c.text : 'Clear input to type your own reply by hand...';
+            return `
+              <button type="button" class="canned-reply-btn" onclick="applyCannedReply('${r.reviewId}', ${idx})" title="${c.text ? c.text.replace(/"/g, '&quot;') : 'Clear text & type custom reply by hand'}">
+                <span style="font-size: 10px; font-weight: 700; color: var(--yellow); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${c.title}</span>
+                <span style="font-size: 9.5px; color: #ccc; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word;">${previewText}</span>
+              </button>
+            `;
+          }).join('');
           
           const authorName = r.authorName || 'Google User';
           const avatarInitial = authorName.charAt(0).toUpperCase();
@@ -5591,17 +5683,21 @@
               
               <!-- Hidden Reply Box -->
               <div id="reply-box-${r.reviewId}" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">
-                <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px;">
-                  <button onclick="const el = document.getElementById('reply-text-${r.reviewId}'); el.value = '${canned1}'; el.dispatchEvent(new Event('input'));" style="background: rgba(255,255,255,0.1); border: none; color: #ccc; padding: 3px 8px; border-radius: 12px; font-size: 10px; cursor: pointer;">"Thank you! 😊"</button>
-                  <button onclick="const el = document.getElementById('reply-text-${r.reviewId}'); el.value = '${canned4}'; el.dispatchEvent(new Event('input'));" style="background: rgba(255,255,255,0.1); border: none; color: #ccc; padding: 3px 8px; border-radius: 12px; font-size: 10px; cursor: pointer;">"Thank you! 👍"</button>
-                  <button onclick="const el = document.getElementById('reply-text-${r.reviewId}'); el.value = '${canned2}'; el.dispatchEvent(new Event('input'));" style="background: rgba(255,255,255,0.1); border: none; color: #ccc; padding: 3px 8px; border-radius: 12px; font-size: 10px; cursor: pointer;">"Feature requests"</button>
-                  <button onclick="const el = document.getElementById('reply-text-${r.reviewId}'); el.value = '${canned3}'; el.dispatchEvent(new Event('input'));" style="background: rgba(255,255,255,0.1); border: none; color: #ccc; padding: 3px 8px; border-radius: 12px; font-size: 10px; cursor: pointer;">"Appreciate feedback"</button>
+                <div style="font-size: 10.5px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+                  <span>⚡ Quick Answers (Tap to paste):</span>
+                  <span style="font-size: 9.5px; opacity: 0.7;">2 lines preview</span>
                 </div>
-                <textarea id="reply-text-${r.reviewId}" maxlength="350" spellcheck="true" autocorrect="on" autocapitalize="sentences" placeholder="Type your reply here..." style="width: 100%; height: 60px; background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 4px; color: #fff; padding: 8px; font-size: 12px; resize: none; margin-bottom: 4px;" oninput="document.getElementById('reply-char-count-${r.reviewId}').innerText = this.value.length + '/350'"></textarea>
-                <div style="text-align: right; font-size: 10px; color: #888; margin-bottom: 8px;" id="reply-char-count-${r.reviewId}">0/350</div>
+                <div id="canned-replies-${r.reviewId}" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; margin-bottom: 10px;">
+                  ${cannedButtonsHtml}
+                </div>
+                <textarea id="reply-text-${r.reviewId}" maxlength="350" spellcheck="true" autocorrect="on" autocapitalize="sentences" placeholder="Type your reply here..." style="width: 100%; height: 68px; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 6px; color: #fff; padding: 8px 10px; font-size: 12px; line-height: 1.4; resize: vertical; margin-bottom: 4px;" oninput="document.getElementById('reply-char-count-${r.reviewId}').innerText = this.value.length + '/350'"></textarea>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 10px; color: var(--text-muted);">Max 350 chars (Google Play limit)</span>
+                  <span style="font-size: 10px; color: #888;" id="reply-char-count-${r.reviewId}">0/350</span>
+                </div>
                 <div style="display: flex; justify-content: flex-end; gap: 8px;">
-                  <button onclick="toggleReplyBox('${r.reviewId}')" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); padding: 4px 12px; border-radius: 4px; font-size: 11px; cursor: pointer;">Cancel</button>
-                  <button onclick="submitReply('${r.packageName}', '${r.reviewId}')" id="btn-submit-${r.reviewId}" style="background: var(--yellow); border: none; color: #000; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer;">Send Reply</button>
+                  <button onclick="toggleReplyBox('${r.reviewId}')" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); padding: 5px 14px; border-radius: 4px; font-size: 11px; cursor: pointer;">Cancel</button>
+                  <button onclick="submitReply('${r.packageName}', '${r.reviewId}')" id="btn-submit-${r.reviewId}" style="background: var(--yellow); border: none; color: #000; padding: 5px 16px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer;">Send Reply</button>
                 </div>
               </div>
             </div>
