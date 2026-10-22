@@ -1078,6 +1078,7 @@
     }
 
     function renderPromotion() {
+      if (promoData && promoData.storeLink && promoData.storeLink.endsWith('id=com.creation.cue175')) { promoData.storeLink = 'https://play.google.com/store/apps/details?id=com.creation.cue175watchface'; }
       showState('active');
       document.getElementById('wf-name').textContent = promoData.name;
       document.getElementById('wf-desc').textContent = promoData.description || "Get a free Google Play Store promo code for this premium watch face!";

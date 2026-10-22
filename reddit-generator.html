@@ -776,7 +776,7 @@
           </div>
           <div id="badge-gwf-history" style="font-size: 10.5px; display: flex; align-items: center; gap: 4px;">
             <div style="display:flex; flex-direction:column; gap:2px;">
-              <span style="color:#4ade80; font-weight:700;">🟢 READY TO POST (4d ago)</span>
+              <span style="color:#4ade80; font-weight:700;">🟢 READY TO POST (6d ago)</span>
               <span style="font-size:10px; color:var(--muted);">Oct 16 • CUE179 (1x total)</span>
             </div>
           </div>
@@ -787,7 +787,10 @@
             <span style="font-size: 10px; background: rgba(255, 197, 24, 0.15); padding: 1px 6px; border-radius: 10px; font-weight: 600; color: var(--yellow);">126k members</span>
           </div>
           <div id="badge-wearos-history" style="font-size: 10.5px; display: flex; align-items: center; gap: 4px;">
-            <span style="color:#4ade80; font-weight:700;">🟢 READY TO POST: Fresh audience (0 posts yet)</span>
+            <div style="display:flex; flex-direction:column; gap:2px;">
+              <span style="color:#fde047; font-weight:700;">🟡 Fair Window (2d ago)</span>
+              <span style="font-size:10px; color:var(--muted);">Oct 20 • CUE116 (1x total)</span>
+            </div>
           </div>
         </a>
         <a href="https://www.reddit.com/r/androidwatchfaces/submit" target="_blank" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: rgba(255, 255, 255, 0.15);">
@@ -797,7 +800,7 @@
           </div>
           <div id="badge-awf-history" style="font-size: 10.5px; display: flex; align-items: center; gap: 4px;">
             <div style="display:flex; flex-direction:column; gap:2px;">
-              <span style="color:#f87171; font-weight:700;">🔴 Too Early (Posted Today - wait 2-3d)</span>
+              <span style="color:#fde047; font-weight:700;">🟡 Fair Window (2d ago)</span>
               <span style="font-size:10px; color:var(--muted);">Oct 20 • CUE097 (2x total)</span>
             </div>
           </div>
@@ -1219,16 +1222,24 @@ Links to claim your free code and the Play Store link are in the first comment b
         var maxLimit = (cap && cap > 0) ? Math.min(cap, total) : total;
         var remaining = Math.max(0, maxLimit - claimed);
 
-        // Try finding matching catalog item
+        // Try finding matching catalog item (exact match first, then substring fallback)
         var normName = (promo.name || key).toLowerCase().replace(/[^a-z0-9]/g, '');
+        var normKey = key.toLowerCase().replace(/[^a-z0-9]/g, '');
         var matchedFace = catalogFaces.find(function(f) {
           var fId = (f.id || '').toLowerCase().replace(/[^a-z0-9]/g, '');
           var fTitle = (f.title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-          return fId === normName || fTitle === normName || normName.includes(fId);
+          return fId === normKey || fId === normName || fTitle === normName;
+        }) || catalogFaces.find(function(f) {
+          var fId = (f.id || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+          return fId && (normName.includes(fId) || normKey.includes(fId));
         });
 
         var imageUrl = promo.imageUrl || (matchedFace ? matchedFace.image_url : '');
-        var pkgUrl = matchedFace ? matchedFace.play_store_url : '';
+        var pkgUrl = (matchedFace && matchedFace.play_store_url) ? matchedFace.play_store_url : (promo.storeLink || '');
+        // Fix known legacy typo in watchfacecue175 storeLink if present
+        if (pkgUrl && pkgUrl.endsWith('id=com.creation.cue175')) {
+          pkgUrl = 'https://play.google.com/store/apps/details?id=com.creation.cue175watchface';
+        }
         var desc = (matchedFace && matchedFace.description_en) ? matchedFace.description_en : (promo.description || '');
 
         combinedList.push({
@@ -1296,18 +1307,27 @@ Links to claim your free code and the Play Store link are in the first comment b
         }
       }
 
-      renderPromotionsList();
-
-      // Start empty by default so user picks the intended watch face deliberately
-      selectedItem = null;
-      var previewTitle = document.getElementById('selected-face-title');
-      if (previewTitle) previewTitle.textContent = "Select a Watch Face from the left list";
-      var previewMeta = document.getElementById('selected-face-meta');
-      if (previewMeta) previewMeta.textContent = "No promotion selected";
-      var capWarn = document.getElementById('cap-warning-banner');
-      if (capWarn) capWarn.style.display = 'none';
-      var capSaved = document.getElementById('cap-saved-banner');
-      if (capSaved) capSaved.style.display = 'none';
+      // Preserve current selection across live Firebase updates; only start empty on initial load
+      if (selectedItem && selectedItem.promoId) {
+        var updatedMatch = combinedList.find(function(i) {
+          return i.promoId === selectedItem.promoId;
+        });
+        if (updatedMatch) {
+          selectedItem = updatedMatch;
+        }
+        renderPromotionsList();
+      } else {
+        renderPromotionsList();
+        selectedItem = null;
+        var previewTitle = document.getElementById('selected-face-title');
+        if (previewTitle) previewTitle.textContent = "Select a Watch Face from the left list";
+        var previewMeta = document.getElementById('selected-face-meta');
+        if (previewMeta) previewMeta.textContent = "No promotion selected";
+        var capWarn = document.getElementById('cap-warning-banner');
+        if (capWarn) capWarn.style.display = 'none';
+        var capSaved = document.getElementById('cap-saved-banner');
+        if (capSaved) capSaved.style.display = 'none';
+      }
     }
 
     // Filter list
@@ -1943,10 +1963,20 @@ Links to claim your free code and the Play Store link are in the first comment b
       startApp();
     }
 
-    // If admin signs in or session restores, refresh promotions
+    // If admin signs in or session restores, refresh promotions & auto-repair known broken storeLink
     auth.onAuthStateChanged(function(user) {
       if (user) {
-        loadPromotions();
+        db.ref('promotions/watchfacecue175/public/storeLink').once('value').then(function(snap) {
+          if (snap.val() === 'https://play.google.com/store/apps/details?id=com.creation.cue175') {
+            db.ref('promotions/watchfacecue175/public/storeLink').set('https://play.google.com/store/apps/details?id=com.creation.cue175watchface');
+          }
+        }).catch(function() {});
+
+        if (catalogFaces.length === 0) {
+          loadCatalog().then(function() { loadPromotions(); }).catch(function() { loadPromotions(); });
+        } else {
+          loadPromotions();
+        }
       }
     });
   </script>
