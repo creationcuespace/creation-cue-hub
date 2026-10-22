@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-21T02:03:20.519Z",
+  "lastUpdated": "2026-10-22T01:52:30.000Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -64,6 +64,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 115,
       "totalWeight": 3846
+    },
+    {
+      "date": "2026-10-22",
+      "timestamp": "2026-10-22T01:52:30.000Z",
+      "avgRating": 4.58,
+      "weightedAvg": 4.52,
+      "ratedCount": 115,
+      "totalWeight": 3854
     }
   ],
   "results": [
@@ -112,7 +120,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
-      "rating": 4.6,
+      "rating": 4.9,
       "ratingCount": null
     },
     {
@@ -352,7 +360,7 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000003)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": 4.6,
+      "rating": 4.9,
       "ratingCount": null
     },
     {
@@ -581,7 +589,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.6,
-      "ratingCount": "415"
+      "ratingCount": "414"
     },
     {
       "id": "cue136_plus",
@@ -773,7 +781,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
       "rating": 4.5,
-      "ratingCount": "92"
+      "ratingCount": "96"
     },
     {
       "id": "cue115",
@@ -842,7 +850,7 @@
       "packageName": "com.creation.cue107watchface",
       "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "10000014 (3.1.5)",
-      "lastUpdatedDate": "Oct 14, 2026",
+      "lastUpdatedDate": "Oct 17, 2026",
       "downloads": "100+",
       "rating": 4.6,
       "ratingCount": null
@@ -1085,7 +1093,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.2,
-      "ratingCount": "20"
+      "ratingCount": "21"
     },
     {
       "id": "crc071",
@@ -1106,10 +1114,10 @@
       "packageName": "com.creationcue.crc069watchface",
       "companionVersion": "Android 16 API & Design Update (v10000010)",
       "wearVersion": "10000011 (2.5.0)",
-      "lastUpdatedDate": "Aug 26, 2026",
+      "lastUpdatedDate": "Aug 27, 2026",
       "downloads": "10K+",
       "rating": 4.3,
-      "ratingCount": "88"
+      "ratingCount": "89"
     },
     {
       "id": "crc068",
@@ -1121,7 +1129,7 @@
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "10K+",
       "rating": 4.9,
-      "ratingCount": "62"
+      "ratingCount": "64"
     },
     {
       "id": "crc066",
@@ -1132,7 +1140,7 @@
       "wearVersion": "10000014 (3.1.0)",
       "lastUpdatedDate": "Sep 15, 2026",
       "downloads": "100+",
-      "rating": 4.6,
+      "rating": 4.5,
       "ratingCount": null
     },
     {
@@ -1421,7 +1429,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "304"
+      "ratingCount": "305"
     },
     {
       "id": "cueindus_pro",
