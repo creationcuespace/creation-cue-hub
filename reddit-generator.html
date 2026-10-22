@@ -917,11 +917,11 @@
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <span>Test Coupon:</span>
           </div>
-          <input type="text" id="reddit-test-code-input" placeholder="Paste coupon code or redeem URL to verify on Google Play..." onkeydown="if(event.key==='Enter')testPlayCoupon('reddit-test-code-input')" style="flex:1; min-width:0; background:var(--black); border:1px solid var(--border); color:var(--yellow); font-family:monospace; font-size:12px; padding:5px 8px; border-radius:4px; height:auto;">
-          <button type="button" class="btn small" onclick="testPlayCoupon('reddit-test-code-input')" style="padding:5px 12px; font-size:11px; height:auto; flex:none; background:var(--blue); color:white; border:none; border-radius:4px; display:flex; align-items:center; gap:4px; cursor:pointer;" title="Open Google Play redeem test">
+          <input type="text" id="reddit-test-code-input" placeholder="Paste coupon code or redeem URL to verify on Google Play..." onkeydown="if(event.key==='Enter')testPlayCoupon('reddit-test-code-input')" oninput="syncTestLink('reddit-test-code-input', 'reddit-test-play-btn')" onfocus="syncTestLink('reddit-test-code-input', 'reddit-test-play-btn')" style="flex:1; min-width:0; background:var(--black); border:1px solid var(--border); color:var(--yellow); font-family:monospace; font-size:12px; padding:5px 8px; border-radius:4px; height:auto;">
+          <a id="reddit-test-play-btn" href="https://play.google.com/redeem" target="_blank" rel="noopener noreferrer" class="btn small" onclick="testPlayCoupon('reddit-test-code-input', event)" style="padding:5px 12px; font-size:11px; height:auto; flex:none; background:var(--blue); color:white; border:none; border-radius:4px; display:flex; align-items:center; gap:4px; cursor:pointer; text-decoration:none;" title="Left-click to test on Play (or right-click to Open in Incognito)">
             <span>Test on Play</span>
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-          </button>
+          </a>
         </div>
 
         <!-- Warning banner for unsaved giveaway cap -->
@@ -1831,19 +1831,9 @@ Links to claim your free code and the Play Store link are in the first comment b
 
     // Copy to clipboard helper
 
-    window.testPlayCoupon = function(codeOrInputId) {
-      var raw = codeOrInputId;
-      var inputEl = document.getElementById(codeOrInputId);
-      if (inputEl) {
-        raw = inputEl.value;
-      }
-      if (!raw || typeof raw !== 'string') return;
+    window.extractCouponCode = function(raw) {
+      if (!raw || typeof raw !== 'string') return '';
       var str = raw.trim();
-      if (!str) {
-        showToast("Please enter a coupon code");
-        return;
-      }
-
       var cleanCode = str;
       if (str.includes('code=')) {
         var match = str.match(/code=([^&#\s]+)/i);
@@ -1852,14 +1842,37 @@ Links to claim your free code and the Play Store link are in the first comment b
         var urlParts = str.split('/');
         cleanCode = urlParts[urlParts.length - 1];
       }
-      cleanCode = cleanCode.replace(/["'`]/g, '').trim();
+      return cleanCode.replace(/["'`]/g, '').trim();
+    };
 
+    window.syncTestLink = function(inputId, linkId) {
+      var input = document.getElementById(inputId);
+      var link = document.getElementById(linkId);
+      if (!input || !link) return;
+      var cleanCode = window.extractCouponCode(input.value);
+      link.href = cleanCode ? ("https://play.google.com/redeem?code=" + encodeURIComponent(cleanCode)) : "https://play.google.com/redeem";
+    };
+
+    window.testPlayCoupon = function(codeOrInputId, e) {
+      var raw = codeOrInputId;
+      var inputEl = document.getElementById(codeOrInputId);
+      if (inputEl) {
+        raw = inputEl.value;
+      }
+      var cleanCode = window.extractCouponCode(raw);
       if (!cleanCode) {
-        alert("Invalid coupon code format.");
+        if (e) e.preventDefault();
+        showToast("Please enter a coupon code");
         return;
       }
 
       var testUrl = "https://play.google.com/redeem?code=" + encodeURIComponent(cleanCode);
+      if (e && e.currentTarget && e.currentTarget.tagName === 'A') {
+        e.currentTarget.href = testUrl;
+        showToast("Testing on Play Store: " + cleanCode);
+        return;
+      }
+
       window.open(testUrl, "_blank");
       showToast("Testing on Play Store: " + cleanCode);
     };
