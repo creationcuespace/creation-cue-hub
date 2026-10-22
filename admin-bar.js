@@ -1194,12 +1194,66 @@
     } catch (e) {}
   }
 
+  // Shared Single-Source-of-Truth Promotion Strategy Playbook
+  // Automatically injected into any <div id="shared-promo-playbook"></div> on Planner & Reddit Generator
+  const PROMO_PLAYBOOK_HTML = `
+    <details id="cc-promo-playbook-details" style="margin: 10px 0 12px 0; border: 1px solid rgba(245, 197, 24, 0.35); border-radius: 8px; background: rgba(245, 197, 24, 0.04); padding: 8px 14px; font-size: 12px; color: #b0b0b8; cursor: pointer; font-family: 'Inter', sans-serif; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+      <summary style="font-weight: 700; color: #f5c518; display: flex; align-items: center; justify-content: space-between; gap: 8px; user-select: none; list-style: none;">
+        <span style="display: inline-flex; align-items: center; gap: 7px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+          <span>🎯 Promotion Strategy Playbook: Reddit Coupons vs. Google Play Discount Sales (Click to view)</span>
+        </span>
+        <span style="font-size: 10px; font-weight: 600; color: #9ca3af; background: rgba(255,255,255,0.06); padding: 2px 7px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); white-space: nowrap;">Shared Rulebook</span>
+      </summary>
+      <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.08); line-height: 1.55; color: #e5e7eb; cursor: default; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+        
+        <!-- Rule 1: New Watch Face Launch -->
+        <div style="background: rgba(16, 185, 129, 0.06); border: 1px solid rgba(16, 185, 129, 0.28); border-radius: 6px; padding: 10px 12px;">
+          <div style="font-weight: 700; color: #34d399; font-size: 12.5px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+            <span>🚀 1. New Watch Face Launch (&lt; 10 Ratings)</span>
+          </div>
+          <ul style="margin: 0; padding-left: 16px; display: flex; flex-direction: column; gap: 4px; font-size: 11.5px; color: #d1d5db;">
+            <li><strong>Goal:</strong> Unlock the public ★ star rating badge on Google Play (requires first 5–8 reviews) &amp; build initial social proof.</li>
+            <li><strong>Action:</strong> Post <strong>50–60 coupons</strong> on Reddit (creates fast scarcity in ~60–90 mins without cannibalizing late organic buyers).</li>
+            <li><strong>Secret Weapon (Private DM Only):</strong> When users ask for a code after expiry, send <strong>5–8 extra codes privately in Reddit Chat/DM</strong>. <em>Never reply in public comments saying you sent a DM</em> (otherwise everyone keeps asking!). Personal DMs convert at ~50–80% into 5★ reviews.</li>
+          </ul>
+        </div>
+
+        <!-- Rule 2: Existing / Best-Selling Faces -->
+        <div style="background: rgba(59, 130, 246, 0.06); border: 1px solid rgba(59, 130, 246, 0.28); border-radius: 6px; padding: 10px 12px;">
+          <div style="font-weight: 700; color: #60a5fa; font-size: 12.5px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+            <span>💰 2. Established Faces (10+ Ratings) — Run Play Store Sales</span>
+          </div>
+          <ul style="margin: 0; padding-left: 16px; display: flex; flex-direction: column; gap: 4px; font-size: 11.5px; color: #d1d5db;">
+            <li><strong>Why Stop Free Coupons:</strong> Google Play's Top Paid algorithm ranks apps by <strong>paid revenue &amp; paid conversion velocity</strong>—<code>$0.00</code> promo codes do <strong>not</strong> boost Paid chart ranking and give away copies to buyers who would have paid.</li>
+            <li><strong>Action:</strong> Run an official <strong>Google Play Discount Sale</strong> (<em>Play Console → Monetization → Promo codes / Sales</em>) dropping price e.g. <strong>€1.69 → €0.49 / €0.59</strong> for 5–7 days.</li>
+            <li><strong>4x Algorithm Win:</strong> Shows strikethrough price badge (<s>€1.69</s> <strong>€0.49</strong>), triggers Google's <em>"Apps on Sale"</em> recommendations, counts 100% as a real paid purchase in the algorithm, and pays you on every download.</li>
+          </ul>
+        </div>
+
+      </div>
+    </details>
+  `;
+
+  function renderPromoPlaybook() {
+    const containers = document.querySelectorAll('#shared-promo-playbook, .shared-promo-playbook');
+    containers.forEach(function (el) {
+      if (!el.dataset.playbookRendered) {
+        el.innerHTML = PROMO_PLAYBOOK_HTML;
+        el.dataset.playbookRendered = 'true';
+      }
+    });
+  }
+
+  window.renderPromoPlaybook = renderPromoPlaybook;
+
   // Initialize
   function init() {
     renderAdminBar();
+    renderPromoPlaybook();
     setupAuth();
     handleUrlParams();
-    console.log('[Creation Cue] Admin Bar v2.4 loaded');
+    console.log('[Creation Cue] Admin Bar v2.5 loaded');
   }
 
   if (document.readyState === 'loading') {

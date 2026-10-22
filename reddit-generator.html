@@ -17,7 +17,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-  <script src="/admin-bar.js?v=2.4"></script>
+  <script src="/admin-bar.js?v=2.5"></script>
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='10' fill='%23FF4500'/%3E%3Cpath d='M16.5 13.5c-.5.5-1.5 1-2.5 1s-2-.5-2.5-1' stroke='white' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='10' r='1.2' fill='white'/%3E%3Ccircle cx='15' cy='10' r='1.2' fill='white'/%3E%3C/svg%3E">
 
@@ -808,6 +808,9 @@
       </div>
     </div>
 
+    <!-- Shared Promotion Strategy Playbook (Single Source of Truth from admin-bar.js) -->
+    <div id="shared-promo-playbook"></div>
+
     <!-- Main Working Grid -->
     <div class="main-grid">
       <!-- Left Column: Search & Select Promotion -->
@@ -841,6 +844,7 @@
           </span>
           <select id="promo-sort-select" class="sort-select" onchange="changeSort(this.value)">
             <option value="ending-soon" selected>⏳ Date Ending Soon First</option>
+            <option value="needs-ratings">🟢 Needs Ratings First (&lt;10 ★)</option>
             <option value="coupons-desc">🎟️ Most Coupons Remaining</option>
             <option value="newest">✨ Newest Created</option>
             <option value="name-asc">🔤 Name (A-Z)</option>
@@ -1092,6 +1096,7 @@ Links to claim your free code and the Play Store link are in the first comment b
 
     // State
     var catalogFaces = [];
+    var versionsMap = {};
     var promotionsData = {};
     var combinedList = [];
     var currentFilter = 'with-coupons';
@@ -1142,8 +1147,56 @@ Links to claim your free code and the Play Store link are in the first comment b
       menu.classList.toggle('open');
     }
 
+    // Load Versions & Ratings Data (versions-data.json)
+    async function loadVersionsData() {
+      var urls = ['/versions-data.json', 'versions-data.json', 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/versions-data.json?v=' + Date.now()];
+      for (var i = 0; i < urls.length; i++) {
+        try {
+          var r = await fetch(urls[i]);
+          if (r.ok) {
+            var data = await r.json();
+            var list = (data && Array.isArray(data.results)) ? data.results : [];
+            list.forEach(function(entry) {
+              if (entry.id) {
+                versionsMap[entry.id.toLowerCase().replace(/[^a-z0-9]/g, '')] = entry;
+              }
+              if (entry.packageName) {
+                versionsMap[entry.packageName.toLowerCase()] = entry;
+              }
+            });
+            return;
+          }
+        } catch(e) {}
+      }
+    }
+
+    function lookupVersionStats(faceId, promoKey, promoName, playStoreUrl) {
+      var candidates = [
+        faceId ? faceId.toLowerCase().replace(/[^a-z0-9]/g, '') : '',
+        promoKey ? promoKey.toLowerCase().replace(/[^a-z0-9]/g, '') : '',
+        promoName ? promoName.toLowerCase().replace(/[^a-z0-9]/g, '') : ''
+      ];
+      for (var i = 0; i < candidates.length; i++) {
+        var c = candidates[i];
+        if (c && versionsMap[c]) return versionsMap[c];
+        // Also check extracted cue/crc code (e.g. "watchfacecue175" -> "cue175")
+        var codeMatch = c.match(/(cue\d+|crc\d+)/i);
+        if (codeMatch && versionsMap[codeMatch[1].toLowerCase()]) {
+          return versionsMap[codeMatch[1].toLowerCase()];
+        }
+      }
+      if (playStoreUrl) {
+        var pkgMatch = playStoreUrl.match(/[?&]id=([a-zA-Z0-9._]+)/);
+        if (pkgMatch && versionsMap[pkgMatch[1].toLowerCase()]) {
+          return versionsMap[pkgMatch[1].toLowerCase()];
+        }
+      }
+      return null;
+    }
+
     // Load Catalog Faces (manager.json)
     async function loadCatalog() {
+      await loadVersionsData();
       try {
         var localResp = await fetch('/manager.json');
         if (localResp.ok) {
@@ -1241,6 +1294,7 @@ Links to claim your free code and the Play Store link are in the first comment b
           pkgUrl = 'https://play.google.com/store/apps/details?id=com.creation.cue175watchface';
         }
         var desc = (matchedFace && matchedFace.description_en) ? matchedFace.description_en : (promo.description || '');
+        var vStats = lookupVersionStats(matchedFace ? matchedFace.id : '', key, promo.name || '', pkgUrl);
 
         combinedList.push({
           isPromotion: true,
@@ -1258,7 +1312,10 @@ Links to claim your free code and the Play Store link are in the first comment b
           playStoreUrl: pkgUrl,
           description: desc,
           faceType: matchedFace ? (matchedFace.type || 'Digital') : 'Watch Face',
-          catalogFace: matchedFace
+          catalogFace: matchedFace,
+          rating: vStats ? vStats.rating : null,
+          ratingCount: vStats && vStats.ratingCount ? parseInt(vStats.ratingCount, 10) : 0,
+          downloads: vStats ? vStats.downloads : null
         });
       });
 
@@ -1270,6 +1327,7 @@ Links to claim your free code and the Play Store link are in the first comment b
         });
 
         if (!alreadyAdded) {
+          var vStats2 = lookupVersionStats(f.id, f.id, f.title || '', f.play_store_url || '');
           combinedList.push({
             isPromotion: false,
             promoId: f.id,
@@ -1286,7 +1344,10 @@ Links to claim your free code and the Play Store link are in the first comment b
             playStoreUrl: f.play_store_url || '',
             description: f.description_en || '',
             faceType: f.type || 'Digital',
-            catalogFace: f
+            catalogFace: f,
+            rating: vStats2 ? vStats2.rating : null,
+            ratingCount: vStats2 && vStats2.ratingCount ? parseInt(vStats2.ratingCount, 10) : 0,
+            downloads: vStats2 ? vStats2.downloads : null
           });
         }
       });
@@ -1387,6 +1448,12 @@ Links to claim your free code and the Play Store link are in the first comment b
             return b.remaining - a.remaining;
           }
           return a.name.localeCompare(b.name);
+        } else if (currentSort === 'needs-ratings') {
+          var aCount = a.ratingCount || 0;
+          var bCount = b.ratingCount || 0;
+          if (aCount !== bCount) return aCount - bCount;
+          if (b.remaining !== a.remaining) return b.remaining - a.remaining;
+          return a.name.localeCompare(b.name);
         } else if (currentSort === 'coupons-desc') {
           if (b.remaining !== a.remaining) return b.remaining - a.remaining;
           return a.name.localeCompare(b.name);
@@ -1430,6 +1497,16 @@ Links to claim your free code and the Play Store link are in the first comment b
           }
         }
 
+        var ratingStrategyHtml = '';
+        var rCount = item.ratingCount || 0;
+        var rVal = item.rating ? item.rating.toFixed(1) : null;
+        if (rCount < 10) {
+          var rLabel = rVal ? (`★ ${rVal} (${rCount})`) : 'No public rating yet';
+          ratingStrategyHtml = `<div style="font-size:10px; color:#34d399; font-weight:600; margin-top:2px;">🟢 ${rLabel} • Great for Reddit Coupons</div>`;
+        } else {
+          ratingStrategyHtml = `<div style="font-size:10px; color:#93c5fd; font-weight:600; margin-top:2px;">⭐ ${rVal || '4.5'}★ (${rCount}) • Prefer Play Store Sale</div>`;
+        }
+
         var imgSrc = item.imageUrl || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%232a2a2a'/%3E%3C/svg%3E";
 
         el.innerHTML = `
@@ -1438,6 +1515,7 @@ Links to claim your free code and the Play Store link are in the first comment b
             <div class="promo-details">
               <div class="promo-name">${item.name}</div>
               <div class="promo-id-badge">${item.promoId}</div>
+              ${ratingStrategyHtml}
               ${expiryHtml}
             </div>
           </div>
@@ -1462,6 +1540,13 @@ Links to claim your free code and the Play Store link are in the first comment b
         if (tInfo) {
           metaText += ' • ' + (tInfo.isExpired ? 'Expired' : tInfo.text);
         }
+      }
+      var selRCount = item.ratingCount || 0;
+      var selRVal = item.rating ? item.rating.toFixed(1) : null;
+      if (selRCount < 10) {
+        metaText += ' • 🟢 ' + (selRVal ? (selRVal + '★ (' + selRCount + ' ratings)') : '<10 ratings') + ' — Best for 50-60 Reddit Coupons + Private DM';
+      } else {
+        metaText += ' • 💰 ' + (selRVal || '4.5') + '★ (' + selRCount + ' ratings) — Established: Prefer Google Play Discount Sale';
       }
       document.getElementById('selected-face-meta').textContent = metaText;
       if (item.imageUrl) {
