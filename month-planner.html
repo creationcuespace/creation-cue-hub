@@ -1784,7 +1784,7 @@
     </div>
     <div class="header-btns">
       <!-- Version badge -->
-      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.66</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.67</span>
       <!-- Firebase connection indicator dot & text -->
       <div id="header-sync-badge" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; flex-shrink: 0;">
         <span id="header-sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
@@ -1916,6 +1916,11 @@
           <button onclick="regenerateCalendarSchedule()" class="btn-secondary">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
             Regenerate Schedule
+          </button>
+
+          <button onclick="seedBlackFriday2026Plan(false)" class="btn-secondary" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.35); color: #34d399; justify-content: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            Add Black Friday 2026 Plan (10 Tasks)
           </button>
 
           <button onclick="openAuditModal()" class="btn-secondary" style="background: rgba(241, 179, 28, 0.05); border-color: rgba(241, 179, 28, 0.2); color: var(--primary-text); justify-content: center; gap: 8px;">
@@ -3423,7 +3428,139 @@
       
       // Start live realtime listener LAST — after all local init writes are done
       // so we don't overwrite incoming remote changes
-      setTimeout(setupRealtimeListener, 1500);
+      seedBlackFriday2026Plan(true); setTimeout(setupRealtimeListener, 1500);
+    }
+
+    // Black Friday 2026 Master Plan Seeder (10 detailed tasks across Oct 26 - Dec 01, 2026)
+    var BLACK_FRIDAY_2026_TASKS = [
+      {
+        id: 'bf2026_1_midtier_sale',
+        title: '🏷️ [BF Phase 1 - Test Sale] Set up 7-day Google Play Discount Sale (€1.69 -> €0.49) on 3-5 Mid-Tier faces (e.g. CUE124, CUE125, CUE154, CUE155, CUE173) in Play Console -> Monetization -> Promo codes / Sales. ⚠️ DO NOT touch Top Best-Sellers (CUE166, CUE135, CUE116, CUE097, CRC072, CUE101, CUE147, CUE149) due to Google 30-day sale cooldown rule before Black Friday!',
+        priority: 'high',
+        duration: 0.25,
+        isFixedDay: false,
+        startDate: '2026-10-26'
+      },
+      {
+        id: 'bf2026_2_seed_ratings_1',
+        title: '🚀 [BF Phase 1 - Rating Unlock #1] Post 50-60 Reddit Coupons on r/GalaxyWatchFace for an unrated/new face (<10 ratings, e.g. CUE175 or CUE177) + send 5-8 extra codes privately via Reddit Chat/DM (never reply publicly!) to unlock the public ★ star rating badge before Black Friday.',
+        priority: 'medium',
+        duration: 0.25,
+        isFixedDay: false,
+        startDate: '2026-10-29'
+      },
+      {
+        id: 'bf2026_3_review_test_sale',
+        title: '📊 [BF Phase 1 - Review Test Sale] Check Google Play Order Management & conversion uplift from the Oct 26-Nov 2 Mid-Tier €0.49 Discount Sale. Identify which price point (€0.49 vs €0.59) and face styles converted best.',
+        priority: 'medium',
+        duration: 0.25,
+        isFixedDay: false,
+        startDate: '2026-11-03'
+      },
+      {
+        id: 'bf2026_4_seed_ratings_2',
+        title: '🚀 [BF Phase 1 - Rating Unlock #2] Post 50-60 Reddit Coupons on r/WearOSFaces for another <10-rating watch face + send 5-8 private DM codes to secure 5★ reviews so the whole catalog looks high-rated for Black Friday.',
+        priority: 'medium',
+        duration: 0.25,
+        isFixedDay: false,
+        startDate: '2026-11-06'
+      },
+      {
+        id: 'bf2026_5_collage_banner',
+        title: '🎨 [BF Phase 2 - Creative Assets] Design "BLACK FRIDAY WEEK: 75% OFF (€0.49)" 6-to-9 Watch Face Showcase Collage Graphic (featuring CUE166, CUE135, CUE116, CUE097, CRC072, CUE178) + prepare temporary Gold/Black Sale Banner for creationcue.web.app.',
+        priority: 'high',
+        duration: 0.5,
+        isFixedDay: false,
+        startDate: '2026-11-16'
+      },
+      {
+        id: 'bf2026_6_schedule_play_sales',
+        title: '🔥 [BF Phase 2 - Play Console Setup] Schedule Official Google Play Black Friday Sales (running Mon Nov 23 -> Tue Dec 1, 2026 at €0.49 / 75% OFF) for Top 20-30 Best-Selling Watch Faces (CUE166, CUE135, CUE116, CUE097, CRC072, CUE101, CUE147, CUE149, CUE178, CRC010, etc.) to trigger strikethrough badges & "Apps on Sale".',
+        priority: 'high',
+        duration: 0.5,
+        isFixedDay: true,
+        startDate: '2026-11-19'
+      },
+      {
+        id: 'bf2026_7_launch_sale_banner',
+        title: '🌐 [BF Phase 3 - Sale Goes Live] Verify €0.49 strikethrough badges are live on Google Play + activate Black Friday 75% OFF highlight banner on creationcue.web.app & claim.html so every visitor sees the discounted catalog.',
+        priority: 'high',
+        duration: 0.25,
+        isFixedDay: true,
+        startDate: '2026-11-23'
+      },
+      {
+        id: 'bf2026_8_trojan_horse_1',
+        title: '🐴 [BF Phase 3 - Trojan Horse Post #1] Post 50 free coupons for 1 Newer Face on r/WearOSFaces (126k members). In Step 3 First Comment, include bold promo line: "🔥 Black Friday Special: 25+ CreationCue Watch Faces are 75% OFF (€0.49) on Google Play this week!" with link to catalog.',
+        priority: 'high',
+        duration: 0.25,
+        isFixedDay: true,
+        startDate: '2026-11-25'
+      },
+      {
+        id: 'bf2026_9_black_friday_day',
+        title: '💎 [BLACK FRIDAY MAIN DAY] 1) Post Trojan Horse #2 (50 coupons on 1 new face + 75% OFF catalog link) on r/GalaxyWatchFace (52k members). 2) Send Black Friday Email Newsletter to subscribers showcasing Top 6 faces at €0.49.',
+        priority: 'high',
+        duration: 0.5,
+        isFixedDay: true,
+        startDate: '2026-11-27'
+      },
+      {
+        id: 'bf2026_10_cyber_monday_wrap',
+        title: '🏁 [BF Phase 3 - Cyber Monday & Wrap-Up] Final "Last 24 Hours for €0.49 Black Friday Deals" push + remove website Black Friday banner on Dec 1 after sale ends & review total paid units sold in Play Console.',
+        priority: 'medium',
+        duration: 0.25,
+        isFixedDay: true,
+        startDate: '2026-11-30'
+      }
+    ];
+
+    function seedBlackFriday2026Plan(autoMode) {
+      if (autoMode && localStorage.getItem('cc_bf2026_plan_seeded_v1') === 'true') {
+        return;
+      }
+
+      var existingIds = new Set((appState.customTasks || []).map(function(t) { return t.id; }));
+      var existingTitles = new Set((appState.customTasks || []).map(function(t) { return (t.title || '').trim(); }));
+
+      var toAdd = BLACK_FRIDAY_2026_TASKS.filter(function(item) {
+        return !existingIds.has(item.id) && !existingTitles.has(item.title);
+      });
+
+      if (toAdd.length === 0) {
+        localStorage.setItem('cc_bf2026_plan_seeded_v1', 'true');
+        if (!autoMode) {
+          showToast("✅ All 10 Black Friday 2026 tasks are already in your Planner!");
+        }
+        return;
+      }
+
+      if (!autoMode) {
+        pushStateToHistory();
+      }
+
+      var nowTs = Date.now();
+      toAdd.forEach(function(item, idx) {
+        appState.customTasks.push({
+          id: item.id,
+          title: item.title,
+          priority: item.priority,
+          duration: item.duration,
+          isFixedDay: item.isFixedDay,
+          startDate: item.startDate,
+          createdAt: nowTs + idx
+        });
+      });
+
+      localStorage.setItem('cc_bf2026_plan_seeded_v1', 'true');
+      saveState();
+      renderBacklog();
+      scheduleFutureTasks();
+      renderCalendar();
+      if (document.getElementById('day-view-container') && document.getElementById('day-view-container').style.display !== 'none') {
+        renderDayView();
+      }
+      showToast("🔥 Added " + toAdd.length + " Black Friday 2026 tasks to your Planner!", !autoMode);
     }
 
     async function fetchCatalog() {
