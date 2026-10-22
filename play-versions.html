@@ -3717,7 +3717,7 @@
           paidDownloads += dlNum;
         }
 
-        if (wf.rating) {
+        if (wf.rating && typeof wf.rating === 'number' && wf.rating > 0) {
           ratedCount++;
           ratingSum += wf.rating;
           if (wf.ratingCount) {
@@ -6273,7 +6273,7 @@
       const ratedFaces = [];
 
       combinedData.forEach(wf => {
-        if (wf.rating) {
+        if (wf.rating && typeof wf.rating === 'number' && wf.rating > 0) {
           ratedCount++;
           ratingSum += wf.rating;
           ratedFaces.push(wf);

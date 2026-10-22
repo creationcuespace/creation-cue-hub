@@ -207,15 +207,21 @@ async function main() {
         downloads = downloadsMatch[1].trim();
       }
 
-      const ratingMatch = html.match(/aria-label="Rated\s+([0-9.]+)\s+stars?\s+out\s+of\s+five\s+stars?"/i);
-      if (ratingMatch) {
-        rating = parseFloat(ratingMatch[1]);
-      }
-
-      const reviewsRegex = /([0-9.,]+K?)\s*(?:reviews|ratings)/i;
-      const reviewsMatch = html.match(reviewsRegex);
-      if (reviewsMatch) {
-        ratingCount = reviewsMatch[1].trim();
+      // Only extract rating and review count if the app itself has its own public star rating header
+      if (html.includes('itemprop="starRating"')) {
+        const ratingChunk = html.substring(html.indexOf('itemprop="starRating"'), html.indexOf('itemprop="starRating"') + 600);
+        const ratingMatch = ratingChunk.match(/aria-label="Rated\s+([0-9.]+)\s+stars?\s+out\s+of\s+five\s+stars?"/i);
+        if (ratingMatch) {
+          rating = parseFloat(ratingMatch[1]);
+        }
+        const reviewsRegex = /([0-9.,]+K?)\s*(?:reviews|ratings)/i;
+        const reviewsMatch = ratingChunk.match(reviewsRegex);
+        if (reviewsMatch) {
+          ratingCount = reviewsMatch[1].trim();
+        }
+      } else {
+        rating = null;
+        ratingCount = null;
       }
 
     } catch (scrapeError) {
