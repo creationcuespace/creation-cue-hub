@@ -752,6 +752,17 @@
               </div>
               <button type="button" class="btn small" style="padding:2px 8px; font-size:10px; height:auto; flex:none; background:rgba(245,197,24,0.15); color:var(--yellow); border:1px solid rgba(245,197,24,0.3); pointer-events:none;">Copy</button>
             </div>
+                        <div class="coupon-tester-bar" style="display:flex; gap:8px; align-items:center; background:rgba(37,99,235,0.08); border:1px solid rgba(37,99,235,0.25); border-radius:4px; padding:6px 10px; margin-bottom:8px;">
+              <div style="display:flex; align-items:center; gap:5px; flex:none; color:#60a5fa; font-size:11.5px; font-weight:700;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <span>Test Code:</span>
+              </div>
+              <input type="text" id="promo-test-code-input" placeholder="Paste coupon code or redeem URL to test on Google Play..." onkeydown="if(event.key==='Enter')testPlayCoupon('promo-test-code-input')" style="flex:1; min-width:0; background:var(--black); border:1px solid var(--border); color:var(--yellow); font-family:monospace; font-size:12px; padding:4px 8px; border-radius:3px; height:auto;">
+              <button type="button" class="btn small" onclick="testPlayCoupon('promo-test-code-input')" style="padding:4px 10px; font-size:11px; height:auto; flex:none; background:var(--blue); color:white; border:none; display:flex; align-items:center; gap:4px; cursor:pointer;" title="Open in Google Play to test if code is redeemed">
+                <span>Test on Play</span>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </button>
+            </div>
             <textarea class="input-area" id="promo-codes" placeholder="Unclaimed coupon codes (one per line)..."></textarea>
             </div>
 
@@ -972,6 +983,40 @@
           btn.textContent = '🔒 Set All to Private';
         }
       });
+    };
+
+
+    window.testPlayCoupon = function(codeOrInputId) {
+      var raw = codeOrInputId;
+      var inputEl = document.getElementById(codeOrInputId);
+      if (inputEl) {
+        raw = inputEl.value;
+      }
+      if (!raw || typeof raw !== 'string') return;
+      var str = raw.trim();
+      if (!str) {
+        showToast("Please enter a coupon code");
+        return;
+      }
+
+      var cleanCode = str;
+      if (str.includes('code=')) {
+        var match = str.match(/code=([^&#\s]+)/i);
+        if (match && match[1]) cleanCode = match[1];
+      } else if (str.startsWith('http')) {
+        var urlParts = str.split('/');
+        cleanCode = urlParts[urlParts.length - 1];
+      }
+      cleanCode = cleanCode.replace(/["'`]/g, '').trim();
+
+      if (!cleanCode) {
+        alert("Invalid coupon code format.");
+        return;
+      }
+
+      var testUrl = "https://play.google.com/redeem?code=" + encodeURIComponent(cleanCode);
+      window.open(testUrl, "_blank");
+      showToast("Testing on Play Store: " + cleanCode);
     };
 
     window.copyDirectRedeemLink = function(e) {
@@ -1524,8 +1569,11 @@
                 <button class="btn red small" style="padding:4px 8px; font-size:11px; flex:none; height:auto;" onclick="deleteToken('${tokenId}')">Delete</button>
               </div>
               ${token.claimed && token.code ? `
-                <div style="font-size:11px; color:var(--muted); margin-top:4px; text-align:left; word-break:break-all;">
-                  Claimed Code: <span style="color:var(--yellow); font-family:monospace; font-weight:bold; cursor:pointer;" onclick="copyCodeOnly('${token.code}', event)" title="Click to copy coupon code">${token.code}</span> | Guest ID: <span style="font-family:monospace;">${token.claimedBy}</span>
+                <div style="font-size:11px; color:var(--muted); margin-top:4px; text-align:left; word-break:break-all; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                  <span>Claimed Code: <span style="color:var(--yellow); font-family:monospace; font-weight:bold; cursor:pointer;" onclick="copyCodeOnly('${token.code}', event)" title="Click to copy coupon code">${token.code}</span></span>
+                  <button type="button" class="btn small" style="padding:2px 7px; font-size:10px; height:auto; background:rgba(37,99,235,0.18); color:#60a5fa; border:1px solid rgba(37,99,235,0.35); display:inline-flex; align-items:center; gap:3px; cursor:pointer;" onclick="testPlayCoupon('${token.code}')" title="Test if this code has already been redeemed on Google Play">↗ Test</button>
+                  <span style="color:var(--border);">|</span>
+                  <span>Guest ID: <span style="font-family:monospace;">${token.claimedBy}</span></span>
                 </div>
               ` : ''}
             </div>
@@ -1676,7 +1724,10 @@
           <div class="claim-row">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <span class="claim-time" style="font-size:12px;">${c.time}</span>
-              <span class="claim-code" style="font-size:12.5px; cursor:pointer;" onclick="copyCodeOnly('${c.code}', event)" title="Guest UID: ${c.uid} • Click to copy code">${c.code}</span>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span class="claim-code" style="font-size:12.5px; cursor:pointer;" onclick="copyCodeOnly('${c.code}', event)" title="Guest UID: ${c.uid} • Click to copy code">${c.code}</span>
+                <button type="button" class="btn small" style="padding:2px 6px; font-size:10px; height:auto; background:rgba(37,99,235,0.18); color:#60a5fa; border:1px solid rgba(37,99,235,0.35); display:inline-flex; align-items:center; gap:2px; cursor:pointer;" onclick="testPlayCoupon('${c.code}')" title="Test if this code has already been redeemed on Google Play">↗ Test</button>
+              </div>
             </div>
             ${metaHtml}
           </div>

@@ -795,6 +795,10 @@
             <span id="btn-live-visitors" class="admin-bar-btn" onclick="window.openAdminLiveVisitors()" title="Live Visitors" style="color: #4caf50; background: rgba(76, 175, 80, 0.12); border: 1px solid rgba(76, 175, 80, 0.3);">
               Live <span class="admin-live-dot"></span> <span id="admin-live-count" class="admin-live-count-target" style="background: rgba(76, 175, 80, 0.22); border: 1px solid rgba(76, 175, 80, 0.45); padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; color: #4caf50;">0</span>
             </span>
+            <span id="btn-test-coupon-admin" class="admin-bar-btn" onclick="window.promptTestCoupon()" title="Test Google Play Coupon" style="color: #60a5fa; background: rgba(37, 99, 235, 0.12); border: 1px solid rgba(37, 99, 235, 0.3); cursor: pointer;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <span class="admin-btn-label">Test Code</span>
+            </span>
           </div>
           <div class="admin-bar-user">
             <span id="admin-user-email" title="${userEmail}">${userEmail}</span>
@@ -818,6 +822,13 @@
               <div class="admin-popover-user" id="admin-popover-email">${userEmail}</div>
             </div>
             <div class="admin-popover-items">
+              <button type="button" class="admin-popover-item" onclick="window.promptTestCoupon(); window.closeAdminMobilePopover();" style="color: #60a5fa;">
+                <div class="admin-popover-item-left">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <span>Test Coupon on Play</span>
+                </div>
+                <span class="admin-popover-badge blue" style="background: rgba(37,99,235,0.18); color: #60a5fa; border: 1px solid rgba(37,99,235,0.35);">Play ↗</span>
+              </button>
               <button type="button" class="admin-popover-item" onclick="window.openAdminLiveVisitors(); window.closeAdminMobilePopover();">
                 <div class="admin-popover-item-left">
                   <span class="admin-live-dot" style="margin: 0 2px 0 0;"></span>
@@ -1034,6 +1045,23 @@
   }
 
   // Global click actions for admin utilities
+  window.promptTestCoupon = function () {
+    const code = prompt("Enter Google Play coupon code or redeem link to test:");
+    if (!code) return;
+    let cleanCode = code.trim();
+    if (cleanCode.includes('code=')) {
+      const match = cleanCode.match(/code=([^&#\s]+)/i);
+      if (match && match[1]) cleanCode = match[1];
+    } else if (cleanCode.startsWith('http')) {
+      const parts = cleanCode.split('/');
+      cleanCode = parts[parts.length - 1];
+    }
+    cleanCode = cleanCode.replace(/["'`]/g, '').trim();
+    if (cleanCode) {
+      window.open("https://play.google.com/redeem?code=" + encodeURIComponent(cleanCode), "_blank");
+    }
+  };
+
   window.openAdminSubscribers = function () {
     if (typeof window.openSubscribersModal === 'function') {
       window.openSubscribersModal();
