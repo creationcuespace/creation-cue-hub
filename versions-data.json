@@ -12,17 +12,17 @@
     {
       "date": "2026-10-15",
       "timestamp": "2026-10-15T01:51:37.525Z",
-      "avgRating": 4.49,
+      "avgRating": 4.48,
       "weightedAvg": 4.43,
-      "ratedCount": 115,
+      "ratedCount": 30,
       "totalWeight": 2746
     },
     {
       "date": "2026-10-16",
       "timestamp": "2026-10-16T01:40:18.552Z",
-      "avgRating": 4.5,
+      "avgRating": 4.49,
       "weightedAvg": 4.43,
-      "ratedCount": 115,
+      "ratedCount": 30,
       "totalWeight": 2749
     },
     {
@@ -30,7 +30,7 @@
       "timestamp": "2026-10-17T01:33:51.541Z",
       "avgRating": 4.49,
       "weightedAvg": 4.43,
-      "ratedCount": 115,
+      "ratedCount": 30,
       "totalWeight": 2751
     },
     {
@@ -38,32 +38,32 @@
       "timestamp": "2026-10-18T01:32:39.229Z",
       "avgRating": 4.49,
       "weightedAvg": 4.51,
-      "ratedCount": 115,
-      "totalWeight": 3834
+      "ratedCount": 30,
+      "totalWeight": 3750
     },
     {
       "date": "2026-10-19",
       "timestamp": "2026-10-19T01:43:23.813Z",
-      "avgRating": 4.48,
+      "avgRating": 4.49,
       "weightedAvg": 4.51,
-      "ratedCount": 115,
-      "totalWeight": 3841
+      "ratedCount": 30,
+      "totalWeight": 3755
     },
     {
       "date": "2026-10-20",
       "timestamp": "2026-10-20T02:05:49.523Z",
-      "avgRating": 4.56,
-      "weightedAvg": 4.52,
-      "ratedCount": 115,
-      "totalWeight": 3842
+      "avgRating": 4.49,
+      "weightedAvg": 4.51,
+      "ratedCount": 30,
+      "totalWeight": 3760
     },
     {
       "date": "2026-10-21",
       "timestamp": "2026-10-21T02:03:20.519Z",
-      "avgRating": 4.57,
-      "weightedAvg": 4.52,
-      "ratedCount": 115,
-      "totalWeight": 3846
+      "avgRating": 4.49,
+      "weightedAvg": 4.51,
+      "ratedCount": 30,
+      "totalWeight": 3765
     },
     {
       "date": "2026-10-22",
