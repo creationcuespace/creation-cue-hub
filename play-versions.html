@@ -1356,6 +1356,8 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      overflow-anchor: none;
+      scroll-behavior: auto !important;
     }
 
     #details-panel.open {
@@ -1500,6 +1502,8 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
+      overflow-anchor: none;
+      scroll-behavior: auto !important;
     }
 
     .details-preview-container {
@@ -4354,6 +4358,15 @@
 
       activeDetailsWfId = id;
 
+      // Always reset scroll to top immediately when opening
+      const detailsPanelEl = document.getElementById('details-panel');
+      const detailsBodyEl = detailsPanelEl ? detailsPanelEl.querySelector('.details-body') : null;
+      if (detailsPanelEl) detailsPanelEl.scrollTop = 0;
+      if (detailsBodyEl) {
+        detailsBodyEl.scrollTop = 0;
+        if (typeof detailsBodyEl.scrollTo === 'function') detailsBodyEl.scrollTo(0, 0);
+      }
+
       // Find catalog info (from managerData)
       const rawWf = managerData.find(item => item.id === id) || {};
 
@@ -4519,13 +4532,40 @@
       updateDrawerReviewStatus(id);
 
       // Open drawer & backdrop
-      document.getElementById('details-panel').classList.add('open');
+      const panel = document.getElementById('details-panel');
+      const body = panel ? panel.querySelector('.details-body') : null;
+      if (panel) {
+        panel.classList.add('open');
+        panel.scrollTop = 0;
+      }
+      if (body) {
+        body.scrollTop = 0;
+        if (typeof body.scrollTo === 'function') body.scrollTo(0, 0);
+      }
       document.getElementById('details-backdrop').classList.add('open');
+
+      // Guarantee scroll position stays at top after layout reflow
+      requestAnimationFrame(() => {
+        if (panel) panel.scrollTop = 0;
+        if (body) {
+          body.scrollTop = 0;
+          if (typeof body.scrollTo === 'function') body.scrollTo(0, 0);
+        }
+      });
     }
 
     function closeDetailsPanel() {
       activeDetailsWfId = null;
-      document.getElementById('details-panel').classList.remove('open');
+      const panel = document.getElementById('details-panel');
+      const body = panel ? panel.querySelector('.details-body') : null;
+      if (panel) {
+        panel.classList.remove('open');
+        panel.scrollTop = 0;
+      }
+      if (body) {
+        body.scrollTop = 0;
+        if (typeof body.scrollTo === 'function') body.scrollTo(0, 0);
+      }
       document.getElementById('details-backdrop').classList.remove('open');
     }
 
@@ -5413,8 +5453,14 @@
       try {
         const panel = document.getElementById('reviews-panel');
         const backdrop = document.getElementById('reviews-backdrop');
+        const content = document.getElementById('reviews-content');
         if (panel) {
           panel.classList.add('open');
+          panel.scrollTop = 0;
+          if (content) {
+            content.scrollTop = 0;
+            if (typeof content.scrollTo === 'function') content.scrollTo(0, 0);
+          }
           if (backdrop) backdrop.classList.add('open');
         } else {
           alert('Panel not found in DOM!');
