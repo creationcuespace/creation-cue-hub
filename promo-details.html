@@ -407,19 +407,77 @@
       overflow-y: auto;
       background: var(--black);
       border: 1px solid var(--border);
-      border-radius: 3px;
+      border-radius: 6px;
       font-size: 13px;
-    }
-
-    .claim-row {
+      padding: 10px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      padding: 8px 10px;
-      border-bottom: 1px solid var(--border);
+      gap: 10px;
     }
 
-    .claim-row:last-child { border-bottom: none; }
+    .token-card, .claim-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 11px 13px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .token-card.unused {
+      background: rgba(245, 197, 24, 0.03);
+      border: 1px solid rgba(245, 197, 24, 0.22);
+      border-left: 4px solid var(--yellow);
+    }
+
+    .token-card.claimed, .claim-card {
+      background: rgba(34, 197, 94, 0.035);
+      border: 1px solid rgba(34, 197, 94, 0.22);
+      border-left: 4px solid var(--green);
+    }
+
+    .token-card:hover, .claim-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .token-claimed-box {
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(34, 197, 94, 0.22);
+      border-radius: 4px;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 11.5px;
+    }
+
+    .claim-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: 10.5px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .claim-badge.unused {
+      background: rgba(245, 197, 24, 0.12);
+      color: var(--yellow);
+      border: 1px solid rgba(245, 197, 24, 0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .claim-badge.claimed {
+      background: rgba(34, 197, 94, 0.14);
+      color: var(--green);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+    }
 
     .claim-time { color: var(--muted); }
     .claim-code { font-family: monospace; color: var(--yellow); font-weight: bold; }
@@ -795,7 +853,7 @@
               </div>
               <button type="button" class="btn small" style="padding:2px 8px; font-size:10px; height:auto; flex:none; background:rgba(245,197,24,0.15); color:var(--yellow); border:1px solid rgba(245,197,24,0.3); pointer-events:none;">Copy</button>
             </div>
-            <div id="one-time-links-container" style="max-height: 520px; overflow-y: auto; background: var(--black); border: 1px solid var(--border); border-radius: 4px;">
+            <div id="one-time-links-container" style="max-height: 520px; overflow-y: auto; background: var(--black); border: 1px solid var(--border); border-radius: 6px; padding: 10px; display: flex; flex-direction: column; gap: 10px;">
               <div class="empty-state">Loading claim links...</div>
             </div>
           </div>
@@ -1569,7 +1627,7 @@
         });
 
         var html = '';
-        tokenKeys.forEach(function(tokenId) {
+        tokenKeys.forEach(function(tokenId, index) {
           var token = tokens[tokenId];
           var claimUrl = claimBaseUrl + '?t=' + tokenId;
           var hasValidShortUrl = token.shortUrl && !token.shortUrl.includes('shrtr.top');
@@ -1582,33 +1640,38 @@
             }
           }
           
-          var statusHtml = '';
-          if (token.claimed) {
-            statusHtml = `<span style="color:var(--green); font-weight:bold;">Claimed (${formatDateTime(token.claimedAt, true)})</span>`;
-          } else {
-            statusHtml = `<span style="color:var(--yellow); font-weight:bold;">Unused Link</span>`;
-          }
+          var isClaimed = !!token.claimed;
+          var statusBadge = isClaimed ? 
+            `<span class="claim-badge claimed">✓ Claimed (${formatDateTime(token.claimedAt, true)})</span>` : 
+            `<span class="claim-badge unused">● Unused Link</span>`;
 
           html += `
-            <div class="claim-row" style="padding:10px; border-bottom:1px solid var(--border);">
-              <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
-                <span class="claim-time" style="font-size:12px;">
-                  Token: <span style="font-family:monospace; color:var(--text); font-weight:600;">${tokenId.substring(0, 8)}...</span>
-                  <span style="color:var(--muted); margin-left:6px;">(${token.createdAt ? formatDateTime(token.createdAt, true) : 'Unknown date'})</span>
-                </span>
-                <span style="font-size:11px;">${statusHtml}</span>
+            <div class="token-card ${isClaimed ? 'claimed' : 'unused'}">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:11.5px; min-width:0;">
+                  <span style="font-size:10px; font-weight:800; color:${isClaimed ? 'var(--green)' : 'var(--yellow)'}; background:${isClaimed ? 'rgba(34,197,94,0.18)' : 'rgba(245,197,24,0.18)'}; padding:1px 6px; border-radius:3px; font-family:monospace; flex:none;">#${index + 1}</span>
+                  <span style="font-family:monospace; color:var(--text); font-weight:700;">Token: ${tokenId.substring(0, 8)}...</span>
+                  <span style="color:var(--muted); font-size:11px; white-space:nowrap;">(${token.createdAt ? formatDateTime(token.createdAt, true) : 'Unknown date'})</span>
+                </div>
+                <div>${statusBadge}</div>
               </div>
-              <div style="display:flex; gap:6px; margin-top:6px; align-items:center;">
-                <input class="input-text" id="token-input-${tokenId}" type="text" readonly value="${displayUrl}" style="padding:4px 8px; font-size:12px; font-family:monospace; height:auto; flex:1; min-width:0; background:var(--black);">
-                <button class="btn small" style="padding:4px 8px; font-size:11px; flex:none; height:auto;" onclick="copyTokenUrl('${tokenId}')">Copy</button>
+
+              <div style="display:flex; gap:6px; align-items:center;">
+                <input class="input-text" id="token-input-${tokenId}" type="text" readonly value="${displayUrl}" style="padding:4px 8px; font-size:12px; font-family:monospace; height:auto; flex:1; min-width:0; background:var(--black); border:1px solid var(--border);">
+                <button class="btn small" style="padding:4px 10px; font-size:11px; flex:none; height:auto;" onclick="copyTokenUrl('${tokenId}')">Copy</button>
                 <button class="btn red small" style="padding:4px 8px; font-size:11px; flex:none; height:auto;" onclick="deleteToken('${tokenId}')">Delete</button>
               </div>
-              ${token.claimed && token.code ? `
-                <div style="font-size:11px; color:var(--muted); margin-top:4px; text-align:left; word-break:break-all; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                  <span>Claimed Code: <span style="color:var(--yellow); font-family:monospace; font-weight:bold; cursor:pointer;" onclick="copyCodeOnly('${token.code}', event)" title="Click to copy coupon code">${token.code}</span></span>
-                  <a href="https://play.google.com/redeem?code=${encodeURIComponent(token.code)}" target="_blank" rel="noopener noreferrer" class="btn small" style="padding:2px 7px; font-size:10px; height:auto; background:rgba(37,99,235,0.18); color:#60a5fa; border:1px solid rgba(37,99,235,0.35); display:inline-flex; align-items:center; gap:3px; cursor:pointer; text-decoration:none;" title="Left-click to test on Play (or right-click to Open in Incognito)">↗ Test</a>
-                  <span style="color:var(--border);">|</span>
-                  <span>Guest ID: <span style="font-family:monospace;">${token.claimedBy}</span></span>
+
+              ${isClaimed && token.code ? `
+                <div class="token-claimed-box">
+                  <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <span style="color:var(--muted); font-size:11px;">Claimed Code:</span>
+                    <span style="color:var(--yellow); font-family:monospace; font-weight:800; font-size:12.5px; cursor:pointer; letter-spacing:0.5px;" onclick="copyCodeOnly('${token.code}', event)" title="Click to copy coupon code">${token.code}</span>
+                    <a href="https://play.google.com/redeem?code=${encodeURIComponent(token.code)}" target="_blank" rel="noopener noreferrer" class="btn small" style="padding:2px 7px; font-size:10px; height:auto; background:rgba(37,99,235,0.18); color:#60a5fa; border:1px solid rgba(37,99,235,0.35); display:inline-flex; align-items:center; gap:3px; cursor:pointer; text-decoration:none;" title="Left-click to test on Play (or right-click to Open in Incognito)">↗ Test</a>
+                  </div>
+                  <div style="font-size:10.5px; color:var(--muted); font-family:monospace;">
+                    Guest: <span style="color:var(--text);">${token.claimedBy ? token.claimedBy.substring(0, 10) + '...' : 'Unknown'}</span>
+                  </div>
                 </div>
               ` : ''}
             </div>
@@ -1747,21 +1810,24 @@
         return b.timestamp - a.timestamp;
       });
 
-      container.innerHTML = claimsCache.map(c => {
+      container.innerHTML = claimsCache.map((c, idx) => {
         var details = [];
         if (c.os) details.push(`📱 ${c.os} (${c.browser})`);
         if (c.timezone) details.push(`🌍 ${c.timezone}`);
         if (c.referrer) details.push(`🔗 ${c.referrer}`);
         var metaHtml = details.length > 0 ? 
-          `<div style="font-size:11px; color:var(--muted); margin-top:2px; display:flex; gap:6px; flex-wrap:wrap; text-align:left; word-break:break-all;">${details.join(' | ')}</div>` : '';
+          `<div style="font-size:11px; color:var(--muted); margin-top:4px; display:flex; gap:6px; flex-wrap:wrap; text-align:left; word-break:break-all;">${details.join(' | ')}</div>` : '';
 
         return `
-          <div class="claim-row">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span class="claim-time" style="font-size:12px;">${c.time}</span>
+          <div class="claim-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+              <div style="display:flex; align-items:center; gap:6px; font-size:11.5px;">
+                <span style="font-size:10px; font-weight:800; color:var(--green); background:rgba(34,197,94,0.18); padding:1px 6px; border-radius:3px; font-family:monospace; flex:none;">#${idx + 1}</span>
+                <span class="claim-time" style="font-size:11.5px; color:var(--muted);">${c.time}</span>
+              </div>
               <div style="display:flex; align-items:center; gap:6px;">
-                <span class="claim-code" style="font-size:12.5px; cursor:pointer;" onclick="copyCodeOnly('${c.code}', event)" title="Guest UID: ${c.uid} • Click to copy code">${c.code}</span>
-                <a href="https://play.google.com/redeem?code=${encodeURIComponent(c.code)}" target="_blank" rel="noopener noreferrer" class="btn small" style="padding:2px 6px; font-size:10px; height:auto; background:rgba(37,99,235,0.18); color:#60a5fa; border:1px solid rgba(37,99,235,0.35); display:inline-flex; align-items:center; gap:2px; cursor:pointer; text-decoration:none;" title="Left-click to test on Play (or right-click to Open in Incognito)">↗ Test</a>
+                <span class="claim-code" style="font-size:12.5px; font-family:monospace; color:var(--yellow); font-weight:800; cursor:pointer; letter-spacing:0.5px;" onclick="copyCodeOnly('${c.code}', event)" title="Guest UID: ${c.uid} • Click to copy code">${c.code}</span>
+                <a href="https://play.google.com/redeem?code=${encodeURIComponent(c.code)}" target="_blank" rel="noopener noreferrer" class="btn small" style="padding:2px 7px; font-size:10px; height:auto; background:rgba(37,99,235,0.18); color:#60a5fa; border:1px solid rgba(37,99,235,0.35); display:inline-flex; align-items:center; gap:2px; cursor:pointer; text-decoration:none;" title="Left-click to test on Play (or right-click to Open in Incognito)">↗ Test</a>
               </div>
             </div>
             ${metaHtml}
