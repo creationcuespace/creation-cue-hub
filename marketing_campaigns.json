@@ -52,5 +52,18 @@
     "depletionMinutes": 95,
     "status": "completed",
     "notes": "Minimalist true-black OLED watch face. Top-rated bestseller. 70 coupons allocated on r/WearOSFaces. Depleted in ~95 minutes."
+  },
+  {
+    "id": "reddit-cue003-20261023",
+    "channel": "reddit",
+    "subreddit": "r/GalaxyWatchFace",
+    "promoId": "cue003",
+    "faceName": "CUE003",
+    "postUrl": "https://www.reddit.com/r/GalaxyWatchFace/comments/1xd7c14/wear_os_watch_face_cue003_digital_watch_face_30/",
+    "title": "[Wear OS] Watch Face CUE003 Digital Watch Face – 30 Free Coupon Codes Giveaway!",
+    "couponsAllocated": 30,
+    "createdAt": "2026-10-23T07:20:00Z",
+    "status": "active",
+    "notes": "3D digital watch face with 6 custom complication slots. 30 coupons allocated on r/GalaxyWatchFace to unlock public rating badge (<10 ratings)."
   }
 ]

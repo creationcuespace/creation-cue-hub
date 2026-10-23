@@ -776,8 +776,8 @@
           </div>
           <div id="badge-gwf-history" style="font-size: 10.5px; display: flex; align-items: center; gap: 4px;">
             <div style="display:flex; flex-direction:column; gap:2px;">
-              <span style="color:#4ade80; font-weight:700;">🟢 READY TO POST (6d ago)</span>
-              <span style="font-size:10px; color:var(--muted);">Oct 16 • CUE179 (1x total)</span>
+              <span style="color:#f87171; font-weight:700;">🔴 Too Early (Posted Today - wait 2-3d)</span>
+              <span style="font-size:10px; color:var(--muted);">Oct 23 • CUE003 (2x total)</span>
             </div>
           </div>
         </a>
@@ -788,7 +788,7 @@
           </div>
           <div id="badge-wearos-history" style="font-size: 10.5px; display: flex; align-items: center; gap: 4px;">
             <div style="display:flex; flex-direction:column; gap:2px;">
-              <span style="color:#fde047; font-weight:700;">🟡 Fair Window (2d ago)</span>
+              <span style="color:#fde047; font-weight:700;">🟡 Fair Window (3d ago)</span>
               <span style="font-size:10px; color:var(--muted);">Oct 20 • CUE116 (1x total)</span>
             </div>
           </div>
@@ -800,7 +800,7 @@
           </div>
           <div id="badge-awf-history" style="font-size: 10.5px; display: flex; align-items: center; gap: 4px;">
             <div style="display:flex; flex-direction:column; gap:2px;">
-              <span style="color:#fde047; font-weight:700;">🟡 Fair Window (2d ago)</span>
+              <span style="color:#fde047; font-weight:700;">🟡 Fair Window (3d ago)</span>
               <span style="font-size:10px; color:var(--muted);">Oct 20 • CUE097 (2x total)</span>
             </div>
           </div>
@@ -1792,7 +1792,7 @@ Links to claim your free code and the Play Store link are in the first comment b
 
       // 6. Quick Replies
       var directClaimUrl = `https://creationcue.web.app/claim?p=${item.promoId}`;
-      var replyLoading = `Hi! The Reddit mobile app's built-in browser sometimes blocks the secure Google connection needed to generate your unique code.\n\nQuick 5-second fix: Tap the 3 dots (...) in the top right corner and choose 'Open in external browser' (Chrome, Safari, Samsung Internet, etc.), or open this link directly:\n${directClaimUrl}\n\nIf you still have any trouble, let me know and I'll send you a working code directly via Reddit Chat! 🙂`;
+      var replyLoading = `Hi! The Reddit mobile app's built-in browser sometimes blocks the secure Google connection needed to generate your unique code.\n\nQuick 5-second fix: Tap the 3 dots (...) in the top right corner and choose 'Open in external browser' (Chrome, Safari, Samsung Internet, etc.), or open this link directly:\n${directClaimUrl}`;
       var replyMissed = `Hi! All promotional giveaway codes have been claimed for this round. You can still check out ${name} directly on Google Play here:\n${playStoreUrl}\n\nStay tuned for upcoming watch faces and giveaways! Thank you for following along and checking out my designs!`;
       var replyThanks = `Thank you so much! Really glad you like it. I hope you enjoy wearing ${name}! A rating or review on Google Play means the world to an independent designer! 😊`;
 
@@ -2114,6 +2114,20 @@ Links to claim your free code and the Play Store link are in the first comment b
         db.ref('promotions/watchfacecue175/public/storeLink').once('value').then(function(snap) {
           if (snap.val() === 'https://play.google.com/store/apps/details?id=com.creation.cue175') {
             db.ref('promotions/watchfacecue175/public/storeLink').set('https://play.google.com/store/apps/details?id=com.creation.cue175watchface');
+          }
+        }).catch(function() {});
+
+        // Ensure CUE003 active campaign stopwatch is initialized for Oct 23, 2026 Reddit giveaway
+        db.ref('promotions/cue003/public/active_campaign').once('value').then(function(snap) {
+          if (!snap.val()) {
+            db.ref('promotions/cue003/public/active_campaign').set({
+              id: 'reddit-cue003-20261023',
+              subreddit: 'r/GalaxyWatchFace',
+              postUrl: 'https://www.reddit.com/r/GalaxyWatchFace/comments/1xd7c14/wear_os_watch_face_cue003_digital_watch_face_30/',
+              couponsAllocated: 30,
+              startedAt: 1792740000000,
+              status: 'active'
+            });
           }
         }).catch(function() {});
 
