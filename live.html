@@ -2236,6 +2236,16 @@
             onmouseout="this.style.background='rgba(245,197,24,0.08)';this.style.borderColor='rgba(245,197,24,0.25)'">
             📣 Open in Socials
           </a>
+          <a id="details-open-console" href="#" target="_blank"
+            style="flex:1; min-width:120px; display:flex; align-items:center; justify-content:center; gap:6px;
+                   background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.35);
+                   color: #fbbf24; font-size:12px; font-weight:600; padding:9px 12px;
+                   border-radius:6px; text-decoration:none; transition: background 0.15s, border-color 0.15s;
+                   letter-spacing:0.3px;"
+            onmouseover="this.style.background='rgba(245,158,11,0.22)';this.style.borderColor='rgba(245,158,11,0.6)'"
+            onmouseout="this.style.background='rgba(245,158,11,0.12)';this.style.borderColor='rgba(245,158,11,0.35)'">
+            🛠️ Play Console
+          </a>
         </div>
       </div>
     </div>
@@ -2390,6 +2400,7 @@
     // Data containers
     var managerData = [];
     var versionsData = {};
+    var consoleAppIds = {};
     var notesData = {};
     var combinedData = [];
     var unrepliedReviews = [];
@@ -2423,6 +2434,11 @@
 
     async function initDashboard() {
       try {
+        try {
+          const cRes = await fetch('console-app-ids.json?t=' + Date.now());
+          consoleAppIds = await cRes.json();
+        } catch(e) {}
+
         // Load manager.json
         const managerRes = await fetch('manager.json?t=' + Date.now());
         const managerJson = await managerRes.json();
@@ -3239,6 +3255,18 @@
       const base = 'https://creationcue.web.app/';
       document.getElementById('details-open-coupons').href = `${base}manage-coupons.html?face=${encodeURIComponent(id)}`;
       document.getElementById('details-open-social').href   = `${base}social-generator.html?face=${encodeURIComponent(id)}`;
+      const consoleBtn = document.getElementById('details-open-console');
+      if (consoleBtn) {
+        const rawId = (wf.id || id || '').toLowerCase();
+        const consoleId = consoleAppIds[wf.packageName] || consoleAppIds[rawId];
+        if (consoleId) {
+          consoleBtn.href = `https://play.google.com/console/u/0/developers/7609098870161748513/app/${consoleId}/app-dashboard`;
+          consoleBtn.title = `Open ${wf.title || id} Dashboard in Play Console`;
+        } else {
+          consoleBtn.href = `https://play.google.com/console/u/0/developers/7609098870161748513/app-list`;
+          consoleBtn.title = `Open Play Console App List`;
+        }
+      }
 
       // Populate Cloud Release Status (Google Play)
       document.getElementById('details-companion-status').textContent = wf.companionStatus || 'N/A';
