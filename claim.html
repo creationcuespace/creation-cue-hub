@@ -887,7 +887,7 @@
         method: "POST",
         body: 'All giveaway coupons for "' + name + '" have been claimed!' + extraText + '\n\nReddit Generator: https://creationcue.web.app/reddit-generator',
         headers: {
-          "Title": "🚨 COUPONS GONE: " + name + "!",
+          "Title": "COUPONS GONE: " + String(name || 'Watch Face').replace(/[^\x20-\x7E]/g, '') + "!",
           "Priority": "urgent",
           "Tags": "rotating_light,checkered_flag,ticket",
           "Click": "https://creationcue.web.app/reddit-generator"
