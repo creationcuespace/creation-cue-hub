@@ -1683,7 +1683,9 @@
               <div style="display:flex; gap:6px; align-items:center;">
                 <input class="input-text" id="token-input-${tokenId}" type="text" readonly value="${displayUrl}" style="padding:4px 8px; font-size:12px; font-family:monospace; height:auto; flex:1; min-width:0; background:var(--black); border:1px solid var(--border);">
                 <button class="btn small" style="padding:4px 10px; font-size:11px; flex:none; height:auto;" onclick="copyTokenUrl('${tokenId}')">Copy</button>
-                <button class="btn red small" style="padding:4px 8px; font-size:11px; flex:none; height:auto;" onclick="deleteToken('${tokenId}')">Delete</button>
+                ${!isClaimed ? `
+                  <button class="btn red small" style="padding:4px 8px; font-size:11px; flex:none; height:auto;" onclick="deleteToken('${tokenId}')">Delete</button>
+                ` : ''}
               </div>
 
               ${isClaimed && token.code ? `
