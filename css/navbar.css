@@ -331,7 +331,8 @@ html.dark-mode .header {
   background: var(--header-bg, rgba(9, 10, 12, 0.94));
 }
 html.dark-mode .brand-logo-img {
-  filter: grayscale(100%) invert(1) brightness(1.2);
+  /* Keep greyscale 3D logo authentic in dark mode with crisp brightness */
+  filter: brightness(1.15) drop-shadow(0 2px 6px rgba(0,0,0,0.4));
 }
 html.dark-mode .brand-name span {
   color: #fbbf24;
@@ -342,7 +343,7 @@ html.dark-mode .brand-name span {
     background: var(--header-bg, rgba(9, 10, 12, 0.94));
   }
   html:not(.light-mode) .brand-logo-img {
-    filter: grayscale(100%) invert(1) brightness(1.2);
+    filter: brightness(1.15) drop-shadow(0 2px 6px rgba(0,0,0,0.4));
   }
   html:not(.light-mode) .brand-name span {
     color: #fbbf24;

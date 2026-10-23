@@ -89,7 +89,7 @@
             <div class="header-inner">
               <!-- Brand Logo -->
               <a href="/" class="brand">
-                <img src="/images/logo.webp" onerror="this.src='/images/logo.png'" width="36" height="36" class="brand-logo-img" alt="Creation Cue Logo">
+                <img src="/images/creationcue_logo_greyscale_3d.svg" onerror="this.src='/images/creationcue_logo_greyscale_3d.png'" width="36" height="36" class="brand-logo-img" alt="Creation Cue Logo">
                 <div class="brand-name">Creation<span>Cue</span>™</div>
               </a>
 
