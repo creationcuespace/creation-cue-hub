@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-22T01:52:30.000Z",
+  "lastUpdated": "2026-10-23T01:58:37.601Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -72,6 +72,14 @@
       "weightedAvg": 4.51,
       "ratedCount": 30,
       "totalWeight": 3769
+    },
+    {
+      "date": "2026-10-23",
+      "timestamp": "2026-10-23T01:58:37.601Z",
+      "avgRating": 4.49,
+      "weightedAvg": 4.51,
+      "ratedCount": 30,
+      "totalWeight": 3777
     }
   ],
   "results": [
@@ -589,7 +597,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.6,
-      "ratingCount": "414"
+      "ratingCount": "416"
     },
     {
       "id": "cue136_plus",
@@ -781,7 +789,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
       "rating": 4.5,
-      "ratingCount": "96"
+      "ratingCount": "98"
     },
     {
       "id": "cue115",
@@ -849,7 +857,7 @@
       "playStoreTitle": "Digital Watch Face CUE107",
       "packageName": "com.creation.cue107watchface",
       "companionVersion": "Android 16 API & Design Update (v10000012)",
-      "wearVersion": "10000014 (3.1.5)",
+      "wearVersion": "10000015 (3.1.6)",
       "lastUpdatedDate": "Oct 17, 2026",
       "downloads": "100+",
       "rating": null,
@@ -889,7 +897,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.3,
-      "ratingCount": "28"
+      "ratingCount": "29"
     },
     {
       "id": "cue103",
@@ -1129,7 +1137,7 @@
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "10K+",
       "rating": 4.9,
-      "ratingCount": "64"
+      "ratingCount": "65"
     },
     {
       "id": "crc066",
@@ -1429,7 +1437,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "305"
+      "ratingCount": "307"
     },
     {
       "id": "cueindus_pro",

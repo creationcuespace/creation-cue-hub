@@ -1,29 +1,4 @@
 {
-  "lastUpdated": "2026-10-22T01:52:30.002Z",
-  "reviews": [
-    {
-      "reviewId": "e49a123e-8fa4-454c-9685-c1d5869fb76c",
-      "packageName": "com.creation.cue116watchface",
-      "title": "Digital Watch Face CUE116",
-      "wfId": "cue116",
-      "authorName": "Fevzi “Paşa” Gülhan",
-      "starRating": 5,
-      "reviewerLanguage": "nl",
-      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
-      "text": "\tgreat big font! love the details. all the information that I need is there. thank you so much for your time and effort 🔥",
-      "lastModified": "2026-10-21T07:19:07.000Z"
-    },
-    {
-      "reviewId": "e4d09dec-d28f-4fec-a532-5528bc3e96a7",
-      "packageName": "com.creation.cue116watchface",
-      "title": "Digital Watch Face CUE116",
-      "wfId": "cue116",
-      "authorName": "Rendell Querol",
-      "starRating": 5,
-      "reviewerLanguage": "en",
-      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
-      "text": "\tI really love this watch face. the design the colors option and the aod. this is favorite watchface",
-      "lastModified": "2026-10-21T06:13:32.000Z"
-    }
-  ]
+  "lastUpdated": "2026-10-23T01:58:37.602Z",
+  "reviews": []
 }
