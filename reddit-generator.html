@@ -769,7 +769,7 @@
         <span style="font-size:12px; color:var(--muted);">Opens the submit page in a new tab ready to paste your copied texts.</span>
       </div>
       <div class="launch-btns">
-        <a href="https://www.reddit.com/r/GalaxyWatchFace/submit" target="_blank" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: rgba(255, 255, 255, 0.15);">
+        <a href="https://www.reddit.com/r/GalaxyWatchFace/submit" target="_blank" onclick="setActiveSubreddit('r/GalaxyWatchFace')" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: rgba(255, 255, 255, 0.15);">
           <div style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:8px;">
             <span style="font-weight:700; color:#fff;">Open r/GalaxyWatchFace ↗</span>
             <span style="font-size: 10px; background: rgba(255,255,255,0.08); padding: 1px 6px; border-radius: 10px; font-weight: 600; color: var(--muted);">52k members</span>
@@ -781,7 +781,7 @@
             </div>
           </div>
         </a>
-        <a href="https://www.reddit.com/r/WearOSFaces/submit" target="_blank" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: rgba(255, 197, 24, 0.5); background: rgba(255, 197, 24, 0.04);">
+        <a href="https://www.reddit.com/r/WearOSFaces/submit" target="_blank" onclick="setActiveSubreddit('r/WearOSFaces')" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: rgba(255, 197, 24, 0.5); background: rgba(255, 197, 24, 0.04);">
           <div style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:8px;">
             <span style="font-weight:700; color:var(--yellow);">Open r/WearOSFaces ↗</span>
             <span style="font-size: 10px; background: rgba(255, 197, 24, 0.15); padding: 1px 6px; border-radius: 10px; font-weight: 600; color: var(--yellow);">126k members</span>
@@ -793,7 +793,7 @@
             </div>
           </div>
         </a>
-        <a href="https://www.reddit.com/r/androidwatchfaces/submit" target="_blank" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: rgba(255, 255, 255, 0.15);">
+        <a href="https://www.reddit.com/r/androidwatchfaces/submit" target="_blank" onclick="setActiveSubreddit('r/androidwatchfaces')" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: rgba(255, 255, 255, 0.15);">
           <div style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:8px;">
             <span style="font-weight:700; color:#fff;">Open r/AndroidWatchFaces ↗</span>
             <span style="font-size: 10px; background: rgba(255,255,255,0.08); padding: 1px 6px; border-radius: 10px; font-weight: 600; color: var(--muted);">10k members</span>
@@ -886,10 +886,18 @@
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
               <span>Test Alert</span>
             </button>
-            <button id="btn-log-campaign" onclick="logCampaignToAnalytics()" class="header-btn" style="font-size: 12px; padding: 5px 10px; background: rgba(255, 69, 0, 0.15); border-color: rgba(255, 69, 0, 0.5); color: #ff8b60; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;" title="Log this giveaway into Analytics Marketing History">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-              <span>Log to Analytics</span>
-            </button>
+            <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 69, 0, 0.06); border: 1px solid rgba(255, 69, 0, 0.3); padding: 4px 8px; border-radius: 6px;">
+              <select id="log-subreddit-select" style="background: var(--black); border: 1px solid var(--border); border-radius: 4px; color: #fff; font-size: 11.5px; font-weight: 600; padding: 4px 6px; cursor: pointer;" title="Subreddit where you posted (auto-selected when you click Open r/... above)">
+                <option value="r/GalaxyWatchFace">r/GalaxyWatchFace</option>
+                <option value="r/WearOSFaces" selected>r/WearOSFaces</option>
+                <option value="r/androidwatchfaces">r/androidwatchfaces</option>
+              </select>
+              <input type="text" id="log-post-url-input" placeholder="Paste Reddit post link (optional)" oninput="onPostUrlInput(this.value)" style="width: 175px; background: var(--black); border: 1px solid var(--border); border-radius: 4px; color: #fff; font-size: 11.5px; padding: 4px 7px;" title="Paste your live Reddit post URL here (auto-detects subreddit)">
+              <button id="btn-log-campaign" onclick="logCampaignToAnalytics()" class="header-btn" style="font-size: 12px; padding: 5px 10px; background: rgba(255, 69, 0, 0.2); border-color: rgba(255, 69, 0, 0.6); color: #ff8b60; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-weight: 700;" title="Start stopwatch & log this giveaway into Analytics + update Subreddit Cooldown Badges">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                <span>Log to Analytics</span>
+              </button>
+            </div>
             <span class="coupons-count-badge badge-active" id="selected-coupons-badge" style="display:none;">489 Coupons Available</span>
           </div>
         </div>
@@ -1249,6 +1257,7 @@ Links to claim your free code and the Play Store link are in the first comment b
           if (data && typeof data === 'object') {
             promotionsData = data;
             buildCombinedList();
+            updateSubredditBadges();
           }
         }
       } catch(e) {
@@ -1262,6 +1271,7 @@ Links to claim your free code and the Play Store link are in the first comment b
           if (val) {
             promotionsData = val;
             buildCombinedList();
+            updateSubredditBadges();
           }
         });
       } catch(e) {
@@ -1888,6 +1898,29 @@ Links to claim your free code and the Play Store link are in the first comment b
       });
     }
 
+    // Remember clicked subreddit from top Quick Reddit Launcher buttons
+    function setActiveSubreddit(subName) {
+      var sel = document.getElementById('log-subreddit-select');
+      if (sel && subName) {
+        sel.value = subName;
+        showToast("Target subreddit set to " + subName);
+      }
+    }
+
+    // Auto-detect subreddit when user pastes a Reddit post URL
+    function onPostUrlInput(val) {
+      if (!val) return;
+      var m = val.match(/\/r\/([a-zA-Z0-9_]+)/i);
+      if (m && m[1]) {
+        var subLower = m[1].toLowerCase();
+        var sel = document.getElementById('log-subreddit-select');
+        if (!sel) return;
+        if (subLower.includes('galaxywatchface')) sel.value = 'r/GalaxyWatchFace';
+        else if (subLower.includes('wearosfaces')) sel.value = 'r/WearOSFaces';
+        else if (subLower.includes('androidwatchfaces')) sel.value = 'r/androidwatchfaces';
+      }
+    }
+
     // Log active giveaway campaign to Marketing History / Analytics
     async function logCampaignToAnalytics() {
       if (!selectedItem) {
@@ -1900,14 +1933,19 @@ Links to claim your free code and the Play Store link are in the first comment b
       var promoId = selectedItem.promoId.toLowerCase();
       var name = selectedItem.name || promoId.toUpperCase();
 
-      var postUrl = prompt("Enter the Reddit Post URL for this campaign (or leave blank if posting now):", "");
-      if (postUrl === null) return; // User cancelled
+      var subSelect = document.getElementById('log-subreddit-select');
+      var urlInput = document.getElementById('log-post-url-input');
+      var postUrl = urlInput ? urlInput.value.trim() : '';
+      var subreddit = subSelect ? subSelect.value : 'r/WearOSFaces';
 
-      var subreddit = "Reddit";
       if (postUrl) {
         var subMatch = postUrl.match(/\/r\/([a-zA-Z0-9_]+)/i);
         if (subMatch && subMatch[1]) {
           subreddit = "r/" + subMatch[1];
+          if (subSelect) {
+            onPostUrlInput(postUrl);
+            subreddit = subSelect.value || subreddit;
+          }
         }
       }
 
@@ -1919,8 +1957,9 @@ Links to claim your free code and the Play Store link are in the first comment b
       }
 
       try {
+        var nowMs = Date.now();
         var campaignRecord = {
-          id: "reddit-" + promoId + "-" + Date.now(),
+          id: "reddit-" + promoId + "-" + nowMs,
           channel: "reddit",
           subreddit: subreddit,
           promoId: promoId,
@@ -1928,10 +1967,18 @@ Links to claim your free code and the Play Store link are in the first comment b
           postUrl: postUrl || ("https://www.reddit.com/" + subreddit),
           title: document.getElementById('output-title').value || ("[Wear OS] " + name + " Giveaway"),
           couponsAllocated: couponsCount,
-          createdAt: new Date().toISOString(),
+          createdAt: new Date(nowMs).toISOString(),
+          startedAt: nowMs,
           status: "active",
           notes: "Logged directly from Reddit Generator."
         };
+
+        // Also save into localStorage so Subreddit Cooldown Badges update immediately even before Firebase sync
+        try {
+          var localLogs = JSON.parse(localStorage.getItem('cc_local_logged_campaigns') || '[]');
+          localLogs.push(campaignRecord);
+          localStorage.setItem('cc_local_logged_campaigns', JSON.stringify(localLogs));
+        } catch(e) {}
 
         // Also save into Firebase RTDB under promotions/{promoId}/public/campaigns
         var user = auth.currentUser;
@@ -1947,12 +1994,15 @@ Links to claim your free code and the Play Store link are in the first comment b
 
         if (user) {
           var updates = {};
-          campaignRecord.startedAt = Date.now();
           updates['promotions/' + promoId + '/public/campaigns/' + campaignRecord.id] = campaignRecord;
           // Store as active campaign on promotion so claim.html can measure depletion automatically
           updates['promotions/' + promoId + '/public/active_campaign'] = {
             id: campaignRecord.id,
-            startedAt: Date.now(),
+            startedAt: nowMs,
+            createdAt: campaignRecord.createdAt,
+            faceName: name,
+            promoId: promoId,
+            postUrl: campaignRecord.postUrl,
             couponsAllocated: couponsCount,
             subreddit: subreddit,
             status: "active"
@@ -1961,11 +2011,18 @@ Links to claim your free code and the Play Store link are in the first comment b
           updates['promotions/' + promoId + '/public/visibility'] = 'public';
           if (promotionsData[promoId] && promotionsData[promoId].public) {
             promotionsData[promoId].public.visibility = 'public';
+            promotionsData[promoId].public.active_campaign = updates['promotions/' + promoId + '/public/active_campaign'];
+            if (!promotionsData[promoId].public.campaigns) promotionsData[promoId].public.campaigns = {};
+            promotionsData[promoId].public.campaigns[campaignRecord.id] = campaignRecord;
           }
           await db.ref().update(updates);
         }
 
-        showToast("✓ Campaign logged to Analytics history!");
+        // Immediately refresh the top 3 Subreddit Cooldown Badges!
+        updateSubredditBadges();
+        if (urlInput) urlInput.value = '';
+
+        showToast("✓ Logged to " + subreddit + " & Cooldown Badge updated!");
         if (btn) {
           btn.innerHTML = '✓ Logged!';
           setTimeout(function() {
@@ -1975,6 +2032,7 @@ Links to claim your free code and the Play Store link are in the first comment b
         }
       } catch(err) {
         console.error("Failed to log campaign:", err);
+        updateSubredditBadges();
         showToast("Logged locally. Firebase sync: " + err.message);
         if (btn) {
           btn.innerHTML = origText;
@@ -2023,75 +2081,154 @@ Links to claim your free code and the Play Store link are in the first comment b
 
     // Initialize on load
     // Dynamically calculate and display past posting activity per subreddit
+    // Merges static marketing_campaigns.json + live Firebase RTDB campaigns + localStorage logs
+    var cachedStaticCampaigns = null;
+
     function updateSubredditBadges() {
-      fetch('/marketing_campaigns.json?v=' + Date.now())
-        .then(function(r) { return r.json(); })
-        .then(function(campaigns) {
-          if (!Array.isArray(campaigns)) return;
+      var fetchPromise = cachedStaticCampaigns
+        ? Promise.resolve(cachedStaticCampaigns)
+        : fetch('/marketing_campaigns.json?v=' + Date.now())
+            .then(function(r) { return r.ok ? r.json() : []; })
+            .then(function(arr) {
+              cachedStaticCampaigns = Array.isArray(arr) ? arr : [];
+              return cachedStaticCampaigns;
+            })
+            .catch(function() { return []; });
 
-          var subs = {
-            'GalaxyWatchFace': { count: 0, lastDate: null, lastFace: '' },
-            'WearOSFaces': { count: 0, lastDate: null, lastFace: '' },
-            'androidwatchfaces': { count: 0, lastDate: null, lastFace: '' }
-          };
+      fetchPromise.then(function(staticCampaigns) {
+        var allCampaigns = Array.isArray(staticCampaigns) ? staticCampaigns.slice() : [];
 
-          campaigns.forEach(function(c) {
-            var subLower = (c.subreddit || '').toLowerCase();
-            for (var key in subs) {
-              if (subLower.includes(key.toLowerCase())) {
-                subs[key].count++;
-                var cTime = new Date(c.createdAt).getTime();
-                if (!subs[key].lastDate || cTime > subs[key].lastDate) {
-                  subs[key].lastDate = cTime;
-                  subs[key].lastFace = c.faceName || (c.promoId ? c.promoId.toUpperCase() : '');
+        // 1. Merge campaigns stored in live Firebase promotionsData
+        if (promotionsData && typeof promotionsData === 'object') {
+          Object.keys(promotionsData).forEach(function(pKey) {
+            var pub = promotionsData[pKey] && promotionsData[pKey].public;
+            if (!pub) return;
+            var faceLabel = (pub.name || pKey).toUpperCase().replace(/^WATCH FACE\s+/i, '');
+            if (pub.campaigns && typeof pub.campaigns === 'object') {
+              Object.values(pub.campaigns).forEach(function(c) {
+                if (c && c.subreddit) {
+                  allCampaigns.push({
+                    id: c.id || ('fb-' + pKey + '-' + (c.startedAt || c.createdAt || '')),
+                    subreddit: c.subreddit,
+                    faceName: c.faceName ? c.faceName.replace(/^Watch Face\s+/i, '') : faceLabel,
+                    promoId: pKey,
+                    postUrl: c.postUrl || '',
+                    createdAt: c.createdAt || (c.startedAt ? new Date(c.startedAt).toISOString() : null)
+                  });
                 }
-              }
+              });
+            }
+            if (pub.active_campaign && pub.active_campaign.subreddit) {
+              var ac = pub.active_campaign;
+              allCampaigns.push({
+                id: ac.id || ('active-' + pKey),
+                subreddit: ac.subreddit,
+                faceName: ac.faceName ? ac.faceName.replace(/^Watch Face\s+/i, '') : faceLabel,
+                promoId: pKey,
+                postUrl: ac.postUrl || '',
+                createdAt: ac.createdAt || (ac.startedAt ? new Date(ac.startedAt).toISOString() : null)
+              });
             }
           });
+        }
 
-          // Format relative time helper & timing safety advisory
-          function formatSubInfo(subKey, elId, isRecommendedIfZero) {
-            var data = subs[subKey];
-            var el = document.getElementById(elId);
-            if (!el) return;
+        // 2. Merge any locally logged campaigns from localStorage
+        try {
+          var localLogs = JSON.parse(localStorage.getItem('cc_local_logged_campaigns') || '[]');
+          if (Array.isArray(localLogs)) {
+            localLogs.forEach(function(c) {
+              if (c && c.subreddit) {
+                allCampaigns.push({
+                  id: c.id,
+                  subreddit: c.subreddit,
+                  faceName: c.faceName ? c.faceName.replace(/^Watch Face\s+/i, '') : (c.promoId ? c.promoId.toUpperCase() : ''),
+                  promoId: c.promoId || '',
+                  postUrl: c.postUrl || '',
+                  createdAt: c.createdAt || (c.startedAt ? new Date(c.startedAt).toISOString() : null)
+                });
+              }
+            });
+          }
+        } catch(e) {}
 
-            if (data.count === 0) {
-              el.innerHTML = '<span style="color:#4ade80; font-weight:700;">🟢 READY TO POST: Fresh audience (0 posts yet)</span>';
-              return;
+        // 3. Deduplicate campaigns (same subreddit + same face on the same day = 1 campaign)
+        var deduped = [];
+        var seenKeys = {};
+        allCampaigns.forEach(function(c) {
+          if (!c || !c.subreddit || !c.createdAt) return;
+          var dObj = new Date(c.createdAt);
+          if (isNaN(dObj.getTime())) return;
+          var dayKey = dObj.toISOString().slice(0, 10);
+          var subNorm = c.subreddit.toLowerCase().replace(/^r\//, '').trim();
+          var faceNorm = (c.promoId || c.faceName || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+          var uniqueKey = subNorm + '|' + faceNorm + '|' + dayKey;
+          if (!seenKeys[uniqueKey]) {
+            seenKeys[uniqueKey] = true;
+            deduped.push(c);
+          }
+        });
+
+        var subs = {
+          'GalaxyWatchFace': { count: 0, lastDate: null, lastFace: '' },
+          'WearOSFaces': { count: 0, lastDate: null, lastFace: '' },
+          'androidwatchfaces': { count: 0, lastDate: null, lastFace: '' }
+        };
+
+        deduped.forEach(function(c) {
+          var subLower = (c.subreddit || '').toLowerCase();
+          for (var key in subs) {
+            if (subLower.includes(key.toLowerCase())) {
+              subs[key].count++;
+              var cTime = new Date(c.createdAt).getTime();
+              if (!subs[key].lastDate || cTime >= subs[key].lastDate) {
+                subs[key].lastDate = cTime;
+                var codeMatch = (c.faceName || c.promoId || '').match(/(cue\d+|crc\d+)/i);
+                subs[key].lastFace = codeMatch ? codeMatch[1].toUpperCase() : (c.faceName || (c.promoId ? c.promoId.toUpperCase() : ''));
+              }
             }
+          }
+        });
 
-            var d = new Date(data.lastDate);
-            var dateStr = d.toLocaleDateString([], { month: 'short', day: 'numeric' });
-            var now = new Date();
-            var diffDays = Math.floor((now - d) / (1000 * 60 * 60 * 24));
-            var timeAgoStr = diffDays === 0 ? "Today" : (diffDays === 1 ? "Yesterday" : (diffDays + "d ago"));
+        // Format relative time helper & timing safety advisory
+        function formatSubInfo(subKey, elId) {
+          var data = subs[subKey];
+          var el = document.getElementById(elId);
+          if (!el) return;
 
-            // Timing health rules:
-            // 0 - 2 days: Too early (risk of community fatigue / spam flag)
-            // 3 - 4 days: Fair / Ready (good gap)
-            // 5+ days: Optimal / Green light
-            var timingBadge = '';
-            if (diffDays < 2) {
-              timingBadge = '<span style="color:#f87171; font-weight:700;">🔴 Too Early (Posted ' + timeAgoStr + ' - wait 2-3d)</span>';
-            } else if (diffDays >= 2 && diffDays < 4) {
-              timingBadge = '<span style="color:#fde047; font-weight:700;">🟡 Fair Window (' + timeAgoStr + ')</span>';
-            } else {
-              timingBadge = '<span style="color:#4ade80; font-weight:700;">🟢 READY TO POST (' + timeAgoStr + ')</span>';
-            }
-
-            el.innerHTML = '<div style="display:flex; flex-direction:column; gap:2px;">' +
-              timingBadge +
-              '<span style="font-size:10px; color:var(--muted);">' + dateStr + ' • ' + data.lastFace + ' (' + data.count + 'x total)</span>' +
-              '</div>';
+          if (data.count === 0) {
+            el.innerHTML = '<span style="color:#4ade80; font-weight:700;">🟢 READY TO POST: Fresh audience (0 posts yet)</span>';
+            return;
           }
 
-          formatSubInfo('GalaxyWatchFace', 'badge-gwf-history', false);
-          formatSubInfo('WearOSFaces', 'badge-wearos-history', true);
-          formatSubInfo('androidwatchfaces', 'badge-awf-history', false);
-        })
-        .catch(function(e) {
-          console.warn("Could not sync subreddit badges:", e);
-        });
+          var d = new Date(data.lastDate);
+          var dateStr = d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+          var now = new Date();
+          var diffDays = Math.floor((now - d) / (1000 * 60 * 60 * 24));
+          var timeAgoStr = diffDays <= 0 ? "Today" : (diffDays === 1 ? "Yesterday" : (diffDays + "d ago"));
+
+          // Timing health rules:
+          // 0 - 1 days: Too early (risk of community fatigue / spam flag)
+          // 2 - 3 days: Fair / Ready (good gap)
+          // 4+ days: Optimal / Green light
+          var timingBadge = '';
+          if (diffDays < 2) {
+            timingBadge = '<span style="color:#f87171; font-weight:700;">🔴 Too Early (Posted ' + timeAgoStr + ' - wait 2-3d)</span>';
+          } else if (diffDays >= 2 && diffDays < 4) {
+            timingBadge = '<span style="color:#fde047; font-weight:700;">🟡 Fair Window (' + timeAgoStr + ')</span>';
+          } else {
+            timingBadge = '<span style="color:#4ade80; font-weight:700;">🟢 READY TO POST (' + timeAgoStr + ')</span>';
+          }
+
+          el.innerHTML = '<div style="display:flex; flex-direction:column; gap:2px;">' +
+            timingBadge +
+            '<span style="font-size:10px; color:var(--muted);">' + dateStr + ' • ' + data.lastFace + ' (' + data.count + 'x total)</span>' +
+            '</div>';
+        }
+
+        formatSubInfo('GalaxyWatchFace', 'badge-gwf-history');
+        formatSubInfo('WearOSFaces', 'badge-wearos-history');
+        formatSubInfo('androidwatchfaces', 'badge-awf-history');
+      });
     }
 
     function startApp() {
