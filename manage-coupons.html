@@ -1367,11 +1367,11 @@ AAAA-BBBB-CCCC"></textarea>
     function formatDateTime(ts, includeSeconds) {
       if (!ts) return '';
       var d = new Date(ts);
-      var day = String(d.getUTCDate()).padStart(2, '0');
-      var month = String(d.getUTCMonth() + 1).padStart(2, '0');
-      var year = d.getUTCFullYear();
-      var hours = String(d.getUTCHours()).padStart(2, '0');
-      var minutes = String(d.getUTCMinutes()).padStart(2, '0');
+      var day = String(d.getDate()).padStart(2, '0');
+      var month = String(d.getMonth() + 1).padStart(2, '0');
+      var year = d.getFullYear();
+      var hours = String(d.getHours()).padStart(2, '0');
+      var minutes = String(d.getMinutes()).padStart(2, '0');
       var str = day + '/' + month + '/' + year + ' ' + hours + ':' + minutes;
       if (includeSeconds) {
         var seconds = String(d.getSeconds()).padStart(2, '0');
