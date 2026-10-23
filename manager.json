@@ -981,9 +981,12 @@
       "play_store_url": "market://details?id=com.creationcue.crc082watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcrc082",
       "description_en": "CRC082 is a refined analog watch face with a balanced layout and practical complications.",
       "description_de": "CRC082 ist ein ausgereiftes analoges Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
-      "filters": [],
+      "filters": [
+        "FREE"
+      ],
       "type": "analog",
-      "is_free": false
+      "is_free": true,
+      "badge_text": "🎀 FREE"
     },
     {
       "id": "crc081",
