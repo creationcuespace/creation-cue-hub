@@ -454,6 +454,9 @@
     }
 
     /* Play Store Gift Card Theme (Minimal & Clean) */
+    .fb-early-callout { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1px solid #bfdbfe; border-radius: 16px; padding: 16px 14px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 6px; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.08); }
+    .fb-early-btn { background: #1877F2; color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 800; border-radius: 99px; padding: 11px 18px; border: none; cursor: pointer; text-decoration: none; box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25); transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
+    .fb-early-btn:hover { background: #166fe5; color: #ffffff; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(24, 119, 242, 0.35); }
     .card.is-gift-card {
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
@@ -665,7 +668,15 @@
         <div id="out-of-coupons-store-area" style="display: none; flex-direction: column; gap: 8px; width: 100%;">
           <a id="btn-store-redirect" href="#" target="_blank" class="btn" style="background: var(--primary); color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a2.003 2.003 0 0 1-1.61-1.956V3.77a2 2 0 0 1 1.609-1.956zm11.605 11.605l2.43 2.43-12.028 6.944 9.598-9.374zm2.43-2.43l-2.43 2.43-9.598-9.374 12.028 6.944zm1.408 1.408l3.14 1.814a1.2 1.2 0 0 1 0 2.078l-3.14 1.814-1.92-1.853 1.92-1.853z"/></svg>
-            <span>GET IT ON GOOGLE PLAY ↗</span>
+            <span>GET IT ON GOOGLE PLAY ↗</span></a>
+          <div class="fb-early-callout">
+            <div style="font-size: 14px; font-weight: 800; color: #1e3a8a; letter-spacing: -0.01em;">🎁 Missed the free codes?</div>
+            <div style="font-size: 12.5px; color: #1e40af; line-height: 1.45; font-weight: 500;">We always post our <strong>first batch of free coupons on Facebook</strong> before anywhere else! Follow us so you never miss the next drop.</div>
+            <a href="https://www.facebook.com/profile.php?id=100089647182787" target="_blank" rel="noopener noreferrer" class="fb-early-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.3c-4.6 0-5.7 3.4-5.7 5.5v1.4H5.4v3.7h3.1v10.8h4.5V11.2h4.3l.5-3.7z"/></svg>
+              <span>Follow on Facebook for First Coupons ↗</span>
+            </a>
+          </div><a style="display:none;">
           </a>
           <p id="store-redirect-subtext" style="font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 4px; line-height: 1.4;">
             All free giveaway codes have been claimed! You can get this watch face directly on Google Play.
@@ -743,6 +754,14 @@
             </button>
           </div>
 
+          <div class="fb-early-callout">
+            <div style="font-size: 13.5px; font-weight: 800; color: #1e3a8a; letter-spacing: -0.01em;">🔔 Want First Access to Future Coupons?</div>
+            <div style="font-size: 12px; color: #1e40af; line-height: 1.45; font-weight: 500;">We drop our <strong>first free promo codes on Facebook</strong> before posting on Reddit. Join our page to grab new releases first!</div>
+            <a href="https://www.facebook.com/profile.php?id=100089647182787" target="_blank" rel="noopener noreferrer" class="fb-early-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.3c-4.6 0-5.7 3.4-5.7 5.5v1.4H5.4v3.7h3.1v10.8h4.5V11.2h4.3l.5-3.7z"/></svg>
+              <span>Join CreationCue on Facebook ↗</span>
+            </a>
+          </div>
           <a href="index.html" class="btn ghost" style="text-decoration: none; margin-top: 8px; display: flex;">
             Browse More Watch Faces →
           </a>
@@ -771,6 +790,7 @@
       <a href="index.html" style="color: var(--text-muted); text-decoration: none; font-weight: 600;">Home</a>
       <a href="blog.html" style="color: var(--text-muted); text-decoration: none; font-weight: 600;">Blog & Guides</a>
       <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank" style="color: var(--text-muted); text-decoration: none; font-weight: 600;">Google Play Store</a>
+      <a href="https://www.facebook.com/profile.php?id=100089647182787" target="_blank" rel="noopener noreferrer" style="color: #1877F2; text-decoration: none; font-weight: 700;">Facebook (Early Coupons)</a>
       <a href="privacy.html" style="color: var(--text-muted); text-decoration: none; font-weight: 600;">Privacy Policy</a>
     </div>
     <div>© 2026 Creation Cue™ Studio. Wear OS by Google. All rights reserved.</div>
