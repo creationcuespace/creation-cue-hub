@@ -834,7 +834,10 @@
         <!-- Column 2: One-Time Links Generator -->
         <div style="display: flex; flex-direction: column; gap: 20px; min-width: 0;">
           <div class="card">
-            <div class="card-title">One-Time Claim Links</div>
+            <div class="card-title" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <span>One-Time Claim Links</span>
+              <span id="lbl-tokens-stat" style="font-size:11px; font-weight:700; color:var(--muted); font-family:sans-serif;"></span>
+            </div>
             
             <div style="font-size: 12px; color: var(--muted); line-height: 1.4;">
               These links can be clicked exactly once. After claim, the code is revealed and the link is deactivated. Perfect for newsletter prizes.
@@ -1613,13 +1616,34 @@
         var container = document.getElementById('one-time-links-container');
         var tokens = snapshot.val();
         
+        var totalCoupons = promoData ? (promoData.totalCoupons || 0) : 0;
+        var claimedCount = promoData ? (promoData.claimedCount || 0) : 0;
+        var remainingCoupons = Math.max(0, totalCoupons - claimedCount);
+        var statEl = document.getElementById('lbl-tokens-stat');
+
         if (!tokens) {
           container.innerHTML = '<div class="empty-state">No one-time links created yet.</div>';
+          if (statEl) {
+            statEl.innerHTML = `<span style="color:var(--muted); font-size:11px;">0 Pending • ${remainingCoupons} available to issue</span>`;
+          }
           return;
         }
 
         var claimBaseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/claim.html';
         var tokenKeys = Object.keys(tokens);
+        var unusedCount = tokenKeys.filter(function(k) { return !tokens[k].claimed; }).length;
+        var safeRemaining = remainingCoupons - unusedCount;
+        if (statEl) {
+          if (unusedCount === 0) {
+            statEl.innerHTML = `<span style="color:var(--muted); font-size:11px;">0 Pending • ${remainingCoupons} available to issue</span>`;
+          } else if (safeRemaining > 0) {
+            statEl.innerHTML = `<span style="color:var(--yellow); font-size:11px;">${unusedCount} Pending</span> <span style="color:var(--border);">•</span> <span style="color:var(--green); font-size:11px;">${safeRemaining} more safe to send</span>`;
+          } else if (safeRemaining === 0) {
+            statEl.innerHTML = `<span style="color:var(--yellow); font-size:11px;">${unusedCount} Pending</span> <span style="color:var(--border);">•</span> <span style="color:#fde047; font-size:11px;">All ${remainingCoupons} reserved in links</span>`;
+          } else {
+            statEl.innerHTML = `<span style="color:var(--red); font-size:11px; font-weight:bold;">⚠️ Overbooked by ${Math.abs(safeRemaining)} links (${unusedCount} links for ${remainingCoupons} coupons)</span>`;
+          }
+        }
         
         // Sort tokens by creation date descending
         tokenKeys.sort(function(a, b) {
