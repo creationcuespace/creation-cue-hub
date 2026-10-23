@@ -1137,66 +1137,14 @@
       }
     }
   </style>
+  <!-- Universal Creation Cue Header Component -->
+  <link rel="stylesheet" href="/css/navbar.css">
+  <script src="/js/navbar.js" defer></script>
 </head>
 <body>
 
-  <!-- STICKY HEADER -->
-  <header class="header">
-    <div class="container">
-      <div class="header-inner">
-        <!-- Brand with Grayscale Logo -->
-        <a href="../" class="brand">
-          <img src="../images/logo.png" onerror="this.src='https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp'" width="36" height="36" class="brand-logo-img" alt="Creation Cue Logo">
-          <div class="brand-name">Creation<span>Cue</span>™</div>
-        </a>
-
-        <!-- Navigation Menu -->
-        <nav>
-          <ul class="nav-links" id="nav-links">
-            <li><a href="../#catalog" onclick="closeMobileMenu()">Watch Faces</a></li>
-            <li><a href="../#free-faces" onclick="closeMobileMenu()">Free Faces</a></li>
-            <li>
-              <a href="../blog.html" class="nav-link-blog active" onclick="closeMobileMenu()">
-                Blog <span class="nav-badge-pill">NEW</span>
-              </a>
-            </li>
-            <li><a href="../install.html" onclick="closeMobileMenu()">Installation</a></li>
-            <li><a href="../#faq" onclick="closeMobileMenu()">FAQ</a></li>
-            <li><a href="../privacy.html" onclick="closeMobileMenu()">Privacy</a></li>
-            <li><a href="../#contact" onclick="closeMobileMenu()">Contact</a></li>
-          </ul>
-        </nav>
-
-        <div class="header-actions">
-          <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" onclick="cycleThemeMode()" aria-label="Toggle light or dark theme" title="Toggle theme">
-            <!-- Sun icon (shown when dark) -->
-            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="5"></circle>
-              <line x1="12" y1="1" x2="12" y2="3"></line>
-              <line x1="12" y1="21" x2="12" y2="23"></line>
-              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-              <line x1="1" y1="12" x2="3" y2="12"></line>
-              <line x1="21" y1="12" x2="23" y2="12"></line>
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-            </svg>
-            <!-- Moon icon (shown when light) -->
-            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
-          <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank" rel="noopener" class="btn btn-dark">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a2.385 2.385 0 0 1-.61-.954V2.768c.15-.36.368-.69.61-.954zm11.235 11.238l2.678 2.678-12.784 7.378 10.106-10.056zm0-2.104L4.738.892l12.784 7.378-2.678 2.678zm1.488 1.488l3.961-2.288a1.59 1.59 0 0 0 0-2.764l-3.961-2.288-1.745 1.745 1.745 1.745 3.961 3.85z"/></svg>
-            <span class="btn-play-text">Play Store</span>
-          </a>
-          <button type="button" class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Navigation" aria-expanded="false">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
+  <!-- UNIVERSAL STICKY HEADER -->
+  <site-header active="blog"></site-header>
 
   <!-- BREADCRUMB -->
   <div class="container">
