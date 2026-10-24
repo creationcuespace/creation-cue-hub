@@ -1,4 +1,53 @@
 {
-  "lastUpdated": "2026-10-23T01:58:37.602Z",
-  "reviews": []
+  "lastUpdated": "2026-10-24T01:59:19.865Z",
+  "reviews": [
+    {
+      "reviewId": "6b19c13d-907d-411b-be3f-cd7c92527764",
+      "packageName": "com.creation.cue003watchface",
+      "title": "Digital Watch Face CUE003",
+      "wfId": "cue003",
+      "authorName": "June yong Chung",
+      "starRating": 5,
+      "reviewerLanguage": "ko",
+      "deviceMetadata": "pa3q (Galaxy S25 Ultra)",
+      "text": "\tThis is a stylish watch face with excellent readability. I'll make good use of it. Thank you.",
+      "lastModified": "2026-10-23T08:10:18.000Z"
+    },
+    {
+      "reviewId": "6e5a545b-14a8-4b01-afbf-a56d339bc263",
+      "packageName": "com.creation.cue003watchface",
+      "title": "Digital Watch Face CUE003",
+      "wfId": "cue003",
+      "authorName": "ainsley douglas",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "a54x (Galaxy A54 5G)",
+      "text": "\tgreat",
+      "lastModified": "2026-10-23T07:46:08.000Z"
+    },
+    {
+      "reviewId": "b8510367-1b4b-477c-a00e-7d41af40eb4a",
+      "packageName": "com.creation.cue003watchface",
+      "title": "Digital Watch Face CUE003",
+      "wfId": "cue003",
+      "authorName": "Grigorescu Ionut",
+      "starRating": 5,
+      "reviewerLanguage": "ro",
+      "deviceMetadata": "HNBVL (HONOR Magic6 Pro)",
+      "text": "\tNice one ,big numbers always will be my favorite,congrats 👏",
+      "lastModified": "2026-10-23T07:26:22.000Z"
+    },
+    {
+      "reviewId": "d553c85c-cf78-4ad8-9aa3-d4a09c3297b2",
+      "packageName": "com.creation.cueinduswatchface",
+      "title": "Watch Face CUE Indus",
+      "wfId": "cueindus",
+      "authorName": "Sonja Schönbühler",
+      "starRating": 5,
+      "reviewerLanguage": "de",
+      "deviceMetadata": "a56x (Galaxy A56 5G)",
+      "text": "\tsuper...",
+      "lastModified": "2026-10-23T06:19:31.000Z"
+    }
+  ]
 }
