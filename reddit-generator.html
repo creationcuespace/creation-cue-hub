@@ -919,6 +919,16 @@
           </div>
         </details>
 
+        <!-- Direct Redeem Link Banner -->
+        <div class="direct-redeem-banner" onclick="copyDirectRedeemLink(event)" title="Click to paste a coupon code and copy the full direct redeem link" style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:6px 12px; background:rgba(245,197,24,0.05); border:1px dashed rgba(245,197,24,0.28); border-radius:6px; margin-top:10px; cursor:pointer; user-select:none; transition:all 0.2s ease;">
+          <div style="display:flex; align-items:center; gap:8px; overflow:hidden; min-width:0;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none; color:var(--yellow);"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+            <span style="font-weight:600; color:var(--text); font-size:11.5px; white-space:nowrap; flex:none;">Direct link:</span>
+            <span style="color:var(--yellow); font-family:monospace; font-size:11.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">https://play.google.com/redeem?code=<span style="opacity:0.45;">.........[coupon code]</span></span>
+          </div>
+          <button type="button" class="btn small" style="padding:2px 8px; font-size:10px; height:auto; flex:none; background:rgba(245,197,24,0.15); color:var(--yellow); border:1px solid rgba(245,197,24,0.3); pointer-events:none;">Paste & Copy</button>
+        </div>
+
         <!-- Google Play Coupon Tester Bar -->
         <div class="coupon-tester-bar" style="display:flex; gap:8px; align-items:center; background:rgba(37,99,235,0.08); border:1px solid rgba(37,99,235,0.25); border-radius:6px; padding:6px 12px; margin-top:12px;">
           <div style="display:flex; align-items:center; gap:6px; flex:none; color:#60a5fa; font-size:11.5px; font-weight:700;">
@@ -1869,6 +1879,24 @@ Links to claim your free code and the Play Store link are in the first comment b
 
       window.open(testUrl, "_blank");
       showToast("Testing on Play Store: " + cleanCode);
+    };
+
+    window.copyDirectRedeemLink = function(e) {
+      if (e) e.stopPropagation();
+      var input = prompt("Paste your coupon code below to copy the full direct redeem link:\n(Or leave blank to copy prefix https://play.google.com/redeem?code=)", "");
+      if (input === null) return;
+      var cleanCode = typeof window.extractCouponCode === 'function' ? window.extractCouponCode(input) : input.trim();
+      var finalUrl = cleanCode ? ("https://play.google.com/redeem?code=" + encodeURIComponent(cleanCode)) : "https://play.google.com/redeem?code=";
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(finalUrl).then(function() {
+          showToast(cleanCode ? ("Copied direct link: " + finalUrl) : ("Copied prefix: " + finalUrl));
+        }).catch(function() {
+          showToast(cleanCode ? ("Copied direct link: " + finalUrl) : ("Copied prefix: " + finalUrl));
+        });
+      } else {
+        showToast(cleanCode ? ("Copied direct link: " + finalUrl) : ("Copied prefix: " + finalUrl));
+      }
     };
 
         function copyField(elementId, label) {
