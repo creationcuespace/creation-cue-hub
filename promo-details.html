@@ -1655,7 +1655,7 @@
           var token = tokens[tokenId];
           var claimUrl = claimBaseUrl + '?t=' + tokenId;
           var hasValidShortUrl = token.shortUrl && !token.shortUrl.includes('shrtr.top');
-          var displayUrl = hasValidShortUrl ? token.shortUrl : claimUrl;
+          var displayUrl = hasValidShortUrl ? token.shortUrl.replace('http://spoo.me/', 'https://spoo.me/') : claimUrl;
           
           if (!hasValidShortUrl && !token.claimed) {
             if (!shortenerQueue.some(function(q) { return q.id === tokenId; })) {
@@ -1681,8 +1681,9 @@
               </div>
 
               <div style="display:flex; gap:6px; align-items:center;">
-                <input class="input-text" id="token-input-${tokenId}" type="text" readonly value="${displayUrl}" style="padding:4px 8px; font-size:12px; font-family:monospace; height:auto; flex:1; min-width:0; background:var(--black); border:1px solid var(--border);">
-                <button class="btn small" style="padding:4px 10px; font-size:11px; flex:none; height:auto;" onclick="copyTokenUrl('${tokenId}')">Copy</button>
+                <input class="input-text" id="token-input-${tokenId}" data-direct-url="${claimUrl}" type="text" readonly value="${displayUrl}" style="padding:4px 8px; font-size:12px; font-family:monospace; height:auto; flex:1; min-width:0; background:var(--black); border:1px solid var(--border);">
+                <button class="btn small" style="padding:4px 10px; font-size:11px; flex:none; height:auto;" onclick="copyTokenUrl('${tokenId}')" title="Copy safe multi-line DM message">Copy</button>
+                <button class="btn ghost small" style="padding:4px 8px; font-size:11px; flex:none; height:auto;" onclick="copyTokenDirectUrl('${tokenId}')" title="Copy direct creationcue.web.app URL only (bypasses spoo.me)">Direct URL</button>
                 ${!isClaimed ? `
                   <button class="btn red small" style="padding:4px 8px; font-size:11px; flex:none; height:auto;" onclick="deleteToken('${tokenId}')">Delete</button>
                 ` : ''}
@@ -1710,25 +1711,38 @@
 
     window.copyTokenUrl = function(tokenId) {
       var input = document.getElementById('token-input-' + tokenId);
-      var link = input ? input.value : '';
+      var link = input ? input.value.trim() : '';
+      if (link.indexOf('http://spoo.me/') === 0) {
+        link = link.replace('http://spoo.me/', 'https://spoo.me/');
+      }
       var wfName = document.getElementById('promo-name').value.trim() || (promoData ? promoData.name : '') || 'the watch face';
-      var textToCopy = "Here is your Google Play Coupon for " + wfName + ":\n" + link + "\n\n⭐ A review is appreciated!";
-      var htmlToCopy = `<div>Here is your Google Play Coupon for <strong>${wfName}</strong>:<br><a href="${link}">${link}</a><br><br>⭐ A review is appreciated!</div>`;
+      var textToCopy = "Here is your Google Play Coupon for " + wfName + ":\r\n\r\n" + link + "\r\n\r\n⭐ A review is appreciated!";
 
-      if (navigator.clipboard && window.ClipboardItem) {
-        var textBlob = new Blob([textToCopy], { type: 'text/plain' });
-        var htmlBlob = new Blob([htmlToCopy], { type: 'text/html' });
-        navigator.clipboard.write([new ClipboardItem({ 'text/plain': textBlob, 'text/html': htmlBlob })]).then(function() {
-          showToast("Claim message copied!");
-        }).catch(function() {
-          navigator.clipboard.writeText(textToCopy).then(function() {
-            showToast("Claim message copied!");
-          });
-        });
-      } else {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(textToCopy).then(function() {
           showToast("Claim message copied!");
+        }).catch(function() {
+          copyFallback(textToCopy, "Claim message copied!");
         });
+      } else {
+        copyFallback(textToCopy, "Claim message copied!");
+      }
+    };
+
+    window.copyTokenDirectUrl = function(tokenId) {
+      var input = document.getElementById('token-input-' + tokenId);
+      var directLink = (input && input.getAttribute('data-direct-url')) || ('https://creationcue.web.app/claim.html?t=' + tokenId);
+      var wfName = document.getElementById('promo-name').value.trim() || (promoData ? promoData.name : '') || 'the watch face';
+      var textToCopy = "Here is your Google Play Coupon for " + wfName + ":\r\n\r\n" + directLink + "\r\n\r\n⭐ A review is appreciated!";
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textToCopy).then(function() {
+          showToast("Direct claim message copied!");
+        }).catch(function() {
+          copyFallback(textToCopy, "Direct claim message copied!");
+        });
+      } else {
+        copyFallback(textToCopy, "Direct claim message copied!");
       }
     };
 
@@ -1931,7 +1945,7 @@ Format this report with a professional tone in clean, beautiful Markdown with st
         }
         const data = await response.json();
         if (data.short_url) {
-          return data.short_url;
+          return data.short_url.replace('http://spoo.me/', 'https://spoo.me/');
         }
         throw new Error("Invalid response from shortener");
       } catch (err) {
