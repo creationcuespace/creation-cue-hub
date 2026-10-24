@@ -1050,22 +1050,10 @@ Links to claim your free code and the Play Store link are in the first comment b
                 Copy Reply
               </button>
             </div>
-            <textarea id="reply-loading-stuck" class="text-output-area" rows="4" readonly style="font-size:12px; line-height:1.45;"></textarea>
+            <textarea id="reply-loading-stuck" class="text-output-area" rows="5" readonly style="font-size:12px; line-height:1.45;"></textarea>
           </div>
 
-          <!-- Problem 2: Late user asking for code after giveaway ended -->
-          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; margin-bottom: 12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
-              <span style="font-size:12px; font-weight:700; color:#fff;">⏳ When user says: "Any codes left? / Missed out"</span>
-              <button class="copy-btn" onclick="copyField('reply-missed-out', 'Missed Out Reply')">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                Copy Reply
-              </button>
-            </div>
-            <textarea id="reply-missed-out" class="text-output-area" rows="3" readonly style="font-size:12px; line-height:1.45;"></textarea>
-          </div>
-
-          <!-- Problem 3: Thank You response -->
+          <!-- Problem 2: Thank You response -->
           <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
               <span style="font-size:12px; font-weight:700; color:#fff;">💖 When user says: "Thank you / Great watch face!"</span>
@@ -1801,15 +1789,11 @@ Links to claim your free code and the Play Store link are in the first comment b
       if (expiredField) expiredField.value = expiredNotice;
 
       // 6. Quick Replies
-      var directClaimUrl = `https://creationcue.web.app/claim?p=${item.promoId}`;
-      var replyLoading = `Hi! The Reddit mobile app's built-in browser sometimes blocks the secure Google connection needed to generate your unique code.\n\nQuick 5-second fix: Tap the 3 dots (...) in the top right corner and choose 'Open in external browser' (Chrome, Safari, Samsung Internet, etc.), or open this link directly:\n${directClaimUrl}`;
-      var replyMissed = `Hi! All promotional giveaway codes have been claimed for this round. You can still check out ${name} directly on Google Play here:\n${playStoreUrl}\n\nStay tuned for upcoming watch faces and giveaways! Thank you for following along and checking out my designs!`;
+      var replyLoading = `Hi! Reddit's built-in browser may block Google sign-in.\n\nEasy fix: Tap the 3 dots (...) at the top right and select "Open in external browser" (Chrome, Safari, etc.).\n\nOr open this link directly in your browser:\n${claimUrl}`;
       var replyThanks = `Thank you so much! Really glad you like it. I hope you enjoy wearing ${name}! A rating or review on Google Play means the world to an independent designer! 😊`;
 
       var rLoadingEl = document.getElementById('reply-loading-stuck');
       if (rLoadingEl) rLoadingEl.value = replyLoading;
-      var rMissedEl = document.getElementById('reply-missed-out');
-      if (rMissedEl) rMissedEl.value = replyMissed;
       var rThanksEl = document.getElementById('reply-thank-you');
       if (rThanksEl) rThanksEl.value = replyThanks;
     }
