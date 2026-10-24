@@ -2230,6 +2230,10 @@
                         document.getElementById('watch-name').value = match.title;
                         document.getElementById('play-store-desc').value = match.description_en || '';
                         document.getElementById('catalog-search').value = match.title;
+                        const isNewFace = match.is_new || match.badge_text === 'NEW' || match.badge_text === 'NEW RELEASE' || (match.filters && match.filters.includes('NEW'));
+                        if (document.getElementById('is-new-face')) {
+                            document.getElementById('is-new-face').checked = !!isNewFace;
+                        }
                         updateCommentsUI();
                         updateMockupImages(match.image_url);
                         generateFastSocialDescriptions();
@@ -2281,7 +2285,7 @@
                     document.getElementById('watch-name').value = f.title;
                     document.getElementById('play-store-desc').value = f.description_en || '';
                     
-                    const isNewFace = f.badge_text === 'NEW' || (f.filters && f.filters.includes('NEW'));
+                    const isNewFace = f.is_new || f.badge_text === 'NEW' || f.badge_text === 'NEW RELEASE' || (f.filters && f.filters.includes('NEW'));
                     if (document.getElementById('is-new-face')) {
                         document.getElementById('is-new-face').checked = !!isNewFace;
                     }

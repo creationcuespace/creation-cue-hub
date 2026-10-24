@@ -32,12 +32,9 @@
       "play_store_url": "market://details?id=com.creation.cue177watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue177",
       "description_en": "This is CUE177 watch face for Wear OS An analog watch face packed with gauges, useful info, and 5 custom slots.",
       "description_de": "Analoges Zifferblatt mit vielen Anzeigen, nützlichen Infos und 5 anpassbaren Komplikationen.",
-      "filters": [
-        "NEW"
-      ],
+      "filters": [],
       "type": "analog",
       "is_free": false,
-      "badge_text": "NEW",
       "release_date": "2026-05-18"
     },
     {
@@ -47,12 +44,9 @@
       "play_store_url": "market://details?id=com.creation.cue178watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue178",
       "description_en": "This is watch face for Wear OS: CUE178. Bold, clear, easy-to-read time display with depth-styled digits.",
       "description_de": "",
-      "filters": [
-        "NEW"
-      ],
+      "filters": [],
       "type": "digital",
       "is_free": false,
-      "badge_text": "NEW",
       "release_date": "2026-07-06"
     },
     {
@@ -75,12 +69,10 @@
       "description_en": "This is watch face for Wear OS: CUE176. A hybrid watch face featuring a neon glow and customizable text complications.",
       "description_de": "Ein neonfarbig gestaltetes Zifferblatt",
       "filters": [
-        "NEW",
         "NEON"
       ],
       "type": "hybrid",
       "is_free": false,
-      "badge_text": "NEW",
       "release_date": "2026-05-01"
     },
     {
@@ -91,12 +83,10 @@
       "description_en": "This watch face is compatible with Wear OS watches with API Level 33+. Digital Watch Face CUE175 A rugged hybrid design combining bold 3D depth with a modern industrial aesthetic.",
       "description_de": "Einzigartiges Wear OS Zifferblatt: sauber gestaltetes Informationslayout, 3D look.",
       "filters": [
-        "NEW",
         "HOT"
       ],
       "type": "digital",
       "is_free": false,
-      "badge_text": "NEW",
       "release_date": "2026-04-10"
     },
     {
@@ -107,12 +97,10 @@
       "description_en": "This is a unique Wear OS watch face CUE174 Large minutes, rotating hours, clean layout with essential info - not an ordinary watch face....",
       "description_de": "Einzigartiges Wear OS Zifferblatt: große Minutenanzeige, rotierende Stunden und ein sauber gestaltetes Informationslayout.",
       "filters": [
-        "NEW",
         "HOT"
       ],
       "type": "digital",
       "is_free": false,
-      "badge_text": "NEW",
       "release_date": "2026-04-15"
     },
     {
