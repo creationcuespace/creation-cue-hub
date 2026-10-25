@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-24T01:59:19.863Z",
+  "lastUpdated": "2026-10-25T01:39:40.345Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -88,6 +88,14 @@
       "weightedAvg": 4.51,
       "ratedCount": 30,
       "totalWeight": 3779
+    },
+    {
+      "date": "2026-10-25",
+      "timestamp": "2026-10-25T01:39:40.345Z",
+      "avgRating": 4.49,
+      "weightedAvg": 4.52,
+      "ratedCount": 30,
+      "totalWeight": 3796
     }
   ],
   "results": [
@@ -904,8 +912,8 @@
       "wearVersion": "Wear OS SDK 35 Update (v10000009)",
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": 4.3,
-      "ratingCount": "30"
+      "rating": 4.4,
+      "ratingCount": "32"
     },
     {
       "id": "cue103",
@@ -1085,7 +1093,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.3,
-      "ratingCount": "653"
+      "ratingCount": "654"
     },
     {
       "id": "crc079",
@@ -1133,7 +1141,7 @@
       "lastUpdatedDate": "Aug 27, 2026",
       "downloads": "10K+",
       "rating": 4.3,
-      "ratingCount": "89"
+      "ratingCount": "90"
     },
     {
       "id": "crc068",
@@ -1145,7 +1153,7 @@
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "10K+",
       "rating": 4.9,
-      "ratingCount": "65"
+      "ratingCount": "66"
     },
     {
       "id": "crc066",
@@ -1205,7 +1213,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100K+",
       "rating": 4.7,
-      "ratingCount": "1.08K"
+      "ratingCount": "1.09K"
     },
     {
       "id": "crc044",
@@ -1445,7 +1453,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "307"
+      "ratingCount": "309"
     },
     {
       "id": "cueindus_pro",
