@@ -272,6 +272,67 @@
       .main-grid { grid-template-columns: 1fr; }
     }
 
+    @media (max-width: 640px) {
+      .header {
+        padding: 10px 14px;
+      }
+      .container {
+        padding: 14px 12px;
+        gap: 16px;
+      }
+      .hero-banner {
+        padding: 14px 16px;
+        gap: 12px;
+      }
+      .hero-text h1 {
+        font-size: 16.5px;
+      }
+      .hero-text p {
+        font-size: 12.5px;
+      }
+      .action-bar {
+        padding: 14px;
+        gap: 12px;
+      }
+      .launch-btns {
+        width: 100%;
+        flex-direction: column;
+      }
+      .launch-btns .reddit-btn {
+        width: 100%;
+      }
+      .card, .section-box {
+        padding: 14px;
+        min-width: 0;
+      }
+      .card-header {
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .section-title-row {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      #selected-face-stats {
+        width: 100%;
+      }
+      #selected-face-stats > div {
+        flex-wrap: wrap;
+        max-width: 100%;
+      }
+      #log-post-url-input {
+        flex: 1 1 140px;
+        width: auto !important;
+        min-width: 0;
+      }
+      .coupon-tester-bar {
+        flex-wrap: wrap;
+      }
+      .coupon-tester-bar input {
+        flex: 1 1 160px !important;
+      }
+    }
+
     /* Cards */
     .card {
       background: var(--dark);
@@ -279,6 +340,7 @@
       border-radius: 10px;
       padding: 20px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      min-width: 0;
     }
 
     .card-header {
@@ -483,6 +545,7 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
+      min-width: 0;
     }
 
     .section-box {
@@ -491,6 +554,7 @@
       border-radius: 10px;
       padding: 18px 20px;
       position: relative;
+      min-width: 0;
     }
 
     .section-title-row {
@@ -863,15 +927,15 @@
       <div class="output-column">
         <!-- Selected Preview Info -->
         <div class="card" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
-          <div style="display:flex; align-items:center; gap:14px; min-width: 200px;">
-            <img id="selected-face-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%232a2a2a'/%3E%3C/svg%3E" alt="Watch face" style="width:48px; height:48px; border-radius:50%; border:1px solid var(--border); object-fit:cover;">
-            <div>
-              <div id="selected-face-title" style="font-size:16px; font-weight:700; color:#fff;">Select a Watch Face from the left list</div>
+          <div style="display:flex; align-items:center; gap:14px; min-width: 0; flex: 1 1 200px;">
+            <img id="selected-face-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%232a2a2a'/%3E%3C/svg%3E" alt="Watch face" style="width:48px; height:48px; border-radius:50%; border:1px solid var(--border); object-fit:cover; flex-shrink:0;">
+            <div style="min-width:0;">
+              <div id="selected-face-title" style="font-size:16px; font-weight:700; color:#fff; word-break:break-word;">Select a Watch Face from the left list</div>
               <div id="selected-face-meta" style="font-size:12px; color:var(--yellow); margin-top:2px;">No promotion selected</div>
             </div>
           </div>
-          <div id="selected-face-stats" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-            <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px;">
+          <div id="selected-face-stats" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-width: 0; max-width: 100%;">
+            <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px; flex-wrap: wrap;">
               <label for="custom-cap-input" style="font-size: 11px; font-weight: 700; color: var(--yellow); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">Coupons to Give:</label>
               <input type="number" id="custom-cap-input" min="1" max="1000" placeholder="e.g. 60" style="width: 75px; background: var(--black); border: 1px solid var(--border); border-radius: 4px; color: #fff; font-size: 13px; font-weight: 700; padding: 4px 6px; text-align: center;" oninput="onCapInputChange()">
               <button id="btn-save-cap" class="btn-save-cap" onclick="saveCapToFirebase()" title="Save cap directly to Firebase database so promo-details & claim page are updated">
@@ -886,13 +950,13 @@
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
               <span>Test Alert</span>
             </button>
-            <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 69, 0, 0.06); border: 1px solid rgba(255, 69, 0, 0.3); padding: 4px 8px; border-radius: 6px;">
-              <select id="log-subreddit-select" style="background: var(--black); border: 1px solid var(--border); border-radius: 4px; color: #fff; font-size: 11.5px; font-weight: 600; padding: 4px 6px; cursor: pointer;" title="Subreddit where you posted (auto-selected when you click Open r/... above)">
+            <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 69, 0, 0.06); border: 1px solid rgba(255, 69, 0, 0.3); padding: 4px 8px; border-radius: 6px; flex-wrap: wrap; max-width: 100%;">
+              <select id="log-subreddit-select" style="background: var(--black); border: 1px solid var(--border); border-radius: 4px; color: #fff; font-size: 11.5px; font-weight: 600; padding: 4px 6px; cursor: pointer; max-width: 100%;" title="Subreddit where you posted (auto-selected when you click Open r/... above)">
                 <option value="r/GalaxyWatchFace">r/GalaxyWatchFace</option>
                 <option value="r/WearOSFaces" selected>r/WearOSFaces</option>
                 <option value="r/androidwatchfaces">r/androidwatchfaces</option>
               </select>
-              <input type="text" id="log-post-url-input" placeholder="Paste Reddit post link (optional)" oninput="onPostUrlInput(this.value)" style="width: 175px; background: var(--black); border: 1px solid var(--border); border-radius: 4px; color: #fff; font-size: 11.5px; padding: 4px 7px;" title="Paste your live Reddit post URL here (auto-detects subreddit)">
+              <input type="text" id="log-post-url-input" placeholder="Paste Reddit post link (optional)" oninput="onPostUrlInput(this.value)" style="width: 175px; max-width: 100%; background: var(--black); border: 1px solid var(--border); border-radius: 4px; color: #fff; font-size: 11.5px; padding: 4px 7px;" title="Paste your live Reddit post URL here (auto-detects subreddit)">
               <button id="btn-log-campaign" onclick="logCampaignToAnalytics()" class="header-btn" style="font-size: 12px; padding: 5px 10px; background: rgba(255, 69, 0, 0.2); border-color: rgba(255, 69, 0, 0.6); color: #ff8b60; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-weight: 700;" title="Start stopwatch & log this giveaway into Analytics + update Subreddit Cooldown Badges">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
                 <span>Log to Analytics</span>
