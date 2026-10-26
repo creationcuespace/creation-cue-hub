@@ -1637,8 +1637,13 @@
                     </div>
 
                     <div class="form-group" style="flex-direction: row; align-items: center; gap: 8px; cursor: pointer; user-select: none; margin-top: 4px;">
-                        <input type="checkbox" id="free-coupons-active" style="width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer;" onchange="updateCommentsUI(); generateFastSocialDescriptions();">
+                        <input type="checkbox" id="free-coupons-active" style="width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer;" onchange="if(this.checked && document.getElementById('coming-soon-active')) document.getElementById('coming-soon-active').checked=false; updateCommentsUI(); generateFastSocialDescriptions();">
                         <label for="free-coupons-active" style="cursor: pointer; margin-bottom: 0; font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Free Coupons Promo Active</label>
+                    </div>
+
+                    <div class="form-group" style="flex-direction: row; align-items: center; gap: 8px; cursor: pointer; user-select: none; margin-top: 2px;">
+                        <input type="checkbox" id="coming-soon-active" style="width: 18px; height: 18px; accent-color: #f59e0b; cursor: pointer;" onchange="if(this.checked && document.getElementById('free-coupons-active')) document.getElementById('free-coupons-active').checked=false; updateCommentsUI(); generateFastSocialDescriptions();">
+                        <label for="coming-soon-active" style="cursor: pointer; margin-bottom: 0; font-size: 11px; font-weight: 700; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.5px;">⏳ Get Ready / Coming Soon Mode</label>
                     </div>
 
                     <div class="form-group">
@@ -2514,11 +2519,17 @@
             const link = linkInput.value.trim() || 'https://play.google.com/store/apps/details?id=...';
             const couponsLink = couponsLinkInput ? couponsLinkInput.value.trim() : '';
             const couponsActive = couponsActiveCheckbox ? couponsActiveCheckbox.checked : false;
+            const comingSoonCheckbox = document.getElementById('coming-soon-active');
+            const comingSoonActive = comingSoonCheckbox ? comingSoonCheckbox.checked : false;
+            const generalDevLink = 'https://play.google.com/store/apps/dev?id=7609098870161748513';
             
             let bioComment = `🔗 Get ${name} on the Google Play Store via the link in my bio!`;
             let linkComment = `🔗 Get ${name} on the Google Play Store via the link: ${link}`;
             
-            if (couponsActive) {
+            if (comingSoonActive) {
+                bioComment = `⏳ Coming soon! 🔍 Explore all Creation Cue watch faces on the Google Play Store via the link in my bio!`;
+                linkComment = `⏳ Coming soon! 🔍 Explore all Creation Cue watch faces on the Google Play Store: ${generalDevLink}`;
+            } else if (couponsActive) {
                 const cLink = couponsLink || 'https://...';
                 bioComment = `🎫 Free coupons link 👉 ${cLink} Grab yours now!`;
                 linkComment = `🎫 Grab your free coupon here 👉 ${cLink}`;
@@ -2711,11 +2722,15 @@
             const couponsActiveCheckbox = document.getElementById('free-coupons-active');
             const couponsLink = couponsLinkInput ? couponsLinkInput.value.trim() : '';
             const couponsActive = couponsActiveCheckbox ? couponsActiveCheckbox.checked : false;
+            const comingSoonCheckbox = document.getElementById('coming-soon-active');
+            const comingSoonActive = comingSoonCheckbox ? comingSoonCheckbox.checked : false;
+            const generalDevLink = 'https://play.google.com/store/apps/dev?id=7609098870161748513';
 
-            if (!name) {
+            if (!name && !comingSoonActive) {
                 alert("Please enter a Watch Face Name first.");
                 return;
             }
+            const displayName = name || 'our newest watch face';
 
             // Extract a neat hook from description (e.g. the first two sentences or first 120 chars)
             let hook = "";
@@ -2732,7 +2747,9 @@
                 }
             }
             if (!hook) {
-                hook = `Experience the stylish ${name} watch face on your smartwatch!`;
+                hook = comingSoonActive
+                    ? `A brand new Creation Cue watch face (${displayName}) is on the way. Stay tuned for the release!`
+                    : `Experience the stylish ${displayName} watch face on your smartwatch!`;
             }
 
             // Build standard posts based on the tone preset
@@ -2746,9 +2763,9 @@
             let captionIntro = "";
             let introPrefix = (document.getElementById('is-new-face') && document.getElementById('is-new-face').checked) ? "the new " : "";
             if (currentPreset === 'sleek') {
-                captionIntro = `This is ${introPrefix}${name}`;
+                captionIntro = `This is ${introPrefix}${displayName}`;
             } else {
-                captionIntro = `${toneIntro} ${introPrefix}${name}`;
+                captionIntro = `${toneIntro} ${introPrefix}${displayName}`;
             }
 
             let tiktokText = "";
@@ -2757,7 +2774,23 @@
             let shortsText = "";
             let reelsText = "";
 
-            if (couponsActive) {
+            if (comingSoonActive) {
+                const titleLabel = name ? `${name} — ` : '';
+                // TikTok Caption
+                tiktokText = `⏳ Get ready... ${name ? name + ' is coming' : 'Coming'} soon to Wear OS! ⌚🔥\n\n${hook}\n\n🔍 Explore all our watch faces via the link in our bio!\n\n#SamsungWatchFace #GalaxyWatchUltra #WearOS #TechTok #WatchFace #ComingSoon`;
+
+                // Instagram Caption (No "Comment CUE" DM trigger)
+                instagramText = `⏳ Get ready... ${name ? name + ' is coming' : 'Coming'} soon for Wear OS! ⌚✨\n\n${hook}\n\nStay tuned for the drop! 🔥👀\n\n🔍 Explore our full collection of watch faces via the link in our bio!\n\n#SamsungWatchFace #GalaxyWatch8 #SamsungGalaxyWatch #WatchFaces #Samsung #WearOS #Smartwatch #WatchFaceDesign #SamsungWatch #AndroidWear #ComingSoon`;
+
+                // Shorts Title
+                shortsTitleText = `⏳ Get Ready! ${titleLabel}Coming Soon to Wear OS! ⌚🔥 #wearos #watch #watchfacedesign #watchface`;
+
+                // Shorts Description
+                shortsText = `⏳ Get ready! ${name ? 'The new ' + name + ' watch face' : 'A brand new Creation Cue watch face'} is coming soon for Wear OS smartwatches! ⌚✨\n\n${hook}\n\n🔍 Explore all Creation Cue watch faces on the Google Play Store:\n🔗 ${generalDevLink}\n🔗 https://is.gd/NxAEME\n\n#Shorts #SamsungWatchFace #GalaxyWatch #WearOS #ComingSoon`;
+
+                // Reels Caption
+                reelsText = `🎥 ⏳ Get ready... ${name ? name + ' is coming' : 'Coming'} soon for Wear OS! ⌚🔥\n\n${hook}\n\n🔍 Explore all Creation Cue watch faces on the Google Play Store:\n🔗 ${generalDevLink}\n🔗 https://is.gd/NxAEME\n\n#SamsungWatchFace #GalaxyWatch #Smartwatch #Samsung #WearableTech #ComingSoon`;
+            } else if (couponsActive) {
                 const cLink = couponsLink || 'https://...';
                 // TikTok Caption
                 tiktokText = `🎫 FREE coupons available for a limited time! 🎟️\n\n✨ Get the modern ${name} watch face for Wear OS completely free! Grab yours now before they are all claimed! 👇\n\n💬 Get your free coupon link in the pinned comment! 👇\n\n#SamsungWatchFace #GalaxyWatchUltra #WearOS #freecoupons #freebie #coupon #promo`;
@@ -2805,7 +2838,7 @@
 
             updateResultsUI();
             syncMockups();
-            showToast(couponsActive ? "Free Coupon posts generated!" : "Posts generated instantly!");
+            showToast(comingSoonActive ? "Coming Soon posts generated!" : (couponsActive ? "Free Coupon posts generated!" : "Posts generated instantly!"));
         }
 
         function updateResultsUI() {
