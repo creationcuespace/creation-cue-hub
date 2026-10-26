@@ -1725,8 +1725,14 @@
             }
 
             setupImageDragAndDrop();
-            checkCompanionServer();
-            setInterval(checkCompanionServer, 20000);
+            try {
+                if (typeof checkCompanionServer === 'function') {
+                    checkCompanionServer();
+                    setInterval(checkCompanionServer, 20000);
+                }
+            } catch(e) {
+                console.warn('Companion check error:', e);
+            }
 
             // Setup input event listeners
             const packageNumInput = document.getElementById('package-num');
@@ -2599,6 +2605,197 @@ INSTRUCTIONS:
                 toast.classList.remove('show');
             }, 2500);
         }
+
+        // =========================================================
+        // Companion App Builder Integration
+        // =========================================================
+        let isCompanionServerOnline = false;
+
+        function checkCompanionServer(manual = false) {
+            const badge = document.getElementById('companion-server-badge');
+            const dot = document.getElementById('companion-server-dot');
+            const label = document.getElementById('companion-server-label');
+            if (label && !isCompanionServerOnline) label.textContent = 'Checking...';
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+            fetch('http://127.0.0.1:8765/api/status', { signal: controller.signal })
+                .then(res => res.json())
+                .then(data => {
+                    clearTimeout(timeoutId);
+                    if (data && data.status === 'ready') {
+                        isCompanionServerOnline = true;
+                        if (dot) dot.style.background = '#28a745';
+                        if (label) label.textContent = 'Helper Online';
+                        if (badge) badge.style.color = '#a3e9b2';
+                        if (manual) showToast('Companion Helper is Online!');
+                        updateCompanionIconStatus();
+                    } else {
+                        throw new Error('Not ready');
+                    }
+                })
+                .catch(() => {
+                    clearTimeout(timeoutId);
+                    isCompanionServerOnline = false;
+                    if (dot) dot.style.background = '#888';
+                    if (label) label.textContent = 'Helper Offline';
+                    if (badge) badge.style.color = 'var(--text-muted)';
+                    if (manual) {
+                        openCompanionModal();
+                    }
+                });
+        }
+
+        function updateCompanionIconStatus() {
+            const num = document.getElementById('package-num') ? document.getElementById('package-num').value.trim() : '';
+            const statusDiv = document.getElementById('companion-icon-status');
+            const cueName = document.getElementById('companion-cue-name');
+            if (cueName) cueName.textContent = num ? `CUE${num}` : 'CUE---';
+
+            if (!num) {
+                if (statusDiv) {
+                    statusDiv.textContent = 'Enter face # above';
+                    statusDiv.style.color = 'var(--text-muted)';
+                }
+                return;
+            }
+
+            if (!isCompanionServerOnline) {
+                if (statusDiv) {
+                    statusDiv.textContent = `D:\\MEGA\\Playstore\\${num}\\store\\512X512PNG.png`;
+                    statusDiv.style.color = 'var(--text-muted)';
+                }
+                return;
+            }
+
+            fetch(`http://127.0.0.1:8765/api/check-face?face=${num}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.exists) {
+                        if (statusDiv) {
+                            statusDiv.textContent = '✅ 512X512PNG.png Found';
+                            statusDiv.style.color = '#a3e9b2';
+                        }
+                    } else {
+                        if (statusDiv) {
+                            statusDiv.textContent = `⚠️ Icon not found in ${num}/store/`;
+                            statusDiv.style.color = '#f5c518';
+                        }
+                    }
+                })
+                .catch(() => {
+                    if (statusDiv) {
+                        statusDiv.textContent = `D:\\MEGA\\Playstore\\${num}\\store\\...`;
+                        statusDiv.style.color = 'var(--text-muted)';
+                    }
+                });
+        }
+
+        function triggerBuildCompanion() {
+            const num = document.getElementById('package-num') ? document.getElementById('package-num').value.trim() : '';
+            const vcInput = document.getElementById('companion-version-code');
+            const vc = vcInput ? parseInt(vcInput.value, 10) || 2 : 2;
+
+            if (!num) {
+                alert('Please enter a Watch Face Number first!');
+                const pInput = document.getElementById('package-num');
+                if (pInput) pInput.focus();
+                return;
+            }
+
+            if (!isCompanionServerOnline) {
+                openCompanionModal();
+                return;
+            }
+
+            const btn = document.getElementById('btn-build-companion');
+            const btnText = document.getElementById('btn-build-companion-text');
+            const progress = document.getElementById('companion-build-progress');
+            const progressText = document.getElementById('companion-progress-text');
+            const progressDetail = document.getElementById('companion-progress-detail');
+            const successBox = document.getElementById('companion-build-success');
+
+            if (btn) btn.disabled = true;
+            if (btnText) btnText.textContent = 'Building...';
+            if (progress) progress.style.display = 'block';
+            if (successBox) successBox.style.display = 'none';
+            if (progressText) progressText.textContent = `Building CUE${num} (v${vc})...`;
+            if (progressDetail) progressDetail.textContent = 'Generating mipmaps & preview, compiling release bundle and signing with Key0...';
+
+            fetch('http://127.0.0.1:8765/api/create-companion', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ faceNumber: num, versionCode: vc })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (btn) btn.disabled = false;
+                if (btnText) btnText.textContent = 'Create Companion App';
+                if (progress) progress.style.display = 'none';
+
+                if (data.success) {
+                    if (successBox) {
+                        successBox.style.display = 'block';
+                        const filesDiv = document.getElementById('companion-success-files');
+                        if (filesDiv) {
+                            filesDiv.innerHTML = `
+                                <div>📁 ${data.playstoreFile}</div>
+                                <div>📁 ${data.liveCompanionFile}</div>
+                                <div style="margin-top: 4px; color: var(--primary);">Size: ${(data.fileSize / 1024 / 1024).toFixed(2)} MB • VersionCode: ${data.versionCode}</div>
+                            `;
+                        }
+                    }
+                    showToast(`✅ Companion App for CUE${num} created!`);
+                } else {
+                    alert('Error creating companion app:\n' + (data.error || 'Unknown error'));
+                }
+            })
+            .catch(err => {
+                if (btn) btn.disabled = false;
+                if (btnText) btnText.textContent = 'Create Companion App';
+                if (progress) progress.style.display = 'none';
+                alert('Connection error with local helper: ' + err.message);
+            });
+        }
+
+        function openCompanionModal() {
+            const num = document.getElementById('package-num') ? document.getElementById('package-num').value.trim() : '180';
+            const vcInput = document.getElementById('companion-version-code');
+            const vc = vcInput ? vcInput.value.trim() : '2';
+            const cmdBox = document.getElementById('companion-modal-cmd');
+            if (cmdBox) cmdBox.textContent = `python D:\\complicationBEST\\creation.V6\\create_companion.py ${num || 180} ${vc || 2}`;
+
+            const modal = document.getElementById('companion-helper-modal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeCompanionModal() {
+            const modal = document.getElementById('companion-helper-modal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function copyModalCmd() {
+            const cmdBox = document.getElementById('companion-modal-cmd');
+            if (cmdBox) {
+                navigator.clipboard.writeText(cmdBox.textContent).then(() => {
+                    showToast('Command copied to clipboard!');
+                });
+            }
+        }
+
+        function retryCompanionConnection() {
+            checkCompanionServer();
+            setTimeout(() => {
+                if (isCompanionServerOnline) {
+                    closeCompanionModal();
+                    triggerBuildCompanion();
+                } else {
+                    alert('Helper is still offline. Please run start_companion_server.bat on your PC first.');
+                }
+            }, 600);
+        }
+
     </script>
 
   <script>
