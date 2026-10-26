@@ -935,11 +935,15 @@
                     <img src="https://wsrv.nl/?url=https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png&w=64&output=webp" class="brand-logo" alt="Logo">
                     <div class="brand-title">
                         <span>Creation<span>Cue</span>™</span>
-                        <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.7.0</span></span>
+                        <span class="brand-subtitle">Deploy Helper <span style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: none; letter-spacing: 0.5px; margin-left: 6px; background-color: rgba(255,193,7,0.15); padding: 2px 6px; border-radius: 4px;">v1.9.0</span></span>
                     </div>
                 </a>
             </div>
             <div class="header-btns">
+                <span id="cloud-sync-status" style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-right: 8px;">
+                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--text-muted);" id="cloud-sync-dot"></span>
+                    <span id="cloud-sync-text">Connecting...</span>
+                </span>
                 <button onclick="handleLogout()" class="header-btn" style="display: none;">Logout</button>
             </div>
         </header>
@@ -1202,6 +1206,23 @@
                     </div>
                 </div>
 
+                <!-- Launch Strategy & Notes Card -->
+                <div class="card zone-config" style="margin-top: 0;">
+                    <div class="card-title">
+                        <div><span class="badge-tag badge-config">Strategy</span> Launch Plan & Notes</div>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    </div>
+                    <div class="form-group">
+                        <div class="output-box-wrapper" style="padding: 10px 12px;">
+                            <button class="copy-overlay-btn" onclick="copyText('out-launch-strategy', 'Launch Strategy')">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                Copy
+                            </button>
+                            <textarea id="out-launch-strategy" class="output-textarea" style="min-height: 180px; font-size: 13px; line-height: 1.5;" placeholder="Paste or write your launch strategy, marketing steps, or release notes here..." oninput="saveDeployState()"></textarea>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Deployment Checklist Card -->
                 <div class="card zone-config" style="margin-top: 0;">
                     <div class="card-title">
@@ -1320,53 +1341,217 @@
 
         let uploadedFileBase64 = null;
         let uploadedFileMime = null;
+        let isApplyingRemoteState = false;
+        let cloudSaveTimeout = null;
 
-        function saveDeployState() {
+        function setSyncStatus(status, text) {
+            const dot = document.getElementById('cloud-sync-dot');
+            const txt = document.getElementById('cloud-sync-text');
+            if (!dot || !txt) return;
+            if (status === 'saving') {
+                dot.style.background = 'var(--primary)';
+                txt.textContent = text || 'Saving to Cloud...';
+            } else if (status === 'synced') {
+                dot.style.background = 'var(--success)';
+                txt.textContent = text || 'Synced to Cloud';
+            } else if (status === 'offline') {
+                dot.style.background = 'var(--warning)';
+                txt.textContent = text || 'Saved Locally';
+            } else if (status === 'error') {
+                dot.style.background = 'var(--danger)';
+                txt.textContent = text || 'Sync Error';
+            }
+        }
+
+        function collectCurrentDeployState() {
             const data = {
-                packageNum: document.getElementById('package-num').value,
-                shortDesc: document.getElementById('out-short-desc').value,
-                longDesc: document.getElementById('out-long-desc').value,
+                packageNum: document.getElementById('package-num') ? document.getElementById('package-num').value : '',
+                shortDesc: document.getElementById('out-short-desc') ? document.getElementById('out-short-desc').value : '',
+                longDesc: document.getElementById('out-long-desc') ? document.getElementById('out-long-desc').value : '',
                 longDescAi: document.getElementById('out-long-desc-ai') ? document.getElementById('out-long-desc-ai').value : '',
                 appTitle: document.getElementById('out-app-title') ? document.getElementById('out-app-title').value : '',
                 policyLink: document.getElementById('out-policy-link') ? document.getElementById('out-policy-link').value : 'https://creationcue.web.app/privacy',
                 healthDecl: document.getElementById('out-health-decl') ? document.getElementById('out-health-decl').value : 'This Watch Face shows real-time activity data (BPM and Steps) sourced from Wear OS sensors.',
                 supportEmail: document.getElementById('out-support-email') ? document.getElementById('out-support-email').value : 'creationcuespace@gmail.com',
+                launchStrategy: document.getElementById('out-launch-strategy') ? document.getElementById('out-launch-strategy').value : '',
                 checklistSteps: window.currentChecklistSteps || [],
                 checklistStates: window.currentChecklistStates || [],
                 features: [],
                 shortDescOptions: [],
                 imgBase64: uploadedFileBase64,
-                imgMime: uploadedFileMime
+                imgMime: uploadedFileMime,
+                lastModified: Date.now()
             };
             const listDiv = document.getElementById('features-list-div');
-            const rows = listDiv.querySelectorAll('.feature-row');
-            rows.forEach(row => {
-                const checkbox = row.querySelector('.feature-checkbox');
-                const textarea = row.querySelector('.feature-textarea');
-                if (checkbox && textarea) {
-                    data.features.push({
-                        text: textarea.value,
-                        checked: checkbox.checked,
-                        isRaw: row.dataset.raw === 'true'
-                    });
-                }
-            });
+            if (listDiv) {
+                const rows = listDiv.querySelectorAll('.feature-row');
+                rows.forEach(row => {
+                    const checkbox = row.querySelector('.feature-checkbox');
+                    const textarea = row.querySelector('.feature-textarea');
+                    if (checkbox && textarea) {
+                        data.features.push({
+                            text: textarea.value,
+                            checked: checkbox.checked,
+                            isRaw: row.dataset.raw === 'true'
+                        });
+                    }
+                });
+            }
             const optBtns = document.querySelectorAll('#ai-options-list button');
             optBtns.forEach(btn => {
                 data.shortDescOptions.push(btn.textContent.replace(/^Option \d+: /, ''));
             });
+            return data;
+        }
+
+        function saveDeployState() {
+            if (isApplyingRemoteState) return;
+
+            const data = collectCurrentDeployState();
+
+            // 1. Always save immediately to LocalStorage for instant offline resilience
             try {
                 localStorage.setItem('cc_deploy_state', JSON.stringify(data));
             } catch (e) {
-                console.warn("Storage quota exceeded (probably large image). Saving without image.");
-                data.imgBase64 = null;
-                data.imgMime = null;
-                localStorage.setItem('cc_deploy_state', JSON.stringify(data));
+                console.warn("Storage quota exceeded (probably large image). Saving without image to localStorage.");
+                const fallback = { ...data, imgBase64: null, imgMime: null };
+                try { localStorage.setItem('cc_deploy_state', JSON.stringify(fallback)); } catch(_) {}
+            }
+
+            // 2. Debounce push to Firebase Realtime Database
+            setSyncStatus('saving');
+            if (cloudSaveTimeout) clearTimeout(cloudSaveTimeout);
+            cloudSaveTimeout = setTimeout(() => {
+                pushStateToFirebase(data);
+            }, 500);
+        }
+
+        function pushStateToFirebase(data) {
+            if (!currentUser || typeof firebase === 'undefined' || !firebase.database) {
+                setSyncStatus('offline');
+                return;
+            }
+
+            // Make a clone without oversized image if image > 2MB to keep RTDB payload lightning fast
+            const cloudPayload = { ...data };
+            if (cloudPayload.imgBase64 && cloudPayload.imgBase64.length > 2000000) {
+                console.warn("Image exceeds 2MB, omitting image from cloud payload to avoid RTDB limits.");
+                cloudPayload.imgBase64 = null;
+                cloudPayload.imgMime = null;
+            }
+
+            firebase.database().ref('play_deploy_state').set(cloudPayload)
+                .then(() => {
+                    setSyncStatus('synced');
+                })
+                .catch(err => {
+                    console.error("Firebase sync error:", err);
+                    setSyncStatus('error', 'Cloud sync failed');
+                });
+        }
+
+        function applyDeployState(savedState) {
+            if (!savedState) return;
+            isApplyingRemoteState = true;
+
+            try {
+                const packageNumInput = document.getElementById('package-num');
+                if (packageNumInput && savedState.packageNum !== undefined) {
+                    packageNumInput.value = savedState.packageNum;
+                    updatePackageId();
+                }
+
+                if (savedState.appTitle !== undefined && document.getElementById('out-app-title')) {
+                    document.getElementById('out-app-title').value = savedState.appTitle;
+                }
+                if (savedState.supportEmail !== undefined && document.getElementById('out-support-email')) {
+                    document.getElementById('out-support-email').value = savedState.supportEmail;
+                }
+
+                if (savedState.checklistSteps && savedState.checklistSteps.length > 0) {
+                    window.currentChecklistSteps = savedState.checklistSteps;
+                    window.currentChecklistStates = savedState.checklistStates || new Array(savedState.checklistSteps.length).fill(false);
+                }
+                renderChecklist();
+
+                const outShort = document.getElementById('out-short-desc');
+                if (outShort && savedState.shortDesc !== undefined) {
+                    outShort.value = savedState.shortDesc;
+                    if (typeof validateShortDescText === 'function') validateShortDescText(savedState.shortDesc);
+                }
+
+                if (savedState.shortDescOptions && savedState.shortDescOptions.length > 0) {
+                    const optionsContainer = document.getElementById('ai-short-desc-options');
+                    const optionsList = document.getElementById('ai-options-list');
+                    if (optionsContainer && optionsList) {
+                        optionsList.innerHTML = '';
+                        savedState.shortDescOptions.forEach((opt, idx) => {
+                            const btnOpt = document.createElement('button');
+                            btnOpt.className = 'btn btn-secondary';
+                            btnOpt.style.padding = '8px 12px';
+                            btnOpt.style.textAlign = 'left';
+                            btnOpt.style.fontSize = '13px';
+                            btnOpt.style.lineHeight = '1.3';
+                            btnOpt.style.height = 'auto';
+                            btnOpt.textContent = `Option ${idx + 1}: ${opt}`;
+                            btnOpt.onclick = () => {
+                                outShort.value = opt;
+                                if (typeof validateShortDescText === 'function') validateShortDescText(opt);
+                                saveDeployState();
+                            };
+                            optionsList.appendChild(btnOpt);
+                        });
+                        optionsContainer.style.display = 'flex';
+                    }
+                }
+
+                const outLong = document.getElementById('out-long-desc');
+                if (outLong && savedState.longDesc !== undefined) {
+                    outLong.value = savedState.longDesc;
+                    if (typeof updateLongDescStats === 'function') updateLongDescStats(savedState.longDesc);
+                }
+
+                const outLongAi = document.getElementById('out-long-desc-ai');
+                if (outLongAi && savedState.longDescAi !== undefined) {
+                    outLongAi.value = savedState.longDescAi;
+                    if (typeof updateLongDescAIStats === 'function') updateLongDescAIStats(savedState.longDescAi);
+                }
+
+                const outPolicy = document.getElementById('out-policy-link');
+                if (outPolicy && savedState.policyLink !== undefined) {
+                    if (savedState.policyLink.includes('privacy.html') || savedState.policyLink.includes('github.io')) {
+                        outPolicy.value = 'https://creationcue.web.app/privacy';
+                    } else {
+                        outPolicy.value = savedState.policyLink;
+                    }
+                }
+                const outHealth = document.getElementById('out-health-decl');
+                if (outHealth && savedState.healthDecl !== undefined) {
+                    outHealth.value = savedState.healthDecl;
+                }
+
+                if (savedState.imgBase64 && savedState.imgMime) {
+                    uploadedFileBase64 = savedState.imgBase64;
+                    uploadedFileMime = savedState.imgMime;
+                    const previewContainer = document.getElementById('preview-container');
+                    const previewImg = document.getElementById('img-preview');
+                    if (previewImg && previewContainer) {
+                        previewImg.src = `data:${uploadedFileMime};base64,${uploadedFileBase64}`;
+                        document.getElementById('upload-zone').style.display = 'none';
+                        previewContainer.style.display = 'flex';
+                        const btnGen = document.getElementById('btn-generate-short');
+                        if (btnGen) btnGen.disabled = false;
+                    }
+                }
+
+                populateFeaturesList(savedState.features);
+            } finally {
+                isApplyingRemoteState = false;
             }
         }
 
         function initializePage() {
-            // Load key from LocalStorage
+            // Load key and settings from LocalStorage
             const storedKey = localStorage.getItem('cc_gemini_api_key') || '';
             document.getElementById('gemini-key').value = storedKey;
 
@@ -1375,113 +1560,98 @@
 
             const storedVersion = localStorage.getItem('cc_gemini_version') || 'v1';
             document.getElementById('gemini-version').value = storedVersion;
-            
-            let savedState = {};
+
+            // Default checklist if nothing exists
+            window.currentChecklistSteps = [
+                "1 Dashboard",
+                "2 Test & release > production > countries",
+                "3 Test & release > Advanced settings > add form factor wear > screenshots",
+                "4 Test & release > Production > WearOS only > Create new release",
+                "5 Test & release > Setup > Advanced settings > opt > not now",
+                "6 Test & release > Production > PhoneTablets... > Create new release > not now"
+            ];
+            window.currentChecklistStates = new Array(window.currentChecklistSteps.length).fill(false);
+
+            // 1. Initial quick load from LocalStorage so the page is instantly responsive
+            let localState = null;
             try {
                 const str = localStorage.getItem('cc_deploy_state');
-                if (str) savedState = JSON.parse(str);
+                if (str) localState = JSON.parse(str);
             } catch(e) {}
 
-            const packageNumInput = document.getElementById('package-num');
-            if (savedState.packageNum) packageNumInput.value = savedState.packageNum;
-            packageNumInput.addEventListener('input', () => {
-                updatePackageId();
-                saveDeployState();
-            });
-            updatePackageId();
-
-            if (savedState.appTitle && document.getElementById('out-app-title')) document.getElementById('out-app-title').value = savedState.appTitle;
-            if (savedState.supportEmail && document.getElementById('out-support-email')) document.getElementById('out-support-email').value = savedState.supportEmail;
-            
-            if (savedState.checklistSteps && savedState.checklistSteps.length > 0) {
-                window.currentChecklistSteps = savedState.checklistSteps;
-                window.currentChecklistStates = savedState.checklistStates || new Array(savedState.checklistSteps.length).fill(false);
+            if (localState) {
+                applyDeployState(localState);
             } else {
-                window.currentChecklistSteps = [
-                    "1 Dashboard",
-                    "2 Test & release > production > countries",
-                    "3 Test & release > Advanced settings > add form factor wear > screenshots",
-                    "4 Test & release > Production > WearOS only > Create new release",
-                    "5 Test & release > Setup > Advanced settings > opt > not now",
-                    "6 Test & release > Production > PhoneTablets... > Create new release > not now"
-                ];
-                window.currentChecklistStates = new Array(window.currentChecklistSteps.length).fill(false);
-            }
-            renderChecklist();
-
-            const outShort = document.getElementById('out-short-desc');
-            if (savedState.shortDesc) {
-                outShort.value = savedState.shortDesc;
-                if (typeof validateShortDescText === 'function') validateShortDescText(savedState.shortDesc);
-            }
-            outShort.addEventListener('input', saveDeployState);
-
-            if (savedState.shortDescOptions && savedState.shortDescOptions.length > 0) {
-                const optionsContainer = document.getElementById('ai-short-desc-options');
-                const optionsList = document.getElementById('ai-options-list');
-                optionsList.innerHTML = '';
-                savedState.shortDescOptions.forEach((opt, idx) => {
-                    const btnOpt = document.createElement('button');
-                    btnOpt.className = 'btn btn-secondary';
-                    btnOpt.style.padding = '8px 12px';
-                    btnOpt.style.textAlign = 'left';
-                    btnOpt.style.fontSize = '13px';
-                    btnOpt.style.lineHeight = '1.3';
-                    btnOpt.style.height = 'auto';
-                    btnOpt.textContent = `Option ${idx + 1}: ${opt}`;
-                    btnOpt.onclick = () => {
-                        outShort.value = opt;
-                        if (typeof validateShortDescText === 'function') validateShortDescText(opt);
-                        saveDeployState();
-                    };
-                    optionsList.appendChild(btnOpt);
-                });
-                optionsContainer.style.display = 'flex';
-            }
-
-            const outLong = document.getElementById('out-long-desc');
-            if (savedState.longDesc) {
-                outLong.value = savedState.longDesc;
-                if (typeof updateLongDescStats === 'function') updateLongDescStats(savedState.longDesc);
-            }
-            outLong.addEventListener('input', saveDeployState);
-
-            const outLongAi = document.getElementById('out-long-desc-ai');
-            if (outLongAi) {
-                if (savedState.longDescAi) {
-                    outLongAi.value = savedState.longDescAi;
-                    if (typeof updateLongDescAIStats === 'function') updateLongDescAIStats(savedState.longDescAi);
-                }
-                outLongAi.addEventListener('input', saveDeployState);
-            }
-
-            const outPolicy = document.getElementById('out-policy-link');
-            if (outPolicy && savedState.policyLink !== undefined) {
-                if (savedState.policyLink.includes('privacy.html') || savedState.policyLink.includes('github.io')) {
-                    outPolicy.value = 'https://creationcue.web.app/privacy';
-                } else {
-                    outPolicy.value = savedState.policyLink;
-                }
-            }
-            const outHealth = document.getElementById('out-health-decl');
-            if (outHealth && savedState.healthDecl !== undefined) {
-                outHealth.value = savedState.healthDecl;
-            }
-
-            if (savedState.imgBase64 && savedState.imgMime) {
-                uploadedFileBase64 = savedState.imgBase64;
-                uploadedFileMime = savedState.imgMime;
-                const previewContainer = document.getElementById('preview-container');
-                const previewImg = document.getElementById('img-preview');
-                previewImg.src = `data:${uploadedFileMime};base64,${uploadedFileBase64}`;
-                document.getElementById('upload-zone').style.display = 'none';
-                previewContainer.style.display = 'flex';
-                const btnGen = document.getElementById('btn-generate-short');
-                if (btnGen) btnGen.disabled = false;
+                updatePackageId();
+                renderChecklist();
+                populateFeaturesList();
             }
 
             setupImageDragAndDrop();
-            populateFeaturesList(savedState.features);
+
+            // Setup input event listeners
+            const packageNumInput = document.getElementById('package-num');
+            if (packageNumInput) {
+                packageNumInput.addEventListener('input', () => {
+                    updatePackageId();
+                    saveDeployState();
+                });
+            }
+            const outShort = document.getElementById('out-short-desc');
+            if (outShort) outShort.addEventListener('input', saveDeployState);
+            const outLong = document.getElementById('out-long-desc');
+            if (outLong) outLong.addEventListener('input', saveDeployState);
+            const outLongAi = document.getElementById('out-long-desc-ai');
+            if (outLongAi) outLongAi.addEventListener('input', saveDeployState);
+            const outStrategy = document.getElementById('out-launch-strategy');
+            if (outStrategy) outStrategy.addEventListener('input', saveDeployState);
+
+            // 2. Universal Sync: Connect to Firebase Realtime Database
+            if (currentUser && typeof firebase !== 'undefined' && firebase.database) {
+                setSyncStatus('saving', 'Syncing cloud...');
+                const deployRef = firebase.database().ref('play_deploy_state');
+
+                // Initial fetch to load from cloud if available
+                deployRef.once('value').then(snapshot => {
+                    const cloudData = snapshot.val();
+                    if (cloudData) {
+                        // If cloud data exists, compare timestamps or apply cloud data
+                        const localTime = (localState && localState.lastModified) ? localState.lastModified : 0;
+                        const cloudTime = cloudData.lastModified || 0;
+                        if (cloudTime >= localTime || !localState) {
+                            applyDeployState(cloudData);
+                            try { localStorage.setItem('cc_deploy_state', JSON.stringify(cloudData)); } catch(_) {}
+                        } else {
+                            // Local changes were made while offline or newer, push local to cloud
+                            pushStateToFirebase(localState);
+                        }
+                        setSyncStatus('synced');
+                    } else if (localState) {
+                        // First time seeding Firebase from existing local data
+                        pushStateToFirebase(localState);
+                    } else {
+                        setSyncStatus('synced');
+                    }
+                }).catch(err => {
+                    console.error("Failed to fetch cloud deploy state:", err);
+                    setSyncStatus('error', 'Cloud sync error');
+                });
+
+                // Real-time listener: if edited on another computer or tab, auto-update this screen!
+                deployRef.on('value', snapshot => {
+                    const cloudData = snapshot.val();
+                    if (!cloudData) return;
+                    
+                    // Only apply if it's newer than our current state
+                    const cur = collectCurrentDeployState();
+                    if (cloudData.lastModified && cur.lastModified && cloudData.lastModified > cur.lastModified) {
+                        console.log("Universal sync: Received newer update from another device.");
+                        applyDeployState(cloudData);
+                        try { localStorage.setItem('cc_deploy_state', JSON.stringify(cloudData)); } catch(_) {}
+                        setSyncStatus('synced', 'Synced (Live)');
+                    }
+                });
+            }
         }
 
         // API settings toggle
@@ -1757,6 +1927,7 @@
 
                 // Enable generator button
                 document.getElementById('btn-generate-short').disabled = false;
+                saveDeployState();
             };
             reader.readAsDataURL(file);
         }
@@ -1773,6 +1944,7 @@
             
             // Disable button
             document.getElementById('btn-generate-short').disabled = true;
+            saveDeployState();
         }
 
         // --- Call Gemini REST API for Short Description ---
