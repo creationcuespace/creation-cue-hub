@@ -853,6 +853,40 @@
       }
     }
 
+
+    /* Companion App Builder Modal & Styles */
+    .companion-modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+    .companion-modal {
+      background: var(--surface-color, #1e1e1e);
+      border: 1px solid var(--border-color, #333);
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+      color: var(--text-color, #e0e0e0);
+    }
+    .companion-code-box {
+      font-family: monospace;
+      font-size: 11px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      padding: 8px 10px;
+      color: var(--primary, #f5c518);
+      word-break: break-all;
+      user-select: all;
+    }
+
 </style>
 </head>
 
@@ -1206,6 +1240,56 @@
                     </div>
                 </div>
 
+                
+                <!-- Companion App Builder Card -->
+                <div class="card zone-config" style="margin-top: 0; border: 1px solid rgba(255, 193, 7, 0.35); box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
+                    <div class="card-title">
+                        <div><span class="badge-tag" style="background: rgba(255, 193, 7, 0.15); color: var(--primary);">Companion</span> Phone App (.aab)</div>
+                        <span id="companion-server-badge" onclick="checkCompanionServer(true)" title="Click to refresh local helper status" style="font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 5px; background: rgba(255, 255, 255, 0.05); color: var(--text-muted); cursor: pointer;">
+                            <span id="companion-server-dot" style="width: 7px; height: 7px; border-radius: 50%; background: #888;"></span>
+                            <span id="companion-server-label">Checking helper...</span>
+                        </span>
+                    </div>
+
+                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4;">
+                        Build, resize icons, compile, and sign the phone companion app for <b id="companion-cue-name" style="color: var(--primary);">CUE---</b> in 1 click.
+                    </div>
+
+                    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 12px;">
+                        <div style="flex: 1;">
+                            <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 4px;">Version Code</label>
+                            <input type="number" id="companion-version-code" class="input-text" value="2" min="1" step="1" style="padding: 6px 10px; font-size: 13px;" oninput="saveDeployState()">
+                        </div>
+                        <div style="flex: 2;">
+                            <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 4px;">Icon Status</label>
+                            <div id="companion-icon-status" style="font-size: 11px; font-weight: 500; color: var(--text-muted); padding: 7px 10px; background: rgba(0,0,0,0.2); border-radius: 6px; border: 1px solid var(--border-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                Enter face # above
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn" id="btn-build-companion" onclick="triggerBuildCompanion()" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                        <span id="btn-build-companion-text">Create Companion App</span>
+                    </button>
+
+                    <div id="companion-build-progress" style="display: none; margin-top: 12px; font-size: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                            <div class="spinner" id="companion-spinner" style="width: 14px; height: 14px; border-width: 2px;"></div>
+                            <span id="companion-progress-text" style="font-weight: 600; color: var(--primary);">Starting build...</span>
+                        </div>
+                        <div id="companion-progress-detail" style="font-size: 11px; color: var(--text-muted); word-break: break-all;"></div>
+                    </div>
+
+                    <div id="companion-build-success" style="display: none; margin-top: 12px; font-size: 12px; background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.4); border-radius: 6px; padding: 10px; color: #a3e9b2;">
+                        <div style="font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                            <span>✅</span> Companion App Created & Signed!
+                        </div>
+                        <div id="companion-success-files" style="font-size: 11px; line-height: 1.4; color: #e0e0e0; font-family: monospace;"></div>
+                    </div>
+                </div>
+
+
                 <!-- Launch Strategy & Notes Card -->
                 <div class="card zone-config" style="margin-top: 0;">
                     <div class="card-title">
@@ -1239,6 +1323,37 @@
 
     <!-- Toast Notification -->
     <div class="toast" id="toast">Copied to Clipboard!</div>
+
+    <!-- Companion Helper Offline Modal -->
+    <div id="companion-helper-modal" class="companion-modal-overlay" style="display: none;">
+        <div class="companion-modal">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="margin: 0; font-size: 18px; color: var(--primary); display: flex; align-items: center; gap: 8px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    Start Local Helper
+                </h3>
+                <button onclick="closeCompanionModal()" style="background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer;">×</button>
+            </div>
+            <p style="font-size: 13px; color: var(--text-color); line-height: 1.5; margin-bottom: 16px;">
+                Because web browsers run in a secure sandbox, 1-click building requires the local companion helper on your PC to compile and sign your <code>.aab</code>.
+            </p>
+            <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+                <div style="font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 6px;">Option 1: Start Background Server (Recommended)</div>
+                <div style="font-size: 12px; color: #fff; margin-bottom: 8px;">Double-click this batch file on your PC:</div>
+                <div class="companion-code-box">D:\complicationBEST\creation.V6\start_companion_server.bat</div>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+                <div style="font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 6px;">Option 2: Run via Terminal Command</div>
+                <div id="companion-modal-cmd" class="companion-code-box" style="margin-bottom: 8px;">python D:\complicationBEST\creation.V6\create_companion.py 180 2</div>
+                <button class="btn btn-secondary btn-sm" onclick="copyModalCmd()" style="width: 100%;">📋 Copy Terminal Command</button>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="btn btn-secondary" onclick="closeCompanionModal()">Close</button>
+                <button class="btn" onclick="retryCompanionConnection()">🔄 Retry Connection</button>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         // Firebase Config
@@ -1374,6 +1489,7 @@
                 healthDecl: document.getElementById('out-health-decl') ? document.getElementById('out-health-decl').value : 'This Watch Face shows real-time activity data (BPM and Steps) sourced from Wear OS sensors.',
                 supportEmail: document.getElementById('out-support-email') ? document.getElementById('out-support-email').value : 'creationcuespace@gmail.com',
                 launchStrategy: document.getElementById('out-launch-strategy') ? document.getElementById('out-launch-strategy').value : '',
+                companionVersionCode: document.getElementById('companion-version-code') ? document.getElementById('companion-version-code').value : '2',
                 checklistSteps: window.currentChecklistSteps || [],
                 checklistStates: window.currentChecklistStates || [],
                 features: [],
@@ -1588,6 +1704,8 @@
             }
 
             setupImageDragAndDrop();
+            checkCompanionServer();
+            setInterval(checkCompanionServer, 20000);
 
             // Setup input event listeners
             const packageNumInput = document.getElementById('package-num');
@@ -1745,6 +1863,9 @@
                 display.textContent = `com.creation.cue${num}watchface`;
             } else {
                 display.textContent = 'com.creation.cue___watchface';
+            }
+            if (typeof updateCompanionIconStatus === 'function') {
+                updateCompanionIconStatus();
             }
         }
 
