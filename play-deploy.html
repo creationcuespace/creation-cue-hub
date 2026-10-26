@@ -1667,6 +1667,34 @@
                     outHealth.value = savedState.healthDecl;
                 }
 
+                const outStrategy = document.getElementById('out-launch-strategy');
+                if (outStrategy) {
+                    if (savedState.launchStrategy && savedState.launchStrategy.trim() !== '') {
+                        outStrategy.value = savedState.launchStrategy;
+                    } else if (!outStrategy.value || outStrategy.value.trim() === '' || savedState.packageNum === '180') {
+                        outStrategy.value = `📋 Your Simple, Crystal-Clear 3-Step Launch Plan for CUE180 (Zero Confusion!)
+
+Stick 100% to your gut here. You don't need public coupon giveaways for a flagship face like CUE180:
+
+Step 1: Right Now (Before Release) — Post the 7 "Under Construction" Photos on Facebook
+Ask your followers: "Which color is your favorite (1–7), and what other color should I add before release?"
+This gets comments rolling and warms up your Facebook followers so they are excited to buy it when it goes live.
+
+Step 2: Launch Day — Send 8–10 Private DM Coupons ONLY (To Unlock the 5.0 ★ Badge)
+Set CUE180 in Manage Coupons to Private (One-Time Links Only).
+Send 8 to 10 One-Time Links via private Reddit Chat to the users who already left you 5-star reviews in the past (plus 1 or 2 super-helpful people if someone suggests an amazing color on FB).
+Result: Within 24–48 hours, CUE180 gets its 5+ five-star reviews so the public 5.0 ★ badge appears on Google Play—without a single public freebie post anywhere!
+
+Step 3: Launch Day — Announce on Facebook & Reddit as a 100% Paid Release (Zero Public Coupons!)
+On Facebook: Post the final showcase image (with the Google Play link in the 1st comment). Your loyal Facebook buyers buy it happily knowing nobody is getting a public freebie dump tomorrow!
+On Reddit (r/GalaxyWatchFace / r/WearOSFaces): Did you know you can post on r/GalaxyWatchFace using the Paid or Discount flair with 0 coupons?
+Or even better: After 3–4 weeks (for example during Black Friday or a weekend promo), you can run an official Google Play Discount Sale (e.g. €0.49 or 50% OFF)—and your early Facebook buyers STILL won't feel bad because everyone is still paying for it, AND every €0.49 sale counts as a real paid purchase in Google Play's algorithm!
+
+✅ Bottom Line:
+Don't second-guess yourself! 200 free coupons = €0 revenue and zero algorithm boost. Your plan (No public coupons + Private DM links for 5★ reviews + Paid launch for your buyers) protects your loyal Facebook fans, protects the value of your best design, and gives Google Play real paid sales. Stay on this exact plan!`;
+                    }
+                }
+
                 if (savedState.imgBase64 && savedState.imgMime) {
                     uploadedFileBase64 = savedState.imgBase64;
                     uploadedFileMime = savedState.imgMime;
