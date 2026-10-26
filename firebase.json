@@ -105,8 +105,6 @@
       "*.pdf",
       "dragon*",
       "*.py",
-      "*.exe",
-      "*.zip",
       "*.pkg",
       "*.pyz",
       "lighthouse*.json",
