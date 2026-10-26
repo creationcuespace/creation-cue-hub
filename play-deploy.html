@@ -2012,8 +2012,16 @@ Don't second-guess yourself! 200 free coupons = €0 revenue and zero algorithm 
             } else {
                 display.textContent = 'com.creation.cue___watchface';
             }
+            const compCue = document.getElementById('companion-cue-name');
+            if (compCue) compCue.textContent = num ? `CUE${num}` : 'CUE---';
+            const pubCue = document.getElementById('publish-cue-name');
+            if (pubCue) pubCue.textContent = num ? `CUE${num}` : 'CUE---';
+
             if (typeof updateCompanionIconStatus === 'function') {
                 updateCompanionIconStatus();
+            }
+            if (typeof updatePublishFilters === 'function') {
+                updatePublishFilters();
             }
         }
 
@@ -2915,6 +2923,135 @@ INSTRUCTIONS:
                     alert('Helper is still offline. Please run start_companion_server.bat on your PC first.');
                 }
             }, 600);
+        }
+
+
+        // =========================================================
+        // Post-Approval Catalog Publisher Integration
+        // =========================================================
+        function updatePublishFilters() {
+            const num = document.getElementById('package-num') ? document.getElementById('package-num').value.trim() : '';
+            const publishCueName = document.getElementById('publish-cue-name');
+            if (publishCueName) publishCueName.textContent = num ? `CUE${num}` : 'CUE---';
+
+            // Auto-detect type from app title if available
+            const titleInput = document.getElementById('out-app-title');
+            if (titleInput && titleInput.value) {
+                const titleLower = titleInput.value.toLowerCase();
+                if (titleLower.includes('hybrid')) {
+                    const r = document.getElementById('type-hybrid');
+                    if (r) r.checked = true;
+                } else if (titleLower.includes('analog')) {
+                    const r = document.getElementById('type-analog');
+                    if (r) r.checked = true;
+                } else if (titleLower.includes('digital')) {
+                    const r = document.getElementById('type-digital');
+                    if (r) r.checked = true;
+                }
+            }
+
+            // Auto-detect weather from checklist or description
+            const longDesc = document.getElementById('out-long-desc') ? document.getElementById('out-long-desc').value.toLowerCase() : '';
+            const shortDesc = document.getElementById('out-short-desc') ? document.getElementById('out-short-desc').value.toLowerCase() : '';
+            const weatherChk = document.getElementById('filter-chk-weather');
+            if (weatherChk && (longDesc.includes('weather') || shortDesc.includes('weather'))) {
+                weatherChk.checked = true;
+            }
+        }
+
+        function triggerPublishCatalog() {
+            const num = document.getElementById('package-num') ? document.getElementById('package-num').value.trim() : '';
+            if (!num) {
+                alert('Please enter a Watch Face Number first!');
+                const pInput = document.getElementById('package-num');
+                if (pInput) pInput.focus();
+                return;
+            }
+
+            if (!isCompanionServerOnline) {
+                openCompanionModal();
+                return;
+            }
+
+            const btn = document.getElementById('btn-publish-catalog');
+            const btnText = document.getElementById('btn-publish-catalog-text');
+            const progress = document.getElementById('publish-progress');
+            const progressText = document.getElementById('publish-progress-text');
+            const progressDetail = document.getElementById('publish-progress-detail');
+            const successBox = document.getElementById('publish-success');
+            const successDetail = document.getElementById('publish-success-detail');
+
+            // Collect publish parameters
+            let selectedType = 'digital';
+            const typeRadio = document.querySelector('input[name="publish-face-type"]:checked');
+            if (typeRadio) selectedType = typeRadio.value;
+
+            const isNew = document.getElementById('filter-chk-new') ? document.getElementById('filter-chk-new').checked : true;
+            const hasWeather = document.getElementById('filter-chk-weather') ? document.getElementById('filter-chk-weather').checked : false;
+            const isHot = document.getElementById('filter-chk-hot') ? document.getElementById('filter-chk-hot').checked : false;
+            const isFree = document.getElementById('filter-chk-free') ? document.getElementById('filter-chk-free').checked : false;
+
+            const filters = [selectedType.charAt(0).toUpperCase() + selectedType.slice(1)];
+            if (isNew) filters.push('NEW');
+            if (hasWeather) filters.push('🌤️ WEATHER');
+            if (isHot) filters.push('HOT');
+            if (isFree) filters.push('FREE');
+
+            const title = `CUE${num}`;
+            const desc = (document.getElementById('out-long-desc') && document.getElementById('out-long-desc').value)
+                || (document.getElementById('out-short-desc') && document.getElementById('out-short-desc').value)
+                || '';
+
+            if (btn) btn.disabled = true;
+            if (btnText) btnText.textContent = 'Publishing...';
+            if (progress) progress.style.display = 'block';
+            if (successBox) successBox.style.display = 'none';
+            if (progressText) progressText.textContent = `Publishing CUE${num} Live...`;
+            if (progressDetail) progressDetail.textContent = 'Optimizing images, updating manager.json & companion carousel, pushing to GitHub & deploying to Firebase...';
+
+            fetch('http://127.0.0.1:8765/api/publish-manager', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    faceNumber: num,
+                    title: title,
+                    type: selectedType,
+                    description: desc,
+                    filters: filters,
+                    isFree: isFree,
+                    isNew: isNew,
+                    badgeText: isNew ? 'NEW RELEASE' : ''
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (btn) btn.disabled = false;
+                if (btnText) btnText.textContent = '🚀 Publish to Website & Companion';
+                if (progress) progress.style.display = 'none';
+
+                if (data.success) {
+                    if (successBox) {
+                        successBox.style.display = 'block';
+                        if (successDetail) {
+                            successDetail.innerHTML = `
+                                <div>• Updated <b>manager.json</b> with filters: <span style="color: var(--primary);">${filters.join(', ')}</span></div>
+                                <div>• Updated <b>badge_text_faces.json</b> (Companion Carousel)</div>
+                                <div>• Optimized <b>images/cue${num}.png</b> & <b>cue${num}.webp</b></div>
+                                <div style="margin-top: 6px;"><a href="${data.catalogUrl}" target="_blank" style="color: #a3e9b2; text-decoration: underline; font-weight: 700;">🔗 View live on creationcue.web.app →</a></div>
+                            `;
+                        }
+                    }
+                    showToast(`🎉 CUE${num} is now live in the catalog & companion!`);
+                } else {
+                    alert('Error publishing to catalog:\n' + (data.error || 'Unknown error'));
+                }
+            })
+            .catch(err => {
+                if (btn) btn.disabled = false;
+                if (btnText) btnText.textContent = '🚀 Publish to Website & Companion';
+                if (progress) progress.style.display = 'none';
+                alert('Connection error with local helper: ' + err.message);
+            });
         }
 
     </script>
