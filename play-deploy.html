@@ -1365,6 +1365,15 @@
                         </div>
                     </div>
 
+                    <!-- Website & Social Release Description -->
+                    <div style="margin-bottom: 12px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                            <label style="font-size: 11px; color: var(--text-muted);">Website & Release Description</label>
+                            <span style="font-size: 10px; color: var(--primary); cursor: pointer; text-decoration: underline;" onclick="syncPublishDescription()" title="Pull latest from Long or Short description">⟳ Pull from Left</span>
+                        </div>
+                        <textarea id="publish-description" class="output-textarea" oninput="saveDeployState()" style="min-height: 85px; font-size: 12px; line-height: 1.4;" placeholder="Description for catalog, manager.json, and release txt..."></textarea>
+                    </div>
+
                     <button class="btn" id="btn-publish-catalog" onclick="triggerPublishCatalog()" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #28a745, #218838); border-color: #28a745;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         <span id="btn-publish-catalog-text">🚀 Publish to Website & Companion</span>
@@ -1615,6 +1624,7 @@
                 supportEmail: document.getElementById('out-support-email') ? document.getElementById('out-support-email').value : 'creationcuespace@gmail.com',
                 launchStrategy: document.getElementById('out-launch-strategy') ? document.getElementById('out-launch-strategy').value : '',
                 companionVersionCode: document.getElementById('companion-version-code') ? document.getElementById('companion-version-code').value : '2',
+                publishDescription: document.getElementById('publish-description') ? document.getElementById('publish-description').value : '',
                 checklistSteps: window.currentChecklistSteps || [],
                 checklistStates: window.currentChecklistStates || [],
                 features: [],
@@ -1769,6 +1779,15 @@
                 const outHealth = document.getElementById('out-health-decl');
                 if (outHealth && savedState.healthDecl !== undefined) {
                     outHealth.value = savedState.healthDecl;
+                }
+
+                const pubDesc = document.getElementById('publish-description');
+                if (pubDesc) {
+                    if (savedState.publishDescription !== undefined && savedState.publishDescription !== '') {
+                        pubDesc.value = savedState.publishDescription;
+                    } else if (!pubDesc.value.trim()) {
+                        syncPublishDescription();
+                    }
                 }
 
                 const outStrategy = document.getElementById('out-launch-strategy');
@@ -2940,6 +2959,15 @@ INSTRUCTIONS:
         // =========================================================
         // Post-Approval Catalog Publisher Integration
         // =========================================================
+        function syncPublishDescription() {
+            const desc = (document.getElementById('out-long-desc') && document.getElementById('out-long-desc').value)
+                || (document.getElementById('out-short-desc') && document.getElementById('out-short-desc').value) || '';
+            const pubDesc = document.getElementById('publish-description');
+            if (pubDesc) {
+                pubDesc.value = desc.trim();
+            }
+        }
+
         function updatePublishFilters() {
             const num = document.getElementById('package-num') ? document.getElementById('package-num').value.trim() : '';
             const publishCueName = document.getElementById('publish-cue-name');
@@ -2967,6 +2995,12 @@ INSTRUCTIONS:
             const weatherChk = document.getElementById('filter-chk-weather');
             if (weatherChk && (longDesc.includes('weather') || shortDesc.includes('weather'))) {
                 weatherChk.checked = true;
+            }
+
+            // Sync description if currently blank
+            const pubDesc = document.getElementById('publish-description');
+            if (pubDesc && !pubDesc.value.trim()) {
+                syncPublishDescription();
             }
         }
 
@@ -3009,7 +3043,9 @@ INSTRUCTIONS:
             if (isFree) filters.push('FREE');
 
             const title = `CUE${num}`;
-            const desc = (document.getElementById('out-long-desc') && document.getElementById('out-long-desc').value)
+            const pubDescElem = document.getElementById('publish-description');
+            const desc = (pubDescElem && pubDescElem.value.trim())
+                || (document.getElementById('out-long-desc') && document.getElementById('out-long-desc').value)
                 || (document.getElementById('out-short-desc') && document.getElementById('out-short-desc').value)
                 || '';
 
@@ -3018,7 +3054,7 @@ INSTRUCTIONS:
             if (progress) progress.style.display = 'block';
             if (successBox) successBox.style.display = 'none';
             if (progressText) progressText.textContent = `Publishing CUE${num} Live...`;
-            if (progressDetail) progressDetail.textContent = 'Optimizing images, updating manager.json & companion carousel, pushing to GitHub & deploying to Firebase...';
+            if (progressDetail) progressDetail.textContent = 'Updating manager.json, descriptions, companion carousel, pushing to GitHub & deploying to Firebase...';
 
             fetch('http://127.0.0.1:8765/api/publish-manager', {
                 method: 'POST',
@@ -3045,7 +3081,9 @@ INSTRUCTIONS:
                         successBox.style.display = 'block';
                         if (successDetail) {
                             successDetail.innerHTML = `
-                                <div>• Updated <b>manager.json</b> with filters: <span style="color: var(--primary);">${filters.join(', ')}</span></div>
+                                <div>• Updated <b>manager.json</b> (description & filters: <span style="color: var(--primary);">${filters.join(', ')}</span>)</div>
+                                <div>• Created / Updated <b>D:\\MEGA\\Playstore\\${num}\\${num}.txt</b> (Social Post text)</div>
+                                <div>• Updated <b>All_Watch_Face_Descriptions.txt</b> master archive</div>
                                 <div>• Updated <b>badge_text_faces.json</b> (Companion Carousel)</div>
                                 <div>• Optimized <b>images/cue${num}.png</b> & <b>cue${num}.webp</b></div>
                                 <div style="margin-top: 6px;"><a href="${data.catalogUrl}" target="_blank" style="color: #a3e9b2; text-decoration: underline; font-weight: 700;">🔗 View live on creationcue.web.app →</a></div>
