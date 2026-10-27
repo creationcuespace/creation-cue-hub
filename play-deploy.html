@@ -213,6 +213,124 @@
             background: var(--primary-glow);
         }
 
+        /* Dynamic Empty vs Filled Input Styles */
+        .field-check-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: #10b981;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 1;
+            margin-left: 6px;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            vertical-align: middle;
+            flex-shrink: 0;
+            box-shadow: 0 1px 4px rgba(16, 185, 129, 0.35);
+        }
+
+        .field-check-badge.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Empty state: Clean White Background with crisp dark text & placeholder */
+        .user-field-empty {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            border: 2px solid #cbd5e1 !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease !important;
+        }
+
+        .user-field-empty::placeholder {
+            color: #64748b !important;
+            opacity: 1 !important;
+        }
+
+        .user-field-empty:focus {
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25) !important;
+            outline: none !important;
+        }
+
+        /* For .output-box-wrapper when child is empty */
+        .output-box-wrapper.user-field-empty {
+            background-color: #ffffff !important;
+            border: 2px solid #cbd5e1 !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        .output-box-wrapper.user-field-empty .output-short-input,
+        .output-box-wrapper.user-field-empty .output-textarea {
+            color: #0f172a !important;
+        }
+
+        .output-box-wrapper.user-field-empty .output-short-input::placeholder,
+        .output-box-wrapper.user-field-empty .output-textarea::placeholder {
+            color: #64748b !important;
+            opacity: 1 !important;
+        }
+
+        .output-box-wrapper.user-field-empty .copy-overlay-btn {
+            background: #f1f5f9 !important;
+            border-color: #cbd5e1 !important;
+            color: #334155 !important;
+        }
+
+        .output-box-wrapper.user-field-empty .copy-overlay-btn:hover {
+            background: var(--primary) !important;
+            color: #000000 !important;
+        }
+
+        /* Watch face number wrapper in topbar */
+        #wrap-package-num {
+            transition: background-color 0.25s ease, border-color 0.25s ease;
+        }
+
+        #wrap-package-num.user-field-empty {
+            background-color: #ffffff !important;
+            border: 2px solid #cbd5e1 !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        #wrap-package-num.user-field-empty #prefix-cue-text {
+            color: #b45309 !important;
+        }
+
+        #wrap-package-num.user-field-empty #package-num {
+            color: #0f172a !important;
+        }
+
+        #wrap-package-num.user-field-empty #package-num::placeholder {
+            color: #64748b !important;
+            opacity: 1 !important;
+        }
+
+        /* Upload zone when empty */
+        #upload-zone.user-field-empty {
+            background-color: #ffffff !important;
+            border: 2px dashed #94a3b8 !important;
+        }
+
+        #upload-zone.user-field-empty .upload-icon {
+            color: #f59e0b !important;
+        }
+
+        #upload-zone.user-field-empty div {
+            color: #0f172a !important;
+        }
+
+        #upload-zone.user-field-empty div:last-child {
+            color: #64748b !important;
+        }
+
         /* Container Layout & Tabs */
         .app-container {
             width: 100%;
@@ -1052,10 +1170,11 @@
                 <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Watch Face:</span>
-                        <div style="display: flex; align-items: center; background: rgba(0,0,0,0.6); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 4px 10px;">
-                            <span style="font-weight: 800; color: var(--primary); font-size: 15px; margin-right: 4px;">CUE</span>
+                        <div id="wrap-package-num" style="display: flex; align-items: center; background: rgba(0,0,0,0.6); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 4px 10px;">
+                            <span id="prefix-cue-text" style="font-weight: 800; color: var(--primary); font-size: 15px; margin-right: 4px;">CUE</span>
                             <input type="number" id="package-num" class="input-text" placeholder="180" min="1" step="1" style="width: 75px; padding: 4px 2px; font-size: 15px; font-weight: 800; border: none; background: transparent; box-shadow: none; color: #fff;" oninput="saveDeployState(); if(typeof updatePackageId === 'function') updatePackageId();">
                         </div>
+                        <span class="field-check-badge" id="check-package-num" title="Filled">✓</span>
                     </div>
 
                     <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 6px 12px;">
@@ -1140,7 +1259,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Watch Face Screenshot</label>
+                        <label style="display: flex; align-items: center;">Watch Face Screenshot <span class="field-check-badge" id="check-screenshot" title="Uploaded">✓</span></label>
                         <div class="upload-zone" id="upload-zone">
                             <div class="upload-icon">📸</div>
                             <div style="font-weight: 600; font-size: 13px;">Drag & Drop Screenshot here</div>
@@ -1202,7 +1321,7 @@
                     <!-- Short Store Description -->
                     <div class="form-group">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <label>Short Description</label>
+                            <label style="display: flex; align-items: center;">Short Description <span class="field-check-badge" id="check-out-short-desc" title="Filled">✓</span></label>
                             <span id="short-desc-counter" class="metric-badge badge-success">0 / 80</span>
                         </div>
                         <div class="output-box-wrapper" style="padding: 10px 12px 14px;">
@@ -1231,7 +1350,7 @@
                     <!-- Long Store Description -->
                     <div class="form-group">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <label>Standard Description</label>
+                            <label style="display: flex; align-items: center;">Standard Description <span class="field-check-badge" id="check-out-long-desc" title="Filled">✓</span></label>
                             <span id="long-desc-counter" style="font-size: 11px; color: var(--text-muted); font-weight: 500;">0 chars / 0 words</span>
                         </div>
                         <div class="output-box-wrapper">
@@ -1246,7 +1365,7 @@
                     <!-- Long Store Description (AI) -->
                     <div class="form-group">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <label>AI Optimized Description <span style="font-size: 10px; background: rgba(255,193,7,0.2); color: var(--primary); padding: 2px 6px; border-radius: 4px; margin-left: 8px;">Gemini</span></label>
+                            <label style="display: flex; align-items: center;">AI Optimized Description <span style="font-size: 10px; background: rgba(255,193,7,0.2); color: var(--primary); padding: 2px 6px; border-radius: 4px; margin-left: 8px;">Gemini</span> <span class="field-check-badge" id="check-out-long-desc-ai" title="Filled">✓</span></label>
                             <span id="long-desc-ai-counter" style="font-size: 11px; color: var(--text-muted); font-weight: 500;">0 chars / 0 words</span>
                         </div>
                         <div class="output-box-wrapper" style="border-color: rgba(255, 193, 7, 0.4);">
@@ -1286,7 +1405,7 @@
 
                     <!-- App Title -->
                     <div class="form-group">
-                        <label>App Title</label>
+                        <label style="display: flex; align-items: center;">App Title <span class="field-check-badge" id="check-out-app-title" title="Filled">✓</span></label>
                         <div class="output-box-wrapper">
                             <button class="copy-overlay-btn" onclick="copyText('out-app-title', 'App Title')">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -1305,7 +1424,7 @@
 
                     <!-- Console Utilities -->
                     <div class="form-group">
-                        <label>Privacy Policy Link</label>
+                        <label style="display: flex; align-items: center;">Privacy Policy Link <span class="field-check-badge" id="check-out-policy-link" title="Filled">✓</span></label>
                         <div class="output-box-wrapper" style="padding: 10px 12px;">
                             <button class="copy-overlay-btn" onclick="copyText('out-policy-link', 'Privacy Policy Link')">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -1316,7 +1435,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Health App Declaration</label>
+                        <label style="display: flex; align-items: center;">Health App Declaration <span class="field-check-badge" id="check-out-health-decl" title="Filled">✓</span></label>
                         <div class="output-box-wrapper" style="padding: 10px 12px;">
                             <button class="copy-overlay-btn" onclick="copyText('out-health-decl', 'Health Declaration')">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -1327,7 +1446,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Support Email</label>
+                        <label style="display: flex; align-items: center;">Support Email <span class="field-check-badge" id="check-out-support-email" title="Filled">✓</span></label>
                         <div class="output-box-wrapper">
                             <button class="copy-overlay-btn" onclick="copyText('out-support-email', 'Support Email')">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -1353,7 +1472,7 @@
 
                     <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 12px;">
                         <div style="flex: 1;">
-                            <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 4px;">Version Code</label>
+                            <label style="font-size: 11px; color: var(--text-muted); display: flex; align-items: center; margin-bottom: 4px;">Version Code <span class="field-check-badge" id="check-companion-version-code" title="Filled">✓</span></label>
                             <input type="number" id="companion-version-code" class="input-text" value="2" min="1" step="1" style="padding: 6px 10px; font-size: 13px;" oninput="saveDeployState()">
                         </div>
                         <div style="flex: 2;">
@@ -1479,7 +1598,7 @@
                     <!-- Website & Social Release Description -->
                     <div style="margin-bottom: 12px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                            <label style="font-size: 11px; color: var(--text-muted);">Website & Release Description</label>
+                            <label style="font-size: 11px; color: var(--text-muted); display: flex; align-items: center;">Website & Release Description <span class="field-check-badge" id="check-publish-description" title="Filled">✓</span></label>
                             <span style="font-size: 10px; color: var(--primary); cursor: pointer; text-decoration: underline;" onclick="syncPublishDescription()" title="Pull latest from Long or Short description">⟳ Pull from Left</span>
                         </div>
                         <textarea id="publish-description" class="output-textarea" oninput="saveDeployState()" style="min-height: 85px; font-size: 12px; line-height: 1.4;" placeholder="Description for catalog, manager.json, and release txt..."></textarea>
@@ -1488,7 +1607,7 @@
                     <!-- Google Play Console Dashboard URL or App ID -->
                     <div style="margin-bottom: 12px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                            <label style="font-size: 11px; color: var(--text-muted); margin: 0;">Play Store Dashboard Link or App ID</label>
+                            <label style="font-size: 11px; color: var(--text-muted); margin: 0; display: flex; align-items: center;">Play Store Dashboard Link or App ID <span class="field-check-badge" id="check-publish-console-url" title="Filled">✓</span></label>
                             <span id="console-id-preview" style="font-size: 10px; color: #64b5f6; font-weight: 600;">For /play-versions link</span>
                         </div>
                         <input type="text" id="publish-console-url" class="input-text" placeholder="Paste Play Console URL (e.g. .../app/497.../app-dashboard) or numeric ID" oninput="saveDeployState(); updateConsoleIdPreview();" style="font-size: 12px; padding: 8px 12px; width: 100%;">
@@ -1550,7 +1669,7 @@
                     <!-- Launch Strategy & Notes Card -->
                 <div class="card zone-config" style="margin-top: 0;">
                     <div class="card-title">
-                        <div><span class="badge-tag badge-config">Strategy</span> Launch Plan & Notes</div>
+                        <div style="display: flex; align-items: center;"><span class="badge-tag badge-config">Strategy</span> Launch Plan & Notes <span class="field-check-badge" id="check-out-launch-strategy" title="Filled">✓</span></div>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
                     </div>
                     <div class="form-group">
@@ -1983,10 +2102,86 @@ Don't second-guess yourself! 200 free coupons = €0 revenue and zero algorithm 
                 populateFeaturesList(savedState.features);
             } finally {
                 isApplyingRemoteState = false;
+                if (typeof refreshFieldStates === 'function') refreshFieldStates();
             }
         }
 
         
+
+        // =========================================================
+        // Dynamic Empty vs Filled Field States (White when empty, Checkmarked when filled)
+        // =========================================================
+        const trackedFillFields = [
+            { id: 'package-num', wrapperId: 'wrap-package-num' },
+            { id: 'out-short-desc', isWrapper: true },
+            { id: 'out-long-desc', isWrapper: true },
+            { id: 'out-long-desc-ai', isWrapper: true },
+            { id: 'out-app-title', isWrapper: true },
+            { id: 'out-policy-link', isWrapper: true },
+            { id: 'out-health-decl', isWrapper: true },
+            { id: 'out-support-email', isWrapper: true },
+            { id: 'companion-version-code' },
+            { id: 'publish-description' },
+            { id: 'publish-console-url' },
+            { id: 'out-launch-strategy', isWrapper: true }
+        ];
+
+        function refreshFieldStates() {
+            // Text inputs and textareas
+            trackedFillFields.forEach(item => {
+                const el = document.getElementById(item.id);
+                if (!el) return;
+                const val = (el.value || '').trim();
+                const isFilled = val.length > 0;
+
+                // Checkmark badge
+                const badge = document.getElementById(`check-${item.id}`);
+                if (badge) {
+                    if (isFilled) {
+                        badge.classList.add('visible');
+                    } else {
+                        badge.classList.remove('visible');
+                    }
+                }
+
+                // Wrapper or direct element styling
+                const wrapper = item.wrapperId ? document.getElementById(item.wrapperId)
+                              : (item.isWrapper ? el.closest('.output-box-wrapper') : null);
+
+                if (isFilled) {
+                    el.classList.remove('user-field-empty');
+                    if (wrapper) wrapper.classList.remove('user-field-empty');
+                } else {
+                    el.classList.add('user-field-empty');
+                    if (wrapper) wrapper.classList.add('user-field-empty');
+                }
+            });
+
+            // Screenshot upload check
+            const imgBadge = document.getElementById('check-screenshot');
+            const upZone = document.getElementById('upload-zone');
+            const hasImage = !!(uploadedFileBase64 && uploadedFileBase64.length > 0);
+            if (imgBadge) {
+                if (hasImage) imgBadge.classList.add('visible');
+                else imgBadge.classList.remove('visible');
+            }
+            if (upZone) {
+                if (hasImage) upZone.classList.remove('user-field-empty');
+                else upZone.classList.add('user-field-empty');
+            }
+        }
+
+        document.addEventListener('input', (e) => {
+            if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+                refreshFieldStates();
+            }
+        });
+        document.addEventListener('change', (e) => {
+            if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+                refreshFieldStates();
+            }
+        });
+
         // =========================================================
         // Deploy Tabs Navigation
         // =========================================================
@@ -2037,6 +2232,9 @@ Don't second-guess yourself! 200 free coupons = €0 revenue and zero algorithm 
             if (['content', 'console', 'publish'].includes(savedDeployTab)) {
                 switchDeployTab(savedDeployTab);
             }
+
+            // Initial pass for empty vs filled fields
+            refreshFieldStates();
 
             // Default checklist if nothing exists
             window.currentChecklistSteps = [
@@ -2423,6 +2621,7 @@ Don't second-guess yourself! 200 free coupons = €0 revenue and zero algorithm 
 
                 // Enable generator button
                 document.getElementById('btn-generate-short').disabled = false;
+                if (typeof refreshFieldStates === 'function') refreshFieldStates();
                 saveDeployState();
             };
             reader.readAsDataURL(file);
@@ -2440,6 +2639,7 @@ Don't second-guess yourself! 200 free coupons = €0 revenue and zero algorithm 
             
             // Disable button
             document.getElementById('btn-generate-short').disabled = true;
+            if (typeof refreshFieldStates === 'function') refreshFieldStates();
             saveDeployState();
         }
 
@@ -2687,6 +2887,7 @@ Enjoying ${faceName}? Leave a review on the Play Store to help us grow and creat
             const outArea = document.getElementById('out-long-desc');
             outArea.value = result;
             updateLongDescStats(result);
+            if (typeof refreshFieldStates === 'function') refreshFieldStates();
             showToast("Standard template built!");
             saveDeployState();
         }
@@ -2786,6 +2987,7 @@ INSTRUCTIONS:
                 const outAreaAi = document.getElementById('out-long-desc-ai');
                 outAreaAi.value = finalDescription;
                 updateLongDescAIStats(finalDescription);
+                if (typeof refreshFieldStates === 'function') refreshFieldStates();
                 saveDeployState();
                 showToast("Long description optimized with Gemini AI!");
 
@@ -2839,6 +3041,7 @@ INSTRUCTIONS:
             const titleField = document.getElementById('out-app-title');
             if (titleField) {
                 titleField.value = `${type} Watch Face CUE${num}`;
+                if (typeof refreshFieldStates === 'function') refreshFieldStates();
                 saveDeployState();
             }
         }
@@ -3182,6 +3385,7 @@ INSTRUCTIONS:
             const pubDesc = document.getElementById('publish-description');
             if (pubDesc) {
                 pubDesc.value = desc.trim();
+                if (typeof refreshFieldStates === 'function') refreshFieldStates();
             }
         }
 
