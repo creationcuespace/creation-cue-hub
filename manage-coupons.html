@@ -791,6 +791,73 @@
         display: none !important;
       }
     }
+  
+    /* VIP Supporters & DM Dispenser Styles */
+    .vip-item-row {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .vip-item-row:hover {
+      border-color: rgba(245, 197, 24, 0.4);
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .vip-badge-reddit {
+      background: rgba(255, 69, 0, 0.12);
+      color: #ff6624;
+      border: 1px solid rgba(255, 69, 0, 0.3);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .vip-badge-facebook {
+      background: rgba(24, 119, 242, 0.12);
+      color: #60a5fa;
+      border: 1px solid rgba(24, 119, 242, 0.3);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .vip-badge-email {
+      background: rgba(168, 85, 247, 0.12);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .vip-filter-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .vip-filter-btn.active {
+      background: rgba(245, 197, 24, 0.15) !important;
+      color: var(--yellow) !important;
+      border-color: var(--yellow) !important;
+      font-weight: 700 !important;
+    }
+
   </style>
 </head>
 
@@ -1066,7 +1133,104 @@ AAAA-BBBB-CCCC"></textarea>
           </div>
         </div>
 
-        <div class="card">
+        
+        <!-- VIP Supporters & 1-Click Coupon Dispenser Card -->
+        <div class="card" id="vip-supporters-card" style="border-left: 4px solid var(--yellow);">
+          <div class="card-title" id="vip-card-title" onclick="toggleVipCard()" style="cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; border-bottom: none; padding-bottom: 0;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span style="font-weight:700;">VIP Supporters & 1-Click Coupon Dispenser</span>
+              <span id="vip-count-badge" style="background:rgba(245,197,24,0.15); color:var(--yellow); border:1px solid rgba(245,197,24,0.3); font-size:11px; font-weight:700; padding:2px 8px; border-radius:12px;">24 Supporters</span>
+            </div>
+            <svg id="vip-card-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s ease; transform: rotate(180deg);">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          
+          <div id="vip-card-body" style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px; border-top: 1px solid var(--border); padding-top: 16px;">
+            
+            <!-- Quick Configuration Bar (Select promo & Customize message) -->
+            <div style="background:var(--mid); border:1px solid var(--border); border-radius:6px; padding:12px; display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <span style="font-size:11px; font-weight:700; text-transform:uppercase; color:var(--yellow); letter-spacing:0.5px;">1. Choose Active Promotion for Codes:</span>
+                <button type="button" class="btn small" onclick="toggleVipTemplate()" style="font-size:10px; padding:2px 8px; background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--muted); cursor:pointer;">
+                  ⚙️ Customize Message Template
+                </button>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:6px; width:100%;">
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <input type="text" id="vip-promo-search-input" list="vip-promo-datalist" placeholder="🔍 Type or click to select promotion (e.g. CUE179, CUE003)..." oninput="onVipPromoTypeInput()" onfocus="this.select()" autocomplete="off" class="input-text" style="flex:1; background:var(--black); color:var(--yellow); font-weight:600; font-size:12px;">
+                  <datalist id="vip-promo-datalist"></datalist>
+                  <button type="button" class="btn small" onclick="refreshVipPromoCodes()" style="flex:none; background:rgba(245,197,24,0.15); color:var(--yellow); border:1px solid rgba(245,197,24,0.3); padding:7px 12px; cursor:pointer;" title="Refresh promo codes cache">
+                    🔄 Refresh Codes
+                  </button>
+                </div>
+                <div id="vip-selected-promo-banner" style="display:none; font-size:11.5px; align-items:center; gap:8px; background:rgba(76,175,80,0.1); border:1px solid rgba(76,175,80,0.3); padding:5px 10px; border-radius:4px; color:var(--green);">
+                  <span>✓ Selected: <strong id="vip-selected-name" style="color:var(--text);">--</strong></span>
+                  <span id="vip-selected-left" style="color:var(--yellow); font-weight:700;">(Left: --)</span>
+                  <button type="button" onclick="clearVipSelectedPromo()" style="background:none; border:none; color:var(--muted); cursor:pointer; text-decoration:underline; font-size:10px; margin-left:auto;">Change</button>
+                </div>
+              </div>
+
+              <!-- Collapsible Message Template Editor -->
+              <div id="vip-template-editor" style="display:none; flex-direction:column; gap:6px; margin-top:4px; padding-top:8px; border-top:1px dashed var(--border);">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span class="form-label" style="margin:0;">Personalized DM Message Template:</span>
+                  <span style="font-size:10px; color:var(--muted);">Variables: <code>{name}</code>, <code>{promo_name}</code>, <code>{code}</code>, <code>{direct_link}</code></span>
+                </div>
+                <textarea id="vip-custom-template" class="input-area" rows="3" style="font-size:12px; font-family:inherit; min-height:60px;">Hi {name}! Thank you so much for your previous 5-star review and support! Here is an exclusive promo code for my new release {promo_name}: {code} (Direct redeem: {direct_link}). Hope you enjoy it on your watch! A quick rating or feedback on Google Play means the world.</textarea>
+              </div>
+            </div>
+
+            <!-- Filter & Add Supporter Row -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                <button type="button" class="btn small vip-filter-btn active" data-filter="all" onclick="filterVipList('all')" style="padding:3px 10px; font-size:11px;">All (<span id="vip-cnt-all">24</span>)</button>
+                <button type="button" class="btn small vip-filter-btn" data-filter="reddit" onclick="filterVipList('reddit')" style="padding:3px 10px; font-size:11px; background:rgba(255,69,0,0.1); color:#ff6624; border:1px solid rgba(255,69,0,0.3);">Reddit (<span id="vip-cnt-reddit">17</span>)</button>
+                <button type="button" class="btn small vip-filter-btn" data-filter="facebook" onclick="filterVipList('facebook')" style="padding:3px 10px; font-size:11px; background:rgba(24,119,242,0.1); color:#60a5fa; border:1px solid rgba(24,119,242,0.3);">Facebook (<span id="vip-cnt-facebook">7</span>)</button>
+                <button type="button" class="btn small vip-filter-btn" data-filter="email" onclick="filterVipList('email')" style="padding:3px 10px; font-size:11px; background:rgba(168,85,247,0.1); color:#c084fc; border:1px solid rgba(168,85,247,0.3);">Email (<span id="vip-cnt-email">0</span>)</button>
+                <button type="button" class="btn small" onclick="syncVipWithFirebase(true)" style="padding:3px 8px; font-size:11px; background:rgba(255,255,255,0.06); color:var(--muted); border:1px solid var(--border); cursor:pointer;" title="Force sync with Firebase database">🔄 Sync</button>
+              </div>
+              <button type="button" class="btn small" onclick="toggleAddVipForm()" style="background:rgba(76,175,80,0.15); color:var(--green); border:1px solid rgba(76,175,80,0.3); padding:4px 10px; font-size:11px; display:flex; align-items:center; gap:5px; cursor:pointer;">
+                <span>+ Add Supporter</span>
+              </button>
+            </div>
+
+            <!-- Inline Add Supporter Form (Hidden by default) -->
+            <div id="add-vip-form" style="display:none; background:var(--mid); border:1px solid rgba(76,175,80,0.4); border-radius:6px; padding:12px; flex-direction:column; gap:8px;">
+              <span style="font-size:12px; font-weight:700; color:var(--green);">Add New Supporter / Reviewer (Reddit / FB / Email):</span>
+              <div style="display:grid; grid-template-columns:1fr 120px 1.5fr; gap:8px;">
+                <input class="input-text" id="new-vip-name" type="text" placeholder="Name or Handle (e.g. u/User123 or John Doe)">
+                <select class="input-text" id="new-vip-platform" style="background:var(--black); color:var(--text); cursor:pointer;">
+                  <option value="reddit">Reddit</option>
+                  <option value="facebook">Facebook</option>
+                  <option value="email">Email</option>
+                </select>
+                <input class="input-text" id="new-vip-notes" type="text" placeholder="Notes (e.g. 5 stars on CUE003, great feedback)">
+              </div>
+              <div style="display:flex; gap:8px;">
+                <input class="input-text" id="new-vip-link" type="text" placeholder="Profile or Chat URL (optional, e.g. https://www.reddit.com/user/...)">
+                <button type="button" class="btn small" onclick="saveNewVipSupporter()" style="flex:none; background:var(--green); color:black; font-weight:700; padding:6px 16px;">Save</button>
+                <button type="button" class="btn small" onclick="toggleAddVipForm(false)" style="flex:none; background:transparent; border:1px solid var(--border); color:var(--muted); padding:6px 12px;">Cancel</button>
+              </div>
+            </div>
+
+            <!-- Search supporters -->
+            <div style="margin-top:-4px;">
+              <input class="input-text" id="vip-search-input" type="text" placeholder="🔍 Search supporters by name, platform, or notes..." oninput="renderVipList()" style="font-size:12px;">
+            </div>
+
+            <!-- Supporters Table / List Container -->
+            <div id="vip-supporters-list" style="display:flex; flex-direction:column; gap:8px; max-height:450px; overflow-y:auto; padding-right:4px;">
+              <!-- Dynamically populated rows -->
+            </div>
+
+          </div>
+        </div>
+
+<div class="card">
           <div class="card-title" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <span>Active Promotions</span>
             <div style="display:flex; gap:8px; align-items:center;">
@@ -1264,6 +1428,7 @@ AAAA-BBBB-CCCC"></textarea>
         db.ref('promotions').update(updates).then(function() {
           showToast("All " + count + " promotions set to Private!");
           if (typeof loadPromotions === 'function') loadPromotions();
+        if (typeof loadVipSupporters === "function") loadVipSupporters(); // Auth Hook
           if (btn) {
             btn.disabled = false;
             btn.textContent = '🔒 Set All to Private';
@@ -2349,6 +2514,7 @@ AAAA-BBBB-CCCC"></textarea>
 
     // Initialize catalog search
     initCatalogSearch();
+    
   </script>
 
   <script>
@@ -2371,5 +2537,751 @@ AAAA-BBBB-CCCC"></textarea>
       }
     }
   </script>
+
+  <script>
+    /* ==========================================================================
+       VIP SUPPORTERS & 1-CLICK COUPON DISPENSER MODULE
+       ========================================================================== */
+    var DEFAULT_VIP_SUPPORTERS = [
+  {
+    "id": "vip_1793042693438",
+    "name": "Grigorescu Ionut",
+    "platform": "facebook",
+    "notes": "⭐⭐⭐⭐⭐ Play Reviewer; suggested cue178",
+    "link": "https://www.facebook.com/messages/t/1358116324",
+    "dateAdded": "2026-10-26"
+  },
+  {
+    "id": "vip_1793042657963",
+    "name": "Tony Whaley",
+    "platform": "facebook",
+    "notes": "Direct Supporter",
+    "link": "https://www.facebook.com/messages/t/100000630331241",
+    "dateAdded": "2026-10-26"
+  },
+  {
+    "id": "vip_1793042638860",
+    "name": "Eriq Olin",
+    "platform": "facebook",
+    "notes": "⭐⭐⭐⭐⭐ Play Reviewer; Direct Supporter",
+    "link": "https://www.facebook.com/messages/t/1286032192",
+    "dateAdded": "2026-10-26"
+  },
+  {
+    "id": "vip_1793042616115",
+    "name": "Hichem Abdmouleh",
+    "platform": "facebook",
+    "notes": "Cant buy (Send free coupons)",
+    "link": "https://www.facebook.com/messages/t/100001289763435",
+    "dateAdded": "2026-10-26"
+  },
+  {
+    "id": "vip_1793042555308",
+    "name": "Benoit Denair",
+    "platform": "facebook",
+    "notes": "Direct Supporter",
+    "link": "https://www.facebook.com/messages/t/100000935101534",
+    "dateAdded": "2026-10-26"
+  },
+  {
+    "id": "vip_1793042508830",
+    "name": "Jatinder Pal Singh",
+    "platform": "facebook",
+    "notes": "Direct Supporter",
+    "link": "https://www.facebook.com/messages/t/100008267140343",
+    "dateAdded": "2026-10-26"
+  },
+  {
+    "id": "vip_1793042444540",
+    "name": "Etienne Willemse",
+    "platform": "facebook",
+    "notes": "⭐⭐⭐⭐⭐ Play Reviewer; Direct Supporter",
+    "link": "https://www.facebook.com/messages/t/1431098526",
+    "dateAdded": "2026-10-26"
+  },
+  {
+    "id": "1",
+    "name": "Ferkof98",
+    "platform": "reddit",
+    "notes": "⭐⭐⭐⭐⭐ \"5 stars thanks dev\"",
+    "link": "https://www.reddit.com/user/Ferkof98/",
+    "dateAdded": "2026-10-16"
+  },
+  {
+    "id": "2",
+    "name": "suzii8808",
+    "platform": "reddit",
+    "notes": "⭐⭐⭐⭐⭐ Confirmed 5★ on CUE003 & CUE179",
+    "link": "https://www.reddit.com/user/suzii8808/",
+    "dateAdded": "2026-10-23"
+  },
+  {
+    "id": "3",
+    "name": "Background-Force3192",
+    "platform": "reddit",
+    "notes": "⭐⭐⭐⭐⭐ Confirmed 5★ rating on CUE003",
+    "link": "https://www.reddit.com/user/Background-Force3192/",
+    "dateAdded": "2026-10-23"
+  },
+  {
+    "id": "4",
+    "name": "Scared-Insurance-929",
+    "platform": "reddit",
+    "notes": "⭐⭐⭐⭐⭐ Confirmed 5★ rating on CUE003",
+    "link": "https://www.reddit.com/user/Scared-Insurance-929/",
+    "dateAdded": "2026-10-23"
+  },
+  {
+    "id": "5",
+    "name": "Anxious-Safety-7537",
+    "platform": "reddit",
+    "notes": "⭐⭐⭐⭐⭐ Confirmed review & upvoted CUE179",
+    "link": "https://www.reddit.com/user/Anxious-Safety-7537/",
+    "dateAdded": "2026-10-20"
+  },
+  {
+    "id": "6",
+    "name": "infuriated_wave",
+    "platform": "reddit",
+    "notes": "📝 Promised review in DM",
+    "link": "https://www.reddit.com/user/infuriated_wave/",
+    "dateAdded": "2026-10-20"
+  },
+  {
+    "id": "7",
+    "name": "chameleondad",
+    "platform": "reddit",
+    "notes": "⌚ Received CUE179, loves designs",
+    "link": "https://www.reddit.com/user/chameleondad/",
+    "dateAdded": "2026-10-16"
+  },
+  {
+    "id": "8",
+    "name": "Zestyclose-Rise-3647",
+    "platform": "reddit",
+    "notes": "Active supporter",
+    "link": "https://www.reddit.com/user/Zestyclose-Rise-3647/",
+    "dateAdded": "2026-10-20"
+  },
+  {
+    "id": "9",
+    "name": "nightkap45",
+    "platform": "reddit",
+    "notes": "Requested CUE097 code",
+    "link": "https://www.reddit.com/user/nightkap45/",
+    "dateAdded": "2026-10-19"
+  },
+  {
+    "id": "10",
+    "name": "5t36h4n",
+    "platform": "reddit",
+    "notes": "Requested CUE097 code",
+    "link": "https://www.reddit.com/user/5t36h4n/",
+    "dateAdded": "2026-10-19"
+  },
+  {
+    "id": "11",
+    "name": "vesipyks",
+    "platform": "reddit",
+    "notes": "Requested CUE097 code",
+    "link": "https://www.reddit.com/user/vesipyks/",
+    "dateAdded": "2026-10-19"
+  },
+  {
+    "id": "12",
+    "name": "Head-Ad-2680",
+    "platform": "reddit",
+    "notes": "Requested CUE097 code",
+    "link": "https://www.reddit.com/user/Head-Ad-2680/",
+    "dateAdded": "2026-10-19"
+  },
+  {
+    "id": "13",
+    "name": "Secret-Ad7277",
+    "platform": "reddit",
+    "notes": "Requested CUE097 code",
+    "link": "https://www.reddit.com/user/Secret-Ad7277/",
+    "dateAdded": "2026-10-19"
+  },
+  {
+    "id": "14",
+    "name": "HarryHolly",
+    "platform": "reddit",
+    "notes": "Requested CUE097 code",
+    "link": "https://www.reddit.com/user/HarryHolly/",
+    "dateAdded": "2026-10-20"
+  },
+  {
+    "id": "15",
+    "name": "Limp_Asparagus3935",
+    "platform": "reddit",
+    "notes": "Requested CUE097 code",
+    "link": "https://www.reddit.com/user/Limp_Asparagus3935/",
+    "dateAdded": "2026-10-19"
+  },
+  {
+    "id": "16",
+    "name": "Niro_d5",
+    "platform": "reddit",
+    "notes": "Requested CUE097 code",
+    "link": "https://www.reddit.com/user/Niro_d5/",
+    "dateAdded": "2026-10-19"
+  },
+  {
+    "id": "17",
+    "name": "tejasb_",
+    "platform": "reddit",
+    "notes": "Requested CUE097 code",
+    "link": "https://www.reddit.com/user/tejasb_/",
+    "dateAdded": "2026-10-19"
+  }
+];
+
+    window.vipSupportersList = [];
+    window.vipActiveFilter = 'all';
+    window.vipLoadedCodes = {};
+
+    window.toggleVipCard = function(forceState) {
+      var body = document.getElementById('vip-card-body');
+      var arrow = document.getElementById('vip-card-arrow');
+      var title = document.getElementById('vip-card-title');
+      if (body && arrow && title) {
+        var isHidden = body.style.display === 'none';
+        var shouldExpand = forceState !== undefined ? forceState : isHidden;
+        if (shouldExpand) {
+          body.style.display = 'flex';
+          arrow.style.transform = 'rotate(180deg)';
+          title.style.borderBottom = '1px solid var(--border)';
+          title.style.paddingBottom = '8px';
+          loadVipSupporters();
+          updateVipPromoDropdown();
+        } else {
+          body.style.display = 'none';
+          arrow.style.transform = 'rotate(0deg)';
+          title.style.borderBottom = 'none';
+          title.style.paddingBottom = '0';
+        }
+      }
+    };
+
+    window.toggleAddVipForm = function(force) {
+      var f = document.getElementById('add-vip-form');
+      if (!f) return;
+      var show = force !== undefined ? force : f.style.display === 'none';
+      f.style.display = show ? 'flex' : 'none';
+      if (show) {
+        var nameInput = document.getElementById('new-vip-name');
+        if (nameInput) nameInput.focus();
+      }
+    };
+
+    window.toggleVipTemplate = function() {
+      var ed = document.getElementById('vip-template-editor');
+      if (!ed) return;
+      ed.style.display = ed.style.display === 'none' ? 'flex' : 'none';
+    };
+
+    window.syncVipWithFirebase = function(manualClick) {
+      if (manualClick) {
+        try { localStorage.removeItem('creationcue_vip_supporters'); } catch(e) {}
+        if (typeof showToast === 'function') showToast("Syncing VIP list from cloud...");
+      }
+
+      if (typeof firebase !== 'undefined' && firebase.database) {
+        firebase.database().ref('vip_supporters').once('value').then(function(snap) {
+          var val = snap.val();
+          if (val && Array.isArray(val) && val.length > 0) {
+            window.vipSupportersList = val;
+            try { localStorage.setItem('creationcue_vip_supporters', JSON.stringify(val)); } catch(e) {}
+            renderVipList();
+            if (manualClick && typeof showToast === 'function') showToast("Synced " + val.length + " supporters from cloud!");
+          } else if (val && typeof val === 'object') {
+            window.vipSupportersList = Object.values(val);
+            try { localStorage.setItem('creationcue_vip_supporters', JSON.stringify(window.vipSupportersList)); } catch(e) {}
+            renderVipList();
+            if (manualClick && typeof showToast === 'function') showToast("Synced " + window.vipSupportersList.length + " supporters!");
+          }
+        }).catch(function(err) {
+          console.warn("VIP sync error:", err);
+          if (manualClick && typeof showToast === 'function') showToast("Sync failed: " + err.message);
+        });
+      }
+    };
+
+    function loadVipSupporters() {
+      loadLocalVipSupporters();
+      renderVipList();
+
+      try {
+        if (typeof firebase !== 'undefined' && firebase.database) {
+          firebase.database().ref('vip_supporters').on('value', function(snap) {
+            var val = snap.val();
+            if (val && Array.isArray(val) && val.length > 0) {
+              window.vipSupportersList = val;
+              try { localStorage.setItem('creationcue_vip_supporters', JSON.stringify(val)); } catch(e) {}
+              renderVipList();
+            } else if (val && typeof val === 'object') {
+              window.vipSupportersList = Object.values(val);
+              try { localStorage.setItem('creationcue_vip_supporters', JSON.stringify(window.vipSupportersList)); } catch(e) {}
+              renderVipList();
+            }
+          });
+        }
+      } catch (e) {
+        console.warn("Firebase not ready for VIP list:", e);
+      }
+    }
+
+    function loadLocalVipSupporters() {
+      try {
+        var local = localStorage.getItem('creationcue_vip_supporters');
+        if (local) {
+          var parsed = JSON.parse(local);
+          // If local storage has the old/fewer items, prefer the full default list
+          if (Array.isArray(parsed) && parsed.length >= DEFAULT_VIP_SUPPORTERS.length) {
+            window.vipSupportersList = parsed;
+            return;
+          }
+        }
+      } catch (e) {}
+      window.vipSupportersList = JSON.parse(JSON.stringify(DEFAULT_VIP_SUPPORTERS));
+      try { localStorage.setItem('creationcue_vip_supporters', JSON.stringify(window.vipSupportersList)); } catch(e) {}
+    }
+
+    function saveVipSupporters(list) {
+      window.vipSupportersList = list;
+      try {
+        localStorage.setItem('creationcue_vip_supporters', JSON.stringify(list));
+      } catch (e) {}
+
+      try {
+        if (typeof firebase !== 'undefined' && firebase.database) {
+          firebase.database().ref('vip_supporters').set(list).catch(function(err) {
+            console.warn("Could not sync VIP list to Firebase:", err);
+          });
+        }
+      } catch (e) {}
+    }
+
+    window.saveNewVipSupporter = function() {
+      var name = document.getElementById('new-vip-name').value.trim();
+      var platform = document.getElementById('new-vip-platform').value || 'reddit';
+      var notes = document.getElementById('new-vip-notes').value.trim();
+      var link = document.getElementById('new-vip-link').value.trim();
+
+      if (!name) {
+        alert("Please enter a name or handle for the supporter.");
+        return;
+      }
+
+      if (!link) {
+        if (platform === 'reddit') {
+          var cleanUser = name.replace(/^u//i, '');
+          link = 'https://www.reddit.com/user/' + cleanUser + '/';
+        }
+      }
+
+      var newEntry = {
+        id: 'vip_' + Date.now(),
+        name: name,
+        platform: platform,
+        notes: notes || 'Direct Supporter',
+        link: link || '',
+        dateAdded: new Date().toISOString().slice(0, 10)
+      };
+
+      window.vipSupportersList.unshift(newEntry);
+      saveVipSupporters(window.vipSupportersList);
+      renderVipList();
+      toggleAddVipForm(false);
+
+      // Clear inputs
+      document.getElementById('new-vip-name').value = '';
+      document.getElementById('new-vip-notes').value = '';
+      document.getElementById('new-vip-link').value = '';
+
+      if (typeof showToast === 'function') showToast("Added " + name + " to VIP supporters!");
+    };
+
+    window.deleteVipSupporter = function(id) {
+      var item = window.vipSupportersList.find(function(x) { return x.id == id; });
+      var name = item ? item.name : 'this supporter';
+      if (!confirm("Are you sure you want to remove " + name + " from the VIP supporters list?")) return;
+      window.vipSupportersList = window.vipSupportersList.filter(function(x) { return x.id != id; });
+      saveVipSupporters(window.vipSupportersList);
+      renderVipList();
+      if (typeof showToast === 'function') showToast("Removed " + name);
+    };
+
+    window.filterVipList = function(filter) {
+      if (!window.vipSupportersList || window.vipSupportersList.length === 0) {
+        loadLocalVipSupporters();
+      }
+      window.vipActiveFilter = filter;
+      document.querySelectorAll('.vip-filter-btn').forEach(function(b) {
+        b.classList.toggle('active', b.getAttribute('data-filter') === filter);
+      });
+      renderVipList();
+    };
+
+    window.renderVipList = function() {
+      var listEl = document.getElementById('vip-supporters-list');
+      if (!listEl) return;
+
+      var total = window.vipSupportersList.length;
+      var redditCnt = window.vipSupportersList.filter(function(x) { return x.platform === 'reddit'; }).length;
+      var fbCnt = window.vipSupportersList.filter(function(x) { return x.platform === 'facebook'; }).length;
+      var emailCnt = window.vipSupportersList.filter(function(x) { return x.platform === 'email'; }).length;
+
+      var cntAllEl = document.getElementById('vip-cnt-all');
+      if (cntAllEl) cntAllEl.textContent = total;
+      var cntBadgeEl = document.getElementById('vip-count-badge');
+      if (cntBadgeEl) cntBadgeEl.textContent = total + ' Supporters';
+      var cntRedditEl = document.getElementById('vip-cnt-reddit');
+      if (cntRedditEl) cntRedditEl.textContent = redditCnt;
+      var cntFbEl = document.getElementById('vip-cnt-facebook');
+      if (cntFbEl) cntFbEl.textContent = fbCnt;
+      var cntEmailEl = document.getElementById('vip-cnt-email');
+      if (cntEmailEl) cntEmailEl.textContent = emailCnt;
+
+      var search = (document.getElementById('vip-search-input') ? document.getElementById('vip-search-input').value : '').toLowerCase().trim();
+
+      var filtered = window.vipSupportersList.filter(function(item) {
+        if (window.vipActiveFilter !== 'all' && item.platform !== window.vipActiveFilter) return false;
+        if (!search) return true;
+        return (item.name && item.name.toLowerCase().includes(search)) ||
+               (item.notes && item.notes.toLowerCase().includes(search)) ||
+               (item.platform && item.platform.toLowerCase().includes(search));
+      });
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = '<div style="text-align:center; padding:20px; color:var(--muted); font-size:12px;">No supporters found matching filter.</div>';
+        return;
+      }
+
+      listEl.innerHTML = filtered.map(function(item) {
+        var platformBadge = '';
+        if (item.platform === 'reddit') {
+          platformBadge = '<span class="vip-badge-reddit">Reddit</span>';
+        } else if (item.platform === 'facebook') {
+          platformBadge = '<span class="vip-badge-facebook">Facebook</span>';
+        } else {
+          platformBadge = '<span class="vip-badge-email">Email</span>';
+        }
+
+        var profileLink = item.link ? item.link : (item.platform === 'reddit' ? 'https://www.reddit.com/user/' + item.name.replace(/^u//i, '') + '/' : '#');
+
+        var lastSentHtml = '';
+        if (item.lastSent) {
+          lastSentHtml = '<span style="font-size:10px; color:var(--green); background:rgba(76,175,80,0.12); border:1px solid rgba(76,175,80,0.25); padding:2px 6px; border-radius:3px;" title="Code: ' + (item.lastSent.code || '') + '">Sent: ' + (item.lastSent.promoName || 'Code') + ' (' + (item.lastSent.date || '') + ')</span>';
+        }
+
+        return `
+          <div class="vip-item-row">
+            <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
+              ${platformBadge}
+              <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <a href="${profileLink}" target="_blank" rel="noopener noreferrer" style="font-weight:700; color:var(--text); font-size:13px; text-decoration:none; display:flex; align-items:center; gap:4px;" title="Open Profile">
+                    <span>${item.name}</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                  </a>
+                  ${lastSentHtml}
+                </div>
+                <div style="font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                  ${item.notes || 'VIP Supporter'}
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:8px; flex:none;">
+              <button type="button" class="btn small" onclick="sendCouponToVip('${item.id}')" style="background:var(--yellow); color:black; font-weight:700; font-size:11px; padding:4px 10px; display:flex; align-items:center; gap:4px; cursor:pointer;" title="Dispense next code and open direct message">
+                <span>Send Coupon</span>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+              <button type="button" onclick="deleteVipSupporter('${item.id}')" style="background:none; border:none; color:var(--muted); cursor:pointer; padding:4px; font-size:14px; opacity:0.6;" title="Remove supporter">✕</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    };
+
+    window.vipSelectedPromoId = '';
+
+    window.updateVipPromoDropdown = function() {
+      var datalist = document.getElementById('vip-promo-datalist');
+      if (!datalist) return;
+
+      datalist.innerHTML = '';
+      var data = window.rawPromotionsData;
+      if (!data) return;
+
+      Object.keys(data).forEach(function(key) {
+        var p = data[key].public;
+        if (!p) return;
+        var total = p.totalCoupons || 0;
+        var claimed = p.claimedCount || 0;
+        var left = Math.max(0, total - claimed);
+        var opt = document.createElement('option');
+        opt.value = (p.name || key) + ' [' + key + ']';
+        opt.label = 'Left: ' + left + ' of ' + total;
+        datalist.appendChild(opt);
+      });
+    };
+
+    window.onVipPromoTypeInput = function() {
+      var input = document.getElementById('vip-promo-search-input');
+      if (!input) return;
+      var val = input.value.trim();
+      if (!val) {
+        clearVipSelectedPromo();
+        return;
+      }
+
+      var data = window.rawPromotionsData;
+      if (!data) return;
+
+      var matchKey = null;
+
+      // 1. Check for [key] tag
+      var bracketMatch = val.match(/\[([a-zA-Z0-9_-]+)\]/);
+      if (bracketMatch && data[bracketMatch[1]]) {
+        matchKey = bracketMatch[1];
+      }
+
+      // 2. Direct key match
+      if (!matchKey && data[val]) {
+        matchKey = val;
+      }
+
+      // 3. Search by name or key substring
+      if (!matchKey) {
+        var query = val.toLowerCase();
+        var keys = Object.keys(data);
+        for (var i = 0; i < keys.length; i++) {
+          var k = keys[i];
+          var p = data[k].public;
+          if (!p) continue;
+          if (k.toLowerCase() === query || (p.name && p.name.toLowerCase() === query)) {
+            matchKey = k;
+            break;
+          }
+        }
+        if (!matchKey) {
+          for (var i = 0; i < keys.length; i++) {
+            var k = keys[i];
+            var p = data[k].public;
+            if (!p) continue;
+            if (k.toLowerCase().includes(query) || (p.name && p.name.toLowerCase().includes(query))) {
+              matchKey = k;
+              break;
+            }
+          }
+        }
+      }
+
+      if (matchKey) {
+        setVipActivePromo(matchKey);
+      }
+    };
+
+    function setVipActivePromo(promoId) {
+      window.vipSelectedPromoId = promoId;
+      var data = window.rawPromotionsData && window.rawPromotionsData[promoId] ? window.rawPromotionsData[promoId].public : null;
+      var name = data ? (data.name || promoId) : promoId;
+      var total = data ? (data.totalCoupons || 0) : 0;
+      var claimed = data ? (data.claimedCount || 0) : 0;
+      var left = Math.max(0, total - claimed);
+
+      var banner = document.getElementById('vip-selected-promo-banner');
+      var nameEl = document.getElementById('vip-selected-name');
+      var leftEl = document.getElementById('vip-selected-left');
+
+      if (banner && nameEl && leftEl) {
+        nameEl.textContent = name + ' (' + promoId + ')';
+        leftEl.textContent = '(Left: ' + left + ' of ' + total + ')';
+        banner.style.display = 'flex';
+      }
+
+      loadPromoCodesForVip(promoId);
+    }
+
+    window.clearVipSelectedPromo = function() {
+      window.vipSelectedPromoId = '';
+      var banner = document.getElementById('vip-selected-promo-banner');
+      if (banner) banner.style.display = 'none';
+      var input = document.getElementById('vip-promo-search-input');
+      if (input) input.value = '';
+    };
+
+    window.refreshVipPromoCodes = function() {
+      var promoId = window.vipSelectedPromoId;
+      if (!promoId) {
+        var input = document.getElementById('vip-promo-search-input');
+        if (input && input.value) {
+          onVipPromoTypeInput();
+          promoId = window.vipSelectedPromoId;
+        }
+      }
+      if (!promoId) {
+        if (typeof showToast === 'function') showToast("Please type or choose a promotion first");
+        return;
+      }
+      delete window.vipLoadedCodes[promoId];
+      loadPromoCodesForVip(promoId, true);
+    };
+
+    function loadPromoCodesForVip(promoId, notify) {
+      if (!promoId) return;
+      if (typeof firebase === 'undefined' || !firebase.database) return;
+
+      firebase.database().ref('promotion_codes/' + promoId).once('value').then(function(snap) {
+        window.vipLoadedCodes[promoId] = snap.val() || {};
+        if (notify && typeof showToast === 'function') showToast("Codes refreshed for " + promoId);
+      }).catch(function(err) {
+        console.warn("Could not pre-load codes for VIP:", err);
+      });
+    }
+
+    window.sendCouponToVip = function(supporterId) {
+      var supporter = window.vipSupportersList.find(function(x) { return x.id == supporterId; });
+      if (!supporter) return;
+
+      var promoId = window.vipSelectedPromoId;
+      if (!promoId) {
+        var searchInput = document.getElementById('vip-promo-search-input');
+        if (searchInput && searchInput.value) {
+          onVipPromoTypeInput();
+          promoId = window.vipSelectedPromoId;
+        }
+      }
+      var promoData = promoId && window.rawPromotionsData && window.rawPromotionsData[promoId] ? window.rawPromotionsData[promoId].public : null;
+      var promoName = promoData ? promoData.name : 'Wear OS Watch Face';
+
+      if (!promoId) {
+        // Fallback: prompt manual coupon
+        var manualCode = prompt("No active promotion is selected in the dropdown.\n\nPlease enter or paste the coupon code to send to " + supporter.name + ":");
+        if (!manualCode || !manualCode.trim()) return;
+        proceedDispenseCoupon(supporter, promoName, manualCode.trim(), null);
+        return;
+      }
+
+      // Check if codes are cached, otherwise fetch
+      var codes = window.vipLoadedCodes[promoId];
+      if (codes) {
+        extractAndDispense(supporter, promoId, promoName, promoData, codes);
+      } else {
+        if (typeof showToast === 'function') showToast("Fetching next code from database...");
+        firebase.database().ref('promotion_codes/' + promoId).once('value').then(function(snap) {
+          window.vipLoadedCodes[promoId] = snap.val() || {};
+          extractAndDispense(supporter, promoId, promoName, promoData, window.vipLoadedCodes[promoId]);
+        }).catch(function(err) {
+          alert("Error fetching codes: " + err.message);
+        });
+      }
+    };
+
+    function extractAndDispense(supporter, promoId, promoName, promoData, codesMap) {
+      // Find latest claimed count
+      var claimed = (promoData && promoData.claimedCount) || 0;
+      var nextIndex = claimed;
+      var code = codesMap[nextIndex];
+
+      if (!code) {
+        alert("No unclaimed codes found in promotion '" + promoName + "'. All codes may have been claimed!");
+        return;
+      }
+
+      var confirmMsg = "Send coupon to " + supporter.name + "?\n\n" +
+                       "• Promotion: " + promoName + "\n" +
+                       "• Coupon Code: " + code + "\n" +
+                       "• Platform: " + supporter.platform.toUpperCase() + "\n\n" +
+                       "Click OK to copy the personalized message & open their chat.";
+
+      if (!confirm(confirmMsg)) return;
+
+      // Update claimed count in Firebase
+      try {
+        firebase.database().ref('promotions/' + promoId + '/public/claimedCount').transaction(function(c) {
+          return (c || 0) + 1;
+        });
+        if (promoData) promoData.claimedCount = claimed + 1;
+        updateVipPromoDropdown();
+      } catch (e) {
+        console.warn("Could not update claimedCount:", e);
+      }
+
+      proceedDispenseCoupon(supporter, promoName, code, promoId);
+    }
+
+    function proceedDispenseCoupon(supporter, promoName, code, promoId) {
+      var directLink = "https://play.google.com/redeem?code=" + encodeURIComponent(code);
+      var cleanName = supporter.name.replace(/^u//i, '');
+
+      // Format template
+      var template = document.getElementById('vip-custom-template') ? document.getElementById('vip-custom-template').value : '';
+      if (!template) {
+        template = "Hi {name}! Thank you so much for your previous 5-star review and support! Here is an exclusive promo code for my new release {promo_name}: {code} (Direct redeem: {direct_link}). Hope you enjoy it on your watch! A quick rating or feedback on Google Play means the world.";
+      }
+
+      var finalMsg = template
+        .replace(/{name}/g, cleanName)
+        .replace(/{promo_name}/g, promoName)
+        .replace(/{code}/g, code)
+        .replace(/{direct_link}/g, directLink);
+
+      // Copy to clipboard
+      try {
+        navigator.clipboard.writeText(finalMsg);
+      } catch (e) {
+        var ta = document.createElement('textarea');
+        ta.value = finalMsg;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+
+      // Record last sent
+      supporter.lastSent = {
+        promoId: promoId || '',
+        promoName: promoName,
+        code: code,
+        date: new Date().toLocaleDateString()
+      };
+      saveVipSupporters(window.vipSupportersList);
+      renderVipList();
+
+      if (typeof showToast === 'function') {
+        showToast("Copied DM for " + supporter.name + "! Opening chat...");
+      }
+
+      // Open Chat / Compose
+      setTimeout(function() {
+        if (supporter.platform === 'reddit') {
+          // Open Reddit Compose with prefilled message
+          var composeUrl = "https://www.reddit.com/message/compose/?to=" + encodeURIComponent(cleanName) + 
+                           "&subject=" + encodeURIComponent("Exclusive Watch Face Code: " + promoName) + 
+                           "&message=" + encodeURIComponent(finalMsg);
+          window.open(composeUrl, '_blank');
+        } else if (supporter.platform === 'facebook') {
+          if (supporter.link && supporter.link.includes('facebook.com')) {
+            window.open(supporter.link, '_blank');
+          } else {
+            window.open('https://www.facebook.com/messages/', '_blank');
+          }
+        } else if (supporter.platform === 'email') {
+          var mailtoUrl = "mailto:" + encodeURIComponent(cleanName) + 
+                          "?subject=" + encodeURIComponent("Exclusive Watch Face Code: " + promoName) + 
+                          "&body=" + encodeURIComponent(finalMsg);
+          window.location.href = mailtoUrl;
+        }
+      }, 300);
+    }
+
+    // Initialize VIP module immediately
+    loadVipSupporters();
+  </script>
+
 </body>
 </html>
