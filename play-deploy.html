@@ -1485,6 +1485,18 @@
                         <textarea id="publish-description" class="output-textarea" oninput="saveDeployState()" style="min-height: 85px; font-size: 12px; line-height: 1.4;" placeholder="Description for catalog, manager.json, and release txt..."></textarea>
                     </div>
 
+                    <!-- Google Play Console Dashboard URL or App ID -->
+                    <div style="margin-bottom: 12px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                            <label style="font-size: 11px; color: var(--text-muted); margin: 0;">Play Store Dashboard Link or App ID</label>
+                            <span id="console-id-preview" style="font-size: 10px; color: #64b5f6; font-weight: 600;">For /play-versions link</span>
+                        </div>
+                        <input type="text" id="publish-console-url" class="input-text" placeholder="Paste Play Console URL (e.g. .../app/497.../app-dashboard) or numeric ID" oninput="saveDeployState(); updateConsoleIdPreview();" style="font-size: 12px; padding: 8px 12px; width: 100%;">
+                        <div style="font-size: 10.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.3;">
+                            Automatically activates the <b>▶️ Play Console</b> direct link in <code>/play-versions</code>.
+                        </div>
+                    </div>
+
                     <button class="btn" id="btn-publish-catalog" onclick="triggerPublishCatalog()" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #28a745, #218838); border-color: #28a745;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         <span id="btn-publish-catalog-text">🚀 Publish to Website & Companion</span>
@@ -1754,6 +1766,7 @@
                 launchStrategy: document.getElementById('out-launch-strategy') ? document.getElementById('out-launch-strategy').value : '',
                 companionVersionCode: document.getElementById('companion-version-code') ? document.getElementById('companion-version-code').value : '2',
                 publishDescription: document.getElementById('publish-description') ? document.getElementById('publish-description').value : '',
+                publishConsoleUrl: document.getElementById('publish-console-url') ? document.getElementById('publish-console-url').value : '',
                 checklistSteps: window.currentChecklistSteps || [],
                 checklistStates: window.currentChecklistStates || [],
                 features: [],
@@ -1917,6 +1930,12 @@
                     } else if (!pubDesc.value.trim()) {
                         syncPublishDescription();
                     }
+                }
+
+                const pubConsole = document.getElementById('publish-console-url');
+                if (pubConsole && savedState.publishConsoleUrl !== undefined) {
+                    pubConsole.value = savedState.publishConsoleUrl;
+                    if (typeof updateConsoleIdPreview === 'function') updateConsoleIdPreview();
                 }
 
                 const outStrategy = document.getElementById('out-launch-strategy');
@@ -3134,6 +3153,29 @@ INSTRUCTIONS:
         // =========================================================
         // Post-Approval Catalog Publisher Integration
         // =========================================================
+        function updateConsoleIdPreview() {
+            const input = document.getElementById('publish-console-url');
+            const preview = document.getElementById('console-id-preview');
+            if (!input || !preview) return;
+            const val = input.value.trim();
+            if (!val) {
+                preview.textContent = 'For /play-versions link';
+                preview.style.color = '#64b5f6';
+                return;
+            }
+            const m = val.match(/(?:\/app\/|^)(\d{15,22})/);
+            if (m) {
+                preview.innerHTML = `✓ ID: <b>${m[1]}</b>`;
+                preview.style.color = '#a3e9b2';
+            } else if (/^\d+$/.test(val)) {
+                preview.innerHTML = `✓ ID: <b>${val}</b>`;
+                preview.style.color = '#a3e9b2';
+            } else {
+                preview.textContent = 'Paste URL with /app/<id>/';
+                preview.style.color = 'var(--warning)';
+            }
+        }
+
         function syncPublishDescription() {
             const desc = (document.getElementById('out-long-desc') && document.getElementById('out-long-desc').value)
                 || (document.getElementById('out-short-desc') && document.getElementById('out-short-desc').value) || '';
@@ -3224,12 +3266,15 @@ INSTRUCTIONS:
                 || (document.getElementById('out-short-desc') && document.getElementById('out-short-desc').value)
                 || '';
 
+            const consoleUrlInput = document.getElementById('publish-console-url');
+            const consoleUrl = consoleUrlInput ? consoleUrlInput.value.trim() : '';
+
             if (btn) btn.disabled = true;
             if (btnText) btnText.textContent = 'Publishing...';
             if (progress) progress.style.display = 'block';
             if (successBox) successBox.style.display = 'none';
             if (progressText) progressText.textContent = `Publishing CUE${num} Live...`;
-            if (progressDetail) progressDetail.textContent = 'Updating manager.json, descriptions, companion carousel, pushing to GitHub & deploying to Firebase...';
+            if (progressDetail) progressDetail.textContent = 'Updating manager.json, descriptions, console-app-ids, companion carousel, pushing to GitHub & deploying to Firebase...';
 
             fetch('http://127.0.0.1:8765/api/publish-manager', {
                 method: 'POST',
@@ -3242,7 +3287,8 @@ INSTRUCTIONS:
                     filters: filters,
                     isFree: isFree,
                     isNew: isNew,
-                    badgeText: isNew ? 'NEW RELEASE' : ''
+                    badgeText: isNew ? 'NEW RELEASE' : '',
+                    consoleUrl: consoleUrl
                 })
             })
             .then(res => res.json())
@@ -3259,9 +3305,13 @@ INSTRUCTIONS:
                                 <div>• Updated <b>manager.json</b> (description & filters: <span style="color: var(--primary);">${filters.join(', ')}</span>)</div>
                                 <div>• Created / Updated <b>D:\\MEGA\\Playstore\\${num}\\${num}.txt</b> (Social Post text)</div>
                                 <div>• Updated <b>All_Watch_Face_Descriptions.txt</b> master archive</div>
+                                ${data.consoleAppId ? `<div>• Updated <b>console-app-ids.json</b> (Play Console ID: <span style="color: #64b5f6;">${data.consoleAppId}</span> for <code>/play-versions</code>)</div>` : ''}
                                 <div>• Updated <b>badge_text_faces.json</b> (Companion Carousel)</div>
                                 <div>• Optimized <b>images/cue${num}.png</b> & <b>cue${num}.webp</b></div>
-                                <div style="margin-top: 6px;"><a href="${data.catalogUrl}" target="_blank" style="color: #a3e9b2; text-decoration: underline; font-weight: 700;">🔗 View live on creationcue.web.app →</a></div>
+                                <div style="margin-top: 6px; display: flex; gap: 14px; flex-wrap: wrap;">
+                                    <a href="${data.catalogUrl}" target="_blank" style="color: #a3e9b2; text-decoration: underline; font-weight: 700;">🔗 View live on creationcue.web.app →</a>
+                                    <a href="/play-versions" target="_blank" style="color: #64b5f6; text-decoration: underline; font-weight: 700;">📊 Open play-versions dashboard →</a>
+                                </div>
                             `;
                         }
                     }
