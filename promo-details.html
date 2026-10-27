@@ -950,11 +950,11 @@
           <div class="card-title" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <span>Claims Log</span>
             <div style="display:flex; align-items:center; gap:8px;">
-              <span id="lbl-claims-today" style="font-size: 13px; font-weight: 800; background: rgba(34, 197, 94, 0.18); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); padding: 3px 10px; border-radius: 12px; display: inline-flex; align-items: center; gap: 4px; letter-spacing: 0.3px;">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span id="lbl-claims-today" style="font-size: 16px; font-weight: 800; background: rgba(34, 197, 94, 0.18); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.45); padding: 4px 12px; border-radius: 12px; display: inline-flex; align-items: center; gap: 5px; letter-spacing: 0.3px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                 <span>0 Today</span>
               </span>
-              <span id="lbl-claims-count" style="font-size: 13.5px; font-weight: 800; background: rgba(255, 208, 0, 0.16); color: #ffd000; border: 1px solid rgba(255, 208, 0, 0.45); padding: 3px 11px; border-radius: 12px; letter-spacing: 0.3px;">0 Total</span>
+              <span id="lbl-claims-count" style="font-size: 16px; font-weight: 800; background: rgba(255, 208, 0, 0.16); color: #ffd000; border: 1px solid rgba(255, 208, 0, 0.45); padding: 4px 13px; border-radius: 12px; letter-spacing: 0.3px;">0 Total</span>
             </div>
           </div>
 
@@ -1674,6 +1674,10 @@
       db.ref('one_time_tokens').orderByChild('promoId').equalTo(promoId).once('value').then(function(snapshot) {
         var container = document.getElementById('one-time-links-container');
         var tokens = snapshot.val();
+        window.oneTimeTokensCache = tokens || {};
+        if (window.rawClaimsCache) {
+          renderClaimsHistory();
+        }
         
         var totalCoupons = promoData ? (promoData.totalCoupons || 0) : 0;
         var claimedCount = promoData ? (promoData.claimedCount || 0) : 0;
@@ -1870,9 +1874,9 @@
 
       if (!claims) {
         container.innerHTML = '<div class="empty-state">No claims recorded for this promotion.</div>';
-        if (countEl) countEl.textContent = "0 Total";
+        if (countEl) countEl.innerHTML = `<span style="font-weight:900;">0</span> Total`;
         if (todayEl) {
-          todayEl.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>0 Today</span>`;
+          todayEl.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span><span style="font-weight:900;">0</span> Today</span>`;
           todayEl.style.background = 'rgba(255, 255, 255, 0.05)';
           todayEl.style.borderColor = 'rgba(255, 255, 255, 0.12)';
           todayEl.style.color = 'var(--muted)';
@@ -1918,9 +1922,9 @@
         };
       });
 
-      if (countEl) countEl.textContent = `${keys.length} Total`;
+      if (countEl) countEl.innerHTML = `<span style="font-weight:900;">${keys.length}</span> Total`;
       if (todayEl) {
-        todayEl.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>${todayCount} Today</span>`;
+        todayEl.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span><span style="font-weight:900;">${todayCount}</span> Today</span>`;
         if (todayCount > 0) {
           todayEl.style.background = 'rgba(34, 197, 94, 0.18)';
           todayEl.style.borderColor = 'rgba(34, 197, 94, 0.45)';
@@ -1938,6 +1942,10 @@
       });
 
       container.innerHTML = claimsCache.map((c, idx) => {
+        var isOneTime = window.oneTimeTokensCache && Object.values(window.oneTimeTokensCache).some(t => {
+          return (t.claimedBy && t.claimedBy === c.uid) || (t.code && c.code && t.code !== 'undefined' && t.code === c.code);
+        });
+
         var details = [];
         if (c.os) details.push(`📱 ${c.os} (${c.browser})`);
         if (c.timezone) details.push(`🌍 ${c.timezone}`);
@@ -1948,8 +1956,9 @@
         return `
           <div class="claim-card">
             <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
-              <div style="display:flex; align-items:center; gap:6px; font-size:11.5px;">
+              <div style="display:flex; align-items:center; gap:6px; font-size:11.5px; flex-wrap:wrap;">
                 <span style="font-size:10px; font-weight:800; color:var(--green); background:rgba(34,197,94,0.18); padding:1px 6px; border-radius:3px; font-family:monospace; flex:none;">#${idx + 1}</span>
+                ${isOneTime ? `<span style="font-size:10px; font-weight:800; color:#38bdf8; background:rgba(56,189,248,0.16); border:1px solid rgba(56,189,248,0.35); padding:1px 6px; border-radius:3px; flex:none;" title="Claimed via a One-Time Claim Link">🎫 1-Time Link</span>` : ''}
                 <span class="claim-time" style="font-size:11.5px; color:var(--muted);">${c.time}</span>
               </div>
               <div style="display:flex; align-items:center; gap:6px;">
