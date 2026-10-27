@@ -3527,6 +3527,22 @@ INSTRUCTIONS:
             const consoleUrlInput = document.getElementById('publish-console-url');
             const consoleUrl = consoleUrlInput ? consoleUrlInput.value.trim() : '';
 
+            const confirmMsg = `🚀 Publish CUE${num} Live to Website & Companions?\n\n` +
+                `Review what will happen automatically:\n` +
+                `• Watch Face: CUE${num} (${selectedType.toUpperCase()})\n` +
+                `• Badges & Filters: ${filters.join(', ')}\n` +
+                `• Web Images: Generates optimized cue${num}.png & cue${num}.webp\n` +
+                `• Catalog: Adds CUE${num} to manager.json at the top\n` +
+                `• Companion Carousels: Adds CUE${num} to badge_text_faces.json\n` +
+                `• Social Post & Archive: Saves ${num}.txt & updates master descriptions\n` +
+                (consoleUrl ? `• Play Console Link: Connected to /play-versions dashboard\n` : '') +
+                `• Deployment: Git commit, push to GitHub & live Firebase deploy\n\n` +
+                `Click "OK" to proceed, or "Cancel" to go back.`;
+
+            if (!confirm(confirmMsg)) {
+                return;
+            }
+
             if (btn) btn.disabled = true;
             if (btnText) btnText.textContent = 'Publishing...';
             if (progress) progress.style.display = 'block';
