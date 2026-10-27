@@ -268,7 +268,8 @@
         pointer-events: none !important;
       }
 
-      body.admin-mode .search-filter-row {
+      body.admin-mode .search-filter-row,
+      body.admin-mode .deploy-tabs-nav {
         top: 104px !important;
       }
 
