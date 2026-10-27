@@ -361,17 +361,43 @@
     }
 
     .promo-stats {
-      font-family: 'Teko', sans-serif;
-      font-size: 22px;
-      display: flex;
-      gap: 14px;
-      color: var(--muted);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 6px 0;
+      padding: 10px 4px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 6px;
+      margin: 4px 0;
     }
 
-    .promo-stats span span { color: var(--yellow); }
+    .promo-stats .stat-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      text-align: center;
+    }
+
+    .promo-stats .stat-lbl {
+      font-size: 11px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+    }
+
+    .promo-stats .stat-num {
+      color: #ffd000;
+      font-family: 'Teko', sans-serif;
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    }
 
     .link-copy-row {
       display: flex;
@@ -480,7 +506,18 @@
     }
 
     .claim-time { color: var(--muted); }
-    .claim-code { font-family: monospace; color: var(--yellow); font-weight: bold; }
+    .claim-code {
+      font-family: monospace;
+      color: #ffd000;
+      font-weight: 800;
+      font-size: 13.5px;
+      letter-spacing: 0.5px;
+      background: rgba(255, 208, 0, 0.08);
+      border: 1px solid rgba(255, 208, 0, 0.25);
+      border-radius: 4px;
+      padding: 2px 7px;
+      display: inline-block;
+    }
 
     .direct-redeem-banner {
       display: flex;
@@ -716,11 +753,23 @@
               --
             </div>
 
-            <div class="promo-stats" style="justify-content: space-around;">
-              <span>Total: <span id="lbl-stat-total">--</span></span>
-              <span>Cap: <span id="lbl-stat-cap">--</span></span>
-              <span>Claimed: <span id="lbl-stat-claimed">--</span></span>
-              <span>Left: <span id="lbl-stat-remaining">--</span></span>
+            <div class="promo-stats">
+              <div class="stat-box">
+                <span class="stat-lbl">Total</span>
+                <span class="stat-num" id="lbl-stat-total">--</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-lbl">Cap</span>
+                <span class="stat-num" id="lbl-stat-cap">--</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-lbl">Claimed</span>
+                <span class="stat-num" id="lbl-stat-claimed">--</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-lbl">Left</span>
+                <span class="stat-num" id="lbl-stat-remaining">--</span>
+              </div>
             </div>
 
             <div class="form-group">
@@ -898,9 +947,15 @@
 
         <!-- Column 3: Claims History -->
         <div class="card" style="min-width: 0;">
-          <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="card-title" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <span>Claims Log</span>
-            <span id="lbl-claims-count" style="font-size: 14px; background: rgba(245, 197, 24, 0.15); color: var(--yellow); padding: 3px 10px; border-radius: 10px; font-weight: bold; border: 1px solid rgba(245, 197, 24, 0.2);">0 Claims</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span id="lbl-claims-today" style="font-size: 13px; font-weight: 800; background: rgba(34, 197, 94, 0.18); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); padding: 3px 10px; border-radius: 12px; display: inline-flex; align-items: center; gap: 4px; letter-spacing: 0.3px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <span>0 Today</span>
+              </span>
+              <span id="lbl-claims-count" style="font-size: 13.5px; font-weight: 800; background: rgba(255, 208, 0, 0.16); color: #ffd000; border: 1px solid rgba(255, 208, 0, 0.45); padding: 3px 11px; border-radius: 12px; letter-spacing: 0.3px;">0 Total</span>
+            </div>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 12px;">
@@ -1697,7 +1752,7 @@
                 <div class="token-claimed-box">
                   <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                     <span style="color:var(--muted); font-size:11px;">Claimed Code:</span>
-                    <span style="color:var(--yellow); font-family:monospace; font-weight:800; font-size:12.5px; cursor:pointer; letter-spacing:0.5px;" onclick="copyCodeOnly('${token.code}', event)" title="Click to copy coupon code">${token.code}</span>
+                    <span class="claim-code" style="cursor:pointer;" onclick="copyCodeOnly('${token.code}', event)" title="Click to copy coupon code">${token.code}</span>
                     <a href="https://play.google.com/redeem?code=${encodeURIComponent(token.code)}" target="_blank" rel="noopener noreferrer" class="btn small" style="padding:2px 7px; font-size:10px; height:auto; background:rgba(37,99,235,0.18); color:#60a5fa; border:1px solid rgba(37,99,235,0.35); display:inline-flex; align-items:center; gap:3px; cursor:pointer; text-decoration:none;" title="Left-click to test on Play (or right-click to Open in Incognito)">↗ Test</a>
                   </div>
                   <div style="font-size:10.5px; color:var(--muted); font-family:monospace;">
@@ -1810,10 +1865,18 @@
       var claims = window.rawClaimsCache;
       var container = document.getElementById('claims-history-box');
       var aiBtn = document.getElementById('btn-ai-analyze');
+      var countEl = document.getElementById('lbl-claims-count');
+      var todayEl = document.getElementById('lbl-claims-today');
 
       if (!claims) {
         container.innerHTML = '<div class="empty-state">No claims recorded for this promotion.</div>';
-        document.getElementById('lbl-claims-count').textContent = "0 Claims";
+        if (countEl) countEl.textContent = "0 Total";
+        if (todayEl) {
+          todayEl.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>0 Today</span>`;
+          todayEl.style.background = 'rgba(255, 255, 255, 0.05)';
+          todayEl.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+          todayEl.style.color = 'var(--muted)';
+        }
         aiBtn.disabled = true;
         aiBtn.style.opacity = '0.5';
         aiBtn.style.cursor = 'not-allowed';
@@ -1826,11 +1889,17 @@
       aiBtn.style.cursor = 'pointer';
 
       var keys = Object.keys(claims);
-      document.getElementById('lbl-claims-count').textContent = `${keys.length} Claims`;
+      var now = new Date();
+      var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+      var todayCount = 0;
 
       // Map and sort claims (newest first)
       claimsCache = keys.map(uid => {
         var c = claims[uid];
+        var t = c.timestamp || 0;
+        if (t >= startOfToday) {
+          todayCount++;
+        }
         var resolvedCode = c.code;
         if ((!resolvedCode || resolvedCode === 'undefined') && c.index !== undefined && window.promoCodesCache) {
           resolvedCode = window.promoCodesCache[c.index] || 'undefined';
@@ -1838,8 +1907,8 @@
         return {
           uid: uid,
           code: resolvedCode || 'undefined',
-          timestamp: c.timestamp || 0,
-          time: c.timestamp ? formatDateTime(c.timestamp, true) : 'Unknown',
+          timestamp: t,
+          time: t ? formatDateTime(t, true) : 'Unknown',
           device: c.device || '',
           os: c.os || '',
           browser: c.browser || '',
@@ -1848,6 +1917,20 @@
           referrer: c.referrer || ''
         };
       });
+
+      if (countEl) countEl.textContent = `${keys.length} Total`;
+      if (todayEl) {
+        todayEl.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>${todayCount} Today</span>`;
+        if (todayCount > 0) {
+          todayEl.style.background = 'rgba(34, 197, 94, 0.18)';
+          todayEl.style.borderColor = 'rgba(34, 197, 94, 0.45)';
+          todayEl.style.color = '#4ade80';
+        } else {
+          todayEl.style.background = 'rgba(255, 255, 255, 0.05)';
+          todayEl.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+          todayEl.style.color = 'var(--muted)';
+        }
+      }
 
       // Sort by timestamp descending (newest first)
       claimsCache.sort(function(a, b) {
@@ -1870,7 +1953,7 @@
                 <span class="claim-time" style="font-size:11.5px; color:var(--muted);">${c.time}</span>
               </div>
               <div style="display:flex; align-items:center; gap:6px;">
-                <span class="claim-code" style="font-size:12.5px; font-family:monospace; color:var(--yellow); font-weight:800; cursor:pointer; letter-spacing:0.5px;" onclick="copyCodeOnly('${c.code}', event)" title="Guest UID: ${c.uid} • Click to copy code">${c.code}</span>
+                <span class="claim-code" style="cursor:pointer;" onclick="copyCodeOnly('${c.code}', event)" title="Guest UID: ${c.uid} • Click to copy code">${c.code}</span>
                 <a href="https://play.google.com/redeem?code=${encodeURIComponent(c.code)}" target="_blank" rel="noopener noreferrer" class="btn small" style="padding:2px 7px; font-size:10px; height:auto; background:rgba(37,99,235,0.18); color:#60a5fa; border:1px solid rgba(37,99,235,0.35); display:inline-flex; align-items:center; gap:2px; cursor:pointer; text-decoration:none;" title="Left-click to test on Play (or right-click to Open in Incognito)">↗ Test</a>
               </div>
             </div>
