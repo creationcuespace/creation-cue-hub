@@ -213,26 +213,89 @@
             background: var(--primary-glow);
         }
 
-        /* Container Layout */
+        /* Container Layout & Tabs */
         .app-container {
             width: 100%;
-            max-width: 1800px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 24px;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr 0.8fr;
-            gap: 24px;
+            padding: 20px 24px 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
             flex: 1;
         }
 
-        @media (max-width: 1400px) {
-            .app-container {
-                grid-template-columns: 1fr 1fr;
-            }
+        .deploy-topbar {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            padding: 14px 20px;
+            box-shadow: 0 4px 20px var(--glass-shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .deploy-tabs-nav {
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            overflow-x: auto;
+        }
+
+        .deploy-tab-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition-smooth);
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .deploy-tab-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            border-color: var(--text-muted);
+        }
+
+        .deploy-tab-btn.active {
+            background: rgba(241, 179, 28, 0.12);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 2px 14px rgba(241, 179, 28, 0.2);
+        }
+
+        .tab-pane {
+            display: none;
+            width: 100%;
+        }
+
+        .tab-pane.active {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            animation: tabFadeIn 0.22s ease;
+        }
+
+        @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 1024px) {
-            .app-container {
+            .tab-pane.active {
                 grid-template-columns: 1fr;
             }
         }
@@ -984,21 +1047,57 @@
 
         <!-- Body content -->
         <main class="app-container">
-            <!-- Left Side Inputs -->
-            <div style="display: flex; flex-direction: column; gap: 24px;">
-                <!-- Package ID generator -->
-                <div class="card zone-input">
-                    <div class="card-title">
-                        <div><span class="badge-tag badge-input">Input</span> Package ID Generator</div>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+            <!-- Persistent Topbar for Current Watch Face & Quick Actions -->
+            <div class="deploy-topbar">
+                <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Watch Face:</span>
+                        <div style="display: flex; align-items: center; background: rgba(0,0,0,0.6); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 4px 10px;">
+                            <span style="font-weight: 800; color: var(--primary); font-size: 15px; margin-right: 4px;">CUE</span>
+                            <input type="number" id="package-num" class="input-text" placeholder="180" min="1" step="1" style="width: 75px; padding: 4px 2px; font-size: 15px; font-weight: 800; border: none; background: transparent; box-shadow: none; color: #fff;" oninput="saveDeployState(); if(typeof updatePackageId === 'function') updatePackageId();">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="package-num">Watch Face Number</label>
-                        <input type="number" id="package-num" class="input-text" placeholder="e.g. 178" min="1" step="1" oninput="saveDeployState(); if(typeof updatePackageId === 'function') updatePackageId();">
+
+                    <div style="display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 6px 12px;">
+                        <span style="font-size: 11px; font-weight: 600; color: var(--text-muted);">Package ID:</span>
+                        <span id="out-package-id" style="font-family: monospace; font-size: 13.5px; font-weight: 700; color: var(--primary);">com.creation.cue___watchface</span>
+                        <button class="btn btn-secondary btn-sm" style="padding: 3px 8px; font-size: 11px; height: auto;" onclick="copyText('out-package-id', 'Package ID')">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            Copy
+                        </button>
                     </div>
                 </div>
 
-                <!-- Short Description AI Generator -->
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span id="top-companion-status" onclick="checkCompanionServer(true)" title="Click to refresh local helper status" style="font-size: 11.5px; font-weight: 600; padding: 5px 12px; border-radius: 12px; display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.04); color: var(--text-muted); border: 1px solid var(--border-color); cursor: pointer;">
+                        <span id="top-companion-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #888;"></span>
+                        <span id="top-companion-label">Checking helper...</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Deploy Workflow Tabs Navigation -->
+            <div class="deploy-tabs-nav">
+                <button class="deploy-tab-btn active" id="tab-btn-content" onclick="switchDeployTab('content')">
+                    <span style="font-size: 16px;">✍️</span>
+                    <span>1. Content & AI</span>
+                </button>
+                <button class="deploy-tab-btn" id="tab-btn-console" onclick="switchDeployTab('console')">
+                    <span style="font-size: 16px;">📦</span>
+                    <span>2. Play Console & Companion</span>
+                    <span id="tab-checklist-badge" style="font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: rgba(255, 193, 7, 0.15); color: var(--primary); border: 1px solid rgba(255, 193, 7, 0.3);">0/7</span>
+                </button>
+                <button class="deploy-tab-btn" id="tab-btn-publish" onclick="switchDeployTab('publish')">
+                    <span style="font-size: 16px;">🚀</span>
+                    <span>3. Publish & Launch</span>
+                    <span style="font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: rgba(40, 167, 69, 0.15); color: #a3e9b2; border: 1px solid rgba(40, 167, 69, 0.3);">Post-Approval</span>
+                </button>
+            </div>
+
+            <!-- TAB 1: Content & AI -->
+            <div class="tab-pane active" id="tab-pane-content">
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Short Description AI Generator -->
                 <div class="card zone-input">
                     <div class="card-title">
                         <div><span class="badge-tag badge-input">Input</span> Short Description Generator</div>
@@ -1058,8 +1157,7 @@
                         <span>Generate Short Description</span>
                     </button>
                 </div>
-
-                <!-- Long Description Features checklist -->
+                    <!-- Long Description Features checklist -->
                 <div class="card zone-input">
                     <div class="card-title">
                         <div><span class="badge-tag badge-input">Input</span> Features Checklist</div>
@@ -1092,11 +1190,9 @@
                         </button>
                     </div>
                 </div>
-            </div>
-
-            <!-- Right Side Outputs -->
-            <div style="display: flex; flex-direction: column; gap: 24px;">
-                <!-- Live Output Card -->
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Live Output Card -->
                 <div class="card zone-gen">
                     <div class="card-title">
                         <div><span class="badge-tag badge-gen">Auto-Generated</span> Generated Store Content</div>
@@ -1163,11 +1259,13 @@
                     </div>
 
                 </div>
+                </div>
             </div>
 
-            <!-- Third Column (Config & Checklist) -->
-            <div style="display: flex; flex-direction: column; gap: 24px; position: sticky; top: 88px;">
-                <!-- App Config Card -->
+            <!-- TAB 2: Play Console & Companion -->
+            <div class="tab-pane" id="tab-pane-console">
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- App Config Card -->
                 <div class="card zone-config" style="margin-top: 0;">
                     <div class="card-title">
                         <div><span class="badge-tag badge-config">Static</span> App Identity</div>
@@ -1178,8 +1276,8 @@
                     <div class="form-group">
                         <label>Package ID</label>
                         <div class="output-box-wrapper" style="padding: 12px 16px;">
-                            <span id="out-package-id" style="font-family: monospace; font-size: 14px; font-weight: 600; color: var(--primary);">com.creation.cue___watchface</span>
-                            <button class="copy-overlay-btn" onclick="copyText('out-package-id', 'Package ID')">
+                            <span id="out-package-id-static" style="font-family: monospace; font-size: 14px; font-weight: 600; color: var(--primary);">com.creation.cue___watchface</span>
+                            <button class="copy-overlay-btn" onclick="copyText('out-package-id-static', 'Package ID')">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                                 Copy
                             </button>
@@ -1239,9 +1337,7 @@
                         </div>
                     </div>
                 </div>
-
-                
-                <!-- Companion App Builder Card -->
+                    <!-- Companion App Builder Card -->
                 <div class="card zone-config" style="margin-top: 0; border: 1px solid rgba(255, 193, 7, 0.35); box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
                     <div class="card-title">
                         <div><span class="badge-tag" style="background: rgba(255, 193, 7, 0.15); color: var(--primary);">Companion</span> Phone App (.aab)</div>
@@ -1309,10 +1405,25 @@
                         </div>
                     </details>
 </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Deployment Checklist Card -->
+                <div class="card zone-config" style="margin-top: 0;">
+                    <div class="card-title">
+                        <div><span class="badge-tag badge-config">Action</span> Deployment Checklist</div>
+                        <button class="header-btn" style="font-size: 11px; padding: 4px 8px; border-radius: 4px;" onclick="toggleChecklistEdit()" id="btn-edit-checklist">Edit Steps</button>
+                    </div>
+                    <div class="form-group" id="checklist-container">
+                        <!-- steps will be generated via JS -->
+                    </div>
+                </div>
+                </div>
+            </div>
 
-
-                
-                <!-- Post-Approval Catalog Publisher Card -->
+            <!-- TAB 3: Publish & Launch -->
+            <div class="tab-pane" id="tab-pane-publish">
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Post-Approval Catalog Publisher Card -->
                 <div class="card zone-config" style="margin-top: 0; border: 1px solid rgba(40, 167, 69, 0.4); box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
                     <div class="card-title">
                         <div><span class="badge-tag" style="background: rgba(40, 167, 69, 0.15); color: #28a745;">Post-Approval</span> Publish to Catalog</div>
@@ -1422,9 +1533,9 @@
                         </div>
                     </details>
 </div>
-
-
-                <!-- Launch Strategy & Notes Card -->
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Launch Strategy & Notes Card -->
                 <div class="card zone-config" style="margin-top: 0;">
                     <div class="card-title">
                         <div><span class="badge-tag badge-config">Strategy</span> Launch Plan & Notes</div>
@@ -1440,18 +1551,36 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Deployment Checklist Card -->
-                <div class="card zone-config" style="margin-top: 0;">
-                    <div class="card-title">
-                        <div><span class="badge-tag badge-config">Action</span> Deployment Checklist</div>
-                        <button class="header-btn" style="font-size: 11px; padding: 4px 8px; border-radius: 4px;" onclick="toggleChecklistEdit()" id="btn-edit-checklist">Edit Steps</button>
-                    </div>
-                    <div class="form-group" id="checklist-container">
-                        <!-- steps will be generated via JS -->
+                                        <!-- Quick Tools & Promotion Shortcuts Card -->
+                    <div class="card zone-config" style="margin-top: 0;">
+                        <div class="card-title">
+                            <div><span class="badge-tag" style="background: rgba(245, 197, 24, 0.15); color: var(--primary);">Shortcuts</span> Release & Promotion Hub</div>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
+                            <a href="/manage-coupons" target="_blank" class="btn btn-secondary" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 12px 16px;">
+                                <span style="display: flex; align-items: center; gap: 8px;">
+                                    <span>⭐</span> <b>VIP Supporters & 1-Click DM Dispenser</b>
+                                </span>
+                                <span style="color: var(--primary); font-size: 12px;">Open →</span>
+                            </a>
+                            <a href="https://play.google.com/console" target="_blank" class="btn btn-secondary" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 12px 16px;">
+                                <span style="display: flex; align-items: center; gap: 8px;">
+                                    <span>🎮</span> <b>Google Play Console</b>
+                                </span>
+                                <span style="color: var(--primary); font-size: 12px;">Open →</span>
+                            </a>
+                            <a href="/" target="_blank" class="btn btn-secondary" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 12px 16px;">
+                                <span style="display: flex; align-items: center; gap: 8px;">
+                                    <span>🌐</span> <b>Creation Cue Hub Live</b>
+                                </span>
+                                <span style="color: var(--primary); font-size: 12px;">Open →</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </main>
     </div>
 
@@ -1838,6 +1967,41 @@ Don't second-guess yourself! 200 free coupons = €0 revenue and zero algorithm 
             }
         }
 
+        
+        // =========================================================
+        // Deploy Tabs Navigation
+        // =========================================================
+        function switchDeployTab(tabKey) {
+            document.querySelectorAll('.deploy-tab-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`tab-btn-${tabKey}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+            const activePane = document.getElementById(`tab-pane-${tabKey}`);
+            if (activePane) activePane.classList.add('active');
+
+            try {
+                localStorage.setItem('cc_active_deploy_tab', tabKey);
+            } catch (_) {}
+        }
+
+        function updateChecklistBadge() {
+            const badge = document.getElementById('tab-checklist-badge');
+            const steps = window.currentChecklistSteps || [];
+            if (!badge || steps.length === 0) return;
+            const done = (window.currentChecklistStates || []).filter(Boolean).length;
+            badge.textContent = `${done}/${steps.length}`;
+            if (done === steps.length) {
+                badge.style.background = 'rgba(40, 167, 69, 0.2)';
+                badge.style.color = '#a3e9b2';
+                badge.style.borderColor = 'rgba(40, 167, 69, 0.4)';
+            } else {
+                badge.style.background = 'rgba(255, 193, 7, 0.15)';
+                badge.style.color = 'var(--primary)';
+                badge.style.borderColor = 'rgba(255, 193, 7, 0.3)';
+            }
+        }
+
         function initializePage() {
             // Load key and settings from LocalStorage
             const storedKey = localStorage.getItem('cc_gemini_api_key') || '';
@@ -1848,6 +2012,12 @@ Don't second-guess yourself! 200 free coupons = €0 revenue and zero algorithm 
 
             const storedVersion = localStorage.getItem('cc_gemini_version') || 'v1';
             document.getElementById('gemini-version').value = storedVersion;
+
+            // Restore active deploy tab
+            const savedDeployTab = localStorage.getItem('cc_active_deploy_tab') || 'content';
+            if (['content', 'console', 'publish'].includes(savedDeployTab)) {
+                switchDeployTab(savedDeployTab);
+            }
 
             // Default checklist if nothing exists
             window.currentChecklistSteps = [
@@ -2667,6 +2837,7 @@ INSTRUCTIONS:
             }
             
             container.innerHTML = '';
+            if (typeof updateChecklistBadge === 'function') updateChecklistBadge();
             steps.forEach((step, index) => {
                 const stepRow = document.createElement('div');
                 stepRow.style.display = 'flex';
@@ -2705,6 +2876,7 @@ INSTRUCTIONS:
                         input.style.textDecoration = 'none';
                         input.style.opacity = '1';
                     }
+                    if (typeof updateChecklistBadge === 'function') updateChecklistBadge();
                     saveDeployState();
                 };
                 
@@ -2774,7 +2946,10 @@ INSTRUCTIONS:
             const badge = document.getElementById('companion-server-badge');
             const dot = document.getElementById('companion-server-dot');
             const label = document.getElementById('companion-server-label');
+            const topDot = document.getElementById('top-companion-dot');
+            const topLabel = document.getElementById('top-companion-label');
             if (label && !isCompanionServerOnline) label.textContent = 'Checking...';
+            if (topLabel && !isCompanionServerOnline) topLabel.textContent = 'Checking...';
 
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 2000);
