@@ -358,10 +358,18 @@
 
         .deploy-tabs-nav {
             display: flex;
+            align-items: center;
+            justify-content: space-between;
             gap: 10px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
+            padding: 10px 0 12px;
             overflow-x: auto;
+            position: sticky;
+            top: 60px;
+            z-index: 90;
+            background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
 
         .deploy-tab-btn {
@@ -1195,22 +1203,27 @@
                 </div>
             </div>
 
-            <!-- Deploy Workflow Tabs Navigation -->
+            <!-- Deploy Workflow Tabs Navigation (Sticky) -->
             <div class="deploy-tabs-nav">
-                <button class="deploy-tab-btn active" id="tab-btn-content" onclick="switchDeployTab('content')">
-                    <span style="font-size: 16px;">✍️</span>
-                    <span>1. Content & AI</span>
-                </button>
-                <button class="deploy-tab-btn" id="tab-btn-console" onclick="switchDeployTab('console')">
-                    <span style="font-size: 16px;">📦</span>
-                    <span>2. Play Console & Companion</span>
-                    <span id="tab-checklist-badge" style="font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: rgba(255, 193, 7, 0.15); color: var(--primary); border: 1px solid rgba(255, 193, 7, 0.3);">0/7</span>
-                </button>
-                <button class="deploy-tab-btn" id="tab-btn-publish" onclick="switchDeployTab('publish')">
-                    <span style="font-size: 16px;">🚀</span>
-                    <span>3. Publish & Launch</span>
-                    <span style="font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: rgba(40, 167, 69, 0.15); color: #a3e9b2; border: 1px solid rgba(40, 167, 69, 0.3);">Post-Approval</span>
-                </button>
+                <div style="display: flex; gap: 10px; align-items: center; flex: 1; overflow-x: auto;">
+                    <button class="deploy-tab-btn active" id="tab-btn-content" onclick="switchDeployTab('content')">
+                        <span style="font-size: 16px;">✍️</span>
+                        <span>1. Content & AI</span>
+                    </button>
+                    <button class="deploy-tab-btn" id="tab-btn-console" onclick="switchDeployTab('console')">
+                        <span style="font-size: 16px;">📦</span>
+                        <span>2. Play Console & Companion</span>
+                        <span id="tab-checklist-badge" style="font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: rgba(255, 193, 7, 0.15); color: var(--primary); border: 1px solid rgba(255, 193, 7, 0.3);">0/7</span>
+                    </button>
+                    <button class="deploy-tab-btn" id="tab-btn-publish" onclick="switchDeployTab('publish')">
+                        <span style="font-size: 16px;">🚀</span>
+                        <span>3. Publish & Launch</span>
+                        <span style="font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: rgba(40, 167, 69, 0.15); color: #a3e9b2; border: 1px solid rgba(40, 167, 69, 0.3);">Post-Approval</span>
+                    </button>
+                </div>
+                <div id="sticky-face-pill" style="display: none; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 13px; font-weight: 800; color: var(--primary); background: rgba(255, 193, 7, 0.1); border: 1px solid rgba(255, 193, 7, 0.25); padding: 4px 10px; border-radius: 8px; white-space: nowrap;">
+                    <span id="sticky-face-text">CUE---</span>
+                </div>
             </div>
 
             <!-- TAB 1: Content & AI -->
@@ -1456,6 +1469,8 @@
                         </div>
                     </div>
                 </div>
+                    </div>
+                <div style="display: flex; flex-direction: column; gap: 24px;">
                     <!-- Companion App Builder Card -->
                 <div class="card zone-config" style="margin-top: 0; border: 1px solid rgba(255, 193, 7, 0.35); box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
                     <div class="card-title">
@@ -1524,8 +1539,6 @@
                         </div>
                     </details>
 </div>
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 24px;">
                     <!-- Deployment Checklist Card -->
                 <div class="card zone-config" style="margin-top: 0;">
                     <div class="card-title">
@@ -2185,6 +2198,21 @@ Don't second-guess yourself! 200 free coupons = €0 revenue and zero algorithm 
         // =========================================================
         // Deploy Tabs Navigation
         // =========================================================
+
+        function updateStickyFacePill() {
+            const num = document.getElementById('package-num') ? document.getElementById('package-num').value.trim() : '';
+            const pill = document.getElementById('sticky-face-pill');
+            const txt = document.getElementById('sticky-face-text');
+            if (pill && txt) {
+                if (num) {
+                    txt.textContent = `CUE${num}`;
+                    pill.style.display = 'inline-flex';
+                } else {
+                    pill.style.display = 'none';
+                }
+            }
+        }
+
         function switchDeployTab(tabKey) {
             document.querySelectorAll('.deploy-tab-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.getElementById(`tab-btn-${tabKey}`);
@@ -2235,6 +2263,7 @@ Don't second-guess yourself! 200 free coupons = €0 revenue and zero algorithm 
 
             // Initial pass for empty vs filled fields
             refreshFieldStates();
+            updateStickyFacePill();
 
             // Default checklist if nothing exists
             window.currentChecklistSteps = [
@@ -2439,6 +2468,9 @@ Don't second-guess yourself! 200 free coupons = €0 revenue and zero algorithm 
             }
             if (typeof updatePublishFilters === 'function') {
                 updatePublishFilters();
+            }
+            if (typeof updateStickyFacePill === 'function') {
+                updateStickyFacePill();
             }
         }
 
