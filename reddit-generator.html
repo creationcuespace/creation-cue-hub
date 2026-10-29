@@ -1221,9 +1221,9 @@ Links to claim your free code and the Play Store link are in the first comment b
               <span class="step-number-badge orange">10</span>
               <span>When Coupons Are Gone (Edit into top comment)</span>
             </span>
-            <button class="copy-btn" onclick="copyField('output-expired', 'Expired Message')">
+            <button class="copy-btn" onclick="copyExpiredAndOpenReddit()" title="Copy expired message to clipboard and open your live Reddit post">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              Copy Expired Notice
+              Copy Expired Notice &amp; Open Reddit ↗
             </button>
           </div>
           <textarea id="output-expired" class="text-output-area" rows="6" placeholder="Ready-to-paste expired notice..."></textarea>
@@ -1838,6 +1838,15 @@ Links to claim your free code and the Play Store link are in the first comment b
         }
       }
 
+      // Auto-prefill post URL if known from active campaign
+      var urlInput = document.getElementById('log-post-url-input');
+      if (urlInput) {
+        var campPostUrl = (item.activeCampaign && item.activeCampaign.postUrl) ? item.activeCampaign.postUrl : '';
+        if (campPostUrl && !urlInput.value) {
+          urlInput.value = campPostUrl;
+        }
+      }
+
       // Update Live Tracker
       updateLiveTracker(item);
 
@@ -2251,6 +2260,40 @@ Links to claim your free code and the Play Store link are in the first comment b
       }).catch(function() {
         showToast(label + ' copied!');
       });
+    }
+
+    // Copy expired notice and directly open Reddit post in new tab
+    function copyExpiredAndOpenReddit() {
+      var el = document.getElementById('output-expired');
+      if (!el) return;
+      el.select();
+      el.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(el.value).then(function() {
+        showToast('Expired notice copied! Opening Reddit post...');
+      }).catch(function() {
+        showToast('Expired notice copied!');
+      });
+
+      // Find the best Reddit post URL
+      var postUrl = '';
+      var urlInput = document.getElementById('log-post-url-input');
+      if (urlInput && urlInput.value && urlInput.value.trim().startsWith('http')) {
+        postUrl = urlInput.value.trim();
+      } else if (selectedItem && selectedItem.activeCampaign && selectedItem.activeCampaign.postUrl) {
+        postUrl = selectedItem.activeCampaign.postUrl;
+      } else if (promotionsData && selectedItem && promotionsData[selectedItem.promoId] && promotionsData[selectedItem.promoId].public && promotionsData[selectedItem.promoId].public.active_campaign && promotionsData[selectedItem.promoId].public.active_campaign.postUrl) {
+        postUrl = promotionsData[selectedItem.promoId].public.active_campaign.postUrl;
+      }
+
+      if (!postUrl) {
+        var subSelect = document.getElementById('log-subreddit-select');
+        var subVal = subSelect ? subSelect.value : 'r/WearOSFaces';
+        postUrl = 'https://www.reddit.com/' + subVal.replace(/^r\//, 'r/') + '/';
+      }
+
+      if (postUrl) {
+        window.open(postUrl, '_blank');
+      }
     }
 
     // Remember clicked subreddit from top Quick Reddit Launcher buttons
