@@ -196,19 +196,24 @@
 
         .profile-avatar-wrapper {
             position: relative;
-            width: 100px;
-            height: 120px;
-            margin: 0 auto 10px;
+            width: 104px;
+            height: 104px;
+            margin: 0 auto 14px;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: radial-gradient(circle at 30% 30%, rgba(212, 163, 89, 0.15), rgba(15, 23, 42, 0.8) 70%);
+            border: 1.5px solid rgba(212, 163, 89, 0.45);
+            border-radius: 50%;
+            padding: 18px;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .profile-avatar-img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.65));
+            filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.6));
         }
 
         .profile-logo-badge {
@@ -557,10 +562,7 @@
             <!-- Person Info & Discrete vCard Save Button -->
             <div class="person-info-section">
                 <div class="profile-avatar-wrapper">
-                    <img src="images/sotiris.png" alt="Sotirios Liontos" class="profile-avatar-img">
-                    <div class="profile-logo-badge" title="CreationCue Designer">
-                        <img src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" alt="Logo" class="badge-logo-img">
-                    </div>
+                    <img src="images/creationcue_logo_greyscale_3d.svg" alt="CreationCue" class="profile-avatar-img">
                 </div>
                 <div class="person-name">Sotirios Liontos</div>
                 <div class="person-role">Digital design UI | UX</div>
