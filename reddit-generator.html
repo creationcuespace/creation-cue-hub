@@ -1011,23 +1011,6 @@
 
   <!-- Main Container -->
   <main class="container">
-    <!-- Top Hero Banner -->
-    <div class="hero-banner">
-      <div class="hero-text">
-        <h1>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--reddit-orange)"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm4.5 11.5c-.5.5-1.5 1-2.5 1s-2-.5-2.5-1m5-3.5a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0zm-6 0a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg>
-          Reddit 1-Click Post & Giveaway Formatter
-        </h1>
-        <p>
-          Select an active promotion below. This tool automatically formats your title, image post body, and comment with the safe, direct <code>creationcue.web.app/claim</code> link (100% free of URL shorteners that trigger Reddit spam bans).
-        </p>
-      </div>
-      <div class="reddit-safe-badge">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        Reddit Anti-Spam Compliant
-      </div>
-    </div>
-
     <!-- Quick Launcher Bar -->
     <div class="action-bar">
       <div>
@@ -1410,7 +1393,7 @@ Links to claim your free code and the Play Store link are in the first comment b
         <span>🎯 Strategy Playbook</span>
       </button>
       <button type="button" class="footer-tool-btn" onclick="openFooterTool('automation')">
-        <span>⚡ How to Automate Giveaway</span>
+        <span>⚡ Automation &amp; Safety Guide</span>
       </button>
       <button type="button" class="footer-tool-btn" onclick="openFooterTool('direct-link')">
         <span>🔗 Direct Play Store Link</span>
@@ -2473,15 +2456,27 @@ Links to claim your free code and the Play Store link are in the first comment b
           </div>
         `;
       } else if (tool === 'automation') {
-        title.innerHTML = '⚡ How the Automated Giveaway Flow Works';
+        title.innerHTML = '⚡ Automation, Speed Tracking &amp; Anti-Spam Safety';
         body.innerHTML = `
-          <ol style="padding-left: 20px; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: #e2e8f0; line-height: 1.6;">
-            <li><strong>Launch Giveaway on Reddit:</strong> Post your title, banner image, and drop the first comment with the direct claim link.</li>
-            <li><strong>Click "Log to Analytics" in Step 6:</strong> Starts the stopwatch timer in the database (<code>startedAt</code>) and logs the campaign.</li>
-            <li><strong>Users Claim Coupons:</strong> Real-time claims count down on <code>creationcue.web.app/claim</code> until your cap is hit.</li>
-            <li><strong>Automatic Depletion Calculation:</strong> When the last coupon is taken, the system instantly computes total elapsed time, attaches it to your <strong>ntfy phone alert</strong> (e.g. <em>"🚨 COUPONS GONE: CUE162! (Claimed in ~40 mins)"</em>), and writes the depletion minutes.</li>
-            <li><strong>Visible in Analytics:</strong> Shows up on <a href="https://cue-earnings.sotsor.workers.dev/analytics" target="_blank" style="color:#60a5fa; text-decoration:underline;">cue-earnings Analytics ↗</a> with the speed badge.</li>
-          </ol>
+          <div style="display:flex; flex-direction:column; gap:14px;">
+            <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:8px; padding:12px 14px;">
+              <div style="font-weight:700; color:#34d399; font-size:13.5px; margin-bottom:6px;">🛡️ 100% Reddit Anti-Spam Compliant</div>
+              <p style="font-size:12.5px; color:#cbd5e1; margin:0; line-height:1.5;">
+                This generator automatically formats your title, image post body, and comment with the safe, direct <code>creationcue.web.app/claim</code> link—<strong>100% free of URL shorteners</strong> (spoo.me, bitly, tinyurl) that trigger Reddit AutoModerator removals and domain bans.
+              </p>
+            </div>
+
+            <div style="background:rgba(255,69,0,0.08); border:1px solid rgba(255,69,0,0.3); border-radius:8px; padding:12px 14px;">
+              <div style="font-weight:700; color:#ff8b60; font-size:13.5px; margin-bottom:6px;">⚡ Automated Flow &amp; Speed Tracking:</div>
+              <ol style="padding-left: 20px; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; color: #e2e8f0; line-height: 1.5;">
+                <li><strong>Launch on Reddit:</strong> Post your title, banner image, and drop the comment with the direct claim link.</li>
+                <li><strong>Click "Log to Analytics" in Step 6:</strong> Starts the stopwatch timer in Firebase (<code>startedAt</code>).</li>
+                <li><strong>Users Claim Coupons:</strong> Real-time claims count down on <code>claim.html</code> until your cap is hit.</li>
+                <li><strong>Automatic Depletion Calculation:</strong> When the last coupon is taken, the system instantly computes total elapsed time, pushes an instant <strong>ntfy phone alert</strong> (e.g. <em>"🚨 COUPONS GONE: CUE162! (Claimed in ~40 mins)"</em>), and writes the depletion minutes.</li>
+                <li><strong>Analytics Sync:</strong> Recorded on <a href="https://cue-earnings.sotsor.workers.dev/analytics" target="_blank" style="color:#60a5fa; text-decoration:underline;">cue-earnings Analytics ↗</a> with the speed badge.</li>
+              </ol>
+            </div>
+          </div>
         `;
       } else if (tool === 'direct-link') {
         title.innerHTML = '🔗 Direct Google Play Redeem Link Generator';
