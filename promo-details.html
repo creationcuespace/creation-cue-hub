@@ -1282,11 +1282,20 @@
       textInput.value = formatHumanDate(new Date(pickerVal + "Z"));
     };
 
-    // Google Sign-In Gate
+    // Google Sign-In Gate with token freshness guard
     auth.onAuthStateChanged(function (user) {
       if (user && (user.email === 'sotsor@gmail.com' || user.uid === 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || user.uid === 'JKq9NWxPshRbCEXjV2eTUVV6A992')) {
         document.getElementById('login-overlay').style.display = 'none';
-        initDetails();
+        
+        // Ensure token is fresh and database connection is online
+        user.getIdToken(false).then(function() {
+          try { db.goOnline(); } catch (e) {}
+          initDetails();
+        }).catch(function(err) {
+          console.warn("Token verify notice:", err);
+          try { db.goOnline(); } catch (e) {}
+          initDetails();
+        });
       } else {
         document.getElementById('login-overlay').style.display = 'flex';
         document.getElementById('loading-state').style.display = 'none';
@@ -1304,6 +1313,17 @@
 
     window.promoCodesCache = {};
     window.rawClaimsCache = null;
+    var loadTimeoutTimer = null;
+
+    window.retryConnection = function() {
+      var msgEl = document.getElementById('loading-msg');
+      if (msgEl) msgEl.innerHTML = '<span style="color:var(--yellow);">Reconnecting to promotional database...</span>';
+      try { db.goOffline(); } catch (e) {}
+      setTimeout(function() {
+        try { db.goOnline(); } catch (e) {}
+        initDetails();
+      }, 300);
+    };
 
     function initDetails() {
       if (!promoId) {
@@ -1311,50 +1331,95 @@
         return;
       }
 
+      // Reset loading state message if visible
+      var msgEl = document.getElementById('loading-msg');
+      if (msgEl && document.getElementById('loading-state').style.display !== 'none') {
+        msgEl.innerHTML = 'Connecting to promotional database...';
+      }
+
+      if (loadTimeoutTimer) clearTimeout(loadTimeoutTimer);
+      // Start 6-second watchdog: if RTDB stalls, show retry button and auto-reconnect
+      loadTimeoutTimer = setTimeout(function() {
+        if (!promoData && document.getElementById('loading-state').style.display !== 'none') {
+          if (msgEl) {
+            msgEl.innerHTML = `
+              <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+                <span style="color:#fde047; font-weight:600;">Database connection is taking longer than usual...</span>
+                <button type="button" class="btn small" onclick="retryConnection()" style="background:var(--yellow); color:var(--black); font-weight:bold; padding:6px 14px; border-radius:4px; border:none; cursor:pointer;">
+                  🔄 Reconnect Now
+                </button>
+              </div>
+            `;
+          }
+          try { db.goOffline(); setTimeout(function() { db.goOnline(); }, 200); } catch (e) {}
+        }
+      }, 6000);
+
       // Load promo metadata listener
       db.ref('promotions/' + promoId + '/public').once('value').then(function(snapshot) {
+        if (loadTimeoutTimer) clearTimeout(loadTimeoutTimer);
         promoData = snapshot.val();
         if (!promoData) {
-          document.getElementById('loading-state').style.display = 'flex';
-          document.getElementById('loading-msg').innerHTML = `<span style="color:var(--red); font-weight:bold;">Promotion "${promoId}" not found. It may have been deleted.</span>`;
-          document.getElementById('dashboard-content').style.display = 'none';
-          return;
+          // Fallback: check alternate case in case promoId was entered with different case (e.g. cue162 vs CUE162)
+          var altId = promoId === promoId.toLowerCase() ? promoId.toUpperCase() : promoId.toLowerCase();
+          return db.ref('promotions/' + altId + '/public').once('value').then(function(altSnap) {
+            if (altSnap.exists()) {
+              promoId = altId;
+              promoData = altSnap.val();
+              try { history.replaceState(null, '', '?p=' + encodeURIComponent(promoId)); } catch(e) {}
+              proceedWithPromoData();
+            } else {
+              document.getElementById('loading-state').style.display = 'flex';
+              document.getElementById('loading-msg').innerHTML = `<span style="color:var(--red); font-weight:bold;">Promotion "${promoId}" not found. It may have been deleted.</span>`;
+              document.getElementById('dashboard-content').style.display = 'none';
+            }
+          });
         }
         
+        proceedWithPromoData();
+      }).catch(function(err) {
+        if (loadTimeoutTimer) clearTimeout(loadTimeoutTimer);
+        console.error(err);
+        var msgEl = document.getElementById('loading-msg');
+        if (msgEl) {
+          msgEl.innerHTML = `
+            <div style="color:var(--red); font-weight:bold; margin-bottom:8px;">Database read error: ${err.message}</div>
+            <button type="button" class="btn small" onclick="retryConnection()" style="background:var(--yellow); color:var(--black); padding:5px 12px; cursor:pointer;">🔄 Retry</button>
+          `;
+        }
+      });
+
+      function proceedWithPromoData() {
         // Hide loading, show content
         document.getElementById('loading-state').style.display = 'none';
         document.getElementById('dashboard-content').style.display = 'block';
 
         renderPromoDetails();
-      }).catch(function(err) {
-        console.error(err);
-        document.getElementById('loading-msg').textContent = "Database read error: " + err.message;
-      });
 
-      // Load promo codes listener
-      db.ref('promotion_codes/' + promoId).once('value').then(function(codesSnap) {
-        window.promoCodesCache = codesSnap.val() || {};
+        // Load promo codes listener
+        db.ref('promotion_codes/' + promoId).once('value').then(function(codesSnap) {
+          window.promoCodesCache = codesSnap.val() || {};
+          
+          var total = (promoData && promoData.totalCoupons) || 0;
+          var claimed = (promoData && promoData.claimedCount) || 0;
+          var unclaimed = [];
+          for (var i = claimed; i < total; i++) {
+            if (window.promoCodesCache[i]) unclaimed.push(window.promoCodesCache[i]);
+          }
+          var codesTextarea = document.getElementById('promo-codes');
+          if (codesTextarea && document.activeElement !== codesTextarea) {
+            codesTextarea.value = unclaimed.join('\n');
+          }
+
+          renderClaimsHistory();
+        }).catch(function(e) { console.warn("Codes load error:", e); });
+
+        // Load one-time links
+        loadOneTimeLinks();
         
-        // Update unclaimed codes textarea if the form is not being edited
-        var total = (promoData && promoData.totalCoupons) || 0;
-        var claimed = (promoData && promoData.claimedCount) || 0;
-        var unclaimed = [];
-        for (var i = claimed; i < total; i++) {
-          if (window.promoCodesCache[i]) unclaimed.push(window.promoCodesCache[i]);
-        }
-        var codesTextarea = document.getElementById('promo-codes');
-        if (codesTextarea && document.activeElement !== codesTextarea) {
-          codesTextarea.value = unclaimed.join('\n');
-        }
-
-        renderClaimsHistory();
-      });
-
-      // Load one-time links
-      loadOneTimeLinks();
-      
-      // Load claims history
-      loadClaimsHistory();
+        // Load claims history
+        loadClaimsHistory();
+      }
     }
 
     function renderPromoDetails() {

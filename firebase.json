@@ -43,6 +43,10 @@
         "destination": "/manage-coupons.html"
       },
       {
+        "source": "/promo-details",
+        "destination": "/promo-details.html"
+      },
+      {
         "source": "/reddit-generator",
         "destination": "/reddit-generator.html"
       },
