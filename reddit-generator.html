@@ -1397,7 +1397,7 @@ Links to claim your free code and the Play Store link are in the first comment b
         <span>⚡ Automation &amp; Safety Guide</span>
       </button>
       <button type="button" class="footer-tool-btn" onclick="openFooterTool('direct-link')">
-        <span>🔗 Direct Play Store Link</span>
+        <span>🔗 Direct Coupon link</span>
       </button>
       <button type="button" class="footer-tool-btn" onclick="openFooterTool('test-coupon')">
         <span>🎟️ Test Coupon on Play</span>
@@ -2480,7 +2480,7 @@ Links to claim your free code and the Play Store link are in the first comment b
           </div>
         `;
       } else if (tool === 'direct-link') {
-        title.innerHTML = '🔗 Direct Google Play Redeem Link Generator';
+        title.innerHTML = '🔗 Direct Coupon Link Generator';
         body.innerHTML = `
           <div style="display:flex; flex-direction:column; gap:12px;">
             <p style="font-size:13px; color:#cbd5e1; margin:0;">
@@ -2533,7 +2533,7 @@ Links to claim your free code and the Play Store link are in the first comment b
       var resEl = document.getElementById('modal-direct-link-result');
       if (resEl) resEl.textContent = finalUrl;
       navigator.clipboard.writeText(finalUrl).then(function() {
-        showToast("Direct Play Store link copied to clipboard!");
+        showToast("Direct coupon link copied to clipboard!");
       });
     }
 
