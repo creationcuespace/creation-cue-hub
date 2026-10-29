@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-28T02:35:18.494Z",
+  "lastUpdated": "2026-10-29T02:53:12.588Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -120,6 +120,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 30,
       "totalWeight": 3806
+    },
+    {
+      "date": "2026-10-29",
+      "timestamp": "2026-10-29T02:53:12.588Z",
+      "avgRating": 4.49,
+      "weightedAvg": 4.52,
+      "ratedCount": 30,
+      "totalWeight": 3807
     }
   ],
   "results": [
@@ -637,7 +645,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.6,
-      "ratingCount": "418"
+      "ratingCount": "416"
     },
     {
       "id": "cue136_plus",
@@ -898,7 +906,7 @@
       "packageName": "com.creation.cue107watchface",
       "companionVersion": "Android 16 API & Design Update (v10000012)",
       "wearVersion": "10000015 (3.1.6)",
-      "lastUpdatedDate": "Oct 16, 2026",
+      "lastUpdatedDate": "Oct 21, 2026",
       "downloads": "100+",
       "rating": null,
       "ratingCount": null
@@ -937,7 +945,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.4,
-      "ratingCount": "32"
+      "ratingCount": "33"
     },
     {
       "id": "cue103",
@@ -1165,7 +1173,7 @@
       "lastUpdatedDate": "Aug 26, 2026",
       "downloads": "10K+",
       "rating": 4.3,
-      "ratingCount": "89"
+      "ratingCount": "90"
     },
     {
       "id": "crc068",
@@ -1477,7 +1485,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "315"
+      "ratingCount": "316"
     },
     {
       "id": "cueindus_pro",

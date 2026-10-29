@@ -1,4 +1,53 @@
 {
-  "lastUpdated": "2026-10-28T02:35:18.521Z",
-  "reviews": []
+  "lastUpdated": "2026-10-29T02:53:12.590Z",
+  "reviews": [
+    {
+      "reviewId": "c0963539-9722-4fe0-a9ed-02703b932161",
+      "packageName": "com.creation.cue162watchface",
+      "title": "Watch Face CUE162",
+      "wfId": "cue162",
+      "authorName": "albert deseure",
+      "starRating": 5,
+      "reviewerLanguage": "nl",
+      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
+      "text": "\tmooi groot om af te lezen, perfect",
+      "lastModified": "2026-10-28T20:22:49.000Z"
+    },
+    {
+      "reviewId": "8c32c690-e249-4972-a745-ecca32886892",
+      "packageName": "com.creation.cue153watchface",
+      "title": "Watch Face CUE153",
+      "wfId": "cue153",
+      "authorName": "albert deseure",
+      "starRating": 5,
+      "reviewerLanguage": "nl",
+      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
+      "text": "\tperfect,alles wat je moet zien in een oogopslag",
+      "lastModified": "2026-10-28T20:02:52.000Z"
+    },
+    {
+      "reviewId": "33db4bb1-00f1-4b41-a5ce-3a8863e654ae",
+      "packageName": "com.creation.cue179watchface",
+      "title": "Watch Face CUE179",
+      "wfId": "cue179",
+      "authorName": "THANH HOA CAO",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "q7q (Galaxy Z Fold7)",
+      "text": "\tIt's nice. If possible could you make the AOD brighter at max please",
+      "lastModified": "2026-10-28T12:46:05.000Z"
+    },
+    {
+      "reviewId": "a8f5af4c-3f36-49c2-b12f-7c97d638fae6",
+      "packageName": "com.creation.cue179watchface",
+      "title": "Watch Face CUE179",
+      "wfId": "cue179",
+      "authorName": "Tony Whaley",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
+      "text": "\tWOW!!! Awesome design, Fabulous color choices. loaded with valuable information. workmanship is off the chain. superior quality and easy to read. my new everyday watch face. astonishing job",
+      "lastModified": "2026-10-28T08:19:57.000Z"
+    }
+  ]
 }
