@@ -64,12 +64,12 @@
             touch-action: pan-x pan-y pinch-zoom;
         }
 
-        /* App Layout Container with Fixed Header & Footer */
+        /* App Layout Container with Single Natural Page Scroll */
         .app-layout {
             width: 100%;
             max-width: 440px;
-            height: 100vh;
-            height: 100dvh;
+            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             margin: 0 auto;
@@ -80,7 +80,6 @@
             border-left: 1px solid var(--card-border);
             border-right: 1px solid var(--card-border);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            overflow: hidden;
         }
 
         @media (min-width: 441px) {
@@ -90,37 +89,17 @@
                 min-height: 100vh;
             }
             .app-layout {
-                height: auto;
-                max-height: none;
+                min-height: auto;
                 border-radius: 28px;
                 border: 1px solid var(--card-border);
                 overflow: hidden;
                 box-shadow: 0 24px 48px rgba(0, 0, 0, 0.7);
             }
-            .sticky-top-header {
-                position: relative;
-                top: auto;
-            }
-            .scrollable-content {
-                overflow-y: visible;
-                flex: none;
-                padding-top: 10px;
-            }
-            .fixed-bottom-bar {
-                position: relative;
-                bottom: auto;
-                background: transparent;
-                backdrop-filter: none;
-                -webkit-backdrop-filter: none;
-                border-top: none;
-            }
         }
 
-        /* Top Header with Watch Workshop Banner */
+        /* Top Header with Watch Workshop Banner (Natural Scroll, Non-Sticky) */
         .sticky-top-header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            position: relative;
             padding: 55px 20px 24px;
             text-align: center;
             background-color: #0E121A;
@@ -131,8 +110,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.14);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             flex-shrink: 0;
-            touch-action: none;
-            overscroll-behavior: none;
             user-select: none;
             -webkit-user-select: none;
         }
@@ -181,11 +158,9 @@
             letter-spacing: 1.5px;
         }
 
-        /* Scrollable Middle Content */
+        /* Middle Body Content */
         .scrollable-content {
             flex: 1;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -344,19 +319,13 @@
             transform: translateY(-2px);
         }
 
-        /* Fixed Bottom Social Navigation Bar */
+        /* Bottom Social Navigation Bar */
         .fixed-bottom-bar {
-            position: sticky;
-            bottom: 0;
-            z-index: 100;
-            padding: 12px 16px 16px;
-            background: rgba(14, 18, 26, 0.94);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            position: relative;
+            padding: 16px;
+            background: transparent;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             flex-shrink: 0;
-            touch-action: none;
-            overscroll-behavior: none;
         }
 
         .social-bar {
