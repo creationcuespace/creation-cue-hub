@@ -192,56 +192,12 @@
 
         .person-info-section {
             text-align: center;
-        }
-
-        .profile-avatar-wrapper {
-            position: relative;
-            width: 104px;
-            height: 104px;
-            margin: 0 auto 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle at 30% 30%, rgba(212, 163, 89, 0.15), rgba(15, 23, 42, 0.8) 70%);
-            border: 1.5px solid rgba(212, 163, 89, 0.45);
-            border-radius: 50%;
-            padding: 18px;
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .profile-avatar-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.6));
-        }
-
-        .profile-logo-badge {
-            position: absolute;
-            bottom: 2px;
-            right: 4px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #0F172A;
-            border: 1.5px solid var(--accent-gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-            z-index: 2;
-        }
-
-        .badge-logo-img {
-            width: 16px;
-            height: 16px;
-            object-fit: contain;
-            filter: brightness(0) invert(1);
+            padding-top: 6px;
         }
 
         .person-name {
-            font-size: 23px;
-            font-weight: 400;
+            font-size: 24px;
+            font-weight: 500;
             color: #FFFFFF;
             letter-spacing: 0.3px;
             margin-bottom: 4px;
@@ -249,9 +205,12 @@
 
         .person-role {
             font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 400;
-            margin-bottom: 12px;
+            color: var(--accent-gold);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 14px;
+            opacity: 0.9;
         }
 
         .discrete-vcard-btn {
@@ -561,9 +520,6 @@
             
             <!-- Person Info & Discrete vCard Save Button -->
             <div class="person-info-section">
-                <div class="profile-avatar-wrapper">
-                    <img src="images/creationcue_logo_greyscale_3d.svg" alt="CreationCue" class="profile-avatar-img">
-                </div>
                 <div class="person-name">Sotirios Liontos</div>
                 <div class="person-role">Digital design UI | UX</div>
                 
