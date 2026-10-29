@@ -390,39 +390,192 @@
             visibility: visible;
         }
 
+        /* Huawei Showcase Modal */
         .modal-box {
-            background: #1E293B;
-            border: 1px solid rgba(241, 179, 28, 0.4);
-            border-radius: 24px;
-            padding: 28px 24px;
-            max-width: 360px;
+            background: #111622;
+            border: 1px solid rgba(241, 179, 28, 0.45);
+            border-radius: 26px;
+            padding: 24px 20px 20px;
+            max-width: 440px;
             width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.85);
+            position: relative;
         }
 
-        .modal-box h3 {
+        .modal-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-title-group {
+            text-align: left;
+        }
+
+        .modal-title-group h3 {
             font-size: 18px;
-            color: var(--accent-gold);
-            margin-bottom: 10px;
-        }
-
-        .modal-box p {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .modal-close-btn {
-            background: var(--accent-gold);
-            color: #0F172A;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 12px;
+            color: #FFFFFF;
             font-weight: 700;
-            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-title-group p {
+            font-size: 12px;
+            color: var(--accent-gold);
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .modal-x-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #FFFFFF;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .modal-x-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .huawei-search-hint {
+            background: rgba(241, 179, 28, 0.08);
+            border: 1px dashed rgba(241, 179, 28, 0.35);
+            border-radius: 12px;
+            padding: 10px 12px;
+            margin-bottom: 16px;
+            font-size: 12px;
+            color: #E2E8F0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            text-align: left;
+        }
+
+        .huawei-search-hint strong {
+            color: var(--accent-gold);
+        }
+
+        .huawei-copy-pill {
+            background: rgba(241, 179, 28, 0.2);
+            border: 1px solid rgba(241, 179, 28, 0.4);
+            color: var(--accent-gold);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .huawei-cards-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .huawei-card-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-align: left;
+            transition: border-color 0.2s ease;
+        }
+
+        .huawei-card-item:hover {
+            border-color: rgba(241, 179, 28, 0.5);
+        }
+
+        .huawei-watch-thumb {
+            width: 76px;
+            height: 98px;
+            border-radius: 12px;
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .huawei-item-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .huawei-item-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 2px;
+        }
+
+        .huawei-item-compat {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .huawei-action-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .huawei-app-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #F1B31C 0%, #D49B11 100%);
+            color: #0F172A;
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(241, 179, 28, 0.3);
+            transition: transform 0.15s ease;
+        }
+
+        .huawei-app-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .huawei-qr-thumb {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: #FFFFFF;
+            padding: 2px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            transition: transform 0.15s ease;
+        }
+
+        .huawei-qr-thumb:hover {
+            transform: scale(1.15);
         }
 
         /* Floating Contact Toast Notification */
@@ -569,12 +722,77 @@
 
     </div>
 
-    <!-- Huawei Coming Soon Modal -->
+    <!-- Huawei Showcase Modal -->
     <div id="huawei-modal" class="modal-overlay" onclick="closeHuaweiNotice(event)">
         <div class="modal-box" onclick="event.stopPropagation()">
-            <h3>📱 Huawei Watch Collection</h3>
-            <p>Our Huawei Themes collection is currently being prepared and will be launching soon!</p>
-            <button class="modal-close-btn" onclick="closeHuaweiNotice()">Got it</button>
+            <div class="modal-header-row">
+                <div class="modal-title-group">
+                    <h3><span>📱</span> Huawei Health Collection</h3>
+                    <p>Wearables & Themes Official Store</p>
+                </div>
+                <button type="button" class="modal-x-btn" onclick="closeHuaweiNotice()" title="Close">&times;</button>
+            </div>
+
+            <div class="huawei-search-hint">
+                <span>In Huawei Health App search: <strong>Creation Cue</strong></span>
+                <button type="button" class="huawei-copy-pill" onclick="copyHuaweiSearch(event)">Copy Name</button>
+            </div>
+
+            <div class="huawei-cards-grid">
+                <!-- CUE 179 -->
+                <div class="huawei-card-item">
+                    <img src="images/huawei/preview_179.webp" alt="CUE 179 Cyber Hybrid" class="huawei-watch-thumb">
+                    <div class="huawei-item-details">
+                        <div class="huawei-item-name">CUE 179 Cyber Hybrid</div>
+                        <div class="huawei-item-compat">GT4 • GT5 • Ultimate • Watch 4/3</div>
+                        <div class="huawei-action-row">
+                            <a href="https://urldre.cloud.huawei.com/Ct2KjTN1sI" target="_blank" class="huawei-app-btn">
+                                <span>Open Watch Face</span>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                            <a href="images/huawei/qr_179.png" target="_blank" title="View / Scan QR Code">
+                                <img src="images/huawei/qr_179.png" alt="Scan QR" class="huawei-qr-thumb">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CUE 178 -->
+                <div class="huawei-card-item">
+                    <img src="images/huawei/preview_178.webp" alt="CUE 178 Digital Fit" class="huawei-watch-thumb">
+                    <div class="huawei-item-details">
+                        <div class="huawei-item-name">CUE 178 Digital Fit</div>
+                        <div class="huawei-item-compat">Huawei Watch FIT 3 / 2 / SE</div>
+                        <div class="huawei-action-row">
+                            <a href="https://urldre.cloud.huawei.com/Cc1HrqATYY" target="_blank" class="huawei-app-btn">
+                                <span>Open Watch Face</span>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                            <a href="images/huawei/qr_178.png" target="_blank" title="View / Scan QR Code">
+                                <img src="images/huawei/qr_178.png" alt="Scan QR" class="huawei-qr-thumb">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CUE 175 -->
+                <div class="huawei-card-item">
+                    <img src="images/huawei/preview_175.webp" alt="CUE 175 Titanium Chrono" class="huawei-watch-thumb">
+                    <div class="huawei-item-details">
+                        <div class="huawei-item-name">CUE 175 Titanium Chrono</div>
+                        <div class="huawei-item-compat">GT4 • GT3 Pro • Ultimate Round</div>
+                        <div class="huawei-action-row">
+                            <a href="https://urldre.cloud.huawei.com/CbAfGPK9DG" target="_blank" class="huawei-app-btn">
+                                <span>Open Watch Face</span>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                            <a href="images/huawei/qr_175.png" target="_blank" title="View / Scan QR Code">
+                                <img src="images/huawei/qr_175.png" alt="Scan QR" class="huawei-qr-thumb">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -592,6 +810,20 @@
 
         function closeHuaweiNotice() {
             document.getElementById('huawei-modal').classList.remove('active');
+        }
+
+        function copyHuaweiSearch(e) {
+            if (e) e.stopPropagation();
+            const btn = e ? e.currentTarget : null;
+            navigator.clipboard.writeText('Creation Cue').then(() => {
+                if (btn) {
+                    const originalText = btn.innerText;
+                    btn.innerText = 'Copied!';
+                    setTimeout(() => { btn.innerText = originalText; }, 1800);
+                }
+            }).catch(() => {
+                prompt('Copy artist name for Huawei Health:', 'Creation Cue');
+            });
         }
 
         // Native Contact Save Handler
