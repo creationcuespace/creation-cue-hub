@@ -1784,7 +1784,7 @@
     </div>
     <div class="header-btns">
       <!-- Version badge -->
-      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.69</span>
+      <span style="font-size: 10px; font-weight: 700; color: var(--primary); background: rgba(255,255,255,0.04); border: 1px solid var(--primary); border-radius: 20px; padding: 3px 8px; flex-shrink: 0; letter-spacing: 0.5px; opacity: 0.8;">v2.70</span>
       <!-- Firebase connection indicator dot & text -->
       <div id="header-sync-badge" style="display: flex; align-items: center; gap: 6px; margin-right: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 20px; flex-shrink: 0;">
         <span id="header-sync-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--danger); display: inline-block;"></span>
@@ -2188,7 +2188,7 @@
 
   <!-- Footer -->
   <footer style="text-align: center; padding: 24px; font-size: 10px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: auto; font-family: var(--font-body); letter-spacing: 0.5px; opacity: 0.6;">
-    CreationCue™ Planner &bull; v2.69
+    CreationCue™ Planner &bull; v2.70
   </footer>
 
   <!-- Inline Override Dialog -->
@@ -2234,6 +2234,50 @@
       <div style="display: flex; justify-content: flex-end; gap: 10px;">
         <button onclick="closeMoveTaskDialog()" class="btn-secondary" style="padding: 8px 14px;">Cancel</button>
         <button onclick="saveMoveTaskDialog()" class="btn-primary" style="padding: 8px 14px;">Move Task</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Backlog Task Modal (Opens without closing Backlog) -->
+  <div class="dialog-overlay" id="edit-backlog-modal" style="z-index: 6000;">
+    <div class="dialog-card" style="width: 480px; max-width: 95%;">
+      <h3 class="drawer-title" style="border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">Edit Task</h3>
+      
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label for="edit-backlog-title">Task Description</label>
+        <input type="text" id="edit-backlog-title" class="input-text">
+      </div>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="edit-backlog-priority">Priority</label>
+          <select id="edit-backlog-priority" class="select-input" style="padding: 9px; height: auto;">
+            <option value="high">🔥 High</option>
+            <option value="medium">💼 Medium</option>
+            <option value="low">⚙️ Low</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="edit-backlog-duration">Days Needed</label>
+          <input type="number" id="edit-backlog-duration" class="input-text" step="0.25" min="0.25" style="padding: 9px;">
+        </div>
+      </div>
+      
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label for="edit-backlog-date">Start Date (DD/MM/YYYY)</label>
+        <input type="text" id="edit-backlog-date" class="input-text flatpickr-date" style="padding: 9px;" placeholder="e.g. 26/06/2026">
+      </div>
+      
+      <div class="form-group" style="margin-bottom: 8px;">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; font-size: 12px; font-weight: 600;">
+          <input type="checkbox" id="edit-backlog-fixed-day" style="width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer;">
+          <span>Fixed Day (Do not roll over if uncompleted)</span>
+        </label>
+      </div>
+      
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;">
+        <button onclick="closeBacklogTaskEditModal()" class="btn-secondary" style="padding: 8px 14px;">Cancel</button>
+        <button onclick="saveBacklogTaskEditModal()" class="btn-primary" style="padding: 8px 14px;">Save Changes</button>
       </div>
     </div>
   </div>
@@ -4126,7 +4170,7 @@
               </div>
             </div>
             <div style="display: flex; gap: 4px; flex-shrink: 0;">
-              <button onclick="editCustomTask('${task.id}')" class="btn-secondary" style="padding: 4px; border-radius: 4px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1);" title="Edit Task">
+              <button onclick="openBacklogTaskEditModal('${task.id}')" class="btn-secondary" style="padding: 4px; border-radius: 4px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1);" title="Edit Task">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
               </button>
               <button onclick="deleteCustomTask('${task.id}')" class="btn-delete" style="width: 28px; height: 28px; padding: 4px;" title="Delete Task">
@@ -4319,6 +4363,103 @@
     function closeBacklogModal() {
       var modal = document.getElementById('backlog-modal');
       if (modal) modal.style.display = 'none';
+    }
+
+    var activeEditBacklogTaskId = null;
+
+    function openBacklogTaskEditModal(taskId) {
+      var task = appState.customTasks.find(function(t) { return t.id === taskId; });
+      if (!task) return;
+
+      activeEditBacklogTaskId = taskId;
+
+      var titleInput = document.getElementById('edit-backlog-title');
+      var priorityInput = document.getElementById('edit-backlog-priority');
+      var durationInput = document.getElementById('edit-backlog-duration');
+      var dateInput = document.getElementById('edit-backlog-date');
+      var fixedDayChk = document.getElementById('edit-backlog-fixed-day');
+
+      if (titleInput) titleInput.value = task.baseTitle || task.title;
+      if (priorityInput) priorityInput.value = task.priority || 'medium';
+      if (durationInput) durationInput.value = task.duration || 1.0;
+      if (fixedDayChk) fixedDayChk.checked = !!task.isFixedDay;
+
+      if (dateInput) {
+        var formatted = task.startDate ? formatStandardDateToDisplay(task.startDate) : '';
+        dateInput.value = formatted;
+        if (dateInput._flatpickr) {
+          dateInput._flatpickr.setDate(formatted, false, "d/m/Y");
+        }
+      }
+
+      var modal = document.getElementById('edit-backlog-modal');
+      if (modal) modal.style.display = 'flex';
+      if (titleInput) setTimeout(function() { titleInput.focus(); }, 50);
+    }
+
+    function closeBacklogTaskEditModal() {
+      var modal = document.getElementById('edit-backlog-modal');
+      if (modal) modal.style.display = 'none';
+      activeEditBacklogTaskId = null;
+    }
+
+    function saveBacklogTaskEditModal() {
+      if (!activeEditBacklogTaskId) return;
+      var task = appState.customTasks.find(function(t) { return t.id === activeEditBacklogTaskId; });
+      if (!task) {
+        closeBacklogTaskEditModal();
+        return;
+      }
+
+      var title = document.getElementById('edit-backlog-title').value.trim();
+      var priority = document.getElementById('edit-backlog-priority').value;
+      var duration = parseFloat(document.getElementById('edit-backlog-duration').value);
+      var dateInputVal = document.getElementById('edit-backlog-date').value.trim();
+      var isFixedDay = document.getElementById('edit-backlog-fixed-day').checked;
+
+      if (!title) {
+        alert("Please enter a task description.");
+        return;
+      }
+      if (isNaN(duration) || duration <= 0) {
+        alert("Please enter a valid duration (e.g. 0.5, 1, 2 days).");
+        return;
+      }
+
+      var startDateVal = dateInputVal ? parseDateToStandardString(dateInputVal) : '';
+
+      pushStateToHistory();
+
+      if (task.groupId) {
+        appState.customTasks.forEach(function(t) {
+          if (t.groupId === task.groupId) {
+            t.title = t.title.replace(t.baseTitle, title);
+            t.baseTitle = title;
+            t.priority = priority;
+            t.duration = duration;
+            t.isFixedDay = isFixedDay;
+          }
+        });
+        if (startDateVal) {
+          task.startDate = startDateVal;
+        }
+      } else {
+        task.title = title;
+        task.priority = priority;
+        task.duration = duration;
+        task.startDate = startDateVal || getTodayDateString();
+        task.isFixedDay = isFixedDay;
+      }
+
+      saveState();
+      closeBacklogTaskEditModal();
+      renderBacklog();
+      scheduleFutureTasks();
+      renderCalendar();
+      if (document.getElementById('day-view-container') && document.getElementById('day-view-container').style.display !== 'none') {
+        renderDayView();
+      }
+      showToast("Task Updated!", true);
     }
 
     function escapeHtmlAttribute(str) {
