@@ -485,62 +485,123 @@
             white-space: nowrap;
         }
 
-        .huawei-cards-grid {
+        /* Huawei Carousel Showcase Modal */
+        .huawei-carousel-wrapper {
+            position: relative;
+            margin: 0 -8px 16px;
+            overflow: hidden;
+        }
+
+        .huawei-track {
+            display: flex;
+            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+            width: 100%;
+        }
+
+        .huawei-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 4px 8px;
+        }
+
+        .huawei-slide-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            margin-bottom: 16px;
-        }
-
-        .huawei-card-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 18px;
-            padding: 12px;
-            display: flex;
             align-items: center;
-            gap: 14px;
-            text-align: left;
-            transition: border-color 0.2s ease;
+            text-align: center;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
         }
 
-        .huawei-card-item:hover {
-            border-color: rgba(241, 179, 28, 0.5);
+        .huawei-slide-img-box {
+            width: 180px;
+            height: 240px;
+            margin-bottom: 14px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: #000;
         }
 
-        .huawei-watch-thumb {
-            width: 76px;
-            height: 98px;
-            border-radius: 12px;
+        .huawei-slide-img-box img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: block;
         }
 
-        .huawei-item-details {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .huawei-item-name {
-            font-size: 15px;
+        .huawei-slide-title {
+            font-size: 17px;
             font-weight: 700;
             color: #FFFFFF;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
 
-        .huawei-item-compat {
-            font-size: 11px;
+        .huawei-slide-compat {
+            font-size: 12px;
             color: var(--text-muted);
-            margin-bottom: 8px;
+            margin-bottom: 14px;
         }
 
-        .huawei-action-row {
+        .huawei-slide-actions {
             display: flex;
             align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .huawei-carousel-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding: 0 4px;
+        }
+
+        .carousel-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #FFFFFF;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(241, 179, 28, 0.25);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .carousel-dots {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .carousel-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .carousel-dot.active {
+            width: 20px;
+            border-radius: 4px;
+            background: var(--accent-gold);
         }
 
         .huawei-app-btn {
@@ -692,7 +753,18 @@
                 </a>
 
                 <button class="btn-action btn-secondary" onclick="openHuaweiNotice()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;">
+                        <!-- Huawei 8-Petal Brand Fan Mark -->
+                        <path d="M12 1.5C11.5 4 10.5 7.5 12 10.5C13.5 7.5 12.5 4 12 1.5Z" fill="#ED002F"/>
+                        <path d="M14.2 2.6C12.8 4.8 11.2 8.1 13.3 10.7C14.8 8 15.3 4.8 14.2 2.6Z" fill="#ED002F"/>
+                        <path d="M16.1 4.5C14 6.3 11.9 9.2 14.4 11.2C15.9 8.9 16.9 6.2 16.1 4.5Z" fill="#ED002F"/>
+                        <path d="M17.4 7C14.8 8.3 12.3 10.7 15 12.2C16.6 10.2 17.8 8.1 17.4 7Z" fill="#ED002F"/>
+                        <path d="M9.8 2.6C11.2 4.8 12.8 8.1 10.7 10.7C9.2 8 8.7 4.8 9.8 2.6Z" fill="#ED002F"/>
+                        <path d="M7.9 4.5C10 6.3 12.1 9.2 9.6 11.2C8.1 8.9 7.1 6.2 7.9 4.5Z" fill="#ED002F"/>
+                        <path d="M6.6 7C9.2 8.3 11.7 10.7 9 12.2C7.4 10.2 6.2 8.1 6.6 7Z" fill="#ED002F"/>
+                        <path d="M5.5 15.2H7.2V17.8H9.8V15.2H11.5V21.5H9.8V19.1H7.2V21.5H5.5V15.2Z" fill="#FFFFFF"/>
+                        <path d="M12.5 15.2H14.2V19.5C14.2 20.3 14.7 20.7 15.4 20.7C16.1 20.7 16.6 20.3 16.6 19.5V15.2H18.3V19.4C18.3 20.9 17.1 21.7 15.4 21.7C13.7 21.7 12.5 20.9 12.5 19.4V15.2Z" fill="#FFFFFF"/>
+                    </svg>
                     <span>View Huawei Watch Collection</span>
                 </button>
             </div>
@@ -738,57 +810,135 @@
                 <button type="button" class="huawei-copy-pill" onclick="copyHuaweiSearch(event)">Copy Name</button>
             </div>
 
-            <div class="huawei-cards-grid">
-                <!-- CUE 179 -->
-                <div class="huawei-card-item">
-                    <img src="images/huawei/preview_179.webp" alt="CUE 179 Cyber Hybrid" class="huawei-watch-thumb">
-                    <div class="huawei-item-details">
-                        <div class="huawei-item-name">CUE 179 Cyber Hybrid</div>
-                        <div class="huawei-item-compat">GT4 • GT5 • Ultimate • Watch 4/3</div>
-                        <div class="huawei-action-row">
-                            <a href="https://urldre.cloud.huawei.com/Ct2KjTN1sI" target="_blank" class="huawei-app-btn">
-                                <span>Open Watch Face</span>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </a>
-                            <a href="images/huawei/qr_179.png" target="_blank" title="View / Scan QR Code">
-                                <img src="images/huawei/qr_179.png" alt="Scan QR" class="huawei-qr-thumb">
-                            </a>
+            <div class="huawei-carousel-nav">
+                <button type="button" class="carousel-btn" onclick="prevHuaweiSlide()" title="Previous Watch Face">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <div class="carousel-dots" id="huawei-dots"></div>
+                <button type="button" class="carousel-btn" onclick="nextHuaweiSlide()" title="Next Watch Face">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+
+            <div class="huawei-carousel-wrapper" id="huawei-carousel-touch">
+                <div class="huawei-track" id="huawei-track">
+                    <!-- Slide 1: CUE 179 Cyber Hybrid -->
+                    <div class="huawei-slide">
+                        <div class="huawei-slide-card">
+                            <div class="huawei-slide-img-box">
+                                <img src="images/huawei/wf_179_round.webp" alt="CUE 179 Cyber Hybrid">
+                            </div>
+                            <div class="huawei-slide-title">CUE 179 Cyber Hybrid</div>
+                            <div class="huawei-slide-compat">GT4 • GT5 • Ultimate • Watch 4 / 3</div>
+                            <div class="huawei-slide-actions">
+                                <a href="https://urldre.cloud.huawei.com/Ct2KjTN1sI" target="_blank" class="huawei-app-btn">
+                                    <span>Open Watch Face</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                                <a href="images/huawei/qr_179.png" target="_blank" title="Scan QR Code">
+                                    <img src="images/huawei/qr_179.png" alt="Scan QR" class="huawei-qr-thumb">
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- CUE 178 -->
-                <div class="huawei-card-item">
-                    <img src="images/huawei/preview_178.webp" alt="CUE 178 Digital Fit" class="huawei-watch-thumb">
-                    <div class="huawei-item-details">
-                        <div class="huawei-item-name">CUE 178 Digital Fit</div>
-                        <div class="huawei-item-compat">Huawei Watch FIT 3 / 2 / SE</div>
-                        <div class="huawei-action-row">
-                            <a href="https://urldre.cloud.huawei.com/Cc1HrqATYY" target="_blank" class="huawei-app-btn">
-                                <span>Open Watch Face</span>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </a>
-                            <a href="images/huawei/qr_178.png" target="_blank" title="View / Scan QR Code">
-                                <img src="images/huawei/qr_178.png" alt="Scan QR" class="huawei-qr-thumb">
-                            </a>
+                    <!-- Slide 2: CUE 178 Digital Fit -->
+                    <div class="huawei-slide">
+                        <div class="huawei-slide-card">
+                            <div class="huawei-slide-img-box">
+                                <img src="images/huawei/wf_178_fit.webp" alt="CUE 178 Digital Fit">
+                            </div>
+                            <div class="huawei-slide-title">CUE 178 Digital Fit</div>
+                            <div class="huawei-slide-compat">Huawei Watch FIT 3 / 2 / SE</div>
+                            <div class="huawei-slide-actions">
+                                <a href="https://urldre.cloud.huawei.com/Cc1HrqATYY" target="_blank" class="huawei-app-btn">
+                                    <span>Open Watch Face</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                                <a href="images/huawei/qr_178.png" target="_blank" title="Scan QR Code">
+                                    <img src="images/huawei/qr_178.png" alt="Scan QR" class="huawei-qr-thumb">
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- CUE 175 -->
-                <div class="huawei-card-item">
-                    <img src="images/huawei/preview_175.webp" alt="CUE 175 Titanium Chrono" class="huawei-watch-thumb">
-                    <div class="huawei-item-details">
-                        <div class="huawei-item-name">CUE 175 Titanium Chrono</div>
-                        <div class="huawei-item-compat">GT4 • GT3 Pro • Ultimate Round</div>
-                        <div class="huawei-action-row">
-                            <a href="https://urldre.cloud.huawei.com/CbAfGPK9DG" target="_blank" class="huawei-app-btn">
-                                <span>Open Watch Face</span>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </a>
-                            <a href="images/huawei/qr_175.png" target="_blank" title="View / Scan QR Code">
-                                <img src="images/huawei/qr_175.png" alt="Scan QR" class="huawei-qr-thumb">
-                            </a>
+                    <!-- Slide 3: CUE 175 Titanium Chrono -->
+                    <div class="huawei-slide">
+                        <div class="huawei-slide-card">
+                            <div class="huawei-slide-img-box">
+                                <img src="images/huawei/wf_175_chrono.webp" alt="CUE 175 Titanium Chrono">
+                            </div>
+                            <div class="huawei-slide-title">CUE 175 Titanium Chrono</div>
+                            <div class="huawei-slide-compat">GT4 • GT3 Pro • Ultimate Round</div>
+                            <div class="huawei-slide-actions">
+                                <a href="https://urldre.cloud.huawei.com/CbAfGPK9DG" target="_blank" class="huawei-app-btn">
+                                    <span>Open Watch Face</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                                <a href="images/huawei/qr_175.png" target="_blank" title="Scan QR Code">
+                                    <img src="images/huawei/qr_175.png" alt="Scan QR" class="huawei-qr-thumb">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4: CUE 179 Fit Edition -->
+                    <div class="huawei-slide">
+                        <div class="huawei-slide-card">
+                            <div class="huawei-slide-img-box">
+                                <img src="images/huawei/wf_179_fit.webp" alt="CUE 179 Fit Edition">
+                            </div>
+                            <div class="huawei-slide-title">CUE 179 Fit Edition</div>
+                            <div class="huawei-slide-compat">Huawei Watch FIT 3 / 2 / SE</div>
+                            <div class="huawei-slide-actions">
+                                <a href="https://urldre.cloud.huawei.com/Ct2HX1W0i4" target="_blank" class="huawei-app-btn">
+                                    <span>Open Watch Face</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                                <a href="images/huawei/qr_179.png" target="_blank" title="Scan QR Code">
+                                    <img src="images/huawei/qr_179.png" alt="Scan QR" class="huawei-qr-thumb">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 5: CUE 175 Sport Edition -->
+                    <div class="huawei-slide">
+                        <div class="huawei-slide-card">
+                            <div class="huawei-slide-img-box">
+                                <img src="images/huawei/wf_175_variant.webp" alt="CUE 175 Sport Edition">
+                            </div>
+                            <div class="huawei-slide-title">CUE 175 Sport Edition</div>
+                            <div class="huawei-slide-compat">GT4 • GT3 Pro • Ultimate Round</div>
+                            <div class="huawei-slide-actions">
+                                <a href="https://urldre.cloud.huawei.com/CbAfGPK9DG" target="_blank" class="huawei-app-btn">
+                                    <span>Open Watch Face</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                                <a href="images/huawei/qr_175.png" target="_blank" title="Scan QR Code">
+                                    <img src="images/huawei/qr_175.png" alt="Scan QR" class="huawei-qr-thumb">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 6: CUE 178 Stealth Gold -->
+                    <div class="huawei-slide">
+                        <div class="huawei-slide-card">
+                            <div class="huawei-slide-img-box">
+                                <img src="images/huawei/wf_178_v2.webp" alt="CUE 178 Stealth Gold">
+                            </div>
+                            <div class="huawei-slide-title">CUE 178 Stealth Gold</div>
+                            <div class="huawei-slide-compat">Huawei Watch FIT Series</div>
+                            <div class="huawei-slide-actions">
+                                <a href="https://urldre.cloud.huawei.com/Cc1HrqATYY" target="_blank" class="huawei-app-btn">
+                                    <span>Open Watch Face</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                                <a href="images/huawei/qr_178.png" target="_blank" title="Scan QR Code">
+                                    <img src="images/huawei/qr_178.png" alt="Scan QR" class="huawei-qr-thumb">
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -803,14 +953,78 @@
     </div>
 
     <script>
-        // Modal Handlers
+        // Modal Handlers & Huawei Carousel Logic
+        let currentHuaweiSlide = 0;
+        const totalHuaweiSlides = 6;
+
+        function initHuaweiDots() {
+            const dotsContainer = document.getElementById('huawei-dots');
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalHuaweiSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot' + (i === currentHuaweiSlide ? ' active' : '');
+                dot.onclick = () => goToHuaweiSlide(i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function updateHuaweiCarousel() {
+            const track = document.getElementById('huawei-track');
+            if (track) {
+                track.style.transform = `translateX(-${currentHuaweiSlide * 100}%)`;
+            }
+            const dots = document.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentHuaweiSlide);
+            });
+        }
+
+        function prevHuaweiSlide() {
+            currentHuaweiSlide = (currentHuaweiSlide - 1 + totalHuaweiSlides) % totalHuaweiSlides;
+            updateHuaweiCarousel();
+        }
+
+        function nextHuaweiSlide() {
+            currentHuaweiSlide = (currentHuaweiSlide + 1) % totalHuaweiSlides;
+            updateHuaweiCarousel();
+        }
+
+        function goToHuaweiSlide(index) {
+            currentHuaweiSlide = index;
+            updateHuaweiCarousel();
+        }
+
         function openHuaweiNotice() {
             document.getElementById('huawei-modal').classList.add('active');
+            initHuaweiDots();
+            updateHuaweiCarousel();
         }
 
         function closeHuaweiNotice() {
             document.getElementById('huawei-modal').classList.remove('active');
         }
+
+        // Touch swipe support for Huawei Carousel
+        (function() {
+            let startX = 0;
+            let endX = 0;
+            const carousel = document.getElementById('huawei-carousel-touch');
+            if (!carousel) return;
+            
+            carousel.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            }, { passive: true });
+            
+            carousel.addEventListener('touchend', (e) => {
+                endX = e.changedTouches[0].clientX;
+                const diff = startX - endX;
+                if (Math.abs(diff) > 40) {
+                    if (diff > 0) nextHuaweiSlide();
+                    else prevHuaweiSlide();
+                }
+            }, { passive: true });
+        })();
 
         function copyHuaweiSearch(e) {
             if (e) e.stopPropagation();
