@@ -292,6 +292,149 @@
       }
     }
 
+    /* Dedicated Separate Action Button for Expired Notice */
+    .btn-expired-separate {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #ff4500 0%, #dc2626 100%);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(255, 69, 0, 0.35);
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+    .btn-expired-separate:hover {
+      background: linear-gradient(135deg, #ff5722 0%, #ef4444 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(255, 69, 0, 0.45);
+    }
+    .btn-expired-separate:active {
+      transform: translateY(0);
+    }
+
+    /* Collapsible Steps 2-9 Drawer */
+    .steps-collapsible-drawer {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .steps-collapsible-drawer summary {
+      padding: 12px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      background: rgba(255, 255, 255, 0.03);
+      font-weight: 700;
+      color: #fff;
+      font-size: 13px;
+      list-style: none;
+      transition: background 0.2s ease;
+    }
+    .steps-collapsible-drawer summary::-webkit-details-marker {
+      display: none;
+    }
+    .steps-collapsible-drawer summary:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .steps-collapsible-drawer[open] summary {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .steps-drawer-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Footer Quick Tools Menu */
+    .footer-tools-menu {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 12px 18px;
+      background: rgba(20, 20, 24, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      margin-top: 24px;
+    }
+    .footer-tool-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .footer-tool-btn:hover {
+      background: rgba(245, 197, 24, 0.12);
+      border-color: rgba(245, 197, 24, 0.4);
+      color: var(--yellow);
+      transform: translateY(-1px);
+    }
+
+    /* Footer Modal */
+    .tool-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .tool-modal-card {
+      background: #141418;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 680px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .tool-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .tool-modal-body {
+      padding: 18px;
+      color: #e2e8f0;
+      font-size: 13px;
+      line-height: 1.6;
+      max-height: 75vh;
+      overflow-y: auto;
+    }
+
     .main-grid {
       display: grid;
       grid-template-columns: 380px 1fr;
@@ -919,9 +1062,6 @@
       </div>
     </div>
 
-    <!-- Shared Promotion Strategy Playbook (Single Source of Truth from admin-bar.js) -->
-    <div id="shared-promo-playbook"></div>
-
     <!-- Main Working Grid -->
     <div class="main-grid">
       <!-- Left Column: Search & Select Promotion -->
@@ -1024,263 +1164,270 @@
             </div>
           </div>
 
-          <!-- Workflow Steps 2 to 6 Deck -->
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
-            
-            <!-- Step 2: Add Cap -->
-            <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(245,197,24,0.25); border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
-              <div style="display:flex; align-items:center; gap:7px; font-size:12px; font-weight:800; color:var(--yellow); text-transform:uppercase;">
-                <span class="step-number-badge" style="width:20px; height:20px; font-size:11px;">2</span>
-                <span>Add Giveaway Cap</span>
-              </div>
-              <div style="display:flex; align-items:center; gap:6px;">
-                <input type="number" id="custom-cap-input" min="1" max="1000" placeholder="e.g. 50" style="width:90px; background:var(--black); border:1px solid var(--border); border-radius:4px; color:#fff; font-size:14px; font-weight:700; padding:6px 8px; text-align:center;" oninput="onCapInputChange()">
-                <button id="btn-save-cap" class="btn-save-cap" style="padding:7px 12px; font-size:12px;" onclick="saveCapToFirebase()" title="Save cap directly to Firebase database so promo-details & claim page are updated">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                  Save Cap
-                </button>
-              </div>
-            </div>
-
-            <!-- Step 3: Select Reddit Page -->
-            <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,69,0,0.25); border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
-              <div style="display:flex; align-items:center; gap:7px; font-size:12px; font-weight:800; color:#ff8b60; text-transform:uppercase;">
-                <span class="step-number-badge orange" style="width:20px; height:20px; font-size:11px;">3</span>
-                <span>Select Target Subreddit</span>
-              </div>
-              <select id="log-subreddit-select" style="width:100%; background:var(--black); border:1px solid var(--border); border-radius:4px; color:#fff; font-size:13px; font-weight:600; padding:6px 8px; cursor:pointer;" title="Subreddit where you posted">
-                <option value="r/GalaxyWatchFace">r/GalaxyWatchFace (52k members)</option>
-                <option value="r/WearOSFaces" selected>r/WearOSFaces (126k members)</option>
-              </select>
-            </div>
-
-            <!-- Step 4: Add Link -->
-            <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.12); border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
-              <div style="display:flex; align-items:center; gap:7px; font-size:12px; font-weight:800; color:#e5e7eb; text-transform:uppercase;">
-                <span class="step-number-badge" style="width:20px; height:20px; font-size:11px; background:rgba(255,255,255,0.1); border-color:#9ca3af; color:#fff;">4</span>
-                <span>Add Reddit Post Link</span>
-              </div>
-              <input type="text" id="log-post-url-input" placeholder="Paste your live Reddit post URL..." oninput="onPostUrlInput(this.value)" style="width:100%; background:var(--black); border:1px solid var(--border); border-radius:4px; color:#fff; font-size:13px; padding:6px 8px;" title="Paste your live Reddit post URL here">
-            </div>
-
-            <!-- Step 5: Test Notification -->
-            <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(59,130,246,0.25); border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
-              <div style="display:flex; align-items:center; gap:7px; font-size:12px; font-weight:800; color:#60a5fa; text-transform:uppercase;">
-                <span class="step-number-badge blue" style="width:20px; height:20px; font-size:11px;">5</span>
-                <span>Test Phone Notification</span>
-              </div>
-              <button id="btn-test-ntfy" onclick="sendTestAlert()" class="header-btn" style="width:100%; justify-content:center; font-size:12.5px; padding:6px 12px; background:rgba(59, 130, 246, 0.12); border-color:rgba(59, 130, 246, 0.4); color:#93c5fd; cursor:pointer; display:inline-flex; align-items:center; gap:6px; font-weight:700;" title="Test phone push alert via ntfy">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                <span>Send Test Alert to Phone</span>
-              </button>
-            </div>
-
-            <!-- Step 6: Log to Analytics -->
-            <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,69,0,0.35); border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
-              <div style="display:flex; align-items:center; gap:7px; font-size:12px; font-weight:800; color:#ff8b60; text-transform:uppercase;">
-                <span class="step-number-badge orange" style="width:20px; height:20px; font-size:11px;">6</span>
-                <span>Log to Analytics</span>
-              </div>
-              <button id="btn-log-campaign" onclick="logCampaignToAnalytics()" class="header-btn" style="width:100%; justify-content:center; font-size:13px; padding:6px 12px; background:rgba(255, 69, 0, 0.25); border-color:rgba(255, 69, 0, 0.7); color:#fff; cursor:pointer; display:inline-flex; align-items:center; gap:6px; font-weight:800;" title="Start stopwatch & log this giveaway into Analytics + update Subreddit Cooldown Badges">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                <span>Start & Log to Analytics</span>
-              </button>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Discrete Automation & Analytics Tracking Flow Note -->
-        <details style="margin-top: 10px; border: 1px solid rgba(255, 69, 0, 0.25); border-radius: 6px; background: rgba(255, 69, 0, 0.03); padding: 6px 12px; font-size: 11.5px; color: var(--muted); cursor: pointer;">
-          <summary style="font-weight: 600; color: #ff8b60; display: inline-flex; align-items: center; gap: 6px; user-select: none;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-            How the automated giveaway & speed tracking flow works (Click to view)
-          </summary>
-          <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.05); line-height: 1.5; color: var(--text); opacity: 0.9; cursor: default;">
-            <ol style="padding-left: 18px; margin: 0; display: flex; flex-direction: column; gap: 4px;">
-              <li><strong>Launch Giveaway on Reddit:</strong> Post your title, banner image, and drop the comment with the claim link.</li>
-              <li><strong>Click "Log to Analytics" above:</strong> Starts the stopwatch timer in the database (<code>startedAt</code>) and logs the campaign.</li>
-              <li><strong>Users Claim Coupons:</strong> Real-time claims count down on <code>creationcue.web.app/claim</code> until your cap is hit.</li>
-              <li><strong>Automatic Depletion Calculation:</strong> When the last coupon is taken, the system instantly computes total elapsed time, attaches it to your <strong>ntfy phone alert</strong> (e.g. <em>"🚨 COUPONS GONE: CUE097! (Claimed in ~68 mins)"</em>), and writes the depletion minutes.</li>
-              <li><strong>Visible in Analytics:</strong> Shows up on <a href="https://cue-earnings.sotsor.workers.dev/analytics" target="_blank" style="color:#60a5fa; text-decoration:none;">cue-earnings Analytics ↗</a> with the <span style="background:rgba(16,185,129,0.15); color:#34d399; padding:1px 6px; border-radius:3px; font-weight:700;">⚡ Depleted in X mins</span> speed badge.</li>
-            </ol>
-          </div>
-        </details>
-
-        <!-- Direct Redeem Link Banner -->
-        <div class="direct-redeem-banner" onclick="copyDirectRedeemLink(event)" title="Click to paste a coupon code and copy the full direct redeem link" style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:6px 12px; background:rgba(245,197,24,0.05); border:1px dashed rgba(245,197,24,0.28); border-radius:6px; margin-top:10px; cursor:pointer; user-select:none; transition:all 0.2s ease;">
-          <div style="display:flex; align-items:center; gap:8px; overflow:hidden; min-width:0;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none; color:var(--yellow);"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-            <span style="font-weight:600; color:var(--text); font-size:11.5px; white-space:nowrap; flex:none;">Direct link:</span>
-            <span style="color:var(--yellow); font-family:monospace; font-size:11.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">https://play.google.com/redeem?code=<span style="opacity:0.45;">.........[coupon code]</span></span>
-          </div>
-          <button type="button" class="btn small" style="padding:2px 8px; font-size:10px; height:auto; flex:none; background:rgba(245,197,24,0.15); color:var(--yellow); border:1px solid rgba(245,197,24,0.3); pointer-events:none;">Paste & Copy</button>
-        </div>
-
-        <!-- Google Play Coupon Tester Bar -->
-        <div class="coupon-tester-bar" style="display:flex; gap:8px; align-items:center; background:rgba(37,99,235,0.08); border:1px solid rgba(37,99,235,0.25); border-radius:6px; padding:6px 12px; margin-top:12px;">
-          <div style="display:flex; align-items:center; gap:6px; flex:none; color:#60a5fa; font-size:11.5px; font-weight:700;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <span>Test Coupon:</span>
-          </div>
-          <input type="text" id="reddit-test-code-input" placeholder="Paste coupon code or redeem URL to verify on Google Play..." onkeydown="if(event.key==='Enter')testPlayCoupon('reddit-test-code-input')" oninput="syncTestLink('reddit-test-code-input', 'reddit-test-play-btn')" onfocus="syncTestLink('reddit-test-code-input', 'reddit-test-play-btn')" style="flex:1; min-width:0; background:var(--black); border:1px solid var(--border); color:var(--yellow); font-family:monospace; font-size:12px; padding:5px 8px; border-radius:4px; height:auto;">
-          <a id="reddit-test-play-btn" href="https://play.google.com/redeem" target="_blank" rel="noopener noreferrer" class="btn small" onclick="testPlayCoupon('reddit-test-code-input', event)" style="padding:5px 12px; font-size:11px; height:auto; flex:none; background:var(--blue); color:white; border:none; border-radius:4px; display:flex; align-items:center; gap:4px; cursor:pointer; text-decoration:none;" title="Left-click to test on Play (or right-click to Open in Incognito)">
-            <span>Test on Play</span>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-          </a>
-        </div>
-
-        <!-- Warning banner for unsaved giveaway cap -->
-        <div id="cap-warning-banner" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; border-radius: 8px; padding: 10px 14px; margin-top: 14px; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
-          <div style="display: flex; align-items: center; gap: 8px; color: #fca5a5; font-size: 12.5px; font-weight: 600;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-            <span>⚠️ <strong>ATTENTION:</strong> Giveaway Cap is not saved yet! All remaining coupons will be claimable until you enter a cap and click <strong>SAVE</strong>.</span>
-          </div>
-          <button onclick="document.getElementById('custom-cap-input').focus()" style="background: #ef4444; color: #fff; border: none; padding: 5px 12px; font-size: 11.5px; font-weight: 700; border-radius: 4px; cursor: pointer;">
-            Enter Cap Now
+          <!-- Dedicated Separate Action Button: When Coupons Are Gone -->
+          <button id="btn-quick-expired" type="button" class="btn-expired-separate" onclick="copyExpiredAndOpenReddit()" title="Copy expired message to clipboard and open your live Reddit post">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span>When Coupons Are Gone (Copy Expired Notice &amp; Open Reddit ↗)</span>
           </button>
         </div>
 
-        <!-- Cap Saved Confirmation Pill -->
-        <div id="cap-saved-banner" style="display: none; background: rgba(16, 185, 129, 0.12); border: 1px solid #10b981; border-radius: 8px; padding: 8px 14px; margin-top: 14px; align-items: center; justify-content: space-between; gap: 10px; color: #6ee7b7; font-size: 12px; font-weight: 600; flex-wrap: wrap;">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            <span>✓ Giveaway Cap locked at <strong id="cap-saved-number">0</strong> coupons. Public claims will automatically stop after reaching this limit.</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: #93c5fd; background: rgba(59, 130, 246, 0.15); padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(59, 130, 246, 0.3);">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-            <span>ntfy Auto-Alert Active</span>
-          </div>
-        </div>
+        <!-- Collapsible Steps 2 to 9 Drawer -->
+        <details id="steps-2-9-drawer" class="steps-collapsible-drawer">
+          <summary>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span>⚙️ Setup &amp; Generator Steps (Points 2 – 9)</span>
+              <span style="font-size:11px; font-weight:600; color:var(--yellow); background:rgba(245,197,24,0.12); padding:2px 8px; border-radius:10px;">Click to Expand / Edit</span>
+            </div>
+            <span style="color:var(--muted); font-size:12px;">▼</span>
+          </summary>
+          <div class="steps-drawer-body">
 
-        <!-- Copy Content Section (Title, Body, Comment, Expired, Replies) -->
-        <div style="display:flex; align-items:center; gap:8px; margin-top:14px; margin-bottom:4px; padding-bottom:6px; border-bottom:1px solid rgba(255,255,255,0.08);">
-          <span style="font-size:14px; font-weight:800; text-transform:uppercase; color:var(--yellow); letter-spacing:1px;">📋 Reddit Post Content (Ready to Copy & Paste)</span>
-        </div>
+            <!-- Warning banner for unsaved giveaway cap -->
+            <div id="cap-warning-banner" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; border-radius: 8px; padding: 10px 14px; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+              <div style="display: flex; align-items: center; gap: 8px; color: #fca5a5; font-size: 12.5px; font-weight: 600;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <span>⚠️ <strong>ATTENTION:</strong> Giveaway Cap is not saved yet! All remaining coupons will be claimable until you enter a cap and click <strong>SAVE</strong>.</span>
+              </div>
+              <button onclick="document.getElementById('custom-cap-input').focus()" style="background: #ef4444; color: #fff; border: none; padding: 5px 12px; font-size: 11.5px; font-weight: 700; border-radius: 4px; cursor: pointer;">
+                Enter Cap Now
+              </button>
+            </div>
 
-        <!-- Step 7: Reddit Post Title -->
-        <div class="section-box">
-          <div class="section-title-row">
-            <span class="section-title">
-              <span class="step-number-badge">7</span>
-              <span>Post Title (Copy into Reddit Title)</span>
-            </span>
-            <button class="copy-btn" onclick="copyField('output-title', 'Post Title')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              Copy Title
-            </button>
-          </div>
-          <input type="text" id="output-title" class="text-output-area" style="font-weight:600; font-size:15px;" placeholder="[Wear OS] CRC066 Digital Watch Face – Free Coupon Codes Giveaway!">
-          <div class="help-hint">
-            💡 Clean moderator-safe format. Exact coupon count is only shown when limited (≤100 or when a cap is set) to maximize urgency without looking like mass dumping.
-          </div>
-        </div>
+            <!-- Cap Saved Confirmation Pill -->
+            <div id="cap-saved-banner" style="display: none; background: rgba(16, 185, 129, 0.12); border: 1px solid #10b981; border-radius: 8px; padding: 8px 14px; align-items: center; justify-content: space-between; gap: 10px; color: #6ee7b7; font-size: 12px; font-weight: 600; flex-wrap: wrap;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>✓ Giveaway Cap locked at <strong id="cap-saved-number">0</strong> coupons. Public claims will automatically stop after reaching this limit.</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: #93c5fd; background: rgba(59, 130, 246, 0.15); padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(59, 130, 246, 0.3);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                <span>ntfy Auto-Alert Active</span>
+              </div>
+            </div>
 
-        <!-- Step 8: Post Body (Safe / No Links) -->
-        <div class="section-box">
-          <div class="section-title-row">
-            <span class="section-title">
-              <span class="step-number-badge">8</span>
-              <span>Post Body Text (No External Links)</span>
-            </span>
-            <button class="copy-btn" onclick="copyField('output-body', 'Post Body')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              Copy Body
-            </button>
-          </div>
-          <textarea id="output-body" class="text-output-area" rows="3" placeholder="Hey everyone! Giving away free Google Play promo codes for CRC066 Wear OS watch face.
+            <!-- Workflow Steps 2 to 6 Deck -->
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+              
+              <!-- Step 2: Add Cap -->
+              <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(245,197,24,0.25); border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
+                <div style="display:flex; align-items:center; gap:7px; font-size:12px; font-weight:800; color:var(--yellow); text-transform:uppercase;">
+                  <span class="step-number-badge" style="width:20px; height:20px; font-size:11px;">2</span>
+                  <span>Add Giveaway Cap</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <input type="number" id="custom-cap-input" min="1" max="1000" placeholder="e.g. 50" style="width:90px; background:var(--black); border:1px solid var(--border); border-radius:4px; color:#fff; font-size:14px; font-weight:700; padding:6px 8px; text-align:center;" oninput="onCapInputChange()">
+                  <button id="btn-save-cap" class="btn-save-cap" style="padding:7px 12px; font-size:12px;" onclick="saveCapToFirebase()" title="Save cap directly to Firebase database so promo-details & claim page are updated">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    Save Cap
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 3: Select Reddit Page -->
+              <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,69,0,0.25); border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
+                <div style="display:flex; align-items:center; gap:7px; font-size:12px; font-weight:800; color:#ff8b60; text-transform:uppercase;">
+                  <span class="step-number-badge orange" style="width:20px; height:20px; font-size:11px;">3</span>
+                  <span>Select Target Subreddit</span>
+                </div>
+                <select id="log-subreddit-select" style="width:100%; background:var(--black); border:1px solid var(--border); border-radius:4px; color:#fff; font-size:13px; font-weight:600; padding:6px 8px; cursor:pointer;" title="Subreddit where you posted">
+                  <option value="r/GalaxyWatchFace">r/GalaxyWatchFace (52k members)</option>
+                  <option value="r/WearOSFaces" selected>r/WearOSFaces (126k members)</option>
+                </select>
+              </div>
+
+              <!-- Step 4: Add Link -->
+              <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.12); border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
+                <div style="display:flex; align-items:center; gap:7px; font-size:12px; font-weight:800; color:#e5e7eb; text-transform:uppercase;">
+                  <span class="step-number-badge" style="width:20px; height:20px; font-size:11px; background:rgba(255,255,255,0.1); border-color:#9ca3af; color:#fff;">4</span>
+                  <span>Add Reddit Post Link</span>
+                </div>
+                <input type="text" id="log-post-url-input" placeholder="Paste your live Reddit post URL..." oninput="onPostUrlInput(this.value)" style="width:100%; background:var(--black); border:1px solid var(--border); border-radius:4px; color:#fff; font-size:13px; padding:6px 8px;" title="Paste your live Reddit post URL here">
+              </div>
+
+              <!-- Step 5: Test Notification -->
+              <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(59,130,246,0.25); border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
+                <div style="display:flex; align-items:center; gap:7px; font-size:12px; font-weight:800; color:#60a5fa; text-transform:uppercase;">
+                  <span class="step-number-badge blue" style="width:20px; height:20px; font-size:11px;">5</span>
+                  <span>Test Phone Notification</span>
+                </div>
+                <button id="btn-test-ntfy" onclick="sendTestAlert()" class="header-btn" style="width:100%; justify-content:center; font-size:12.5px; padding:6px 12px; background:rgba(59, 130, 246, 0.12); border-color:rgba(59, 130, 246, 0.4); color:#93c5fd; cursor:pointer; display:inline-flex; align-items:center; gap:6px; font-weight:700;" title="Test phone push alert via ntfy">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                  <span>Send Test Alert to Phone</span>
+                </button>
+              </div>
+
+              <!-- Step 6: Log to Analytics -->
+              <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,69,0,0.35); border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:6px;">
+                <div style="display:flex; align-items:center; gap:7px; font-size:12px; font-weight:800; color:#ff8b60; text-transform:uppercase;">
+                  <span class="step-number-badge orange" style="width:20px; height:20px; font-size:11px;">6</span>
+                  <span>Log to Analytics</span>
+                </div>
+                <button id="btn-log-campaign" onclick="logCampaignToAnalytics()" class="header-btn" style="width:100%; justify-content:center; font-size:13px; padding:6px 12px; background:rgba(255, 69, 0, 0.25); border-color:rgba(255, 69, 0, 0.7); color:#fff; cursor:pointer; display:inline-flex; align-items:center; gap:6px; font-weight:800;" title="Start stopwatch & log this giveaway into Analytics + update Subreddit Cooldown Badges">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                  <span>Start & Log to Analytics</span>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Copy Content Section (Title, Body, Comment, Expired, Replies) -->
+            <div style="display:flex; align-items:center; gap:8px; margin-top:6px; padding-bottom:6px; border-bottom:1px solid rgba(255,255,255,0.08);">
+              <span style="font-size:13.5px; font-weight:800; text-transform:uppercase; color:var(--yellow); letter-spacing:0.5px;">📋 Reddit Post Content (Ready to Copy &amp; Paste)</span>
+            </div>
+
+            <!-- Step 7: Reddit Post Title -->
+            <div class="section-box">
+              <div class="section-title-row">
+                <span class="section-title">
+                  <span class="step-number-badge">7</span>
+                  <span>Post Title (Copy into Reddit Title)</span>
+                </span>
+                <button class="copy-btn" onclick="copyField('output-title', 'Post Title')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy Title
+                </button>
+              </div>
+              <input type="text" id="output-title" class="text-output-area" style="font-weight:600; font-size:15px;" placeholder="[Wear OS] CRC066 Digital Watch Face – Free Coupon Codes Giveaway!">
+              <div class="help-hint">
+                💡 Clean moderator-safe format. Exact coupon count is only shown when limited (≤100 or when a cap is set) to maximize urgency without looking like mass dumping.
+              </div>
+            </div>
+
+            <!-- Step 8: Post Body (Safe / No Links) -->
+            <div class="section-box">
+              <div class="section-title-row">
+                <span class="section-title">
+                  <span class="step-number-badge">8</span>
+                  <span>Post Body Text (No External Links)</span>
+                </span>
+                <button class="copy-btn" onclick="copyField('output-body', 'Post Body')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy Body
+                </button>
+              </div>
+              <textarea id="output-body" class="text-output-area" rows="3" placeholder="Hey everyone! Giving away free Google Play promo codes for CRC066 Wear OS watch face.
 
 Links to claim your free code and the Play Store link are in the first comment below! 👇"></textarea>
-          <div class="help-hint warning">
-            ⚠️ <strong>Crucial Anti-Ban Rule:</strong> Upload your promo image/banner via Reddit's Image button, and keep this short body text without links. This prevents AutoModerator from holding your post!
-          </div>
-        </div>
-
-        <!-- Step 9: First Comment (Direct Link + Store + Features) -->
-        <div class="section-box">
-          <div class="section-title-row">
-            <span class="section-title">
-              <span class="step-number-badge">9</span>
-              <span>First Comment (Paste immediately after posting)</span>
-            </span>
-            <button class="copy-btn" onclick="copyField('output-comment', 'Comment')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              Copy Comment
-            </button>
-          </div>
-          <textarea id="output-comment" class="text-output-area" rows="11" placeholder="Full comment will appear here with direct claim URL..."></textarea>
-          <div class="help-hint">
-            ✓ Uses clean direct <code>creationcue.web.app/claim?p=...</code> (no shorteners like spoo.me/bitly, completely Reddit-safe).
-          </div>
-        </div>
-
-        <!-- Step 10: After Coupons Expire (1-Click Update Note) -->
-        <div class="section-box" style="border-left: 4px solid var(--reddit-orange);">
-          <div class="section-title-row">
-            <span class="section-title" style="color: #ff8b60;">
-              <span class="step-number-badge orange">10</span>
-              <span>When Coupons Are Gone (Edit into top comment)</span>
-            </span>
-            <button class="copy-btn" onclick="copyExpiredAndOpenReddit()" title="Copy expired message to clipboard and open your live Reddit post">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              Copy Expired Notice &amp; Open Reddit ↗
-            </button>
-          </div>
-          <textarea id="output-expired" class="text-output-area" rows="6" placeholder="Ready-to-paste expired notice..."></textarea>
-          <div class="help-hint">
-            💡 When codes hit 0, edit this notice to the top of your 1st comment to stop code requests and funnel late traffic straight to Google Play!
-          </div>
-        </div>
-
-        <!-- Quick Replies for Comment Issues -->
-        <div class="section-box" style="border-left: 4px solid #3b82f6;">
-          <div class="section-title-row">
-            <span class="section-title" style="color: #60a5fa;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-              <span>Quick Replies for Comment Issues</span>
-            </span>
-          </div>
-          <div class="help-hint" style="margin-bottom: 12px;">
-            💬 Pre-written friendly answers when users comment with common questions or mobile issues:
-          </div>
-
-          <!-- Problem 1: Link won't load / keeps spinning / claim button stuck -->
-          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px; padding: 12px; margin-bottom: 12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
-              <span style="font-size:13px; font-weight:700; color:#fff;">⚠️ When user says: "Link won't load / button not working"</span>
-              <button class="copy-btn" onclick="copyField('reply-loading-stuck', 'Browser Fix Reply')">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                Copy Reply
-              </button>
+              <div class="help-hint warning">
+                ⚠️ <strong>Crucial Anti-Ban Rule:</strong> Upload your promo image/banner via Reddit's Image button, and keep this short body text without links. This prevents AutoModerator from holding your post!
+              </div>
             </div>
-            <textarea id="reply-loading-stuck" class="text-output-area" rows="5" readonly style="font-size:13.5px; line-height:1.5;"></textarea>
-          </div>
 
-          <!-- Problem 2: Thank You response -->
-          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px; padding: 12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
-              <span style="font-size:13px; font-weight:700; color:#fff;">💖 When user says: "Thank you / Great watch face!"</span>
-              <button class="copy-btn" onclick="copyField('reply-thank-you', 'Thank You Reply')">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                Copy Reply
-              </button>
+            <!-- Step 9: First Comment (Direct Link + Store + Features) -->
+            <div class="section-box">
+              <div class="section-title-row">
+                <span class="section-title">
+                  <span class="step-number-badge">9</span>
+                  <span>First Comment (Paste immediately after posting)</span>
+                </span>
+                <button class="copy-btn" onclick="copyField('output-comment', 'Comment')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy Comment
+                </button>
+              </div>
+              <textarea id="output-comment" class="text-output-area" rows="11" placeholder="Full comment will appear here with direct claim URL..."></textarea>
+              <div class="help-hint">
+                ✓ Uses clean direct <code>creationcue.web.app/claim?p=...</code> (no shorteners like spoo.me/bitly, completely Reddit-safe).
+              </div>
             </div>
-            <textarea id="reply-thank-you" class="text-output-area" rows="2" readonly style="font-size:13.5px; line-height:1.5;"></textarea>
-          </div>
-        </div>
 
-        <!-- Posting Walkthrough Guide -->
-        <div class="guide-box">
-          <strong>📋 Summary of Safe Posting Rules:</strong>
-          <ol>
-            <li>Click <strong>Open r/WearOSFaces</strong> or <strong>Open r/GalaxyWatchFace</strong> above.</li>
-            <li>In Reddit, click the <strong>Image icon</strong> inside the post editor to upload your watch face image banner.</li>
-            <li>Select flair <strong>Watch Face</strong> (make sure NSFW/Spoiler/Affiliate remain off).</li>
-            <li>Paste <strong>Step 1</strong> into Title, and <strong>Step 2</strong> into the Body text.</li>
-            <li>Click <strong>Post</strong>.</li>
-            <li>As soon as it goes live, click the comment bubble (💬 0) and paste <strong>Step 3</strong>!</li>
-          </ol>
+            <!-- Step 10: After Coupons Expire (Editable Reference) -->
+            <div class="section-box" style="border-left: 4px solid var(--reddit-orange);">
+              <div class="section-title-row">
+                <span class="section-title" style="color: #ff8b60;">
+                  <span class="step-number-badge orange">10</span>
+                  <span>When Coupons Are Gone (Editable Notice Text)</span>
+                </span>
+                <button class="copy-btn" onclick="copyExpiredAndOpenReddit()" title="Copy expired message to clipboard and open your live Reddit post">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy Expired Notice &amp; Open Reddit ↗
+                </button>
+              </div>
+              <textarea id="output-expired" class="text-output-area" rows="6" placeholder="Ready-to-paste expired notice..."></textarea>
+              <div class="help-hint">
+                💡 When codes hit 0, edit this notice to the top of your 1st comment to stop code requests and funnel late traffic straight to Google Play!
+              </div>
+            </div>
+
+            <!-- Quick Replies for Comment Issues -->
+            <div class="section-box" style="border-left: 4px solid #3b82f6;">
+              <div class="section-title-row">
+                <span class="section-title" style="color: #60a5fa;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  <span>Quick Replies for Comment Issues</span>
+                </span>
+              </div>
+              <div class="help-hint" style="margin-bottom: 12px;">
+                💬 Pre-written friendly answers when users comment with common questions or mobile issues:
+              </div>
+
+              <!-- Problem 1: Link won't load / keeps spinning / claim button stuck -->
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px; padding: 12px; margin-bottom: 12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+                  <span style="font-size:13px; font-weight:700; color:#fff;">⚠️ When user says: "Link won't load / button not working"</span>
+                  <button class="copy-btn" onclick="copyField('reply-loading-stuck', 'Browser Fix Reply')">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy Reply
+                  </button>
+                </div>
+                <textarea id="reply-loading-stuck" class="text-output-area" rows="5" readonly style="font-size:13.5px; line-height:1.5;"></textarea>
+              </div>
+
+              <!-- Problem 2: Thank You response -->
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 6px; padding: 12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+                  <span style="font-size:13px; font-weight:700; color:#fff;">💖 When user says: "Thank you / Great watch face!"</span>
+                  <button class="copy-btn" onclick="copyField('reply-thank-you', 'Thank You Reply')">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy Reply
+                  </button>
+                </div>
+                <textarea id="reply-thank-you" class="text-output-area" rows="2" readonly style="font-size:13.5px; line-height:1.5;"></textarea>
+              </div>
+            </div>
+
+            <!-- Posting Walkthrough Guide -->
+            <div class="guide-box">
+              <strong>📋 Summary of Safe Posting Rules:</strong>
+              <ol>
+                <li>Click <strong>Open r/WearOSFaces</strong> or <strong>Open r/GalaxyWatchFace</strong> above.</li>
+                <li>In Reddit, click the <strong>Image icon</strong> inside the post editor to upload your watch face image banner.</li>
+                <li>Select flair <strong>Watch Face</strong> (make sure NSFW/Spoiler/Affiliate remain off).</li>
+                <li>Paste <strong>Step 1</strong> into Title, and <strong>Step 2</strong> into the Body text.</li>
+                <li>Click <strong>Post</strong>.</li>
+                <li>As soon as it goes live, click the comment bubble (💬 0) and paste <strong>Step 3</strong>!</li>
+              </ol>
+            </div>
+
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- Footer Quick Tools Menu -->
+    <div class="footer-tools-menu">
+      <button type="button" class="footer-tool-btn" onclick="openFooterTool('playbook')">
+        <span>🎯 Strategy Playbook</span>
+      </button>
+      <button type="button" class="footer-tool-btn" onclick="openFooterTool('automation')">
+        <span>⚡ How to Automate Giveaway</span>
+      </button>
+      <button type="button" class="footer-tool-btn" onclick="openFooterTool('direct-link')">
+        <span>🔗 Direct Play Store Link</span>
+      </button>
+      <button type="button" class="footer-tool-btn" onclick="openFooterTool('test-coupon')">
+        <span>🎟️ Test Coupon on Play</span>
+      </button>
+    </div>
+
+    <!-- Footer Tool Modal -->
+    <div id="footer-tool-modal" class="tool-modal-backdrop" onclick="closeFooterToolModal(event)" style="display:none;">
+      <div class="tool-modal-card">
+        <div class="tool-modal-header">
+          <div id="footer-modal-title" style="font-size:15px; font-weight:800; color:#fff; display:flex; align-items:center; gap:8px;">Tool Title</div>
+          <button type="button" class="tool-modal-close" onclick="closeFooterToolModal()" style="background:transparent; border:none; color:var(--muted); font-size:22px; cursor:pointer; padding:2px 8px; line-height:1;">&times;</button>
         </div>
+        <div id="footer-modal-content" class="tool-modal-body"></div>
       </div>
     </div>
   </main>
@@ -2294,6 +2441,115 @@ Links to claim your free code and the Play Store link are in the first comment b
       if (postUrl) {
         window.open(postUrl, '_blank');
       }
+    }
+
+    // Footer Modal Tools (Playbook, Automation Flow, Direct Link, Test Coupon)
+    function openFooterTool(tool) {
+      var modal = document.getElementById('footer-tool-modal');
+      var title = document.getElementById('footer-modal-title');
+      var body = document.getElementById('footer-modal-content');
+      if (!modal || !title || !body) return;
+
+      if (tool === 'playbook') {
+        title.innerHTML = '🎯 Promotion Strategy Playbook';
+        body.innerHTML = `
+          <div style="line-height:1.6; display:flex; flex-direction:column; gap:14px;">
+            <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:8px; padding:12px 14px;">
+              <div style="font-weight:700; color:#34d399; font-size:13.5px; margin-bottom:6px;">🚀 1. New Watch Face Launch (&lt; 10 Ratings)</div>
+              <ul style="margin:0; padding-left:18px; display:flex; flex-direction:column; gap:6px; font-size:12.5px; color:#d1d5db;">
+                <li><strong>Goal:</strong> Unlock the public ★ star rating badge on Google Play (requires first 5–8 reviews) &amp; build initial social proof.</li>
+                <li><strong>Action:</strong> Post <strong>50–60 coupons</strong> on Reddit (creates fast scarcity in ~60–90 mins without cannibalizing late organic buyers).</li>
+                <li><strong>Secret Weapon (Private DM Only):</strong> When users ask for a code after expiry, send <strong>5–8 extra codes privately in Reddit Chat/DM</strong>. Personal DMs convert at ~50–80% into 5★ reviews.</li>
+              </ul>
+            </div>
+            <div style="background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.3); border-radius:8px; padding:12px 14px;">
+              <div style="font-weight:700; color:#60a5fa; font-size:13.5px; margin-bottom:6px;">💰 2. Established Faces (10+ Ratings) — Run Play Store Sales</div>
+              <ul style="margin:0; padding-left:18px; display:flex; flex-direction:column; gap:6px; font-size:12.5px; color:#d1d5db;">
+                <li><strong>Why Stop Free Coupons:</strong> Google Play's Top Paid algorithm ranks apps by <strong>paid revenue &amp; velocity</strong>—free promo codes do not boost Paid chart rank.</li>
+                <li><strong>Action:</strong> Run an official <strong>Google Play Discount Sale</strong> (dropping price e.g. <strong>€1.69 → €0.49</strong> for 5–7 days).</li>
+                <li><strong>Algorithm Win:</strong> Shows strikethrough price badge (<s>€1.69</s> €0.49), triggers "Apps on Sale" recommendations, and counts 100% as real paid sales.</li>
+              </ul>
+            </div>
+          </div>
+        `;
+      } else if (tool === 'automation') {
+        title.innerHTML = '⚡ How the Automated Giveaway Flow Works';
+        body.innerHTML = `
+          <ol style="padding-left: 20px; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: #e2e8f0; line-height: 1.6;">
+            <li><strong>Launch Giveaway on Reddit:</strong> Post your title, banner image, and drop the first comment with the direct claim link.</li>
+            <li><strong>Click "Log to Analytics" in Step 6:</strong> Starts the stopwatch timer in the database (<code>startedAt</code>) and logs the campaign.</li>
+            <li><strong>Users Claim Coupons:</strong> Real-time claims count down on <code>creationcue.web.app/claim</code> until your cap is hit.</li>
+            <li><strong>Automatic Depletion Calculation:</strong> When the last coupon is taken, the system instantly computes total elapsed time, attaches it to your <strong>ntfy phone alert</strong> (e.g. <em>"🚨 COUPONS GONE: CUE162! (Claimed in ~40 mins)"</em>), and writes the depletion minutes.</li>
+            <li><strong>Visible in Analytics:</strong> Shows up on <a href="https://cue-earnings.sotsor.workers.dev/analytics" target="_blank" style="color:#60a5fa; text-decoration:underline;">cue-earnings Analytics ↗</a> with the speed badge.</li>
+          </ol>
+        `;
+      } else if (tool === 'direct-link') {
+        title.innerHTML = '🔗 Direct Google Play Redeem Link Generator';
+        body.innerHTML = `
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <p style="font-size:13px; color:#cbd5e1; margin:0;">
+              Convert any coupon code into an instant 1-click Google Play redemption link (bypasses browser typing):
+            </p>
+            <div style="display:flex; gap:8px;">
+              <input type="text" id="modal-direct-code-input" placeholder="Paste coupon code (e.g. 4X8K9L...)" style="flex:1; background:var(--black); border:1px solid var(--border); border-radius:6px; padding:9px 12px; color:#fff; font-family:monospace; font-size:13px;">
+              <button type="button" class="btn small" onclick="generateAndCopyDirectLink()" style="background:var(--yellow); color:#000; font-weight:800; padding:9px 16px; border:none; border-radius:6px; cursor:pointer;">
+                Copy Link
+              </button>
+            </div>
+            <div id="modal-direct-link-result" style="font-family:monospace; font-size:12px; color:#94a3b8; word-break:break-all; background:rgba(0,0,0,0.3); padding:10px 12px; border-radius:6px; min-height:24px;">
+              https://play.google.com/redeem?code=...
+            </div>
+          </div>
+        `;
+      } else if (tool === 'test-coupon') {
+        title.innerHTML = '🎟️ Test Coupon on Google Play';
+        body.innerHTML = `
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <p style="font-size:13px; color:#cbd5e1; margin:0;">
+              Verify if a coupon code is valid directly on the official Google Play redeem page:
+            </p>
+            <div style="display:flex; gap:8px;">
+              <input type="text" id="modal-test-code-input" placeholder="Paste coupon code or URL..." style="flex:1; background:var(--black); border:1px solid var(--border); border-radius:6px; padding:9px 12px; color:#fff; font-family:monospace; font-size:13px;" onkeydown="if(event.key==='Enter')testCouponFromModal()">
+              <button type="button" class="btn small" onclick="testCouponFromModal()" style="background:var(--blue); color:#fff; font-weight:800; padding:9px 16px; border:none; border-radius:6px; cursor:pointer;">
+                Test on Play ↗
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    function closeFooterToolModal(e) {
+      if (e && e.target && e.target.id !== 'footer-tool-modal' && !e.target.classList.contains('tool-modal-backdrop') && !e.target.closest('.tool-modal-close')) {
+        return;
+      }
+      var modal = document.getElementById('footer-tool-modal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function generateAndCopyDirectLink() {
+      var input = document.getElementById('modal-direct-code-input');
+      var raw = input ? input.value.trim() : '';
+      var clean = typeof window.extractCouponCode === 'function' ? window.extractCouponCode(raw) : raw;
+      var finalUrl = clean ? ("https://play.google.com/redeem?code=" + encodeURIComponent(clean)) : "https://play.google.com/redeem?code=";
+      var resEl = document.getElementById('modal-direct-link-result');
+      if (resEl) resEl.textContent = finalUrl;
+      navigator.clipboard.writeText(finalUrl).then(function() {
+        showToast("Direct Play Store link copied to clipboard!");
+      });
+    }
+
+    function testCouponFromModal() {
+      var input = document.getElementById('modal-test-code-input');
+      var raw = input ? input.value.trim() : '';
+      var clean = typeof window.extractCouponCode === 'function' ? window.extractCouponCode(raw) : raw;
+      if (!clean) {
+        showToast("Please enter a coupon code");
+        return;
+      }
+      window.open("https://play.google.com/redeem?code=" + encodeURIComponent(clean), "_blank");
     }
 
     // Remember clicked subreddit from top Quick Reddit Launcher buttons
