@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-29T02:53:12.588Z",
+  "lastUpdated": "2026-10-30T02:58:08.694Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -128,6 +128,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 30,
       "totalWeight": 3807
+    },
+    {
+      "date": "2026-10-30",
+      "timestamp": "2026-10-30T02:58:08.694Z",
+      "avgRating": 4.49,
+      "weightedAvg": 4.52,
+      "ratedCount": 30,
+      "totalWeight": 3809
     }
   ],
   "results": [
@@ -453,7 +461,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": 4.8,
-      "ratingCount": "24"
+      "ratingCount": "25"
     },
     {
       "id": "cue152",
@@ -1173,7 +1181,7 @@
       "lastUpdatedDate": "Aug 26, 2026",
       "downloads": "10K+",
       "rating": 4.3,
-      "ratingCount": "90"
+      "ratingCount": "91"
     },
     {
       "id": "crc068",
