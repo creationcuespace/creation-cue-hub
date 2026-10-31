@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-30T02:58:08.694Z",
+  "lastUpdated": "2026-10-31T02:43:50.183Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -136,6 +136,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 30,
       "totalWeight": 3809
+    },
+    {
+      "date": "2026-10-31",
+      "timestamp": "2026-10-31T02:43:50.183Z",
+      "avgRating": 4.5,
+      "weightedAvg": 4.52,
+      "ratedCount": 30,
+      "totalWeight": 3815
     }
   ],
   "results": [
@@ -449,7 +457,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.8,
-      "ratingCount": "28"
+      "ratingCount": "29"
     },
     {
       "id": "cue153",
@@ -953,7 +961,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.4,
-      "ratingCount": "33"
+      "ratingCount": "35"
     },
     {
       "id": "cue103",
@@ -1157,7 +1165,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.2,
-      "ratingCount": "21"
+      "ratingCount": "20"
     },
     {
       "id": "crc071",
@@ -1180,8 +1188,8 @@
       "wearVersion": "10000011 (2.5.0)",
       "lastUpdatedDate": "Aug 26, 2026",
       "downloads": "10K+",
-      "rating": 4.3,
-      "ratingCount": "91"
+      "rating": 4.4,
+      "ratingCount": "93"
     },
     {
       "id": "crc068",
@@ -1407,7 +1415,7 @@
       "companionVersion": "Android 16 API & Design Update (v10000011)",
       "wearVersion": "Wear OS SDK 35 Update (v10000010)",
       "lastUpdatedDate": "Aug 4, 2026",
-      "downloads": "10+",
+      "downloads": "50+",
       "rating": null,
       "ratingCount": null
     },
@@ -1493,7 +1501,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "316"
+      "ratingCount": "318"
     },
     {
       "id": "cueindus_pro",
