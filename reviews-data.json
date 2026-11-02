@@ -1,18 +1,6 @@
 {
-  "lastUpdated": "2026-11-01T02:35:29.624Z",
+  "lastUpdated": "2026-11-02T02:45:33.231Z",
   "reviews": [
-    {
-      "reviewId": "22b181db-a966-49c7-88ba-700b9f6ac0f4",
-      "packageName": "com.creation.cue154watchface",
-      "title": "Watch Face CUE154",
-      "wfId": "cue154",
-      "authorName": "Adolfo Frabetti",
-      "starRating": 5,
-      "reviewerLanguage": "it",
-      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
-      "text": "\tAll Key Features work perfectly on my Galaxy Watch Ultra2!",
-      "lastModified": "2026-10-29T19:30:37.000Z"
-    },
     {
       "reviewId": "62f35961-b0d8-4de8-a98e-71ea3698327e",
       "packageName": "com.creation.cue162watchface",
