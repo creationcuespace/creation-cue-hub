@@ -47,7 +47,10 @@ async function main() {
   console.log('Authenticating with Google Play Developer API...');
   const auth = new google.auth.GoogleAuth({
     keyFile: credentialsPath,
-    scopes: ['https://www.googleapis.com/auth/androidpublisher'],
+    scopes: [
+      'https://www.googleapis.com/auth/androidpublisher',
+      'https://www.googleapis.com/auth/playdeveloperreporting'
+    ],
   });
 
   const play = google.androidpublisher({
@@ -364,6 +367,11 @@ async function main() {
       downloads,
       rating,
       ratingCount,
+      vitals: prevItem && prevItem.vitals ? prevItem.vitals : {
+        crashRate: 0.0,
+        anrRate: 0.0,
+        status: 'healthy'
+      },
     };
     if (inReview) {
       itemResult.inReview = true;

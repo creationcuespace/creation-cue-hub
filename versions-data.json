@@ -190,7 +190,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": 4.8,
-      "ratingCount": "14"
+      "ratingCount": "14",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue003",
@@ -204,14 +209,19 @@
       "wearVersion": "10999999 (1.5.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "\u25b8Steps and distance can now be replaced with a custom complication.\n\u25b8Additional color themes added.",
+      "wearNotes": "▸Steps and distance can now be replaced with a custom complication.\n▸Additional color themes added.",
       "storeLanguages": [
         "en-GB"
       ],
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue177",
@@ -225,14 +235,19 @@
       "wearVersion": "10000012 (2.1.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "What's New:\n\ud83c\udf10 Multilingual Support Added!\nThe watch face now dynamically supports localized elements in the following languages, in addition to English:\n\n\u2022 German (Germany, Austria, Switzerland, Liechtenstein, Luxembourg, Belgium)\n\u2022 Spanish (Spain, Mexico, US & Latin America)\n\u2022 Italian (Italy, Switzerland, San Marino, Vatican City)\n\u2022 Greek (Greece, Cyprus)\n\u2022 French (France, Canada, Belgium, Switzerland, Luxembourg, Haiti & regional locales)",
+      "wearNotes": "What's New:\n🌐 Multilingual Support Added!\nThe watch face now dynamically supports localized elements in the following languages, in addition to English:\n\n• German (Germany, Austria, Switzerland, Liechtenstein, Luxembourg, Belgium)\n• Spanish (Spain, Mexico, US & Latin America)\n• Italian (Italy, Switzerland, San Marino, Vatican City)\n• Greek (Greece, Cyprus)\n• French (France, Canada, Belgium, Switzerland, Luxembourg, Haiti & regional locales)",
       "storeLanguages": [
         "en-GB"
       ],
       "lastUpdatedDate": "Oct 6, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue176",
@@ -253,7 +268,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue175",
@@ -275,7 +295,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue174",
@@ -297,7 +322,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue173",
@@ -318,7 +348,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue172",
@@ -339,7 +374,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue171",
@@ -360,7 +400,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue170",
@@ -381,7 +426,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue169",
@@ -402,7 +452,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue168",
@@ -423,7 +478,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue167",
@@ -437,14 +497,19 @@
       "wearVersion": "10000007 (1.2.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "\u2192 Added a few more color combinations.",
+      "wearNotes": "→ Added a few more color combinations.",
       "storeLanguages": [
         "en-GB"
       ],
       "lastUpdatedDate": "Oct 14, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue166",
@@ -467,7 +532,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 5,
-      "ratingCount": "59"
+      "ratingCount": "59",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue165",
@@ -488,7 +558,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue164",
@@ -502,14 +577,19 @@
       "wearVersion": "10000007 (1.3.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "\u25b8Minor adjustments to shadow effects.\n\u25b8Now includes more color options.",
+      "wearNotes": "▸Minor adjustments to shadow effects.\n▸Now includes more color options.",
       "storeLanguages": [
         "en-GB"
       ],
       "lastUpdatedDate": "Aug 29, 2026",
       "downloads": "500+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue163",
@@ -530,7 +610,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue162",
@@ -551,7 +636,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue161",
@@ -572,7 +662,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": 4.2,
-      "ratingCount": "14"
+      "ratingCount": "14",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue160",
@@ -593,7 +688,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue159",
@@ -614,7 +714,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue158",
@@ -635,7 +740,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue157",
@@ -656,7 +766,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue156",
@@ -677,7 +792,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue155",
@@ -698,7 +818,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue154",
@@ -719,7 +844,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.8,
-      "ratingCount": "28"
+      "ratingCount": "28",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue153",
@@ -740,7 +870,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": 4.8,
-      "ratingCount": "25"
+      "ratingCount": "25",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue152",
@@ -761,7 +896,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue151",
@@ -782,7 +922,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.3,
-      "ratingCount": "52"
+      "ratingCount": "52",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue150",
@@ -803,7 +948,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue149",
@@ -824,7 +974,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": 4.2,
-      "ratingCount": "13"
+      "ratingCount": "13",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue148",
@@ -845,7 +1000,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": 4.2,
-      "ratingCount": "26"
+      "ratingCount": "26",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue147",
@@ -866,7 +1026,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue146",
@@ -887,7 +1052,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": 4,
-      "ratingCount": "20"
+      "ratingCount": "20",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue145",
@@ -908,7 +1078,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.7,
-      "ratingCount": "47"
+      "ratingCount": "47",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue144",
@@ -929,7 +1104,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": 4.9,
-      "ratingCount": "19"
+      "ratingCount": "19",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue143",
@@ -950,7 +1130,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue142",
@@ -971,7 +1156,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.6,
-      "ratingCount": "82"
+      "ratingCount": "82",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue141",
@@ -992,7 +1182,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue140",
@@ -1013,7 +1208,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": 4.5,
-      "ratingCount": "14"
+      "ratingCount": "14",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue139",
@@ -1034,7 +1234,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue137",
@@ -1055,7 +1260,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue136",
@@ -1076,7 +1286,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.6,
-      "ratingCount": "416"
+      "ratingCount": "416",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue136_plus",
@@ -1097,7 +1312,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue135",
@@ -1118,7 +1338,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.6,
-      "ratingCount": "20"
+      "ratingCount": "20",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue134",
@@ -1139,7 +1364,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue133",
@@ -1160,7 +1390,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue132",
@@ -1181,7 +1416,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue131",
@@ -1202,7 +1442,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": 5,
-      "ratingCount": "9"
+      "ratingCount": "9",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue130",
@@ -1223,7 +1468,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue129",
@@ -1244,7 +1494,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue128",
@@ -1265,7 +1520,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue127",
@@ -1286,7 +1546,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue126",
@@ -1307,7 +1572,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue125",
@@ -1328,7 +1598,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue124",
@@ -1349,7 +1624,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue123",
@@ -1370,7 +1650,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue122",
@@ -1391,7 +1676,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue116",
@@ -1415,7 +1705,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
       "rating": 4.5,
-      "ratingCount": "98"
+      "ratingCount": "98",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue115",
@@ -1436,7 +1731,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue114",
@@ -1457,7 +1757,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue111",
@@ -1478,7 +1783,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.6,
-      "ratingCount": "48"
+      "ratingCount": "48",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue110",
@@ -1499,7 +1809,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue109",
@@ -1520,7 +1835,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue107",
@@ -1541,7 +1861,12 @@
       "lastUpdatedDate": "Oct 22, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue106",
@@ -1562,7 +1887,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue105",
@@ -1583,7 +1913,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue104",
@@ -1604,7 +1939,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.4,
-      "ratingCount": "35"
+      "ratingCount": "35",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue103",
@@ -1625,7 +1965,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue102",
@@ -1646,7 +1991,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue101",
@@ -1667,7 +2017,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue100",
@@ -1688,7 +2043,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue099",
@@ -1709,7 +2069,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue098",
@@ -1730,7 +2095,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue097",
@@ -1744,14 +2114,19 @@
       "wearVersion": "10000017 (4.1.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "\u25b8 Made a few minor design adjustments.",
+      "wearNotes": "▸ Made a few minor design adjustments.",
       "storeLanguages": [
         "en-GB"
       ],
       "lastUpdatedDate": "Oct 11, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc094",
@@ -1772,7 +2147,12 @@
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc092",
@@ -1793,7 +2173,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc091",
@@ -1814,7 +2199,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc090",
@@ -1835,7 +2225,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc087",
@@ -1856,7 +2251,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc082",
@@ -1877,7 +2277,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 3,
-      "ratingCount": "7"
+      "ratingCount": "7",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc081",
@@ -1898,7 +2303,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc080",
@@ -1919,7 +2329,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.3,
-      "ratingCount": "657"
+      "ratingCount": "657",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc079",
@@ -1940,7 +2355,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc072",
@@ -1961,7 +2381,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.2,
-      "ratingCount": "20"
+      "ratingCount": "20",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc071",
@@ -1982,7 +2407,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc069",
@@ -1996,7 +2426,7 @@
       "wearVersion": "10000011 (2.5.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "\u25b8 Additional color themes added.\n\u25b8 Fixed the spacing of the day name.\n\u25b8 \ucd94\uac00 \uc0c9\uc0c1 \ud14c\ub9c8\uac00 \ucd94\uac00\ub418\uc5c8\uc2b5\ub2c8\ub2e4.\n\u25b8 \uc694\uc77c \uc774\ub984\uc758 \uac04\uaca9\uc744 \uc218\uc815\ud588\uc2b5\ub2c8\ub2e4.",
+      "wearNotes": "▸ Additional color themes added.\n▸ Fixed the spacing of the day name.\n▸ 추가 색상 테마가 추가되었습니다.\n▸ 요일 이름의 간격을 수정했습니다.",
       "storeLanguages": [
         "en-US",
         "ko-KR"
@@ -2004,7 +2434,12 @@
       "lastUpdatedDate": "Aug 27, 2026",
       "downloads": "10K+",
       "rating": 4.4,
-      "ratingCount": "93"
+      "ratingCount": "93",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc068",
@@ -2025,7 +2460,12 @@
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "10K+",
       "rating": 4.9,
-      "ratingCount": "66"
+      "ratingCount": "66",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc066",
@@ -2039,14 +2479,19 @@
       "wearVersion": "10000014 (3.1.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "\u25b8Charging indication position changed.\n\u25b8Minor adjustments to shadow effects.\n\u25b8Now includes more color options.",
+      "wearNotes": "▸Charging indication position changed.\n▸Minor adjustments to shadow effects.\n▸Now includes more color options.",
       "storeLanguages": [
         "en-US"
       ],
       "lastUpdatedDate": "Sep 15, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc065",
@@ -2067,7 +2512,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": 4.8,
-      "ratingCount": "12"
+      "ratingCount": "12",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc057",
@@ -2088,7 +2538,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc050",
@@ -2109,7 +2564,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc046",
@@ -2130,7 +2590,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100K+",
       "rating": 4.7,
-      "ratingCount": "1.1K"
+      "ratingCount": "1.1K",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc044",
@@ -2151,7 +2616,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc043",
@@ -2172,7 +2642,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc042",
@@ -2193,7 +2668,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc041",
@@ -2214,7 +2694,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.2,
-      "ratingCount": "473"
+      "ratingCount": "473",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc039",
@@ -2235,7 +2720,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc036",
@@ -2256,7 +2746,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc035",
@@ -2277,7 +2772,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc034",
@@ -2298,7 +2798,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc032",
@@ -2319,7 +2824,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc031",
@@ -2340,7 +2850,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc030",
@@ -2361,7 +2876,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": 4.3,
-      "ratingCount": "20"
+      "ratingCount": "20",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc028",
@@ -2382,7 +2902,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": 4.8,
-      "ratingCount": "21"
+      "ratingCount": "21",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc027",
@@ -2403,7 +2928,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue024",
@@ -2424,7 +2954,12 @@
       "lastUpdatedDate": "Oct 9, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "crc023",
@@ -2445,7 +2980,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "ccwf022",
@@ -2466,7 +3006,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cc014",
@@ -2487,7 +3032,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cc010",
@@ -2508,7 +3058,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cc005",
@@ -2522,14 +3077,19 @@
       "wearVersion": "10000033 (3.0.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "Updated to comply with Google Play\u2019s new guidelines.",
+      "wearNotes": "Updated to comply with Google Play’s new guidelines.",
       "storeLanguages": [
         "en-US"
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cueindus",
@@ -2550,7 +3110,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "319"
+      "ratingCount": "319",
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cueindus_pro",
@@ -2573,7 +3138,12 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     },
     {
       "id": "cue179",
@@ -2594,7 +3164,12 @@
       "lastUpdatedDate": "Sep 8, 2026",
       "downloads": "100+",
       "rating": null,
-      "ratingCount": null
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0.0,
+        "anrRate": 0.0,
+        "status": "healthy"
+      }
     }
   ]
 }
