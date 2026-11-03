@@ -3230,16 +3230,37 @@ AAAA-BBBB-CCCC"></textarea>
         .replace(/{code}/g, code)
         .replace(/{direct_link}/g, directLink);
 
-      // Copy to clipboard
+      // Copy to clipboard with rock-solid fallback
+      var copied = false;
       try {
-        navigator.clipboard.writeText(finalMsg);
-      } catch (e) {
         var ta = document.createElement('textarea');
         ta.value = finalMsg;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.top = '0';
+        ta.style.left = '-9999px';
+        ta.style.opacity = '0';
         document.body.appendChild(ta);
+        ta.focus();
         ta.select();
-        document.execCommand('copy');
+        ta.setSelectionRange(0, finalMsg.length);
+        copied = document.execCommand('copy');
         document.body.removeChild(ta);
+      } catch (e) {
+        console.warn("execCommand copy fallback error:", e);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(finalMsg).then(function() {
+          copied = true;
+        }).catch(function(err) {
+          console.warn("navigator.clipboard.writeText error:", err);
+          if (!copied) {
+            prompt("Please copy the personalized message manually (Ctrl+C):", finalMsg);
+          }
+        });
+      } else if (!copied) {
+        prompt("Please copy the personalized message manually (Ctrl+C):", finalMsg);
       }
 
       // Record last sent
@@ -3253,30 +3274,28 @@ AAAA-BBBB-CCCC"></textarea>
       renderVipList();
 
       if (typeof showToast === 'function') {
-        showToast("Copied DM for " + supporter.name + "! Opening chat...");
+        showToast("Copied DM for " + supporter.name + "! Chat opened.");
       }
 
-      // Open Chat / Compose
-      setTimeout(function() {
-        if (supporter.platform === 'reddit') {
-          // Open Reddit Compose with prefilled message
-          var composeUrl = "https://www.reddit.com/message/compose/?to=" + encodeURIComponent(cleanName) + 
-                           "&subject=" + encodeURIComponent("Exclusive Watch Face Code: " + promoName) + 
-                           "&message=" + encodeURIComponent(finalMsg);
-          window.open(composeUrl, '_blank');
-        } else if (supporter.platform === 'facebook') {
-          if (supporter.link && supporter.link.includes('facebook.com')) {
-            window.open(supporter.link, '_blank');
-          } else {
-            window.open('https://www.facebook.com/messages/', '_blank');
-          }
-        } else if (supporter.platform === 'email') {
-          var mailtoUrl = "mailto:" + encodeURIComponent(cleanName) + 
-                          "?subject=" + encodeURIComponent("Exclusive Watch Face Code: " + promoName) + 
-                          "&body=" + encodeURIComponent(finalMsg);
-          window.location.href = mailtoUrl;
+      // Open Chat / Compose immediately without setTimeout to prevent popup blocker
+      if (supporter.platform === 'reddit') {
+        // Open Reddit Compose with prefilled message
+        var composeUrl = "https://www.reddit.com/message/compose/?to=" + encodeURIComponent(cleanName) + 
+                         "&subject=" + encodeURIComponent("Exclusive Watch Face Code: " + promoName) + 
+                         "&message=" + encodeURIComponent(finalMsg);
+        window.open(composeUrl, '_blank');
+      } else if (supporter.platform === 'facebook') {
+        if (supporter.link && supporter.link.includes('facebook.com')) {
+          window.open(supporter.link, '_blank');
+        } else {
+          window.open('https://www.facebook.com/messages/', '_blank');
         }
-      }, 300);
+      } else if (supporter.platform === 'email') {
+        var mailtoUrl = "mailto:" + encodeURIComponent(cleanName) + 
+                        "?subject=" + encodeURIComponent("Exclusive Watch Face Code: " + promoName) + 
+                        "&body=" + encodeURIComponent(finalMsg);
+        window.location.href = mailtoUrl;
+      }
     }
 
     // Initialize VIP module immediately
