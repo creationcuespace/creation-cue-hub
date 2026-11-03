@@ -1,3 +1,17 @@
+// Extract sentiment and feature topics from review text
+function extractReviewTopics(text) {
+  if (!text) return [];
+  const t = text.toLowerCase();
+  const tags = [];
+  if (/(battery|drain|power|percentage|consumption|dies|charging)/i.test(t)) tags.push('Battery');
+  if (/(aod|always on|always-on|ambient|dim|black screen|dark)/i.test(t)) tags.push('AOD');
+  if (/(complication|weather|steps|heart|bpm|sensor|calories|date|shortcut)/i.test(t)) tags.push('Complications');
+  if (/(lag|slow|freeze|stuck|crash|bug|hang|delay)/i.test(t)) tags.push('Performance');
+  if (/(samsung|galaxy|pixel|ultra|watch 4|watch 5|watch 6|watch 7|wear os|wearos)/i.test(t)) tags.push('Hardware');
+  if (/(love|great|best|beautiful|clean|amazing|nice|awesome|favourite|perfect|super)/i.test(t)) tags.push('Loved it');
+  return tags;
+}
+
 const { google } = require('googleapis');
 const fs = require('fs');
 const path = require('path');
@@ -101,10 +115,27 @@ async function main() {
     let rating = null;
     let ratingCount = null;
 
+    let companionStatus = 'N/A';
+    let companionRollout = '100%';
+    let companionNotes = 'None';
+
+    let wearStatus = 'N/A';
+    let wearRollout = '100%';
+    let wearNotes = 'None';
+
+    let storeLanguages = [];
+
     const prevItem = existingMap.get(packageName);
     if (prevItem) {
       if (prevItem.rating !== undefined) rating = prevItem.rating;
       if (prevItem.ratingCount !== undefined) ratingCount = prevItem.ratingCount;
+      if (prevItem.companionStatus) companionStatus = prevItem.companionStatus;
+      if (prevItem.companionRollout) companionRollout = prevItem.companionRollout;
+      if (prevItem.companionNotes) companionNotes = prevItem.companionNotes;
+      if (prevItem.wearStatus) wearStatus = prevItem.wearStatus;
+      if (prevItem.wearRollout) wearRollout = prevItem.wearRollout;
+      if (prevItem.wearNotes) wearNotes = prevItem.wearNotes;
+      if (prevItem.storeLanguages) storeLanguages = prevItem.storeLanguages;
     }
 
     let editId = null;
@@ -135,9 +166,18 @@ async function main() {
           track: 'production',
         });
         if (track.data.releases && track.data.releases.length > 0) {
-          const activeRelease = track.data.releases.find(r => r.status === 'completed' || r.status === 'inProgress');
+          const activeRelease = track.data.releases.find(r => r.status === 'completed' || r.status === 'inProgress') || track.data.releases[0];
           if (activeRelease) {
             companionVersion = activeRelease.name || (activeRelease.versionCodes ? activeRelease.versionCodes.join(', ') : 'N/A');
+            companionStatus = activeRelease.status || 'completed';
+            if (activeRelease.userFraction !== undefined && activeRelease.userFraction !== null) {
+              companionRollout = Math.round(activeRelease.userFraction * 100) + '%';
+            } else if (activeRelease.status === 'completed') {
+              companionRollout = '100%';
+            }
+            if (activeRelease.releaseNotes && activeRelease.releaseNotes.length > 0) {
+              companionNotes = activeRelease.releaseNotes.map(rn => rn.text).filter(Boolean).join('\n') || 'None';
+            }
           }
         }
       } catch (e) {}
@@ -149,10 +189,29 @@ async function main() {
           track: 'wear:production',
         });
         if (wearTrack.data.releases && wearTrack.data.releases.length > 0) {
-          const activeRelease = wearTrack.data.releases.find(r => r.status === 'completed' || r.status === 'inProgress');
+          const activeRelease = wearTrack.data.releases.find(r => r.status === 'completed' || r.status === 'inProgress') || wearTrack.data.releases[0];
           if (activeRelease) {
             wearVersion = activeRelease.name || (activeRelease.versionCodes ? activeRelease.versionCodes.join(', ') : 'N/A');
+            wearStatus = activeRelease.status || 'completed';
+            if (activeRelease.userFraction !== undefined && activeRelease.userFraction !== null) {
+              wearRollout = Math.round(activeRelease.userFraction * 100) + '%';
+            } else if (activeRelease.status === 'completed') {
+              wearRollout = '100%';
+            }
+            if (activeRelease.releaseNotes && activeRelease.releaseNotes.length > 0) {
+              wearNotes = activeRelease.releaseNotes.map(rn => rn.text).filter(Boolean).join('\n') || 'None';
+            }
           }
+        }
+      } catch (e) {}
+
+      try {
+        const listings = await play.edits.listings.list({
+          packageName,
+          editId,
+        });
+        if (listings.data.listings && listings.data.listings.length > 0) {
+          storeLanguages = listings.data.listings.map(l => l.language).filter(Boolean);
         }
       } catch (e) {}
 
@@ -254,6 +313,7 @@ async function main() {
               starRating: c.starRating,
               reviewerLanguage: c.reviewerLanguage,
               deviceMetadata: c.deviceMetadata ? c.deviceMetadata.productName : 'Unknown',
+              topics: extractReviewTopics(c.text),
               text: c.text,
               lastModified: c.lastModified ? new Date(parseInt(c.lastModified.seconds, 10) * 1000).toISOString() : new Date().toISOString()
             });
@@ -287,7 +347,14 @@ async function main() {
       playStoreTitle,
       packageName,
       companionVersion,
+      companionStatus,
+      companionRollout,
+      companionNotes,
       wearVersion,
+      wearStatus,
+      wearRollout,
+      wearNotes,
+      storeLanguages,
       lastUpdatedDate,
       downloads,
       rating,

@@ -2212,6 +2212,27 @@
         </div>
       </div>
 
+      <!-- Store Listing Languages & Translations -->
+      <div class="details-section">
+        <div class="details-section-title" style="display:flex; justify-content:space-between; align-items:center;">
+          <span>Store Listing Languages</span>
+          <span id="details-languages-count" style="font-size:11px; color:var(--yellow); font-weight:700;">1 language</span>
+        </div>
+        <div id="details-languages-badges" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;">
+          <span style="background: rgba(255,255,255,0.06); border: 1px solid var(--border); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; color: #fff; display: inline-flex; align-items: center; gap: 4px;">🇬🇧 en-GB</span>
+        </div>
+        <div id="details-languages-missing" style="font-size:11px; color:#9ca3af; margin-top:8px; line-height:1.4;"></div>
+      </div>
+
+      <!-- Android Vitals & Stability Health -->
+      <div class="details-section">
+        <div class="details-section-title" style="display:flex; justify-content:space-between; align-items:center;">
+          <span>Android Vitals & Stability</span>
+          <span id="details-vitals-badge" style="font-size:11px; padding:2px 8px; border-radius:4px; font-weight:700; background:rgba(16,185,129,0.15); color:#34d399; border:1px solid rgba(16,185,129,0.3);">Healthy</span>
+        </div>
+        <div id="details-vitals-content" style="margin-top:6px; font-size:12px; color:#ccc; line-height:1.45;"></div>
+      </div>
+
       <!-- Quick Open in Other Tools -->
       <div class="details-section">
         <div class="details-section-title">Quick Open in Other Tools</div>
@@ -2614,6 +2635,8 @@
           wearStatus: playInfo.wearStatus || 'N/A',
           wearRollout: playInfo.wearRollout || '100%',
           wearNotes: playInfo.wearNotes || 'None',
+          storeLanguages: playInfo.storeLanguages || [],
+          vitals: playInfo.vitals || null,
           lastUpdatedDate: playInfo.lastUpdatedDate || 'N/A',
           playStoreTitle: playInfo.playStoreTitle || '',
           isFree: wf.is_free || false,
@@ -3047,6 +3070,23 @@
     }
 
     // Helper to get version code number from version string (outside parenthesis, taking last 3 digits for Wear OS)
+    function getLanguageFlag(langCode) {
+      if (!langCode) return '🌐';
+      const l = langCode.toLowerCase();
+      if (l.includes('en') || l.includes('gb') || l.includes('us')) return '🇬🇧';
+      if (l.includes('de')) return '🇩🇪';
+      if (l.includes('el') || l.includes('gr')) return '🇬🇷';
+      if (l.includes('it')) return '🇮🇹';
+      if (l.includes('fr')) return '🇫🇷';
+      if (l.includes('es')) return '🇪🇸';
+      if (l.includes('ko')) return '🇰🇷';
+      if (l.includes('ja')) return '🇯🇵';
+      if (l.includes('pt')) return '🇵🇹';
+      if (l.includes('ru')) return '🇷🇺';
+      if (l.includes('ar')) return '🇸🇦';
+      return '🌐';
+    }
+
     function getVersionCode(versionStr, isWear = false) {
       if (!versionStr) return 0;
       if (versionStr.includes('API Error') || versionStr === 'N/A') return 0;
@@ -3283,6 +3323,56 @@
       document.getElementById('details-wear-status').textContent = wf.wearStatus || 'N/A';
       document.getElementById('details-wear-rollout').textContent = wf.wearRollout || '100%';
       document.getElementById('details-wear-notes').textContent = wf.wearNotes || 'None';
+
+      // Populate Store Languages
+      const langCountEl = document.getElementById('details-languages-count');
+      const langBadgesEl = document.getElementById('details-languages-badges');
+      const langMissingEl = document.getElementById('details-languages-missing');
+      const langs = Array.isArray(wf.storeLanguages) && wf.storeLanguages.length > 0 ? wf.storeLanguages : ['en-GB'];
+
+      if (langCountEl) langCountEl.textContent = `${langs.length} language${langs.length === 1 ? '' : 's'}`;
+      if (langBadgesEl) {
+        langBadgesEl.innerHTML = langs.map(l => {
+          const flag = getLanguageFlag(l);
+          return `<span style="background: rgba(255,255,255,0.06); border: 1px solid var(--border); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; color: #fff; display: inline-flex; align-items: center; gap: 4px;">${flag} ${l}</span>`;
+        }).join('');
+      }
+      if (langMissingEl) {
+        const keyLangs = [
+          { code: 'de-DE', name: 'German' },
+          { code: 'es-ES', name: 'Spanish' },
+          { code: 'it-IT', name: 'Italian' },
+          { code: 'fr-FR', name: 'French' },
+          { code: 'ko-KR', name: 'Korean' }
+        ];
+        const missing = keyLangs.filter(k => !langs.some(l => l.toLowerCase().startsWith(k.code.slice(0, 2))));
+        if (missing.length > 0) {
+          langMissingEl.innerHTML = `<span style="color:#fbbf24;">💡 Missing Key Markets:</span> ${missing.map(m => m.name).join(', ')} — adding local translations in Play Console improves European search visibility.`;
+        } else {
+          langMissingEl.innerHTML = `<span style="color:#34d399;">✅ Full localization coverage for key European & Asian markets!</span>`;
+        }
+      }
+
+      // Populate Vitals Health
+      const vitalsBadgeEl = document.getElementById('details-vitals-badge');
+      const vitalsContentEl = document.getElementById('details-vitals-content');
+      if (vitalsContentEl) {
+        if (wf.vitals && wf.vitals.crashRate !== undefined) {
+          vitalsBadgeEl.textContent = wf.vitals.crashRate < 1.09 ? 'Healthy (<1.09%)' : 'High Crash Rate';
+          vitalsBadgeEl.style.color = wf.vitals.crashRate < 1.09 ? '#34d399' : '#f87171';
+          vitalsContentEl.innerHTML = `Crash Rate: <strong>${wf.vitals.crashRate}%</strong> • ANR Rate: <strong>${wf.vitals.anrRate || 0}%</strong>`;
+        } else {
+          vitalsBadgeEl.textContent = 'Stable';
+          vitalsContentEl.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:8px 10px; border-radius:6px; margin-top:2px;">
+              <span>Android Vitals API (Crash/ANR):</span>
+              <a href="https://console.developers.google.com/apis/api/playdeveloperreporting.googleapis.com/overview?project=104519723325" target="_blank" style="color:var(--yellow); font-size:11px; font-weight:700; text-decoration:none; padding:3px 8px; border:1px solid rgba(245,197,24,0.4); border-radius:4px; background:rgba(245,197,24,0.08);">
+                ⚡ Enable API in GCP
+              </a>
+            </div>
+          `;
+        }
+      }
 
       // Open drawer & backdrop
       const panel = document.getElementById('details-panel');

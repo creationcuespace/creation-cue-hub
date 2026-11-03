@@ -2942,6 +2942,27 @@
         </div>
       </div>
 
+      <!-- Store Listing Languages & Translations -->
+      <div class="details-section">
+        <div class="details-section-title" style="display:flex; justify-content:space-between; align-items:center;">
+          <span>Store Listing Languages</span>
+          <span id="details-languages-count" style="font-size:11px; color:var(--yellow); font-weight:700;">1 language</span>
+        </div>
+        <div id="details-languages-badges" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;">
+          <span style="background: rgba(255,255,255,0.06); border: 1px solid var(--border); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; color: #fff; display: inline-flex; align-items: center; gap: 4px;">🇬🇧 en-GB</span>
+        </div>
+        <div id="details-languages-missing" style="font-size:11px; color:#9ca3af; margin-top:8px; line-height:1.4;"></div>
+      </div>
+
+      <!-- Android Vitals & Stability Health -->
+      <div class="details-section">
+        <div class="details-section-title" style="display:flex; justify-content:space-between; align-items:center;">
+          <span>Android Vitals & Stability</span>
+          <span id="details-vitals-badge" style="font-size:11px; padding:2px 8px; border-radius:4px; font-weight:700; background:rgba(16,185,129,0.15); color:#34d399; border:1px solid rgba(16,185,129,0.3);">Healthy</span>
+        </div>
+        <div id="details-vitals-content" style="margin-top:6px; font-size:12px; color:#ccc; line-height:1.45;"></div>
+      </div>
+
     </div>
   </div>
 
@@ -3057,6 +3078,14 @@
           Unreplied Reviews
         </div>
         <button class="details-close-btn" onclick="closeReviewsPanel()" title="Close">✕</button>
+      </div>
+      <div id="reviews-filter-bar" style="padding: 10px 16px; background: rgba(0,0,0,0.25); border-bottom: 1px solid var(--border); display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+        <span style="font-size: 11px; color: var(--muted); font-weight: 600;">Topic Filter:</span>
+        <button class="review-filter-btn active" data-topic="all" onclick="filterReviewsByTopic('all', this)" style="font-size: 11px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--border); background: var(--purple); color: #fff; cursor: pointer;">All</button>
+        <button class="review-filter-btn" data-topic="Battery" onclick="filterReviewsByTopic('Battery', this)" style="font-size: 11px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #ccc; cursor: pointer;">🔋 Battery</button>
+        <button class="review-filter-btn" data-topic="Complications" onclick="filterReviewsByTopic('Complications', this)" style="font-size: 11px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #ccc; cursor: pointer;">⚙️ Complications</button>
+        <button class="review-filter-btn" data-topic="AOD" onclick="filterReviewsByTopic('AOD', this)" style="font-size: 11px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #ccc; cursor: pointer;">🕒 AOD</button>
+        <button class="review-filter-btn" data-topic="Loved it" onclick="filterReviewsByTopic('Loved it', this)" style="font-size: 11px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #ccc; cursor: pointer;">⭐ Loved it</button>
       </div>
       <div class="details-body" id="reviews-content" style="padding: 16px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; align-content: start; overflow-y: auto;">
         <!-- Reviews will be injected here -->
@@ -4571,6 +4600,56 @@
       document.getElementById('details-wear-rollout').textContent = wf.wearRollout || '100%';
       document.getElementById('details-wear-notes').textContent = wf.wearNotes || 'None';
 
+      // Populate Store Languages
+      const langCountEl = document.getElementById('details-languages-count');
+      const langBadgesEl = document.getElementById('details-languages-badges');
+      const langMissingEl = document.getElementById('details-languages-missing');
+      const langs = Array.isArray(wf.storeLanguages) && wf.storeLanguages.length > 0 ? wf.storeLanguages : ['en-GB'];
+
+      if (langCountEl) langCountEl.textContent = `${langs.length} language${langs.length === 1 ? '' : 's'}`;
+      if (langBadgesEl) {
+        langBadgesEl.innerHTML = langs.map(l => {
+          const flag = getLanguageFlag(l);
+          return `<span style="background: rgba(255,255,255,0.06); border: 1px solid var(--border); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; color: #fff; display: inline-flex; align-items: center; gap: 4px;">${flag} ${l}</span>`;
+        }).join('');
+      }
+      if (langMissingEl) {
+        const keyLangs = [
+          { code: 'de-DE', name: 'German' },
+          { code: 'es-ES', name: 'Spanish' },
+          { code: 'it-IT', name: 'Italian' },
+          { code: 'fr-FR', name: 'French' },
+          { code: 'ko-KR', name: 'Korean' }
+        ];
+        const missing = keyLangs.filter(k => !langs.some(l => l.toLowerCase().startsWith(k.code.slice(0, 2))));
+        if (missing.length > 0) {
+          langMissingEl.innerHTML = `<span style="color:#fbbf24;">💡 Missing Key Markets:</span> ${missing.map(m => m.name).join(', ')} — adding local translations in Play Console improves European search visibility.`;
+        } else {
+          langMissingEl.innerHTML = `<span style="color:#34d399;">✅ Full localization coverage for key European & Asian markets!</span>`;
+        }
+      }
+
+      // Populate Vitals Health
+      const vitalsBadgeEl = document.getElementById('details-vitals-badge');
+      const vitalsContentEl = document.getElementById('details-vitals-content');
+      if (vitalsContentEl) {
+        if (wf.vitals && wf.vitals.crashRate !== undefined) {
+          vitalsBadgeEl.textContent = wf.vitals.crashRate < 1.09 ? 'Healthy (<1.09%)' : 'High Crash Rate';
+          vitalsBadgeEl.style.color = wf.vitals.crashRate < 1.09 ? '#34d399' : '#f87171';
+          vitalsContentEl.innerHTML = `Crash Rate: <strong>${wf.vitals.crashRate}%</strong> • ANR Rate: <strong>${wf.vitals.anrRate || 0}%</strong>`;
+        } else {
+          vitalsBadgeEl.textContent = 'Stable';
+          vitalsContentEl.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:8px 10px; border-radius:6px; margin-top:2px;">
+              <span>Android Vitals API (Crash/ANR):</span>
+              <a href="https://console.developers.google.com/apis/api/playdeveloperreporting.googleapis.com/overview?project=104519723325" target="_blank" style="color:var(--yellow); font-size:11px; font-weight:700; text-decoration:none; padding:3px 8px; border:1px solid rgba(245,197,24,0.4); border-radius:4px; background:rgba(245,197,24,0.08);">
+                ⚡ Enable API in GCP
+              </a>
+            </div>
+          `;
+        }
+      }
+
       // Update Google Store Review Status in drawer
       updateDrawerReviewStatus(id);
 
@@ -5703,6 +5782,51 @@
       }
     }
 
+    function getLanguageFlag(langCode) {
+      if (!langCode) return '🌐';
+      const l = langCode.toLowerCase();
+      if (l.includes('en') || l.includes('gb') || l.includes('us')) return '🇬🇧';
+      if (l.includes('de')) return '🇩🇪';
+      if (l.includes('el') || l.includes('gr')) return '🇬🇷';
+      if (l.includes('it')) return '🇮🇹';
+      if (l.includes('fr')) return '🇫🇷';
+      if (l.includes('es')) return '🇪🇸';
+      if (l.includes('ko')) return '🇰🇷';
+      if (l.includes('ja')) return '🇯🇵';
+      if (l.includes('pt')) return '🇵🇹';
+      if (l.includes('ru')) return '🇷🇺';
+      if (l.includes('ar')) return '🇸🇦';
+      return '🌐';
+    }
+
+    let currentReviewTopicFilter = 'all';
+
+    function filterReviewsByTopic(topic, btn) {
+      currentReviewTopicFilter = topic;
+      document.querySelectorAll('.review-filter-btn').forEach(b => {
+        b.style.background = 'rgba(255,255,255,0.05)';
+        b.style.color = '#ccc';
+      });
+      if (btn) {
+        btn.style.background = 'var(--purple)';
+        btn.style.color = '#fff';
+      }
+      renderReviews();
+    }
+
+    function extractReviewTopics(text) {
+      if (!text) return [];
+      const t = text.toLowerCase();
+      const tags = [];
+      if (/(battery|drain|power|percentage|consumption|dies|charging)/i.test(t)) tags.push('Battery');
+      if (/(aod|always on|always-on|ambient|dim|black screen|dark)/i.test(t)) tags.push('AOD');
+      if (/(complication|weather|steps|heart|bpm|sensor|calories|date|shortcut)/i.test(t)) tags.push('Complications');
+      if (/(lag|slow|freeze|stuck|crash|bug|hang|delay)/i.test(t)) tags.push('Performance');
+      if (/(samsung|galaxy|pixel|ultra|watch 4|watch 5|watch 6|watch 7|wear os|wearos)/i.test(t)) tags.push('Hardware');
+      if (/(love|great|best|beautiful|clean|amazing|nice|awesome|favourite|perfect|super)/i.test(t)) tags.push('Loved it');
+      return tags;
+    }
+
     function renderReviews() {
       try {
         const content = document.getElementById('reviews-content');
@@ -5710,6 +5834,17 @@
 
         if (!unrepliedReviews || unrepliedReviews.length === 0) {
           content.innerHTML = `<div style="color: var(--text-muted); text-align: center; margin-top: 40px; font-size: 14px; grid-column: 1 / -1;">No unreplied reviews! 🎉</div>`;
+          return;
+        }
+
+        const filteredReviews = unrepliedReviews.filter(r => {
+          if (currentReviewTopicFilter === 'all') return true;
+          const topics = extractReviewTopics(r.text);
+          return topics.includes(currentReviewTopicFilter);
+        });
+
+        if (filteredReviews.length === 0) {
+          content.innerHTML = `<div style="color: var(--text-muted); text-align: center; margin-top: 40px; font-size: 14px; grid-column: 1 / -1;">No reviews match topic "${currentReviewTopicFilter}" 🔍</div>`;
           return;
         }
 
@@ -5725,7 +5860,7 @@
           return colors[Math.abs(hash) % colors.length];
         }
 
-        unrepliedReviews.forEach(r => {
+        filteredReviews.forEach(r => {
           let dateStr = 'Unknown Date';
           try {
             dateStr = new Date(r.lastModified).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
@@ -5776,7 +5911,20 @@
 
               <!-- Stars & Text -->
               <div style="margin-bottom: 12px;">
-                <div style="margin-bottom: 4px; display: flex; align-items: center;">${starsHtml}</div>
+                <div style="margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                  <div style="display: flex; align-items: center;">${starsHtml}</div>
+                  <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                    ${extractReviewTopics(r.text).map(t => {
+                      let bg = 'rgba(255,255,255,0.08)';
+                      let col = '#ddd';
+                      if (t === 'Battery') { bg = 'rgba(239, 68, 68, 0.2)'; col = '#fca5a5'; }
+                      else if (t === 'Complications') { bg = 'rgba(59, 130, 246, 0.2)'; col = '#93c5fd'; }
+                      else if (t === 'AOD') { bg = 'rgba(168, 85, 247, 0.2)'; col = '#d8b4fe'; }
+                      else if (t === 'Loved it') { bg = 'rgba(16, 185, 129, 0.2)'; col = '#6ee7b7'; }
+                      return `<span style="font-size: 9.5px; font-weight: 700; padding: 1px 6px; border-radius: 4px; background: ${bg}; color: ${col};">${t}</span>`;
+                    }).join('')}
+                  </div>
+                </div>
                 <div style="font-size: 13px; color: #eee; line-height: 1.45;">
                   "${r.text || 'No text'}"
                 </div>
@@ -5788,7 +5936,10 @@
                   ${iconImgHtml}
                   <div style="display: flex; flex-direction: column;">
                     <span style="color: var(--primary); font-weight: bold; letter-spacing: 0.5px; font-size: 12px;">${r.title}</span>
-                    <span style="font-size: 9px; opacity: 0.7;">📱 ${r.deviceMetadata} • 🌐 ${r.reviewerLanguage}</span>
+                    <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+                      <span style="font-size: 9.5px; opacity: 0.9; color: #a5b4fc;">${/(watch|gear|ticwatch|galaxy watch|pixel watch)/i.test(r.deviceMetadata || '') ? '⌚' : '📱'} ${(r.deviceMetadata && r.deviceMetadata.match(/\(([^)]+)\)/)) ? r.deviceMetadata.match(/\(([^)]+)\)/)[1] : (r.deviceMetadata || 'Unknown')}</span>
+                      <span style="font-size: 9.5px; opacity: 0.7;">• 🌐 ${r.reviewerLanguage || 'en'}</span>
+                    </div>
                   </div>
                 </div>
                 
