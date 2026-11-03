@@ -3142,7 +3142,7 @@
           <!-- Live Stats (Downloads dynamically synced with play-versions) -->
           <div class="hero-stats">
             <div class="stat-item">
-              <div class="stat-value" id="stat-count">115+</div>
+              <div class="stat-value" id="stat-count">0+</div>
               <p>Watch Faces</p>
             </div>
             <div class="stat-item">
@@ -3150,7 +3150,7 @@
               <p id="stat-installs-label">Total Downloads</p>
             </div>
             <div class="stat-item">
-              <div class="stat-value">100%</div>
+              <div class="stat-value" id="stat-battery">0%</div>
               <p>WFF Battery Optimized</p>
             </div>
           </div>
@@ -4215,78 +4215,81 @@
     }
 
     // --------------------------------------------------------
-    // Count-Up Animation for Total Downloads Stat
+    // Generic Count-Up Animation Helper
     // --------------------------------------------------------
-    const downloadsAnimState = {
-      rafId: null,
-      target: 322.3,
-      suffix: 'K+',
-      decimals: 1,
-      startTime: 0,
-      startVal: 0,
-      duration: 1600,
-      isFinished: false
-    };
-
-    function animateDownloadsCountUp(targetNum = 322.3, suffix = 'K+', decimals = 1, duration = 1600) {
-      const el = document.getElementById('stat-installs');
-      if (!el) return;
-
-      // If animation already completed and target is unchanged, keep formatted display
-      if (downloadsAnimState.isFinished && Math.abs(downloadsAnimState.target - targetNum) < 0.05) {
-        return;
-      }
-
-      // If already running towards this target, don't restart from 0
-      if (downloadsAnimState.rafId && Math.abs(downloadsAnimState.target - targetNum) < 0.05) {
-        return;
-      }
-
-      // If already running but target changed, smoothly adapt target in-flight
-      if (downloadsAnimState.rafId) {
-        downloadsAnimState.target = targetNum;
-        downloadsAnimState.suffix = suffix;
-        downloadsAnimState.decimals = decimals;
-        return;
-      }
-
-      downloadsAnimState.target = targetNum;
-      downloadsAnimState.suffix = suffix;
-      downloadsAnimState.decimals = decimals;
-      downloadsAnimState.duration = duration;
-      downloadsAnimState.startTime = performance.now();
-      downloadsAnimState.startVal = 0;
-      downloadsAnimState.isFinished = false;
+    function createCountUpAnimator(elementId) {
+      const state = {
+        rafId: null,
+        target: 0,
+        suffix: '',
+        decimals: 0,
+        startTime: 0,
+        startVal: 0,
+        duration: 1600,
+        isFinished: false
+      };
 
       function easeOutCubic(t) {
         return 1 - Math.pow(1 - t, 3);
       }
 
-      function step(now) {
-        const elapsed = now - downloadsAnimState.startTime;
-        const progress = Math.min(elapsed / downloadsAnimState.duration, 1);
-        const eased = easeOutCubic(progress);
-        const currentVal = downloadsAnimState.startVal + (downloadsAnimState.target - downloadsAnimState.startVal) * eased;
+      return function animate(targetNum, suffix = '', decimals = 0, duration = 1600) {
+        const el = document.getElementById(elementId);
+        if (!el) return;
 
-        if (downloadsAnimState.decimals > 0) {
-          el.textContent = currentVal.toFixed(downloadsAnimState.decimals) + downloadsAnimState.suffix;
-        } else {
-          el.textContent = Math.floor(currentVal).toLocaleString() + downloadsAnimState.suffix;
+        if (state.isFinished && Math.abs(state.target - targetNum) < 0.05) {
+          return;
         }
 
-        if (progress < 1) {
-          downloadsAnimState.rafId = requestAnimationFrame(step);
-        } else {
-          el.textContent = (downloadsAnimState.decimals > 0 
-            ? downloadsAnimState.target.toFixed(downloadsAnimState.decimals) 
-            : downloadsAnimState.target.toLocaleString()) + downloadsAnimState.suffix;
-          downloadsAnimState.rafId = null;
-          downloadsAnimState.isFinished = true;
+        if (state.rafId && Math.abs(state.target - targetNum) < 0.05) {
+          return;
         }
-      }
 
-      downloadsAnimState.rafId = requestAnimationFrame(step);
+        if (state.rafId) {
+          state.target = targetNum;
+          state.suffix = suffix;
+          state.decimals = decimals;
+          return;
+        }
+
+        state.target = targetNum;
+        state.suffix = suffix;
+        state.decimals = decimals;
+        state.duration = duration;
+        state.startTime = performance.now();
+        state.startVal = 0;
+        state.isFinished = false;
+
+        function step(now) {
+          const elapsed = now - state.startTime;
+          const progress = Math.min(elapsed / state.duration, 1);
+          const eased = easeOutCubic(progress);
+          const currentVal = state.startVal + (state.target - state.startVal) * eased;
+
+          if (state.decimals > 0) {
+            el.textContent = currentVal.toFixed(state.decimals) + state.suffix;
+          } else {
+            el.textContent = Math.floor(currentVal).toLocaleString() + state.suffix;
+          }
+
+          if (progress < 1) {
+            state.rafId = requestAnimationFrame(step);
+          } else {
+            el.textContent = (state.decimals > 0 
+              ? state.target.toFixed(state.decimals) 
+              : state.target.toLocaleString()) + state.suffix;
+            state.rafId = null;
+            state.isFinished = true;
+          }
+        }
+
+        state.rafId = requestAnimationFrame(step);
+      };
     }
+
+    const animateWatchFacesCountUp = createCountUpAnimator('stat-count');
+    const animateDownloadsCountUp = createCountUpAnimator('stat-installs');
+    const animateBatteryCountUp = createCountUpAnimator('stat-battery');
 
     // --------------------------------------------------------
     // Sync Total Downloads dynamically with play-versions
@@ -4298,7 +4301,7 @@
       try {
         const res = await fetch('versions-data.json?t=' + Date.now());
         if (!res.ok) {
-          animateDownloadsCountUp(322.3, 'K+', 1, 1600);
+          animateDownloadsCountUp(322.4, 'K+', 1, 1600);
           return;
         }
         const data = await res.json();
@@ -4348,11 +4351,11 @@
 
           animateDownloadsCountUp(targetVal, suffix, decimals, 1600);
         } else {
-          animateDownloadsCountUp(322.3, 'K+', 1, 1600);
+          animateDownloadsCountUp(322.4, 'K+', 1, 1600);
         }
       } catch (err) {
         console.warn('Could not load versions-data.json downloads', err);
-        animateDownloadsCountUp(322.3, 'K+', 1, 1600);
+        animateDownloadsCountUp(322.4, 'K+', 1, 1600);
       }
     }
 
@@ -4374,7 +4377,7 @@
         });
 
         const total = allWatchFaces.length;
-        document.getElementById('stat-count').innerText = total + '+';
+        animateWatchFacesCountUp(total, '+', 0, 1600);
         if (document.getElementById('count-all')) document.getElementById('count-all').innerText = total;
         if (document.getElementById('count-analog')) document.getElementById('count-analog').innerText = countMap['ANALOG'] || 0;
         if (document.getElementById('count-digital')) document.getElementById('count-digital').innerText = countMap['DIGITAL'] || 0;
@@ -5147,7 +5150,9 @@
     window.addEventListener('DOMContentLoaded', () => {
       initTheme();
       initHeroWatch();
-      animateDownloadsCountUp(322.3, 'K+', 1, 1600);
+      animateWatchFacesCountUp(115, '+', 0, 1600);
+      animateDownloadsCountUp(322.4, 'K+', 1, 1600);
+      animateBatteryCountUp(100, '%', 0, 1600);
       loadDownloadsStat();
       loadCatalog();
       initCookieConsent();
