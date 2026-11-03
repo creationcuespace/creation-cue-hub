@@ -2884,7 +2884,11 @@
     }
 
     async function initDashboard() {
-      initRoadmapTasks();
+      try {
+        initRoadmapTasks();
+      } catch (err) {
+        console.error("Error initializing roadmap tasks:", err);
+      }
       try {
         try {
           const cRes = await fetch('console-app-ids.json?t=' + Date.now());
@@ -4591,6 +4595,17 @@
     // ─────────────────────────────────────────────────────────────────────────
 
     // ─────────────────────────────────────────────────────────────────────────
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     // Roadmap & Operations Tasks Logic
     // ─────────────────────────────────────────────────────────────────────────
     const DEFAULT_ROADMAP_TASKS = [
@@ -4952,8 +4967,9 @@
     }
 
     function renderRoadmapTasks() {
-      const container = document.getElementById('roadmap-content');
-      if (!container) return;
+      try {
+        const container = document.getElementById('roadmap-content');
+        if (!container) return;
 
       let filtered = roadmapTasks;
       if (currentRoadmapFilter === 'active') {
@@ -5068,6 +5084,9 @@
       });
 
       container.innerHTML = html;
+      } catch (err) {
+        console.error("renderRoadmapTasks error:", err);
+      }
     }
 
     // Reviews Panel Logic
