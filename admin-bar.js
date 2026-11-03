@@ -159,6 +159,22 @@
       activeBg: 'rgba(163, 230, 53, 0.35)',
       icon: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>',
       slideIcon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>'
+    },
+    {
+      id: 'play-store',
+      label: 'Watch Faces',
+      slideLabel: 'Play Watch Faces',
+      title: 'Google Play Watch Faces (Right-click or long-press for Incognito)',
+      href: 'https://play.google.com/store/apps/category/WATCH_FACE?hl=en',
+      target: '_blank',
+      iconOnly: true,
+      color: '#38bdf8',
+      bg: 'rgba(56, 189, 248, 0.14)',
+      border: 'rgba(56, 189, 248, 0.32)',
+      hoverBg: 'rgba(56, 189, 248, 0.25)',
+      activeBg: 'rgba(56, 189, 248, 0.35)',
+      icon: '<svg width="12" height="12" viewBox="0 0 24 24"><path fill="#00D2FF" d="M3.6 1.8c-.4.4-.6 1-.6 1.7v17c0 .7.2 1.3.6 1.7l.1.1 9.6-9.6v-.2L3.7 2.9l-.1-1.1z"/><path fill="#00F076" d="M16.5 15.1l-3.2-3.2V12.1l3.2-3.2.1.1 3.8 2.2c1.1.6 1.1 1.6 0 2.2l-3.8 2.2-.1-.5z"/><path fill="#FF3A44" d="M16.6 15.1L13.3 12 3.6 21.7c.4.4.9.4 1.6 0l11.4-6.6z"/><path fill="#FFC800" d="M16.6 8.9L5.2 2.3C4.5 1.9 4 1.9 3.6 2.3L13.3 12l3.3-3.1z"/></svg>',
+      slideIcon: '<svg width="18" height="18" viewBox="0 0 24 24"><path fill="#00D2FF" d="M3.6 1.8c-.4.4-.6 1-.6 1.7v17c0 .7.2 1.3.6 1.7l.1.1 9.6-9.6v-.2L3.7 2.9l-.1-1.1z"/><path fill="#00F076" d="M16.5 15.1l-3.2-3.2V12.1l3.2-3.2.1.1 3.8 2.2c1.1.6 1.1 1.6 0 2.2l-3.8 2.2-.1-.5z"/><path fill="#FF3A44" d="M16.6 15.1L13.3 12 3.6 21.7c.4.4.9.4 1.6 0l11.4-6.6z"/><path fill="#FFC800" d="M16.6 8.9L5.2 2.3C4.5 1.9 4 1.9 3.6 2.3L13.3 12l3.3-3.1z"/></svg>'
     }
   ];
 
@@ -386,6 +402,13 @@
         touch-action: pan-x;
         padding: 4px 8px;
         border-radius: 6px;
+      }
+      .admin-bar-links a.icon-only {
+        padding: 4px 7px;
+        gap: 0;
+      }
+      .admin-bar-links a.icon-only svg {
+        display: block;
       }
       .admin-bar-links a svg {
         color: var(--tab-color);
@@ -717,6 +740,9 @@
           padding: 4px 8px !important;
           font-size: 11px !important;
         }
+        .admin-bar-links a.icon-only {
+          padding: 4px 7px !important;
+        }
         .admin-bar-right-desktop {
           display: none !important;
         }
@@ -749,10 +775,13 @@
       const targetAttr = target ? ` target="${target}" rel="noopener noreferrer"` : '';
       const href = resolveHref(item.href);
       const styleAttr = `style="--tab-color:${item.color}; --tab-bg:${item.bg}; --tab-border:${item.border}; --tab-hover-bg:${item.hoverBg}; --tab-active-bg:${item.activeBg};"`;
+      const titleAttr = item.title ? ` title="${item.title}" aria-label="${item.title}"` : ` title="${item.label}"`;
+      const iconOnlyClass = item.iconOnly ? ' icon-only' : '';
+      const labelHtml = item.iconOnly ? '' : `<span>${item.label}</span>`;
       return `
-        <a href="${href}" class="admin-bar-link${activeClass}"${targetAttr} ${styleAttr}>
+        <a href="${href}" class="admin-bar-link${iconOnlyClass}${activeClass}"${targetAttr} ${styleAttr}${titleAttr}>
           ${item.icon}
-          <span>${item.label}</span>
+          ${labelHtml}
         </a>
       `;
     }).join('');
@@ -1014,10 +1043,12 @@
         const targetAttr = target ? ` target="${target}" rel="noopener noreferrer"` : '';
         const href = resolveHref(item.href);
         const styleAttr = `style="--tab-color:${item.color}; --tab-bg:${item.bg}; --tab-border:${item.border};"`;
+        const titleAttr = item.title ? ` title="${item.title}"` : '';
+        const slideLabel = item.slideLabel || item.label;
         return `
-          <a href="${href}" class="app-slide-link${activeClass}"${targetAttr} ${styleAttr}>
+          <a href="${href}" class="app-slide-link${activeClass}"${targetAttr} ${styleAttr}${titleAttr}>
             <span class="app-slide-icon" style="display:flex; align-items:center;">${item.slideIcon || item.icon}</span>
-            <span>${item.label}</span>
+            <span>${slideLabel}</span>
           </a>
         `;
       }).join('');
