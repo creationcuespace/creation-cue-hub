@@ -27,6 +27,287 @@
     .flatpickr-prev-month svg, .flatpickr-next-month svg { fill: #e0e0e0 !important; }
     .flatpickr-prev-month:hover svg, .flatpickr-next-month:hover svg { fill: #7C3AED !important; }
     .numInputWrapper input { color: #e0e0e0 !important; }
+
+    /* Roadmap & Tasks Panel & Widget Styles */
+    #roadmap-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100001;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    #roadmap-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #roadmap-panel {
+      position: fixed;
+      top: 0;
+      right: -750px;
+      width: 720px;
+      max-width: 95vw;
+      height: 100vh;
+      background: var(--dark, #0f0f18);
+      border-left: 1px solid var(--border, #2d2d3f);
+      z-index: 100002;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #roadmap-panel.open {
+      right: 0 !important;
+      visibility: visible !important;
+    }
+
+    .roadmap-filter-btn {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 14px;
+      border: 1px solid var(--border, #2d2d3f);
+      background: rgba(255, 255, 255, 0.05);
+      color: #ccc;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .roadmap-filter-btn:hover {
+      background: rgba(124, 58, 237, 0.2);
+      border-color: #7C3AED;
+      color: #fff;
+    }
+
+    .roadmap-filter-btn.active {
+      background: #7C3AED !important;
+      border-color: #9333EA !important;
+      color: #fff !important;
+      font-weight: 600;
+    }
+
+    .roadmap-task-card {
+      background: #151522;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 14px 16px;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+
+    .roadmap-task-card:hover {
+      border-color: rgba(124, 58, 237, 0.4);
+      background: #181828;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .roadmap-task-card.task-completed {
+      opacity: 0.65;
+      background: #11111a;
+      border-color: rgba(52, 211, 153, 0.2);
+    }
+
+    .roadmap-task-card.task-completed .roadmap-task-title {
+      text-decoration: line-through;
+      color: var(--muted, #94a3b8);
+    }
+
+    .roadmap-task-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .roadmap-checkbox-custom {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      background: rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .roadmap-checkbox-custom:checked {
+      background: #10B981;
+      border-color: #10B981;
+    }
+
+    .roadmap-checkbox-custom:checked::after {
+      content: '✓';
+      color: white;
+      font-size: 13px;
+      font-weight: 800;
+      position: absolute;
+    }
+
+    .roadmap-task-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.35;
+      flex: 1;
+    }
+
+    .roadmap-badges-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .roadmap-badge-pill {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 10px;
+      letter-spacing: 0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge-status-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-status-ready { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-status-planned { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    .badge-status-completed { background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
+
+    .badge-prio-high { background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); }
+    .badge-prio-medium { background: rgba(245, 197, 24, 0.12); color: #facc15; border: 1px solid rgba(245, 197, 24, 0.25); }
+    .badge-prio-low { background: rgba(148, 163, 184, 0.12); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.25); }
+
+    .badge-category { background: rgba(255, 255, 255, 0.06); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.1); }
+
+    .roadmap-desc-block {
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.5;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 6px;
+      padding: 8px 12px;
+      border-left: 2px solid var(--purple, #7C3AED);
+      margin-top: 2px;
+      white-space: pre-line;
+    }
+
+    .roadmap-checkpoints-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 4px;
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 6px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .roadmap-checkpoint-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: #cbd5e1;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .roadmap-checkpoint-label input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+      accent-color: #7C3AED;
+    }
+
+    .roadmap-checkpoint-label.done span {
+      text-decoration: line-through;
+      color: var(--muted, #64748b);
+    }
+
+    .roadmap-actions-footer {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 4px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .roadmap-action-btn {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border, #2d2d3f);
+      background: var(--mid, #1a1a2b);
+      color: #cbd5e1;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    .roadmap-action-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .roadmap-action-btn.btn-planner {
+      background: rgba(124, 58, 237, 0.12);
+      border-color: rgba(124, 58, 237, 0.35);
+      color: #c4b5fd;
+    }
+    .roadmap-action-btn.btn-planner:hover {
+      background: rgba(124, 58, 237, 0.25);
+      border-color: #7C3AED;
+      color: #fff;
+    }
+
+    .roadmap-action-btn.btn-gcp {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: rgba(56, 189, 248, 0.35);
+      color: #7dd3fc;
+    }
+    .roadmap-action-btn.btn-gcp:hover {
+      background: rgba(56, 189, 248, 0.25);
+      border-color: #38bdf8;
+      color: #fff;
+    }
+
+    .roadmap-action-btn.btn-delete {
+      color: #f87171;
+      margin-left: auto;
+    }
+    .roadmap-action-btn.btn-delete:hover {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: #ef4444;
+      color: #fff;
+    }
+
   </style>
 
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -2117,7 +2398,7 @@
       }
 
       /* Mobile bottom sheet transformation */
-      #details-panel, #reviews-panel {
+      #details-panel, #reviews-panel, #roadmap-panel {
         width: 100%;
         height: 88vh;
         right: 0 !important;
@@ -2130,7 +2411,7 @@
         box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
       }
 
-      #details-panel.open, #reviews-panel.open {
+      #details-panel.open, #reviews-panel.open, #roadmap-panel.open {
         bottom: 0;
       }
 
@@ -2420,6 +2701,10 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
         Socials
       </a>
+      <a href="javascript:void(0)" onclick="toggleAppMenu(); openRoadmapPanel();" class="app-slide-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        Roadmap &amp; Tasks
+      </a>
       <a href="month-planner.html" class="app-slide-link ">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
         Planner
@@ -2478,6 +2763,13 @@
     </a>
     </div>
     <div class="header-btns">
+      <!-- Roadmap & Tasks Button -->
+      <button class="header-btn" style="position: relative; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 0 12px; transition: all 0.2s;" onclick="openRoadmapPanel()" title="Roadmap & Operations Tasks" id="roadmap-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        <span class="roadmap-btn-text" style="font-size: 13px; font-weight: 600; letter-spacing: 0.5px;">Roadmap</span>
+        <span id="roadmap-badge" style="background: #7C3AED; color: white; font-size: 10px; font-weight: 700; border-radius: 10px; padding: 1px 6px; min-width: 16px; text-align: center; line-height: 14px;">3</span>
+      </button>
+
       <!-- Notification Bell -->
       <button class="header-btn" style="position: relative; display: flex; align-items: center; justify-content: center; padding: 0 12px; transition: all 0.2s;" onclick="openReviewsPanel()" title="Unreplied Reviews" id="reviews-bell-btn">
         <svg id="reviews-bell-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
@@ -3092,6 +3384,137 @@
         <div style="color: var(--text-muted); text-align: center; margin-top: 40px; font-size: 14px; grid-column: 1 / -1;">Loading reviews...</div>
       </div>
     </div>
+  <!-- Roadmap & Tasks Panel (Slide-in Drawer) -->
+  <div id="roadmap-backdrop" onclick="closeRoadmapPanel()"></div>
+  <div id="roadmap-panel">
+    <div class="mobile-handle"></div>
+    <div class="details-header" style="justify-content: space-between; border-bottom: 1px solid var(--border); padding: 14px 20px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(124, 58, 237, 0.15); border: 1px solid rgba(124, 58, 237, 0.4); display: flex; align-items: center; justify-content: center; color: #a78bfa;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        </div>
+        <div>
+          <div style="font-family: 'Teko', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: 1px; line-height: 1.1; color: #fff;">
+            Roadmap &amp; Operations Tasks
+          </div>
+          <div id="roadmap-sync-status" style="font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-top: 2px;">
+            <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #10B981;"></span>
+            <span id="roadmap-sync-text">Cloud Synced (Firebase)</span>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <button id="btn-toggle-add-task" onclick="toggleAddRoadmapTaskForm()" class="header-btn" style="font-size: 11px; padding: 6px 12px; background: rgba(124, 58, 237, 0.15); border-color: rgba(124, 58, 237, 0.4); color: #c4b5fd;">
+          + New Task
+        </button>
+        <button class="details-close-btn" onclick="closeRoadmapPanel()" title="Close">✕</button>
+      </div>
+    </div>
+
+    <!-- Quick Stats Bar -->
+    <div style="display: flex; gap: 8px; padding: 12px 20px; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border); overflow-x: auto;">
+      <div style="flex: 1; min-width: 90px; background: var(--mid); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; text-align: center;">
+        <div style="font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: 0.5px;">Active Tasks</div>
+        <div id="roadmap-stat-active" style="font-size: 16px; font-weight: 700; color: #fff; margin-top: 2px;">0</div>
+      </div>
+      <div style="flex: 1; min-width: 90px; background: var(--mid); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; text-align: center;">
+        <div style="font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: 0.5px;">Pending Approval</div>
+        <div id="roadmap-stat-pending" style="font-size: 16px; font-weight: 700; color: #f59e0b; margin-top: 2px;">0</div>
+      </div>
+      <div style="flex: 1; min-width: 90px; background: var(--mid); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; text-align: center;">
+        <div style="font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: 0.5px;">Ready in GCP</div>
+        <div id="roadmap-stat-ready" style="font-size: 16px; font-weight: 700; color: #38bdf8; margin-top: 2px;">0</div>
+      </div>
+      <div style="flex: 1; min-width: 90px; background: var(--mid); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; text-align: center;">
+        <div style="font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: 0.5px;">Completed</div>
+        <div id="roadmap-stat-completed" style="font-size: 16px; font-weight: 700; color: #34d399; margin-top: 2px;">0</div>
+      </div>
+    </div>
+
+    <!-- Filter Pills Bar -->
+    <div id="roadmap-filter-bar" style="padding: 10px 20px; background: rgba(0,0,0,0.15); border-bottom: 1px solid var(--border); display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+      <span style="font-size: 11px; color: var(--muted); font-weight: 600;">Filter:</span>
+      <button class="roadmap-filter-btn active" data-filter="all" onclick="filterRoadmapTasks('all', this)">All</button>
+      <button class="roadmap-filter-btn" data-filter="active" onclick="filterRoadmapTasks('active', this)">⚡ Active</button>
+      <button class="roadmap-filter-btn" data-filter="pending_approval" onclick="filterRoadmapTasks('pending_approval', this)">⏳ Pending Approval</button>
+      <button class="roadmap-filter-btn" data-filter="ready" onclick="filterRoadmapTasks('ready', this)">⚡ Ready</button>
+      <button class="roadmap-filter-btn" data-filter="planned" onclick="filterRoadmapTasks('planned', this)">📋 Planned</button>
+      <button class="roadmap-filter-btn" data-filter="completed" onclick="filterRoadmapTasks('completed', this)">✅ Completed</button>
+    </div>
+
+    <!-- Add Task Collapsible Form -->
+    <div id="roadmap-add-task-form" style="display: none; padding: 16px 20px; background: rgba(124, 58, 237, 0.05); border-bottom: 1px solid rgba(124, 58, 237, 0.3);">
+      <div style="font-size: 13px; font-weight: 700; color: #c4b5fd; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+        <span>Create New Roadmap Task</span>
+        <button type="button" onclick="toggleAddRoadmapTaskForm(false)" style="background:none; border:none; color:var(--muted); cursor:pointer; font-size:12px;">✕ Cancel</button>
+      </div>
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-bottom: 10px;">
+        <div>
+          <label style="font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Task Title *</label>
+          <input type="text" id="new-task-title" placeholder="e.g. 🌐 Mass Store Listing Localization" style="width: 100%; background: var(--mid); border: 1px solid var(--border); color: #fff; padding: 8px 10px; border-radius: 6px; font-size: 12px;">
+        </div>
+        <div>
+          <label style="font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Category</label>
+          <select id="new-task-category" style="width: 100%; background: var(--mid); border: 1px solid var(--border); color: #fff; padding: 8px 10px; border-radius: 6px; font-size: 12px;">
+            <option value="Store Optimization">Store Optimization</option>
+            <option value="API & Analytics">API & Analytics</option>
+            <option value="Monetization">Monetization</option>
+            <option value="Wear OS 5 / WFS">Wear OS 5 / WFS</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Design">Design</option>
+            <option value="General">General</option>
+          </select>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+        <div>
+          <label style="font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Priority</label>
+          <select id="new-task-priority" style="width: 100%; background: var(--mid); border: 1px solid var(--border); color: #fff; padding: 8px 10px; border-radius: 6px; font-size: 12px;">
+            <option value="high">🔴 High Priority</option>
+            <option value="medium" selected>🟡 Medium Priority</option>
+            <option value="low">🟢 Low Priority</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Status</label>
+          <select id="new-task-status" style="width: 100%; background: var(--mid); border: 1px solid var(--border); color: #fff; padding: 8px 10px; border-radius: 6px; font-size: 12px;">
+            <option value="in_progress">⚡ Ready / In Progress</option>
+            <option value="pending_approval">⏳ Pending Approval</option>
+            <option value="planned" selected>📋 Planned</option>
+            <option value="completed">✅ Completed</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-bottom: 10px;">
+        <label style="font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Description / Instructions</label>
+        <textarea id="new-task-desc" rows="3" placeholder="Context, requirements, hard limits or steps..." style="width: 100%; background: var(--mid); border: 1px solid var(--border); color: #fff; padding: 8px 10px; border-radius: 6px; font-size: 12px; resize: vertical;"></textarea>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+        <div>
+          <label style="font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Action Link URL (optional)</label>
+          <input type="url" id="new-task-url" placeholder="https://..." style="width: 100%; background: var(--mid); border: 1px solid var(--border); color: #fff; padding: 8px 10px; border-radius: 6px; font-size: 12px;">
+        </div>
+        <div>
+          <label style="font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Action Link Label (optional)</label>
+          <input type="text" id="new-task-url-label" placeholder="e.g. Open GCP Console" style="width: 100%; background: var(--mid); border: 1px solid var(--border); color: #fff; padding: 8px 10px; border-radius: 6px; font-size: 12px;">
+        </div>
+      </div>
+      <div style="margin-bottom: 12px;">
+        <label style="font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Checklist / Subtasks (1 per line)</label>
+        <textarea id="new-task-checkpoints" rows="2" placeholder="Step 1&#10;Step 2&#10;Step 3" style="width: 100%; background: var(--mid); border: 1px solid var(--border); color: #fff; padding: 8px 10px; border-radius: 6px; font-size: 12px; resize: vertical;"></textarea>
+      </div>
+      <div style="display: flex; gap: 8px; justify-content: flex-end;">
+        <button type="button" onclick="toggleAddRoadmapTaskForm(false)" class="header-btn" style="font-size: 12px; padding: 6px 14px;">Cancel</button>
+        <button type="button" onclick="saveNewRoadmapTask()" class="header-btn" style="font-size: 12px; padding: 6px 16px; background: #7C3AED; border-color: #9333EA; color: #fff; font-weight: 600;">Save Task</button>
+      </div>
+    </div>
+
+    <!-- Task List Container -->
+    <div id="roadmap-content" style="padding: 16px 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 12px;">
+      <div style="color: var(--muted); text-align: center; margin-top: 40px; font-size: 13px;">Loading roadmap tasks...</div>
+    </div>
+  </div>
+
   <!-- Release Notes Modal -->
   <div id="release-notes-modal-overlay" style="display: none;" onclick="if(event.target===this) closeReleaseNotesModal()">
     <div id="release-notes-modal">
@@ -3314,6 +3737,7 @@
     }
 
     async function initDashboard() {
+      initRoadmapTasks();
       setupAutoRefresh();
       try {
         // Load GitHub Config first so fetchLiveData can use the API immediately
@@ -5568,6 +5992,494 @@
     }
 
     // ─────────────────────────────────────────────────────────────────────────
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Roadmap & Operations Tasks Logic
+    // ─────────────────────────────────────────────────────────────────────────
+    const DEFAULT_ROADMAP_TASKS = [
+      {
+        id: "task-store-localization",
+        title: "🌐 Mass Store Listing Localization (German + Spanish / Italian)",
+        category: "Store Optimization",
+        priority: "high",
+        status: "pending_approval",
+        statusLabel: "⏳ Pending Approval",
+        description: "Automatically translate and deploy 2 new localized store listings across all 115 watch faces via the Google Play Developer API (play.edits.listings).\n\n• Prerequisite: Waiting for Google Play to accept current Nov 2 description and email updates.\n• Target Languages: German (de-DE) & Spanish (es-ES) or Italian (it-IT).\n• Policy Limits: Title ≤ 30 chars, Short Desc ≤ 80 chars, Full Desc ≤ 4,000 chars.",
+        actionUrl: "",
+        actionLabel: "",
+        checkpoints: [
+          { text: "Google Play approves pending Nov 2 description updates", done: false },
+          { text: "Pull final approved English descriptions from manager.json", done: false },
+          { text: "Generate German & Spanish translations with AI", done: false },
+          { text: "Character-length audit: all 115 titles (≤ 30) & short descs (≤ 80)", done: false },
+          { text: "Single dry run deployment on CUE107 in Play Console", done: false },
+          { text: "Batch deployment across remaining 114 watch faces", done: false }
+        ],
+        completed: false,
+        createdAt: 1730620800000
+      },
+      {
+        id: "task-vitals-api",
+        title: "⚡ Enable Android Vitals API in Google Cloud Console",
+        category: "API & Analytics",
+        priority: "high",
+        status: "ready",
+        statusLabel: "⚡ Ready to Action",
+        description: "Enable the Google Play Developer Reporting API in GCP project 'Quick Reminder' (my-project-1535091400019) to unlock real-time crash rates & ANR (freeze) rates for all watch faces.",
+        actionUrl: "https://console.cloud.google.com/apis/library/playdeveloperreporting.googleapis.com?project=my-project-1535091400019",
+        actionLabel: "🔗 Enable in GCP Console",
+        checkpoints: [
+          { text: "Open GCP library for project my-project-1535091400019", done: false },
+          { text: "Click the blue 'ENABLE' button", done: false },
+          { text: "Wait 2 minutes for API propagation", done: false },
+          { text: "Verify Bad Behavior threshold (< 1.09%) badges in dashboard", done: false }
+        ],
+        completed: false,
+        createdAt: 1730620800000
+      },
+      {
+        id: "task-gcs-reports",
+        title: "📊 Connect Google Play Cloud Storage (GCS) Bulk Reports",
+        category: "API & Analytics",
+        priority: "medium",
+        status: "planned",
+        statusLabel: "📋 Planned",
+        description: "Retrieve your private Google Play GCS bucket URI (gs://pubsite_prod_rev_...) from Play Console > Download reports. Allows automated daily tracking of true net installs, active devices (Galaxy Watch vs Pixel), and net revenue.",
+        actionUrl: "https://play.google.com/console/u/0/developers/7609098870161748513/app-list",
+        actionLabel: "🔗 Open Play Console Reports",
+        checkpoints: [
+          { text: "Copy private bucket URI from Google Play Console", done: false },
+          { text: "Configure service account read access for the bucket", done: false },
+          { text: "Add daily CSV ingest script to sync workflow", done: false }
+        ],
+        completed: false,
+        createdAt: 1730620800000
+      },
+      {
+        id: "task-black-friday-sales",
+        title: "🏷️ Black Friday & Holiday Discount Sales Campaign",
+        category: "Monetization",
+        priority: "medium",
+        status: "planned",
+        statusLabel: "📅 Late November",
+        description: "Schedule 7-day promotional discount sales (€1.69 -> €0.49 / 75% OFF) across top best-seller watch faces.\n\n• Policy Note: Google enforces a strict 30-day cooldown between sales on the same app.",
+        actionUrl: "",
+        actionLabel: "",
+        checkpoints: [
+          { text: "Select top 15 revenue watch faces", done: false },
+          { text: "Verify 30-day cooldown status before scheduling", done: false },
+          { text: "Set €0.49 promotional pricing in Play Console", done: false },
+          { text: "Promote on Reddit & Wear OS coupon communities", done: false }
+        ],
+        completed: false,
+        createdAt: 1730620800000
+      }
+    ];
+
+    var roadmapTasks = [];
+    var currentRoadmapFilter = 'all';
+
+    function initRoadmapTasks() {
+      // 1. Instant local load
+      try {
+        const cached = localStorage.getItem('cc_roadmap_tasks');
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            roadmapTasks = parsed;
+          } else {
+            roadmapTasks = JSON.parse(JSON.stringify(DEFAULT_ROADMAP_TASKS));
+          }
+        } else {
+          roadmapTasks = JSON.parse(JSON.stringify(DEFAULT_ROADMAP_TASKS));
+          localStorage.setItem('cc_roadmap_tasks', JSON.stringify(roadmapTasks));
+        }
+      } catch (e) {
+        console.warn("Could not parse cached roadmap tasks:", e);
+        roadmapTasks = JSON.parse(JSON.stringify(DEFAULT_ROADMAP_TASKS));
+      }
+
+      renderRoadmapTasks();
+      updateRoadmapBadge();
+
+      // 2. Realtime Database Sync
+      if (typeof db !== 'undefined' && db) {
+        db.ref('roadmap_tasks').on('value', function(snapshot) {
+          const val = snapshot.val();
+          if (val && Array.isArray(val) && val.length > 0) {
+            roadmapTasks = val;
+            localStorage.setItem('cc_roadmap_tasks', JSON.stringify(roadmapTasks));
+            updateRoadmapSyncStatus(true);
+            renderRoadmapTasks();
+            updateRoadmapBadge();
+          } else if (!val) {
+            // Seed default tasks to Firebase if empty in DB
+            db.ref('roadmap_tasks').set(roadmapTasks).then(() => {
+              updateRoadmapSyncStatus(true);
+            }).catch(e => {
+              console.warn("Could not seed roadmap tasks to Firebase:", e);
+              updateRoadmapSyncStatus(false);
+            });
+          }
+        }, function(err) {
+          console.warn("Roadmap tasks Firebase listener error:", err);
+          updateRoadmapSyncStatus(false);
+        });
+      }
+    }
+
+    function updateRoadmapSyncStatus(synced) {
+      const el = document.getElementById('roadmap-sync-status');
+      if (!el) return;
+      if (synced) {
+        el.innerHTML = '<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#10B981;"></span> <span>Cloud Synced (Firebase)</span>';
+      } else {
+        el.innerHTML = '<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#f59e0b;"></span> <span>Local Cache Mode</span>';
+      }
+    }
+
+    function saveRoadmapTasks() {
+      try {
+        localStorage.setItem('cc_roadmap_tasks', JSON.stringify(roadmapTasks));
+      } catch (e) {
+        console.warn("LocalStorage save error:", e);
+      }
+
+      if (typeof db !== 'undefined' && db) {
+        db.ref('roadmap_tasks').set(roadmapTasks).catch(err => {
+          console.warn("Firebase save error for roadmap tasks:", err);
+        });
+      }
+
+      renderRoadmapTasks();
+      updateRoadmapBadge();
+    }
+
+    function updateRoadmapBadge() {
+      const badge = document.getElementById('roadmap-badge');
+      if (!badge) return;
+      const activeCount = roadmapTasks.filter(t => !t.completed).length;
+      badge.textContent = activeCount;
+      badge.style.display = activeCount > 0 ? 'inline-block' : 'none';
+
+      // Update Quick Stats in drawer
+      const statActive = document.getElementById('roadmap-stat-active');
+      const statPending = document.getElementById('roadmap-stat-pending');
+      const statReady = document.getElementById('roadmap-stat-ready');
+      const statCompleted = document.getElementById('roadmap-stat-completed');
+
+      if (statActive) statActive.textContent = activeCount;
+      if (statPending) statPending.textContent = roadmapTasks.filter(t => !t.completed && t.status === 'pending_approval').length;
+      if (statReady) statReady.textContent = roadmapTasks.filter(t => !t.completed && (t.status === 'ready' || t.status === 'in_progress')).length;
+      if (statCompleted) statCompleted.textContent = roadmapTasks.filter(t => t.completed).length;
+    }
+
+    function openRoadmapPanel() {
+      try {
+        const panel = document.getElementById('roadmap-panel');
+        const backdrop = document.getElementById('roadmap-backdrop');
+        if (panel) {
+          panel.classList.add('open');
+          panel.scrollTop = 0;
+          if (backdrop) backdrop.classList.add('open');
+        }
+        renderRoadmapTasks();
+      } catch (e) {
+        console.error("Error opening roadmap panel:", e);
+      }
+    }
+
+    function closeRoadmapPanel() {
+      const panel = document.getElementById('roadmap-panel');
+      const backdrop = document.getElementById('roadmap-backdrop');
+      if (panel) panel.classList.remove('open');
+      if (backdrop) backdrop.classList.remove('open');
+    }
+
+    function filterRoadmapTasks(filter, btn) {
+      currentRoadmapFilter = filter;
+      document.querySelectorAll('.roadmap-filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderRoadmapTasks();
+    }
+
+    function toggleRoadmapTask(taskId, isChecked) {
+      const task = roadmapTasks.find(t => t.id === taskId);
+      if (!task) return;
+      task.completed = isChecked;
+      if (isChecked) {
+        task.completedAt = Date.now();
+        if (Array.isArray(task.checkpoints)) {
+          task.checkpoints.forEach(cp => cp.done = true);
+        }
+      } else {
+        task.completedAt = null;
+      }
+      saveRoadmapTasks();
+    }
+
+    function toggleRoadmapCheckpoint(taskId, cpIndex, isChecked) {
+      const task = roadmapTasks.find(t => t.id === taskId);
+      if (!task || !task.checkpoints || !task.checkpoints[cpIndex]) return;
+      task.checkpoints[cpIndex].done = isChecked;
+
+      const allDone = task.checkpoints.every(cp => cp.done);
+      if (allDone && !task.completed) {
+        task.completed = true;
+        task.completedAt = Date.now();
+      } else if (!allDone && task.completed) {
+        task.completed = false;
+        task.completedAt = null;
+      }
+
+      saveRoadmapTasks();
+    }
+
+    function toggleAddRoadmapTaskForm(force) {
+      const form = document.getElementById('roadmap-add-task-form');
+      const btn = document.getElementById('btn-toggle-add-task');
+      if (!form) return;
+      const willShow = typeof force === 'boolean' ? force : form.style.display === 'none';
+      form.style.display = willShow ? 'block' : 'none';
+      if (btn) btn.textContent = willShow ? '✕ Close Form' : '+ New Task';
+      if (willShow) {
+        document.getElementById('new-task-title').focus();
+      }
+    }
+
+    function saveNewRoadmapTask() {
+      const titleInput = document.getElementById('new-task-title');
+      const title = (titleInput.value || '').trim();
+      if (!title) {
+        alert('Please enter a task title.');
+        titleInput.focus();
+        return;
+      }
+
+      const category = document.getElementById('new-task-category').value;
+      const priority = document.getElementById('new-task-priority').value;
+      const status = document.getElementById('new-task-status').value;
+      const desc = document.getElementById('new-task-desc').value.trim();
+      const actionUrl = document.getElementById('new-task-url').value.trim();
+      const actionLabel = document.getElementById('new-task-url-label').value.trim() || (actionUrl ? 'Open Link' : '');
+      const cpText = document.getElementById('new-task-checkpoints').value.trim();
+
+      const checkpoints = cpText.split('\n')
+        .map(line => line.trim())
+        .filter(line => line.length > 0)
+        .map(text => ({ text, done: false }));
+
+      let statusLabel = '📋 Planned';
+      if (status === 'in_progress' || status === 'ready') statusLabel = '⚡ Ready';
+      else if (status === 'pending_approval') statusLabel = '⏳ Pending Approval';
+      else if (status === 'completed') statusLabel = '✅ Completed';
+
+      const newTask = {
+        id: 'task_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+        title: title,
+        category: category,
+        priority: priority,
+        status: status,
+        statusLabel: statusLabel,
+        description: desc,
+        actionUrl: actionUrl,
+        actionLabel: actionLabel,
+        checkpoints: checkpoints,
+        completed: status === 'completed',
+        createdAt: Date.now()
+      };
+
+      roadmapTasks.unshift(newTask);
+      saveRoadmapTasks();
+
+      // Reset form
+      titleInput.value = '';
+      document.getElementById('new-task-desc').value = '';
+      document.getElementById('new-task-url').value = '';
+      document.getElementById('new-task-url-label').value = '';
+      document.getElementById('new-task-checkpoints').value = '';
+      toggleAddRoadmapTaskForm(false);
+
+      showToast(`✅ Created roadmap task "${title}"`);
+    }
+
+    function deleteRoadmapTask(taskId) {
+      const task = roadmapTasks.find(t => t.id === taskId);
+      if (!task) return;
+      if (!confirm(`Are you sure you want to delete "${task.title}"?`)) return;
+      roadmapTasks = roadmapTasks.filter(t => t.id !== taskId);
+      saveRoadmapTasks();
+      showToast(`🗑️ Deleted task`);
+    }
+
+    async function scheduleRoadmapTaskInPlanner(taskId) {
+      const task = roadmapTasks.find(t => t.id === taskId);
+      if (!task) return;
+
+      const todayStr = new Date().toISOString().split('T')[0];
+      const targetDate = prompt(`Schedule "${task.title}" in Month Planner\nEnter target date (YYYY-MM-DD):`, todayStr);
+      if (!targetDate || !/^\d{4}-\d{2}-\d{2}$/.test(targetDate.trim())) {
+        if (targetDate) alert("Invalid date format. Please use YYYY-MM-DD.");
+        return;
+      }
+
+      const dateStr = targetDate.trim();
+
+      if (!currentUser) {
+        alert("You must be signed in with Firebase to sync tasks with your Month Planner.");
+        return;
+      }
+
+      try {
+        const snapPromise = db.ref('work_planner/' + currentUser.uid).once('value');
+        const snapTimeout = new Promise(resolve => setTimeout(() => resolve(null), 3000));
+        const snap = await Promise.race([snapPromise, snapTimeout]);
+        const data = (snap && typeof snap.val === 'function' && snap.val()) ? snap.val() : {};
+        const existing = Array.isArray(data.customTasks) ? data.customTasks : [];
+
+        const cleanTitle = task.title.replace(/^[^\w\s\u00C0-\u017F]+/, '').trim();
+        const newTask = {
+          id: 'task_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+          title: cleanTitle || task.title,
+          priority: task.priority || 'medium',
+          duration: 1,
+          startDate: dateStr,
+          createdAt: Date.now()
+        };
+
+        existing.push(newTask);
+        data.customTasks = existing;
+        data._writtenBy = 'roadmap_widget_' + Math.random().toString(36).substr(2, 7);
+
+        await db.ref('work_planner/' + currentUser.uid).set(data);
+        showToast(`📅 Scheduled "${task.title}" in Month Planner for ${dateStr}!`);
+      } catch (err) {
+        console.error("Error scheduling in Month Planner:", err);
+        alert("Failed to schedule in Month Planner: " + err.message);
+      }
+    }
+
+    function renderRoadmapTasks() {
+      const container = document.getElementById('roadmap-content');
+      if (!container) return;
+
+      let filtered = roadmapTasks;
+      if (currentRoadmapFilter === 'active') {
+        filtered = roadmapTasks.filter(t => !t.completed);
+      } else if (currentRoadmapFilter === 'completed') {
+        filtered = roadmapTasks.filter(t => t.completed);
+      } else if (currentRoadmapFilter === 'pending_approval') {
+        filtered = roadmapTasks.filter(t => t.status === 'pending_approval');
+      } else if (currentRoadmapFilter === 'ready') {
+        filtered = roadmapTasks.filter(t => t.status === 'ready' || t.status === 'in_progress');
+      } else if (currentRoadmapFilter === 'planned') {
+        filtered = roadmapTasks.filter(t => t.status === 'planned');
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px 20px; color: var(--muted);">
+            <div style="font-size: 32px; margin-bottom: 10px;">📋</div>
+            <div style="font-size: 14px; font-weight: 600; color: #fff;">No tasks found</div>
+            <div style="font-size: 12px; margin-top: 4px;">No roadmap tasks match the current filter.</div>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      filtered.forEach(task => {
+        const isDone = Boolean(task.completed);
+        const prio = task.priority || 'medium';
+        const prioBadge = prio === 'high' 
+          ? '<span class="roadmap-badge-pill badge-prio-high">🔴 High</span>'
+          : prio === 'low'
+          ? '<span class="roadmap-badge-pill badge-prio-low">🟢 Low</span>'
+          : '<span class="roadmap-badge-pill badge-prio-medium">🟡 Medium</span>';
+
+        let statusClass = 'badge-status-planned';
+        let statusText = task.statusLabel || '📋 Planned';
+        if (isDone) {
+          statusClass = 'badge-status-completed';
+          statusText = '✅ Completed';
+        } else if (task.status === 'pending_approval') {
+          statusClass = 'badge-status-pending';
+          statusText = '⏳ Pending Approval';
+        } else if (task.status === 'ready' || task.status === 'in_progress') {
+          statusClass = 'badge-status-ready';
+          statusText = '⚡ Ready to Action';
+        }
+
+        const statusBadge = `<span class="roadmap-badge-pill ${statusClass}">${statusText}</span>`;
+        const categoryBadge = task.category ? `<span class="roadmap-badge-pill badge-category">${escapeHtml(task.category)}</span>` : '';
+
+        // Checkpoints checklist
+        let checkpointsHtml = '';
+        if (Array.isArray(task.checkpoints) && task.checkpoints.length > 0) {
+          const totalCp = task.checkpoints.length;
+          const doneCp = task.checkpoints.filter(cp => cp.done).length;
+          const pct = Math.round((doneCp / totalCp) * 100);
+
+          let itemsHtml = task.checkpoints.map((cp, idx) => `
+            <label class="roadmap-checkpoint-label ${cp.done ? 'done' : ''}">
+              <input type="checkbox" ${cp.done ? 'checked' : ''} onchange="toggleRoadmapCheckpoint('${task.id}', ${idx}, this.checked)">
+              <span>${escapeHtml(cp.text)}</span>
+            </label>
+          `).join('');
+
+          checkpointsHtml = `
+            <div class="roadmap-checkpoints-list">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 4px;">
+                <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: 0.5px;">Checklist &amp; Steps</span>
+                <span style="font-size: 10px; font-weight: 600; color: ${pct === 100 ? '#34d399' : '#a78bfa'};">${doneCp}/${totalCp} (${pct}%)</span>
+              </div>
+              <div style="height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; margin-bottom: 6px;">
+                <div style="height: 100%; width: ${pct}%; background: ${pct === 100 ? '#10B981' : '#7C3AED'}; transition: width 0.3s ease;"></div>
+              </div>
+              ${itemsHtml}
+            </div>
+          `;
+        }
+
+        // Action Buttons
+        const actionBtn = task.actionUrl 
+          ? `<a href="${task.actionUrl}" target="_blank" class="roadmap-action-btn btn-gcp">${escapeHtml(task.actionLabel || '🔗 Open Link')}</a>`
+          : '';
+
+        html += `
+          <div class="roadmap-task-card ${isDone ? 'task-completed' : ''}" id="task-card-${task.id}">
+            <div class="roadmap-task-header">
+              <input type="checkbox" class="roadmap-checkbox-custom" ${isDone ? 'checked' : ''} onchange="toggleRoadmapTask('${task.id}', this.checked)" title="Mark Task Complete">
+              <div style="flex: 1;">
+                <div class="roadmap-task-title">${escapeHtml(task.title)}</div>
+                <div class="roadmap-badges-row">
+                  ${statusBadge}
+                  ${prioBadge}
+                  ${categoryBadge}
+                </div>
+              </div>
+            </div>
+
+            ${task.description ? `<div class="roadmap-desc-block">${escapeHtml(task.description)}</div>` : ''}
+
+            ${checkpointsHtml}
+
+            <div class="roadmap-actions-footer">
+              ${actionBtn}
+              <button type="button" onclick="scheduleRoadmapTaskInPlanner('${task.id}')" class="roadmap-action-btn btn-planner">
+                📅 Add to Planner
+              </button>
+              <button type="button" onclick="deleteRoadmapTask('${task.id}')" class="roadmap-action-btn btn-delete" title="Delete Task">
+                🗑️
+              </button>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
     // Reviews Panel Logic
     // ─────────────────────────────────────────────────────────────────────────
     function openReviewsPanel() {
