@@ -1300,7 +1300,15 @@
           localStorage.removeItem('firebase:previous_websocket_failure');
           db.goOnline();
         } catch (e) {}
-        initDetails();
+        
+        // If promo metadata is already loaded, load admin-only data immediately
+        if (promoDataLoaded) {
+          loadPromoCodes();
+          loadOneTimeLinks();
+          loadClaimsHistory();
+        } else {
+          initDetails();
+        }
       } else {
         document.getElementById('login-overlay').style.display = 'flex';
         document.getElementById('loading-state').style.display = 'none';
@@ -1451,9 +1459,13 @@
         document.getElementById('dashboard-content').style.display = 'block';
 
         renderPromoDetails();
-        loadPromoCodes();
-        loadOneTimeLinks();
-        loadClaimsHistory();
+        
+        // Load admin-only data if user is already authenticated
+        if (currentUser) {
+          loadPromoCodes();
+          loadOneTimeLinks();
+          loadClaimsHistory();
+        }
       }
     }
 
@@ -1690,12 +1702,45 @@
           }
         }
 
+        var saveBtn = document.getElementById('btn-save-settings');
+        if (saveBtn) {
+          saveBtn.disabled = true;
+          saveBtn.textContent = 'Saving...';
+        }
+
         db.ref().update(updates).then(function() {
           showToast("Configuration saved!");
-          setTimeout(function() { window.location.reload(); }, 600);
+          if (saveBtn) {
+            saveBtn.disabled = false;
+            saveBtn.textContent = 'Save Settings';
+          }
+          // Update in-memory promoData and re-render without page reload
+          if (promoData) {
+            promoData.name = name;
+            promoData.description = desc;
+            promoData.storeLink = link;
+            promoData.imageUrl = imgUrl;
+            promoData.visibility = visibility;
+            promoData.startsAt = startsAt;
+            promoData.expiresAt = expiresAt;
+            promoData.claimsCap = claimsCap;
+            promoData.totalCoupons = newTotal;
+            renderPromoDetails();
+          }
         }).catch(function(err) {
+          if (saveBtn) {
+            saveBtn.disabled = false;
+            saveBtn.textContent = 'Save Settings';
+          }
           alert("Save failed: " + err.message);
         });
+      }).catch(function(err) {
+        var saveBtn = document.getElementById('btn-save-settings');
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.textContent = 'Save Settings';
+        }
+        alert("Save failed: " + err.message);
       });
     });
 
@@ -2286,6 +2331,9 @@ Format this report with a professional tone in clean, beautiful Markdown with st
         processShortenerQueue();
       }, 1000); // 1 second delay
     }
+
+    // Start loading promotion metadata immediately on page load
+    initDetails();
   </script>
 </body>
 </html>
