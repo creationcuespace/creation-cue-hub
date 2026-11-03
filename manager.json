@@ -6,6 +6,27 @@
   },
   "watch_faces": [
     {
+      "id": "cue180",
+      "title": "CUE180",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue180.png",
+      "play_store_url": "market://details?id=com.creation.cue180watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue180",
+      "description_en": "Key Features:\n\n▸ Steps counter and distance covered in km or miles plus progress bar (can be replaced).\n\n▸ Battery power display with low-level alert, progress bar and color coded battery level led.\n\n▸ This watch face comes with: 5 short text and 1 long text complications.\n\n▸ Full AOD display.\n\n▸ Multiple color themes available.\n\n▸ Bold and readily readable figures for enhanced user experience.\n\n▸ A light sweep effect across the plate appears when the screen turns on and can be toggled on or off. \n\n▸ The background index lines rotate, adding a dynamic touch to the watch face.\n\n\n\nEnjoying CUE180? Leave a review on the Play Store to help us grow and create more designs!",
+      "description_de": "",
+      "filters": [
+        "Digital",
+        "NEW"
+      ],
+      "type": "digital",
+      "is_free": false,
+      "is_coming_soon": false,
+      "badge_text": "NEW RELEASE",
+      "is_new": true,
+      "tags": [
+        "Digital"
+      ],
+      "release_date": "2026-11-03"
+    },
+    {
       "id": "cue179",
       "title": "CUE179",
       "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue179.png",
@@ -18,8 +39,8 @@
       "type": "digital",
       "is_free": false,
       "is_coming_soon": false,
-      "badge_text": "NEW RELEASE",
-      "is_new": true,
+      "badge_text": "",
+      "is_new": false,
       "tags": [
         "Digital"
       ],
@@ -35,7 +56,8 @@
       "filters": [],
       "type": "analog",
       "is_free": false,
-      "release_date": "2026-05-18"
+      "release_date": "2026-05-18",
+      "is_new": false
     },
     {
       "id": "cue178",
@@ -47,7 +69,8 @@
       "filters": [],
       "type": "digital",
       "is_free": false,
-      "release_date": "2026-07-06"
+      "release_date": "2026-07-06",
+      "is_new": false
     },
     {
       "id": "cue003",
@@ -59,7 +82,8 @@
       "filters": [],
       "type": "digital",
       "is_free": false,
-      "release_date": "2026-08-01"
+      "release_date": "2026-08-01",
+      "is_new": false
     },
     {
       "id": "cue176",
@@ -73,7 +97,8 @@
       ],
       "type": "hybrid",
       "is_free": false,
-      "release_date": "2026-05-01"
+      "release_date": "2026-05-01",
+      "is_new": false
     },
     {
       "id": "cue175",
@@ -87,7 +112,8 @@
       ],
       "type": "digital",
       "is_free": false,
-      "release_date": "2026-04-10"
+      "release_date": "2026-04-10",
+      "is_new": false
     },
     {
       "id": "cue174",
@@ -101,7 +127,8 @@
       ],
       "type": "digital",
       "is_free": false,
-      "release_date": "2026-04-15"
+      "release_date": "2026-04-15",
+      "is_new": false
     },
     {
       "id": "cue173",
@@ -112,7 +139,8 @@
       "description_de": "Modernes Hybrid-Zifferblatt mit taktischer Datenanzeige und vollständiger Wear OS-Unterstützung.",
       "filters": [],
       "type": "hybrid",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue172",
@@ -123,7 +151,8 @@
       "description_de": "Technisches Hybrid-Zifferblatt mit mehrschichtigem, robustem Design.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue171",
@@ -134,7 +163,8 @@
       "description_de": "Symmetrisches, rundes Digital-Zifferblatt mit gestaffelten Anzeigen und taktischem Erscheinungsbild.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue170",
@@ -145,7 +175,8 @@
       "description_de": "Robustes Hybrid-Zifferblatt mit analogen Zeigern über großen digitalen Umrissen.",
       "filters": [],
       "type": "hybrid",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue169",
@@ -156,7 +187,8 @@
       "description_de": "Schlankes Tech-Zifferblatt mit markanten Ziffern und einem ausgewogenen, dynamischen Layout.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue168",
@@ -167,7 +199,8 @@
       "description_de": "Robustes digitales Zifferblatt mit mehreren Anzeigebereichen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue167",
@@ -178,7 +211,8 @@
       "description_de": "Klares, funktionales Zifferblatt mit vertikal angeordneten Elementen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue166",
@@ -189,7 +223,8 @@
       "description_de": "Robustes Hybrid-Zifferblatt mit detailliertem Layout und Mondphasenanzeige.",
       "filters": [],
       "type": "hybrid",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue165",
@@ -200,7 +235,8 @@
       "description_de": "Markantes Hybrid-Zifferblatt mit großen, gestaffelten Ziffern und mechanischen Zeigern.",
       "filters": [],
       "type": "hybrid",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue164",
@@ -211,7 +247,8 @@
       "description_de": "Digitales Hybrid-Zifferblatt mit mehrschichtigem 3D-Look und smarten Funktionen.",
       "filters": [],
       "type": "Hybrid",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue163",
@@ -222,7 +259,8 @@
       "description_de": "Modernes Zifferblatt mit gestaffelten Anzeigen und wechselnden Details für mehr Tiefenwirkung.",
       "filters": [],
       "type": "Hybrid",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue162",
@@ -233,7 +271,8 @@
       "description_de": "Dynamisches Zifferblatt mit markanten Indexen, realistischer Tiefe und vielfältigen Funktionen.",
       "filters": [],
       "type": "Hybrid",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue161",
@@ -244,7 +283,8 @@
       "description_de": "Zifferblatt mit markanter Zeitanzeige, Mondphase und individuellen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue160",
@@ -255,7 +295,8 @@
       "description_de": "Zifferblatt mit kraftvoller digitaler Oberfläche und einem sportlich-mechanischen Charakter.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue159",
@@ -266,7 +307,8 @@
       "description_de": "Digitales Zifferblatt, bei dem die Akkuladung clever in das zentrale Tech-Symbol integriert ist.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue158",
@@ -277,7 +319,8 @@
       "description_de": "Futuristisches Analog-Digital-Hybrid-Zifferblatt mit kraftvollem, dynamischem Design.",
       "filters": [],
       "type": "Hybrid",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue157",
@@ -288,7 +331,8 @@
       "description_de": "Markantes, modernes digitales Zifferblatt mit sportlichem und dynamischem Layout.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue156",
@@ -299,7 +343,8 @@
       "description_de": "Zifferblatt mit markanten gotischen Ziffern und einem modernen, kantigen digitalen Layout.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue155",
@@ -310,7 +355,8 @@
       "description_de": "Modernes Zifferblatt mit einem kraftvollen, von Technik inspirierten Design.",
       "filters": [],
       "type": "Hybrid",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue154",
@@ -324,7 +370,8 @@
       ],
       "type": "digital",
       "is_free": false,
-      "badge_text": "🌤️ WEATHER"
+      "badge_text": "🌤️ WEATHER",
+      "is_new": false
     },
     {
       "id": "cue153",
@@ -335,7 +382,8 @@
       "description_de": "Instrumenten-Zifferblatt im Cockpit-Stil mit klarem, technikbetontem Design.",
       "filters": [],
       "type": "analog",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue152",
@@ -346,7 +394,8 @@
       "description_de": "Zeitloses analoges Zifferblatt mit klassischem Zifferblattdesign und präzisen Details.",
       "filters": [],
       "type": "analog",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue151",
@@ -360,7 +409,8 @@
       ],
       "type": "digital",
       "is_free": false,
-      "badge_text": "🌤️ WEATHER"
+      "badge_text": "🌤️ WEATHER",
+      "is_new": false
     },
     {
       "id": "cue150",
@@ -371,7 +421,8 @@
       "description_de": "Futuristisches Zifferblatt mit segmentierter Digitalanzeige und markanten diagonalen Aussparungen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue149",
@@ -382,7 +433,8 @@
       "description_de": "CUE149 ist ein markantes digitales Zifferblatt mit einzigartigem Charakter und einer Vielzahl von Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue148",
@@ -396,7 +448,8 @@
       ],
       "type": "digital",
       "is_free": false,
-      "badge_text": "🌤️ WEATHER"
+      "badge_text": "🌤️ WEATHER",
+      "is_new": false
     },
     {
       "id": "cue147",
@@ -410,7 +463,8 @@
       ],
       "type": "digital",
       "is_free": false,
-      "badge_text": "🌤️ WEATHER"
+      "badge_text": "🌤️ WEATHER",
+      "is_new": false
     },
     {
       "id": "cue146",
@@ -424,7 +478,8 @@
       ],
       "type": "digital",
       "is_free": false,
-      "badge_text": "🌤️ WEATHER"
+      "badge_text": "🌤️ WEATHER",
+      "is_new": false
     },
     {
       "id": "cue145",
@@ -438,7 +493,8 @@
       ],
       "type": "digital",
       "is_free": false,
-      "badge_text": "🌤️ WEATHER"
+      "badge_text": "🌤️ WEATHER",
+      "is_new": false
     },
     {
       "id": "cue144",
@@ -452,7 +508,8 @@
       ],
       "type": "digital",
       "is_free": false,
-      "badge_text": "🌤️ WEATHER"
+      "badge_text": "🌤️ WEATHER",
+      "is_new": false
     },
     {
       "id": "cue143",
@@ -463,7 +520,8 @@
       "description_de": "CUE143 ist ein beliebtes digitales Zifferblatt mit auffälligem Design und umfangreichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue142",
@@ -477,7 +535,8 @@
       ],
       "type": "digital",
       "is_free": false,
-      "badge_text": "🌤️ WEATHER"
+      "badge_text": "🌤️ WEATHER",
+      "is_new": false
     },
     {
       "id": "cue141",
@@ -488,7 +547,8 @@
       "description_de": "CUE141 ist ein markantes digitales Zifferblatt mit einzigartigem Charakter und einer Vielzahl von Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue140",
@@ -501,7 +561,8 @@
         "NEON"
       ],
       "type": "hybrid",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue139",
@@ -515,7 +576,8 @@
       ],
       "type": "digital",
       "is_free": false,
-      "badge_text": "🌤️ WEATHER"
+      "badge_text": "🌤️ WEATHER",
+      "is_new": false
     },
     {
       "id": "cue137",
@@ -526,7 +588,8 @@
       "description_de": "CUE137 ist ein stilvolles analoges Zifferblatt mit kühnem Look und gut lesbaren Komplikationen.",
       "filters": [],
       "type": "analog",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue136",
@@ -540,7 +603,8 @@
       ],
       "type": "analog",
       "is_free": true,
-      "badge_text": "🎀 FREE"
+      "badge_text": "🎀 FREE",
+      "is_new": false
     },
     {
       "id": "cue136_plus",
@@ -553,7 +617,8 @@
       "type": "analog",
       "is_free": false,
       "badge_text": "PLUS",
-      "promotion_for": "com.creation.cue136watchface"
+      "promotion_for": "com.creation.cue136watchface",
+      "is_new": false
     },
     {
       "id": "cue135",
@@ -564,7 +629,8 @@
       "description_de": "CUE135 ist ein beliebtes hybrides Zifferblatt mit auffälligem Design und umfangreichen Komplikationen.",
       "filters": [],
       "type": "hybrid",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue134",
@@ -575,7 +641,8 @@
       "description_de": "CUE134 ist ein frisches hybrides Zifferblatt mit stilvollem Design und nützlichen Komplikationen.",
       "filters": [],
       "type": "hybrid",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue133",
@@ -586,7 +653,8 @@
       "description_de": "CUE133 ist ein markantes digitales Zifferblatt mit einzigartigem Charakter und einer Vielzahl von Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue132",
@@ -600,7 +668,8 @@
       ],
       "badge_text": "🎀 FREE",
       "type": "analog",
-      "is_free": true
+      "is_free": true,
+      "is_new": false
     },
     {
       "id": "cue131",
@@ -611,7 +680,8 @@
       "description_de": "CUE131 ist ein schlankes digitales Zifferblatt mit modernem Look und übersichtlich angeordneten Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue130",
@@ -622,7 +692,8 @@
       "description_de": "CUE130 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue129",
@@ -633,7 +704,8 @@
       "description_de": "CUE129 ist ein stilvolles digitales Zifferblatt mit kühnem Look und gut lesbaren Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue128",
@@ -644,7 +716,8 @@
       "description_de": "CUE128 ist ein modernes analoges Zifferblatt mit klarem Layout und anpassbaren Komplikationen.",
       "filters": [],
       "type": "analog",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue127",
@@ -655,7 +728,8 @@
       "description_de": "CUE127 ist ein beliebtes digitales Zifferblatt mit auffälligem Design und umfangreichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue126",
@@ -666,7 +740,8 @@
       "description_de": "CUE126 ist ein frisches digitales Zifferblatt mit stilvollem Design und nützlichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue125",
@@ -677,7 +752,8 @@
       "description_de": "CUE125 ist ein markantes digitales Zifferblatt mit einzigartigem Charakter und einer Vielzahl von Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue124",
@@ -688,7 +764,8 @@
       "description_de": "CUE124 ist ein poliertes digitales Zifferblatt im minimalistischen Stil mit wichtigen Gesundheits- und Zeitkomplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue123",
@@ -699,7 +776,8 @@
       "description_de": "CUE123 ist ein schlankes digitales Zifferblatt mit modernem Look und übersichtlich angeordneten Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue122",
@@ -710,7 +788,8 @@
       "description_de": "CUE122 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue116",
@@ -724,7 +803,8 @@
       ],
       "type": "digital",
       "is_free": false,
-      "badge_text": "🔥 HOT"
+      "badge_text": "🔥 HOT",
+      "is_new": false
     },
     {
       "id": "cue115",
@@ -735,7 +815,8 @@
       "description_de": "CUE115 ist ein schlankes digitales Zifferblatt mit modernem Look und übersichtlich angeordneten Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue114",
@@ -746,7 +827,8 @@
       "description_de": "CUE114 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue111",
@@ -757,7 +839,8 @@
       "description_de": "CUE111 ist ein beliebtes digitales Zifferblatt mit auffälligem Design und umfangreichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue110",
@@ -768,7 +851,8 @@
       "description_de": "CUE110 ist ein frisches digitales Zifferblatt mit stilvollem Design und nützlichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue109",
@@ -779,7 +863,8 @@
       "description_de": "CUE109 ist ein markantes digitales Zifferblatt mit einzigartigem Charakter und einer Vielzahl von Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue107",
@@ -790,7 +875,8 @@
       "description_de": "CUE107 ist ein schlankes digitales Zifferblatt mit modernem Look und übersichtlich angeordneten Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue106",
@@ -801,7 +887,8 @@
       "description_de": "CUE106 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue105",
@@ -812,7 +899,8 @@
       "description_de": "CUE105 ist ein stilvolles digitales Zifferblatt mit kühnem Look und gut lesbaren Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue104",
@@ -826,7 +914,8 @@
       ],
       "type": "digital",
       "is_free": true,
-      "badge_text": "🎀 FREE"
+      "badge_text": "🎀 FREE",
+      "is_new": false
     },
     {
       "id": "cue103",
@@ -837,7 +926,8 @@
       "description_de": "CUE103 ist ein beliebtes digitales Zifferblatt mit auffälligem Design und umfangreichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue102",
@@ -848,7 +938,8 @@
       "description_de": "CUE102 ist ein frisches digitales Zifferblatt mit stilvollem Design und nützlichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue101",
@@ -859,7 +950,8 @@
       "description_de": "CUE101 ist ein markantes digitales Zifferblatt mit einzigartigem Charakter und einer Vielzahl von Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue100",
@@ -870,7 +962,8 @@
       "description_de": "CUE100 ist ein poliertes digitales Zifferblatt im minimalistischen Stil mit wichtigen Gesundheits- und Zeitkomplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue099",
@@ -881,7 +974,8 @@
       "description_de": "CUE099 ist ein schlankes digitales Zifferblatt mit modernem Look und übersichtlich angeordneten Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue098",
@@ -892,7 +986,8 @@
       "description_de": "CUE098 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cue097",
@@ -903,7 +998,8 @@
       "description_de": "CUE097 ist ein stilvolles digitales Zifferblatt mit kühnem Look und gut lesbaren Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc094",
@@ -914,7 +1010,8 @@
       "description_de": "CRC094 ist ein frisches digitales Zifferblatt mit stilvollem Design und nützlichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc092",
@@ -925,7 +1022,8 @@
       "description_de": "CRC092 ist ein poliertes digitales Zifferblatt im minimalistischen Stil mit wichtigen Gesundheits- und Zeitkomplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc091",
@@ -938,7 +1036,8 @@
         "NEON"
       ],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc090",
@@ -949,7 +1048,8 @@
       "description_de": "CRC090 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc087",
@@ -960,7 +1060,8 @@
       "description_de": "CRC087 ist ein beliebtes digitales Zifferblatt mit auffälligem Design und umfangreichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc082",
@@ -974,7 +1075,8 @@
       ],
       "type": "analog",
       "is_free": true,
-      "badge_text": "🎀 FREE"
+      "badge_text": "🎀 FREE",
+      "is_new": false
     },
     {
       "id": "crc081",
@@ -985,7 +1087,8 @@
       "description_de": "CRC081 ist ein stilvolles digitales Zifferblatt mit kühnem Look und gut lesbaren Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc080",
@@ -999,7 +1102,8 @@
       ],
       "type": "digital",
       "is_free": true,
-      "badge_text": "🎀 FREE"
+      "badge_text": "🎀 FREE",
+      "is_new": false
     },
     {
       "id": "crc079",
@@ -1010,7 +1114,8 @@
       "description_de": "CRC079 ist ein beliebtes digitales Zifferblatt mit auffälligem Design und umfangreichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc072",
@@ -1023,7 +1128,8 @@
         "NEON"
       ],
       "type": "hybrid",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc071",
@@ -1034,7 +1140,8 @@
       "description_de": "CRC071 ist ein beliebtes digitales Zifferblatt mit auffälligem Design und umfangreichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc069",
@@ -1048,7 +1155,8 @@
       ],
       "type": "digital",
       "is_free": true,
-      "badge_text": "🎀 FREE"
+      "badge_text": "🎀 FREE",
+      "is_new": false
     },
     {
       "id": "crc068",
@@ -1062,7 +1170,8 @@
       ],
       "type": "digital",
       "is_free": true,
-      "badge_text": "🎀 FREE"
+      "badge_text": "🎀 FREE",
+      "is_new": false
     },
     {
       "id": "crc066",
@@ -1073,7 +1182,8 @@
       "description_de": "CRC066 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc065",
@@ -1084,7 +1194,8 @@
       "description_de": "CRC065 ist ein stilvolles hybrides Zifferblatt mit kühnem Look und gut lesbaren Komplikationen.",
       "filters": [],
       "type": "hybrid",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc057",
@@ -1095,7 +1206,8 @@
       "description_de": "CRC057 ist ein stilvolles digitales Zifferblatt mit kühnem Look und gut lesbaren Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc050",
@@ -1106,7 +1218,8 @@
       "description_de": "CRC050 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc046",
@@ -1120,7 +1233,8 @@
       ],
       "badge_text": "🎀 FREE",
       "type": "analog",
-      "is_free": true
+      "is_free": true,
+      "is_new": false
     },
     {
       "id": "crc044",
@@ -1131,7 +1245,8 @@
       "description_de": "CRC044 ist ein poliertes digitales Zifferblatt im minimalistischen Stil mit wichtigen Gesundheits- und Zeitkomplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc043",
@@ -1142,7 +1257,8 @@
       "description_de": "CRC043 ist ein schlankes digitales Zifferblatt mit modernem Look und übersichtlich angeordneten Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc042",
@@ -1153,7 +1269,8 @@
       "description_de": "CRC042 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc041",
@@ -1167,7 +1284,8 @@
       ],
       "type": "digital",
       "is_free": true,
-      "badge_text": "🎀 FREE"
+      "badge_text": "🎀 FREE",
+      "is_new": false
     },
     {
       "id": "crc039",
@@ -1178,7 +1296,8 @@
       "description_de": "CRC039 ist ein beliebtes digitales Zifferblatt mit auffälligem Design und umfangreichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc036",
@@ -1190,7 +1309,8 @@
       "filters": [],
       "type": "digital",
       "is_free": true,
-      "badge_text": "🎀 FREE"
+      "badge_text": "🎀 FREE",
+      "is_new": false
     },
     {
       "id": "crc035",
@@ -1201,7 +1321,8 @@
       "description_de": "CRC035 ist ein schlankes digitales Zifferblatt mit modernem Look und übersichtlich angeordneten Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc034",
@@ -1212,7 +1333,8 @@
       "description_de": "CRC034 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc032",
@@ -1223,7 +1345,8 @@
       "description_de": "CRC032 ist ein modernes digitales Zifferblatt mit klarem Layout und anpassbaren Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc031",
@@ -1234,7 +1357,8 @@
       "description_de": "CRC031 ist ein beliebtes digitales Zifferblatt mit auffälligem Design und umfangreichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc030",
@@ -1245,7 +1369,8 @@
       "description_de": "CRC030 ist ein frisches digitales Zifferblatt mit stilvollem Design und nützlichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc028",
@@ -1256,7 +1381,8 @@
       "description_de": "CRC028 ist ein poliertes digitales Zifferblatt im minimalistischen Stil mit wichtigen Gesundheits- und Zeitkomplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc027",
@@ -1270,7 +1396,8 @@
       ],
       "type": "digital",
       "is_free": true,
-      "badge_text": "🎀 FREE"
+      "badge_text": "🎀 FREE",
+      "is_new": false
     },
     {
       "id": "cue024",
@@ -1281,7 +1408,8 @@
       "description_de": "CUE024 ist ein modernes digitales Zifferblatt mit klarem Layout und anpassbaren Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "crc023",
@@ -1295,7 +1423,8 @@
       ],
       "type": "digital",
       "is_free": true,
-      "badge_text": "🎀 FREE"
+      "badge_text": "🎀 FREE",
+      "is_new": false
     },
     {
       "id": "ccwf022",
@@ -1306,7 +1435,8 @@
       "description_de": "CCWF022 ist ein frisches digitales Zifferblatt mit stilvollem Design und nützlichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cc014",
@@ -1317,7 +1447,8 @@
       "description_de": "CC014 ist ein frisches digitales Zifferblatt mit stilvollem Design und nützlichen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cc010",
@@ -1328,7 +1459,8 @@
       "description_de": "CC010 ist ein ausgereiftes digitales Zifferblatt mit ausgewogenem Layout und praktischen Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cc005",
@@ -1339,7 +1471,8 @@
       "description_de": "CC005 ist ein markantes digitales Zifferblatt mit einzigartigem Charakter und einer Vielzahl von Komplikationen.",
       "filters": [],
       "type": "digital",
-      "is_free": false
+      "is_free": false,
+      "is_new": false
     },
     {
       "id": "cueindus",
@@ -1354,7 +1487,8 @@
       ],
       "type": "digital",
       "is_free": true,
-      "badge_text": "🎀 FREE"
+      "badge_text": "🎀 FREE",
+      "is_new": false
     },
     {
       "id": "cueindus_pro",
@@ -1369,7 +1503,8 @@
       "type": "digital",
       "is_free": false,
       "badge_text": "PRO",
-      "promotion_for": "com.creation.cueinduswatchface"
+      "promotion_for": "com.creation.cueinduswatchface",
+      "is_new": false
     }
   ]
 }

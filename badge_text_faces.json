@@ -1,6 +1,13 @@
 {
   "watch_faces": [
     {
+      "id": "cue180",
+      "title": "CUE180 (NEW RELEASE)",
+      "release_date": "2026-11-03",
+      "image_url": "https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue180.png",
+      "play_store_url": "market://details?id=com.creation.cue180watchface&referrer=utm_source%3Dhub_app%26utm_campaign%3Dcue180"
+    },
+    {
       "id": "cueindus_pro",
       "title": "CUE Indus Pro (AD)",
       "badge_text": "PRO",
