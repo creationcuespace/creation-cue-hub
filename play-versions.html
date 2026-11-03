@@ -308,6 +308,60 @@
       color: #fff;
     }
 
+
+    /* Vitals at-a-glance badges */
+    .vitals-alert-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid #ef4444;
+      color: #fca5a5;
+      letter-spacing: 0.3px;
+      animation: pulseVitalsAlert 2s infinite ease-in-out;
+      cursor: pointer;
+    }
+
+    .vitals-warn-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fcd34d;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+    }
+
+    .grid-card-vitals-badge {
+      position: absolute;
+      bottom: 6px;
+      left: 6px;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(239, 68, 68, 0.9);
+      color: #fff;
+      border: 1px solid #ef4444;
+      backdrop-filter: blur(4px);
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    @keyframes pulseVitalsAlert {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.75; transform: scale(0.97); }
+    }
+
   </style>
 
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -2922,6 +2976,15 @@
         <div class="stat-label">Staged Rollouts (&lt;100%)</div>
         <div class="stat-value" id="stat-rollouts" style="color: var(--yellow);">0</div>
       </div>
+      <div class="stat-card clickable-card" id="card-vitals" title="Click to filter by Android Vitals Issues (Crash rate >= 1.09% or ANR >= 0.47%)" style="border-left-color: #34d399;">
+        <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
+          <span>Android Vitals</span>
+          <span id="stat-vitals-sub" style="font-size:10px; font-weight:700; color:#34d399;">Healthy</span>
+        </div>
+        <div class="stat-value" id="stat-vitals-issues" style="color: #34d399;">0</div>
+        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;" id="stat-vitals-desc">0 stability alerts</div>
+      </div>
+
     </div>
 
     <!-- Controls Row -->
@@ -2942,6 +3005,7 @@
         </div>
         <select class="filter-select" id="sort-select" onchange="onSortDropdownChange(this.value)" style="border-color: rgba(129, 199, 132, 0.4); color: #81c784;" title="Sort Watch Faces">
           <option value="rating-desc">⭐ Rating (High → Low)</option>
+          <option value="vitals-desc">💥 Highest Crash Rate</option>
           <option value="rating-asc">⭐ Rating (Low → High)</option>
           <option value="installs-desc">⬇️ Downloads (High → Low)</option>
           <option value="installs-asc">⬆️ Downloads (Low → High)</option>
@@ -2970,6 +3034,7 @@
           <option value="all">🚀 All Status</option>
           <option value="in-review">⏳ In Review (Pending)</option>
           <option value="staged">⏳ Staged Rollouts (&lt;100%)</option>
+          <option value="vitals-issue">💥 Vitals Issues (Crash/ANR)</option>
           <option value="completed">✅ Completed (100%)</option>
         </select>
         <select class="filter-select" id="filter-api" title="Filter by API Status">
@@ -4019,9 +4084,23 @@
       if (cardErrors) {
         cardErrors.classList.toggle('active-filter', apiFilter === 'error');
       }
-      const cardRollouts = document.getElementById('card-rollouts');
+      const cardVitals = document.getElementById('card-vitals');
+    if (cardVitals) {
+      cardVitals.addEventListener('click', () => {
+        const filterRolloutEl = document.getElementById('filter-rollout');
+        if (filterRolloutEl) {
+          filterRolloutEl.value = filterRolloutEl.value === 'vitals-issue' ? 'all' : 'vitals-issue';
+          renderDashboard();
+        }
+      });
+    }
+    const cardRollouts = document.getElementById('card-rollouts');
       if (cardRollouts) {
         cardRollouts.classList.toggle('active-filter', rolloutFilter === 'staged');
+      }
+      const cardVitalsCard = document.getElementById('card-vitals');
+      if (cardVitalsCard) {
+        cardVitalsCard.classList.toggle('active-filter', rolloutFilter === 'vitals-issue');
       }
       const cardInReview = document.getElementById('card-in-review');
       if (cardInReview) {
@@ -4052,7 +4131,12 @@
         let matchRollout = true;
         if (rolloutFilter === 'in-review') {
           matchRollout = !!wf.inReview;
-        } else if (rolloutFilter === 'staged') {
+        } else if (rolloutFilter === 'vitals-issue') {
+          const crash = (wf.vitals && typeof wf.vitals.crashRate === 'number') ? wf.vitals.crashRate : 0;
+          const anr = (wf.vitals && typeof wf.vitals.anrRate === 'number') ? wf.vitals.anrRate : 0;
+          matchRollout = crash >= 1.09 || anr >= 0.47;
+        }
+        if (rolloutFilter === 'staged') {
           const companionStaged = wf.companionRollout && wf.companionRollout !== '100%' && wf.companionRollout !== 'N/A';
           const wearStaged = wf.wearRollout && wf.wearRollout !== '100%' && wf.wearRollout !== 'N/A';
           matchRollout = companionStaged || wearStaged;
@@ -4150,6 +4234,13 @@
           return a.id.localeCompare(b.id, undefined, { numeric: true, sensitivity: 'base' });
         }
         
+        if (sortVal === 'vitals-desc') {
+          const cA = (a.vitals && typeof a.vitals.crashRate === 'number') ? a.vitals.crashRate : 0;
+          const cB = (b.vitals && typeof b.vitals.crashRate === 'number') ? b.vitals.crashRate : 0;
+          if (cA !== cB) return cB - cA;
+          return a.id.localeCompare(b.id, undefined, { numeric: true, sensitivity: 'base' });
+        }
+
         if (sortVal === 'rating-desc' || sortVal === 'rating-asc') {
           const rA = a.rating !== null ? a.rating : -1;
           const rB = b.rating !== null ? b.rating : -1;
@@ -4352,6 +4443,33 @@
       ).length;
       document.getElementById('stat-errors').textContent = errorCount;
       document.getElementById('stat-errors').style.color = errorCount > 0 ? 'var(--red)' : 'var(--green)';
+
+            // Count Vitals issues (crash rate >= 1.09% or anr rate >= 0.47%)
+      const vitalsIssueCount = combinedData.filter(wf => {
+        const crash = (wf.vitals && typeof wf.vitals.crashRate === 'number') ? wf.vitals.crashRate : 0;
+        const anr = (wf.vitals && typeof wf.vitals.anrRate === 'number') ? wf.vitals.anrRate : 0;
+        return crash >= 1.09 || anr >= 0.47;
+      }).length;
+
+      const statVitalsEl = document.getElementById('stat-vitals-issues');
+      const statVitalsSubEl = document.getElementById('stat-vitals-sub');
+      const statVitalsDescEl = document.getElementById('stat-vitals-desc');
+      const cardVitalsEl = document.getElementById('card-vitals');
+
+      if (statVitalsEl) {
+        statVitalsEl.textContent = vitalsIssueCount;
+        statVitalsEl.style.color = vitalsIssueCount > 0 ? '#f87171' : '#34d399';
+      }
+      if (statVitalsSubEl) {
+        statVitalsSubEl.textContent = vitalsIssueCount > 0 ? `${vitalsIssueCount} Alert${vitalsIssueCount > 1 ? 's' : ''}` : '100% Healthy';
+        statVitalsSubEl.style.color = vitalsIssueCount > 0 ? '#f87171' : '#34d399';
+      }
+      if (statVitalsDescEl) {
+        statVitalsDescEl.textContent = vitalsIssueCount > 0 ? 'Exceeds Google threshold' : 'All below 1.09% threshold';
+      }
+      if (cardVitalsEl) {
+        cardVitalsEl.style.borderLeftColor = vitalsIssueCount > 0 ? '#ef4444' : '#34d399';
+      }
 
       // Count staged rollouts (<100%)
       const stagedCount = combinedData.filter(wf => {
