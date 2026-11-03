@@ -532,8 +532,51 @@
     /* Stats Section */
     .stats-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
+      grid-template-columns: minmax(220px, 1.15fr) minmax(220px, 1.15fr) minmax(190px, 0.9fr) minmax(300px, 1.4fr);
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .stats-mini-cluster {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .stat-mini-card {
+      padding: 10px 12px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      gap: 4px !important;
+      min-height: 0 !important;
+      border-radius: 4px;
+    }
+
+    .stat-mini-card .stat-label {
+      font-size: 10px !important;
+      margin-bottom: 0 !important;
+      letter-spacing: 0.3px;
+    }
+
+    .stat-mini-card .stat-value {
+      font-size: 22px !important;
+      line-height: 1 !important;
+    }
+
+    @media (max-width: 1200px) {
+      .stats-container {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .stats-container {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+      }
     }
 
     .stat-card {
@@ -2943,14 +2986,7 @@
           <div id="rating-sparkline-svg" style="height: 40px; width: 100%;"></div>
         </div>
       </div>
-      <div class="stat-card clickable-card" id="card-in-review" title="Click to filter by In Review only" onclick="onInReviewCardClick()" style="border-left-color: #f59e0b;">
-        <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
-          <span>Changes In Review</span>
-          <span style="font-size: 10px; opacity: 0.75; color: #f59e0b;">🔍 Filter</span>
-        </div>
-        <div class="stat-value" id="stat-in-review" style="color: #f59e0b;">0</div>
-        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;" id="stat-in-review-sub">0 awaiting approval</div>
-      </div>
+            <!-- Quick Copier (Column 3) -->
       <div class="stat-card" style="display: flex; flex-direction: column; gap: 8px; padding: 12px 16px;">
         <div class="stat-label" style="margin-bottom: 2px;">Quick Copier</div>
         <div style="display: flex; flex-direction: column; gap: 6px; font-size: 11px; flex: 1; justify-content: center;">
@@ -2968,23 +3004,57 @@
           </div>
         </div>
       </div>
-      <div class="stat-card clickable-card" id="card-errors" title="Click to filter by API Errors only">
-        <div class="stat-label">API Configuration Errors</div>
-        <div class="stat-value" id="stat-errors" style="color: var(--yellow);">0</div>
-      </div>
-      <div class="stat-card clickable-card" id="card-rollouts" title="Click to filter by Staged Rollouts (<100%) only">
-        <div class="stat-label">Staged Rollouts (&lt;100%)</div>
-        <div class="stat-value" id="stat-rollouts" style="color: var(--yellow);">0</div>
-      </div>
-      <div class="stat-card clickable-card" id="card-vitals" title="Click to filter by Android Vitals Issues (Crash rate >= 1.09% or ANR >= 0.47%)" style="border-left-color: #34d399;">
-        <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
-          <span>Android Vitals</span>
-          <span id="stat-vitals-sub" style="font-size:10px; font-weight:700; color:#34d399;">Healthy</span>
-        </div>
-        <div class="stat-value" id="stat-vitals-issues" style="color: #34d399;">0</div>
-        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;" id="stat-vitals-desc">0 stability alerts</div>
-      </div>
 
+      <!-- 2-Row Cluster of Status & Filter Cards (Column 4) -->
+      <div class="stats-mini-cluster">
+        <!-- Row 1, Col 1: Changes in Review -->
+        <div class="stat-card stat-mini-card clickable-card" id="card-in-review" title="Click to filter by In Review only" onclick="onInReviewCardClick()" style="border-left-color: #f59e0b; margin: 0;">
+          <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>In Review</span>
+            <span style="font-size: 9px; opacity: 0.8; color: #f59e0b;">🔍 Filter</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top: 2px;">
+            <div class="stat-value" id="stat-in-review" style="color: #f59e0b; font-size: 22px;">0</div>
+            <div style="font-size: 10px; color: var(--muted);" id="stat-in-review-sub">0 awaiting</div>
+          </div>
+        </div>
+
+        <!-- Row 1, Col 2: Staged Rollouts -->
+        <div class="stat-card stat-mini-card clickable-card" id="card-rollouts" title="Click to filter by Staged Rollouts (<100%) only" style="border-left-color: var(--yellow); margin: 0;">
+          <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Rollouts</span>
+            <span style="font-size: 9px; opacity: 0.8; color: var(--yellow);">&lt;100%</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top: 2px;">
+            <div class="stat-value" id="stat-rollouts" style="color: var(--yellow); font-size: 22px;">0</div>
+            <div style="font-size: 10px; color: var(--muted);">staged</div>
+          </div>
+        </div>
+
+        <!-- Row 2, Col 1: API Configuration Errors -->
+        <div class="stat-card stat-mini-card clickable-card" id="card-errors" title="Click to filter by API Errors only" style="border-left-color: var(--green); margin: 0;">
+          <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>API Status</span>
+            <span style="font-size: 9px; opacity: 0.8; color: var(--muted);">WFS/Play</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top: 2px;">
+            <div class="stat-value" id="stat-errors" style="color: var(--green); font-size: 22px;">0</div>
+            <div style="font-size: 10px; color: var(--muted);">errors</div>
+          </div>
+        </div>
+
+        <!-- Row 2, Col 2: Android Vitals -->
+        <div class="stat-card stat-mini-card clickable-card" id="card-vitals" title="Click to filter by Android Vitals Issues (Crash rate >= 1.09% or ANR >= 0.47%)" style="border-left-color: #34d399; margin: 0;">
+          <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Vitals</span>
+            <span id="stat-vitals-sub" style="font-size: 9px; font-weight: 700; color: #34d399;">100% OK</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top: 2px;">
+            <div class="stat-value" id="stat-vitals-issues" style="color: #34d399; font-size: 22px;">0</div>
+            <div style="font-size: 10px; color: var(--muted);" id="stat-vitals-desc">0 alerts</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Controls Row -->
