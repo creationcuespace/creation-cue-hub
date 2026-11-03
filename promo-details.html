@@ -1469,26 +1469,34 @@
       }
     }
 
-    function loadPromoCodes() {
-      db.ref('promotion_codes/' + promoId).once('value').then(function(codesSnap) {
-        applyPromoCodes(codesSnap.val());
-      }).catch(async function(err) {
-        console.warn("RTDB codes read notice, trying authenticated REST fetch:", err);
-        if (currentUser) {
-          try {
-            var token = await currentUser.getIdToken();
-            var resp = await fetch(`${RTDB_BASE}/promotion_codes/${encodeURIComponent(promoId)}.json?auth=${token}`);
-            if (resp.ok) {
-              var val = await resp.json();
+    async function loadPromoCodes() {
+      // 1. Instant authenticated REST fetch
+      if (currentUser) {
+        try {
+          var token = await currentUser.getIdToken();
+          var resp = await fetch(`${RTDB_BASE}/promotion_codes/${encodeURIComponent(promoId)}.json?auth=${token}`);
+          if (resp.ok) {
+            var val = await resp.json();
+            if (val) {
               applyPromoCodes(val);
             }
-          } catch(e) { console.warn("REST codes read failed:", e); }
+          }
+        } catch(e) {
+          console.warn("REST codes read notice:", e);
         }
-      });
+      }
+
+      // 2. Also attach/read via RTDB
+      db.ref('promotion_codes/' + promoId).once('value').then(function(codesSnap) {
+        if (codesSnap.exists()) {
+          applyPromoCodes(codesSnap.val());
+        }
+      }).catch(function(e) { console.warn("RTDB codes read notice:", e); });
     }
 
     function applyPromoCodes(codes) {
-      window.promoCodesCache = codes || {};
+      if (!codes) return;
+      window.promoCodesCache = codes;
       var total = (promoData && promoData.totalCoupons) || 0;
       var claimed = (promoData && promoData.claimedCount) || 0;
       var unclaimed = [];
@@ -1497,7 +1505,9 @@
       }
       var codesTextarea = document.getElementById('promo-codes');
       if (codesTextarea && document.activeElement !== codesTextarea) {
-        codesTextarea.value = unclaimed.join('\n');
+        if (unclaimed.length > 0 || !codesTextarea.value.trim()) {
+          codesTextarea.value = unclaimed.join('\n');
+        }
       }
       renderClaimsHistory();
     }
@@ -1644,7 +1654,10 @@
       }
       var codesTextarea = document.getElementById('promo-codes');
       if (codesTextarea && document.activeElement !== codesTextarea) {
-        codesTextarea.value = unclaimed.join('\n');
+        // Protect user's input: only set value if we have codes in cache, or if textarea is empty
+        if (unclaimed.length > 0 || !codesTextarea.value.trim()) {
+          codesTextarea.value = unclaimed.join('\n');
+        }
       }
     }
 
@@ -1674,68 +1687,63 @@
         return;
       }
 
-      db.ref('promotions/' + promoId + '/public/totalCoupons').once('value').then(function(totalSnap) {
-        var oldTotal = totalSnap.val() || 0;
-        var updates = {};
-        
-        updates['promotions/' + promoId + '/public/name'] = name;
-        updates['promotions/' + promoId + '/public/description'] = desc;
-        updates['promotions/' + promoId + '/public/storeLink'] = link;
-        updates['promotions/' + promoId + '/public/imageUrl'] = imgUrl;
-        updates['promotions/' + promoId + '/public/visibility'] = visibility;
-        updates['promotions/' + promoId + '/public/startsAt'] = startsAt;
-        updates['promotions/' + promoId + '/public/expiresAt'] = expiresAt;
-        updates['promotions/' + promoId + '/public/claimsCap'] = claimsCap;
+      var saveBtn = document.getElementById('btn-save-settings');
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Saving...';
+      }
 
-        var newTotal = claimedCount + codesList.length;
-        updates['promotions/' + promoId + '/public/totalCoupons'] = newTotal;
+      var oldTotal = (promoData && promoData.totalCoupons) || 0;
+      var updates = {};
+      
+      updates['promotions/' + promoId + '/public/name'] = name;
+      updates['promotions/' + promoId + '/public/description'] = desc;
+      updates['promotions/' + promoId + '/public/storeLink'] = link;
+      updates['promotions/' + promoId + '/public/imageUrl'] = imgUrl;
+      updates['promotions/' + promoId + '/public/visibility'] = visibility;
+      updates['promotions/' + promoId + '/public/startsAt'] = startsAt;
+      updates['promotions/' + promoId + '/public/expiresAt'] = expiresAt;
+      updates['promotions/' + promoId + '/public/claimsCap'] = claimsCap;
 
-        // Write new codes starting from claimed count index
-        codesList.forEach((code, index) => {
-          updates['promotion_codes/' + promoId + '/' + (claimedCount + index)] = code;
-        });
+      var newTotal = claimedCount + codesList.length;
+      updates['promotions/' + promoId + '/public/totalCoupons'] = newTotal;
 
-        // Clean up indices if code list is shorter than it was before
-        if (oldTotal > newTotal) {
-          for (var i = newTotal; i < oldTotal; i++) {
-            updates['promotion_codes/' + promoId + '/' + i] = null;
-          }
+      // Update in-memory promoCodesCache immediately with all new codes
+      if (!window.promoCodesCache) window.promoCodesCache = {};
+      codesList.forEach((code, index) => {
+        var codeIdx = claimedCount + index;
+        updates['promotion_codes/' + promoId + '/' + codeIdx] = code;
+        window.promoCodesCache[codeIdx] = code;
+      });
+
+      // Clean up indices if code list is shorter than it was before
+      if (oldTotal > newTotal) {
+        for (var i = newTotal; i < oldTotal; i++) {
+          updates['promotion_codes/' + promoId + '/' + i] = null;
+          delete window.promoCodesCache[i];
         }
+      }
 
-        var saveBtn = document.getElementById('btn-save-settings');
+      db.ref().update(updates).then(function() {
+        showToast("Configuration saved!");
         if (saveBtn) {
-          saveBtn.disabled = true;
-          saveBtn.textContent = 'Saving...';
+          saveBtn.disabled = false;
+          saveBtn.textContent = 'Save Settings';
         }
-
-        db.ref().update(updates).then(function() {
-          showToast("Configuration saved!");
-          if (saveBtn) {
-            saveBtn.disabled = false;
-            saveBtn.textContent = 'Save Settings';
-          }
-          // Update in-memory promoData and re-render without page reload
-          if (promoData) {
-            promoData.name = name;
-            promoData.description = desc;
-            promoData.storeLink = link;
-            promoData.imageUrl = imgUrl;
-            promoData.visibility = visibility;
-            promoData.startsAt = startsAt;
-            promoData.expiresAt = expiresAt;
-            promoData.claimsCap = claimsCap;
-            promoData.totalCoupons = newTotal;
-            renderPromoDetails();
-          }
-        }).catch(function(err) {
-          if (saveBtn) {
-            saveBtn.disabled = false;
-            saveBtn.textContent = 'Save Settings';
-          }
-          alert("Save failed: " + err.message);
-        });
+        // Update in-memory promoData and re-render in place
+        if (promoData) {
+          promoData.name = name;
+          promoData.description = desc;
+          promoData.storeLink = link;
+          promoData.imageUrl = imgUrl;
+          promoData.visibility = visibility;
+          promoData.startsAt = startsAt;
+          promoData.expiresAt = expiresAt;
+          promoData.claimsCap = claimsCap;
+          promoData.totalCoupons = newTotal;
+          renderPromoDetails();
+        }
       }).catch(function(err) {
-        var saveBtn = document.getElementById('btn-save-settings');
         if (saveBtn) {
           saveBtn.disabled = false;
           saveBtn.textContent = 'Save Settings';
@@ -1848,21 +1856,23 @@
     });
 
     // One-Time Tokens management
-    function loadOneTimeLinks() {
+    async function loadOneTimeLinks() {
+      // 1. Instant authenticated REST fetch
+      if (currentUser) {
+        try {
+          var token = await currentUser.getIdToken();
+          var resp = await fetch(`${RTDB_BASE}/one_time_tokens.json?orderBy="promoId"&equalTo="${encodeURIComponent(promoId)}"&auth=${token}`);
+          if (resp.ok) {
+            var val = await resp.json();
+            if (val) renderOneTimeTokens(val);
+          }
+        } catch(e) {}
+      }
+
+      // 2. Also attach via RTDB
       db.ref('one_time_tokens').orderByChild('promoId').equalTo(promoId).once('value').then(function(snapshot) {
-        renderOneTimeTokens(snapshot.val());
-      }).catch(async function(err) {
-        console.warn("RTDB one_time_tokens notice, trying REST:", err);
-        if (currentUser) {
-          try {
-            var token = await currentUser.getIdToken();
-            var resp = await fetch(`${RTDB_BASE}/one_time_tokens.json?orderBy="promoId"&equalTo="${encodeURIComponent(promoId)}"&auth=${token}`);
-            if (resp.ok) {
-              renderOneTimeTokens(await resp.json());
-            }
-          } catch(e) {}
-        }
-      });
+        if (snapshot.exists()) renderOneTimeTokens(snapshot.val());
+      }).catch(function(e) { console.warn("RTDB one_time_tokens notice:", e); });
     }
 
     function renderOneTimeTokens(tokens) {
@@ -2050,23 +2060,29 @@
     });
 
     // Claims Logs History loader
-    function loadClaimsHistory() {
-      db.ref('promotion_claims/' + promoId).once('value').then(function(snapshot) {
-        window.rawClaimsCache = snapshot.val();
-        renderClaimsHistory();
-      }).catch(async function(err) {
-        console.warn("RTDB claims load notice, trying REST:", err);
-        if (currentUser) {
-          try {
-            var token = await currentUser.getIdToken();
-            var resp = await fetch(`${RTDB_BASE}/promotion_claims/${encodeURIComponent(promoId)}.json?auth=${token}`);
-            if (resp.ok) {
-              window.rawClaimsCache = await resp.json();
+    async function loadClaimsHistory() {
+      // 1. Instant authenticated REST fetch
+      if (currentUser) {
+        try {
+          var token = await currentUser.getIdToken();
+          var resp = await fetch(`${RTDB_BASE}/promotion_claims/${encodeURIComponent(promoId)}.json?auth=${token}`);
+          if (resp.ok) {
+            var val = await resp.json();
+            if (val) {
+              window.rawClaimsCache = val;
               renderClaimsHistory();
             }
-          } catch(e) {}
+          }
+        } catch(e) {}
+      }
+
+      // 2. Also attach via RTDB
+      db.ref('promotion_claims/' + promoId).once('value').then(function(snapshot) {
+        if (snapshot.exists()) {
+          window.rawClaimsCache = snapshot.val();
+          renderClaimsHistory();
         }
-      });
+      }).catch(function(e) { console.warn("RTDB claims load notice:", e); });
     }
 
     function renderClaimsHistory() {
