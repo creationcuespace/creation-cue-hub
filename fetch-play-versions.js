@@ -234,7 +234,7 @@ async function main() {
     }
 
     try {
-      const playStoreUrl = `https://play.google.com/store/apps/details?id=${packageName}&hl=en`;
+      const playStoreUrl = `https://play.google.com/store/apps/details?id=${packageName}&hl=en&gl=us`;
       const response = await axios.get(playStoreUrl, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, fill=none; Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -279,8 +279,13 @@ async function main() {
           ratingCount = reviewsMatch[1].trim();
         }
       } else {
-        rating = null;
-        ratingCount = null;
+        if (prevItem && prevItem.rating !== undefined && prevItem.rating !== null) {
+          rating = prevItem.rating;
+          ratingCount = prevItem.ratingCount;
+        } else {
+          rating = null;
+          ratingCount = null;
+        }
       }
 
     } catch (scrapeError) {

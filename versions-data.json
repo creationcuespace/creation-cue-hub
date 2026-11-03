@@ -163,11 +163,11 @@
     },
     {
       "date": "2026-11-03",
-      "timestamp": "2026-11-03T06:48:29.107Z",
-      "avgRating": 4.8,
-      "weightedAvg": 4.89,
-      "ratedCount": 3,
-      "totalWeight": 2076
+      "timestamp": "2026-11-03T04:02:09.741Z",
+      "avgRating": 4.5,
+      "weightedAvg": 4.52,
+      "ratedCount": 30,
+      "totalWeight": 3827
     }
   ],
   "results": [
@@ -189,8 +189,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.8,
+      "ratingCount": "14"
     },
     {
       "id": "cue003",
@@ -204,7 +204,7 @@
       "wearVersion": "10999999 (1.5.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "▸Steps and distance can now be replaced with a custom complication.\n▸Additional color themes added.",
+      "wearNotes": "\u25b8Steps and distance can now be replaced with a custom complication.\n\u25b8Additional color themes added.",
       "storeLanguages": [
         "en-GB"
       ],
@@ -225,7 +225,7 @@
       "wearVersion": "10000012 (2.1.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "What's New:\n🌐 Multilingual Support Added!\nThe watch face now dynamically supports localized elements in the following languages, in addition to English:\n\n• German (Germany, Austria, Switzerland, Liechtenstein, Luxembourg, Belgium)\n• Spanish (Spain, Mexico, US & Latin America)\n• Italian (Italy, Switzerland, San Marino, Vatican City)\n• Greek (Greece, Cyprus)\n• French (France, Canada, Belgium, Switzerland, Luxembourg, Haiti & regional locales)",
+      "wearNotes": "What's New:\n\ud83c\udf10 Multilingual Support Added!\nThe watch face now dynamically supports localized elements in the following languages, in addition to English:\n\n\u2022 German (Germany, Austria, Switzerland, Liechtenstein, Luxembourg, Belgium)\n\u2022 Spanish (Spain, Mexico, US & Latin America)\n\u2022 Italian (Italy, Switzerland, San Marino, Vatican City)\n\u2022 Greek (Greece, Cyprus)\n\u2022 French (France, Canada, Belgium, Switzerland, Luxembourg, Haiti & regional locales)",
       "storeLanguages": [
         "en-GB"
       ],
@@ -437,7 +437,7 @@
       "wearVersion": "10000007 (1.2.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "→ Added a few more color combinations.",
+      "wearNotes": "\u2192 Added a few more color combinations.",
       "storeLanguages": [
         "en-GB"
       ],
@@ -466,8 +466,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 5,
+      "ratingCount": "59"
     },
     {
       "id": "cue165",
@@ -502,7 +502,7 @@
       "wearVersion": "10000007 (1.3.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "▸Minor adjustments to shadow effects.\n▸Now includes more color options.",
+      "wearNotes": "\u25b8Minor adjustments to shadow effects.\n\u25b8Now includes more color options.",
       "storeLanguages": [
         "en-GB"
       ],
@@ -571,8 +571,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.2,
+      "ratingCount": "14"
     },
     {
       "id": "cue160",
@@ -718,8 +718,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.8,
+      "ratingCount": "28"
     },
     {
       "id": "cue153",
@@ -739,8 +739,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.8,
+      "ratingCount": "25"
     },
     {
       "id": "cue152",
@@ -781,8 +781,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.3,
+      "ratingCount": "52"
     },
     {
       "id": "cue150",
@@ -823,8 +823,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.2,
+      "ratingCount": "13"
     },
     {
       "id": "cue148",
@@ -844,8 +844,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.2,
+      "ratingCount": "26"
     },
     {
       "id": "cue147",
@@ -886,8 +886,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4,
+      "ratingCount": "20"
     },
     {
       "id": "cue145",
@@ -907,8 +907,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.7,
+      "ratingCount": "47"
     },
     {
       "id": "cue144",
@@ -928,8 +928,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.9,
+      "ratingCount": "19"
     },
     {
       "id": "cue143",
@@ -970,8 +970,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.6,
+      "ratingCount": "82"
     },
     {
       "id": "cue141",
@@ -1012,8 +1012,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.5,
+      "ratingCount": "14"
     },
     {
       "id": "cue139",
@@ -1075,8 +1075,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.6,
+      "ratingCount": "416"
     },
     {
       "id": "cue136_plus",
@@ -1117,8 +1117,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.6,
+      "ratingCount": "20"
     },
     {
       "id": "cue134",
@@ -1201,8 +1201,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 5,
+      "ratingCount": "9"
     },
     {
       "id": "cue130",
@@ -1414,8 +1414,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.5,
+      "ratingCount": "98"
     },
     {
       "id": "cue115",
@@ -1477,8 +1477,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.6,
+      "ratingCount": "48"
     },
     {
       "id": "cue110",
@@ -1603,8 +1603,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.4,
+      "ratingCount": "35"
     },
     {
       "id": "cue103",
@@ -1744,7 +1744,7 @@
       "wearVersion": "10000017 (4.1.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "▸ Made a few minor design adjustments.",
+      "wearNotes": "\u25b8 Made a few minor design adjustments.",
       "storeLanguages": [
         "en-GB"
       ],
@@ -1876,8 +1876,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 3,
+      "ratingCount": "7"
     },
     {
       "id": "crc081",
@@ -1918,7 +1918,7 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
-      "rating": 4.9,
+      "rating": 4.3,
       "ratingCount": "657"
     },
     {
@@ -1960,8 +1960,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.2,
+      "ratingCount": "20"
     },
     {
       "id": "crc071",
@@ -1996,15 +1996,15 @@
       "wearVersion": "10000011 (2.5.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "▸ Additional color themes added.\n▸ Fixed the spacing of the day name.\n▸ 추가 색상 테마가 추가되었습니다.\n▸ 요일 이름의 간격을 수정했습니다.",
+      "wearNotes": "\u25b8 Additional color themes added.\n\u25b8 Fixed the spacing of the day name.\n\u25b8 \ucd94\uac00 \uc0c9\uc0c1 \ud14c\ub9c8\uac00 \ucd94\uac00\ub418\uc5c8\uc2b5\ub2c8\ub2e4.\n\u25b8 \uc694\uc77c \uc774\ub984\uc758 \uac04\uaca9\uc744 \uc218\uc815\ud588\uc2b5\ub2c8\ub2e4.",
       "storeLanguages": [
         "en-US",
         "ko-KR"
       ],
       "lastUpdatedDate": "Aug 27, 2026",
       "downloads": "10K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.4,
+      "ratingCount": "93"
     },
     {
       "id": "crc068",
@@ -2024,8 +2024,8 @@
       ],
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "10K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.9,
+      "ratingCount": "66"
     },
     {
       "id": "crc066",
@@ -2039,7 +2039,7 @@
       "wearVersion": "10000014 (3.1.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "▸Charging indication position changed.\n▸Minor adjustments to shadow effects.\n▸Now includes more color options.",
+      "wearNotes": "\u25b8Charging indication position changed.\n\u25b8Minor adjustments to shadow effects.\n\u25b8Now includes more color options.",
       "storeLanguages": [
         "en-US"
       ],
@@ -2066,8 +2066,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.8,
+      "ratingCount": "12"
     },
     {
       "id": "crc057",
@@ -2129,7 +2129,7 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100K+",
-      "rating": 5,
+      "rating": 4.7,
       "ratingCount": "1.1K"
     },
     {
@@ -2213,8 +2213,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.2,
+      "ratingCount": "473"
     },
     {
       "id": "crc039",
@@ -2360,8 +2360,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.3,
+      "ratingCount": "20"
     },
     {
       "id": "crc028",
@@ -2381,8 +2381,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null
+      "rating": 4.8,
+      "ratingCount": "21"
     },
     {
       "id": "crc027",
@@ -2522,7 +2522,7 @@
       "wearVersion": "10000033 (3.0.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "Updated to comply with Google Play’s new guidelines.",
+      "wearNotes": "Updated to comply with Google Play\u2019s new guidelines.",
       "storeLanguages": [
         "en-US"
       ],
@@ -2549,7 +2549,7 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
-      "rating": 4.5,
+      "rating": 4.6,
       "ratingCount": "319"
     },
     {
