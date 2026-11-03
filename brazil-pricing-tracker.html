@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<title>Brazil Tax &amp; Pricing Manager (EUR &amp; BRL) — Creation Cue</title>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<style>
+  body { background: #121216; color: #f0f0f0; font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 24px; }
+  .container { max-width: 1340px; margin: 0 auto; }
+  h1 { margin: 0 0 8px; color: #f5c518; font-size: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .subtitle { color: #999; margin-bottom: 20px; font-size: 14px; }
+  .stats { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+  .card { background: #1e1e26; border: 1px solid #333; border-radius: 10px; padding: 14px 20px; min-width: 170px; }
+  .card .num { font-size: 26px; font-weight: 700; margin-top: 4px; }
+  .filters { display: flex; gap: 10px; margin-bottom: 16px; align-items: center; flex-wrap: wrap; }
+  button, .btn-link { background: #2a2a35; color: #fff; border: 1px solid #444; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12.5px; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+  button:hover, .btn-link:hover { border-color: #f5c518; text-decoration: none; }
+  button.active { background: #7C3AED; border-color: #7C3AED; }
+  .save-mega-btn { background: #eab308; color: #000; border: 1px solid #facc15; font-weight: 700; padding: 7px 14px; }
+  .save-mega-btn:hover { background: #facc15; border-color: #fff; }
+  .sync-badge { font-size: 12px; padding: 4px 10px; border-radius: 20px; background: #1e293b; color: #38bdf8; border: 1px solid #334155; font-weight: 600; }
+  input[type="text"] { background: #1e1e26; border: 1px solid #444; color: #fff; padding: 7px 12px; border-radius: 6px; width: 240px; }
+  table { width: 100%; border-collapse: collapse; background: #1a1a22; border-radius: 10px; overflow: hidden; font-size: 13.5px; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #2a2a35; vertical-align: middle; }
+  th { background: #23232e; color: #aaa; font-weight: 600; text-transform: uppercase; font-size: 11.5px; }
+  tr.doneRow { opacity: 0.42; background: #142218; }
+  tr.saleRow { background: rgba(245, 158, 11, 0.06); }
+  .badge { padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; display: inline-block; }
+  .badge-warn { background: rgba(232,40,30,0.2); color: #ff6b6b; border: 1px solid rgba(232,40,30,0.4); }
+  .badge-sale { background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.45); }
+  .badge-ok { background: rgba(76,175,80,0.2); color: #66bb6a; border: 1px solid rgba(76,175,80,0.4); }
+  .badge-free { background: rgba(150,150,150,0.15); color: #999; }
+  .copy-btn { background: #2563eb; border: 1px solid #3b82f6; padding: 5px 10px; font-size: 12px; }
+  .copy-btn:hover { background: #1d4ed8; border-color: #60a5fa; }
+  .copy-brl-btn { background: #059669; border: 1px solid #10b981; padding: 5px 10px; font-size: 12px; }
+  .copy-brl-btn:hover { background: #047857; border-color: #34d399; }
+  .console-pricing-btn { background: #7c3aed; border: 1px solid #8b5cf6; color: #fff; }
+  .console-pricing-btn:hover { background: #6d28d9; border-color: #f5c518; }
+  .console-dash-btn { background: #1f2937; border: 1px solid #374151; color: #cbd5e1; font-size: 11.5px; padding: 5px 9px; }
+  .price-target { color: #4ade80; font-weight: 700; font-size: 14px; }
+  .price-old { color: #ff6b6b; font-weight: 600; }
+  .sale-sub { color: #fbbf24; font-size: 11.5px; font-weight: 600; display: block; margin-top: 2px; }
+  a { color: #60a5fa; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .actions-cell { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>
+    <span>Brazil Tax &amp; Pricing Manager (EUR &amp; BRL)</span>
+    <span style="display:flex; gap:10px; align-items:center;">
+      <span id="syncStatus" class="sync-badge">💾 Local / MEGA Mode</span>
+      <button class="save-mega-btn" onclick="saveToHtmlFile()" title="Saves your checked boxes directly inside this HTML file on MEGA so it works offline on your laptop too!">💾 Save Progress to File (MEGA)</button>
+    </span>
+  </h1>
+  <div class="subtitle">Live Play Store Re-Scan (Nov 3, 2026 @ 15:02) — <strong>49 new watch faces confirmed raised today!</strong> Watch faces with an active Play Store sale are marked with 🏷️ <strong>ON SALE</strong> (Google Play locks base price changes until the sale ends).</div>
+  <div class="stats">
+    <div class="card"><div>Ready to Update Now</div><div class="num" style="color:#ff6b6b" id="remCount">27</div></div>
+    <div class="card"><div>Locked by Active Sale</div><div class="num" style="color:#fbbf24">4</div></div>
+    <div class="card"><div>Already Raised in Brazil</div><div class="num" style="color:#4ade80">70</div></div>
+    <div class="card"><div>Checked Off Today</div><div class="num" style="color:#f5c518" id="doneCount">76</div></div>
+  </div>
+  <div class="filters">
+    <button class="" onclick="filterRows('NEEDS_UPDATE', this)">Needs Update Now (27)</button>
+    <button onclick="filterRows('ON_SALE', this)" class="">🏷️ Locked on Sale (4)</button>
+    <button onclick="filterRows('ALL_SALES', this)">🏷️ All Active Sales (5)</button>
+    <button onclick="filterRows('RAISED', this)">✅ Already Raised (70)</button>
+    <button onclick="filterRows('ALL', this)" class="active">All (115)</button>
+    <input type="text" id="searchBox" placeholder="Search cue128, package..." oninput="applySearch()">
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Done</th>
+        <th>Face ID</th>
+        <th>Package Name</th>
+        <th>BR Sales</th>
+        <th>Base EUR</th>
+        <th>Current BRL</th>
+        <th>Target EUR / BRL</th>
+        <th>Play Console &amp; Quick Copy (EUR / BRL)</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="tbody">
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CUE136_PLUS" data-search="cue136_plus com.creation.cue136pluswatchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE136_PLUS', this)" id="chk_CUE136_PLUS"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972992010093797539/paid-app" target="_blank" onclick="copySilent('3.19')">CUE136_PLUS</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972992010093797539/paid-app" target="_blank" onclick="copySilent('3.19')">com.creation.cue136PLUSwatchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.39</td>
+        <td class="price-old">R$ 11.99</td>
+        <td class="price-target">€3.19 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 16.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('3.19', this)">Copy €3.19</button> <button class="copy-brl-btn" onclick="copyVal('16.99', this)">Copy R$ 16.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972992010093797539/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CUE172" data-search="cue172 com.creation.cue172watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE172', this)" id="chk_CUE172"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972964843252212952/paid-app" target="_blank" onclick="copySilent('2.79')">CUE172</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972964843252212952/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue172watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="price-old">R$ 10.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972964843252212952/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CUE170" data-search="cue170 com.creation.cue170watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE170', this)" id="chk_CUE170"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972670266110187664/paid-app" target="_blank" onclick="copySilent('2.79')">CUE170</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972670266110187664/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue170watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="price-old">R$ 10.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972670266110187664/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC092" data-search="crc092 com.creationcue.crc092watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC092', this)" id="chk_CRC092"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972056163732323959/paid-app" target="_blank" onclick="copySilent('2.25')">CRC092</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972056163732323959/paid-app" target="_blank" onclick="copySilent('2.25')">com.creationcue.crc092watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="price-old">R$ 8.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972056163732323959/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CUE103" data-search="cue103 com.creation.cue103watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE103', this)" id="chk_CUE103"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976184962165714251/paid-app" target="_blank" onclick="copySilent('1.99')">CUE103</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976184962165714251/paid-app" target="_blank" onclick="copySilent('1.99')">com.creation.cue103watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="price-old">R$ 7.99</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976184962165714251/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC079" data-search="crc079 com.creationcue.crc079watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC079', this)" id="chk_CRC079"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973808359762815506/paid-app" target="_blank" onclick="copySilent('1.99')">CRC079</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973808359762815506/paid-app" target="_blank" onclick="copySilent('1.99')">com.creationcue.crc079watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="price-old">R$ 7.99</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973808359762815506/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC072" data-search="crc072 com.creationcue.crc072watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC072', this)" id="chk_CRC072"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972324157055014223/paid-app" target="_blank" onclick="copySilent('1.99')">CRC072</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972324157055014223/paid-app" target="_blank" onclick="copySilent('1.99')">com.creationcue.crc072watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="price-old">R$ 7.99</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972324157055014223/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC066" data-search="crc066 com.creationcue.crc066watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC066', this)" id="chk_CRC066"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974074471027406650/paid-app" target="_blank" onclick="copySilent('1.99')">CRC066</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974074471027406650/paid-app" target="_blank" onclick="copySilent('1.99')">com.creationcue.crc066watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="price-old">R$ 7.99</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974074471027406650/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC057" data-search="crc057 com.creationcue.crc057watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC057', this)" id="chk_CRC057"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974620326529969533/paid-app" target="_blank" onclick="copySilent('1.99')">CRC057</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974620326529969533/paid-app" target="_blank" onclick="copySilent('1.99')">com.creationcue.crc057watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="price-old">R$ 7.99</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974620326529969533/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC031" data-search="crc031 com.watchfacestudio.crc031" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC031', this)" id="chk_CRC031"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973006704759632470/paid-app" target="_blank" onclick="copySilent('1.99')">CRC031</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973006704759632470/paid-app" target="_blank" onclick="copySilent('1.99')">com.watchfacestudio.crc031</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="price-old">R$ 7.99</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973006704759632470/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC030" data-search="crc030 com.watchfacestudio.crc030" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC030', this)" id="chk_CRC030"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972680421367657491/paid-app" target="_blank" onclick="copySilent('1.99')">CRC030</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972680421367657491/paid-app" target="_blank" onclick="copySilent('1.99')">com.watchfacestudio.crc030</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="price-old">R$ 7.99</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972680421367657491/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CCWF022" data-search="ccwf022 com.watchfacestudio.ccwf022" style="">
+        <td><input type="checkbox" onchange="toggleDone('CCWF022', this)" id="chk_CCWF022"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972946890736556320/paid-app" target="_blank" onclick="copySilent('1.99')">CCWF022</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972946890736556320/paid-app" target="_blank" onclick="copySilent('1.99')">com.watchfacestudio.ccwf022</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="price-old">R$ 7.99</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972946890736556320/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CC014" data-search="cc014 com.watchfacestudio.cc014" style="">
+        <td><input type="checkbox" onchange="toggleDone('CC014', this)" id="chk_CC014"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974441939368594230/paid-app" target="_blank" onclick="copySilent('1.99')">CC014</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974441939368594230/paid-app" target="_blank" onclick="copySilent('1.99')">com.watchfacestudio.cc014</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="price-old">R$ 8.49</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974441939368594230/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CC010" data-search="cc010 com.watchfacestudio.cc010" style="">
+        <td><input type="checkbox" onchange="toggleDone('CC010', this)" id="chk_CC010"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973277267355085522/paid-app" target="_blank" onclick="copySilent('1.99')">CC010</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973277267355085522/paid-app" target="_blank" onclick="copySilent('1.99')">com.watchfacestudio.cc010</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="price-old">R$ 8.49</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973277267355085522/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CC005" data-search="cc005 com.watchfacestudio.cc005" style="">
+        <td><input type="checkbox" onchange="toggleDone('CC005', this)" id="chk_CC005"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975544989105804591/paid-app" target="_blank" onclick="copySilent('1.99')">CC005</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975544989105804591/paid-app" target="_blank" onclick="copySilent('1.99')">com.watchfacestudio.CC005</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="price-old">R$ 7.99</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975544989105804591/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CUE098" data-search="cue098 com.creation.cue098watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE098', this)" id="chk_CUE098"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976410007227103986/paid-app" target="_blank" onclick="copySilent('1.85')">CUE098</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976410007227103986/paid-app" target="_blank" onclick="copySilent('1.85')">com.creation.cue098watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.39</td>
+        <td class="price-old">R$ 7.49</td>
+        <td class="price-target">€1.85 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 10.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.85', this)">Copy €1.85</button> <button class="copy-brl-btn" onclick="copyVal('10.99', this)">Copy R$ 10.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976410007227103986/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC081" data-search="crc081 com.creationcue.crc081watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC081', this)" id="chk_CRC081"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976409176419038023/paid-app" target="_blank" onclick="copySilent('1.85')">CRC081</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976409176419038023/paid-app" target="_blank" onclick="copySilent('1.85')">com.creationcue.crc081watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.39</td>
+        <td class="price-old">R$ 7.49</td>
+        <td class="price-target">€1.85 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 10.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.85', this)">Copy €1.85</button> <button class="copy-brl-btn" onclick="copyVal('10.99', this)">Copy R$ 10.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976409176419038023/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC071" data-search="crc071 com.creationcue.crc071watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC071', this)" id="chk_CRC071"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975605727753447575/paid-app" target="_blank" onclick="copySilent('1.85')">CRC071</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975605727753447575/paid-app" target="_blank" onclick="copySilent('1.85')">com.creationcue.crc071watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.39</td>
+        <td class="price-old">R$ 7.49</td>
+        <td class="price-target">€1.85 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 10.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.85', this)">Copy €1.85</button> <button class="copy-brl-btn" onclick="copyVal('10.99', this)">Copy R$ 10.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975605727753447575/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC044" data-search="crc044 com.creationcue.crc044" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC044', this)" id="chk_CRC044"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976373139715785769/paid-app" target="_blank" onclick="copySilent('1.85')">CRC044</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976373139715785769/paid-app" target="_blank" onclick="copySilent('1.85')">com.creationcue.crc044</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.39</td>
+        <td class="price-old">R$ 7.49</td>
+        <td class="price-target">€1.85 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 10.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.85', this)">Copy €1.85</button> <button class="copy-brl-btn" onclick="copyVal('10.99', this)">Copy R$ 10.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976373139715785769/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC043" data-search="crc043 com.creationcue.crc043" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC043', this)" id="chk_CRC043"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972537081556653862/paid-app" target="_blank" onclick="copySilent('1.85')">CRC043</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972537081556653862/paid-app" target="_blank" onclick="copySilent('1.85')">com.creationcue.crc043</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.39</td>
+        <td class="price-old">R$ 7.49</td>
+        <td class="price-target">€1.85 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 10.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.85', this)">Copy €1.85</button> <button class="copy-brl-btn" onclick="copyVal('10.99', this)">Copy R$ 10.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972537081556653862/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC042" data-search="crc042 com.watchfacestudio.crc042" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC042', this)" id="chk_CRC042"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972295724775576414/paid-app" target="_blank" onclick="copySilent('1.85')">CRC042</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972295724775576414/paid-app" target="_blank" onclick="copySilent('1.85')">com.watchfacestudio.crc042</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.39</td>
+        <td class="price-old">R$ 7.49</td>
+        <td class="price-target">€1.85 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 10.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.85', this)">Copy €1.85</button> <button class="copy-brl-btn" onclick="copyVal('10.99', this)">Copy R$ 10.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972295724775576414/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC035" data-search="crc035 com.watchfacestudio.crc035" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC035', this)" id="chk_CRC035"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973147972107421039/paid-app" target="_blank" onclick="copySilent('1.85')">CRC035</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973147972107421039/paid-app" target="_blank" onclick="copySilent('1.85')">com.watchfacestudio.crc035</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.39</td>
+        <td class="price-old">R$ 7.49</td>
+        <td class="price-target">€1.85 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 10.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.85', this)">Copy €1.85</button> <button class="copy-brl-btn" onclick="copyVal('10.99', this)">Copy R$ 10.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973147972107421039/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC034" data-search="crc034 com.watchfacestudio.crc034" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC034', this)" id="chk_CRC034"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973761396193814606/paid-app" target="_blank" onclick="copySilent('1.85')">CRC034</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973761396193814606/paid-app" target="_blank" onclick="copySilent('1.85')">com.watchfacestudio.crc034</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.39</td>
+        <td class="price-old">R$ 7.49</td>
+        <td class="price-target">€1.85 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 10.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.85', this)">Copy €1.85</button> <button class="copy-brl-btn" onclick="copyVal('10.99', this)">Copy R$ 10.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973761396193814606/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC028" data-search="crc028 com.watchfacestudio.crc028" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC028', this)" id="chk_CRC028"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973827486264106716/paid-app" target="_blank" onclick="copySilent('1.85')">CRC028</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973827486264106716/paid-app" target="_blank" onclick="copySilent('1.85')">com.watchfacestudio.crc028</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.39</td>
+        <td class="price-old">R$ 7.49</td>
+        <td class="price-target">€1.85 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 10.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.85', this)">Copy €1.85</button> <button class="copy-brl-btn" onclick="copyVal('10.99', this)">Copy R$ 10.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973827486264106716/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CUE109" data-search="cue109 com.creation.cue109watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE109', this)" id="chk_CUE109"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973873293020753742/paid-app" target="_blank" onclick="copySilent('1.59')">CUE109</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973873293020753742/paid-app" target="_blank" onclick="copySilent('1.59')">com.creation.cue109watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.19</td>
+        <td class="price-old">R$ 6.49</td>
+        <td class="price-target">€1.59 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 9.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.59', this)">Copy €1.59</button> <button class="copy-brl-btn" onclick="copyVal('9.99', this)">Copy R$ 9.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973873293020753742/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CRC050" data-search="crc050 com.watchfacestudio.crc050" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC050', this)" id="chk_CRC050"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973818985389088157/paid-app" target="_blank" onclick="copySilent('1.59')">CRC050</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973818985389088157/paid-app" target="_blank" onclick="copySilent('1.59')">com.watchfacestudio.crc050</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.19</td>
+        <td class="price-old">R$ 6.49</td>
+        <td class="price-target">€1.59 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 9.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.59', this)">Copy €1.59</button> <button class="copy-brl-btn" onclick="copyVal('9.99', this)">Copy R$ 9.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973818985389088157/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="doneRow" data-status="NEEDS_UPDATE" data-onsale="0" data-id="CUE024" data-search="cue024 com.creation.cue024watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE024', this)" id="chk_CUE024"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975474795417885911/paid-app" target="_blank" onclick="copySilent('1.59')">CUE024</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975474795417885911/paid-app" target="_blank" onclick="copySilent('1.59')">com.creation.cue024watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.19</td>
+        <td class="price-old">R$ 5.49</td>
+        <td class="price-target">€1.59 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 9.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.59', this)">Copy €1.59</button> <button class="copy-brl-btn" onclick="copyVal('9.99', this)">Copy R$ 9.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975474795417885911/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-warn">NEEDS UPDATE</span></td>
+      </tr>
+      <tr class="saleRow" data-status="ON_SALE" data-onsale="1" data-id="CUE173" data-search="cue173 com.creation.cue173watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE173', this)" id="chk_CUE173"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975889140195445370/paid-app" target="_blank" onclick="copySilent('2.79')">CUE173</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975889140195445370/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue173watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09<span class="sale-sub">🏷️ Sale: €0.63</span></td>
+        <td class="price-old">R$ 10.99<span class="sale-sub">🏷️ Sale: R$ 3.30</span></td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975889140195445370/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-sale">🏷️ ON SALE (LOCKED)</span></td>
+      </tr>
+      <tr class="saleRow" data-status="ON_SALE" data-onsale="1" data-id="CUE155" data-search="cue155 com.creation.cue155watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE155', this)" id="chk_CUE155"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974575027411711914/paid-app" target="_blank" onclick="copySilent('2.39')">CUE155</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974575027411711914/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue155watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79<span class="sale-sub">🏷️ Sale: €0.54</span></td>
+        <td class="price-old">R$ 10.99<span class="sale-sub">🏷️ Sale: R$ 3.30</span></td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974575027411711914/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-sale">🏷️ ON SALE (LOCKED)</span></td>
+      </tr>
+      <tr class="saleRow" data-status="ON_SALE" data-onsale="1" data-id="CUE125" data-search="cue125 com.creation.cue125watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE125', this)" id="chk_CUE125"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972905667567682157/paid-app" target="_blank" onclick="copySilent('2.25')">CUE125</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972905667567682157/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue125watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69<span class="sale-sub">🏷️ Sale: €0.51</span></td>
+        <td class="price-old">R$ 10.99<span class="sale-sub">🏷️ Sale: R$ 3.30</span></td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972905667567682157/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-sale">🏷️ ON SALE (LOCKED)</span></td>
+      </tr>
+      <tr class="saleRow" data-status="ON_SALE" data-onsale="1" data-id="CUE124" data-search="cue124 com.creation.cue124" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE124', this)" id="chk_CUE124"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974238888246064522/paid-app" target="_blank" onclick="copySilent('2.25')">CUE124</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974238888246064522/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue124</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69<span class="sale-sub">🏷️ Sale: €0.51</span></td>
+        <td class="price-old">R$ 9.99<span class="sale-sub">🏷️ Sale: R$ 3.00</span></td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974238888246064522/paid-app" target="_blank" title="Opens Play Console /paid-app">⚡ Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-sale">🏷️ ON SALE (LOCKED)</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE178" data-search="cue178 com.creation.cue178watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE178', this)" id="chk_CUE178"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973340390791879258/paid-app" target="_blank" onclick="copySilent('2.79')">CUE178</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973340390791879258/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue178watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="">R$ 14.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973340390791879258/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE003" data-search="cue003 com.creation.cue003watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE003', this)" id="chk_CUE003"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975109865756013758/paid-app" target="_blank" onclick="copySilent('2.79')">CUE003</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975109865756013758/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue003watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975109865756013758/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE177" data-search="cue177 com.creation.cue177watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE177', this)" id="chk_CUE177"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972965066090852698/paid-app" target="_blank" onclick="copySilent('2.79')">CUE177</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972965066090852698/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue177watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="">R$ 14.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972965066090852698/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE176" data-search="cue176 com.creation.cue176watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE176', this)" id="chk_CUE176"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975626335556797256/paid-app" target="_blank" onclick="copySilent('2.79')">CUE176</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975626335556797256/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue176watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="">R$ 16.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975626335556797256/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE175" data-search="cue175 com.creation.cue175watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE175', this)" id="chk_CUE175"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972773748799629493/paid-app" target="_blank" onclick="copySilent('2.79')">CUE175</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972773748799629493/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue175watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="">R$ 14.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972773748799629493/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE174" data-search="cue174 com.creation.cue174watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE174', this)" id="chk_CUE174"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972615353718141174/paid-app" target="_blank" onclick="copySilent('2.79')">CUE174</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972615353718141174/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue174watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="">R$ 14.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972615353718141174/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE171" data-search="cue171 com.creation.cue171watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE171', this)" id="chk_CUE171"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972118076910981120/paid-app" target="_blank" onclick="copySilent('2.79')">CUE171</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972118076910981120/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue171watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="">R$ 14.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972118076910981120/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE169" data-search="cue169 com.creation.cue169watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE169', this)" id="chk_CUE169"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972674831247014711/paid-app" target="_blank" onclick="copySilent('2.79')">CUE169</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972674831247014711/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue169watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="">R$ 14.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972674831247014711/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE168" data-search="cue168 com.creation.cue168watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE168', this)" id="chk_CUE168"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974184231953708127/paid-app" target="_blank" onclick="copySilent('2.79')">CUE168</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974184231953708127/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue168watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="">R$ 14.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974184231953708127/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE166" data-search="cue166 com.creation.cue166watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE166', this)" id="chk_CUE166"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974093127282298176/paid-app" target="_blank" onclick="copySilent('2.79')">CUE166</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974093127282298176/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue166watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="">R$ 14.30</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974093127282298176/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE165" data-search="cue165 com.creation.cue165watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE165', this)" id="chk_CUE165"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975105011328348719/paid-app" target="_blank" onclick="copySilent('2.79')">CUE165</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975105011328348719/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue165watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="">R$ 14.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975105011328348719/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE164" data-search="cue164 com.creation.cue164watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE164', this)" id="chk_CUE164"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972297491721046790/paid-app" target="_blank" onclick="copySilent('2.79')">CUE164</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972297491721046790/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue164watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="">R$ 14.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972297491721046790/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE163" data-search="cue163 com.creation.cue163watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE163', this)" id="chk_CUE163"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975475839948184110/paid-app" target="_blank" onclick="copySilent('2.79')">CUE163</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975475839948184110/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cue163watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="">R$ 14.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975475839948184110/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUEINDUS_PRO" data-search="cueindus_pro com.creation.cueindusprowatchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUEINDUS_PRO', this)" id="chk_CUEINDUS_PRO"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973464186554347361/paid-app" target="_blank" onclick="copySilent('2.79')">CUEINDUS_PRO</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973464186554347361/paid-app" target="_blank" onclick="copySilent('2.79')">com.creation.cueindusprowatchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€2.09</td>
+        <td class="">R$ 14.99</td>
+        <td class="price-target">€2.79 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 14.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.79', this)">Copy €2.79</button> <button class="copy-brl-btn" onclick="copyVal('14.99', this)">Copy R$ 14.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973464186554347361/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE134" data-search="cue134 com.creation.cue134watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE134', this)" id="chk_CUE134"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975338963478265433/paid-app" target="_blank" onclick="copySilent('2.49')">CUE134</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975338963478265433/paid-app" target="_blank" onclick="copySilent('2.49')">com.creation.cue134watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.89</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.49 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.49', this)">Copy €2.49</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975338963478265433/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE129" data-search="cue129 com.creation.cue129watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE129', this)" id="chk_CUE129"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973098573349218728/paid-app" target="_blank" onclick="copySilent('2.49')">CUE129</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973098573349218728/paid-app" target="_blank" onclick="copySilent('2.49')">com.creation.cue129watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.89</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.49 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.49', this)">Copy €2.49</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973098573349218728/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE167" data-search="cue167 com.creation.cue167watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE167', this)" id="chk_CUE167"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972264987059145017/paid-app" target="_blank" onclick="copySilent('2.39')">CUE167</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972264987059145017/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue167watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972264987059145017/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE162" data-search="cue162 com.creation.cue162watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE162', this)" id="chk_CUE162"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973461486322462577/paid-app" target="_blank" onclick="copySilent('2.39')">CUE162</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973461486322462577/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue162watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973461486322462577/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE161" data-search="cue161 com.creation.cue161watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE161', this)" id="chk_CUE161"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975523197225093895/paid-app" target="_blank" onclick="copySilent('2.39')">CUE161</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975523197225093895/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue161watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975523197225093895/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE160" data-search="cue160 com.creation.cue160watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE160', this)" id="chk_CUE160"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976170803793660368/paid-app" target="_blank" onclick="copySilent('2.39')">CUE160</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976170803793660368/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue160watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976170803793660368/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE159" data-search="cue159 com.creation.cue159watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE159', this)" id="chk_CUE159"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973134053595425139/paid-app" target="_blank" onclick="copySilent('2.39')">CUE159</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973134053595425139/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue159watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973134053595425139/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE158" data-search="cue158 com.creation.cue158watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE158', this)" id="chk_CUE158"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973881096802295407/paid-app" target="_blank" onclick="copySilent('2.39')">CUE158</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973881096802295407/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue158watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79</td>
+        <td class="">R$ 11.99</td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973881096802295407/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE157" data-search="cue157 com.creation.cue157watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE157', this)" id="chk_CUE157"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973034253392951728/paid-app" target="_blank" onclick="copySilent('2.39')">CUE157</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973034253392951728/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue157watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973034253392951728/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE156" data-search="cue156 com.creation.cue156watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE156', this)" id="chk_CUE156"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972848101978410325/paid-app" target="_blank" onclick="copySilent('2.39')">CUE156</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972848101978410325/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue156watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972848101978410325/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="saleRow" data-status="RAISED" data-onsale="1" data-id="CUE154" data-search="cue154 com.creation.cue154watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE154', this)" id="chk_CUE154"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972985465748276837/paid-app" target="_blank" onclick="copySilent('2.39')">CUE154</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972985465748276837/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue154watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79<span class="sale-sub">🏷️ Sale: €0.54</span></td>
+        <td class="">R$ 13.99<span class="sale-sub">🏷️ Sale: R$ 4.20</span></td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972985465748276837/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span> <span class="badge badge-sale">🏷️ ON SALE</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE153" data-search="cue153 com.creation.cue153watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE153', this)" id="chk_CUE153"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972434860530950212/paid-app" target="_blank" onclick="copySilent('2.39')">CUE153</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972434860530950212/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue153watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79</td>
+        <td class="">R$ 11.99</td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972434860530950212/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE152" data-search="cue152 com.creation.cue152watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE152', this)" id="chk_CUE152"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976422431848576173/paid-app" target="_blank" onclick="copySilent('2.39')">CUE152</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976422431848576173/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue152watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79</td>
+        <td class="">R$ 14.99</td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976422431848576173/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE151" data-search="cue151 com.creation.cue151watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE151', this)" id="chk_CUE151"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972672192902633708/paid-app" target="_blank" onclick="copySilent('2.39')">CUE151</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972672192902633708/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue151watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79</td>
+        <td class="">R$ 14.99</td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972672192902633708/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE150" data-search="cue150 com.creation.cue150watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE150', this)" id="chk_CUE150"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976435826720823570/paid-app" target="_blank" onclick="copySilent('2.39')">CUE150</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976435826720823570/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue150watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976435826720823570/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE130" data-search="cue130 com.creation.cue130watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE130', this)" id="chk_CUE130"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976370706459573712/paid-app" target="_blank" onclick="copySilent('2.39')">CUE130</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976370706459573712/paid-app" target="_blank" onclick="copySilent('2.39')">com.creation.cue130watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976370706459573712/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CRC032" data-search="crc032 com.watchfacestudio.crc032" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC032', this)" id="chk_CRC032"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972514697745049704/paid-app" target="_blank" onclick="copySilent('2.39')">CRC032</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972514697745049704/paid-app" target="_blank" onclick="copySilent('2.39')">com.watchfacestudio.crc032</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.79</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.39 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.39', this)">Copy €2.39</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972514697745049704/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE149" data-search="cue149 com.creation.cue149watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE149', this)" id="chk_CUE149"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973266241024465638/paid-app" target="_blank" onclick="copySilent('2.25')">CUE149</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973266241024465638/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue149watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973266241024465638/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE148" data-search="cue148 com.creation.cue148watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE148', this)" id="chk_CUE148"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975588297043548661/paid-app" target="_blank" onclick="copySilent('2.25')">CUE148</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975588297043548661/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue148watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975588297043548661/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE147" data-search="cue147 com.creation.cue147watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE147', this)" id="chk_CUE147"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973654961980098178/paid-app" target="_blank" onclick="copySilent('2.25')">CUE147</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973654961980098178/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue147watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973654961980098178/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE146" data-search="cue146 com.creation.cue146watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE146', this)" id="chk_CUE146"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973096656163427822/paid-app" target="_blank" onclick="copySilent('2.25')">CUE146</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973096656163427822/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue146watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973096656163427822/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE145" data-search="cue145 com.creation.cue145watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE145', this)" id="chk_CUE145"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976347932847409648/paid-app" target="_blank" onclick="copySilent('2.25')">CUE145</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976347932847409648/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue145watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976347932847409648/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE144" data-search="cue144 com.creation.cue144watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE144', this)" id="chk_CUE144"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973331447265724167/paid-app" target="_blank" onclick="copySilent('2.25')">CUE144</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973331447265724167/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue144watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973331447265724167/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE143" data-search="cue143 com.creation.cue143watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE143', this)" id="chk_CUE143"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973685954902119218/paid-app" target="_blank" onclick="copySilent('2.25')">CUE143</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973685954902119218/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue143watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973685954902119218/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE142" data-search="cue142 com.creation.cue142watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE142', this)" id="chk_CUE142"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973416037743311570/paid-app" target="_blank" onclick="copySilent('2.25')">CUE142</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973416037743311570/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue142watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973416037743311570/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE135" data-search="cue135 com.creation.cue135watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE135', this)" id="chk_CUE135"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973345831218722222/paid-app" target="_blank" onclick="copySilent('2.25')">CUE135</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973345831218722222/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue135watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973345831218722222/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE133" data-search="cue133 com.creation.cue133watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE133', this)" id="chk_CUE133"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975254990455310187/paid-app" target="_blank" onclick="copySilent('2.25')">CUE133</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975254990455310187/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue133watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975254990455310187/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE131" data-search="cue131 com.creation.cue131watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE131', this)" id="chk_CUE131"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972775397592419969/paid-app" target="_blank" onclick="copySilent('2.25')">CUE131</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972775397592419969/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue131watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972775397592419969/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE127" data-search="cue127 com.creation.cue127watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE127', this)" id="chk_CUE127"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975319706578691751/paid-app" target="_blank" onclick="copySilent('2.25')">CUE127</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975319706578691751/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue127watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975319706578691751/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE126" data-search="cue126 com.creation.cue126watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE126', this)" id="chk_CUE126"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975970252783994489/paid-app" target="_blank" onclick="copySilent('2.25')">CUE126</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975970252783994489/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue126watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975970252783994489/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE115" data-search="cue115 com.creation.cue115watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE115', this)" id="chk_CUE115"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972737865203804235/paid-app" target="_blank" onclick="copySilent('2.25')">CUE115</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972737865203804235/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue115watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972737865203804235/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE107" data-search="cue107 com.creation.cue107watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE107', this)" id="chk_CUE107"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976182484106461422/paid-app" target="_blank" onclick="copySilent('2.25')">CUE107</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976182484106461422/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue107watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976182484106461422/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE101" data-search="cue101 com.creation.cue101watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE101', this)" id="chk_CUE101"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972846483005495256/paid-app" target="_blank" onclick="copySilent('2.25')">CUE101</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972846483005495256/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue101watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972846483005495256/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE100" data-search="cue100 com.creation.cue100watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE100', this)" id="chk_CUE100"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976212887895371292/paid-app" target="_blank" onclick="copySilent('2.25')">CUE100</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976212887895371292/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue100watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976212887895371292/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE099" data-search="cue099 com.creation.cue099watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE099', this)" id="chk_CUE099"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975342283544973907/paid-app" target="_blank" onclick="copySilent('2.25')">CUE099</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975342283544973907/paid-app" target="_blank" onclick="copySilent('2.25')">com.creation.cue099watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975342283544973907/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CRC087" data-search="crc087 com.creationcue.crc087watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC087', this)" id="chk_CRC087"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974104455742258306/paid-app" target="_blank" onclick="copySilent('2.25')">CRC087</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974104455742258306/paid-app" target="_blank" onclick="copySilent('2.25')">com.creationcue.crc087watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.69</td>
+        <td class="">R$ 13.99</td>
+        <td class="price-target">€2.25 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 13.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.25', this)">Copy €2.25</button> <button class="copy-brl-btn" onclick="copyVal('13.99', this)">Copy R$ 13.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974104455742258306/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE141" data-search="cue141 com.creation.cue141watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE141', this)" id="chk_CUE141"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976082402601604790/paid-app" target="_blank" onclick="copySilent('2.12')">CUE141</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976082402601604790/paid-app" target="_blank" onclick="copySilent('2.12')">com.creation.cue141watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 12.99</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976082402601604790/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE140" data-search="cue140 com.creation.cue140watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE140', this)" id="chk_CUE140"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974314546526058799/paid-app" target="_blank" onclick="copySilent('2.12')">CUE140</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974314546526058799/paid-app" target="_blank" onclick="copySilent('2.12')">com.creation.cue140watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 14.99</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974314546526058799/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE139" data-search="cue139 com.creation.cue139watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE139', this)" id="chk_CUE139"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975278572497753314/paid-app" target="_blank" onclick="copySilent('2.12')">CUE139</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975278572497753314/paid-app" target="_blank" onclick="copySilent('2.12')">com.creation.cue139watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 12.99</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975278572497753314/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE137" data-search="cue137 com.creation.cue137watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE137', this)" id="chk_CUE137"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974348389519637728/paid-app" target="_blank" onclick="copySilent('2.12')">CUE137</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974348389519637728/paid-app" target="_blank" onclick="copySilent('2.12')">com.creation.cue137watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 12.99</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974348389519637728/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE128" data-search="cue128 com.creation.cue128watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE128', this)" id="chk_CUE128"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976410437403473956/paid-app" target="_blank" onclick="copySilent('2.12')">CUE128</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976410437403473956/paid-app" target="_blank" onclick="copySilent('2.12')">com.creation.cue128watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 12.99</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976410437403473956/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE123" data-search="cue123 com.creation.cue123watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE123', this)" id="chk_CUE123"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974488370815961266/paid-app" target="_blank" onclick="copySilent('2.12')">CUE123</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974488370815961266/paid-app" target="_blank" onclick="copySilent('2.12')">com.creation.cue123watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 12.99</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974488370815961266/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE116" data-search="cue116 com.creation.cue116watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE116', this)" id="chk_CUE116"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974456362376973400/paid-app" target="_blank" onclick="copySilent('2.12')">CUE116</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974456362376973400/paid-app" target="_blank" onclick="copySilent('2.12')">com.creation.cue116watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 11.79</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974456362376973400/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CUE111" data-search="cue111 com.creation.cue111watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE111', this)" id="chk_CUE111"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974002886278195256/paid-app" target="_blank" onclick="copySilent('2.12')">CUE111</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974002886278195256/paid-app" target="_blank" onclick="copySilent('2.12')">com.creation.cue111watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 12.99</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974002886278195256/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE110" data-search="cue110 com.creation.cue110watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE110', this)" id="chk_CUE110"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974158142154083718/paid-app" target="_blank" onclick="copySilent('2.12')">CUE110</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974158142154083718/paid-app" target="_blank" onclick="copySilent('2.12')">com.creation.cue110watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 12.99</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974158142154083718/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE105" data-search="cue105 com.creation.cue105watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE105', this)" id="chk_CUE105"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972865159128822797/paid-app" target="_blank" onclick="copySilent('2.12')">CUE105</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972865159128822797/paid-app" target="_blank" onclick="copySilent('2.12')">com.creation.cue105watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 12.99</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972865159128822797/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE102" data-search="cue102 com.creation.cue102watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE102', this)" id="chk_CUE102"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972353779520268514/paid-app" target="_blank" onclick="copySilent('2.12')">CUE102</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972353779520268514/paid-app" target="_blank" onclick="copySilent('2.12')">com.creation.cue102watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 12.99</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972353779520268514/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE097" data-search="cue097 com.creation.cue097watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE097', this)" id="chk_CUE097"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973547352301467131/paid-app" target="_blank" onclick="copySilent('2.12')">CUE097</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973547352301467131/paid-app" target="_blank" onclick="copySilent('2.12')">com.creation.cue097watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 12.99</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973547352301467131/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CRC094" data-search="crc094 com.creationcue.crc094watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC094', this)" id="chk_CRC094"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973344070428690250/paid-app" target="_blank" onclick="copySilent('2.12')">CRC094</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973344070428690250/paid-app" target="_blank" onclick="copySilent('2.12')">com.creationcue.crc094watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 12.49</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973344070428690250/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CRC091" data-search="crc091 com.creationcue.crc091watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC091', this)" id="chk_CRC091"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974915646437600771/paid-app" target="_blank" onclick="copySilent('2.12')">CRC091</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974915646437600771/paid-app" target="_blank" onclick="copySilent('2.12')">com.creationcue.crc091watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 12.99</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974915646437600771/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CRC090" data-search="crc090 com.creationcue.crc090watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC090', this)" id="chk_CRC090"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972939470283278288/paid-app" target="_blank" onclick="copySilent('2.12')">CRC090</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972939470283278288/paid-app" target="_blank" onclick="copySilent('2.12')">com.creationcue.crc090watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.59</td>
+        <td class="">R$ 12.99</td>
+        <td class="price-target">€2.12 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('2.12', this)">Copy €2.12</button> <button class="copy-brl-btn" onclick="copyVal('12.99', this)">Copy R$ 12.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972939470283278288/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE122" data-search="cue122 com.creation.cue122watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE122', this)" id="chk_CUE122"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972543213183704761/paid-app" target="_blank" onclick="copySilent('1.99')">CUE122</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972543213183704761/paid-app" target="_blank" onclick="copySilent('1.99')">com.creation.cue122watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="">R$ 12.49</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972543213183704761/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE114" data-search="cue114 com.creation.cue114watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE114', this)" id="chk_CUE114"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974352446116869801/paid-app" target="_blank" onclick="copySilent('1.99')">CUE114</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974352446116869801/paid-app" target="_blank" onclick="copySilent('1.99')">com.creation.cue114watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="">R$ 12.49</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974352446116869801/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="doneRow" data-status="RAISED" data-onsale="0" data-id="CUE106" data-search="cue106 com.creation.cue106watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE106', this)" id="chk_CUE106"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973090849652225758/paid-app" target="_blank" onclick="copySilent('1.99')">CUE106</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973090849652225758/paid-app" target="_blank" onclick="copySilent('1.99')">com.creation.cue106watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="">R$ 12.49</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973090849652225758/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CRC065" data-search="crc065 com.creationcue.crc065" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC065', this)" id="chk_CRC065"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974512735543404701/paid-app" target="_blank" onclick="copySilent('1.99')">CRC065</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974512735543404701/paid-app" target="_blank" onclick="copySilent('1.99')">com.creationcue.crc065</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.49</td>
+        <td class="">R$ 12.49</td>
+        <td class="price-target">€1.99 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 12.49</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.99', this)">Copy €1.99</button> <button class="copy-brl-btn" onclick="copyVal('12.49', this)">Copy R$ 12.49</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974512735543404701/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="RAISED" data-onsale="0" data-id="CRC039" data-search="crc039 com.watchfacestudio.crc039" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC039', this)" id="chk_CRC039"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973913513974342773/paid-app" target="_blank" onclick="copySilent('1.72')">CRC039</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973913513974342773/paid-app" target="_blank" onclick="copySilent('1.72')">com.watchfacestudio.crc039</a></td>
+        <td><strong>0</strong></td>
+        <td>€1.29</td>
+        <td class="">R$ 9.99</td>
+        <td class="price-target">€1.72 <span style="color:#888;font-weight:400">/</span> <span style="color:#34d399">R$ 9.99</span></td>
+        <td class="actions-cell"><button class="copy-btn" onclick="copyVal('1.72', this)">Copy €1.72</button> <button class="copy-brl-btn" onclick="copyVal('9.99', this)">Copy R$ 9.99</button> <a class="btn-link console-pricing-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973913513974342773/paid-app" target="_blank">Open Paid-App Pricing</a></td>
+        <td><span class="badge badge-ok">RAISED</span></td>
+      </tr>
+      <tr class="" data-status="FREE" data-onsale="0" data-id="CUE136" data-search="cue136 com.creation.cue136watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE136', this)" id="chk_CUE136"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974335037813147738/paid-app" target="_blank" onclick="copySilent('-')">CUE136</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974335037813147738/paid-app" target="_blank" onclick="copySilent('-')">com.creation.cue136watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€FREE</td>
+        <td class="">R$ FREE</td>
+        <td class="price-target">-</td>
+        <td class="actions-cell">  <a class="btn-link console-dash-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974335037813147738/paid-app" target="_blank">Paid-App Pricing</a></td>
+        <td><span class="badge badge-free">FREE</span></td>
+      </tr>
+      <tr class="" data-status="FREE" data-onsale="0" data-id="CUE132" data-search="cue132 com.creation.cue132watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE132', this)" id="chk_CUE132"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972774492319126111/paid-app" target="_blank" onclick="copySilent('-')">CUE132</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972774492319126111/paid-app" target="_blank" onclick="copySilent('-')">com.creation.cue132watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€FREE</td>
+        <td class="">R$ FREE</td>
+        <td class="price-target">-</td>
+        <td class="actions-cell">  <a class="btn-link console-dash-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972774492319126111/paid-app" target="_blank">Paid-App Pricing</a></td>
+        <td><span class="badge badge-free">FREE</span></td>
+      </tr>
+      <tr class="" data-status="FREE" data-onsale="0" data-id="CUE104" data-search="cue104 com.creation.cue104watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE104', this)" id="chk_CUE104"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972631235810842508/paid-app" target="_blank" onclick="copySilent('-')">CUE104</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972631235810842508/paid-app" target="_blank" onclick="copySilent('-')">com.creation.cue104watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€FREE</td>
+        <td class="">R$ FREE</td>
+        <td class="price-target">-</td>
+        <td class="actions-cell">  <a class="btn-link console-dash-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972631235810842508/paid-app" target="_blank">Paid-App Pricing</a></td>
+        <td><span class="badge badge-free">FREE</span></td>
+      </tr>
+      <tr class="" data-status="FREE" data-onsale="0" data-id="CRC082" data-search="crc082 com.creationcue.crc082watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC082', this)" id="chk_CRC082"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975855178082874296/paid-app" target="_blank" onclick="copySilent('-')">CRC082</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975855178082874296/paid-app" target="_blank" onclick="copySilent('-')">com.creationcue.crc082watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€FREE</td>
+        <td class="">R$ FREE</td>
+        <td class="price-target">-</td>
+        <td class="actions-cell">  <a class="btn-link console-dash-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975855178082874296/paid-app" target="_blank">Paid-App Pricing</a></td>
+        <td><span class="badge badge-free">FREE</span></td>
+      </tr>
+      <tr class="" data-status="FREE" data-onsale="0" data-id="CRC080" data-search="crc080 com.creationscue.crc080watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC080', this)" id="chk_CRC080"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973855808477400516/paid-app" target="_blank" onclick="copySilent('-')">CRC080</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973855808477400516/paid-app" target="_blank" onclick="copySilent('-')">com.creationscue.crc080watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€FREE</td>
+        <td class="">R$ FREE</td>
+        <td class="price-target">-</td>
+        <td class="actions-cell">  <a class="btn-link console-dash-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973855808477400516/paid-app" target="_blank">Paid-App Pricing</a></td>
+        <td><span class="badge badge-free">FREE</span></td>
+      </tr>
+      <tr class="" data-status="FREE" data-onsale="0" data-id="CRC069" data-search="crc069 com.creationcue.crc069watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC069', this)" id="chk_CRC069"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973440473559780405/paid-app" target="_blank" onclick="copySilent('-')">CRC069</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973440473559780405/paid-app" target="_blank" onclick="copySilent('-')">com.creationcue.crc069watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€FREE</td>
+        <td class="">R$ FREE</td>
+        <td class="price-target">-</td>
+        <td class="actions-cell">  <a class="btn-link console-dash-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973440473559780405/paid-app" target="_blank">Paid-App Pricing</a></td>
+        <td><span class="badge badge-free">FREE</span></td>
+      </tr>
+      <tr class="" data-status="FREE" data-onsale="0" data-id="CRC068" data-search="crc068 com.creationcue.crc068watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC068', this)" id="chk_CRC068"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974371105474168538/paid-app" target="_blank" onclick="copySilent('-')">CRC068</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974371105474168538/paid-app" target="_blank" onclick="copySilent('-')">com.creationcue.crc068watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€FREE</td>
+        <td class="">R$ FREE</td>
+        <td class="price-target">-</td>
+        <td class="actions-cell">  <a class="btn-link console-dash-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974371105474168538/paid-app" target="_blank">Paid-App Pricing</a></td>
+        <td><span class="badge badge-free">FREE</span></td>
+      </tr>
+      <tr class="" data-status="FREE" data-onsale="0" data-id="CRC046" data-search="crc046 com.creationcue.crc046" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC046', this)" id="chk_CRC046"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976339058826515797/paid-app" target="_blank" onclick="copySilent('-')">CRC046</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976339058826515797/paid-app" target="_blank" onclick="copySilent('-')">com.creationcue.crc046</a></td>
+        <td><strong>0</strong></td>
+        <td>€FREE</td>
+        <td class="">R$ FREE</td>
+        <td class="price-target">-</td>
+        <td class="actions-cell">  <a class="btn-link console-dash-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976339058826515797/paid-app" target="_blank">Paid-App Pricing</a></td>
+        <td><span class="badge badge-free">FREE</span></td>
+      </tr>
+      <tr class="" data-status="FREE" data-onsale="0" data-id="CRC041" data-search="crc041 com.watchfacestudio.crc041" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC041', this)" id="chk_CRC041"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973191883693456947/paid-app" target="_blank" onclick="copySilent('-')">CRC041</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973191883693456947/paid-app" target="_blank" onclick="copySilent('-')">com.watchfacestudio.crc041</a></td>
+        <td><strong>0</strong></td>
+        <td>€FREE</td>
+        <td class="">R$ FREE</td>
+        <td class="price-target">-</td>
+        <td class="actions-cell">  <a class="btn-link console-dash-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973191883693456947/paid-app" target="_blank">Paid-App Pricing</a></td>
+        <td><span class="badge badge-free">FREE</span></td>
+      </tr>
+      <tr class="" data-status="FREE" data-onsale="0" data-id="CRC036" data-search="crc036 com.watchfacestudio.crc036" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC036', this)" id="chk_CRC036"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973017036428761181/paid-app" target="_blank" onclick="copySilent('-')">CRC036</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973017036428761181/paid-app" target="_blank" onclick="copySilent('-')">com.watchfacestudio.crc036</a></td>
+        <td><strong>0</strong></td>
+        <td>€FREE</td>
+        <td class="">R$ FREE</td>
+        <td class="price-target">-</td>
+        <td class="actions-cell">  <a class="btn-link console-dash-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973017036428761181/paid-app" target="_blank">Paid-App Pricing</a></td>
+        <td><span class="badge badge-free">FREE</span></td>
+      </tr>
+      <tr class="" data-status="FREE" data-onsale="0" data-id="CRC027" data-search="crc027 com.watchfacestudio.crc027" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC027', this)" id="chk_CRC027"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973317653244690450/paid-app" target="_blank" onclick="copySilent('-')">CRC027</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973317653244690450/paid-app" target="_blank" onclick="copySilent('-')">com.watchfacestudio.crc027</a></td>
+        <td><strong>0</strong></td>
+        <td>€FREE</td>
+        <td class="">R$ FREE</td>
+        <td class="price-target">-</td>
+        <td class="actions-cell">  <a class="btn-link console-dash-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973317653244690450/paid-app" target="_blank">Paid-App Pricing</a></td>
+        <td><span class="badge badge-free">FREE</span></td>
+      </tr>
+      <tr class="" data-status="FREE" data-onsale="0" data-id="CRC023" data-search="crc023 com.watchfacestudio.crc023" style="">
+        <td><input type="checkbox" onchange="toggleDone('CRC023', this)" id="chk_CRC023"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972922182284788150/paid-app" target="_blank" onclick="copySilent('-')">CRC023</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972922182284788150/paid-app" target="_blank" onclick="copySilent('-')">com.watchfacestudio.crc023</a></td>
+        <td><strong>0</strong></td>
+        <td>€FREE</td>
+        <td class="">R$ FREE</td>
+        <td class="price-target">-</td>
+        <td class="actions-cell">  <a class="btn-link console-dash-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972922182284788150/paid-app" target="_blank">Paid-App Pricing</a></td>
+        <td><span class="badge badge-free">FREE</span></td>
+      </tr>
+      <tr class="" data-status="FREE" data-onsale="0" data-id="CUEINDUS" data-search="cueindus com.creation.cueinduswatchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUEINDUS', this)" id="chk_CUEINDUS"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972255012651387859/paid-app" target="_blank" onclick="copySilent('-')">CUEINDUS</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972255012651387859/paid-app" target="_blank" onclick="copySilent('-')">com.creation.cueinduswatchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€FREE</td>
+        <td class="">R$ FREE</td>
+        <td class="price-target">-</td>
+        <td class="actions-cell">  <a class="btn-link console-dash-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972255012651387859/paid-app" target="_blank">Paid-App Pricing</a></td>
+        <td><span class="badge badge-free">FREE</span></td>
+      </tr>
+      <tr class="" data-status="ERR" data-onsale="0" data-id="CUE138" data-search="cue138 com.creation.cue138watchface" style="">
+        <td><input type="checkbox" onchange="toggleDone('CUE138', this)" id="chk_CUE138"></td>
+        <td><strong><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972128177417629608/paid-app" target="_blank" onclick="copySilent('-')">CUE138</a></strong></td>
+        <td><a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972128177417629608/paid-app" target="_blank" onclick="copySilent('-')">com.creation.cue138watchface</a></td>
+        <td><strong>0</strong></td>
+        <td>€ERR</td>
+        <td class="">R$ ERR</td>
+        <td class="price-target">-</td>
+        <td class="actions-cell">  <a class="btn-link console-dash-btn" href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972128177417629608/paid-app" target="_blank">Paid-App Pricing</a></td>
+        <td><span class="badge badge-free">ERR</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<script id="embeddedStateScript">
+  window.EMBEDDED_DONE = {"CUE136_PLUS":true,"CUE172":true,"CUE171":true,"CUE170":true,"CUE169":true,"CUE168":true,"CUE165":true,"CUE164":true,"CUE163":true,"CUEINDUS_PRO":true,"CUE134":true,"CUE129":true,"CUE167":true,"CUE162":true,"CUE161":true,"CUE160":true,"CUE159":true,"CUE157":true,"CUE156":true,"CUE150":true,"CUE130":true,"CRC032":true,"CUE149":true,"CUE147":true,"CUE146":true,"CUE144":true,"CUE143":true,"CUE135":true,"CUE133":true,"CUE131":true,"CUE127":true,"CUE126":true,"CUE115":true,"CUE107":true,"CUE101":true,"CUE100":true,"CUE099":true,"CRC092":true,"CRC087":true,"CUE141":true,"CUE139":true,"CUE137":true,"CUE128":true,"CUE123":true,"CUE110":true,"CUE105":true,"CUE102":true,"CUE097":true,"CRC091":true,"CRC090":true,"CUE122":true,"CUE114":true,"CUE106":true,"CUE103":true,"CRC079":true,"CRC072":true,"CRC066":true,"CRC057":true,"CRC031":true,"CRC030":true,"CCWF022":true,"CC014":true,"CC010":true,"CC005":true,"CUE098":true,"CRC081":true,"CRC071":true,"CRC044":true,"CRC043":true,"CRC042":true,"CRC035":true,"CRC034":true,"CRC028":true,"CUE109":true,"CRC050":true,"CUE024":true};
+</script>
+<script>
+  let curFilter = 'NEEDS_UPDATE';
+  const localSaved = JSON.parse(localStorage.getItem('br_tax_done') || '{}');
+  const saved = Object.assign({}, window.EMBEDDED_DONE || {}, localSaved);
+
+  let dbRef = null;
+  try {
+    const firebaseConfig = {
+      apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+      authDomain: "creation-cue-manage.firebaseapp.com",
+      databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "creation-cue-manage"
+    };
+    if (window.firebase) {
+      firebase.initializeApp(firebaseConfig);
+      dbRef = firebase.database().ref('brazil_pricing_done');
+      dbRef.on('value', (snap) => {
+        const cloudData = snap.val() || {};
+        Object.assign(saved, cloudData);
+        localStorage.setItem('br_tax_done', JSON.stringify(saved));
+        renderChecks();
+        document.getElementById('syncStatus').textContent = '☁️ Cloud Synced (PC + Laptop)';
+        document.getElementById('syncStatus').style.color = '#4ade80';
+      }, (err) => {
+        document.getElementById('syncStatus').textContent = '💾 Local / MEGA Mode';
+      });
+    }
+  } catch (e) {
+    console.warn('Firebase sync unavailable:', e);
+  }
+
+  function renderChecks() {
+    document.querySelectorAll('#tbody input[type="checkbox"]').forEach(chk => {
+      const id = chk.id.replace('chk_', '');
+      const isDone = !!saved[id];
+      chk.checked = isDone;
+      chk.closest('tr').classList.toggle('doneRow', isDone);
+    });
+    updateCounts();
+  }
+
+  function init() {
+    renderChecks();
+    applySearch();
+    if (dbRef && Object.keys(saved).length > 0) {
+      dbRef.update(saved).catch(() => {});
+    }
+  }
+
+  function toggleDone(id, chk) {
+    if (chk.checked) {
+      saved[id] = true;
+    } else {
+      delete saved[id];
+    }
+    localStorage.setItem('br_tax_done', JSON.stringify(saved));
+    chk.closest('tr').classList.toggle('doneRow', chk.checked);
+    updateCounts();
+    if (dbRef) {
+      dbRef.child(id).set(chk.checked ? true : null).catch(() => {});
+    }
+  }
+
+  async function saveToHtmlFile() {
+    document.getElementById('embeddedStateScript').textContent = '\n  window.EMBEDDED_DONE = ' + JSON.stringify(saved) + ';\n';
+    const fullHtml = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    if (window.showSaveFilePicker) {
+      try {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: 'brazil-pricing-tracker.html',
+          types: [{ description: 'HTML File', accept: {'text/html': ['.html']} }]
+        });
+        const writable = await handle.createWritable();
+        await writable.write(fullHtml);
+        await writable.close();
+        document.getElementById('syncStatus').textContent = '✅ Saved into MEGA HTML file!';
+        return;
+      } catch (e) {
+        if (e.name === 'AbortError') return;
+      }
+    }
+    const blob = new Blob([fullHtml], {type: 'text/html'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'brazil-pricing-tracker.html';
+    a.click();
+  }
+
+  function updateCounts() {
+    const done = Object.values(saved).filter(Boolean).length;
+    document.getElementById('doneCount').textContent = done;
+  }
+  function filterRows(status, btn) {
+    curFilter = status;
+    document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applySearch();
+  }
+  function applySearch() {
+    const q = document.getElementById('searchBox').value.toLowerCase();
+    document.querySelectorAll('#tbody tr').forEach(tr => {
+      const st = tr.getAttribute('data-status');
+      const onsale = tr.getAttribute('data-onsale') === '1';
+      const s = tr.getAttribute('data-search');
+      let matchFilter = false;
+      if (curFilter === 'ALL') matchFilter = true;
+      else if (curFilter === 'ALL_SALES') matchFilter = onsale;
+      else matchFilter = (st === curFilter);
+      const matchQ = !q || s.includes(q);
+      tr.style.display = (matchFilter && matchQ) ? '' : 'none';
+    });
+  }
+  function copyVal(val, btn) {
+    navigator.clipboard.writeText(val);
+    const old = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = old, 1000);
+  }
+  function copySilent(val) {
+    if (val && val !== '-') navigator.clipboard.writeText(val);
+  }
+  init();
+</script>
+
+</body></html>

@@ -2626,6 +2626,68 @@
       border-color: rgba(33, 150, 243, 0.2);
     }
 
+        /* Brazil Tax & Pricing Badges */
+    .br-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 6px;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 4px;
+      white-space: nowrap;
+      text-decoration: none;
+      cursor: pointer;
+      transition: filter 0.15s, transform 0.15s;
+    }
+    .br-badge:hover {
+      filter: brightness(1.2);
+      transform: translateY(-1px);
+    }
+    .br-badge.br-warn {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      animation: brPulse 2s infinite ease-in-out;
+    }
+    .br-badge.br-sale {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+    .br-badge.br-ok {
+      background: rgba(16, 185, 129, 0.12);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .br-badge.br-pending {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.35);
+    }
+    @keyframes brPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.75; }
+    }
+
+    .grid-card-br-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(220, 38, 38, 0.9);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
     /* Downloads Breakdown Sub-boxes */
     .dl-sub-box {
       cursor: pointer;
@@ -3057,6 +3119,20 @@
       </div>
     </div>
 
+    <!-- Brazil Tax & Pricing Alert Banner -->
+    <div id="brazil-tax-banner" style="display: none; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-left: 4px solid #ef4444; border-radius: 4px; padding: 10px 14px; margin-bottom: 16px; align-items: center; justify-content: space-between; gap: 12px; font-size: 13px; color: #f0f0f0;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 16px;">🇧🇷</span>
+        <span>
+          <strong>Brazil Tax Alert:</strong> <span id="brazil-warning-count" style="color: #f87171; font-weight: 700;">0</span> watch faces do not have the <strong>+34% tax markup</strong> applied in Brazil (high IOF & digital taxes reduce net revenue).
+        </span>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center; flex-shrink: 0;">
+        <button id="btn-filter-brazil-tax" type="button" class="header-btn" onclick="toggleBrazilTaxFilter()" style="border-color: #ef4444; color: #f87171; font-size: 11px; padding: 4px 10px; cursor: pointer;">🔍 Filter Brazil Issues</button>
+        <a href="brazil-pricing-tracker.html" target="_blank" class="header-btn" style="border-color: rgba(255,255,255,0.2); color: var(--muted); font-size: 11px; padding: 4px 10px; text-decoration: none;">📋 Open Tracker</a>
+      </div>
+    </div>
+
     <!-- Controls Row -->
     <div class="controls-row">
       <div class="search-input-wrapper">
@@ -3099,6 +3175,9 @@
           <option value="all">🏷️ All Pricing</option>
           <option value="free">🎁 Free Faces</option>
           <option value="paid">💎 Paid Faces</option>
+          <option value="br-needs-update">🇧🇷 Needs Brazil Price Raise</option>
+          <option value="br-on-sale">🇧🇷 Locked on Sale</option>
+          <option value="br-raised">🇧🇷 Brazil Price OK (+34%)</option>
         </select>
         <select class="filter-select" id="filter-rollout" title="Filter by Rollout / Review Status">
           <option value="all">🚀 All Status</option>
@@ -3205,6 +3284,51 @@
            onmouseout="this.style.background='rgba(16,185,129,0.12)';this.style.borderColor='rgba(16,185,129,0.35)'">
           ⭐ Copy Review Request Link
         </button>
+      </div>
+
+      <!-- Brazil Tax & Pricing Card -->
+      <div id="details-brazil-pricing-card" style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 12px 14px; margin-top: 6px; margin-bottom: 6px; display: none; flex-direction: column; gap: 8px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 16px;">🇧🇷</span>
+            <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #fff;">Brazil Pricing & Tax</span>
+          </div>
+          <span id="details-br-status-badge" class="badge" style="font-size: 10px; padding: 2px 8px; font-weight: 700; border-radius: 4px;">NEEDS UPDATE</span>
+        </div>
+        
+        <!-- Comparison breakdown -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: rgba(0,0,0,0.25); padding: 8px 10px; border-radius: 6px; font-size: 12px;">
+          <div>
+            <div style="color: var(--muted); font-size: 10px; text-transform: uppercase;">Current Play Store BR</div>
+            <div id="details-br-current-price" style="font-size: 15px; font-weight: 700; color: #ff6b6b; margin-top: 2px;">R$ 10.99</div>
+            <div id="details-br-base-eur" style="font-size: 10px; color: var(--muted);">Base EUR: €2.09</div>
+          </div>
+          <div>
+            <div style="color: var(--muted); font-size: 10px; text-transform: uppercase;">Target (+34% Tax Offset)</div>
+            <div id="details-br-target-price" style="font-size: 15px; font-weight: 700; color: #34d399; margin-top: 2px;">R$ 14.99</div>
+            <div id="details-br-target-eur" style="font-size: 10px; color: var(--muted);">In Console: €2.79</div>
+          </div>
+        </div>
+
+        <div id="details-br-warning-text" style="font-size: 11.5px; color: #cbd5e1; line-height: 1.35;">
+          Brazil digital taxes & IOF require at least <strong>+34% higher price</strong> to achieve net earnings parity with your base EUR price.
+        </div>
+
+        <!-- Quick actions -->
+        <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; align-items: center;">
+          <a id="details-br-console-link" href="#" target="_blank" class="btn-link" style="background: #7c3aed; border: 1px solid #8b5cf6; color: #fff; font-size: 11px; padding: 5px 10px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; font-weight: 600;">
+            ⚡ Open Paid-App Pricing
+          </a>
+          <button id="details-br-copy-eur" type="button" class="copy-btn" style="padding: 5px 8px; font-size: 11px;" onclick="copyVal(this.dataset.val, this)">
+            Copy €2.79
+          </button>
+          <button id="details-br-copy-brl" type="button" class="copy-btn" style="padding: 5px 8px; font-size: 11px; background: #059669; border-color: #10b981;" onclick="copyVal(this.dataset.val, this)">
+            Copy R$ 14.99
+          </button>
+          <button id="details-br-toggle-done" type="button" class="header-btn" style="padding: 5px 10px; font-size: 11px; margin-left: auto; border-color: #f5c518; color: #f5c518;" onclick="toggleDrawerBrazilDone()">
+            ✓ Mark Updated
+          </button>
+        </div>
       </div>
 
       <!-- Google Store Review Status Banner -->
@@ -3799,6 +3923,9 @@
     var notesData = {};
     var companionReleaseNotes = {};
     var reviewStatusData = {};
+    window.INITIAL_BRAZIL_DONE = {"CUE136_PLUS":true,"CUE172":true,"CUE171":true,"CUE170":true,"CUE169":true,"CUE168":true,"CUE165":true,"CUE164":true,"CUE163":true,"CUEINDUS_PRO":true,"CUE134":true,"CUE129":true,"CUE167":true,"CUE162":true,"CUE161":true,"CUE160":true,"CUE159":true,"CUE157":true,"CUE156":true,"CUE150":true,"CUE130":true,"CRC032":true,"CUE149":true,"CUE147":true,"CUE146":true,"CUE144":true,"CUE143":true,"CUE135":true,"CUE133":true,"CUE131":true,"CUE127":true,"CUE126":true,"CUE115":true,"CUE107":true,"CUE101":true,"CUE100":true,"CUE099":true,"CRC092":true,"CRC087":true,"CUE141":true,"CUE139":true,"CUE137":true,"CUE128":true,"CUE123":true,"CUE110":true,"CUE105":true,"CUE102":true,"CUE097":true,"CRC091":true,"CRC090":true,"CUE122":true,"CUE114":true,"CUE106":true,"CUE103":true,"CRC079":true,"CRC072":true,"CRC066":true,"CRC057":true,"CRC031":true,"CRC030":true,"CCWF022":true,"CC014":true,"CC010":true,"CC005":true,"CUE098":true,"CRC081":true,"CRC071":true,"CRC044":true,"CRC043":true,"CRC042":true,"CRC035":true,"CRC034":true,"CRC028":true,"CUE109":true,"CRC050":true,"CUE024":true};
+    var brazilPricingData = {};
+    var brazilPricingDone = Object.assign({}, window.INITIAL_BRAZIL_DONE, JSON.parse(localStorage.getItem('br_tax_done') || '{}'));
 
     function setupAutoRefresh() {
       // Check every 60 seconds if it's 7:30 AM local time
@@ -3918,6 +4045,13 @@
           console.warn("Could not load versions-data.json", e);
         }
 
+        // Load brazil-pricing.json
+        try {
+          brazilPricingData = await fetchLiveData('brazil-pricing.json') || {};
+        } catch (e) {
+          console.warn("Could not load brazil-pricing.json", e);
+        }
+
         // Load reviews-data.json
         try {
           const reviewsResponse = await fetchLiveData('reviews-data.json');
@@ -4020,6 +4154,24 @@
             console.warn("Could not load review status from database:", err);
           });
 
+          // Connect to Realtime Database to load Brazil Pricing Done status
+          db.ref('brazil_pricing_done').on('value', function(snapshot) {
+            const cloudDone = snapshot.val() || {};
+            // If empty in cloud, auto-seed with initial done items
+            if (Object.keys(cloudDone).length === 0 && window.INITIAL_BRAZIL_DONE) {
+              db.ref('brazil_pricing_done').update(window.INITIAL_BRAZIL_DONE).catch(() => {});
+            }
+            brazilPricingDone = Object.assign({}, window.INITIAL_BRAZIL_DONE || {}, cloudDone);
+            localStorage.setItem('br_tax_done', JSON.stringify(brazilPricingDone));
+            buildCombinedData();
+            renderDashboard();
+            if (activeDetailsWfId) {
+              updateDrawerBrazilPricing(activeDetailsWfId);
+            }
+          }, function(err) {
+            console.warn("Could not load brazil_pricing_done from database:", err);
+          });
+
           // Connect to Realtime Database to load Replied Reviews (cross-device sync)
           db.ref('watch_face_replied_reviews').on('value', function(snapshot) {
             firebaseRepliedReviews = snapshot.val() || {};
@@ -4099,9 +4251,18 @@
           localImageUrl = 'images/' + filename;
         }
 
+        const brItems = (brazilPricingData && brazilPricingData.items) || {};
+        const rawWfId = (wf.id || '').toLowerCase();
+        const brInfo = brItems[rawWfId] || brItems[packageName.toLowerCase()] || null;
+        const isBrDone = !!(brazilPricingDone[(wf.id || '').toUpperCase()] || brazilPricingDone[rawWfId]);
+
         return {
           id: wf.id || '',
           title: wf.title || wf.id || 'Unknown',
+          brazilPricing: brInfo ? {
+            ...brInfo,
+            isDone: isBrDone
+          } : null,
           imageUrl: localImageUrl,
           packageName: packageName,
           companionVersion: playInfo.companionVersion || 'N/A',
@@ -4196,6 +4357,13 @@
         let matchPrice = true;
         if (priceFilter === 'free') matchPrice = wf.isFree === true;
         if (priceFilter === 'paid') matchPrice = wf.isFree === false;
+        if (priceFilter === 'br-needs-update') {
+          matchPrice = !wf.isFree && wf.brazilPricing && (wf.brazilPricing.status === 'NEEDS_UPDATE' || wf.brazilPricing.needsUpdate) && !wf.brazilPricing.isDone;
+        } else if (priceFilter === 'br-on-sale') {
+          matchPrice = !wf.isFree && wf.brazilPricing && wf.brazilPricing.status === 'ON_SALE';
+        } else if (priceFilter === 'br-raised') {
+          matchPrice = !wf.isFree && wf.brazilPricing && (wf.brazilPricing.status === 'RAISED' || wf.brazilPricing.isDone);
+        }
 
         // Rollout filter
         let matchRollout = true;
@@ -4585,6 +4753,21 @@
       const headerScanDateEl = document.getElementById('header-scan-date');
       if (headerScanDateEl) headerScanDateEl.textContent = formattedScanDate;
 
+      // Brazil Tax Alert Banner calculation
+      const brNeedsUpdateCount = combinedData.filter(wf => !wf.isFree && wf.brazilPricing && wf.brazilPricing.needsUpdate && !wf.brazilPricing.isDone).length;
+      const brBannerEl = document.getElementById('brazil-tax-banner');
+      const brCountEl = document.getElementById('brazil-warning-count');
+      const filterBrBtn = document.getElementById('btn-filter-brazil-tax');
+      if (brBannerEl && brCountEl) {
+        brCountEl.textContent = brNeedsUpdateCount;
+        brBannerEl.style.display = brNeedsUpdateCount > 0 ? 'flex' : 'none';
+        if (filterBrBtn) {
+          filterBrBtn.textContent = priceFilter === 'br-needs-update' ? '✕ Reset Filter' : `🔍 Filter Brazil Issues (${brNeedsUpdateCount})`;
+          filterBrBtn.style.background = priceFilter === 'br-needs-update' ? '#ef4444' : 'transparent';
+          filterBrBtn.style.color = priceFilter === 'br-needs-update' ? '#fff' : '#f87171';
+        }
+      }
+
       // View Mode Toggle (List vs Grid/Thumbnail)
       const listBtn = document.getElementById('view-mode-list');
       const gridBtn = document.getElementById('view-mode-grid');
@@ -4822,7 +5005,7 @@
               <div class="wf-details">
                 <span class="wf-title">${watchFaceName}</span>
                 <span class="wf-id">${wf.id}</span>
-                ${wf.inReview ? `<span class="in-review-badge">⏳ IN REVIEW</span>` : ''}
+                ${wf.inReview ? `<span class="in-review-badge">⏳ IN REVIEW</span>` : ''} ${(!wf.isFree && wf.brazilPricing && wf.brazilPricing.status === 'NEEDS_UPDATE' && !wf.brazilPricing.isDone) ? `<span class="in-review-badge" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border-color: rgba(239, 68, 68, 0.4);" title="${escapeHtml(wf.brazilPricing.warningMessage || '')}">🇧🇷 ⚠️ +34% TAX ALERT</span>` : ''}
               </div>
             </div>
           </td>
@@ -4866,7 +5049,58 @@
             ` : `<span style="color: var(--muted); font-size: 12px;">—</span>`}
           </td>
           <td>
-            <span class="price-badge ${wf.isFree ? 'free' : 'paid'}">${wf.isFree ? 'Free' : 'Paid'}</span>
+            ${(() => {
+              if (wf.isFree) {
+                return '<span class="price-badge free">Free</span>';
+              }
+              if (wf.brazilPricing) {
+                const bp = wf.brazilPricing;
+                if (bp.isDone) {
+                  return `
+                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-start;">
+                      <span class="price-badge paid">Paid</span>
+                      <span class="br-badge br-pending" title="Marked as updated in Play Console. Waiting for Google Play public store cache to refresh." onclick="event.stopPropagation(); openDetailsPanel('${wf.id}');">
+                        🇧🇷 ⏳ R$ ${bp.targetBrl ? bp.targetBrl.toFixed(2) : '14.99'}
+                      </span>
+                      <span style="font-size: 9.5px; color: #60a5fa; white-space: nowrap;">Console Updated</span>
+                    </div>
+                  `;
+                }
+                if (bp.status === 'NEEDS_UPDATE') {
+                  return `
+                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-start;">
+                      <span class="price-badge paid">Paid</span>
+                      <span class="br-badge br-warn" title="${escapeHtml(bp.warningMessage || '')}" onclick="event.stopPropagation(); window.open('${bp.pricingConsoleUrl}', '_blank');">
+                        🇧🇷 ⚠️ BR Price Low
+                      </span>
+                      <span style="font-size: 10px; color: #f87171; white-space: nowrap; font-weight: 600;" title="Current: R$ ${bp.currentBrl} · Target (+34%): R$ ${bp.targetBrl}">
+                        R$ ${bp.currentBrl ? bp.currentBrl.toFixed(2) : '?'} → R$ ${bp.targetBrl ? bp.targetBrl.toFixed(2) : '?'}
+                      </span>
+                    </div>
+                  `;
+                }
+                if (bp.status === 'ON_SALE') {
+                  return `
+                    <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-start;">
+                      <span class="price-badge paid" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.35);">🏷️ On Sale</span>
+                      <span class="br-badge br-sale" title="${escapeHtml(bp.warningMessage || '')}" onclick="event.stopPropagation(); openDetailsPanel('${wf.id}');">
+                        🇧🇷 🔒 R$ ${bp.saleBrl ? bp.saleBrl.toFixed(2) : 'Sale'}
+                      </span>
+                      <span style="font-size: 9.5px; color: #fbbf24; white-space: nowrap;">Target: R$ ${bp.targetBrl ? bp.targetBrl.toFixed(2) : '14.99'}</span>
+                    </div>
+                  `;
+                }
+                return `
+                  <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-start;">
+                    <span class="price-badge paid">Paid</span>
+                    <span class="br-badge br-ok" title="Brazil price has the +34% tax markup applied (R$ ${bp.currentBrl ? bp.currentBrl.toFixed(2) : ''})" onclick="event.stopPropagation(); openDetailsPanel('${wf.id}');">
+                      🇧🇷 ✅ R$ ${bp.currentBrl ? bp.currentBrl.toFixed(2) : 'OK'}
+                    </span>
+                  </div>
+                `;
+              }
+              return '<span class="price-badge paid">Paid</span>';
+            })()}
           </td>
           <td class="note-cell">
             <textarea class="note-textarea" data-wf-id="${wf.id}" onblur="saveNote('${wf.id}', this.value, this)" placeholder="Add developer logs or notes...">${wf.note}</textarea>
@@ -5113,6 +5347,9 @@
         b.textContent = rawWf.badge_text;
         badgeContainer.appendChild(b);
       }
+
+      // Populate Brazil Pricing Card in Drawer
+      updateDrawerBrazilPricing(id);
 
       // Descriptions
       const descEn = rawWf.description_en || 'No description available.';
@@ -7883,7 +8120,150 @@
         overlay.classList.remove('active');
       }
     }
-  </script>
+  
+    function updateDrawerBrazilPricing(id) {
+      const card = document.getElementById('details-brazil-pricing-card');
+      if (!card) return;
+      const wf = combinedData.find(item => item.id === id);
+      if (!wf || wf.isFree || !wf.brazilPricing) {
+        card.style.display = 'none';
+        return;
+      }
+
+      const bp = wf.brazilPricing;
+      card.style.display = 'flex';
+
+      const statusBadge = document.getElementById('details-br-status-badge');
+      const curPriceEl = document.getElementById('details-br-current-price');
+      const baseEurEl = document.getElementById('details-br-base-eur');
+      const targetPriceEl = document.getElementById('details-br-target-price');
+      const targetEurEl = document.getElementById('details-br-target-eur');
+      const warnTextEl = document.getElementById('details-br-warning-text');
+      const consoleLink = document.getElementById('details-br-console-link');
+      const copyEurBtn = document.getElementById('details-br-copy-eur');
+      const copyBrlBtn = document.getElementById('details-br-copy-brl');
+      const toggleDoneBtn = document.getElementById('details-br-toggle-done');
+
+      curPriceEl.textContent = bp.currentBrl ? `R$ ${bp.currentBrl.toFixed(2)}` : 'N/A';
+      baseEurEl.textContent = bp.baseEur ? `Base EUR: €${bp.baseEur.toFixed(2)}` : 'Base EUR: N/A';
+      targetPriceEl.textContent = bp.targetBrl ? `R$ ${bp.targetBrl.toFixed(2)}` : 'N/A';
+      targetEurEl.textContent = bp.targetEur ? `In Console: €${bp.targetEur.toFixed(2)}` : 'Target EUR: N/A';
+
+      if (consoleLink) {
+        consoleLink.href = bp.pricingConsoleUrl || '#';
+      }
+      if (copyEurBtn) {
+        const eurVal = bp.targetEur ? bp.targetEur.toFixed(2) : '2.79';
+        copyEurBtn.dataset.val = eurVal;
+        copyEurBtn.textContent = `Copy €${eurVal}`;
+      }
+      if (copyBrlBtn) {
+        const brlVal = bp.targetBrl ? bp.targetBrl.toFixed(2) : '14.99';
+        copyBrlBtn.dataset.val = brlVal;
+        copyBrlBtn.textContent = `Copy R$ ${brlVal}`;
+      }
+
+      if (bp.isDone) {
+        card.style.background = 'rgba(59, 130, 246, 0.08)';
+        card.style.borderColor = 'rgba(59, 130, 246, 0.35)';
+        statusBadge.className = 'badge';
+        statusBadge.style.background = 'rgba(59, 130, 246, 0.2)';
+        statusBadge.style.color = '#60a5fa';
+        statusBadge.textContent = 'CONSOLE UPDATED';
+        warnTextEl.innerHTML = `You marked this watch face as updated in Play Console. Waiting for Google Play public store cache to refresh to <strong>R$ ${bp.targetBrl ? bp.targetBrl.toFixed(2) : '14.99'}</strong>.`;
+        if (toggleDoneBtn) {
+          toggleDoneBtn.textContent = '↩ Mark Incomplete';
+          toggleDoneBtn.style.color = '#60a5fa';
+          toggleDoneBtn.style.borderColor = '#60a5fa';
+        }
+      } else if (bp.status === 'NEEDS_UPDATE') {
+        card.style.background = 'rgba(239, 68, 68, 0.08)';
+        card.style.borderColor = 'rgba(239, 68, 68, 0.35)';
+        statusBadge.className = 'badge badge-warn';
+        statusBadge.style.background = 'rgba(239, 68, 68, 0.2)';
+        statusBadge.style.color = '#f87171';
+        statusBadge.textContent = 'NEEDS UPDATE';
+        warnTextEl.innerHTML = `⚠️ Current Brazil price (R$ ${bp.currentBrl ? bp.currentBrl.toFixed(2) : '?'}) is <strong>NOT 34% higher</strong>. Raise it to <strong>R$ ${bp.targetBrl ? bp.targetBrl.toFixed(2) : '14.99'}</strong> (or enter <strong>€${bp.targetEur ? bp.targetEur.toFixed(2) : '2.79'}</strong> in Play Console) to compensate for Brazilian taxes.`;
+        if (toggleDoneBtn) {
+          toggleDoneBtn.textContent = '✓ Mark Updated';
+          toggleDoneBtn.style.color = '#f5c518';
+          toggleDoneBtn.style.borderColor = '#f5c518';
+        }
+      } else if (bp.status === 'ON_SALE') {
+        card.style.background = 'rgba(245, 158, 11, 0.08)';
+        card.style.borderColor = 'rgba(245, 158, 11, 0.35)';
+        statusBadge.className = 'badge badge-sale';
+        statusBadge.style.background = 'rgba(245, 158, 11, 0.2)';
+        statusBadge.style.color = '#fbbf24';
+        statusBadge.textContent = 'LOCKED ON SALE';
+        warnTextEl.innerHTML = `🏷️ Watch face is currently on sale (${bp.saleBrl ? 'R$ ' + bp.saleBrl.toFixed(2) : 'discounted'}). Google Play locks base price edits during active sales. Target after promotion: <strong>R$ ${bp.targetBrl ? bp.targetBrl.toFixed(2) : '14.99'}</strong>.`;
+        if (toggleDoneBtn) {
+          toggleDoneBtn.textContent = '✓ Mark Updated';
+          toggleDoneBtn.style.color = '#fbbf24';
+          toggleDoneBtn.style.borderColor = '#fbbf24';
+        }
+      } else if (bp.status === 'RAISED') {
+        card.style.background = 'rgba(16, 185, 129, 0.08)';
+        card.style.borderColor = 'rgba(16, 185, 129, 0.35)';
+        statusBadge.className = 'badge badge-ok';
+        statusBadge.style.background = 'rgba(16, 185, 129, 0.2)';
+        statusBadge.style.color = '#34d399';
+        statusBadge.textContent = 'TAX COMPLIANT';
+        warnTextEl.innerHTML = `✅ Healthy: Brazilian price is set to <strong>R$ ${bp.currentBrl ? bp.currentBrl.toFixed(2) : '14.99'}</strong>, fully offsetting the ~34% digital taxes.`;
+        if (toggleDoneBtn) {
+          toggleDoneBtn.textContent = '✓ Raised';
+          toggleDoneBtn.style.color = '#34d399';
+          toggleDoneBtn.style.borderColor = '#34d399';
+        }
+      }
+    }
+
+    function toggleDrawerBrazilDone() {
+      if (!activeDetailsWfId) return;
+      const wf = combinedData.find(item => item.id === activeDetailsWfId);
+      if (!wf || !wf.brazilPricing) return;
+
+      const upperId = activeDetailsWfId.toUpperCase();
+      const isCurrentlyDone = !!brazilPricingDone[upperId];
+      const newStatus = !isCurrentlyDone;
+
+      if (newStatus) {
+        brazilPricingDone[upperId] = true;
+      } else {
+        delete brazilPricingDone[upperId];
+        delete brazilPricingDone[activeDetailsWfId.toLowerCase()];
+      }
+
+      localStorage.setItem('br_tax_done', JSON.stringify(brazilPricingDone));
+
+      if (db) {
+        db.ref('brazil_pricing_done/' + upperId).set(newStatus ? true : null).catch(err => {
+          console.warn('Could not sync brazil_pricing_done to Firebase:', err);
+        });
+      }
+
+      buildCombinedData();
+      renderDashboard();
+      updateDrawerBrazilPricing(activeDetailsWfId);
+      showToast(newStatus ? 'Marked as updated in Play Console!' : 'Removed updated status.');
+    }
+
+    function toggleBrazilTaxFilter() {
+      const priceSelect = document.getElementById('filter-price');
+      if (priceSelect) {
+        priceSelect.value = priceSelect.value === 'br-needs-update' ? 'all' : 'br-needs-update';
+        renderDashboard();
+      }
+    }
+
+    function copyVal(val, btn) {
+      if (!val) return;
+      navigator.clipboard.writeText(val);
+      const old = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = old, 1000);
+    }
+</script>
 
 </body>
 

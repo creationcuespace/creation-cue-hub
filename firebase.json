@@ -59,6 +59,10 @@
         "destination": "/play-versions.html"
       },
       {
+        "source": "/brazil-pricing-tracker",
+        "destination": "/brazil-pricing-tracker.html"
+      },
+      {
         "source": "/play-deploy",
         "destination": "/play-deploy.html"
       },
