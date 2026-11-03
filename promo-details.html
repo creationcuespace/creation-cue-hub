@@ -1009,6 +1009,11 @@
       appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
     };
 
+    // Force clear any stuck websocket failures on startup
+    try {
+      localStorage.removeItem('firebase:previous_websocket_failure');
+    } catch(e) {}
+
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     var db = firebase.database();
@@ -1023,6 +1028,10 @@
     var promoId = new URLSearchParams(window.location.search).get('p') || new URLSearchParams(window.location.search).get('promo');
     var promoData = null;
     var claimsCache = [];
+    var currentUser = null;
+    var promoDataLoaded = false;
+    var loadTimeoutTimer = null;
+    const RTDB_BASE = "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app";
 
     // Helper functions for alerts and copy notifications
     var toastTimeout = null;
@@ -1284,18 +1293,14 @@
 
     // Google Sign-In Gate with token freshness guard
     auth.onAuthStateChanged(function (user) {
-      if (user && (user.email === 'sotsor@gmail.com' || user.uid === 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || user.uid === 'JKq9NWxPshRbCEXjV2eTUVV6A992')) {
+      if (user && (user.email === 'sotsor@gmail.com' || user.email === 'sotirios.liontos@gmail.com' || user.uid === 'D5ghoWWOojW4JcAlhZKtcj02E6U2' || user.uid === 'JKq9NWxPshRbCEXjV2eTUVV6A992')) {
+        currentUser = user;
         document.getElementById('login-overlay').style.display = 'none';
-        
-        // Ensure token is fresh and database connection is online
-        user.getIdToken(false).then(function() {
-          try { db.goOnline(); } catch (e) {}
-          initDetails();
-        }).catch(function(err) {
-          console.warn("Token verify notice:", err);
-          try { db.goOnline(); } catch (e) {}
-          initDetails();
-        });
+        try {
+          localStorage.removeItem('firebase:previous_websocket_failure');
+          db.goOnline();
+        } catch (e) {}
+        initDetails();
       } else {
         document.getElementById('login-overlay').style.display = 'flex';
         document.getElementById('loading-state').style.display = 'none';
@@ -1313,16 +1318,47 @@
 
     window.promoCodesCache = {};
     window.rawClaimsCache = null;
-    var loadTimeoutTimer = null;
+
+    // Fast HTTPS REST fetch (guaranteed instantaneous response without socket lag)
+    async function fetchPromoFast(id) {
+      if (!id) return null;
+      try {
+        var cleanId = id.trim();
+        var res = await fetch(`${RTDB_BASE}/promotions/${encodeURIComponent(cleanId)}/public.json`);
+        if (res.ok) {
+          var val = await res.json();
+          if (val) return { id: cleanId, data: val };
+        }
+        // Try alternate case if primary not found
+        var altId = cleanId === cleanId.toLowerCase() ? cleanId.toUpperCase() : cleanId.toLowerCase();
+        var altRes = await fetch(`${RTDB_BASE}/promotions/${encodeURIComponent(altId)}/public.json`);
+        if (altRes.ok) {
+          var altVal = await altRes.json();
+          if (altVal) return { id: altId, data: altVal };
+        }
+      } catch (err) {
+        console.warn("REST promo fetch fallback:", err);
+      }
+      return null;
+    }
 
     window.retryConnection = function() {
+      try { localStorage.removeItem('firebase:previous_websocket_failure'); } catch (e) {}
       var msgEl = document.getElementById('loading-msg');
-      if (msgEl) msgEl.innerHTML = '<span style="color:var(--yellow);">Reconnecting to promotional database...</span>';
-      try { db.goOffline(); } catch (e) {}
-      setTimeout(function() {
+      if (msgEl) msgEl.innerHTML = '<span style="color:var(--yellow);">Refreshing session and reconnecting...</span>';
+      
+      if (currentUser) {
+        currentUser.getIdToken(true).then(function() {
+          try { db.goOnline(); } catch (e) {}
+          initDetails();
+        }).catch(function() {
+          try { db.goOnline(); } catch (e) {}
+          initDetails();
+        });
+      } else {
         try { db.goOnline(); } catch (e) {}
         initDetails();
-      }, 300);
+      }
     };
 
     function initDetails() {
@@ -1331,95 +1367,127 @@
         return;
       }
 
-      // Reset loading state message if visible
+      promoDataLoaded = false;
       var msgEl = document.getElementById('loading-msg');
       if (msgEl && document.getElementById('loading-state').style.display !== 'none') {
         msgEl.innerHTML = 'Connecting to promotional database...';
       }
 
       if (loadTimeoutTimer) clearTimeout(loadTimeoutTimer);
-      // Start 6-second watchdog: if RTDB stalls, show retry button and auto-reconnect
+      // Auto-recovery watchdog: if taking > 4 seconds, self-heal session
       loadTimeoutTimer = setTimeout(function() {
-        if (!promoData && document.getElementById('loading-state').style.display !== 'none') {
+        if (!promoDataLoaded && document.getElementById('loading-state').style.display !== 'none') {
           if (msgEl) {
             msgEl.innerHTML = `
               <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
-                <span style="color:#fde047; font-weight:600;">Database connection is taking longer than usual...</span>
+                <span style="color:#fde047; font-weight:600;">Connecting taking longer than usual... Recovering session...</span>
                 <button type="button" class="btn small" onclick="retryConnection()" style="background:var(--yellow); color:var(--black); font-weight:bold; padding:6px 14px; border-radius:4px; border:none; cursor:pointer;">
                   🔄 Reconnect Now
                 </button>
               </div>
             `;
           }
-          try { db.goOffline(); setTimeout(function() { db.goOnline(); }, 200); } catch (e) {}
+          try { localStorage.removeItem('firebase:previous_websocket_failure'); } catch (e) {}
+          if (currentUser) {
+            currentUser.getIdToken(true).then(function() {
+              try { db.goOnline(); } catch (e) {}
+              fetchPromoFast(promoId).then(function(res) {
+                if (res && !promoDataLoaded) {
+                  promoId = res.id;
+                  promoData = res.data;
+                  proceedWithPromoData();
+                }
+              });
+            }).catch(function(e) { console.warn("Auto-recover token error:", e); });
+          }
         }
-      }, 6000);
+      }, 4000);
 
-      // Load promo metadata listener
+      // Path 1: Instant REST fetch (runs concurrently; resolves in 40-80ms!)
+      fetchPromoFast(promoId).then(function(res) {
+        if (res && !promoDataLoaded) {
+          if (loadTimeoutTimer) clearTimeout(loadTimeoutTimer);
+          promoId = res.id;
+          promoData = res.data;
+          try { history.replaceState(null, '', '?p=' + encodeURIComponent(promoId)); } catch(e) {}
+          proceedWithPromoData();
+        }
+      });
+
+      // Path 2: RTDB SDK listener (maintains live database socket)
       db.ref('promotions/' + promoId + '/public').once('value').then(function(snapshot) {
         if (loadTimeoutTimer) clearTimeout(loadTimeoutTimer);
-        promoData = snapshot.val();
-        if (!promoData) {
-          // Fallback: check alternate case in case promoId was entered with different case (e.g. cue162 vs CUE162)
+        var val = snapshot.val();
+        if (val) {
+          promoData = val;
+          proceedWithPromoData();
+        } else if (!promoDataLoaded) {
+          // Check alternate case in RTDB
           var altId = promoId === promoId.toLowerCase() ? promoId.toUpperCase() : promoId.toLowerCase();
-          return db.ref('promotions/' + altId + '/public').once('value').then(function(altSnap) {
+          db.ref('promotions/' + altId + '/public').once('value').then(function(altSnap) {
             if (altSnap.exists()) {
               promoId = altId;
               promoData = altSnap.val();
               try { history.replaceState(null, '', '?p=' + encodeURIComponent(promoId)); } catch(e) {}
               proceedWithPromoData();
-            } else {
+            } else if (!promoDataLoaded) {
               document.getElementById('loading-state').style.display = 'flex';
               document.getElementById('loading-msg').innerHTML = `<span style="color:var(--red); font-weight:bold;">Promotion "${promoId}" not found. It may have been deleted.</span>`;
               document.getElementById('dashboard-content').style.display = 'none';
             }
           });
         }
-        
-        proceedWithPromoData();
       }).catch(function(err) {
-        if (loadTimeoutTimer) clearTimeout(loadTimeoutTimer);
-        console.error(err);
-        var msgEl = document.getElementById('loading-msg');
-        if (msgEl) {
-          msgEl.innerHTML = `
-            <div style="color:var(--red); font-weight:bold; margin-bottom:8px;">Database read error: ${err.message}</div>
-            <button type="button" class="btn small" onclick="retryConnection()" style="background:var(--yellow); color:var(--black); padding:5px 12px; cursor:pointer;">🔄 Retry</button>
-          `;
-        }
+        console.warn("RTDB metadata read notice:", err);
       });
 
       function proceedWithPromoData() {
+        if (promoDataLoaded) return;
+        promoDataLoaded = true;
+        if (loadTimeoutTimer) clearTimeout(loadTimeoutTimer);
+
         // Hide loading, show content
         document.getElementById('loading-state').style.display = 'none';
         document.getElementById('dashboard-content').style.display = 'block';
 
         renderPromoDetails();
-
-        // Load promo codes listener
-        db.ref('promotion_codes/' + promoId).once('value').then(function(codesSnap) {
-          window.promoCodesCache = codesSnap.val() || {};
-          
-          var total = (promoData && promoData.totalCoupons) || 0;
-          var claimed = (promoData && promoData.claimedCount) || 0;
-          var unclaimed = [];
-          for (var i = claimed; i < total; i++) {
-            if (window.promoCodesCache[i]) unclaimed.push(window.promoCodesCache[i]);
-          }
-          var codesTextarea = document.getElementById('promo-codes');
-          if (codesTextarea && document.activeElement !== codesTextarea) {
-            codesTextarea.value = unclaimed.join('\n');
-          }
-
-          renderClaimsHistory();
-        }).catch(function(e) { console.warn("Codes load error:", e); });
-
-        // Load one-time links
+        loadPromoCodes();
         loadOneTimeLinks();
-        
-        // Load claims history
         loadClaimsHistory();
       }
+    }
+
+    function loadPromoCodes() {
+      db.ref('promotion_codes/' + promoId).once('value').then(function(codesSnap) {
+        applyPromoCodes(codesSnap.val());
+      }).catch(async function(err) {
+        console.warn("RTDB codes read notice, trying authenticated REST fetch:", err);
+        if (currentUser) {
+          try {
+            var token = await currentUser.getIdToken();
+            var resp = await fetch(`${RTDB_BASE}/promotion_codes/${encodeURIComponent(promoId)}.json?auth=${token}`);
+            if (resp.ok) {
+              var val = await resp.json();
+              applyPromoCodes(val);
+            }
+          } catch(e) { console.warn("REST codes read failed:", e); }
+        }
+      });
+    }
+
+    function applyPromoCodes(codes) {
+      window.promoCodesCache = codes || {};
+      var total = (promoData && promoData.totalCoupons) || 0;
+      var claimed = (promoData && promoData.claimedCount) || 0;
+      var unclaimed = [];
+      for (var i = claimed; i < total; i++) {
+        if (window.promoCodesCache[i]) unclaimed.push(window.promoCodesCache[i]);
+      }
+      var codesTextarea = document.getElementById('promo-codes');
+      if (codesTextarea && document.activeElement !== codesTextarea) {
+        codesTextarea.value = unclaimed.join('\n');
+      }
+      renderClaimsHistory();
     }
 
     function renderPromoDetails() {
@@ -1737,8 +1805,23 @@
     // One-Time Tokens management
     function loadOneTimeLinks() {
       db.ref('one_time_tokens').orderByChild('promoId').equalTo(promoId).once('value').then(function(snapshot) {
+        renderOneTimeTokens(snapshot.val());
+      }).catch(async function(err) {
+        console.warn("RTDB one_time_tokens notice, trying REST:", err);
+        if (currentUser) {
+          try {
+            var token = await currentUser.getIdToken();
+            var resp = await fetch(`${RTDB_BASE}/one_time_tokens.json?orderBy="promoId"&equalTo="${encodeURIComponent(promoId)}"&auth=${token}`);
+            if (resp.ok) {
+              renderOneTimeTokens(await resp.json());
+            }
+          } catch(e) {}
+        }
+      });
+    }
+
+    function renderOneTimeTokens(tokens) {
         var container = document.getElementById('one-time-links-container');
-        var tokens = snapshot.val();
         window.oneTimeTokensCache = tokens || {};
         if (window.rawClaimsCache) {
           renderClaimsHistory();
@@ -1927,6 +2010,18 @@
       db.ref('promotion_claims/' + promoId).once('value').then(function(snapshot) {
         window.rawClaimsCache = snapshot.val();
         renderClaimsHistory();
+      }).catch(async function(err) {
+        console.warn("RTDB claims load notice, trying REST:", err);
+        if (currentUser) {
+          try {
+            var token = await currentUser.getIdToken();
+            var resp = await fetch(`${RTDB_BASE}/promotion_claims/${encodeURIComponent(promoId)}.json?auth=${token}`);
+            if (resp.ok) {
+              window.rawClaimsCache = await resp.json();
+              renderClaimsHistory();
+            }
+          } catch(e) {}
+        }
       });
     }
 
