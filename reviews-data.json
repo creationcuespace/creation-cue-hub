@@ -1,77 +1,17 @@
 {
-  "lastUpdated": "2026-11-02T02:45:33.231Z",
+  "lastUpdated": "2026-11-03T04:02:09.743Z",
   "reviews": [
     {
-      "reviewId": "62f35961-b0d8-4de8-a98e-71ea3698327e",
-      "packageName": "com.creation.cue162watchface",
-      "title": "Watch Face CUE162",
-      "wfId": "cue162",
-      "authorName": "Abdulrahman Busaad",
-      "starRating": 5,
-      "reviewerLanguage": "ar",
-      "deviceMetadata": "hiphi (motorola edge plus (2022))",
-      "text": "\tfantastic",
-      "lastModified": "2026-10-29T16:38:20.000Z"
-    },
-    {
-      "reviewId": "ee8d2a9d-af50-441a-ad38-2834eb1499ba",
-      "packageName": "com.creation.cue162watchface",
-      "title": "Watch Face CUE162",
-      "wfId": "cue162",
-      "authorName": "Igor Kovačević",
-      "starRating": 5,
-      "reviewerLanguage": "sr",
-      "deviceMetadata": "b0s (Galaxy S22 Ultra)",
-      "text": "\tgreat design 👍",
-      "lastModified": "2026-10-29T16:21:41.000Z"
-    },
-    {
-      "reviewId": "9ad705bc-5cd6-483a-898f-60a5858a8344",
-      "packageName": "com.creation.cue162watchface",
-      "title": "Watch Face CUE162",
-      "wfId": "cue162",
-      "authorName": "Galih Mahendra",
+      "reviewId": "f6dd0a4f-3eda-4da7-a18e-f0cb2902a034",
+      "packageName": "com.creationcue.crc071watchface",
+      "title": "Digital Watch Face CRC071",
+      "wfId": "crc071",
+      "authorName": "The Active Chat",
       "starRating": 5,
       "reviewerLanguage": "en",
-      "deviceMetadata": "OP56BBL1 (Find N3)",
-      "text": "\tVery realistic watch face, well done dev! Love it!",
-      "lastModified": "2026-10-29T15:54:28.000Z"
-    },
-    {
-      "reviewId": "abbbd263-22b7-4b18-9a3a-2c4178c4ea4e",
-      "packageName": "com.creation.cue162watchface",
-      "title": "Watch Face CUE162",
-      "wfId": "cue162",
-      "authorName": "Khuzeima Mohamedbhai",
-      "starRating": 5,
-      "reviewerLanguage": "en",
-      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
-      "text": "\tNice bold watch face. loving it.",
-      "lastModified": "2026-10-29T15:44:56.000Z"
-    },
-    {
-      "reviewId": "1a51615b-1df2-400a-b5e8-86b312f5d2d3",
-      "packageName": "com.creation.cue162watchface",
-      "title": "Watch Face CUE162",
-      "wfId": "cue162",
-      "authorName": "Rodrigo Herrera",
-      "starRating": 5,
-      "reviewerLanguage": "es",
-      "deviceMetadata": "aurora (Xiaomi 14 Ultra)",
-      "text": "\tGracias! Me encanta la libertad para personalizarlo!! 👌🏼",
-      "lastModified": "2026-10-29T10:38:40.000Z"
-    },
-    {
-      "reviewId": "3a89ea41-86b7-4850-8372-d208869257f2",
-      "packageName": "com.creation.cue163watchface",
-      "title": "Watch Face CUE163",
-      "wfId": "cue163",
-      "authorName": "albert deseure",
-      "starRating": 5,
-      "reviewerLanguage": "nl",
-      "deviceMetadata": "brussels (REDMI Note 17 Pro Max 5G)",
-      "text": "\tmooi en goed afleesbaar",
-      "lastModified": "2026-10-29T08:07:37.000Z"
+      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
+      "text": "\tFantastic face with great clarity of info panels, nice color options, and spectacular design..",
+      "lastModified": "2026-11-02T03:14:52.000Z"
     }
   ]
 }
