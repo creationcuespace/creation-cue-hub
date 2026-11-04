@@ -4231,7 +4231,11 @@
       
       let finalUrl = url;
       if (url.startsWith('images/')) {
-        finalUrl = window.location.origin + '/' + url;
+        if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || !window.location.origin || window.location.origin === 'null') {
+          finalUrl = 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/' + url;
+        } else {
+          finalUrl = window.location.origin + '/' + url;
+        }
       }
       
       if (finalUrl.startsWith('http') && !finalUrl.includes('wsrv.nl')) {
@@ -4240,15 +4244,30 @@
       return finalUrl;
     }
 
+    function handleImageError(img, rawUrl) {
+      if (!img) return;
+      if (!img.dataset.failedOnce && rawUrl && img.src !== rawUrl) {
+        img.dataset.failedOnce = '1';
+        img.src = rawUrl;
+      } else {
+        img.onerror = null;
+        img.src = 'https://via.placeholder.com/150';
+      }
+    }
+
     function buildCombinedData() {
       combinedData = managerData.map(wf => {
         const packageName = getPackageName(wf.play_store_url) || '';
         const playInfo = versionsData[packageName] || {};
         
+        let rawImageUrl = wf.image_url || '';
         let localImageUrl = wf.image_url || 'https://via.placeholder.com/150';
         if (localImageUrl.includes('/images/')) {
           let filename = localImageUrl.split('/images/')[1];
           localImageUrl = 'images/' + filename;
+          if (!rawImageUrl.startsWith('http')) {
+            rawImageUrl = 'https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/' + filename;
+          }
         }
 
         const brItems = (brazilPricingData && brazilPricingData.items) || {};
@@ -4264,6 +4283,7 @@
             isDone: isBrDone
           } : null,
           imageUrl: localImageUrl,
+          rawImageUrl: rawImageUrl,
           packageName: packageName,
           companionVersion: playInfo.companionVersion || 'N/A',
           companionStatus: playInfo.companionStatus || 'N/A',
@@ -4798,7 +4818,7 @@
                   <input type="checkbox" class="grid-card-cb" data-wf-id="${wf.id}" ${isChecked}>
                 </div>
                 <div class="grid-card-img-wrapper">
-                  <img src="${getOptimizedImageUrl(wf.imageUrl, 240)}" alt="${wf.id}" class="grid-card-img" loading="lazy">
+                  <img src="${getOptimizedImageUrl(wf.imageUrl, 240)}" alt="${wf.id}" class="grid-card-img" loading="lazy" onerror="handleImageError(this, '${escapeHtml(wf.rawImageUrl || '')}')">
                   <span class="grid-card-badge-top">${wf.id.toUpperCase()}</span>
                   ${wf.inReview ? `<span class="grid-card-review-badge">⏳ IN REVIEW</span>` : ''}
                 </div>
@@ -5001,7 +5021,7 @@
         const contentHtml = `
           <td>
             <div class="wf-thumb-wrapper">
-              <img class="wf-thumb" src="${getOptimizedImageUrl(wf.imageUrl, 84)}" alt="${wf.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/150'">
+              <img class="wf-thumb" src="${getOptimizedImageUrl(wf.imageUrl, 84)}" alt="${wf.title}" loading="lazy" onerror="handleImageError(this, '${escapeHtml(wf.rawImageUrl || '')}')">
               <div class="wf-details">
                 <span class="wf-title">${watchFaceName}</span>
                 <span class="wf-id">${wf.id}</span>
@@ -5300,7 +5320,10 @@
           titleEl.style.display = 'none';
         }
       }
-      document.getElementById('details-img').src = getOptimizedImageUrl(wf.imageUrl, 240);
+            const detailsImg = document.getElementById('details-img');
+      detailsImg.dataset.failedOnce = '';
+      detailsImg.onerror = function() { handleImageError(this, wf.rawImageUrl || ''); };
+      detailsImg.src = getOptimizedImageUrl(wf.imageUrl, 240);
       document.getElementById('details-companion-ver').textContent = wf.companionVersion;
       document.getElementById('details-wear-ver').textContent = wf.wearVersion;
       document.getElementById('details-downloads-val').textContent = wf.downloads || 'N/A';
@@ -7250,11 +7273,15 @@
           }
 
           let iconUrl = '';
+          let rawIconUrl = '';
           if (typeof managerData !== 'undefined' && managerData.length > 0) {
             const match = managerData.find(w => w.id === r.wfId);
-            if (match) iconUrl = match.image_url;
+            if (match) {
+              iconUrl = match.image_url;
+              rawIconUrl = match.image_url;
+            }
           }
-          const iconImgHtml = iconUrl ? `<img src="${getOptimizedImageUrl(iconUrl, 48)}" style="width: 28px; height: 28px; border-radius: 4px; object-fit: cover; box-shadow: 0 1px 3px rgba(0,0,0,0.3);" alt="icon">` : '';
+          const iconImgHtml = iconUrl ? `<img src="${getOptimizedImageUrl(iconUrl, 48)}" style="width: 28px; height: 28px; border-radius: 4px; object-fit: cover; box-shadow: 0 1px 3px rgba(0,0,0,0.3);" alt="icon" onerror="handleImageError(this, '${escapeHtml(rawIconUrl)}')">` : '';
 
           const cannedButtonsHtml = CANNED_REVIEW_REPLIES.map((c, idx) => {
             const previewText = c.text ? c.text : 'Clear input to type your own reply by hand...';
@@ -8019,7 +8046,7 @@
           item.onclick = () => { closeRatingHistoryModal(); openDetailsPanel(wf.id); };
           item.innerHTML = `
             <div style="display:flex; align-items:center; gap:8px; overflow:hidden;">
-              <img src="${getOptimizedImageUrl(wf.imageUrl, 40)}" style="width:24px; height:24px; border-radius:3px; object-fit:cover;" onerror="this.src='https://via.placeholder.com/40'">
+              <img src="${getOptimizedImageUrl(wf.imageUrl, 40)}" style="width:24px; height:24px; border-radius:3px; object-fit:cover;" onerror="handleImageError(this, '${escapeHtml(wf.rawImageUrl || '')}')">
               <span style="font-weight:700; color:#fff;">${wf.id.toUpperCase()}</span>
               <span style="color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:130px;">${wf.title}</span>
             </div>
@@ -8037,7 +8064,7 @@
           item.onclick = () => { closeRatingHistoryModal(); openDetailsPanel(wf.id); };
           item.innerHTML = `
             <div style="display:flex; align-items:center; gap:8px; overflow:hidden;">
-              <img src="${getOptimizedImageUrl(wf.imageUrl, 40)}" style="width:24px; height:24px; border-radius:3px; object-fit:cover;" onerror="this.src='https://via.placeholder.com/40'">
+              <img src="${getOptimizedImageUrl(wf.imageUrl, 40)}" style="width:24px; height:24px; border-radius:3px; object-fit:cover;" onerror="handleImageError(this, '${escapeHtml(wf.rawImageUrl || '')}')">
               <span style="font-weight:700; color:#fff;">${wf.id.toUpperCase()}</span>
               <span style="color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:130px;">${wf.title}</span>
             </div>

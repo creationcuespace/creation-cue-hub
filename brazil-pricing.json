@@ -2072,6 +2072,24 @@
       "saleBrl": null,
       "saleEur": null,
       "warningMessage": "Healthy: Brazil price (R$ 14.99) has the 34% tax markup applied."
+    },
+    "cue180": {
+      "id": "cue180",
+      "title": "CUE180",
+      "packageName": "com.creation.cue180watchface",
+      "consoleAppId": "4974342784830372309",
+      "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4974342784830372309/paid-app",
+      "isFree": false,
+      "status": "RAISED",
+      "onSale": false,
+      "needsUpdate": false,
+      "baseEur": 2.09,
+      "currentBrl": 14.99,
+      "targetEur": 2.79,
+      "targetBrl": 14.99,
+      "saleBrl": null,
+      "saleEur": null,
+      "warningMessage": "Healthy: Brazil price (R$ 14.99) has the 34% tax markup applied."
     }
   }
 }
