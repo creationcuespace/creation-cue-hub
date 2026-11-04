@@ -1034,7 +1034,7 @@
         <a href="https://www.reddit.com/r/WearOSFaces/submit" target="_blank" onclick="setActiveSubreddit('r/WearOSFaces')" class="reddit-btn secondary" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 12px; border-color: rgba(255, 197, 24, 0.5); background: rgba(255, 197, 24, 0.04);">
           <div style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:8px;">
             <span style="font-weight:700; color:var(--yellow);">Open r/WearOSFaces ↗</span>
-            <span style="font-size: 10px; background: rgba(255, 197, 24, 0.15); padding: 1px 6px; border-radius: 10px; font-weight: 600; color: var(--yellow);">126k members</span>
+            <span style="font-size: 10px; background: rgba(255, 197, 24, 0.15); padding: 1px 6px; border-radius: 10px; font-weight: 600; color: var(--yellow);">1.5k members</span>
           </div>
           <div id="badge-wearos-history" style="font-size: 10.5px; display: flex; align-items: center; gap: 4px;">
             <div style="display:flex; flex-direction:column; gap:2px;">
@@ -1215,7 +1215,9 @@
                 </div>
                 <select id="log-subreddit-select" style="width:100%; background:var(--black); border:1px solid var(--border); border-radius:4px; color:#fff; font-size:13px; font-weight:600; padding:6px 8px; cursor:pointer;" title="Subreddit where you posted">
                   <option value="r/GalaxyWatchFace">r/GalaxyWatchFace (52k members)</option>
-                  <option value="r/WearOSFaces" selected>r/WearOSFaces (126k members)</option>
+                  <option value="r/AndroidWatchFaces">r/AndroidWatchFaces (40k members)</option>
+                  <option value="r/SamsungWatchFace">r/SamsungWatchFace (5k members)</option>
+                  <option value="r/WearOSFaces" selected>r/WearOSFaces (1.5k members)</option>
                 </select>
               </div>
 
@@ -2566,6 +2568,8 @@ Links to claim your free code and the Play Store link are in the first comment b
         var sel = document.getElementById('log-subreddit-select');
         if (!sel) return;
         if (subLower.includes('galaxywatchface')) sel.value = 'r/GalaxyWatchFace';
+        else if (subLower.includes('androidwatchfaces')) sel.value = 'r/AndroidWatchFaces';
+        else if (subLower.includes('samsungwatchface')) sel.value = 'r/SamsungWatchFace';
         else if (subLower.includes('wearosfaces')) sel.value = 'r/WearOSFaces';
       }
     }
