@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-03T15:02:00Z",
+  "lastUpdated": "2026-11-04T09:00:47.450Z",
   "title": "Brazil Tax & Pricing Status",
   "description": "Tracks whether watch faces in Google Play Brazil have had their prices raised by ~34% to offset heavy Brazilian digital taxes and IOF.",
   "items": {
@@ -136,16 +136,16 @@
       "consoleAppId": "4975889140195445370",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4975889140195445370/paid-app",
       "isFree": false,
-      "status": "ON_SALE",
-      "onSale": true,
-      "needsUpdate": true,
+      "status": "RAISED",
+      "onSale": false,
+      "needsUpdate": false,
       "baseEur": 2.09,
-      "currentBrl": 10.99,
+      "currentBrl": 14.99,
       "targetEur": 2.79,
       "targetBrl": 14.99,
-      "saleBrl": 3.3,
-      "saleEur": 0.63,
-      "warningMessage": "Locked on active sale (R$ 3.30). Play Console locks price changes during sales. Target after sale: R$ 14.99 (or €2.79)."
+      "saleBrl": null,
+      "saleEur": null,
+      "warningMessage": "Healthy: Brazil price (R$ 14.99) has the 34% tax markup applied."
     },
     "cue172": {
       "id": "cue172",
@@ -154,16 +154,16 @@
       "consoleAppId": "4972964843252212952",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4972964843252212952/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 2.09,
-      "currentBrl": 10.99,
+      "currentBrl": 14.99,
       "targetEur": 2.79,
       "targetBrl": 14.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 10.99) is NOT 34% higher. Needs R$ 14.99 (or €2.79 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 14.99) has the 34% tax markup applied."
     },
     "cue171": {
       "id": "cue171",
@@ -190,16 +190,16 @@
       "consoleAppId": "4972670266110187664",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4972670266110187664/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 2.09,
-      "currentBrl": 10.99,
+      "currentBrl": 14.99,
       "targetEur": 2.79,
       "targetBrl": 14.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 10.99) is NOT 34% higher. Needs R$ 14.99 (or €2.79 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 14.99) has the 34% tax markup applied."
     },
     "cue169": {
       "id": "cue169",
@@ -271,7 +271,7 @@
       "targetBrl": 14.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Healthy: Brazil price (R$ 14.30) has the 34% tax markup applied."
+      "warningMessage": "Healthy: Brazil price (R$ 14.3) has the 34% tax markup applied."
     },
     "cue165": {
       "id": "cue165",
@@ -460,16 +460,16 @@
       "consoleAppId": "4974575027411711914",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4974575027411711914/paid-app",
       "isFree": false,
-      "status": "ON_SALE",
-      "onSale": true,
-      "needsUpdate": true,
+      "status": "RAISED",
+      "onSale": false,
+      "needsUpdate": false,
       "baseEur": 1.79,
-      "currentBrl": 10.99,
+      "currentBrl": 13.99,
       "targetEur": 2.39,
       "targetBrl": 13.99,
-      "saleBrl": 3.3,
-      "saleEur": 0.54,
-      "warningMessage": "Locked on active sale (R$ 3.30). Play Console locks price changes during sales. Target after sale: R$ 13.99 (or €2.39)."
+      "saleBrl": null,
+      "saleEur": null,
+      "warningMessage": "Healthy: Brazil price (R$ 13.99) has the 34% tax markup applied."
     },
     "cue154": {
       "id": "cue154",
@@ -485,8 +485,8 @@
       "currentBrl": 13.99,
       "targetEur": 2.39,
       "targetBrl": 13.99,
-      "saleBrl": 4.2,
-      "saleEur": 0.54,
+      "saleBrl": null,
+      "saleEur": null,
       "warningMessage": "Healthy: Brazil price (R$ 13.99) has the 34% tax markup applied."
     },
     "cue153": {
@@ -793,7 +793,7 @@
       "targetBrl": null,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Free watch face"
+      "warningMessage": "Free watch face — no tax markup needed."
     },
     "cue136_plus": {
       "id": "cue136_plus",
@@ -802,16 +802,16 @@
       "consoleAppId": "4972992010093797539",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4972992010093797539/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 2.39,
-      "currentBrl": 11.99,
+      "currentBrl": 16.99,
       "targetEur": 3.19,
       "targetBrl": 16.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 11.99) is NOT 34% higher. Needs R$ 16.99 (or €3.19 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 16.99) has the 34% tax markup applied."
     },
     "cue135": {
       "id": "cue135",
@@ -883,7 +883,7 @@
       "targetBrl": null,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Free watch face"
+      "warningMessage": "Free watch face — no tax markup needed."
     },
     "cue131": {
       "id": "cue131",
@@ -1000,16 +1000,16 @@
       "consoleAppId": "4972905667567682157",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4972905667567682157/paid-app",
       "isFree": false,
-      "status": "ON_SALE",
-      "onSale": true,
-      "needsUpdate": true,
+      "status": "RAISED",
+      "onSale": false,
+      "needsUpdate": false,
       "baseEur": 1.69,
-      "currentBrl": 10.99,
+      "currentBrl": 13.99,
       "targetEur": 2.25,
       "targetBrl": 13.99,
-      "saleBrl": 3.3,
-      "saleEur": 0.51,
-      "warningMessage": "Locked on active sale (R$ 3.30). Play Console locks price changes during sales. Target after sale: R$ 13.99 (or €2.25)."
+      "saleBrl": null,
+      "saleEur": null,
+      "warningMessage": "Healthy: Brazil price (R$ 13.99) has the 34% tax markup applied."
     },
     "cue124": {
       "id": "cue124",
@@ -1018,16 +1018,16 @@
       "consoleAppId": "4974238888246064522",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4974238888246064522/paid-app",
       "isFree": false,
-      "status": "ON_SALE",
-      "onSale": true,
-      "needsUpdate": true,
+      "status": "RAISED",
+      "onSale": false,
+      "needsUpdate": false,
       "baseEur": 1.69,
-      "currentBrl": 9.99,
+      "currentBrl": 13.99,
       "targetEur": 2.25,
       "targetBrl": 13.99,
-      "saleBrl": 3,
-      "saleEur": 0.51,
-      "warningMessage": "Locked on active sale (R$ 3.00). Play Console locks price changes during sales. Target after sale: R$ 13.99 (or €2.25)."
+      "saleBrl": null,
+      "saleEur": null,
+      "warningMessage": "Healthy: Brazil price (R$ 13.99) has the 34% tax markup applied."
     },
     "cue123": {
       "id": "cue123",
@@ -1162,16 +1162,16 @@
       "consoleAppId": "4973873293020753742",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4973873293020753742/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.19,
-      "currentBrl": 6.49,
+      "currentBrl": 9.99,
       "targetEur": 1.59,
       "targetBrl": 9.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 6.49) is NOT 34% higher. Needs R$ 9.99 (or €1.59 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 9.99) has the 34% tax markup applied."
     },
     "cue107": {
       "id": "cue107",
@@ -1243,7 +1243,7 @@
       "targetBrl": null,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Free watch face"
+      "warningMessage": "Free watch face — no tax markup needed."
     },
     "cue103": {
       "id": "cue103",
@@ -1252,16 +1252,16 @@
       "consoleAppId": "4976184962165714251",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4976184962165714251/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.49,
-      "currentBrl": 7.99,
+      "currentBrl": 12.49,
       "targetEur": 1.99,
       "targetBrl": 12.49,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.99) is NOT 34% higher. Needs R$ 12.49 (or €1.99 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 12.49) has the 34% tax markup applied."
     },
     "cue102": {
       "id": "cue102",
@@ -1342,16 +1342,16 @@
       "consoleAppId": "4976410007227103986",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4976410007227103986/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.39,
-      "currentBrl": 7.49,
+      "currentBrl": 10.99,
       "targetEur": 1.85,
       "targetBrl": 10.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.49) is NOT 34% higher. Needs R$ 10.99 (or €1.85 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 10.99) has the 34% tax markup applied."
     },
     "cue097": {
       "id": "cue097",
@@ -1396,16 +1396,16 @@
       "consoleAppId": "4972056163732323959",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4972056163732323959/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.69,
-      "currentBrl": 8.99,
+      "currentBrl": 13.99,
       "targetEur": 2.25,
       "targetBrl": 13.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 8.99) is NOT 34% higher. Needs R$ 13.99 (or €2.25 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 13.99) has the 34% tax markup applied."
     },
     "crc091": {
       "id": "crc091",
@@ -1477,7 +1477,7 @@
       "targetBrl": null,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Free watch face"
+      "warningMessage": "Free watch face — no tax markup needed."
     },
     "crc081": {
       "id": "crc081",
@@ -1486,16 +1486,16 @@
       "consoleAppId": "4976409176419038023",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4976409176419038023/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.39,
-      "currentBrl": 7.49,
+      "currentBrl": 10.99,
       "targetEur": 1.85,
       "targetBrl": 10.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.49) is NOT 34% higher. Needs R$ 10.99 (or €1.85 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 10.99) has the 34% tax markup applied."
     },
     "crc080": {
       "id": "crc080",
@@ -1513,7 +1513,7 @@
       "targetBrl": null,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Free watch face"
+      "warningMessage": "Free watch face — no tax markup needed."
     },
     "crc079": {
       "id": "crc079",
@@ -1522,16 +1522,16 @@
       "consoleAppId": "4973808359762815506",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4973808359762815506/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.49,
-      "currentBrl": 7.99,
+      "currentBrl": 12.49,
       "targetEur": 1.99,
       "targetBrl": 12.49,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.99) is NOT 34% higher. Needs R$ 12.49 (or €1.99 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 12.49) has the 34% tax markup applied."
     },
     "crc072": {
       "id": "crc072",
@@ -1540,16 +1540,16 @@
       "consoleAppId": "4972324157055014223",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4972324157055014223/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.49,
-      "currentBrl": 7.99,
+      "currentBrl": 12.49,
       "targetEur": 1.99,
       "targetBrl": 12.49,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.99) is NOT 34% higher. Needs R$ 12.49 (or €1.99 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 12.49) has the 34% tax markup applied."
     },
     "crc071": {
       "id": "crc071",
@@ -1558,16 +1558,16 @@
       "consoleAppId": "4975605727753447575",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4975605727753447575/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.39,
-      "currentBrl": 7.49,
+      "currentBrl": 10.99,
       "targetEur": 1.85,
       "targetBrl": 10.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.49) is NOT 34% higher. Needs R$ 10.99 (or €1.85 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 10.99) has the 34% tax markup applied."
     },
     "crc069": {
       "id": "crc069",
@@ -1585,7 +1585,7 @@
       "targetBrl": null,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Free watch face"
+      "warningMessage": "Free watch face — no tax markup needed."
     },
     "crc068": {
       "id": "crc068",
@@ -1603,7 +1603,7 @@
       "targetBrl": null,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Free watch face"
+      "warningMessage": "Free watch face — no tax markup needed."
     },
     "crc066": {
       "id": "crc066",
@@ -1612,16 +1612,16 @@
       "consoleAppId": "4974074471027406650",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4974074471027406650/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.49,
-      "currentBrl": 7.99,
+      "currentBrl": 12.49,
       "targetEur": 1.99,
       "targetBrl": 12.49,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.99) is NOT 34% higher. Needs R$ 12.49 (or €1.99 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 12.49) has the 34% tax markup applied."
     },
     "crc065": {
       "id": "crc065",
@@ -1648,16 +1648,16 @@
       "consoleAppId": "4974620326529969533",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4974620326529969533/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.49,
-      "currentBrl": 7.99,
+      "currentBrl": 12.49,
       "targetEur": 1.99,
       "targetBrl": 12.49,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.99) is NOT 34% higher. Needs R$ 12.49 (or €1.99 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 12.49) has the 34% tax markup applied."
     },
     "crc050": {
       "id": "crc050",
@@ -1666,16 +1666,16 @@
       "consoleAppId": "4973818985389088157",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4973818985389088157/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.19,
-      "currentBrl": 6.49,
+      "currentBrl": 9.99,
       "targetEur": 1.59,
       "targetBrl": 9.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 6.49) is NOT 34% higher. Needs R$ 9.99 (or €1.59 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 9.99) has the 34% tax markup applied."
     },
     "crc046": {
       "id": "crc046",
@@ -1693,7 +1693,7 @@
       "targetBrl": null,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Free watch face"
+      "warningMessage": "Free watch face — no tax markup needed."
     },
     "crc044": {
       "id": "crc044",
@@ -1702,16 +1702,16 @@
       "consoleAppId": "4976373139715785769",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4976373139715785769/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.39,
-      "currentBrl": 7.49,
+      "currentBrl": 10.99,
       "targetEur": 1.85,
       "targetBrl": 10.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.49) is NOT 34% higher. Needs R$ 10.99 (or €1.85 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 10.99) has the 34% tax markup applied."
     },
     "crc043": {
       "id": "crc043",
@@ -1720,16 +1720,16 @@
       "consoleAppId": "4972537081556653862",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4972537081556653862/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.39,
-      "currentBrl": 7.49,
+      "currentBrl": 10.99,
       "targetEur": 1.85,
       "targetBrl": 10.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.49) is NOT 34% higher. Needs R$ 10.99 (or €1.85 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 10.99) has the 34% tax markup applied."
     },
     "crc042": {
       "id": "crc042",
@@ -1738,16 +1738,16 @@
       "consoleAppId": "4972295724775576414",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4972295724775576414/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.39,
-      "currentBrl": 7.49,
+      "currentBrl": 10.99,
       "targetEur": 1.85,
       "targetBrl": 10.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.49) is NOT 34% higher. Needs R$ 10.99 (or €1.85 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 10.99) has the 34% tax markup applied."
     },
     "crc041": {
       "id": "crc041",
@@ -1765,7 +1765,7 @@
       "targetBrl": null,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Free watch face"
+      "warningMessage": "Free watch face — no tax markup needed."
     },
     "crc039": {
       "id": "crc039",
@@ -1801,7 +1801,7 @@
       "targetBrl": null,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Free watch face"
+      "warningMessage": "Free watch face — no tax markup needed."
     },
     "crc035": {
       "id": "crc035",
@@ -1810,16 +1810,16 @@
       "consoleAppId": "4973147972107421039",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4973147972107421039/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.39,
-      "currentBrl": 7.49,
+      "currentBrl": 10.99,
       "targetEur": 1.85,
       "targetBrl": 10.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.49) is NOT 34% higher. Needs R$ 10.99 (or €1.85 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 10.99) has the 34% tax markup applied."
     },
     "crc034": {
       "id": "crc034",
@@ -1828,16 +1828,16 @@
       "consoleAppId": "4973761396193814606",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4973761396193814606/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.39,
-      "currentBrl": 7.49,
+      "currentBrl": 10.99,
       "targetEur": 1.85,
       "targetBrl": 10.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.49) is NOT 34% higher. Needs R$ 10.99 (or €1.85 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 10.99) has the 34% tax markup applied."
     },
     "crc032": {
       "id": "crc032",
@@ -1864,16 +1864,16 @@
       "consoleAppId": "4973006704759632470",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4973006704759632470/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.49,
-      "currentBrl": 7.99,
+      "currentBrl": 12.49,
       "targetEur": 1.99,
       "targetBrl": 12.49,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.99) is NOT 34% higher. Needs R$ 12.49 (or €1.99 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 12.49) has the 34% tax markup applied."
     },
     "crc030": {
       "id": "crc030",
@@ -1882,16 +1882,16 @@
       "consoleAppId": "4972680421367657491",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4972680421367657491/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.49,
-      "currentBrl": 7.99,
+      "currentBrl": 12.49,
       "targetEur": 1.99,
       "targetBrl": 12.49,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.99) is NOT 34% higher. Needs R$ 12.49 (or €1.99 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 12.49) has the 34% tax markup applied."
     },
     "crc028": {
       "id": "crc028",
@@ -1900,16 +1900,16 @@
       "consoleAppId": "4973827486264106716",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4973827486264106716/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.39,
-      "currentBrl": 7.49,
+      "currentBrl": 10.99,
       "targetEur": 1.85,
       "targetBrl": 10.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.49) is NOT 34% higher. Needs R$ 10.99 (or €1.85 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 10.99) has the 34% tax markup applied."
     },
     "crc027": {
       "id": "crc027",
@@ -1927,7 +1927,7 @@
       "targetBrl": null,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Free watch face"
+      "warningMessage": "Free watch face — no tax markup needed."
     },
     "cue024": {
       "id": "cue024",
@@ -1936,16 +1936,16 @@
       "consoleAppId": "4975474795417885911",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4975474795417885911/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.19,
-      "currentBrl": 5.49,
+      "currentBrl": 9.99,
       "targetEur": 1.59,
       "targetBrl": 9.99,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 5.49) is NOT 34% higher. Needs R$ 9.99 (or €1.59 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 9.99) has the 34% tax markup applied."
     },
     "crc023": {
       "id": "crc023",
@@ -1963,7 +1963,7 @@
       "targetBrl": null,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Free watch face"
+      "warningMessage": "Free watch face — no tax markup needed."
     },
     "ccwf022": {
       "id": "ccwf022",
@@ -1972,16 +1972,16 @@
       "consoleAppId": "4972946890736556320",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4972946890736556320/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.49,
-      "currentBrl": 7.99,
+      "currentBrl": 12.49,
       "targetEur": 1.99,
       "targetBrl": 12.49,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.99) is NOT 34% higher. Needs R$ 12.49 (or €1.99 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 12.49) has the 34% tax markup applied."
     },
     "cc014": {
       "id": "cc014",
@@ -1990,16 +1990,16 @@
       "consoleAppId": "4974441939368594230",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4974441939368594230/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.49,
-      "currentBrl": 8.49,
+      "currentBrl": 12.49,
       "targetEur": 1.99,
       "targetBrl": 12.49,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 8.49) is NOT 34% higher. Needs R$ 12.49 (or €1.99 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 12.49) has the 34% tax markup applied."
     },
     "cc010": {
       "id": "cc010",
@@ -2008,16 +2008,16 @@
       "consoleAppId": "4973277267355085522",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4973277267355085522/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.49,
-      "currentBrl": 8.49,
+      "currentBrl": 12.49,
       "targetEur": 1.99,
       "targetBrl": 12.49,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 8.49) is NOT 34% higher. Needs R$ 12.49 (or €1.99 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 12.49) has the 34% tax markup applied."
     },
     "cc005": {
       "id": "cc005",
@@ -2026,16 +2026,16 @@
       "consoleAppId": "4975544989105804591",
       "pricingConsoleUrl": "https://play.google.com/console/u/0/developers/7609098870161748513/app/4975544989105804591/paid-app",
       "isFree": false,
-      "status": "NEEDS_UPDATE",
+      "status": "RAISED",
       "onSale": false,
-      "needsUpdate": true,
+      "needsUpdate": false,
       "baseEur": 1.49,
-      "currentBrl": 7.99,
+      "currentBrl": 12.49,
       "targetEur": 1.99,
       "targetBrl": 12.49,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Brazil price (R$ 7.99) is NOT 34% higher. Needs R$ 12.49 (or €1.99 in Play Console) to offset Brazil taxes."
+      "warningMessage": "Healthy: Brazil price (R$ 12.49) has the 34% tax markup applied."
     },
     "cueindus": {
       "id": "cueindus",
@@ -2053,7 +2053,7 @@
       "targetBrl": null,
       "saleBrl": null,
       "saleEur": null,
-      "warningMessage": "Free watch face"
+      "warningMessage": "Free watch face — no tax markup needed."
     },
     "cueindus_pro": {
       "id": "cueindus_pro",
@@ -2090,6 +2090,15 @@
       "saleBrl": null,
       "saleEur": null,
       "warningMessage": "Healthy: Brazil price (R$ 14.99) has the 34% tax markup applied."
+    },
+    "cue138": {
+      "id": "cue138",
+      "title": "CUE138",
+      "packageName": "com.creation.cue138watchface",
+      "status": "ERR",
+      "onSale": false,
+      "needsUpdate": false,
+      "warningMessage": "Free watch face — no tax markup needed."
     }
   }
 }
