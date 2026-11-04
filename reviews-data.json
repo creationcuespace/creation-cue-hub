@@ -1,4 +1,112 @@
 {
-  "lastUpdated": "2026-11-03T06:48:29.112Z",
-  "reviews": []
+  "lastUpdated": "2026-11-04T03:17:33.716Z",
+  "reviews": [
+    {
+      "reviewId": "0a5040bc-c432-4ade-9ba6-48263b8e9950",
+      "packageName": "com.creation.cue180watchface",
+      "title": "Digital Watch Face CUE180",
+      "wfId": "cue180",
+      "authorName": "Robert Wickline",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "m2q (Galaxy S26+)",
+      "topics": [
+        "Hardware",
+        "Loved it"
+      ],
+      "text": "\tVery nice Wf looks great on my Galaxy watch ultra 2. really like the number and letter font! No Leading Zero is Always a Big Plus! keep up the great work Dev! recommended!",
+      "lastModified": "2026-11-03T20:03:43.000Z"
+    },
+    {
+      "reviewId": "89a07925-75c1-45a5-a124-b5316479ca57",
+      "packageName": "com.creation.cue180watchface",
+      "title": "Digital Watch Face CUE180",
+      "wfId": "cue180",
+      "authorName": "Abdmouleh Hichem",
+      "starRating": 5,
+      "reviewerLanguage": "fr",
+      "deviceMetadata": "a55x (Galaxy A55 5G)",
+      "topics": [
+        "Loved it"
+      ],
+      "text": "\tu keep impressing us with beautiful watchfaces . keep up the good work",
+      "lastModified": "2026-11-03T19:33:37.000Z"
+    },
+    {
+      "reviewId": "0aa9e8e4-9ec6-46f9-949f-03d424dc38ce",
+      "packageName": "com.creation.cue180watchface",
+      "title": "Digital Watch Face CUE180",
+      "wfId": "cue180",
+      "authorName": "P. A.",
+      "starRating": 5,
+      "reviewerLanguage": "de",
+      "deviceMetadata": "pipa (Xiaomi Pad 6)",
+      "topics": [],
+      "text": "\tVielen Dank für ein sehr schön gestaltetes Zifferblatt.Sehr übersichtlich und detailreich. Ablesbarkeit ist top.",
+      "lastModified": "2026-11-03T19:27:23.000Z"
+    },
+    {
+      "reviewId": "3e0d99ca-4bce-4b40-874b-c61cfc664a67",
+      "packageName": "com.creation.cue162watchface",
+      "title": "Watch Face CUE162",
+      "wfId": "cue162",
+      "authorName": "Bill Mathioudakis",
+      "starRating": 5,
+      "reviewerLanguage": "el",
+      "deviceMetadata": "leap (motorola razr 60 ultra)",
+      "topics": [
+        "Hardware",
+        "Loved it"
+      ],
+      "text": "\tVery nice watch face with a lot of customization! It looks great on my Motorola Watch Ultra! 😉",
+      "lastModified": "2026-11-03T17:53:51.000Z"
+    },
+    {
+      "reviewId": "0d8775f8-e797-4bc0-a9a0-47b706249265",
+      "packageName": "com.creation.cue180watchface",
+      "title": "Digital Watch Face CUE180",
+      "wfId": "cue180",
+      "authorName": "Grigorescu Ionut",
+      "starRating": 5,
+      "reviewerLanguage": "ro",
+      "deviceMetadata": "HNBVL (PORSCHE DESIGN HONOR Magic6 RSR)",
+      "topics": [
+        "AOD",
+        "Complications",
+        "Loved it"
+      ],
+      "text": "\tThis is by the most beautiful design that I ever see from my entire big collection of designs.Futuristic line ,special AOD and so useful .I recommend it from the bottom of my heart ❤️",
+      "lastModified": "2026-11-03T17:07:15.000Z"
+    },
+    {
+      "reviewId": "2a4bac5d-4f66-49f4-bf58-ae86146eaf72",
+      "packageName": "com.creation.cue180watchface",
+      "title": "Digital Watch Face CUE180",
+      "wfId": "cue180",
+      "authorName": "Etienne Willemse",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "r13s (Galaxy S25 FE)",
+      "topics": [
+        "Loved it"
+      ],
+      "text": "\tOh yeah what an awesome looking digital design. Super cool and so modern looking. Absolutely classic. Thank you. Best designer around",
+      "lastModified": "2026-11-03T16:39:12.000Z"
+    },
+    {
+      "reviewId": "456d8ed4-315a-46e8-8b75-c93383f7e0d8",
+      "packageName": "com.creation.cue180watchface",
+      "title": "Digital Watch Face CUE180",
+      "wfId": "cue180",
+      "authorName": "Eriq Olin",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "pa3q (Galaxy S25 Ultra)",
+      "topics": [
+        "Loved it"
+      ],
+      "text": "\tsuper nice!! ✨⭐",
+      "lastModified": "2026-11-03T16:34:42.000Z"
+    }
+  ]
 }

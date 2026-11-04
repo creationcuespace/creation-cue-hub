@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-03T06:48:29.108Z",
+  "lastUpdated": "2026-11-04T03:17:33.715Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -168,6 +168,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 30,
       "totalWeight": 3827
+    },
+    {
+      "date": "2026-11-04",
+      "timestamp": "2026-11-04T03:17:33.715Z",
+      "avgRating": 4.5,
+      "weightedAvg": 4.52,
+      "ratedCount": 30,
+      "totalWeight": 3833
     }
   ],
   "results": [
@@ -192,8 +200,8 @@
       "rating": 4.8,
       "ratingCount": "14",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -218,8 +226,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -244,8 +252,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -270,8 +278,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -297,8 +305,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -324,8 +332,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -350,8 +358,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -376,8 +384,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -402,8 +410,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -428,8 +436,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -454,8 +462,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -480,8 +488,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -506,8 +514,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -534,8 +542,8 @@
       "rating": 5,
       "ratingCount": "59",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -560,8 +568,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -586,8 +594,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -612,8 +620,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -638,8 +646,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -664,8 +672,8 @@
       "rating": 4.2,
       "ratingCount": "14",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -690,8 +698,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -716,8 +724,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -742,8 +750,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -768,8 +776,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -794,8 +802,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -820,8 +828,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -846,8 +854,8 @@
       "rating": 4.8,
       "ratingCount": "28",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -872,8 +880,8 @@
       "rating": 4.8,
       "ratingCount": "25",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -898,8 +906,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -924,8 +932,8 @@
       "rating": 4.3,
       "ratingCount": "52",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -950,8 +958,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -976,8 +984,8 @@
       "rating": 4.2,
       "ratingCount": "13",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1002,8 +1010,8 @@
       "rating": 4.2,
       "ratingCount": "26",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1028,8 +1036,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1054,8 +1062,8 @@
       "rating": 4,
       "ratingCount": "20",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1080,8 +1088,8 @@
       "rating": 4.7,
       "ratingCount": "47",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1106,8 +1114,8 @@
       "rating": 4.9,
       "ratingCount": "19",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1132,8 +1140,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1158,8 +1166,8 @@
       "rating": 4.6,
       "ratingCount": "82",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1184,8 +1192,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1210,8 +1218,8 @@
       "rating": 4.5,
       "ratingCount": "14",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1236,8 +1244,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1262,8 +1270,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1288,8 +1296,8 @@
       "rating": 4.6,
       "ratingCount": "416",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1314,8 +1322,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1340,8 +1348,8 @@
       "rating": 4.6,
       "ratingCount": "20",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1366,8 +1374,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1392,8 +1400,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1418,8 +1426,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1444,8 +1452,8 @@
       "rating": 5,
       "ratingCount": "9",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1470,8 +1478,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1496,8 +1504,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1522,8 +1530,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1548,8 +1556,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1574,8 +1582,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1600,8 +1608,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1626,8 +1634,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1652,8 +1660,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1678,8 +1686,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1707,8 +1715,8 @@
       "rating": 4.5,
       "ratingCount": "98",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1733,8 +1741,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1759,8 +1767,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1785,8 +1793,8 @@
       "rating": 4.6,
       "ratingCount": "48",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1811,8 +1819,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1837,8 +1845,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1863,8 +1871,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1889,8 +1897,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1915,8 +1923,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1939,10 +1947,10 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.4,
-      "ratingCount": "35",
+      "ratingCount": "36",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1967,8 +1975,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -1993,8 +2001,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2019,8 +2027,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2045,8 +2053,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2071,8 +2079,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2097,8 +2105,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2123,8 +2131,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2149,8 +2157,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2175,8 +2183,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2201,8 +2209,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2227,8 +2235,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2253,8 +2261,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2279,8 +2287,8 @@
       "rating": 3,
       "ratingCount": "7",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2305,8 +2313,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2331,8 +2339,8 @@
       "rating": 4.3,
       "ratingCount": "657",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2357,8 +2365,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2383,8 +2391,8 @@
       "rating": 4.2,
       "ratingCount": "20",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2409,8 +2417,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2436,8 +2444,8 @@
       "rating": 4.4,
       "ratingCount": "93",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2460,10 +2468,10 @@
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "10K+",
       "rating": 4.9,
-      "ratingCount": "66",
+      "ratingCount": "68",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2488,8 +2496,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2514,8 +2522,8 @@
       "rating": 4.8,
       "ratingCount": "12",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2540,8 +2548,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2566,8 +2574,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2592,8 +2600,8 @@
       "rating": 4.7,
       "ratingCount": "1.1K",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2618,8 +2626,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2644,8 +2652,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2670,8 +2678,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2696,8 +2704,8 @@
       "rating": 4.2,
       "ratingCount": "473",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2722,8 +2730,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2748,8 +2756,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2774,8 +2782,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2800,8 +2808,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2826,8 +2834,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2852,8 +2860,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2878,8 +2886,8 @@
       "rating": 4.3,
       "ratingCount": "20",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2904,8 +2912,8 @@
       "rating": 4.8,
       "ratingCount": "21",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2930,8 +2938,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2956,8 +2964,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -2982,8 +2990,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -3008,8 +3016,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -3034,8 +3042,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -3060,8 +3068,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -3086,8 +3094,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -3110,10 +3118,10 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "319",
+      "ratingCount": "322",
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -3140,8 +3148,8 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     },
@@ -3166,8 +3174,34 @@
       "rating": null,
       "ratingCount": null,
       "vitals": {
-        "crashRate": 0.0,
-        "anrRate": 0.0,
+        "crashRate": 0,
+        "anrRate": 0,
+        "status": "healthy"
+      }
+    },
+    {
+      "id": "cue180",
+      "title": "CUE180",
+      "playStoreTitle": "Digital Watch Face CUE180",
+      "packageName": "com.creation.cue180watchface",
+      "companionVersion": "3 (6.1.0)",
+      "companionStatus": "completed",
+      "companionRollout": "100%",
+      "companionNotes": "None",
+      "wearVersion": "10000001 (1.0.0)",
+      "wearStatus": "completed",
+      "wearRollout": "100%",
+      "wearNotes": "None",
+      "storeLanguages": [
+        "en-GB"
+      ],
+      "lastUpdatedDate": "Oct 27, 2026",
+      "downloads": "1+",
+      "rating": null,
+      "ratingCount": null,
+      "vitals": {
+        "crashRate": 0,
+        "anrRate": 0,
         "status": "healthy"
       }
     }
