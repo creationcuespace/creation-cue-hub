@@ -1427,6 +1427,46 @@
       color: var(--yellow);
     }
 
+    .btn-br-copy-eur {
+      background: #2563eb !important;
+      border: 1px solid #3b82f6 !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      font-size: 11px !important;
+      padding: 5px 10px !important;
+      border-radius: 6px !important;
+      cursor: pointer !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .btn-br-copy-eur:hover {
+      background: #1d4ed8 !important;
+      border-color: #60a5fa !important;
+      color: #ffffff !important;
+    }
+
+    .btn-br-copy-brl {
+      background: #059669 !important;
+      border: 1px solid #10b981 !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      font-size: 11px !important;
+      padding: 5px 10px !important;
+      border-radius: 6px !important;
+      cursor: pointer !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .btn-br-copy-brl:hover {
+      background: #047857 !important;
+      border-color: #34d399 !important;
+      color: #ffffff !important;
+    }
+
     .version-badge {
       display: inline-block;
       padding: 4px 8px;
@@ -3319,10 +3359,10 @@
           <a id="details-br-console-link" href="#" target="_blank" class="btn-link" style="background: #7c3aed; border: 1px solid #8b5cf6; color: #fff; font-size: 11px; padding: 5px 10px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; font-weight: 600;">
             ⚡ Open Paid-App Pricing
           </a>
-          <button id="details-br-copy-eur" type="button" class="copy-btn" style="padding: 5px 8px; font-size: 11px;" onclick="copyVal(this.dataset.val, this)">
+          <button id="details-br-copy-eur" type="button" class="btn-br-copy-eur" onclick="copyVal(this.dataset.val, this)" title="Copy target EUR price for Play Console">
             Copy €2.79
           </button>
-          <button id="details-br-copy-brl" type="button" class="copy-btn" style="padding: 5px 8px; font-size: 11px; background: #059669; border-color: #10b981;" onclick="copyVal(this.dataset.val, this)">
+          <button id="details-br-copy-brl" type="button" class="btn-br-copy-brl" onclick="copyVal(this.dataset.val, this)" title="Copy target Brazil BRL price">
             Copy R$ 14.99
           </button>
           <button id="details-br-toggle-done" type="button" class="header-btn" style="padding: 5px 10px; font-size: 11px; margin-left: auto; border-color: #f5c518; color: #f5c518;" onclick="toggleDrawerBrazilDone()">
@@ -8287,8 +8327,8 @@
       if (!val) return;
       navigator.clipboard.writeText(val);
       const old = btn.textContent;
-      btn.textContent = 'Copied!';
-      setTimeout(() => btn.textContent = old, 1000);
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => btn.textContent = old, 1200);
     }
 </script>
 
