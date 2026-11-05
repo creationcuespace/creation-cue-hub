@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-04T08:33:32.449Z",
+  "lastUpdated": "2026-11-05T03:44:36.491Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -176,6 +176,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 30,
       "totalWeight": 3833
+    },
+    {
+      "date": "2026-11-05",
+      "timestamp": "2026-11-05T03:44:36.491Z",
+      "avgRating": 4.5,
+      "weightedAvg": 4.52,
+      "ratedCount": 30,
+      "totalWeight": 3832
     }
   ],
   "results": [
@@ -852,7 +860,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.8,
-      "ratingCount": "28",
+      "ratingCount": "29",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -2468,7 +2476,7 @@
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "10K+",
       "rating": 4.9,
-      "ratingCount": "68",
+      "ratingCount": "66",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
