@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-05T15:58:40.402Z",
+  "lastUpdated": "2026-11-05T16:23:01.254Z",
   "taxpayer": {
     "name": "Σωτήριος Λιόντος του Κωνσταντίνου",
     "afm": "047155049",
@@ -298,11 +298,14 @@
       "deliverable": "gitlab-playstore-developer-automation-suite.tar.gz",
       "deliveryDeadline": "11/11/2026",
       "feeUsd": 1885,
-      "feeEurEst": 1730,
+      "feeEurEst": 1621.5,
       "vatRate": "0% (Άρθρο 14 παρ. 2 περ. α' - Τρίτη Χώρα)",
       "withholdingTax": "0% (W-8BEN / ΣΑΔΦ Ελλάδας - ΗΠΑ)",
-      "status": "Υπογεγραμμένο (Executed) / Αναμονή Παράδοσης & Έκδοσης ΤΠΥ",
-      "documentPath": "documents/contracts/Google_LLC_PCA_Agreement_Signed_2026-10-12_n473618.pdf"
+      "status": "Παραδόθηκε / Εγκεκριμένη Πληρωμή 15/11/2026 (1.621,50 €) - Αναμονή Εκκαθάρισης & Έκδοσης ΤΠΥ",
+      "documentPath": "documents/contracts/Google_LLC_PCA_Agreement_Signed_2026-10-12_n473618.pdf",
+      "feeEurApproved": 1621.5,
+      "expectedPayoutDate": "15/11/2026",
+      "deliveryStatus": "Παραδόθηκε επιτυχώς (Initial Delivery Completed via Offer Management Portal)"
     }
   ],
   "forecast2027": {
