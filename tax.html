@@ -1198,7 +1198,7 @@
         <div class="panel-box" style="margin-bottom: 28px;">
             <div class="panel-title">
                 <span>🧾 Καταχωρημένα Έξοδα Χρήσης 2026: "CREATION CUE"</span>
-                <span style="font-size:13px; color:var(--success);">Σύνολο: 60,00 € (100% Εκπιπτόμενα)</span>
+                <span style="font-size:13px; color:var(--success);" id="expenses-total-badge">Σύνολο: 259,83 € (100% Εκπιπτόμενα)</span>
             </div>
 
             <div class="table-responsive">
@@ -1660,7 +1660,9 @@
             const tbody = document.getElementById("expenses-table-body");
             if (tbody && d.expenses2026) {
                 tbody.innerHTML = "";
+                let totalExp = 0;
                 d.expenses2026.forEach(item => {
+                    totalExp += item.amount;
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
                         <td class="cell-nowrap"><strong>${item.date}</strong></td>
@@ -1673,6 +1675,10 @@
                     `;
                     tbody.appendChild(tr);
                 });
+                const expBadge = document.getElementById("expenses-total-badge");
+                if (expBadge) {
+                    expBadge.textContent = `Σύνολο: ${totalExp.toLocaleString("el-GR", { minimumFractionDigits: 2 })} € (100% Εκπιπτόμενα)`;
+                }
             }
 
             // Render Subsidies Monitor
