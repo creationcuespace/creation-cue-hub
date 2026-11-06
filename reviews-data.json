@@ -1,33 +1,18 @@
 {
-  "lastUpdated": "2026-11-05T03:44:36.493Z",
+  "lastUpdated": "2026-11-06T03:40:24.949Z",
   "reviews": [
     {
-      "reviewId": "e69861ca-c15e-4b88-88c0-8dfb6f3833c7",
-      "packageName": "com.creation.cue180watchface",
-      "title": "Digital Watch Face CUE180",
-      "wfId": "cue180",
-      "authorName": "Tony Whaley",
+      "reviewId": "462668b0-6339-4368-bc6a-3614cd20cd34",
+      "packageName": "com.creation.cueinduswatchface",
+      "title": "Watch Face CUE Indus",
+      "wfId": "cueindus",
+      "authorName": "Johan Smith",
       "starRating": 5,
-      "reviewerLanguage": "en",
-      "deviceMetadata": "m3q (Galaxy S26 Ultra)",
-      "topics": [
-        "Loved it"
-      ],
-      "text": "\tawesome looking design, workmanship is amazing, perfect color choices, all the information I need is displayed in easy to reads places. fabulous job 👏 👍 👌",
-      "lastModified": "2026-11-04T19:35:17.000Z"
-    },
-    {
-      "reviewId": "737c40f2-5541-464f-af80-68c349379d01",
-      "packageName": "com.creation.cue180watchface",
-      "title": "Digital Watch Face CUE180",
-      "wfId": "cue180",
-      "authorName": "albert deseure",
-      "starRating": 5,
-      "reviewerLanguage": "nl",
-      "deviceMetadata": "brussels (REDMI Note 17 Pro Max 5G)",
+      "reviewerLanguage": "es",
+      "deviceMetadata": "fresh8bs (Galaxy Watch8)",
       "topics": [],
-      "text": "\toverzichtelijk en mooi om naar te kijken",
-      "lastModified": "2026-11-04T11:16:23.000Z"
+      "text": "\tMuy bonito",
+      "lastModified": "2026-11-06T00:04:38.000Z"
     }
   ]
 }
