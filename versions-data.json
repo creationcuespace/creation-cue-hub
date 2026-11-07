@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-06T03:40:24.947Z",
+  "lastUpdated": "2026-11-07T03:13:40.569Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -192,6 +192,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 30,
       "totalWeight": 3839
+    },
+    {
+      "date": "2026-11-07",
+      "timestamp": "2026-11-07T03:13:40.569Z",
+      "avgRating": 4.5,
+      "weightedAvg": 4.52,
+      "ratedCount": 30,
+      "totalWeight": 3843
     }
   ],
   "results": [
@@ -1882,7 +1890,7 @@
       "storeLanguages": [
         "en-GB"
       ],
-      "lastUpdatedDate": "Oct 22, 2026",
+      "lastUpdatedDate": "Oct 21, 2026",
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
@@ -2455,7 +2463,7 @@
         "en-US",
         "ko-KR"
       ],
-      "lastUpdatedDate": "Aug 27, 2026",
+      "lastUpdatedDate": "Aug 26, 2026",
       "downloads": "10K+",
       "rating": 4.4,
       "ratingCount": "96",
@@ -2484,7 +2492,7 @@
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "10K+",
       "rating": 4.9,
-      "ratingCount": "66",
+      "ratingCount": "67",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -3134,7 +3142,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "325",
+      "ratingCount": "328",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
