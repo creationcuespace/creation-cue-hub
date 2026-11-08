@@ -1,4 +1,31 @@
 {
-  "lastUpdated": "2026-11-07T03:13:40.571Z",
-  "reviews": []
+  "lastUpdated": "2026-11-08T02:43:13.393Z",
+  "reviews": [
+    {
+      "reviewId": "ad5bb352-43b7-4bfb-a700-6eb4a8d119d4",
+      "packageName": "com.creation.cue147watchface",
+      "title": "Watch Face CUE147",
+      "wfId": "cue147",
+      "authorName": "Ivan alejandro tinajero",
+      "starRating": 5,
+      "reviewerLanguage": "es",
+      "deviceMetadata": "kodiak (Pixel 11 Pro XL)",
+      "topics": [],
+      "text": "\tmuy bonita",
+      "lastModified": "2026-11-07T18:26:39.000Z"
+    },
+    {
+      "reviewId": "804ad083-4dfc-4525-b464-e23fa584865d",
+      "packageName": "com.creation.cue136watchface",
+      "title": "Analog Watch Face CUE136",
+      "wfId": "cue136",
+      "authorName": "Ronald Salvador",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "e1s (Galaxy S24)",
+      "topics": [],
+      "text": "\ti can't believe that this is free. thanks a lot, generous, creative maker Ű",
+      "lastModified": "2026-11-07T05:49:29.000Z"
+    }
+  ]
 }

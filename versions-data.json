@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-07T03:13:40.569Z",
+  "lastUpdated": "2026-11-08T02:43:13.390Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -200,6 +200,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 30,
       "totalWeight": 3843
+    },
+    {
+      "date": "2026-11-08",
+      "timestamp": "2026-11-08T02:43:13.390Z",
+      "avgRating": 4.5,
+      "weightedAvg": 4.52,
+      "ratedCount": 30,
+      "totalWeight": 3846
     }
   ],
   "results": [
@@ -3142,7 +3150,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "328",
+      "ratingCount": "331",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -3212,15 +3220,15 @@
       "companionStatus": "completed",
       "companionRollout": "100%",
       "companionNotes": "None",
-      "wearVersion": "10000001 (1.0.0)",
+      "wearVersion": "10000002 (1.1.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "None",
+      "wearNotes": "Centered the long text slightly higher and added a few more colors.",
       "storeLanguages": [
         "en-GB"
       ],
       "lastUpdatedDate": "Oct 27, 2026",
-      "downloads": "1+",
+      "downloads": "10+",
       "rating": null,
       "ratingCount": null,
       "vitals": {
