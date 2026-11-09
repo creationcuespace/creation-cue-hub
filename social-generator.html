@@ -2486,14 +2486,14 @@
             currentSocialTab = platform;
 
             // Scroll so the top of the tab content and first comment are visible
-            const tabsHeader = document.querySelector('.tabs-header');
-            if (tabsHeader) {
+            const targetElement = document.getElementById('results-panel') || document.querySelector('.output-panel');
+            if (targetElement) {
                 const isAdmin = document.body.classList.contains('admin-mode');
                 const totalTopOffset = window.innerWidth <= 600 ? (isAdmin ? 88 : 48) : (isAdmin ? 101 : 61);
-                const elementPosition = tabsHeader.getBoundingClientRect().top + window.pageYOffset;
-                const targetScrollY = elementPosition - totalTopOffset;
+                const panelTop = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                const targetScrollY = Math.max(0, panelTop - totalTopOffset);
                 window.scrollTo({
-                    top: Math.max(0, targetScrollY),
+                    top: targetScrollY,
                     behavior: 'smooth'
                 });
             }
