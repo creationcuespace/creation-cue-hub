@@ -164,6 +164,13 @@
             box-shadow: 0 4px 12px var(--primary-glow);
         }
 
+        .header-btn.btn-copied {
+            background: #10b981 !important;
+            border-color: #059669 !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.45) !important;
+        }
+
         /* Main Container Layout */
         .app-container {
             width: 100%;
@@ -1740,7 +1747,7 @@
                                         </svg>
                                         <span id="char-count-tiktok">0 / 2200</span>
                                     </div>
-                                    <button class="header-btn primary-btn" onclick="copyResultText('tiktok')">Copy Caption</button>
+                                    <button class="header-btn primary-btn" onclick="copyResultText('tiktok', this)">Copy Caption</button>
                                 </div>
                             </div>
                             
@@ -1752,7 +1759,7 @@
                                         <textarea class="result-box comment-textarea" id="res-comment-tiktok"></textarea>
                                     </div>
                                     <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
-                                        <button class="header-btn primary-btn" onclick="copyCommentText('tiktok')">Copy Comment</button>
+                                        <button class="header-btn primary-btn" onclick="copyCommentText('tiktok', this)">Copy Comment</button>
                                     </div>
                                 </div>
                             </div>
@@ -1816,7 +1823,7 @@
                                         </svg>
                                         <span id="char-count-instagram">0 / 2200</span>
                                     </div>
-                                    <button class="header-btn primary-btn" onclick="copyResultText('instagram')">Copy Caption</button>
+                                    <button class="header-btn primary-btn" onclick="copyResultText('instagram', this)">Copy Caption</button>
                                 </div>
                             </div>
                             
@@ -1828,14 +1835,14 @@
                                         <textarea class="result-box comment-textarea" id="res-comment-instagram"></textarea>
                                     </div>
                                     <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
-                                        <button class="header-btn primary-btn" onclick="copyCommentText('instagram')">Copy Comment</button>
+                                        <button class="header-btn primary-btn" onclick="copyCommentText('instagram', this)">Copy Comment</button>
                                     </div>
                                 </div>
                                 
                                 <!-- LinkDM Shortcuts -->
                                 <div style="margin-top: 16px; border-top: 1px dashed var(--glass-border); padding-top: 16px;">
                                     <div class="result-actions" style="display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap;">
-                                         <button class="header-btn" onclick="copyPlayStoreLink()" style="border-color: var(--primary); color: var(--primary);">📋 Copy Play Store Link</button>
+                                         <button class="header-btn" onclick="copyPlayStoreLink(this)" style="border-color: var(--primary); color: var(--primary);">📋 Copy Play Store Link</button>
                                      </div>
                                 </div>
                             </div>
@@ -1884,7 +1891,7 @@
                                     <label style="font-weight: 700; color: var(--primary);">Video Title (Max 100 chars)</label>
                                     <div style="display:flex; gap:10px;">
                                         <input class="input-text" id="res-title-shorts" style="font-family: var(--font-display); font-weight:700;">
-                                        <button class="header-btn primary-btn" onclick="copyShortsTitle()">Copy Title</button>
+                                        <button class="header-btn primary-btn" onclick="copyShortsTitle(this)">Copy Title</button>
                                     </div>
                                 </div>
                                 
@@ -1902,7 +1909,7 @@
                                             </svg>
                                             <span id="char-count-shorts">0 / 5000</span>
                                         </div>
-                                        <button class="header-btn primary-btn" onclick="copyResultText('shorts')">Copy Description</button>
+                                        <button class="header-btn primary-btn" onclick="copyResultText('shorts', this)">Copy Description</button>
                                     </div>
                                 </div>
                             </div>
@@ -1915,7 +1922,7 @@
                                         <textarea class="result-box comment-textarea" id="res-comment-shorts"></textarea>
                                     </div>
                                     <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
-                                        <button class="header-btn primary-btn" onclick="copyCommentText('shorts')">Copy Comment</button>
+                                        <button class="header-btn primary-btn" onclick="copyCommentText('shorts', this)">Copy Comment</button>
                                     </div>
                                 </div>
                             </div>
@@ -1982,7 +1989,7 @@
                                         </svg>
                                         <span id="char-count-reels">0 / 2000</span>
                                     </div>
-                                    <button class="header-btn primary-btn" onclick="copyResultText('reels')">Copy Caption</button>
+                                    <button class="header-btn primary-btn" onclick="copyResultText('reels', this)">Copy Caption</button>
                                 </div>
                             </div>
                             
@@ -1994,7 +2001,7 @@
                                         <textarea class="result-box comment-textarea" id="res-comment-reels"></textarea>
                                     </div>
                                     <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
-                                        <button class="header-btn primary-btn" onclick="copyCommentText('reels')">Copy Comment</button>
+                                        <button class="header-btn primary-btn" onclick="copyCommentText('reels', this)">Copy Comment</button>
                                     </div>
                                 </div>
                             </div>
@@ -2453,6 +2460,16 @@
             currentPreset = preset;
         }
 
+        function markButtonCopied(btn) {
+            if (!btn) return;
+            btn.classList.add('btn-copied');
+            if (!btn.dataset.originalText) {
+                btn.dataset.originalText = btn.textContent.trim();
+            }
+            const cleanText = btn.dataset.originalText.replace(/^[\u2713\U0001f4cb\s]+/, '');
+            btn.innerHTML = '&#10003; ' + cleanText;
+        }
+
         function switchSocialTab(platform) {
             document.getElementById('tab-btn-tiktok').classList.remove('active');
             document.getElementById('tab-btn-instagram').classList.remove('active');
@@ -2467,6 +2484,26 @@
             document.getElementById('tab-btn-' + platform).classList.add('active');
             document.getElementById('content-' + platform).classList.add('active');
             currentSocialTab = platform;
+
+            // Scroll so the top of the tab content and first comment are visible
+            const tabsHeader = document.querySelector('.tabs-header');
+            if (tabsHeader) {
+                const isAdmin = document.body.classList.contains('admin-mode');
+                const totalTopOffset = window.innerWidth <= 600 ? (isAdmin ? 88 : 48) : (isAdmin ? 101 : 61);
+                const elementPosition = tabsHeader.getBoundingClientRect().top + window.pageYOffset;
+                const targetScrollY = elementPosition - totalTopOffset;
+                window.scrollTo({
+                    top: Math.max(0, targetScrollY),
+                    behavior: 'smooth'
+                });
+            }
+
+            // Ensure textareas inside the tab are scrolled to the top
+            const textEl = document.getElementById('res-text-' + platform);
+            if (textEl) textEl.scrollTop = 0;
+            const commentEl = document.getElementById('res-comment-' + platform);
+            if (commentEl) commentEl.scrollTop = 0;
+
             // Auto-expand visible textareas on tab switch
             setTimeout(() => {
                 autoExpand(document.getElementById('res-text-' + platform));
@@ -2483,29 +2520,31 @@
             }, 2000);
         }
 
-        function copyResultText(platform) {
+        function copyResultText(platform, btn) {
             const el = document.getElementById('res-text-' + platform);
             const text = el ? el.value : '';
             if (!text) return;
             navigator.clipboard.writeText(text).then(() => {
                 showToast("Caption copied!");
+                markButtonCopied(btn || (window.event && window.event.currentTarget));
             }).catch(() => {
                 alert("Failed to copy. Please manually select and copy text.");
             });
         }
-        function copyCommentText(platform) {
+        function copyCommentText(platform, btn) {
             const commentBox = document.getElementById('res-comment-' + platform);
             if (!commentBox) return;
             const text = commentBox.value;
             if (!text) return;
             navigator.clipboard.writeText(text).then(() => {
                 showToast("Comment copied!");
+                markButtonCopied(btn || (window.event && window.event.currentTarget));
             }).catch(() => {
                 alert("Failed to copy. Please manually select and copy text.");
             });
         }
 
-        function copyPlayStoreLink() {
+        function copyPlayStoreLink(btn) {
             const linkInput = document.getElementById('watch-link');
             if (!linkInput) return;
             const text = linkInput.value.trim();
@@ -2515,6 +2554,7 @@
             }
             navigator.clipboard.writeText(text).then(() => {
                 showToast("Play Store Link copied!");
+                markButtonCopied(btn || (window.event && window.event.currentTarget));
             }).catch(() => {
                 alert("Failed to copy. Please manually select and copy text.");
             });
@@ -2570,12 +2610,13 @@
             if (commentReels) commentReels.value = reelsComment;
         }
 
-        function copyShortsTitle() {
+        function copyShortsTitle(btn) {
             const el = document.getElementById('res-title-shorts');
             const text = el ? el.value : '';
             if (!text) return;
             navigator.clipboard.writeText(text).then(() => {
                 showToast("Shorts Title copied!");
+                markButtonCopied(btn || (window.event && window.event.currentTarget));
             });
         }
 
@@ -2877,6 +2918,14 @@
             updateCharCounter('instagram', generatedData.instagram, 2200);
             updateCharCounter('shorts', generatedData.shorts, 5000);
             updateCharCounter('reels', generatedData.reels, 2000);
+
+            // Reset any copied button states on generation
+            document.querySelectorAll('.header-btn.btn-copied').forEach(btn => {
+                btn.classList.remove('btn-copied');
+                if (btn.dataset.originalText) {
+                    btn.textContent = btn.dataset.originalText;
+                }
+            });
 
             // Update comments
             updateCommentsUI();
