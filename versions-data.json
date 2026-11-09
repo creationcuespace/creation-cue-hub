@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-08T02:43:13.390Z",
+  "lastUpdated": "2026-11-09T02:58:55.400Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -208,6 +208,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 30,
       "totalWeight": 3846
+    },
+    {
+      "date": "2026-11-09",
+      "timestamp": "2026-11-09T02:58:55.400Z",
+      "avgRating": 4.49,
+      "weightedAvg": 4.52,
+      "ratedCount": 30,
+      "totalWeight": 3861
     }
   ],
   "results": [
@@ -1326,7 +1334,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.6,
-      "ratingCount": "417",
+      "ratingCount": "420",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -1745,7 +1753,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
       "rating": 4.5,
-      "ratingCount": "98",
+      "ratingCount": "97",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -1898,7 +1906,7 @@
       "storeLanguages": [
         "en-GB"
       ],
-      "lastUpdatedDate": "Oct 21, 2026",
+      "lastUpdatedDate": "Oct 22, 2026",
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
@@ -1978,8 +1986,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": 4.4,
-      "ratingCount": "36",
+      "rating": 4.3,
+      "ratingCount": "37",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -2471,10 +2479,10 @@
         "en-US",
         "ko-KR"
       ],
-      "lastUpdatedDate": "Aug 26, 2026",
+      "lastUpdatedDate": "Aug 27, 2026",
       "downloads": "10K+",
       "rating": 4.4,
-      "ratingCount": "96",
+      "ratingCount": "97",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -2630,7 +2638,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100K+",
       "rating": 4.7,
-      "ratingCount": "1.1K",
+      "ratingCount": "1.11K",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -3150,7 +3158,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "331",
+      "ratingCount": "332",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,

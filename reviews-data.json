@@ -1,31 +1,18 @@
 {
-  "lastUpdated": "2026-11-08T02:43:13.393Z",
+  "lastUpdated": "2026-11-09T02:58:55.402Z",
   "reviews": [
     {
-      "reviewId": "ad5bb352-43b7-4bfb-a700-6eb4a8d119d4",
-      "packageName": "com.creation.cue147watchface",
-      "title": "Watch Face CUE147",
-      "wfId": "cue147",
-      "authorName": "Ivan alejandro tinajero",
+      "reviewId": "f5985a11-3908-4c82-8703-41985a7d8f9d",
+      "packageName": "com.creation.cue128watchface",
+      "title": "Analog Watch Face cue128",
+      "wfId": "cue128",
+      "authorName": "Siegfried Heilmeier",
       "starRating": 5,
-      "reviewerLanguage": "es",
-      "deviceMetadata": "kodiak (Pixel 11 Pro XL)",
+      "reviewerLanguage": "de",
+      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
       "topics": [],
-      "text": "\tmuy bonita",
-      "lastModified": "2026-11-07T18:26:39.000Z"
-    },
-    {
-      "reviewId": "804ad083-4dfc-4525-b464-e23fa584865d",
-      "packageName": "com.creation.cue136watchface",
-      "title": "Analog Watch Face CUE136",
-      "wfId": "cue136",
-      "authorName": "Ronald Salvador",
-      "starRating": 5,
-      "reviewerLanguage": "en",
-      "deviceMetadata": "e1s (Galaxy S24)",
-      "topics": [],
-      "text": "\ti can't believe that this is free. thanks a lot, generous, creative maker Ű",
-      "lastModified": "2026-11-07T05:49:29.000Z"
+      "text": "\tSehr schön ,und ich nutze es noch immer !",
+      "lastModified": "2026-11-08T16:54:16.000Z"
     }
   ]
 }
