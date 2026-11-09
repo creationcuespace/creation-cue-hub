@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-05T16:23:01.254Z",
+  "lastUpdated": "2026-11-09T10:00:40+03:00",
   "taxpayer": {
     "name": "Σωτήριος Λιόντος του Κωνσταντίνου",
     "afm": "047155049",
@@ -44,17 +44,17 @@
   },
   "realEstateIncome": {
     "sotirios": {
-      "residentialRent": 11475,
-      "commercialRent": 600,
-      "totalRent": 12075,
+      "residentialRent": 11475.0,
+      "commercialRent": 600.0,
+      "totalRent": 12075.0,
       "taxBracket": "15% έως 12.000€, 35% για το υπερβάλλον",
       "strategicNote": "Ισχυρή σταθερή ροή φορολογητέου εισοδήματος που καλύπτει άνετα τα τεκμήρια διαβίωσης παράλληλα με τη νέα ατομική επιχείρηση."
     },
     "spouse": {
-      "commercialRent": 7680,
-      "totalRent": 7680
+      "commercialRent": 7680.0,
+      "totalRent": 7680.0
     },
-    "totalFamilyRent": 19755
+    "totalFamilyRent": 19755.0
   },
   "presumptionsAndAssets": {
     "primaryResidence": {
@@ -78,9 +78,9 @@
         "cc": 1994,
         "year": 2007,
         "owner": "Σωτήριος (100%)",
-        "roadTax": 690,
+        "roadTax": 690.0,
         "fuelConsumption": "13 lt / 100 km",
-        "presumptionAmount": 4400,
+        "presumptionAmount": 4400.0,
         "businessDeductibility": "30% έκπτωση στο Ε3 (καύσιμα, service, ασφάλιστρα, τέλη)"
       },
       {
@@ -89,7 +89,7 @@
         "cc": 1390,
         "year": 2004,
         "owner": "Σύζυγος (100%)",
-        "presumptionAmount": 2600
+        "presumptionAmount": 2600.0
       }
     ]
   },
@@ -176,7 +176,7 @@
       "description": "Τέλος τήρησης μερίδας Γ.Ε.ΜΗ. (Creation Cue)",
       "entity": "Κεντρική Ένωση Επιμελητηρίων (ΚΕΕΕ)",
       "ref": "RF68906423002000015521123 / Viva Wallet",
-      "amount": 30,
+      "amount": 30.0,
       "e3Code": "585 (Τέλη ΓΕΜΗ)"
     },
     {
@@ -184,7 +184,7 @@
       "description": "Τέλος καταχώρισης διακριτικού τίτλου στο ΓΕΜΗ (Πρωτ. 4073048)",
       "entity": "Οικονομικό Επιμελητήριο / ΓΕΜΗ",
       "ref": "RF24906421001000004073048",
-      "amount": 10,
+      "amount": 10.0,
       "e3Code": "585 (Έξοδα έναρξης/τίτλου)"
     },
     {
@@ -192,7 +192,7 @@
       "description": "Τέλος / Ετήσια συνδρομή εγγραφής",
       "entity": "Επιμελητήριο Ιωαννίνων",
       "ref": "RF91908911007710860042026",
-      "amount": 10,
+      "amount": 10.0,
       "e3Code": "585 (Συνδρομές Επιμελητηρίου)"
     },
     {
@@ -200,21 +200,11 @@
       "description": "Τέλος / Ετήσια συνδρομή εγγραφής",
       "entity": "Επιμελητήριο Ιωαννίνων",
       "ref": "RF28908911000034420012026",
-      "amount": 10,
+      "amount": 10.0,
       "e3Code": "585 (Συνδρομές Επιμελητηρίου)"
-    },
-    {
-      "date": "18/11/2026",
-      "description": "Αεροπορικό εισιτήριο Αθήνα-Μιλάνο-Αθήνα (Huawei Watch Face Summit)",
-      "entity": "AEGEAN AIRLINES S.A.",
-      "ref": "Ticket 390-2486842665 / PNR 8HX7XY",
-      "amount": 199.83,
-      "e3Code": "585 (Έξοδα ταξιδιών εξωτερικού)",
-      "notes": "Συνολικό κόστος κράτησης 399,66 € (2 επιβάτες). Έκπτωση 50% για Σωτήριο Λιόντο (Mr). Το άλλο 50% αφορά τη σύζυγο (ιδιωτική δαπάνη).",
-      "documentPath": "documents/tax_2026/business_trip_milan/01_Aegean_Airlines_Eticket_8HX7XY_Sotirios_Liontos.pdf"
     }
   ],
-  "totalExpenses2026": 259.83,
+  "totalExpenses2026": 60.0,
   "salesInvoices2026": [
     {
       "date": "17/04/2026",
@@ -297,36 +287,33 @@
       "signDate": "12/10/2026",
       "deliverable": "gitlab-playstore-developer-automation-suite.tar.gz",
       "deliveryDeadline": "11/11/2026",
-      "feeUsd": 1885,
-      "feeEurEst": 1621.5,
+      "feeUsd": 1885.0,
+      "feeEurEst": 1730.0,
       "vatRate": "0% (Άρθρο 14 παρ. 2 περ. α' - Τρίτη Χώρα)",
       "withholdingTax": "0% (W-8BEN / ΣΑΔΦ Ελλάδας - ΗΠΑ)",
-      "status": "Παραδόθηκε / Εγκεκριμένη Πληρωμή 15/11/2026 (1.621,50 €) - Αναμονή Εκκαθάρισης & Έκδοσης ΤΠΥ",
-      "documentPath": "documents/contracts/Google_LLC_PCA_Agreement_Signed_2026-10-12_n473618.pdf",
-      "feeEurApproved": 1621.5,
-      "expectedPayoutDate": "15/11/2026",
-      "deliveryStatus": "Παραδόθηκε επιτυχώς (Initial Delivery Completed via Offer Management Portal)"
+      "status": "Υπογεγραμμένο (Executed) / Αναμονή Παράδοσης & Έκδοσης ΤΠΥ",
+      "documentPath": "documents/contracts/Google_LLC_PCA_Agreement_Signed_2026-10-12_n473618.pdf"
     }
   ],
   "forecast2027": {
-    "creationCueGrossRevenue": 18000,
-    "creationCueExpenses": 8000,
-    "creationCueTaxableProfit": 10000,
-    "creationCueIncomeTax": 900,
-    "existingRentIncome": 12075,
+    "creationCueGrossRevenue": 18000.0,
+    "creationCueExpenses": 8000.0,
+    "creationCueTaxableProfit": 10000.0,
+    "creationCueIncomeTax": 900.0,
+    "existingRentIncome": 12075.0,
     "existingRentTax": 1826.25,
-    "newCommercialRentEst": 4200,
-    "newCommercialRentTaxEst": 1470,
-    "totalGrossInflows": 34275,
-    "totalPersonalNetIncome": 23500,
-    "totalFamilyNetIncome": 47500,
-    "monthlyPersonalNet": 1960,
-    "monthlyFamilyNet": 3950,
+    "newCommercialRentEst": 4200.0,
+    "newCommercialRentTaxEst": 1470.0,
+    "totalGrossInflows": 34275.0,
+    "totalPersonalNetIncome": 23500.0,
+    "totalFamilyNetIncome": 47500.0,
+    "monthlyPersonalNet": 1960.0,
+    "monthlyFamilyNet": 3950.0,
     "status": "Οριστικό κλείσιμο Ο.Ε. & μετάβαση σε 100% Digital / Asset Cashflow"
   },
   "subsidiesMonitor": {
-    "lastCheck": "02/11/2026",
-    "nextCheck": "09/11/2026",
+    "lastCheck": "09/11/2026",
+    "nextCheck": "16/11/2026",
     "checkFrequency": "Εβδομαδιαίος Έλεγχος (Κάθε Δευτέρα στις 10:00 π.μ.)",
     "mobileNotificationChannel": {
       "service": "ntfy.sh",
@@ -356,8 +343,8 @@
         "targetItem": "Ηλεκτρικό Αυτοκίνητο (Leasing) & Αντικατάσταση Subaru",
         "description": "Επιδότηση μακροχρόνιας μίσθωσης (leasing) αμιγώς ηλεκτρικού επιβατικού οχήματος. Μειώνει άμεσα το μηνιαίο μίσθωμα. Σε συνδυασμό με την υπερέκπτωση δαπάνης 50% στο Ε3, αποτελεί την ιδανική λύση για αντικατάσταση του Subaru Impreza.",
         "link": "https://kinoumeilektrika3.gov.gr",
-        "daysRemaining": 59,
-        "expiryAlert": "ΕΠΙΚΕΙΜΕΝΗ ΛΗΞΗ: Απομένουν 59 ημέρες (31/12/2026)",
+        "daysRemaining": 52,
+        "expiryAlert": "ΕΠΙΚΕΙΜΕΝΗ ΛΗΞΗ: Απομένουν 52 ημέρες (31/12/2026)",
         "urgency": "WARNING"
       },
       {
@@ -373,8 +360,8 @@
         "targetItem": "Hardware (MacBook, Monitors) & AI Tools / Cloud",
         "description": "Κάλυψη δαπανών για hardware (MacBook, σταθμοί εργασίας, monitors), επαγγελματικό λογισμικό (Adobe, JetBrains, AI tools), cloud services & κυβερνοασφάλεια. Επιλέξιμος ο ΚΑΔ 62011100.",
         "link": "https://www.espa.gr",
-        "daysRemaining": 240,
-        "expiryAlert": "Ενεργό (240 ημέρες απομένουν)",
+        "daysRemaining": 233,
+        "expiryAlert": "Ενεργό (233 ημέρες απομένουν)",
         "urgency": "NORMAL"
       },
       {
@@ -390,8 +377,8 @@
         "targetItem": "Εκσυγχρονισμός Τοπικής Επιχείρησης Ιωαννίνων",
         "description": "Στοχευμένες περιφερειακές δράσεις για επιχειρήσεις με έδρα τα Ιωάννινα. Αφορά αναβάθμιση τεχνολογικού εξοπλισμού, marketing και διεθνή προώθηση. Σημείωση: Η τρέχουσα πρόσκληση ΠΗΠΕ-06 'Νέα Ευκαιρία' (λήξη 21/10/2026) απευθύνεται σε ανέργους/μισθωτούς (μη επιλέξιμος), ενώ αναμένεται η δράση εκσυγχρονισμού υφιστάμενων ΜμΕ.",
         "link": "https://espa-epirus.gr",
-        "daysRemaining": 59,
-        "expiryAlert": "ΕΠΙΚΕΙΜΕΝΗ ΛΗΞΗ: Απομένουν 59 ημέρες (31/12/2026)",
+        "daysRemaining": 52,
+        "expiryAlert": "ΕΠΙΚΕΙΜΕΝΗ ΛΗΞΗ: Απομένουν 52 ημέρες (31/12/2026)",
         "urgency": "WARNING"
       },
       {
@@ -407,67 +394,12 @@
         "targetItem": "Εξαγωγική Δραστηριότητα & Πνευματικά Δικαιώματα",
         "description": "Απευθύνεται σε ψηφιακές επιχειρήσεις με εξαγωγικό χαρακτήρα. Η Creation Cue τιμολογεί 100% B2B προς Google Play (Google Ireland), πληρώντας το βασικό κριτήριο εξωστρέφειας.",
         "link": "https://www.espa.gr",
-        "daysRemaining": 424,
-        "expiryAlert": "Ενεργό (424 ημέρες απομένουν)",
-        "urgency": "NORMAL"
-      },
-      {
-        "id": "kinoume-ilektrika-3-idiotes",
-        "title": "Κινούμαι Ηλεκτρικά 3 (Φυσικά Πρόσωπα & Οικογένεια)",
-        "agency": "Υπουργείο Υποδομών & Μεταφορών",
-        "url": "https://kinoumeilektrika3.gov.gr",
-        "deadline": "2026-12-31",
-        "status": "Ενεργό",
-        "benefit": "Έως 12.000 € επιδότηση (9.000€ αγορά BEV + 2.000€ απόσυρση + 1.000€ για 2 τέκνα)",
-        "badge": "Προσωπικό / Οικογενειακό",
-        "badgeColor": "green",
-        "targetItem": "Αντικατάσταση Subaru ή 2ου ΙΧ με αμιγώς ηλεκτρικό ως ιδιώτης",
-        "description": "Εναλλακτική της επαγγελματικής μίσθωσης: Αγορά αμιγώς ηλεκτρικού επιβατικού οχήματος ως φυσικό πρόσωπο. Για οικογένειες με 2 προστατευόμενα τέκνα προβλέπεται επιπλέον ενίσχυση 1.000€ και 2.000€ για απόσυρση παλαιού οχήματος.",
-        "link": "https://kinoumeilektrika3.gov.gr",
-        "daysRemaining": 56,
-        "expiryAlert": "ΕΠΙΚΕΙΜΕΝΗ ΛΗΞΗ: Απομένουν 56 ημέρες (31/12/2026)",
-        "urgency": "WARNING"
-      },
-      {
-        "id": "dypa-social-tourism-aggeliki",
-        "title": "Κοινωνικός Τουρισμός ΔΥΠΑ (Δικαιούχος: Αγγελική & Οικογένεια)",
-        "agency": "Δημόσια Υπηρεσία Απασχόλησης (ΔΥΠΑ)",
-        "url": "https://www.dypa.gov.gr",
-        "deadline": "2027-06-30",
-        "status": "Εν αναμονή επόμενου κύκλου",
-        "benefit": "6 έως 12 δωρεάν διανυκτερεύσεις + επιδότηση ακτοπλοϊκών εισιτηρίων",
-        "badge": "Οικογενειακό (Σύζυγος)",
-        "badgeColor": "gold",
-        "targetItem": "Οικογενειακές Διακοπές 4 Ατόμων (Αγγελική, Σωτήριος, 2 παιδιά)",
-        "description": "Η σύζυγος ως μισθωτή με εισφορές υπέρ πρώην Οργανισμού Εργατικής Εστίας είναι άμεση δικαιούχος του προγράμματος για όλη την 4μελή οικογένεια (συμπεριλαμβανομένου του Σωτηρίου και των δίδυμων τέκνων).",
-        "link": "https://www.dypa.gov.gr",
-        "daysRemaining": 237,
-        "expiryAlert": "Επόμενη υποβολή: Άνοιξη 2027",
-        "urgency": "NORMAL"
-      },
-      {
-        "id": "exoikonomo-home-energy",
-        "title": "Εξοικονομώ / Ανακαινίζω για Κατοικίες (Ιωάννινα & Εύβοια)",
-        "agency": "Υπουργείο Περιβάλλοντος & Ενέργειας (ΥΠΕΝ)",
-        "url": "https://ypen.gov.gr",
-        "deadline": "2027-12-31",
-        "status": "Προγραμματισμός Νέου Κύκλου",
-        "benefit": "Επιδότηση 40% - 70% για αντλία θερμότητας, φωτοβολταϊκά, κουφώματα, μόνωση",
-        "badge": "Ακίνητα / Κατοικίες",
-        "badgeColor": "blue",
-        "targetItem": "Κύρια Κατοικία Ιωαννίνων (65 τ.μ.) ή Εξοχικό Αμαρύνθου (105 τ.μ.)",
-        "description": "Επιδότηση ενεργειακής αναβάθμισης ιδιόκτητων κατοικιών. Ιδιαίτερα στα Ιωάννινα (Κλιματική Ζώνη Γ) η εγκατάσταση αντλίας θερμότητας προσφέρει μέγιστη εξοικονόμηση κόστους θέρμανσης.",
-        "link": "https://ypen.gov.gr",
-        "daysRemaining": 421,
-        "expiryAlert": "Αναμονή έκδοσης οδηγού νέου προγράμματος",
+        "daysRemaining": 417,
+        "expiryAlert": "Ενεργό (417 ημέρες απομένουν)",
         "urgency": "NORMAL"
       }
     ],
     "excludedPrograms": [
-      {
-        "title": "Επίδομα Θέρμανσης (myΘέρμανση ΑΑΔΕ) 2026-2027",
-        "reason": "Εισοδηματικό όριο για έγγαμο με 2 τέκνα: 34.000€. Το πραγματικό οικογενειακό εισόδημα (μισθός Αγγελικής 17.682€ + ενοίκια 19.755€ + Creation Cue) υπερβαίνει τα 47.400€, με αποτέλεσμα την αυτόματη απόρριψη από το σύστημα."
-      },
       {
         "title": "ΔΥΠΑ - Νέα Επιχειρηματικότητα Ανέργων (14.800€ - 17.500€)",
         "reason": "Απαιτεί προηγούμενη εγγραφή στα μητρώα ανέργων. Αποκλείεσαι λόγω αδιάλειπτης ασφάλισης ΕΦΚΑ από το 1997 και ενεργής επιχείρησης."
@@ -485,34 +417,34 @@
       "kinoume-ilektrika-3": {
         "url": "https://kinoumeilektrika3.gov.gr",
         "online": true,
-        "checkedAt": "02/11/2026 10:01"
+        "checkedAt": "09/11/2026 10:00"
       },
       "espa-digital-sme": {
         "url": "https://www.espa.gr",
         "online": true,
-        "checkedAt": "02/11/2026 10:01"
+        "checkedAt": "09/11/2026 10:00"
       },
       "pep-epirus-2021-2027": {
         "url": "https://espa-epirus.gr",
         "online": true,
-        "checkedAt": "02/11/2026 10:01"
+        "checkedAt": "09/11/2026 10:00"
       },
       "innovation-export-fund": {
         "url": "https://www.espa.gr",
         "online": true,
-        "checkedAt": "02/11/2026 10:01"
+        "checkedAt": "09/11/2026 10:00"
       }
     },
     "activeExpiryAlerts": [
       {
         "title": "Κινούμαι Ηλεκτρικά 3 (Επαγγελματικό Leasing & Αγορά BEV)",
-        "daysRemaining": 59,
+        "daysRemaining": 52,
         "deadline": "31/12/2026",
         "urgency": "WARNING"
       },
       {
         "title": "ΠΕΠ Ηπείρου («Ήπειρος 2021-2027») - Ενίσχυση Πολύ Μικρών Επιχειρήσεων ΤΠΕ",
-        "daysRemaining": 59,
+        "daysRemaining": 52,
         "deadline": "31/12/2026",
         "urgency": "WARNING"
       }
