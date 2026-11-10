@@ -31,6 +31,10 @@
     ],
     "rewrites": [
       {
+        "source": "/milan",
+        "destination": "/milan.html"
+      },
+      {
         "source": "/tax",
         "destination": "/tax.html"
       },
@@ -108,16 +112,15 @@
       "docs/**",
       "blog/images/**",
       "scratch/**",
-      "tickets/**",
       "*backup*",
-      "*.pdf",
       "dragon*",
       "*.py",
       "*.pkg",
       "*.pyz",
       "lighthouse*.json",
       "all_found_promotions.json",
-      "promotions_summary.json"
+      "promotions_summary.json",
+      "*.log"
     ],
     "maxReleases": 2,
     "headers": [

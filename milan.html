@@ -1,0 +1,3090 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Πρόγραμμα Ταξιδιού & Huawei Summit - Μιλάνο</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Preload Hero Image -->
+    <link rel="preload" as="image" href="images/milan_skyline_duomo.jpg">
+    
+    <style>
+        :root {
+            --bg-dark: #0b1120;
+            --bg-card: rgba(17, 24, 39, 0.75);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.35);
+            --gold: #f59e0b;
+            --gold-glow: rgba(245, 158, 11, 0.4);
+            --huawei-red: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border: rgba(255, 255, 255, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-bottom: 90px;
+        }
+
+        .glass {
+            background: var(--bg-card);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 70vh;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            padding: 60px 20px 45px 20px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            filter: brightness(0.55);
+            transform: scale(1.02);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(11, 17, 32, 0.45) 0%, rgba(11, 17, 32, 0.92) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 30px;
+            background: rgba(245, 158, 11, 0.18);
+            border: 1px solid rgba(245, 158, 11, 0.45);
+            color: #fbbf24;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+            animation: fadeInDown 0.8s ease both;
+        }
+
+        .hero-content h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffffff 20%, #e2e8f0 60%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: fadeInDown 0.9s ease 0.1s both;
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            animation: fadeInUp 0.9s ease 0.2s both;
+        }
+
+        /* Smart Countdown */
+        .countdown-container {
+            margin-top: 10px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 28px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.72) 100%);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 30px rgba(56, 189, 248, 0.22);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            animation: fadeInUp 1s ease 0.3s both;
+            max-width: 96%;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .countdown-container:hover {
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 35px rgba(56, 189, 248, 0.35);
+            border-color: rgba(56, 189, 248, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .countdown-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .countdown-title i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            animation: cdBounce 2s ease-in-out infinite;
+        }
+
+        .countdown-timer {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .time-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 10px 16px;
+            min-width: 74px;
+            box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .time-box:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--accent);
+        }
+
+        .time-val {
+            font-size: 2.1rem;
+            font-weight: 800;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: monospace, sans-serif;
+            letter-spacing: -1px;
+        }
+
+        .time-lbl {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 5px;
+            letter-spacing: 0.8px;
+        }
+
+        .smart-status-banner {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #34d399;
+            text-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        @keyframes cdBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-4px) rotate(-6deg); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 40px 0 22px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+            margin-left: 15px;
+        }
+
+        /* Strike Alert Box */
+        .strike-alert-box {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.16) 0%, rgba(185, 28, 28, 0.28) 100%);
+            border: 2px solid #ef4444;
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.25);
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 35px;
+            position: relative;
+            overflow: hidden;
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.2); }
+            100% { box-shadow: 0 0 35px rgba(239, 68, 68, 0.45); }
+        }
+
+        .strike-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .strike-header i {
+            font-size: 2rem;
+            color: #ef4444;
+        }
+
+        .strike-header h3 {
+            font-size: 1.35rem;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .strike-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 15px;
+        }
+
+        .strike-item {
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .strike-item h4 {
+            color: #fca5a5;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Accordion / Booking details */
+        details.booking-details {
+            background: var(--bg-card);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        details.booking-details[open] {
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        details.booking-details summary {
+            padding: 18px 22px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            background: rgba(255, 255, 255, 0.03);
+            transition: background 0.2s ease;
+        }
+
+        details.booking-details summary:hover {
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        details.booking-details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details.booking-details summary::after {
+            content: '\f107';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: var(--accent);
+            transition: transform 0.3s ease;
+        }
+
+        details.booking-details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .booking-content {
+            padding: 22px;
+            border-top: 1px solid var(--border);
+        }
+
+        .booking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .booking-item {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.95rem;
+        }
+
+        .booking-item strong {
+            color: #fff;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+
+        /* Checklists */
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .check-card {
+            padding: 20px;
+            border-radius: 14px;
+        }
+
+        .check-card h3 {
+            font-size: 1.15rem;
+            color: var(--accent);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            padding: 6px 8px;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .task-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .task-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            margin-top: 2px;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .task-checkbox:checked {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .task-checkbox:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 11px;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .task-checkbox:checked + .task-text {
+            text-decoration: line-through;
+            color: var(--text-muted);
+            opacity: 0.8;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            position: relative;
+            margin-top: 25px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 10px;
+            bottom: 10px;
+            width: 3px;
+            background: linear-gradient(180deg, var(--accent) 0%, #818cf8 50%, var(--gold) 100%);
+            border-radius: 2px;
+        }
+
+        .timeline-day {
+            position: relative;
+            padding-left: 55px;
+        }
+
+        .day-marker {
+            position: absolute;
+            left: 2px;
+            top: 0;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, #6366f1 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: white;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
+            z-index: 2;
+        }
+
+        .day-marker.gala-marker {
+            background: linear-gradient(135deg, #ef4444 0%, #f59e0b 100%);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.8);
+        }
+
+        .day-header {
+            margin-bottom: 16px;
+        }
+
+        .day-header h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .day-header p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .event-card {
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(56, 189, 248, 0.4);
+        }
+
+        .event-card.gala-card {
+            border: 2px solid rgba(245, 158, 11, 0.6);
+            background: linear-gradient(135deg, rgba(30, 27, 75, 0.75) 0%, rgba(45, 19, 24, 0.75) 100%);
+            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.25);
+        }
+
+        .event-time {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .event-content h4 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .event-content p {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: #e2e8f0;
+        }
+
+        .event-media {
+            margin-top: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .event-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            max-height: 400px;
+            transition: transform 0.4s ease;
+        }
+
+        .event-media img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Buttons & Badges */
+        .btn-link, .btn-map, .add-to-cal-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-link {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-link:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .btn-map {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--success);
+            color: var(--success);
+            margin-top: 10px;
+            margin-right: 8px;
+        }
+
+        .btn-map:hover {
+            background: var(--success);
+            color: var(--bg-dark);
+        }
+
+        .add-to-cal-btn {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            border-radius: 6px;
+        }
+
+        .add-to-cal-btn:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+        }
+
+        .metro-badge {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: white;
+            margin: 0 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .metro-m1 { background: #e11d48; } /* Red Line M1 */
+        .metro-m2 { background: #16a34a; } /* Green Line M2 */
+        .metro-m3 { background: #eab308; color: #000; } /* Yellow Line M3 */
+        .metro-m4 { background: #0284c7; } /* Blue Line M4 */
+        .metro-m5 { background: #a855f7; } /* Purple Line M5 */
+
+        /* Metro Directions & Route Box */
+        .metro-route-box {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 4px solid var(--accent);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin: 12px 0;
+            font-size: 0.92rem;
+        }
+
+        .metro-route-header {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .direction-sign {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.3) 100%);
+            border: 1px solid #f59e0b;
+            color: #fbbf24;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            max-width: 100%;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            box-sizing: border-box;
+        }
+
+        .stops-badge {
+            background: rgba(56, 189, 248, 0.18);
+            border: 1px solid var(--accent);
+            color: #38bdf8;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-block;
+            max-width: 100%;
+            word-break: break-word;
+            box-sizing: border-box;
+        }
+
+        .stops-chain {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+            font-size: 0.82rem;
+            color: #cbd5e1;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .stop-pill {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 100%;
+            word-break: break-word;
+            box-sizing: border-box;
+        }
+
+        .stop-pill.highlight {
+            background: var(--accent);
+            color: var(--bg-dark);
+            font-weight: 800;
+            border-color: var(--accent);
+        }
+
+        .nav-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .nav-pill-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #e2e8f0;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-pill-btn:hover, .nav-pill-btn.active {
+            background: var(--accent);
+            color: var(--bg-dark);
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+
+        .tip-callout {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--gold);
+            padding: 10px 14px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 8px;
+            font-size: 0.88rem;
+            color: #fef3c7;
+        }
+
+        /* Quick Bar */
+        .quick-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(11, 17, 32, 0.92);
+            backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            z-index: 1000;
+            padding: 0 10px;
+        }
+
+        .quick-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            gap: 4px;
+            transition: all 0.2s ease;
+            flex: 1;
+            height: 100%;
+        }
+
+        .quick-item i {
+            font-size: 1.25rem;
+        }
+
+        .quick-item:hover {
+            color: var(--text-main);
+            transform: translateY(-2px);
+        }
+
+        /* Toast Container */
+        .toast-container {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid var(--accent);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            backdrop-filter: blur(12px);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 320px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: auto;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 650px) {
+            html, body {
+                overflow-x: hidden !important;
+                max-width: 100vw !important;
+                width: 100% !important;
+            }
+            #app-wrapper {
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
+                width: 100% !important;
+            }
+            .container {
+                padding: 16px 10px !important;
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
+                box-sizing: border-box !important;
+            }
+            .hero-content h1 { font-size: 1.85rem; }
+            .hero-content p { font-size: 0.92rem; }
+            .hero-badge { max-width: 100%; white-space: normal; text-align: center; }
+            .countdown-container { padding: 12px 6px; width: 100%; }
+            .countdown-timer { gap: 4px; flex-wrap: nowrap; width: 100%; justify-content: space-between; }
+            .time-box { min-width: 0; flex: 1 1 0; padding: 6px 2px; }
+            .time-val { font-size: 1.35rem; }
+            .time-lbl { font-size: 0.58rem; }
+            
+            /* Timeline & Cards */
+            .timeline {
+                gap: 20px;
+                margin-top: 15px;
+            }
+            .timeline::before { left: 12px; }
+            .timeline-day { padding-left: 36px; }
+            .day-marker { width: 26px; height: 26px; font-size: 0.72rem; left: 0; top: 0; }
+            .day-header h3 { font-size: 1.25rem; }
+            .event-card {
+                padding: 14px 10px;
+                border-radius: 12px;
+                max-width: 100%;
+                overflow-x: hidden;
+                box-sizing: border-box;
+            }
+            .event-time {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+            .add-to-cal-btn {
+                font-size: 0.75rem;
+                padding: 3px 8px;
+            }
+            
+            /* Metro Badges & Routes */
+            .metro-route-box {
+                padding: 10px 8px;
+                margin: 10px 0;
+                max-width: 100%;
+                overflow-x: hidden;
+                box-sizing: border-box;
+            }
+            .metro-route-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .direction-sign {
+                display: inline-flex;
+                flex-wrap: wrap;
+                max-width: 100%;
+                word-break: break-word;
+                overflow-wrap: break-word;
+                font-size: 0.76rem;
+                padding: 4px 8px;
+                line-height: 1.35;
+                box-sizing: border-box;
+            }
+            .stops-badge {
+                white-space: normal;
+                display: inline-block;
+                max-width: 100%;
+                font-size: 0.75rem;
+                box-sizing: border-box;
+            }
+            .stops-chain {
+                gap: 4px;
+                font-size: 0.75rem;
+                max-width: 100%;
+                overflow-wrap: break-word;
+                box-sizing: border-box;
+            }
+            .stop-pill {
+                padding: 2px 6px;
+                font-size: 0.75rem;
+                max-width: 100%;
+                word-break: break-word;
+                box-sizing: border-box;
+            }
+
+            /* Grids */
+            .strike-grid, .booking-grid, .checklist-grid {
+                grid-template-columns: 1fr !important;
+                gap: 12px;
+            }
+            .strike-alert-box {
+                border-radius: 12px;
+            }
+            .booking-content {
+                padding: 14px 10px;
+            }
+            .btn-link, .btn-map {
+                max-width: 100%;
+                box-sizing: border-box;
+                white-space: normal;
+                word-break: break-word;
+                font-size: 0.8rem;
+                padding: 7px 12px;
+            }
+            .quick-item span { font-size: 0.68rem; }
+        }
+
+        /* Menu Buttons Grid (Responsive 2-col on mobile, 4-col on desktop) */
+        .menu-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        @media (min-width: 768px) {
+            .menu-buttons-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 12px;
+            }
+        }
+        .menu-card-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(15, 23, 42, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 12px;
+            padding: 11px 12px;
+            color: #f1f5f9;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(12px);
+            text-align: left;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .menu-card-btn:hover {
+            background: rgba(30, 41, 59, 0.95);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(56, 189, 248, 0.25);
+        }
+        .menu-card-btn:active {
+            transform: scale(0.98);
+        }
+        .menu-card-btn.active {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(30, 41, 59, 0.98) 100%);
+            border-color: var(--accent);
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+        }
+        .menu-card-btn .btn-icon-wrap {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+        .menu-card-btn:hover .btn-icon-wrap {
+            transform: scale(1.08);
+        }
+        .menu-card-btn .btn-text-wrap {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            line-height: 1.25;
+        }
+        .menu-card-btn .btn-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .menu-card-btn .btn-sub {
+            font-size: 0.72rem;
+            color: #94a3b8;
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .menu-card-btn.active .btn-sub {
+            color: #7dd3fc;
+        }
+        @media (max-width: 380px) {
+            .menu-card-btn {
+                padding: 9px 8px;
+                gap: 8px;
+            }
+            .menu-card-btn .btn-icon-wrap {
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+            .menu-card-btn .btn-title {
+                font-size: 0.8rem;
+            }
+            .menu-card-btn .btn-sub {
+                font-size: 0.68rem;
+            }
+        }
+
+        /* Menu Panels Wrapper & Panels */
+        #menu-panels-wrapper {
+            margin-bottom: 28px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+            background: rgba(15, 23, 42, 0.94);
+            backdrop-filter: blur(16px);
+            animation: fadeInMenuPanel 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes fadeInMenuPanel {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .menu-content-panel {
+            padding: 0;
+        }
+        .panel-header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 14px 18px;
+            background: rgba(30, 41, 59, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .panel-header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+        .panel-close-btn {
+            background: rgba(239, 68, 68, 0.18);
+            border: 1px solid #ef4444;
+            color: #fca5a5;
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .panel-close-btn:hover {
+            background: #ef4444;
+            color: #ffffff;
+        }
+        .panel-body {
+            padding: 20px 18px;
+        }
+        .panel-footer-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 12px 18px;
+            background: rgba(15, 23, 42, 0.85);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .panel-footer-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #cbd5e1;
+            padding: 7px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.84rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .panel-footer-btn:hover {
+            background: rgba(255, 255, 255, 0.16);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Master PIN Lock Screen (Shown first, top of page) -->
+    <div id="auth-screen" style="min-height: 85vh; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div class="glass" style="max-width: 440px; width: 100%; padding: 45px 30px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7); border-radius: 20px;">
+            <div style="width: 76px; height: 76px; margin: 0 auto 22px; border-radius: 50%; background: rgba(56, 189, 248, 0.15); display: flex; align-items: center; justify-content: center; border: 2px solid var(--accent); box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);">
+                <i class="fa-solid fa-lock" id="lock-icon" style="font-size: 2.2rem; color: var(--accent);"></i>
+            </div>
+            <h2 style="font-size: 1.65rem; color: #fff; margin-bottom: 12px; font-weight: 700;">Προστατευμένη Πρόσβαση</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 28px; line-height: 1.5;">
+                Παρακαλώ εισάγετε το <strong>Master PIN</strong> για να ξεκλειδώσετε το πρόγραμμα και όλες τις πληροφορίες του ταξιδιού.
+            </p>
+            
+            <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 15px;">
+                <input type="password" id="pin-input" placeholder="PIN" inputmode="numeric" maxlength="8" autofocus style="padding: 14px 18px; border-radius: 10px; border: 1.5px solid var(--accent); background: rgba(0,0,0,0.45); color: white; width: 140px; text-align: center; font-size: 1.4rem; letter-spacing: 4px; outline: none; transition: all 0.2s;">
+                <button id="unlock-btn" class="btn-link" style="border: none; cursor: pointer; font-size: 1.15rem; padding: 14px 22px; background: var(--accent); color: var(--bg-dark); border-radius: 10px; font-weight: 700;">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+            <p id="auth-error" style="color: #ef4444; display: none; font-size: 0.95rem; font-weight: 600; margin-top: 10px;">
+                <i class="fa-solid fa-triangle-exclamation"></i> Λάθος PIN. Δοκιμάστε ξανά.
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Protected Content (Hidden until unlocked with PIN) -->
+    <div id="app-wrapper" style="display: none;">
+
+    <!-- Top Floating Re-lock Pill -->
+    <div style="position: absolute; top: 15px; right: 15px; z-index: 100;">
+        <button onclick="lockMilanApp()" title="Κλείδωμα σελίδας" style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.25); color: #cbd5e1; padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; cursor: pointer; backdrop-filter: blur(8px); display: flex; align-items: center; gap: 6px; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(239, 68, 68, 0.25)'; this.style.borderColor='#ef4444'; this.style.color='#fca5a5';" onmouseout="this.style.background='rgba(15, 23, 42, 0.7)'; this.style.borderColor='rgba(255,255,255,0.25)'; this.style.color='#cbd5e1';">
+            <i class="fa-solid fa-lock"></i> Κλείδωμα
+        </button>
+    </div>
+
+    <!-- Bottom Quick-Access Bar -->
+    <nav class="quick-bar">
+        <a href="https://www.google.com/maps/search/public+toilets+near+me" target="_blank" class="quick-item" title="Δημόσιες τουαλέτες κοντά σας">
+            <i class="fa-solid fa-restroom" style="color: #a78bfa;"></i>
+            <span>WC</span>
+        </a>
+        <a href="https://www.google.com/maps/search/supermarket+near+me" target="_blank" class="quick-item" title="Σούπερ Μάρκετ κοντά σας (Pam, Carrefour)">
+            <i class="fa-solid fa-cart-shopping" style="color: #34d399;"></i>
+            <span>Market</span>
+        </a>
+        <a href="https://www.google.com/maps/search/espresso+cafe+or+gelato+near+me" target="_blank" class="quick-item" title="Εσπρέσο & Gelato">
+            <i class="fa-solid fa-mug-hot" style="color: #f59e0b;"></i>
+            <span>Καφές</span>
+        </a>
+        <a href="https://www.google.com/maps/search/Milan+Metro+Station+near+me" target="_blank" class="quick-item" title="Σταθμοί Μετρό Μιλάνου">
+            <i class="fa-solid fa-train-subway" style="color: #38bdf8;"></i>
+            <span>Μετρό</span>
+        </a>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=B%26B+Hotel+Milano+Sant'Ambrogio,+Via+Olivetani+4,+Milan" target="_blank" class="quick-item" title="Οδηγίες επιστροφής στο B&B Hotel Milano Sant'Ambrogio">
+            <i class="fa-solid fa-hotel" style="color: #fbbf24;"></i>
+            <span>Ξενοδοχείο</span>
+        </a>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="hero">
+        <img src="images/milan_skyline_duomo.jpg" alt="Μιλάνο - Duomo" class="hero-bg">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fa-solid fa-award"></i> HUAWEI WATCH FACE SUMMIT 2026
+            </div>
+            <h1>Ταξίδι στο Μιλάνο</h1>
+            <p>18 – 21 Νοεμβρίου 2026 • 4ήμερο Επαγγελματικό Summit & Ταξίδι στην Πρωτεύουσα του Design</p>
+            
+            <div class="countdown-container" id="smart-countdown-box">
+                <div class="countdown-title" id="countdown-title">
+                    <i class="fa-solid fa-plane-up"></i> Αντίστροφη Μέτρηση για Απογείωση (Αθήνα ➔ Μιλάνο)
+                </div>
+                <div class="countdown-timer" id="countdown-timer">
+                    <div class="time-box"><span class="time-val" id="cd-days">00</span><span class="time-lbl">ΗΜΕΡΕΣ</span></div>
+                    <div class="time-box"><span class="time-val" id="cd-hours">00</span><span class="time-lbl">ΩΡΕΣ</span></div>
+                    <div class="time-box"><span class="time-val" id="cd-mins">00</span><span class="time-lbl">ΛΕΠΤΑ</span></div>
+                    <div class="time-box"><span class="time-val" id="cd-secs">00</span><span class="time-lbl">ΔΕΥΤΕΡ.</span></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Menu Buttons Grid: 2 columns on mobile, 4 columns on tablet/desktop -->
+        <div class="menu-buttons-grid" aria-label="Κεντρικό Μενού Πληροφοριών">
+            <!-- 1. Απεργία -->
+            <button type="button" class="menu-card-btn" id="btn-strike" onclick="toggleMenuPanel('strike')">
+                <div class="btn-icon-wrap" style="color: #ef4444; background: rgba(239, 68, 68, 0.16); border: 1px solid rgba(239, 68, 68, 0.35);">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="btn-text-wrap">
+                    <span class="btn-title">Απεργία</span>
+                    <span class="btn-sub">20–21 Νοεμβρίου</span>
+                </div>
+            </button>
+
+            <!-- 2. Κρατήσεις -->
+            <button type="button" class="menu-card-btn" id="btn-bookings" onclick="toggleMenuPanel('bookings')">
+                <div class="btn-icon-wrap" style="color: var(--accent); background: rgba(56, 189, 248, 0.16); border: 1px solid rgba(56, 189, 248, 0.35);">
+                    <i class="fa-solid fa-ticket"></i>
+                </div>
+                <div class="btn-text-wrap">
+                    <span class="btn-title">Κρατήσεις</span>
+                    <span class="btn-sub">6 Έγγραφα & Vouchers</span>
+                </div>
+            </button>
+
+            <!-- 3. Έκτακτη Ανάγκη -->
+            <button type="button" class="menu-card-btn" id="btn-emergency" onclick="toggleMenuPanel('emergency')">
+                <div class="btn-icon-wrap" style="color: #f87171; background: rgba(248, 113, 113, 0.16); border: 1px solid rgba(248, 113, 113, 0.35);">
+                    <i class="fa-solid fa-truck-medical"></i>
+                </div>
+                <div class="btn-text-wrap">
+                    <span class="btn-title">Έκτακτη Ανάγκη</span>
+                    <span class="btn-sub">112 • 113 • 118 • Hotel</span>
+                </div>
+            </button>
+
+            <!-- 4. Γαστρονομία -->
+            <button type="button" class="menu-card-btn" id="btn-gastronomy" onclick="toggleMenuPanel('gastronomy')">
+                <div class="btn-icon-wrap" style="color: #fbbf24; background: rgba(251, 191, 36, 0.16); border: 1px solid rgba(251, 191, 36, 0.35);">
+                    <i class="fa-solid fa-utensils"></i>
+                </div>
+                <div class="btn-text-wrap">
+                    <span class="btn-title">Γαστρονομία</span>
+                    <span class="btn-sub">Top Στέκια & Φαγητό</span>
+                </div>
+            </button>
+
+            <!-- 5. Μυστικά Καφέ -->
+            <button type="button" class="menu-card-btn" id="btn-coffee" onclick="toggleMenuPanel('coffee')">
+                <div class="btn-icon-wrap" style="color: #38bdf8; background: rgba(56, 189, 248, 0.16); border: 1px solid rgba(56, 189, 248, 0.35);">
+                    <i class="fa-solid fa-mug-saucer"></i>
+                </div>
+                <div class="btn-text-wrap">
+                    <span class="btn-title">Μυστικά Καφέ</span>
+                    <span class="btn-sub">Al Banco • Coperto</span>
+                </div>
+            </button>
+
+            <!-- 6. Έξοδα Επιχείρησης -->
+            <button type="button" class="menu-card-btn" id="btn-expenses" onclick="toggleMenuPanel('expenses')">
+                <div class="btn-icon-wrap" style="color: var(--success); background: rgba(16, 185, 129, 0.16); border: 1px solid rgba(16, 185, 129, 0.35);">
+                    <i class="fa-solid fa-receipt"></i>
+                </div>
+                <div class="btn-text-wrap">
+                    <span class="btn-title">Έξοδα Ε3</span>
+                    <span class="btn-sub">Creation Cue (585)</span>
+                </div>
+            </button>
+
+            <!-- 7. Λίστες Βαλίτσας -->
+            <button type="button" class="menu-card-btn" id="btn-checklists" onclick="toggleMenuPanel('checklists')">
+                <div class="btn-icon-wrap" style="color: #c084fc; background: rgba(192, 132, 252, 0.16); border: 1px solid rgba(192, 132, 252, 0.35);">
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
+                <div class="btn-text-wrap">
+                    <span class="btn-title">Λίστες Βαλίτσας</span>
+                    <span class="btn-sub">Έγγραφα • Ρουχισμός</span>
+                </div>
+            </button>
+
+            <!-- 8. Πρόγραμμα Ημερών -->
+            <button type="button" class="menu-card-btn" id="btn-timeline" onclick="closeAllPanels(); scrollToElement('section-timeline');">
+                <div class="btn-icon-wrap" style="color: #a78bfa; background: rgba(167, 139, 250, 0.16); border: 1px solid rgba(167, 139, 250, 0.35);">
+                    <i class="fa-solid fa-route"></i>
+                </div>
+                <div class="btn-text-wrap">
+                    <span class="btn-title">Πρόγραμμα</span>
+                    <span class="btn-sub">4 Ημέρες Αναλυτικά</span>
+                </div>
+            </button>
+        </div>
+
+        <!-- Dynamic Menu Panels Viewer (Hidden by default; zero visible drop-downs on load) -->
+        <div id="menu-panels-wrapper" style="display: none;">
+
+            <!-- 1. STRIKE PANEL -->
+            <div id="panel-strike" class="menu-content-panel strike-alert-box" style="display: none; border: 2px solid #ef4444; border-radius: 14px; overflow: hidden; margin: 0;">
+                <span id="strike-details"></span>
+                <div class="panel-header-bar" style="background: rgba(69, 10, 10, 0.85); border-bottom: 1px solid rgba(239, 68, 68, 0.4);">
+                    <h3 class="panel-header-title" style="color: #fecaca;">
+                        <i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i>
+                        <span>Ενημέρωση Απεργίας στην Ιταλία (20 – 21 Νοεμβρίου)</span>
+                    </h3>
+                    <button type="button" class="panel-close-btn" onclick="closeAllPanels()">
+                        <i class="fa-solid fa-xmark"></i> Κλείσιμο
+                    </button>
+                </div>
+                <div class="panel-body" style="padding: 18px 18px 20px 18px;">
+                    <p style="color: #fee2e2; font-size: 0.95rem; margin-bottom: 15px;">
+                    Στην Ιταλία έχει προκηρυχθεί εθνική γενική απεργία (CGIL) την Παρασκευή 20 Νοεμβρίου και σιδηροδρομική απεργία (Trenord/FS) έως το Σάββατο 21 Νοεμβρίου. Δείτε παρακάτω το πλάνο ασφαλούς μετακίνησης.
+                </p>
+
+                <div class="strike-grid">
+                    <div class="strike-item">
+                        <h4><i class="fa-solid fa-train-subway"></i> 1. Μετρό & Τραμ (ATM Μιλάνο)</h4>
+                        <p style="font-size: 0.9rem; color: #f1f5f9;">
+                            Βάσει ιταλικού νόμου ισχύουν <strong>Εγγυημένες Ζώνες (Fasce di Garanzia)</strong> όπου το μετρό λειτουργεί κανονικά:
+                        </p>
+                        <ul style="font-size: 0.88rem; color: #cbd5e1; margin-top: 6px; padding-left: 20px;">
+                            <li><strong>Πρωί:</strong> Από την έναρξη έως <strong>08:45</strong></li>
+                            <li><strong>Απόγευμα:</strong> <strong>15:00 έως 18:00</strong></li>
+                        </ul>
+                        <p style="font-size: 0.85rem; color: #fca5a5; margin-top: 6px;">
+                            <em>Tip:</em> Το κέντρο του Μιλάνου (Duomo, Galleria, Brera, Santa Maria delle Grazie) περπατιέται εξαιρετικά με τα πόδια!
+                        </p>
+                    </div>
+
+                    <div class="strike-item">
+                        <h4><i class="fa-solid fa-plane-departure"></i> 2. Επιστροφή στο Αεροδρόμιο (Σάββατο 21/11)</h4>
+                        <p style="font-size: 0.9rem; color: #f1f5f9;">
+                            Η πτήση αναχωρεί στις <strong>18:45</strong> από Malpensa T1. Αν το Malpensa Express (Trenord) επηρεαστεί:
+                        </p>
+                        <ul style="font-size: 0.88rem; color: #cbd5e1; margin-top: 6px; padding-left: 20px;">
+                            <li><strong>Εγγυημένο Λεωφορείο Trenord:</strong> Υποχρεωτικό Non-Stop λεωφορείο από Milano Cadorna (Via Paleocapa 1).</li>
+                            <li><strong>Λεωφορεία Malpensa Shuttle / Terravision:</strong> Φεύγουν ανά 20' από Milano Centrale (€10). Τα τουριστικά πούλμαν δεν απεργούν!</li>
+                            <li><strong>Ταξί:</strong> Σταθερή νομοθετημένη ταρίφα πόλης: <strong>110 €</strong> (Milan Center ➔ MXP).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px;">
+                    <a href="https://www.atm.it/it/Pagine/default.aspx" target="_blank" class="btn-link" style="border-color: #f87171; color: #fee2e2;">
+                        <i class="fa-solid fa-globe"></i> Live Κατάσταση ATM Milano
+                    </a>
+                    <a href="https://www.trenord.it/news/trenord-informa/avvisi/sciopero/" target="_blank" class="btn-link" style="border-color: #f87171; color: #fee2e2;">
+                        <i class="fa-solid fa-train"></i> Ενημερώσεις Απεργιών Trenord
+                    </a>
+                </div>
+                </div>
+                <div class="panel-footer-bar">
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels()">
+                        <i class="fa-solid fa-xmark"></i> Κλείσιμο
+                    </button>
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels(); scrollToElement('section-weather');">
+                        <i class="fa-solid fa-cloud-sun"></i> Καιρός Μιλάνου
+                    </button>
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels(); scrollToElement('section-timeline');">
+                        <i class="fa-solid fa-route"></i> Πρόγραμμα Ημερών
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. BOOKINGS PANEL -->
+            <div id="panel-bookings" class="menu-content-panel" style="display: none; border: 1.5px solid var(--accent); border-radius: 14px; overflow: hidden; margin: 0; background: rgba(15, 23, 42, 0.95);">
+                <span id="menu-bookings"></span>
+                <div class="panel-header-bar">
+                    <h3 class="panel-header-title" style="color: var(--accent);">
+                        <i class="fa-solid fa-ticket" style="color: var(--accent);"></i>
+                        <span>Κρατήσεις & Επίσημα Έγγραφα (6 Εισιτήρια & Vouchers)</span>
+                    </h3>
+                    <button type="button" class="panel-close-btn" onclick="closeAllPanels()">
+                        <i class="fa-solid fa-xmark"></i> Κλείσιμο
+                    </button>
+                </div>
+                <div class="panel-body" style="padding: 16px 14px;">
+                    <!-- Aegean Flight Card -->
+            <details class="booking-details" id="booking-flight">
+                <summary>
+                    <span><i class="fa-solid fa-plane" style="color: var(--accent); margin-right: 10px;"></i> Πτήσεις Aegean Airlines (Αθήνα ⇄ Μιλάνο MXP)</span>
+                </summary>
+                <div class="booking-content">
+                    <div class="booking-grid">
+                        <div class="booking-item">
+                            <strong><i class="fa-solid fa-barcode"></i> Κωδικός Κράτησης (PNR):</strong> 
+                            <span style="font-size: 1.25rem; font-weight: 800; color: var(--accent); letter-spacing: 1px;">8HX7XY</span><br><br>
+                            <strong>Επιβάτες:</strong><br>
+                            • Mr Sotirios Liontos (Εισιτήριο: <code>390-2486842665</code>)<br>
+                            &nbsp;&nbsp;<small style="color: #94a3b8;">Miles+Bonus: A3 169563026 (924 μίλια)</small><br>
+                            • Mrs Aggeliki Antoniou (Εισιτήριο: <code>390-2486842664</code>)<br><br>
+                            <strong>Ναύλος:</strong> Economy Light (1 χειραποσκευή 8kg + 1 προσωπικό αντικείμενο ανά άτομο)
+                        </div>
+                        <div class="booking-item">
+                            <strong><i class="fa-solid fa-plane-departure"></i> Πτήση Αναχώρησης (A3664)</strong><br>
+                            • Τετάρτη 18 Νοεμβρίου 2026<br>
+                            • <strong>16:15</strong> Αθήνα (ATH) ➔ <strong>17:50</strong> Μιλάνο Malpensa (MXP - T1)<br>
+                            • Διάρκεια: 2 ώρες 35 λεπτά (Airbus A321neo)<br><br>
+                            <strong><i class="fa-solid fa-plane-arrival"></i> Πτήση Επιστροφής (A3665)</strong><br>
+                            • Σάββατο 21 Νοεμβρίου 2026<br>
+                            • <strong>18:45</strong> Μιλάνο Malpensa (MXP - T1) ➔ <strong>22:15</strong> Αθήνα (ATH - T1)<br>
+                            • Διάρκεια: 2 ώρες 30 λεπτά (Airbus A321neo)
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
+                        <a href="tickets/milan/aegean_booking_8HX7XY.pdf" target="_blank" class="btn-link">
+                            <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Κατέβασμα Booking Confirmation (PDF)
+                        </a>
+                        <a href="tickets/milan/aegean_eticket_liontos.pdf" target="_blank" class="btn-link">
+                            <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Ηλεκτρονικό Εισιτήριο e-Ticket (PDF)
+                        </a>
+                        <a href="https://el.aegeanair.com/" target="_blank" class="btn-link">
+                            <i class="fa-solid fa-globe"></i> Aegean Web Check-in (ανοίγει 48 ώρες πριν)
+                        </a>
+                    </div>
+
+                    <div class="event-media" style="margin-top: 18px; border: 1px solid rgba(255,255,255,0.15); max-height: 280px; overflow: hidden;">
+                        <img src="images/milan_ticket_aegean.png" alt="Aegean Booking Confirmation Preview">
+                    </div>
+                </div>
+            </details>
+
+            <!-- Airport Parking Card (5 Stars Parking) -->
+            <details class="booking-details" id="booking-parking">
+                <summary>
+                    <span><i class="fa-solid fa-square-parking" style="color: #38bdf8; margin-right: 10px;"></i> Parking Αεροδρομίου: 5 Stars Parking (Ελ. Βενιζέλος)</span>
+                </summary>
+                <div class="booking-content">
+                    <div class="booking-grid">
+                        <div class="booking-item">
+                            <strong><i class="fa-solid fa-circle-check" style="color: var(--success);"></i> Κατάσταση Κράτησης:</strong> 
+                            <span style="font-size: 1.15rem; font-weight: 700; color: #fff;">Ενεργή Κράτηση (Active Booking)</span><br><br>
+                            <strong><i class="fa-solid fa-calendar-days" style="color: var(--accent);"></i> Διάρκεια Στάθμευσης:</strong><br>
+                            • <strong>Είσοδος (Park From):</strong> Τετάρτη 18 Νοεμβρίου 2026, <strong>12:00</strong><br>
+                            • <strong>Έξοδος (Park Until):</strong> Σάββατο 21 Νοεμβρίου 2026, <strong>22:30</strong><br>
+                            • <strong>Συνολική Διάρκεια:</strong> 3 ημέρες & 10,5 ώρες
+                        </div>
+                        <div class="booking-item">
+                            <strong><i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> Τοποθεσία & Επικοινωνία:</strong><br>
+                            • <strong>Διεύθυνση:</strong> 22ο χλμ. Λεωφόρου Μαρκοπούλου, Μαρκόπουλο Αττικής<br>
+                            • <strong>Κινητό (Shuttle Pick-up):</strong> <a href="tel:+306983322264" style="color: #38bdf8; font-weight: 700; text-decoration: none;"><i class="fa-solid fa-phone"></i> 6983 322264</a><br>
+                            • <strong>Σταθερό Parking:</strong> <a href="tel:+302299025087" style="color: #cbd5e1; text-decoration: none;"><i class="fa-solid fa-phone-volume"></i> 22990 25087</a><br>
+                            • <strong>Χρόνος Μεταφοράς:</strong> 5–7 λεπτά απευθείας στις πύλες του αεροδρομίου.
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 12px; padding: 16px; margin: 18px 0; font-size: 0.92rem; color: #e2e8f0; line-height: 1.6;">
+                        <h4 style="color: var(--accent); margin-bottom: 8px; font-size: 1.05rem;"><i class="fa-solid fa-van-shuttle"></i> Οδηγίες Μεταφοράς με Mini-Bus Shuttle:</h4>
+                        • <strong>Αναχώρηση (Τετάρτη 18/11):</strong> Φτάνετε στο 5 Stars Parking στις 12:00–13:30. Αφήνετε το αυτοκίνητο και το ιδιωτικό mini-bus shuttle σας μεταφέρει δωρεάν στις Αναχωρήσεις του Αεροδρομίου Ελ. Βενιζέλος (ATH).<br>
+                        • <strong>Επιστροφή (Σάββατο 21/11):</strong> Μετά την προσγείωση (22:15) και μόλις παραλάβετε τις αποσκευές σας, καλείτε άμεσα το <strong style="color: #fff;">6983 322264</strong>. Το van θα σας παραλάβει από το σημείο συνάντησης των Αφίξεων για να σας μεταφέρει πίσω στο όχημά σας.
+                    </div>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=5+Stars+Parking+22o+chlm+Leoforos+Markopoulou" target="_blank" class="btn-map" style="margin-top: 0;">
+                            <i class="fa-solid fa-location-arrow"></i> Πλοήγηση στο Parking (Google Maps)
+                        </a>
+                        <a href="tel:+306983322264" class="btn-link" style="background: rgba(16, 185, 129, 0.2); border-color: var(--success); color: #34d399;">
+                            <i class="fa-solid fa-phone"></i> Κλήση Shuttle (6983 322264)
+                        </a>
+                    </div>
+
+                    <div class="event-media" style="margin-top: 18px; border: 1px solid rgba(255,255,255,0.15); max-height: 420px; overflow: hidden; display: flex; justify-content: center; background: #000; border-radius: 12px;">
+                        <img src="images/milan_parking_5stars.jpg" alt="5 Stars Parking Active Booking" style="max-height: 420px; width: auto; object-fit: contain;">
+                    </div>
+                </div>
+            </details>
+
+            <!-- Hotel Card -->
+            <details class="booking-details" id="booking-hotel">
+                <summary>
+                    <span><i class="fa-solid fa-hotel" style="color: #fbbf24; margin-right: 10px;"></i> Ξενοδοχείο: B&B Hotel Milano Sant'Ambrogio</span>
+                </summary>
+                <div class="booking-content">
+                    <div class="booking-grid">
+                        <div class="booking-item">
+                            <strong><i class="fa-solid fa-check-circle" style="color: var(--success);"></i> Επιβεβαίωση Booking.com:</strong> 
+                            <span style="font-size: 1.15rem; font-weight: 700; color: #fff;">6179609151</span><br>
+                            <strong>PIN:</strong> <code>8602</code> (Εμπιστευτικό)<br>
+                            <strong>Διαμονή:</strong> 3 διανυκτερεύσεις (18 Νοε - 21 Νοε 2026)<br>
+                            <strong>Τύπος:</strong> Twin Room (2 ενήλικες)<br>
+                            <strong>Πρωινό:</strong> <span style="color: var(--success); font-weight: bold;">Περιλαμβάνεται</span> στο τελικό ποσό!<br>
+                            <strong>Κόστος Διαμονής:</strong> 479,86 € (Προπληρωμένο)
+                        </div>
+                        <div class="booking-item">
+                            <strong><i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> Στοιχεία Επικοινωνίας & Τοποθεσία:</strong><br>
+                            • <strong>Διεύθυνση:</strong> Via Olivetani 4, Milan City Center, 20123 Milano<br>
+                            • <strong>Τηλέφωνο:</strong> <a href="tel:+390248101089" style="color: #38bdf8; text-decoration: none;">+39 02 48101089</a><br>
+                            • <strong>Check-in:</strong> 18/11 από 14:00 έως 23:00 (υπάρχει self check-in)<br>
+                            • <strong>Check-out:</strong> 21/11 έως τις 12:00 μ.μ.<br>
+                            • <strong>Φόρος Διαμονής (City Tax):</strong> 42 € (7€ / άτομο / νύχτα - πληρώνεται στη reception)
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 18px; padding: 14px 18px; background: rgba(16, 185, 129, 0.12); border-left: 4px solid var(--success); border-radius: 6px;">
+                        <h4 style="color: var(--success); margin-bottom: 6px;"><i class="fa-solid fa-star"></i> Στρατηγικό Πλεονέκτημα Τοποθεσίας:</h4>
+                        <p style="font-size: 0.92rem; color: #e2e8f0;">
+                            Το ξενοδοχείο απέχει μόλις <strong>350 μέτρα</strong> από το σταθμό Μετρό <strong>Sant'Ambrogio</strong> (<span class="metro-badge metro-m2">M2</span> & <span class="metro-badge metro-m4">M4</span>), <strong>600 μέτρα</strong> από τη στάση <strong>Conciliazione</strong> (<span class="metro-badge metro-m1">M1</span>) και μόλις 10-12 λεπτά με τα πόδια από τον σιδηροδρομικό σταθμό <strong>Milano Cadorna</strong> (όπου τερματίζει το Malpensa Express από το αεροδρόμιο)!
+                        </p>
+                    </div>
+
+                    <div style="margin-top: 18px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
+                        <a href="tickets/milan/hotel_booking_bb_santambrogio.pdf" target="_blank" class="btn-link">
+                            <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Κατέβασμα Booking.com PDF
+                        </a>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=B%26B+Hotel+Milano+Sant'Ambrogio,+Via+Olivetani+4,+Milan" target="_blank" class="btn-map" style="margin-top: 0;">
+                            <i class="fa-solid fa-diamond-turn-right"></i> Πλοήγηση στο Ξενοδοχείο (Google Maps)
+                        </a>
+                    </div>
+
+                    <div class="event-media" style="margin-top: 18px; border: 1px solid rgba(255,255,255,0.15); max-height: 280px; overflow: hidden;">
+                        <img src="images/milan_booking_hotel.png" alt="Hotel Booking Preview">
+                    </div>
+                </div>
+            </details>
+
+            <!-- Huawei Watch Face Summit Card -->
+            <details class="booking-details" id="booking-huawei">
+                <summary>
+                    <span style="color: #fbbf24;"><i class="fa-solid fa-award" style="color: #ef4444; margin-right: 10px;"></i> HUAWEI Watch Face Summit Milano 2026 (Επίσημη Πρόσκληση & Gala)</span>
+                </summary>
+                <div class="booking-content">
+                    <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(245, 158, 11, 0.15) 100%); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+                            <div>
+                                <span style="background: #ef4444; color: white; padding: 3px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">Επίσημο Event</span>
+                                <h3 style="font-size: 1.45rem; color: #fff; margin-top: 8px;">Huawei Watch Face Summit Milano 2026</h3>
+                                <p style="color: #fbbf24; font-weight: 600; font-size: 1.05rem;">«Where Technology Meets Art & Design»</p>
+                            </div>
+                            <span style="background: rgba(16, 185, 129, 0.2); border: 1px solid var(--success); color: var(--success); padding: 4px 12px; border-radius: 8px; font-weight: 700; font-size: 0.9rem;">
+                                <i class="fa-solid fa-circle-check"></i> Επιβεβαιωμένη Συμμετοχή
+                            </span>
+                        </div>
+
+                        <div class="booking-grid" style="margin-top: 18px;">
+                            <div class="booking-item" style="background: rgba(0,0,0,0.4);">
+                                <strong><i class="fa-solid fa-calendar-day" style="color: var(--accent);"></i> Ημερομηνία & Ώρες:</strong><br>
+                                • <strong>Πέμπτη 19 Νοεμβρίου 2026</strong><br>
+                                • <strong>15:30:</strong> Έναρξη Check-in & Υποδοχή<br>
+                                • <strong>16:00 – 22:00:</strong> Summit, Παρουσιάσεις & Gala Dinner
+                            </div>
+                            <div class="booking-item" style="background: rgba(0,0,0,0.4);">
+                                <strong><i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> Τοποθεσία Διεξαγωγής:</strong><br>
+                                • <strong>Ξενοδοχείο Meliá Milano</strong><br>
+                                • Via Masaccio 19, 20149 Milano<br>
+                                • Στάση Μετρό: <strong>Lotto</strong> (<span class="metro-badge metro-m1">M1</span> & <span class="metro-badge metro-m5">M5</span>)<br>
+                                • <em>Μόλις 250μ με τα πόδια από το μετρό Lotto!</em>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 16px; font-size: 0.92rem; color: #e2e8f0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px;">
+                            <strong>Εγγεγραμμένοι Σύνεδροι:</strong> Sotirios Liontos (Designer / Creation Cue) & Aggeliki Antoniou (+1 Guest).<br>
+                            <strong>Διοργάνωση:</strong> Huawei Watch Faces Business Growth Team Europe (Yixuan, Mobile: +34 652341383, watchface@huawei.com).<br>
+                            <strong>Dress Code:</strong> Business Smart / Επίσημο Gala.
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
+                        <a href="tickets/milan/huawei_summit_milan_2026_invitation.pdf" target="_blank" class="btn-link">
+                            <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Προβολή Επίσημης Πρόσκλησης Huawei (PDF)
+                        </a>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=Melia+Milano,+Via+Masaccio+19,+Milan" target="_blank" class="btn-map" style="margin-top: 0;">
+                            <i class="fa-solid fa-diamond-turn-right"></i> Πώς θα πάω στο Meliá Milano (Google Maps)
+                        </a>
+                    </div>
+
+                    <div class="event-media" style="margin-top: 18px; border: 1px solid rgba(255,255,255,0.15);">
+                        <img src="images/milan_huawei_gala.jpg" alt="Huawei Gala Summit Atmosphere">
+                    </div>
+                </div>
+            </details>
+
+            <!-- Cenacolo Vinciano / Leonardo da Vinci Last Supper Card -->
+            <details class="booking-details" id="booking-cenacolo">
+                <summary>
+                    <span style="color: #fbbf24;"><i class="fa-solid fa-paintbrush" style="color: #fbbf24; margin-right: 10px;"></i> Μουσείο & Ξενάγηση: Ο Μυστικός Δείπνος (Leonardo da Vinci)</span>
+                </summary>
+                <div class="booking-content">
+                    <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.16) 0%, rgba(15, 23, 42, 0.85) 100%); border: 1px solid rgba(245, 158, 11, 0.45); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+                            <div>
+                                <span style="background: #f59e0b; color: #0b1120; padding: 3px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase;">Κορυφαίο Αξιοθέατο Παγκόσμιας Κληρονομιάς UNESCO</span>
+                                <h3 style="font-size: 1.45rem; color: #fff; margin-top: 8px;">Ο Μυστικός Δείπνος (Il Cenacolo Vinciano)</h3>
+                                <p style="color: #fbbf24; font-weight: 600; font-size: 1.05rem;">Επίσημη Ξενάγηση με Επαγγελματία Ξεναγό</p>
+                            </div>
+                            <span style="background: rgba(16, 185, 129, 0.2); border: 1px solid var(--success); color: var(--success); padding: 4px 12px; border-radius: 8px; font-weight: 700; font-size: 0.9rem;">
+                                <i class="fa-solid fa-circle-check"></i> Επιβεβαιωμένη Κράτηση
+                            </span>
+                        </div>
+
+                        <div class="booking-grid" style="margin-top: 18px;">
+                            <div class="booking-item" style="background: rgba(0,0,0,0.45);">
+                                <strong><i class="fa-solid fa-calendar-day" style="color: var(--gold);"></i> Ημερομηνία & Ώρες:</strong><br>
+                                • <strong>Παρασκευή 20 Νοεμβρίου 2026</strong><br>
+                                • <strong>15:45:</strong> Υποχρεωτική παρουσία (Έλεγχος & Συνάντηση με ξεναγό)<br>
+                                • <strong>16:15 – 17:15:</strong> Ώρα Εισόδου & Επίσημη Ξενάγηση
+                            </div>
+                            <div class="booking-item" style="background: rgba(0,0,0,0.45);">
+                                <strong><i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> Τοποθεσία:</strong><br>
+                                • <strong>Santa Maria delle Grazie (Refettorio)</strong><br>
+                                • Piazza di Santa Maria delle Grazie 2, 20123 Milano<br>
+                                • <strong>Απόσταση από B&B Hotel Sant'Ambrogio:</strong> Μόλις <strong>500 μέτρα (5–7 λεπτά με τα πόδια)</strong><br>
+                                • <em>Δεν επηρεάζεται καθόλου από την απεργία των μέσων!</em>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 16px; font-size: 0.92rem; color: #e2e8f0; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 14px; line-height: 1.6;">
+                            <strong>Απαραίτητοι Κανόνες Επίσκεψης:</strong><br>
+                            • <em>Αυστηρό Check-in:</em> Απαιτείται άφιξη τουλάχιστον 20–30 λεπτά νωρίτερα (15:45 το αργότερο) για ταυτοπροσωπία και πέρασμα από ανιχνευτή.<br>
+                            • <em>Φωτογράφιση:</em> Επιτρέπονται φωτογραφίες αυστηρά <strong>ΧΩΡΙΣ φλας</strong>. Απαγορεύονται τρίποδα & selfie sticks.<br>
+                            • <em>Αποσκευές:</em> Απαγορεύονται μεγάλα σακίδια πλάτης (διατίθενται δωρεάν lockers στο χώρο).<br>
+                            • <em>Ταυτότητες:</em> Έχετε μαζί αστυνομική ταυτότητα ή διαβατήριο.
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
+                        <a href="https://www.google.com/maps/dir/?api=1&origin=B%26B+Hotel+Milano+Sant'Ambrogio,+Via+Olivetani+4,+Milan&destination=Santa+Maria+delle+Grazie,+Piazza+di+Santa+Maria+delle+Grazie,+Milan" target="_blank" class="btn-map" style="margin-top: 0;">
+                            <i class="fa-solid fa-person-walking"></i> Οδηγίες με τα πόδια από το Ξενοδοχείο (Google Maps)
+                        </a>
+                        <a href="https://cenacolovinciano.org/" target="_blank" class="btn-link">
+                            <i class="fa-solid fa-circle-info"></i> Επίσημο Portal Cenacolo Vinciano
+                        </a>
+                    </div>
+
+                    <div class="event-media" style="margin-top: 18px; border: 1px solid rgba(245, 158, 11, 0.4); max-height: 380px; overflow: hidden; border-radius: 12px;">
+                        <img src="images/milan_last_supper.jpg" alt="Leonardo Da Vinci The Last Supper Santa Maria delle Grazie">
+                    </div>
+                </div>
+            </details>
+
+            <!-- Milan Metro & Transport Guide -->
+            <details class="booking-details" id="booking-transport">
+                <summary>
+                    <span><i class="fa-solid fa-train-subway" style="color: #38bdf8; margin-right: 10px;"></i> Έξυπνος Οδηγός Μετακινήσεων & Μετρό Μιλάνου</span>
+                </summary>
+                <div class="booking-content">
+
+                    <!-- Interactive Quick Route Selector -->
+                    <h4 style="color: var(--accent); margin-bottom: 10px; font-size: 1.1rem;">
+                        <i class="fa-solid fa-compass"></i> Επιλέξτε Προορισμό για Άμεσες Οδηγίες Μετρό:
+                    </h4>
+                    <div class="nav-pills" id="metro-nav-pills">
+                        <button class="nav-pill-btn active" onclick="showMetroRoute('gala')">🌟 Huawei Summit (Meliá)</button>
+                        <button class="nav-pill-btn" onclick="showMetroRoute('cenacolo')">🖼️ Da Vinci (Μυστικός Δείπνος)</button>
+                        <button class="nav-pill-btn" onclick="showMetroRoute('duomo')">⛪ Duomo & Galleria</button>
+                        <button class="nav-pill-btn" onclick="showMetroRoute('navigli')">🍹 Navigli (Aperitivo)</button>
+                        <button class="nav-pill-btn" onclick="showMetroRoute('brera')">🎨 Brera & Μόδα</button>
+                        <button class="nav-pill-btn" onclick="showMetroRoute('sansiro')">⚽ Γήπεδο San Siro</button>
+                        <button class="nav-pill-btn" onclick="showMetroRoute('airport')">✈️ Αεροδρόμιο Malpensa</button>
+                    </div>
+
+                    <!-- Dynamic Route Display Card -->
+                    <div id="metro-route-display" class="metro-route-box" style="margin-bottom: 22px; border-color: rgba(56, 189, 248, 0.4); background: rgba(15, 23, 42, 0.85);">
+                        <!-- Default: Huawei Gala -->
+                        <div class="metro-route-header">
+                            <span class="metro-badge metro-m1">M1 Κόκκινη</span>
+                            <span style="color: #fff; font-size: 1.05rem;">Από: <strong>Conciliazione</strong> ➔ Προς: <strong>Lotto (Meliá Milano)</strong></span>
+                            <span class="stops-badge"><i class="fa-solid fa-stopwatch"></i> 4 στάσεις • 7 λεπτά</span>
+                        </div>
+                        <div style="margin: 8px 0;">
+                            <span class="direction-sign"><i class="fa-solid fa-signs-post"></i> ΠΙΝΑΚΙΔΑ ΑΠΟΒΑΘΡΑΣ (DIREZIONE): <strong>RHO FIERAMILANO</strong></span>
+                        </div>
+                        <div class="tip-callout" style="border-left-color: #ef4444; background: rgba(239, 68, 68, 0.12); color: #fecaca;">
+                            <i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i> <strong>ΠΡΟΣΟΧΗ:</strong> Στο σταθμό Pagano η γραμμή M1 διακλαδώνεται. Μπείτε <strong>ΜΟΝΟ</strong> σε συρμό που αναγράφει <strong>Rho Fieramilano</strong> (ή Molino Dorino). <em>Μην μπείτε σε συρμό που αναγράφει Bisceglie!</em>
+                        </div>
+                        <div class="stops-chain">
+                            <span class="stop-pill highlight">Conciliazione</span>
+                            <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                            <span class="stop-pill">Pagano</span>
+                            <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                            <span class="stop-pill">Buonarroti</span>
+                            <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                            <span class="stop-pill">Amendola</span>
+                            <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                            <span class="stop-pill highlight">Lotto</span>
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.9rem; color: #cbd5e1;">
+                            <i class="fa-solid fa-person-walking"></i> <strong>Έξοδος σταθμού:</strong> Ακολουθήστε τις εξόδους προς <em>Via Masaccio</em>. Με το που βγείτε στην επιφάνεια, περπατήστε ευθεία 250 μέτρα (3 λεπτά). Το Meliá Milano βρίσκεται στο αριστερό σας χέρι.
+                        </p>
+                    </div>
+
+                    <div class="booking-grid">
+                        <div class="booking-item">
+                            <strong style="color: var(--accent);"><i class="fa-solid fa-credit-card"></i> Ανέπαφο Tap & Go (Χωρίς Ουρές)</strong><br>
+                            Χτυπάτε απλώς την κάρτα σας (ή Apple Pay / Google Wallet) στα κίτρινα τουρνικέ στην <strong>είσοδο ΚΑΙ στην έξοδο</strong>.<br>
+                            • <strong>Κόστος μονής διαδρομής:</strong> 2,20 € (ισχύει για 90' σε ζώνες Mi1-Mi3).<br>
+                            • <strong>Ημερήσιο Πλαφόν (Daily Cap):</strong> Αν κάνετε 3 ή περισσότερες διαδρομές μέσα σε 24 ώρες, το σύστημα χρεώνει αυτόματα το ημερήσιο εισιτήριο των <strong>7,60 €</strong> και όλες οι επόμενες διαδρομές είναι δωρεάν!
+                        </div>
+                        <div class="booking-item">
+                            <strong style="color: #fbbf24;"><i class="fa-solid fa-train"></i> Malpensa Express (Αεροδρόμιο ⇄ Cadorna)</strong><br>
+                            • <strong>Πινακίδα στο Αεροδρόμιο:</strong> Αναζητάτε <strong>«MALPENSA EXPRESS»</strong> με προορισμό <strong>Milano Cadorna</strong> (κωδικός <strong>MXP</strong>, όχι τη γραμμή S3 που είναι τοπικός προαστιακός!).<br>
+                            • Αναχώρηση από MXP Terminal 1 ➔ Σταθμός <strong>Milano Cadorna</strong> σε 37 λεπτά.<br>
+                            • Δρομολόγια ανά 30' (στα :27 και :57 κάθε ώρας). <strong>Τιμή:</strong> 13 € μονή (26 € μετ' επιστροφής).<br>
+                            • <strong>Από το Cadorna στο Ξενοδοχείο:</strong> 10 λεπτά χαλαρός περίπατος με τα πόδια (900μ ευθεία) Ή Μετρό M2 για 1 στάση μέχρι Sant'Ambrogio + 4 λεπτά περπάτημα (350μ).
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+                        <a href="https://www.google.com/maps/search/Milan+Metro/@45.4642,9.1900,13z/data=!5m1!1e2" target="_blank" class="btn-map" style="margin-top: 0;">
+                            <i class="fa-solid fa-location-dot"></i> Live Χάρτης Μετρό στο Google Maps
+                        </a>
+                        <a href="tickets/milan/schema_rete_metro.pdf" target="_blank" class="btn-link">
+                            <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Επίσημος Χάρτης Δικτύου ATM (PDF)
+                        </a>
+                        <a href="https://www.atm.it/it/AltriServizi/Trasporto/Pagine/Mappe.aspx" target="_blank" class="btn-link">
+                            <i class="fa-solid fa-globe"></i> Επίσημο Portal Χαρτών ATM
+                        </a>
+                    </div>
+
+                    <div class="event-media" style="margin-top: 18px; border: 1px solid rgba(56, 189, 248, 0.35); max-height: 480px; overflow: hidden; border-radius: 12px; background: #000; display: flex; justify-content: center;">
+                        <img src="images/milan_metro_map.png" alt="Χάρτης Δικτύου Μετρό Μιλάνου (M1, M2, M3, M4, M5)" style="max-height: 480px; width: 100%; object-fit: contain;">
+                    </div>
+
+                </div>
+            </details>
+                </div>
+                <div class="panel-footer-bar">
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels()">
+                        <i class="fa-solid fa-xmark"></i> Κλείσιμο
+                    </button>
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels(); scrollToElement('section-weather');">
+                        <i class="fa-solid fa-cloud-sun"></i> Καιρός Μιλάνου
+                    </button>
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels(); scrollToElement('section-timeline');">
+                        <i class="fa-solid fa-route"></i> Πρόγραμμα Ημερών
+                    </button>
+                </div>
+            </div>
+
+            <!-- 3. EMERGENCY NUMBERS PANEL -->
+            <div id="panel-emergency" class="menu-content-panel" style="display: none; border: 1.5px solid rgba(239, 68, 68, 0.45); border-radius: 14px; overflow: hidden; margin: 0; background: rgba(15, 23, 42, 0.95);">
+                <span id="menu-emergency"></span>
+                <div class="panel-header-bar" style="background: rgba(69, 10, 10, 0.7); border-bottom: 1px solid rgba(239, 68, 68, 0.3);">
+                    <h3 class="panel-header-title" style="color: #fca5a5;">
+                        <i class="fa-solid fa-truck-medical" style="color: #ef4444;"></i>
+                        <span>Τηλέφωνα & Έκτακτη Ανάγκη</span>
+                    </h3>
+                    <button type="button" class="panel-close-btn" onclick="closeAllPanels()">
+                        <i class="fa-solid fa-xmark"></i> Κλείσιμο
+                    </button>
+                </div>
+                <div class="panel-body" style="padding: 18px;">
+                    <ul class="task-list" style="list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 0.95rem;">
+                    <li><strong style="color: #fca5a5;"><i class="fa-solid fa-phone" style="margin-right: 8px;"></i> Πανευρωπαϊκός Αριθμός:</strong> <a href="tel:112" style="color: white; font-weight: bold; background: rgba(239, 68, 68, 0.25); border: 1px solid #ef4444; padding: 3px 12px; border-radius: 6px; text-decoration: none; margin-left: 6px;"><i class="fa-solid fa-phone-flip"></i> 112</a></li>
+                    <li><strong style="color: #fca5a5;"><i class="fa-solid fa-shield-halved" style="margin-right: 8px;"></i> Αστυνομία (Polizia):</strong> <a href="tel:113" style="color: white; font-weight: bold; background: rgba(56, 189, 248, 0.2); border: 1px solid #38bdf8; padding: 3px 12px; border-radius: 6px; text-decoration: none; margin-left: 6px;"><i class="fa-solid fa-phone-flip"></i> 113</a></li>
+                    <li><strong style="color: #fca5a5;"><i class="fa-solid fa-kit-medical" style="margin-right: 8px;"></i> Ασθενοφόρο:</strong> <a href="tel:118" style="color: white; font-weight: bold; background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; padding: 3px 12px; border-radius: 6px; text-decoration: none; margin-left: 6px;"><i class="fa-solid fa-phone-flip"></i> 118</a></li>
+                    <li><strong style="color: #cbd5e1;"><i class="fa-solid fa-building-flag" style="margin-right: 8px;"></i> Ελληνικό Προξενείο Μιλάνου:</strong> Via Turati 6 (<a href="tel:+3902653775" style="color: #38bdf8; font-weight: 700; text-decoration: none;">+39 02 653775</a>)</li>
+                    <li><strong style="color: #cbd5e1;"><i class="fa-solid fa-hotel" style="margin-right: 8px;"></i> B&B Hotel Milano Sant'Ambrogio:</strong> <a href="tel:+390248101089" style="color: #38bdf8; font-weight: 700; text-decoration: none;">+39 02 48101089</a></li>
+                </ul>
+                </div>
+                <div class="panel-footer-bar">
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels()">
+                        <i class="fa-solid fa-xmark"></i> Κλείσιμο
+                    </button>
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels(); scrollToElement('section-weather');">
+                        <i class="fa-solid fa-cloud-sun"></i> Καιρός Μιλάνου
+                    </button>
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels(); scrollToElement('section-timeline');">
+                        <i class="fa-solid fa-route"></i> Πρόγραμμα Ημερών
+                    </button>
+                </div>
+            </div>
+
+            <!-- 4. GASTRONOMY PANEL -->
+            <div id="panel-gastronomy" class="menu-content-panel" style="display: none; border: 1.5px solid rgba(245, 158, 11, 0.45); border-radius: 14px; overflow: hidden; margin: 0; background: rgba(15, 23, 42, 0.95);">
+                <span id="menu-gastronomy"></span>
+                <div class="panel-header-bar">
+                    <h3 class="panel-header-title" style="color: #fde68a;">
+                        <i class="fa-solid fa-utensils" style="color: #fbbf24;"></i>
+                        <span>Γαστρονομία & Top Στέκια Μιλάνου</span>
+                    </h3>
+                    <button type="button" class="panel-close-btn" onclick="closeAllPanels()">
+                        <i class="fa-solid fa-xmark"></i> Κλείσιμο
+                    </button>
+                </div>
+                <div class="panel-body" style="padding: 18px;">
+                    <ul style="font-size: 0.92rem; color: #e2e8f0; display: flex; flex-direction: column; gap: 14px; list-style: none;">
+                    <li style="background: rgba(255, 255, 255, 0.03); padding: 12px 14px; border-radius: 10px; border-left: 3px solid #fbbf24;">
+                        <strong style="color: #fbbf24; font-size: 1rem;"><i class="fa-solid fa-bread-slice"></i> Pasticceria Cucchi (Corso Genova 1):</strong><br>
+                        <span style="color: #cbd5e1; font-size: 0.88rem;">Μόλις 600μ από το ξενοδοχείο. Ιστορικό καφέ από το 1936! Εδώ θα πάρετε το αυθεντικό μιλανέζικο <strong>Panettone</strong> και πρωινό καφέ.</span>
+                    </li>
+                    <li style="background: rgba(255, 255, 255, 0.03); padding: 12px 14px; border-radius: 10px; border-left: 3px solid #fbbf24;">
+                        <strong style="color: #fbbf24; font-size: 1rem;"><i class="fa-solid fa-pizza-slice"></i> Luini Panzerotti (Via Santa Radegonda 16):</strong><br>
+                        <span style="color: #cbd5e1; font-size: 0.88rem;">100μ από τον Duomo (από το 1888). Τα διασημότερα ζεστά panzerotti με μοτσαρέλα και ντομάτα (~3,50 €).</span>
+                    </li>
+                    <li style="background: rgba(255, 255, 255, 0.03); padding: 12px 14px; border-radius: 10px; border-left: 3px solid #fbbf24;">
+                        <strong style="color: #fbbf24; font-size: 1rem;"><i class="fa-solid fa-bowl-rice"></i> Trattoria Milanese (Via Santa Marta 11):</strong><br>
+                        <span style="color: #cbd5e1; font-size: 0.88rem;">800μ από το ξενοδοχείο. Αυθεντικό <strong>Risotto alla Milanese</strong> με σαφράν και παραδοσιακό <strong>Ossobuco</strong>.</span>
+                    </li>
+                    <li style="background: rgba(255, 255, 255, 0.03); padding: 12px 14px; border-radius: 10px; border-left: 3px solid #fbbf24;">
+                        <strong style="color: #fbbf24; font-size: 1rem;"><i class="fa-solid fa-wine-glass"></i> Camparino in Galleria (Piazza Duomo):</strong><br>
+                        <span style="color: #cbd5e1; font-size: 0.88rem;">Ιστορικό μπαρ στην είσοδο της Galleria, όπου γεννήθηκε το Aperitivo.</span>
+                    </li>
+                </ul>
+                </div>
+                <div class="panel-footer-bar">
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels()">
+                        <i class="fa-solid fa-xmark"></i> Κλείσιμο
+                    </button>
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels(); scrollToElement('section-weather');">
+                        <i class="fa-solid fa-cloud-sun"></i> Καιρός Μιλάνου
+                    </button>
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels(); scrollToElement('section-timeline');">
+                        <i class="fa-solid fa-route"></i> Πρόγραμμα Ημερών
+                    </button>
+                </div>
+            </div>
+
+            <!-- 5. COFFEE TIPS PANEL -->
+            <div id="panel-coffee" class="menu-content-panel" style="display: none; border: 1.5px solid rgba(56, 189, 248, 0.45); border-radius: 14px; overflow: hidden; margin: 0; background: rgba(15, 23, 42, 0.95);">
+                <span id="menu-coffee-tips"></span>
+                <div class="panel-header-bar">
+                    <h3 class="panel-header-title" style="color: #bae6fd;">
+                        <i class="fa-solid fa-mug-saucer" style="color: #38bdf8;"></i>
+                        <span>Μυστικά Καφέ & Εστιατορίων</span>
+                    </h3>
+                    <button type="button" class="panel-close-btn" onclick="closeAllPanels()">
+                        <i class="fa-solid fa-xmark"></i> Κλείσιμο
+                    </button>
+                </div>
+                <div class="panel-body" style="padding: 18px;">
+                    <ul style="font-size: 0.9rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 12px; list-style: none;">
+                    <li style="background: rgba(255, 255, 255, 0.03); padding: 12px 14px; border-radius: 10px; border-left: 3px solid #38bdf8;">
+                        <strong style="color: #38bdf8; font-size: 0.95rem;">• Al Banco vs Al Tavolo:</strong><br>
+                        <span style="font-size: 0.88rem;">Αν πιείτε τον εσπρέσο όρθιοι στο μπαρ («al banco») κοστίζει <strong>1,20 € - 1,50 €</strong>. Αν καθίσετε σε τραπέζι («al tavolo»), έχει έξτρα χρέωση σερβιρίσματος (3 € - 5 €).</span>
+                    </li>
+                    <li style="background: rgba(255, 255, 255, 0.03); padding: 12px 14px; border-radius: 10px; border-left: 3px solid #38bdf8;">
+                        <strong style="color: #38bdf8; font-size: 0.95rem;">• Κανόνας Cappuccino:</strong><br>
+                        <span style="font-size: 0.88rem;">Οι Ιταλοί πίνουν cappuccino μόνο το πρωί. Μετά το μεσημέρι παραγγέλνουν μόνο <em>espresso</em> ή <em>caffè macchiato</em>.</span>
+                    </li>
+                    <li style="background: rgba(255, 255, 255, 0.03); padding: 12px 14px; border-radius: 10px; border-left: 3px solid #38bdf8;">
+                        <strong style="color: #38bdf8; font-size: 0.95rem;">• Το «Coperto» στο λογαριασμό:</strong><br>
+                        <span style="font-size: 0.88rem;">Είναι η νόμιμη πάγια χρέωση κουβέρ/ψωμιού στην Ιταλία (συνήθως 2 € - 3 € / άτομο). Το φιλοδώρημα δεν είναι απαραίτητο (1-2 € στρογγυλοποίηση αρκεί).</span>
+                    </li>
+                    <li style="background: rgba(255, 255, 255, 0.03); padding: 12px 14px; border-radius: 10px; border-left: 3px solid #38bdf8;">
+                        <strong style="color: #38bdf8; font-size: 0.95rem;">• Παραγγελία Νερού:</strong><br>
+                        <span style="font-size: 0.88rem;"><em>Naturale</em> (χωρίς ανθρακικό) ή <em>Frizzante</em> (με ανθρακικό).</span>
+                    </li>
+                </ul>
+                </div>
+                <div class="panel-footer-bar">
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels()">
+                        <i class="fa-solid fa-xmark"></i> Κλείσιμο
+                    </button>
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels(); scrollToElement('section-weather');">
+                        <i class="fa-solid fa-cloud-sun"></i> Καιρός Μιλάνου
+                    </button>
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels(); scrollToElement('section-timeline');">
+                        <i class="fa-solid fa-route"></i> Πρόγραμμα Ημερών
+                    </button>
+                </div>
+            </div>
+
+            <!-- 6. BUSINESS EXPENSES PANEL -->
+            <div id="panel-expenses" class="menu-content-panel" style="display: none; border: 1.5px solid rgba(16, 185, 129, 0.45); border-radius: 14px; overflow: hidden; margin: 0; background: rgba(15, 23, 42, 0.95);">
+                <span id="menu-business-expenses"></span>
+                <div class="panel-header-bar" style="background: rgba(6, 78, 59, 0.85); border-bottom: 1px solid rgba(16, 185, 129, 0.4);">
+                    <h3 class="panel-header-title" style="color: #6ee7b7;">
+                        <i class="fa-solid fa-receipt" style="color: var(--success);"></i>
+                        <span>Έξοδα Επιχείρησης (Creation Cue) — Κωδικός Ε3: 585</span>
+                    </h3>
+                    <button type="button" class="panel-close-btn" onclick="closeAllPanels()">
+                        <i class="fa-solid fa-xmark"></i> Κλείσιμο
+                    </button>
+                </div>
+                <div class="panel-body" style="background: rgba(6, 78, 59, 0.15); padding: 18px;">
+                    <p style="font-size: 0.92rem; color: #a7f3d0; margin-bottom: 12px;">
+                    <strong>Κωδικός Ε3: 585</strong> (Έξοδα επαγγελματικών ταξιδιών εξωτερικού). Κρατήστε τα παραστατικά για τον λογιστή:
+                </p>
+                <ul class="task-list" style="font-size: 0.88rem;">
+                    <label class="task-item">
+                        <input type="checkbox" class="task-checkbox" id="tax-milan-1">
+                        <span class="task-text">Εισιτήριο Aegean (Έτοιμο: 199,83 € εκπιπτόμενο).</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" class="task-checkbox" id="tax-milan-2">
+                        <span class="task-text">Απόδειξη Parking Αεροδρομίου Αθηνών (Ελ. Βενιζέλος).</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" class="task-checkbox" id="tax-milan-3">
+                        <span class="task-text">Αποδείξεις διοδίων & βενζίνης διαδρομής Ιωάννινα-Αθήνα.</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" class="task-checkbox" id="tax-milan-4">
+                        <span class="task-text">Αποδείξεις Malpensa Express & μετακινήσεων Μιλάνου.</span>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" class="task-checkbox" id="tax-milan-5">
+                        <span class="task-text">Τιμολόγιο/Απόδειξη διαμονής B&B Hotel (€42 City tax).</span>
+                    </label>
+                </ul>
+                </div>
+                <div class="panel-footer-bar">
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels()">
+                        <i class="fa-solid fa-xmark"></i> Κλείσιμο
+                    </button>
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels(); scrollToElement('section-weather');">
+                        <i class="fa-solid fa-cloud-sun"></i> Καιρός Μιλάνου
+                    </button>
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels(); scrollToElement('section-timeline');">
+                        <i class="fa-solid fa-route"></i> Πρόγραμμα Ημερών
+                    </button>
+                </div>
+            </div>
+
+            <!-- 7. CHECKLISTS PANEL -->
+            <div id="panel-checklists" class="menu-content-panel" style="display: none; border: 1.5px solid rgba(192, 132, 252, 0.45); border-radius: 14px; overflow: hidden; margin: 0; background: rgba(15, 23, 42, 0.95);">
+                <span id="menu-checklists"></span>
+                <div class="panel-header-bar">
+                    <h3 class="panel-header-title" style="color: #e9d5ff;">
+                        <i class="fa-solid fa-list-check" style="color: #c084fc;"></i>
+                        <span>Λίστες Προετοιμασίας & Βαλίτσας</span>
+                    </h3>
+                    <button type="button" class="panel-close-btn" onclick="closeAllPanels()">
+                        <i class="fa-solid fa-xmark"></i> Κλείσιμο
+                    </button>
+                </div>
+                <div class="panel-body" style="padding: 18px;">
+                    <div class="checklist-grid">
+                    
+                    <div class="check-card glass">
+                        <h3><i class="fa-solid fa-passport"></i> 1. Προετοιμασία & Έγγραφα</h3>
+                        <ul class="task-list">
+                            <label class="task-item">
+                                <input type="checkbox" class="task-checkbox" id="task-milan-1">
+                                <span class="task-text">Ταυτότητες / Διαβατήρια (Σωτήριος & Αγγελική).</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" class="task-checkbox" id="task-milan-park">
+                                <span class="task-text">Κράτηση Parking: <strong>5 Stars Parking</strong> (18–21 Νοε, 12:00–22:30).</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" class="task-checkbox" id="task-milan-cenacolo">
+                                <span class="task-text">Εισιτήριο & Voucher: <strong>Ο Μυστικός Δείπνος (Da Vinci)</strong> (20 Νοε, 16:15 - Άφιξη 15:45).</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" class="task-checkbox" id="task-milan-2">
+                                <span class="task-text">Κατέβασμα χάρτη Μιλάνου στο Google Maps (Offline).</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" class="task-checkbox" id="task-milan-3">
+                                <span class="task-text">Εφαρμογή <a href="https://www.atm.it/en/Pages/app.aspx" target="_blank">ATM Milano Official App</a>.</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" class="task-checkbox" id="task-milan-4">
+                                <span class="task-text">Power bank (φορτισμένο, έως 100Wh - μόνο σε χειραποσκευή).</span>
+                            </label>
+                        </ul>
+                    </div>
+
+                    <div class="check-card glass">
+                        <h3><i class="fa-solid fa-user-tie"></i> 2. Gala & Ρουχισμός</h3>
+                        <ul class="task-list">
+                            <label class="task-item">
+                                <input type="checkbox" class="task-checkbox" id="task-milan-5">
+                                <span class="task-text">Επίσημο/Smart Business ένδυμα για το Huawei Summit Gala.</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" class="task-checkbox" id="task-milan-6">
+                                <span class="task-text">Άνετα παπούτσια περιπάτου για τα πλακόστρωτα του Μιλάνου.</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" class="task-checkbox" id="task-milan-7">
+                                <span class="task-text">Ζεστό παλτό / μπουφάν (Νοέμβριος στο Μιλάνο: 6°C - 12°C).</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" class="task-checkbox" id="task-milan-8">
+                                <span class="task-text">Σπαστή ομπρέλα για παν ενδεχόμενο.</span>
+                            </label>
+                        </ul>
+                    </div>
+
+                    <div class="check-card glass">
+                        <h3><i class="fa-solid fa-bag-shopping"></i> 3. Μιλανέζικα Souvenirs & Αγορές</h3>
+                        <ul class="task-list">
+                            <label class="task-item">
+                                <input type="checkbox" class="task-checkbox" id="task-milan-9">
+                                <span class="task-text">Αυθεντικό Panettone Μιλάνου (από Pasticceria Marchesi ή Cucchi).</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" class="task-checkbox" id="task-milan-10">
+                                <span class="task-text">Ιταλικός espresso σε κόκκους ή αλεσμένος (Illy / Lavazza).</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" class="task-checkbox" id="task-milan-11">
+                                <span class="task-text">Αυθεντική παρμεζάνα Parmigiano Reggiano 24 μηνών.</span>
+                            </label>
+                            <label class="task-item">
+                                <input type="checkbox" class="task-checkbox" id="task-milan-12">
+                                <span class="task-text">Ιταλικό δερμάτινο αξεσουάρ ή είδη μόδας από Quadrilatero.</span>
+                            </label>
+                        </ul>
+                    </div>
+
+                </div>
+                </div>
+                <div class="panel-footer-bar">
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels()">
+                        <i class="fa-solid fa-xmark"></i> Κλείσιμο
+                    </button>
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels(); scrollToElement('section-weather');">
+                        <i class="fa-solid fa-cloud-sun"></i> Καιρός Μιλάνου
+                    </button>
+                    <button type="button" class="panel-footer-btn" onclick="closeAllPanels(); scrollToElement('section-timeline');">
+                        <i class="fa-solid fa-route"></i> Πρόγραμμα Ημερών
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 8. WEATHER SECTION -->
+        <div id="section-weather" style="margin-top: 15px; margin-bottom: 35px;">
+            <h2 class="section-title"><i class="fa-solid fa-cloud-sun"></i> Καιρός στο Μιλάνο</h2>
+            <div class="glass" style="margin-bottom: 25px; padding: 20px; border-radius: 14px;">
+                <h3 style="margin-bottom: 15px; color: var(--accent);">
+                    <i class="fa-solid fa-temperature-half"></i> Πρόγνωση Καιρού Μιλάνου (Νοέμβριος 2026)
+                    <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">(Πατήστε για αναλυτικό ανά ώρα)</span>
+                </h3>
+                <a href="https://www.accuweather.com/el/it/milan/214046/hourly-weather-forecast/214046" target="_blank" style="display: block; position: relative; text-decoration: none;">
+                    <a class="weatherwidget-io" href="https://forecast7.com/el/45d469d19/milan/" data-label_1="ΜΙΛΑΝΟ" data-label_2="ΚΑΙΡΟΣ" data-theme="dark" data-basecolor="rgba(0,0,0,0.15)" data-textcolor="#ffffff" data-accent="rgba(255,255,255,0.1)">ΜΙΛΑΝΟ ΚΑΙΡΟΣ</a>
+                    <script>
+                    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                    </script>
+                </a>
+            </div>
+        </div>
+
+        <!-- 9. ITINERARY TIMELINE -->
+        <div id="section-timeline">
+            <h2 class="section-title"><i class="fa-solid fa-route"></i> Το Αναλυτικό Πρόγραμμα (4 Ημέρες)</h2>
+
+            <div class="timeline">
+                
+                <!-- Day 1: Wednesday 18 Nov -->
+                <div class="timeline-day" id="day-2026-11-18">
+                    <div class="day-marker">D1</div>
+                    <div class="day-header">
+                        <h3>Από τα Γιάννενα & την Αθήνα ➔ Άφιξη στο Μιλάνο</h3>
+                        <p>Τετάρτη, 18 Νοεμβρίου 2026</p>
+                    </div>
+
+                    <div class="event-card glass" style="border-left: 4px solid #38bdf8;">
+                        <div class="event-time">
+                            <span><i class="fa-regular fa-clock"></i> 06:15 - 11:15</span>
+                        </div>
+                        <div class="event-content">
+                            <h4><i class="fa-solid fa-car-side" style="color: #38bdf8;"></i> Αναχώρηση από Γιάννενα & Οδικό Ταξίδι προς Αθήνα</h4>
+                            <p><strong>06:15</strong> Ξεκίνημα με το αυτοκίνητο από τα <strong>Γιάννενα</strong> (Ιόνια Οδός A5 ➔ Γέφυρα Ρίου-Αντιρρίου ➔ Ολυμπία Οδός A8 ➔ Αττική Οδός).</p>
+                            <p>Άνετη οδήγηση σε σύγχρονο αυτοκινητόδρομο (~410 χλμ, ~4 ώρες και 15 λεπτά με μία σύντομη στάση 20 λεπτών για καφέ και ξεκούραση).</p>
+                        </div>
+                    </div>
+
+                    <div class="event-card glass" style="border-left: 4px solid #f43f5e;">
+                        <div class="event-time">
+                            <span><i class="fa-regular fa-clock"></i> 11:15 - 11:50</span>
+                        </div>
+                        <div class="event-content">
+                            <h4><i class="fa-solid fa-heart" style="color: #f43f5e;"></i> Στάση στην Αθήνα: Στη θεία Βάσω (Σταυριάνα & Αντωνία)</h4>
+                            <p><strong>11:15</strong> Άφιξη στο σπίτι της <strong>θείας Βάσως</strong> στην Αθήνα.</p>
+                            <p>Αφήνουμε την <strong>Σταυριάνα</strong> και την <strong>Αντωνία</strong> με τις αποσκευές τους στα πιο ζεστά και αγαπημένα χέρια! Αγκαλιές, φιλιά, και αναχώρηση χωρίς κανένα άγχος μέσω Αττικής Οδού για το αεροδρόμιο.</p>
+                        </div>
+                    </div>
+
+                    <div class="event-card glass" style="border-left: 4px solid var(--accent);">
+                        <div class="event-time">
+                            <span><i class="fa-regular fa-clock"></i> 12:00 - 13:45</span>
+                            <a href="#" class="add-to-cal-btn" data-title="5 Stars Parking - Στάθμευση & Μετάβαση ATH" data-start="20261118T120000" data-end="20261118T134500" data-loc="5 Stars Parking, 22ο χλμ Λεωφ. Μαρκοπούλου"><i class="fa-regular fa-calendar-plus"></i> Ημερολόγιο</a>
+                        </div>
+                        <div class="event-content">
+                            <h4><i class="fa-solid fa-square-parking" style="color: var(--accent);"></i> Στάθμευση στο 5 Stars Parking & Shuttle προς Αεροδρόμιο</h4>
+                            <p><strong>12:00 - 12:30</strong> Έναρξη κράτησης στάθμευσης στο <strong>5 Stars Parking</strong> (22ο χλμ. Λεωφόρου Μαρκοπούλου).</p>
+                            <p>Άμεση και δωρεάν μεταφορά με το ιδιωτικό mini-bus shuttle του parking κατευθείαν στις Αναχωρήσεις του Αεροδρομίου Ελ. Βενιζέλος (ATH) σε 5–7 λεπτά.</p>
+                            <div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+                                <a href="https://www.google.com/maps/dir/?api=1&destination=5+Stars+Parking+22o+chlm+Leoforos+Markopoulou" target="_blank" class="btn-map" style="font-size: 0.8rem; padding: 6px 14px; margin-top: 0;">
+                                    <i class="fa-solid fa-location-arrow"></i> Πλοήγηση στο Parking
+                                </a>
+                                <a href="tel:+306983322264" class="btn-link" style="font-size: 0.8rem; padding: 6px 14px;">
+                                    <i class="fa-solid fa-phone"></i> Shuttle: 6983 322264
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="event-card glass">
+                        <div class="event-time">
+                            <span><i class="fa-regular fa-clock"></i> 13:45 - 17:50</span>
+                            <a href="#" class="add-to-cal-btn" data-title="Πτήση Aegean A3664 Αθήνα - Μιλάνο" data-start="20261118T161500" data-end="20261118T175000" data-loc="Athens El. Venizelos Airport"><i class="fa-regular fa-calendar-plus"></i> Ημερολόγιο</a>
+                        </div>
+                        <div class="event-content">
+                            <h4>Απογείωση & Άφιξη στο Malpensa (MXP)</h4>
+                            <p><strong>13:45</strong> Άφιξη στο Αεροδρόμιο Ελ. Βενιζέλος (ATH). Έλεγχος ασφαλείας και επιβίβαση στην πύλη.</p>
+                            <p><strong>16:15</strong> Αναχώρηση πτήσης Aegean <strong>A3664</strong>.</p>
+                            <p><strong>17:50</strong> Προσγείωση στο Αεροδρόμιο Milano Malpensa (Terminal 1). Καλώς ήρθατε στην Ιταλία!</p>
+                        </div>
+                    </div>
+
+                    <div class="event-card glass">
+                        <div class="event-time">
+                            <span><i class="fa-regular fa-clock"></i> 18:20 - 19:30</span>
+                        </div>
+                        <div class="event-content">
+                            <h4>Μετάβαση από Αεροδρόμιο & Check-in στο Ξενοδοχείο</h4>
+                            
+                            <!-- Train from MXP -->
+                            <p><strong>18:30</strong> <strong>Τρένο Malpensa Express από Terminal 1:</strong><br>
+                            Κατεβαίνετε στον υπόγειο σιδηροδρομικό σταθμό του Terminal 1. Αναζητάτε στις οθόνες την επιγραφή: <strong>«MALPENSA EXPRESS»</strong> με προορισμό <strong>«MILANO CADORNA»</strong> (διάρκεια 37 λεπτά απευθείας).<br>
+                            <small style="color: #fca5a5;"><i class="fa-solid fa-circle-exclamation"></i> <em>Σημείωση:</em> ΔΕΝ είναι η γραμμή S3 (η S3 είναι προαστιακός από το Saronno και δεν πάει στο αεροδρόμιο). Μπαίνετε αποκλειστικά στο τρένο με ένδειξη <strong>MXP / Malpensa Express</strong>.</small></p>
+
+                            <!-- Arrival at Cadorna -->
+                            <p style="margin-top: 12px;"><strong>19:15</strong> <strong>Άφιξη στο σταθμό Milano Cadorna ➔ Πώς πάτε στο Ξενοδοχείο (2 Επιλογές):</strong></p>
+                            
+                            <!-- Option A: Walk -->
+                            <div style="background: rgba(15, 23, 42, 0.75); border-left: 4px solid #10b981; border-radius: 8px; padding: 12px; margin: 8px 0 12px 0;">
+                                <strong style="color: #34d399; font-size: 0.95rem;"><i class="fa-solid fa-person-walking"></i> Επιλογή 1 (Συνιστώμενη): 100% με τα πόδια (10 λεπτά - 900 μέτρα)</strong>
+                                <p style="font-size: 0.86rem; color: #cbd5e1; margin-top: 4px; line-height: 1.5;">
+                                    Βγαίνετε από τον σταθμό Cadorna κατευθείαν στην πλατεία και περπατάτε ευθεία: <em>Via Carducci ➔ δεξιά στη Via San Vittore ➔ αριστερά στη Via Olivetani 4</em>.<br>
+                                    Επειδή έχετε χειραποσκευές (cabin trolley), είναι η <strong>πιο απλή και άμεση λύση</strong> χωρίς να μπλέκετε με σκάλες και υπόγεια μετρό!
+                                </p>
+                            </div>
+
+                            <!-- Option B: Metro + 4 min walk -->
+                            <div style="background: rgba(15, 23, 42, 0.75); border-left: 4px solid #38bdf8; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+                                <strong style="color: #38bdf8; font-size: 0.95rem;"><i class="fa-solid fa-train-subway"></i> Επιλογή 2 (Αν βρέχει): Μετρό M2 (1 στάση) + 4 λεπτά περπάτημα</strong>
+                                <p style="font-size: 0.86rem; color: #cbd5e1; margin-top: 4px; line-height: 1.5;">
+                                    Από το Cadorna κατεβαίνετε στο υπόγειο <strong>Μετρό M2 (Πράσινη Γραμμή)</strong> με κατεύθυνση (Direzione): <em>Assago Forum</em> ή <em>Abbiategrasso</em>.<br>
+                                    Κάνετε <strong>μόλις 1 στάση (2 λεπτά)</strong> και κατεβαίνετε στο <strong>Sant'Ambrogio</strong>.<br>
+                                    Βγαίνετε από την έξοδο <em>Via San Vittore / Via Olivetani</em> και περπατάτε <strong>350 μέτρα (4 λεπτά)</strong> μέχρι την πόρτα του ξενοδοχείου.
+                                </p>
+                            </div>
+
+                            <p><strong>19:30</strong> Check-in στο <strong>B&B Hotel Milano Sant'Ambrogio</strong>, τακτοποίηση στο δωμάτιο και φρεσκάρισμα.</p>
+                            <div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+                                <a href="https://www.google.com/maps/dir/?api=1&origin=Milano+Cadorna&destination=B%26B+Hotel+Milano+Sant'Ambrogio,+Via+Olivetani+4,+Milan&travelmode=walking" target="_blank" class="btn-map" style="margin-top: 0;">
+                                    <i class="fa-solid fa-person-walking"></i> Διαδρομή με τα πόδια από Cadorna (Google Maps)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="event-card glass">
+                        <div class="event-time">
+                            <span><i class="fa-regular fa-clock"></i> 20:15 - 23:00</span>
+                        </div>
+                        <div class="event-content">
+                            <h4>Βόλτα στη Βασιλική Sant'Ambrogio & Αυθεντικό Aperitivo στο Navigli</h4>
+                            <p><strong>20:15</strong> Σύντομος περίπατος στην ιστορική <strong>Basilica di Sant'Ambrogio</strong> (του 4ου αιώνα) ακριβώς δίπλα στο ξενοδοχείο.</p>
+                            <p><strong>20:45</strong> Μετάβαση στα περίφημα κανάλια του <strong>Navigli</strong> για το κλασικό μιλανέζικο Aperitivo:</p>
+
+                            <div class="metro-route-box">
+                                <div class="metro-route-header">
+                                    <span class="metro-badge metro-m2">M2 Πράσινη</span>
+                                    <span style="color: #fff;"><strong>Sant'Ambrogio</strong> ➔ <strong>Porta Genova FS (Navigli)</strong></span>
+                                    <span class="stops-badge">2 στάσεις • 3 λεπτά</span>
+                                </div>
+                                <span class="direction-sign"><i class="fa-solid fa-signs-post"></i> DIREZIONE: <strong>ASSAGO FORUM</strong> ή <strong>ABBIATEGRASSO</strong></span>
+                                <div class="stops-chain">
+                                    <span class="stop-pill highlight">Sant'Ambrogio</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill">Sant'Agostino</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill highlight">Porta Genova FS</span>
+                                </div>
+                                <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 6px;">
+                                    <em>Έξοδος:</em> Βγαίνετε προς <em>Via Casale</em> και στα 150 μέτρα βρίσκεστε πάνω στο κανάλι Naviglio Grande.<br>
+                                    <em>Επιστροφή στο ξενοδοχείο:</em> Από Porta Genova FS παίρνετε M2 με <span class="direction-sign" style="font-size: 0.75rem; padding: 1px 6px;">DIREZIONE: CASCINA GOBBA / GESSATE / COLOGNO</span> (2 στάσεις πίσω στο Sant'Ambrogio).
+                                </p>
+                            </div>
+
+                            <p><strong>21:15</strong> Κλασικό Aperitivo δίπλα στο νερό (απολαύστε Negroni Sbagliato ή Spritz με τοπικά ορεκτικά) και δείπνο σε παραδοσιακή trattoria.</p>
+                            <a href="https://www.google.com/maps/search/Naviglio+Grande+Milan" target="_blank" class="btn-map"><i class="fa-solid fa-martini-glass-citrus"></i> Περιοχή Navigli</a>
+                            <div class="event-media">
+                                <img src="images/milan_navigli.jpg" alt="Navigli Canal Night">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 2: Thursday 19 Nov - THE GALA DAY -->
+                <div class="timeline-day" id="day-2026-11-19">
+                    <div class="day-marker gala-marker"><i class="fa-solid fa-star" style="font-size: 0.8rem;"></i></div>
+                    <div class="day-header">
+                        <h3 style="color: #fbbf24;">Duomo, Galleria & HUAWEI WATCH FACE SUMMIT 2026</h3>
+                        <p>Πέμπτη, 19 Νοεμβρίου 2026 • Η Μεγάλη Ημέρα του Summit</p>
+                    </div>
+
+                    <div class="event-card glass">
+                        <div class="event-time">
+                            <span><i class="fa-regular fa-clock"></i> 08:30 - 13:30</span>
+                        </div>
+                        <div class="event-content">
+                            <h4>Κάστρο Sforzesco, Duomo & Galleria Vittorio Emanuele II</h4>
+                            <p><strong>08:30</strong> Πρωινό στο ξενοδοχείο (περιλαμβάνεται).</p>
+                            <p><strong>09:30</strong> Πρωινός περίπατος προς την εκκλησία Santa Maria delle Grazie (όπου βρίσκεται ο «Μυστικός Δείπνος») και το επιβλητικό <strong>Κάστρο Sforzesco</strong> με το πάρκο Sempione.</p>
+                            <p><strong>11:00</strong> Μετάβαση στην Piazza del Duomo:</p>
+
+                            <div class="metro-route-box">
+                                <div class="metro-route-header">
+                                    <span class="metro-badge metro-m1">M1 Κόκκινη</span>
+                                    <span style="color: #fff;"><strong>Conciliazione</strong> (ή Cairoli) ➔ <strong>Duomo</strong></span>
+                                    <span class="stops-badge">3 στάσεις • 5 λεπτά</span>
+                                </div>
+                                <span class="direction-sign"><i class="fa-solid fa-signs-post"></i> DIREZIONE: <strong>SESTO 1° MAGGIO FS</strong></span>
+                                <div class="stops-chain">
+                                    <span class="stop-pill highlight">Conciliazione</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill">Cadorna FN</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill">Cairoli</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill highlight">Duomo</span>
+                                </div>
+                                <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 6px;">
+                                    <em>Έξοδος:</em> Οι κυλιόμενες σκάλες σας βγάζουν κατευθείαν στην καρδιά της Piazza del Duomo μπροστά από την πρόσοψη του Καθεδρικού!
+                                </p>
+                            </div>
+
+                            <p>Επίσκεψη στον συγκλονιστικό <strong>Καθεδρικό Ναό Duomo</strong> και βόλτα στην <strong>Galleria Vittorio Emanuele II</strong>.</p>
+                            <p><strong>12:30</strong> Στάση για εσπρέσο στο ιστορικό <em>Camparino in Galleria</em> και περιστροφή στη φτέρνα στο ψηφιδωτό του ταύρου για καλοτυχία!</p>
+                            <p><strong>13:00</strong> Ελαφρύ μεσημεριανό γεύμα (δοκιμάστε τα διάσημα panzerotti του <em>Luini</em> κοντά στον Duomo).</p>
+                            <a href="https://www.google.com/maps/search/Duomo+di+Milano" target="_blank" class="btn-map"><i class="fa-solid fa-church"></i> Χάρτης Duomo</a>
+                            <div class="event-media">
+                                <img src="images/milan_galleria.jpg" alt="Galleria Vittorio Emanuele II">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="event-card glass">
+                        <div class="event-time">
+                            <span><i class="fa-regular fa-clock"></i> 14:00 - 15:30</span>
+                        </div>
+                        <div class="event-content">
+                            <h4>Επιστροφή στο Ξενοδοχείο & Αναχώρηση για το Huawei Summit</h4>
+                            <p><strong>14:00</strong> Επιστροφή στο B&B Hotel για ξεκούραση και ντύσιμο με το επίσημο / smart business ένδυμα για το Gala.</p>
+                            <p><strong>15:00</strong> Αναχώρηση για το ξενοδοχείο <strong>Meliá Milano</strong>:</p>
+
+                            <div class="metro-route-box" style="border-color: #f59e0b; background: rgba(30, 27, 75, 0.8);">
+                                <div class="metro-route-header">
+                                    <span class="metro-badge metro-m1">M1 Κόκκινη</span>
+                                    <span style="color: #fff;"><strong>Conciliazione</strong> ➔ <strong>Lotto (Meliá Milano)</strong></span>
+                                    <span class="stops-badge" style="border-color: #f59e0b; color: #fbbf24;">4 στάσεις • 7 λεπτά</span>
+                                </div>
+                                <span class="direction-sign" style="background: rgba(239, 68, 68, 0.25); border-color: #ef4444; color: #fca5a5;">
+                                    <i class="fa-solid fa-signs-post"></i> DIREZIONE: <strong>RHO FIERAMILANO</strong> (ή Molino Dorino)
+                                </span>
+                                <div class="tip-callout" style="margin-top: 6px; font-size: 0.83rem; padding: 6px 10px;">
+                                    ⚠️ <em>Προσοχή: Μην επιβιβαστείτε σε συρμό με ένδειξη Bisceglie (διακλαδώνεται στο Pagano και δεν πάει Lotto)!</em>
+                                </div>
+                                <div class="stops-chain">
+                                    <span class="stop-pill highlight">Conciliazione</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill">Pagano</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill">Buonarroti</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill">Amendola</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill highlight" style="background: #f59e0b; color: #000;">Lotto</span>
+                                </div>
+                                <p style="font-size: 0.86rem; color: #cbd5e1; margin-top: 8px;">
+                                    <em>Έξοδος:</em> Ακολουθήστε τις εξόδους <strong>Via Masaccio</strong>. Περπατήστε 250μ ευθεία μπροστά (3 λεπτά). Το Meliá Milano είναι στο αριστερό σας χέρι.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GALA EVENT CARD -->
+                    <div class="event-card glass gala-card" id="timeline-gala">
+                        <div class="event-time">
+                            <span style="color: #fbbf24; font-size: 1rem;"><i class="fa-solid fa-award" style="color: #ef4444;"></i> 15:30 – 22:00 (Κύριο Event)</span>
+                            <a href="#" class="add-to-cal-btn" data-title="Huawei Watch Face Summit Milano 2026" data-start="20261119T153000" data-end="20261119T220000" data-loc="Hotel Melia Milano, Via Masaccio 19, Milan"><i class="fa-regular fa-calendar-plus"></i> Ημερολόγιο</a>
+                        </div>
+                        <div class="event-content">
+                            <h4 style="color: #fbbf24; font-size: 1.35rem;">HUAWEI WATCH FACE SUMMIT MILANO 2026</h4>
+                            <p style="color: #fde68a; font-weight: 600;">Ξενοδοχείο Meliá Milano (Via Masaccio 19)</p>
+                            <p><strong>15:30</strong> <strong>Check-in & Υποδοχή Συνέδρων:</strong> Παραλαβή διαπιστεύσεων (badges) για τον Σωτήριο Λιόντο και την Αγγελική Αντωνίου. Welcome drinks & δικτύωση.</p>
+                            <p><strong>16:15</strong> <strong>Keynote & Design Summit:</strong> Παρουσιάσεις για την εξέλιξη της ευρωπαϊκής αγοράς watch faces, νέες τεχνολογίες οθονών, σχεδιαστικές τάσεις και στρατηγική της Huawei.</p>
+                            <p><strong>18:30</strong> <strong>Awards & Exclusive Showcase:</strong> Βραβεύσεις κορυφαίων σχεδιαστών και παρουσίαση καινοτόμων ιδεών.</p>
+                            <p><strong>19:30</strong> <strong>Gala Dinner & Networking:</strong> Επίσημο δείπνο γκαλά με στελέχη της Huawei Ευρώπης (ομάδα ανάπτυξης watch faces) και κορυφαίους δημιουργούς από όλη την Ευρώπη.</p>
+                            <p><strong>22:00</strong> Ολοκλήρωση της λαμπερής βραδιάς. Επιστροφή στο B&B Hotel:</p>
+
+                            <div class="metro-route-box" style="margin-top: 10px;">
+                                <div class="metro-route-header">
+                                    <span class="metro-badge metro-m1">M1 Κόκκινη</span>
+                                    <span style="color: #fff;"><strong>Lotto</strong> ➔ <strong>Conciliazione</strong></span>
+                                    <span class="stops-badge">4 στάσεις • 7 λεπτά</span>
+                                </div>
+                                <span class="direction-sign"><i class="fa-solid fa-signs-post"></i> DIREZIONE: <strong>SESTO 1° MAGGIO FS</strong></span>
+                                <div class="stops-chain">
+                                    <span class="stop-pill highlight">Lotto</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill">Amendola</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill">Buonarroti</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill">Pagano</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill highlight">Conciliazione</span>
+                                </div>
+                                <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 6px;">
+                                    <em>Έξοδος:</em> Βγαίνετε στο σταθμό Conciliazione και περπατάτε 600μ μέσω Corso Magenta πίσω στο B&B Hotel. Το μετρό λειτουργεί έως τις 00:15.
+                                </p>
+                            </div>
+
+                            <a href="#booking-huawei" class="btn-link" style="margin-top: 10px;"><i class="fa-solid fa-file-invoice"></i> Προβολή Στοιχείων Πρόσκλησης</a>
+                            <div class="event-media">
+                                <img src="images/milan_huawei_gala.jpg" alt="Huawei Gala Ceremony">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 3: Friday 20 Nov -->
+                <div class="timeline-day" id="day-2026-11-20">
+                    <div class="day-marker">D3</div>
+                    <div class="day-header">
+                        <h3 style="color: #fbbf24;">Τέχνη Brera & Ο Μυστικός Δείπνος του Leonardo da Vinci</h3>
+                        <p>Παρασκευή, 20 Νοεμβρίου 2026 • Ημέρα Απεργίας (Απόλυτη Ασφάλεια: Μόλις 500μ με τα πόδια από το ξενοδοχείο!)</p>
+                    </div>
+
+                    <div class="event-card glass">
+                        <div class="event-time">
+                            <span><i class="fa-regular fa-clock"></i> 09:30 - 14:00</span>
+                        </div>
+                        <div class="event-content">
+                            <h4>Καλλιτεχνική Γειτονιά Brera & Quadrilatero della Moda</h4>
+                            <p><strong>09:00</strong> Πρωινό στο ξενοδοχείο.</p>
+                            <p><strong>10:00</strong> Μετάβαση στη γραφική γειτονιά της <strong>Brera</strong> (πλακόστρωτα σοκάκια, γκαλερί τέχνης, Pinacoteca di Brera):</p>
+
+                            <div class="metro-route-box">
+                                <div class="metro-route-header">
+                                    <span class="metro-badge metro-m2">M2 Πράσινη</span>
+                                    <span style="color: #fff;"><strong>Sant'Ambrogio</strong> ➔ <strong>Lanza - Brera</strong></span>
+                                    <span class="stops-badge">2 στάσεις • 3 λεπτά</span>
+                                </div>
+                                <span class="direction-sign"><i class="fa-solid fa-signs-post"></i> DIREZIONE: <strong>GESSATE</strong> / <strong>COLOGNO NORD</strong> / <strong>CASCINA GOBBA</strong></span>
+                                <div class="stops-chain">
+                                    <span class="stop-pill highlight">Sant'Ambrogio</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill">Cadorna FN</span>
+                                    <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i>
+                                    <span class="stop-pill highlight">Lanza</span>
+                                </div>
+                                <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 6px;">
+                                    <em>Έξοδος:</em> Βγαίνετε στο σταθμό Lanza ακριβώς στην πύλη της Brera (Piccolo Teatro). Εναλλακτικά, αν υπάρξει απεργία εκτός των εγγυημένων ζωνών, η Brera απέχει έναν πανέμορφο περίπατο 18 λεπτών με τα πόδια!
+                                </p>
+                            </div>
+
+                            <p><strong>12:00</strong> Περιήγηση στο περίφημο <strong>Quadrilatero della Moda</strong> (Via Montenapoleone & Via della Spiga), την παγκόσμια καρδιά της υψηλής ραπτικής και του ιταλικού design.</p>
+                            <p><strong>13:15</strong> Μεσημεριανό γεύμα σε παραδοσιακή trattoria (δοκιμάστε αυθεντική <em>Cotoletta alla Milanese</em>).</p>
+                            <a href="https://www.google.com/maps/search/Pinacoteca+di+Brera" target="_blank" class="btn-map"><i class="fa-solid fa-palette"></i> Brera Art District</a>
+                        </div>
+                    </div>
+
+                    <!-- Highlight Event: The Last Supper (Leonardo da Vinci) -->
+                    <div class="event-card glass" style="border: 2px solid rgba(245, 158, 11, 0.55); box-shadow: 0 10px 30px rgba(245, 158, 11, 0.15);">
+                        <div class="event-time">
+                            <span style="color: #fbbf24; font-weight: 700;"><i class="fa-regular fa-clock"></i> 15:30 - 17:45</span>
+                            <a href="#" class="add-to-cal-btn" data-title="Ο Μυστικός Δείπνος (Da Vinci) - Santa Maria delle Grazie" data-start="20261120T161500" data-end="20261120T173000" data-loc="Piazza Santa Maria delle Grazie 2, Milano"><i class="fa-regular fa-calendar-plus"></i> Ημερολόγιο</a>
+                        </div>
+                        <div class="event-content">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+                                <h4 style="color: #fbbf24; font-size: 1.25rem;"><i class="fa-solid fa-paintbrush"></i> Ο Μυστικός Δείπνος (Il Cenacolo Vinciano) & Santa Maria delle Grazie</h4>
+                                <span style="background: rgba(245, 158, 11, 0.2); border: 1px solid var(--gold); color: #fbbf24; padding: 3px 12px; border-radius: 8px; font-weight: 700; font-size: 0.82rem;">
+                                    <i class="fa-solid fa-ticket"></i> Επίσημη Ξενάγηση 16:15
+                                </span>
+                            </div>
+
+                            <p style="margin-top: 10px;"><strong>15:30</strong> <strong>Χαλαρή Μετάβαση με τα πόδια (Μόλις 500 μέτρα!):</strong><br>
+                            Το B&B Hotel Sant'Ambrogio βρίσκεται σε στρατηγική τοποθεσία: βγαίνετε από την Via Olivetani 4, στρίβετε δεξιά στη Via San Vittore και μέσω Via Zenale φτάνετε στην <strong>Piazza di Santa Maria delle Grazie</strong> σε μόλις <strong>5–7 λεπτά με τα πόδια</strong>! <em>(Κανένα απολύτως άγχος για την απεργία των μέσων!).</em></p>
+
+                            <div style="background: rgba(239, 68, 68, 0.18); border: 1px solid rgba(239, 68, 68, 0.45); border-radius: 10px; padding: 12px 16px; margin: 12px 0; font-size: 0.9rem; color: #fca5a5; line-height: 1.5;">
+                                <i class="fa-solid fa-triangle-exclamation"></i> <strong>ΑΥΣΤΗΡΟΣ ΚΑΝΟΝΑΣ ΠΡΟΣΕΛΕΥΣΗΣ (15:45 το αργότερο):</strong><br>
+                                Οι κανονισμοί του μουσείου απαιτούν υποχρεωτική παρουσία <strong>20–30 λεπτά νωρίτερα (15:45)</strong> στο σημείο συνάντησης με τον ξεναγό / εκδοτήριο εισιτηρίων για επικύρωση vouchers και έλεγχο ασφαλείας. Σε περίπτωση αργοπορίας, η είσοδος απαγορεύεται αυστηρά από το σύστημα!
+                            </div>
+
+                            <p><strong>16:15 – 17:15</strong> <strong>Η Μεγάλη Εμπειρία & Επίσημη Ξενάγηση:</strong></p>
+                            <ul style="font-size: 0.9rem; color: #cbd5e1; margin-left: 20px; line-height: 1.6;">
+                                <li><strong>Είσοδος στην Τραπεζαρία (Refettorio):</strong> Ελεγχόμενη ατμόσφαιρα με ειδικά φίλτρα αέρα. 15 μαγικά λεπτά μπροστά στην αυθεντική τοιχογραφία του <strong>Leonardo da Vinci</strong> (1495–1498, διαστάσεων 4,60 x 8,80μ) και στην αντικριστή «Σταύρωση» του Montorfano.</li>
+                                <li><strong>Ανάλυση από τον Επίσημο Ξεναγό:</strong> Εξήγηση των κρυμμένων συμβολισμών, της επαναστατικής προοπτικής και των συναισθημάτων των 12 Αποστόλων τη στιγμή που ο Χριστός αποκαλύπτει την προδοσία.</li>
+                                <li><strong>Εκκλησία & Chiostro delle Rane:</strong> Ξενάγηση στον αναγεννησιακό τρούλο και την αυλή που σχεδίασε ο Donato Bramante.</li>
+                            </ul>
+
+                            <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 12px 14px; margin-top: 12px; font-size: 0.85rem; color: #94a3b8; line-height: 1.5;">
+                                <strong><i class="fa-solid fa-circle-info" style="color: var(--accent);"></i> Χρήσιμοι Κανόνες Επίσκεψης:</strong><br>
+                                • <em>Φωτογραφίες:</em> Επιτρέπονται για προσωπική χρήση, αυστηρά <strong>ΧΩΡΙΣ φλας</strong> και χωρίς selfie sticks.<br>
+                                • <em>Τσάντες:</em> Απαγορεύονται μεγάλα σακίδια πλάτης και αποσκευές. Διατίθενται δωρεάν lockers στο χώρο υποδοχής.<br>
+                                • <em>Ταυτοποίηση:</em> Έχετε μαζί τις αστυνομικές ταυτότητές σας.
+                            </div>
+
+                            <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap;">
+                                <a href="https://www.google.com/maps/dir/?api=1&origin=B%26B+Hotel+Milano+Sant'Ambrogio,+Via+Olivetani+4,+Milan&destination=Santa+Maria+delle+Grazie,+Piazza+di+Santa+Maria+delle+Grazie,+Milan" target="_blank" class="btn-map" style="font-size: 0.82rem; padding: 7px 16px; margin-top: 0;">
+                                    <i class="fa-solid fa-person-walking"></i> Διαδρομή με τα πόδια από το ξενοδοχείο (500μ - 6 λεπτά)
+                                </a>
+                                <a href="https://cenacolovinciano.org/" target="_blank" class="btn-link" style="font-size: 0.82rem; padding: 7px 16px;">
+                                    <i class="fa-solid fa-landmark"></i> Επίσημο Site Cenacolo Vinciano
+                                </a>
+                            </div>
+
+                            <div class="event-media" style="margin-top: 16px; border: 1px solid rgba(245, 158, 11, 0.35); max-height: 280px; overflow: hidden; border-radius: 12px;">
+                                <img src="images/milan_last_supper.jpg" alt="Leonardo Da Vinci The Last Supper - Santa Maria delle Grazie">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="event-card glass">
+                        <div class="event-time">
+                            <span><i class="fa-regular fa-clock"></i> 18:00 - 21:30</span>
+                        </div>
+                        <div class="event-content">
+                            <h4>Απογευματινός Καφές, Castello Sforzesco & Δείπνο</h4>
+                            <p><strong>18:00</strong> Απογευματινός εσπρέσο και παραδοσιακά μιλανέζικα γλυκά στο ιστορικό <em>Caffè San Vittore</em> ή στην <em>Pasticceria Marchesi</em> (στη Via Santa Maria alla Porta).</p>
+                            <p><strong>18:45</strong> Χαλαρή βόλτα προς το επιβλητικό <strong>Castello Sforzesco</strong> και το Parco Sempione (μόλις 12 λεπτά με τα πόδια από τη Santa Maria delle Grazie).</p>
+                            <p><strong>20:30</strong> Δείπνο σε αυθεντική trattoria στην περιοχή Magenta / Sant'Ambrogio, κλείνοντας την τρίτη ημέρα με αξέχαστες πολιτιστικές αναμνήσεις.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 4: Saturday 21 Nov - DEPARTURE -->
+                <div class="timeline-day" id="day-2026-11-21">
+                    <div class="day-marker">D4</div>
+                    <div class="day-header">
+                        <h3>Αγορές, Panettone & Ασφαλής Επιστροφή στην Αθήνα</h3>
+                        <p>Σάββατο, 21 Νοεμβρίου 2026 • Επιστροφή</p>
+                    </div>
+
+                    <div class="event-card glass">
+                        <div class="event-time">
+                            <span><i class="fa-regular fa-clock"></i> 09:00 - 12:00</span>
+                        </div>
+                        <div class="event-content">
+                            <h4>Πρωινό, Check-out & Τελευταίες Αγορές</h4>
+                            <p><strong>09:00</strong> Πρωινό στο ξενοδοχείο.</p>
+                            <p><strong>10:30</strong> Check-out από το δωμάτιο (πληρωμή του φόρου πόλης 42€). Φύλαξη αποσκευών στο χώρο του ξενοδοχείου.</p>
+                            <p><strong>11:00</strong> Αγορά του διάσημου μιλανέζικου <strong>Panettone</strong> από το ιστορικό ζαχαροπλαστείο <em>Pasticceria Cucchi</em> (στην Corso Genova 1, 6 λεπτά από το ξενοδοχείο) ή από τη Marchesi.</p>
+                            <p><strong>13:00</strong> Αποχαιρετιστήριο ιταλικό γεύμα και καφές κοντά στην περιοχή Magenta / Cadorna.</p>
+                        </div>
+                    </div>
+
+                    <div class="event-card glass" style="border: 2px solid rgba(56, 189, 248, 0.45); box-shadow: 0 10px 30px rgba(56, 189, 248, 0.1);">
+                        <div class="event-time">
+                            <span style="color: var(--accent); font-weight: 700;"><i class="fa-regular fa-clock"></i> 14:45 - 18:45</span>
+                            <a href="#" class="add-to-cal-btn" data-title="Πτήση Aegean A3665 Μιλάνο - Αθήνα" data-start="20261121T184500" data-end="20261121T221500" data-loc="Milan Malpensa Airport T1"><i class="fa-regular fa-calendar-plus"></i> Ημερολόγιο</a>
+                        </div>
+                        <div class="event-content">
+                            <h4>Έγκαιρη Αναχώρηση για Αεροδρόμιο Malpensa & Πτήση Επιστροφής</h4>
+                            <p><strong>14:45</strong> <strong>Παραλαβή αποσκευών</strong> από το ξενοδοχείο B&B Sant'Ambrogio. <em>(Ξεκινάμε 15-30 λεπτά νωρίτερα για να έχουμε απόλυτη ασφάλεια και άνεση χρόνου!).</em></p>
+                            
+                            <!-- Standard Option: Train -->
+                            <p style="margin-top: 10px;"><strong>15:00</strong> <strong>Βασική Επιλογή: Malpensa Express από Cadorna (αν λειτουργεί):</strong></p>
+                            <div class="metro-route-box" style="border-color: #38bdf8; margin-bottom: 14px;">
+                                <div class="metro-route-header">
+                                    <span class="metro-badge" style="background: #0284c7;">Τρένο Malpensa Express</span>
+                                    <span style="color: #fff;"><strong>Milano Cadorna</strong> ➔ <strong>Malpensa T1</strong></span>
+                                    <span class="stops-badge">37 λεπτά απευθείας</span>
+                                </div>
+                                <span class="direction-sign"><i class="fa-solid fa-train"></i> ΠΙΝΑΚΙΔΑ ΣΤΑΘΜΟΥ: <strong>MALPENSA AEROPORTO T1 - T2</strong></span>
+                                <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 6px;">
+                                    • <em>Συχνότητα:</em> Κάθε 30 λεπτά (στα :27 και :57 κάθε ώρας).<br>
+                                    • <em>Πρόσβαση στο Cadorna:</em> 10 λεπτά με τα πόδια από το ξενοδοχείο (ή 1 στάση με M2 από Sant'Ambrogio με Direzione Cascina Gobba).
+                                </p>
+                            </div>
+
+                            <!-- CONTINGENCY ALERT BOX: WHAT IF NO TRAIN -->
+                            <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(245, 158, 11, 0.15) 100%); border: 1.5px solid rgba(245, 158, 11, 0.5); border-radius: 12px; padding: 16px; margin: 16px 0;">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                    <i class="fa-solid fa-triangle-exclamation" style="color: #fbbf24; font-size: 1.25rem;"></i>
+                                    <h5 style="color: #fbbf24; font-size: 1.05rem; font-weight: 700; margin: 0;">ΣΧΕΔΙΟ ΑΠΕΡΓΙΑΣ: Τι κάνουμε αν ΔΕΝ βρούμε τρένο (3 Σίγουρες Εναλλακτικές);</h5>
+                                </div>
+                                <p style="font-size: 0.88rem; color: #f8fafc; margin-bottom: 12px; line-height: 1.5;">
+                                    Λόγω της σιδηροδρομικής απεργίας της Trenord, εάν το τρένο ακυρωθεί ή έχει καθυστέρηση, ακολουθήστε άμεσα μία από τις παρακάτω <strong>3 δοκιμασμένες εναλλακτικές</strong>:
+                                </p>
+
+                                <!-- Plan B: Trenord Bus from Cadorna -->
+                                <div style="background: rgba(15, 23, 42, 0.75); border-left: 4px solid #38bdf8; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
+                                        <strong style="color: #38bdf8; font-size: 0.95rem;"><i class="fa-solid fa-bus"></i> Εναλλακτική 1 (Δίπλα στο Cadorna): Εγγυημένο Λεωφορείο Trenord (Non-Stop)</strong>
+                                        <span style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Εισιτήριο Τρένου (€13)</span>
+                                    </div>
+                                    <p style="font-size: 0.86rem; color: #cbd5e1; margin-top: 6px; line-height: 1.5;">
+                                        • <strong>Τι είναι:</strong> Βάσει νόμου, όταν απεργούν τα τρένα, η Trenord δρομολογεί υποχρεωτικά <em>Bus Sostitutivo Non-Stop</em> κατευθείαν για Malpensa T1 χωρίς ενδιάμεσες στάσεις.<br>
+                                        • <strong>Πού βρίσκεται:</strong> Στην οδό <strong>Via Paleocapa 1</strong> (ακριβώς στην έξοδο του σταθμού Cadorna, 10 λεπτά με τα πόδια από το ξενοδοχείο).<br>
+                                        • <strong>Διάρκεια:</strong> ~50–60 λεπτά απευθείας στο Terminal 1.
+                                    </p>
+                                    <div style="margin-top: 8px;">
+                                        <a href="https://www.google.com/maps/search/?api=1&query=Via+Paleocapa+1+Milano" target="_blank" class="btn-map" style="font-size: 0.78rem; padding: 5px 12px; margin-top: 0;">
+                                            <i class="fa-solid fa-location-dot"></i> Αφετηρία Λεωφορείου Cadorna (Google Maps)
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Plan C: Shuttle Buses from Centrale -->
+                                <div style="background: rgba(15, 23, 42, 0.75); border-left: 4px solid #10b981; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
+                                        <strong style="color: #34d399; font-size: 0.95rem;"><i class="fa-solid fa-van-shuttle"></i> Εναλλακτική 2 (100% Εξασφαλισμένο): Malpensa Shuttle από Milano Centrale</strong>
+                                        <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;">10 € / άτομο</span>
+                                    </div>
+                                    <p style="font-size: 0.86rem; color: #cbd5e1; margin-top: 6px; line-height: 1.5;">
+                                        • <strong>Τι είναι:</strong> Ιδιωτικά τουριστικά πούλμαν (Malpensa Shuttle, Terravision, Autostradale) που <strong>ΔΕΝ συμμετέχουν στις απεργίες των σιδηροδρόμων</strong>.<br>
+                                        • <strong>Συχνότητα:</strong> Αναχωρούν κάθε <strong>15–20 λεπτά</strong> από την Piazza Luigi di Savoia (Milano Centrale).<br>
+                                        • <strong>Πώς πάτε στο Centrale:</strong> Μετρό M2 (Πράσινη) από Sant'Ambrogio ➔ Centrale FS (6 στάσεις, 10 λεπτά - το μετρό λειτουργεί κανονικά 15:00–18:00!) ή με ταξί πόλης (~12€).<br>
+                                        • <strong>Εισιτήριο:</strong> 10€, αγοράζεται επιτόπου στον οδηγό ή στο κιόσκι στο πεζοδρόμιο.<br>
+                                        • <strong>Διάρκεια:</strong> ~50 λεπτά απευθείας στο Malpensa T1.
+                                    </p>
+                                    <div style="margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap;">
+                                        <a href="https://www.google.com/maps/search/?api=1&query=Piazza+Luigi+di+Savoia+Milano+Centrale" target="_blank" class="btn-map" style="font-size: 0.78rem; padding: 5px 12px; margin-top: 0;">
+                                            <i class="fa-solid fa-location-dot"></i> Στάση Λεωφορείων Centrale (Google Maps)
+                                        </a>
+                                        <a href="https://www.malpensashuttle.it/" target="_blank" class="btn-link" style="font-size: 0.78rem; padding: 5px 12px;">
+                                            <i class="fa-solid fa-bus-simple"></i> Δρομολόγια Malpensa Shuttle
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Plan D: Fixed Rate Taxi -->
+                                <div style="background: rgba(15, 23, 42, 0.75); border-left: 4px solid #f59e0b; border-radius: 8px; padding: 12px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
+                                        <strong style="color: #fbbf24; font-size: 0.95rem;"><i class="fa-solid fa-taxi"></i> Εναλλακτική 3 (Απόλυτη Άνεση Πόρτα-Πόρτα): Ταξί με Σταθερή Ταρίφα</strong>
+                                        <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;">110 € Κλειδωμένη Τιμή</span>
+                                    </div>
+                                    <p style="font-size: 0.86rem; color: #cbd5e1; margin-top: 6px; line-height: 1.5;">
+                                        • <strong>Τι είναι:</strong> Επίσημη κρατική διατίμηση του Δήμου Μιλάνου: <strong>ακριβώς 110 € συνολικά</strong> για όλους τους επιβάτες και τις αποσκευές (χωρίς ταξίμετρο).<br>
+                                        • <strong>Από πού:</strong> Παραλαβή κατευθείαν από την πόρτα του ξενοδοχείου σας (Via Olivetani 4) απευθείας στην πύλη Αναχωρήσεων του Malpensa T1 σε ~45–50 λεπτά.<br>
+                                        • <strong>Πώς το καλείτε:</strong> Είτε ζητάτε από τη ρεσεψιόν του ξενοδοχείου, είτε καλείτε άμεσα με 1 κλικ:
+                                    </p>
+                                    <div style="margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap;">
+                                        <a href="tel:+39028585" class="btn-link" style="background: rgba(245, 158, 11, 0.2); border-color: #f59e0b; color: #fbbf24; font-size: 0.78rem; padding: 5px 12px;">
+                                            <i class="fa-solid fa-phone"></i> Radio Taxi (+39 02 8585)
+                                        </a>
+                                        <a href="tel:+39026969" class="btn-link" style="background: rgba(245, 158, 11, 0.2); border-color: #f59e0b; color: #fbbf24; font-size: 0.78rem; padding: 5px 12px;">
+                                            <i class="fa-solid fa-phone"></i> Taxi Milano (+39 02 6969)
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <p style="margin-top: 14px;"><strong>16:00 – 16:30</strong> Άφιξη στο <strong>Malpensa Terminal 1</strong> (άνετος χρόνος 2,5+ ώρες πριν την πτήση για έλεγχο ασφαλείας και καφέ).</p>
+                            <p><strong>18:45</strong> Αναχώρηση πτήσης Aegean <strong>A3665</strong> για Αθήνα.</p>
+                            <p><strong>22:15</strong> Προσγείωση στο Αεροδρόμιο Ελ. Βενιζέλος (Αθήνα). Καλό γυρισμό γεμάτο νέες ιδέες και επιτυχίες!</p>
+                            
+                            <div style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
+                                <a href="https://www.milanomalpensa-airport.com/en/flights/departures" target="_blank" class="btn-map" style="background: rgba(168, 85, 247, 0.15); border: 1px solid #a855f7; color: #a855f7; margin-top: 0; font-size: 0.82rem; padding: 7px 14px;">
+                                    <i class="fa-solid fa-plane-radar"></i> Live Πτήσεις Malpensa (MXP)
+                                </a>
+                                <a href="https://www.trenord.it/news/trenord-informa/avvisi/sciopero/" target="_blank" class="btn-link" style="border-color: #f87171; color: #fca5a5; font-size: 0.82rem; padding: 7px 14px;">
+                                    <i class="fa-solid fa-triangle-exclamation"></i> Live Έλεγχος Απεργιών Trenord
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="event-card glass" style="border-left: 4px solid var(--accent);">
+                        <div class="event-time">
+                            <span><i class="fa-regular fa-clock"></i> 22:15 - 23:15</span>
+                        </div>
+                        <div class="event-content">
+                            <h4><i class="fa-solid fa-van-shuttle" style="color: var(--accent);"></i> Άφιξη στην Αθήνα, Shuttle & Παραλαβή Αυτοκινήτου</h4>
+                            <p><strong>22:15</strong> Προσγείωση πτήσης A3665 στο Αεροδρόμιο Ελ. Βενιζέλος (ATH).</p>
+                            <p><strong>22:35</strong> Παραλαβή αποσκευών. Καλείτε άμεσα το <strong style="color: #fff;">6983 322264</strong> για να σας παραλάβει το mini-bus shuttle του <strong>5 Stars Parking</strong> από το σημείο συνάντησης των Αφίξεων.</p>
+                            <p><strong>22:50</strong> Μετάβαση στο 5 Stars Parking (22ο χλμ. Λεωφ. Μαρκοπούλου) και παραλαβή του αυτοκινήτου σας.</p>
+                            <div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+                                <a href="tel:+306983322264" class="btn-link" style="background: rgba(16, 185, 129, 0.2); border-color: var(--success); color: #34d399; font-size: 0.82rem; padding: 6px 14px;">
+                                    <i class="fa-solid fa-phone"></i> Κλήση Shuttle: 6983 322264
+                                </a>
+                                <a href="#booking-parking" class="btn-map" style="font-size: 0.82rem; padding: 6px 14px; margin-top: 0;">
+                                    <i class="fa-solid fa-square-parking"></i> Στοιχεία Κράτησης Parking
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="event-card glass" style="border-left: 4px solid #f43f5e;">
+                        <div class="event-time">
+                            <span><i class="fa-regular fa-clock"></i> 23:15+</span>
+                        </div>
+                        <div class="event-content">
+                            <h4><i class="fa-solid fa-house-chimney-heart" style="color: #f43f5e;"></i> Επανένωση στη θεία Βάσω με Σταυριάνα & Αντωνία!</h4>
+                            <p><strong>23:30+</strong> Άφιξη στο σπίτι της <strong>θείας Βάσως</strong> στην Αθήνα!</p>
+                            <p>Μεγάλη αγκαλιά με την <strong>Σταυριάνα</strong> και την <strong>Αντωνία</strong>, αυθεντικό μιλανέζικο Panettone και όμορφα δωράκια από το Μιλάνο! Ξεκούραση και διανυκτέρευση στην Αθήνα μετά από ένα πλούσιο και επιτυχημένο 4ήμερο στο Μιλάνο, πριν την επιστροφή στα Γιάννενα.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    </div> <!-- End of app-wrapper -->
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Firebase SDK (compat mode matching project architecture) -->
+    <script defer src="/__/firebase/10.7.1/firebase-app-compat.js"></script>
+    <script defer src="/__/firebase/10.7.1/firebase-database-compat.js"></script>
+    <script defer src="/__/firebase/init.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const SITE_VERSION = 1;
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            const toastContainer = document.getElementById('toast-container');
+            let isInitialLoad = true;
+
+            // Interactive Metro Routes Data & Handler
+            const metroRoutes = {
+                gala: {
+                    lineBadge: '<span class="metro-badge metro-m1">M1 Κόκκινη</span>',
+                    title: 'Από: <strong>Conciliazione</strong> ➔ Προς: <strong>Lotto (Meliá Milano)</strong>',
+                    badge: '<i class="fa-solid fa-stopwatch"></i> 4 στάσεις • 7 λεπτά',
+                    direction: 'DIREZIONE: <strong>RHO FIERAMILANO</strong>',
+                    warning: '<i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i> <strong>ΠΡΟΣΟΧΗ:</strong> Στο σταθμό Pagano η γραμμή M1 διακλαδώνεται. Μπείτε <strong>ΜΟΝΟ</strong> σε συρμό για <strong>Rho Fieramilano</strong> (ή Molino Dorino). <em>Μην μπείτε σε συρμό για Bisceglie!</em>',
+                    chain: ['Conciliazione', 'Pagano', 'Buonarroti', 'Amendola', 'Lotto'],
+                    exit: '<i class="fa-solid fa-person-walking"></i> <strong>Έξοδος:</strong> Ακολουθήστε πινακίδες προς <em>Via Masaccio</em>. Περπατήστε ευθεία 250μ (3 λεπτά). Το Meliá Milano είναι στο αριστερό σας χέρι.<br><em>Επιστροφή (βράδυ):</em> Από Lotto παίρνετε M1 με Direzione Sesto 1° Maggio FS ➔ 4 στάσεις πίσω στο Conciliazione.'
+                },
+                cenacolo: {
+                    lineBadge: '<span class="metro-badge" style="background: #f59e0b; color: #0b1120;"><i class="fa-solid fa-person-walking"></i> Με τα πόδια</span>',
+                    title: 'Από: <strong>B&B Hotel Sant\'Ambrogio</strong> ➔ Προς: <strong>Santa Maria delle Grazie</strong>',
+                    badge: '<i class="fa-solid fa-stopwatch"></i> 5–7 λεπτά • 500 μέτρα',
+                    direction: 'ΔΙΑΔΡΟΜΗ: <strong>Via Olivetani ➔ Via San Vittore ➔ Via Zenale ➔ Piazza Santa Maria delle Grazie</strong>',
+                    warning: '<i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i> <strong>ΑΥΣΤΗΡΗ ΠΡΟΣΕΛΕΥΣΗ ΣΤΙΣ 15:45:</strong> Υποχρεωτική παρουσία 20–30 λεπτά πριν την ώρα εισόδου (16:15). Λόγω εγγύτητας (500μ), δεν επηρεάζεται καθόλου από την απεργία των μέσων!',
+                    chain: ['B&B Hotel Sant\'Ambrogio', 'Via Olivetani 4', 'Via San Vittore', 'Via Zenale', 'Santa Maria delle Grazie'],
+                    exit: '<i class="fa-solid fa-landmark"></i> <strong>Σημείο Συνάντησης:</strong> Στην είσοδο των εκδοτηρίων/μουσείου του Cenacolo Vinciano στην πλατεία. Φωτογραφίες μόνο χωρίς φλας, απαγορεύονται μεγάλα σακίδια.'
+                },
+                duomo: {
+                    lineBadge: '<span class="metro-badge metro-m1">M1 Κόκκινη</span>',
+                    title: 'Από: <strong>Conciliazione</strong> ➔ Προς: <strong>Duomo & Galleria</strong>',
+                    badge: '<i class="fa-solid fa-stopwatch"></i> 3 στάσεις • 5 λεπτά',
+                    direction: 'DIREZIONE: <strong>SESTO 1° MAGGIO FS</strong>',
+                    warning: null,
+                    chain: ['Conciliazione', 'Cadorna FN', 'Cairoli', 'Duomo'],
+                    exit: '<i class="fa-solid fa-person-walking"></i> <strong>Έξοδος:</strong> Οι σκάλες του σταθμού βγάζουν κατευθείαν στην καρδιά της Piazza del Duomo μπροστά από την πρόσοψη του Καθεδρικού Ναού!<br><em>Επιστροφή:</em> Από Duomo παίρνετε M1 με Direzione Rho Fiera ή Bisceglie ➔ 3 στάσεις πίσω στο Conciliazione.'
+                },
+                navigli: {
+                    lineBadge: '<span class="metro-badge metro-m2">M2 Πράσινη</span>',
+                    title: 'Από: <strong>Sant\'Ambrogio</strong> ➔ Προς: <strong>Porta Genova (Navigli)</strong>',
+                    badge: '<i class="fa-solid fa-stopwatch"></i> 2 στάσεις • 3 λεπτά',
+                    direction: 'DIREZIONE: <strong>ASSAGO FORUM</strong> ή <strong>ABBIATEGRASSO</strong>',
+                    warning: null,
+                    chain: ['Sant\'Ambrogio', 'Sant\'Agostino', 'Porta Genova FS'],
+                    exit: '<i class="fa-solid fa-person-walking"></i> <strong>Έξοδος:</strong> Βγείτε προς <em>Via Casale</em>. Στα 150μ βρίσκεστε πάνω στο κανάλι Naviglio Grande (το επίκεντρο του Aperitivo!).<br><em>Επιστροφή:</em> Από Porta Genova FS παίρνετε M2 με Direzione Cascina Gobba / Gessate ➔ 2 στάσεις ➔ Sant\'Ambrogio.'
+                },
+                brera: {
+                    lineBadge: '<span class="metro-badge metro-m2">M2 Πράσινη</span>',
+                    title: 'Από: <strong>Sant\'Ambrogio</strong> ➔ Προς: <strong>Lanza (Brera & Μόδα)</strong>',
+                    badge: '<i class="fa-solid fa-stopwatch"></i> 2 στάσεις • 3 λεπτά',
+                    direction: 'DIREZIONE: <strong>GESSATE</strong> / <strong>COLOGNO NORD</strong> / <strong>CASCINA GOBBA</strong>',
+                    warning: null,
+                    chain: ['Sant\'Ambrogio', 'Cadorna FN', 'Lanza'],
+                    exit: '<i class="fa-solid fa-person-walking"></i> <strong>Έξοδος:</strong> Βγαίνετε στο Lanza (Piccolo Teatro). Περπατάτε 3 λεπτά στην Via Fiori Chiari και στην Pinacoteca di Brera. Από εκεί συνεχίζετε με τα πόδια προς Via Montenapoleone!'
+                },
+                sansiro: {
+                    lineBadge: '<span class="metro-badge metro-m5">M5 Μωβ (Lilla)</span>',
+                    title: 'Από: <strong>Lotto</strong> (ή Garibaldi FS) ➔ Προς: <strong>San Siro Stadio</strong>',
+                    badge: '<i class="fa-solid fa-stopwatch"></i> 3 στάσεις • 5 λεπτά',
+                    direction: 'DIREZIONE: <strong>SAN SIRO STADIO</strong>',
+                    warning: null,
+                    chain: ['Lotto', 'Segesta', 'San Siro Ippodromo', 'San Siro Stadio'],
+                    exit: '<i class="fa-solid fa-person-walking"></i> <strong>Έξοδος:</strong> Τερματικός σταθμός ακριβώς έξω από τις πύλες του θρυλικού γηπέδου San Siro (Μουσείο & Tour).<br><em>Επιστροφή:</em> M5 με Direzione Bignami ➔ 3 στάσεις στο Lotto ➔ M1 με Direzione Sesto 1° Maggio FS ➔ 4 στάσεις στο Conciliazione.'
+                },
+                airport: {
+                    lineBadge: '<span class="metro-badge" style="background:#0284c7;">Malpensa Express & Πλάνο Απεργίας</span>',
+                    title: 'Από: <strong>Milano Cadorna</strong> ➔ Προς: <strong>Malpensa Aeroporto T1</strong>',
+                    badge: '<i class="fa-solid fa-train"></i> 37 λεπτά τρένο • ή 50 λεπτά Bus',
+                    direction: 'ΠΙΝΑΚΙΔΑ ΣΤΑΘΜΟΥ: <strong>MALPENSA AEROPORTO T1 - T2</strong>',
+                    warning: '<i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i> <strong>ΑΝ ΔΕΝ ΒΡΕΙΤΕ ΤΡΕΝΟ (ΑΠΕΡΓΙΑ TRENORD):</strong><br>• <strong>1. Εγγυημένο Non-Stop Bus Trenord:</strong> Ακριβώς έξω από το Cadorna στην <em>Via Paleocapa 1</em> (ισχύει το εισιτήριο 13€).<br>• <strong>2. Malpensa Shuttle:</strong> Κάθε 15–20 λεπτά από Milano Centrale (Piazza Luigi di Savoia - 10€, δεν απεργεί ποτέ!).<br>• <strong>3. Ταξί:</strong> Σταθερή νόμιμη ταρίφα 110€ κατευθείαν από το ξενοδοχείο (Radio Taxi: 02 8585).',
+                    chain: ['Cadorna FN', 'Milano Bovisa', 'Saronno', 'Busto Arsizio', 'Malpensa T1'],
+                    exit: '<i class="fa-solid fa-plane-departure"></i> <strong>Αποβίβαση:</strong> Απευθείας στον υπόγειο σταθμό του Terminal 1 (κυλιόμενες σκάλες οδηγούν απευθείας στο Check-in & Αναχωρήσεις της Aegean).'
+                }
+            };
+
+            window.showMetroRoute = function(key) {
+                const r = metroRoutes[key];
+                if (!r) return;
+                
+                document.querySelectorAll('#metro-nav-pills .nav-pill-btn').forEach(btn => btn.classList.remove('active'));
+                if (window.event && window.event.target) {
+                    window.event.target.classList.add('active');
+                }
+
+                const container = document.getElementById('metro-route-display');
+                if (!container) return;
+
+                let warningHtml = r.warning ? `
+                    <div class="tip-callout" style="border-left-color: #ef4444; background: rgba(239, 68, 68, 0.12); color: #fecaca; margin-top: 8px;">
+                        ${r.warning}
+                    </div>` : '';
+
+                let chainHtml = r.chain.map((c, idx) => {
+                    let isHigh = idx === 0 || idx === r.chain.length - 1;
+                    return `<span class="stop-pill ${isHigh ? 'highlight' : ''}">${c}</span>` + 
+                           (idx < r.chain.length - 1 ? ' <i class="fa-solid fa-arrow-right" style="color: #64748b; font-size: 0.75rem;"></i> ' : '');
+                }).join(' ');
+
+                container.innerHTML = `
+                    <div class="metro-route-header">
+                        ${r.lineBadge}
+                        <span style="color: #fff; font-size: 1.05rem;">${r.title}</span>
+                        <span class="stops-badge">${r.badge}</span>
+                    </div>
+                    <div style="margin: 8px 0;">
+                        <span class="direction-sign"><i class="fa-solid fa-signs-post"></i> ${r.direction}</span>
+                    </div>
+                    ${warningHtml}
+                    <div class="stops-chain">
+                        ${chainHtml}
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: #cbd5e1;">
+                        ${r.exit}
+                    </p>
+                `;
+            };
+
+            // Setup Add to Calendar buttons
+            document.querySelectorAll('.add-to-cal-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const title = encodeURIComponent(btn.dataset.title || '');
+                    const start = btn.dataset.start || '';
+                    const end = btn.dataset.end || '';
+                    const loc = encodeURIComponent(btn.dataset.loc || '');
+                    
+                    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&location=${loc}&ctz=Europe/Rome`;
+                    window.open(url, '_blank');
+                });
+            });
+
+            function showToast(iconClass, title, message) {
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.innerHTML = `
+                    <i class="${iconClass}" style="color: var(--accent); font-size: 1.3rem;"></i>
+                    <div class="toast-content">
+                        <strong style="display: block; font-size: 0.95rem;">${title}</strong>
+                        <span style="font-size: 0.85rem; color: #cbd5e1;">${message}</span>
+                    </div>
+                `;
+                toastContainer.appendChild(toast);
+                
+                void toast.offsetWidth;
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 400);
+                }, 4000);
+            }
+            
+            // Firebase / LocalStorage Task Sync
+            setTimeout(() => {
+                if (typeof firebase !== 'undefined' && firebase.apps.length) {
+                    try {
+                        const db = firebase.database();
+                        const tasksRef = db.ref('milan_trip/tasks');
+
+                        tasksRef.on('value', (snapshot) => {
+                            const data = snapshot.val() || {};
+                            checkboxes.forEach(box => {
+                                const isChecked = !!data[box.id];
+                                box.checked = isChecked;
+                            });
+                            isInitialLoad = false;
+                        });
+
+                        checkboxes.forEach(box => {
+                            box.addEventListener('change', (e) => {
+                                tasksRef.child(e.target.id).set(e.target.checked);
+                            });
+                        });
+                    } catch (e) {
+                        console.log('Firebase fallback to localStorage');
+                        useLocalStorage();
+                    }
+                } else {
+                    useLocalStorage();
+                }
+
+                function useLocalStorage() {
+                    checkboxes.forEach(box => {
+                        box.checked = localStorage.getItem('milan_' + box.id) === 'true';
+                        box.addEventListener('change', (e) => {
+                            localStorage.setItem('milan_' + e.target.id, e.target.checked);
+                        });
+                    });
+                }
+            }, 600);
+
+            // Password Protection Logic (Full Page Gatekeeper)
+            const unlockBtn = document.getElementById('unlock-btn');
+            const pinInput = document.getElementById('pin-input');
+            const authError = document.getElementById('auth-error');
+            const authScreen = document.getElementById('auth-screen');
+            const appWrapper = document.getElementById('app-wrapper');
+            const lockIcon = document.getElementById('lock-icon');
+
+            window.lockMilanApp = function() {
+                localStorage.removeItem('milan_unlocked');
+                location.reload();
+            };
+
+            const unlockContent = () => {
+                if (authScreen) authScreen.style.display = 'none';
+                if (appWrapper) appWrapper.style.display = 'block';
+                document.body.style.paddingBottom = '90px';
+                if (lockIcon) {
+                    lockIcon.className = 'fa-solid fa-lock-open';
+                    lockIcon.style.color = 'var(--success)';
+                }
+                updateCountdown();
+            };
+
+            const lockContent = () => {
+                if (authScreen) authScreen.style.display = 'flex';
+                if (appWrapper) appWrapper.style.display = 'none';
+                document.body.style.paddingBottom = '0px';
+                if (lockIcon) {
+                    lockIcon.className = 'fa-solid fa-lock';
+                    lockIcon.style.color = 'var(--accent)';
+                }
+            };
+
+            // Check initial state
+            if (localStorage.getItem('milan_unlocked') === 'true') {
+                unlockContent();
+            } else {
+                lockContent();
+            }
+
+            if (unlockBtn && pinInput) {
+                const checkPin = () => {
+                    const val = pinInput.value.trim();
+                    if (val === '2606' || btoa(val) === 'MjYwNg==') {
+                        localStorage.setItem('milan_unlocked', 'true');
+                        unlockContent();
+                        window.scrollTo({top: 0, behavior: 'instant'});
+                    } else {
+                        if (authError) authError.style.display = 'block';
+                        pinInput.value = '';
+                        pinInput.focus();
+                    }
+                };
+
+                unlockBtn.addEventListener('click', checkPin);
+                pinInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') checkPin();
+                });
+            }
+
+            // SMART COUNTDOWN LOGIC
+            function updateCountdown() {
+                const now = new Date();
+                // Departure from Athens: Wednesday 18 Nov 2026, 16:15 EET (+02:00)
+                const dep = new Date('2026-11-18T16:15:00+02:00');
+                const tripEnd = new Date('2026-11-21T22:15:00+02:00'); // Arrival back in Athens
+                
+                const box = document.getElementById('smart-countdown-box');
+                if (!box) return;
+
+                const diff = dep - now;
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    const elDays = document.getElementById('cd-days');
+                    const elHours = document.getElementById('cd-hours');
+                    const elMins = document.getElementById('cd-mins');
+                    const elSecs = document.getElementById('cd-secs');
+
+                    if (elDays) elDays.innerText = days.toString().padStart(2, '0');
+                    if (elHours) elHours.innerText = hours.toString().padStart(2, '0');
+                    if (elMins) elMins.innerText = mins.toString().padStart(2, '0');
+                    if (elSecs) elSecs.innerText = secs.toString().padStart(2, '0');
+                } else if (now >= dep && now <= tripEnd) {
+                    let dayNum = Math.floor((now - dep) / (1000 * 60 * 60 * 24)) + 1;
+                    if (dayNum > 4) dayNum = 4;
+                    if (box.dataset.state !== 'trip') {
+                        box.dataset.state = 'trip';
+                        box.style.background = 'linear-gradient(135deg, rgba(6, 78, 59, 0.88) 0%, rgba(15, 23, 42, 0.88) 100%)';
+                        box.style.borderColor = '#34d399';
+                        box.innerHTML = `<div class="smart-status-banner"><i class="fa-solid fa-earth-europe" style="animation: cdBounce 2s infinite;"></i> <span>Είμαστε στο Μιλάνο! — <strong>Ημέρα ${dayNum}<sup>η</sup> από 4</strong></span></div>`;
+                    }
+                } else {
+                    if (box.dataset.state !== 'past') {
+                        box.dataset.state = 'past';
+                        box.style.background = 'linear-gradient(135deg, rgba(30, 27, 75, 0.85) 0%, rgba(15, 23, 42, 0.85) 100%)';
+                        box.innerHTML = `<div style="font-size: 1.25rem; color: #fde68a; font-weight: 600; text-align: center;"><i class="fa-solid fa-heart" style="color: #ef4444; margin-right: 8px;"></i>Μια αξέχαστη εμπειρία στο Μιλάνο & Huawei Summit 2026!</div>`;
+                    }
+                }
+            }
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+
+            // Menu Panels State Management
+            let currentOpenPanelKey = null;
+
+            window.toggleMenuPanel = function(panelKey) {
+                const wrapper = document.getElementById('menu-panels-wrapper');
+                const targetPanelId = 'panel-' + panelKey;
+                const targetPanel = document.getElementById(targetPanelId);
+                const targetBtn = document.getElementById('btn-' + panelKey);
+
+                // If already open and visible, toggle it closed
+                if (currentOpenPanelKey === panelKey && wrapper && wrapper.style.display !== 'none') {
+                    window.closeAllPanels();
+                    return;
+                }
+
+                // Deactivate all buttons & hide all panels
+                document.querySelectorAll('.menu-card-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.menu-content-panel').forEach(p => p.style.display = 'none');
+
+                if (targetPanel && wrapper) {
+                    targetPanel.style.display = 'block';
+                    if (targetBtn) targetBtn.classList.add('active');
+                    wrapper.style.display = 'block';
+                    currentOpenPanelKey = panelKey;
+                    setTimeout(() => {
+                        wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 50);
+                }
+            };
+
+            window.closeAllPanels = function() {
+                const wrapper = document.getElementById('menu-panels-wrapper');
+                if (wrapper) wrapper.style.display = 'none';
+                document.querySelectorAll('.menu-content-panel').forEach(p => p.style.display = 'none');
+                document.querySelectorAll('.menu-card-btn').forEach(b => b.classList.remove('active'));
+                currentOpenPanelKey = null;
+            };
+
+            // Backward-compatible toggleAndScroll helper
+            window.toggleAndScroll = function(id) {
+                const map = {
+                    'strike-details': 'strike',
+                    'panel-strike': 'strike',
+                    'menu-bookings': 'bookings',
+                    'panel-bookings': 'bookings',
+                    'menu-emergency': 'emergency',
+                    'panel-emergency': 'emergency',
+                    'menu-gastronomy': 'gastronomy',
+                    'panel-gastronomy': 'gastronomy',
+                    'menu-coffee-tips': 'coffee',
+                    'panel-coffee': 'coffee',
+                    'menu-business-expenses': 'expenses',
+                    'panel-expenses': 'expenses',
+                    'menu-checklists': 'checklists',
+                    'panel-checklists': 'checklists'
+                };
+
+                if (map[id]) {
+                    window.toggleMenuPanel(map[id]);
+                    return;
+                }
+
+                // Check if target is inside a panel (e.g. booking-flight, booking-parking, booking-hotel, etc.)
+                const el = document.getElementById(id);
+                if (el) {
+                    const parentPanel = el.closest('.menu-content-panel');
+                    if (parentPanel) {
+                        const panelKey = parentPanel.id.replace('panel-', '');
+                        const wrapper = document.getElementById('menu-panels-wrapper');
+                        document.querySelectorAll('.menu-card-btn').forEach(b => b.classList.remove('active'));
+                        document.querySelectorAll('.menu-content-panel').forEach(p => p.style.display = 'none');
+                        parentPanel.style.display = 'block';
+                        const btn = document.getElementById('btn-' + panelKey);
+                        if (btn) btn.classList.add('active');
+                        if (wrapper) wrapper.style.display = 'block';
+                        currentOpenPanelKey = panelKey;
+
+                        if (el.tagName === 'DETAILS') el.open = true;
+                        const subParent = el.parentElement ? el.parentElement.closest('details') : null;
+                        if (subParent) subParent.open = true;
+
+                        setTimeout(() => {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 80);
+                        return;
+                    }
+                }
+
+                window.scrollToElement(id);
+            };
+
+            window.scrollToElement = function(id) {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            };
+
+            // Auto-expand and open panel on anchor clicks
+            document.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const hash = link.getAttribute('href');
+                    if (!hash || hash === '#') return;
+                    const targetId = hash.substring(1);
+                    const el = document.getElementById(targetId);
+                    if (el && el.closest('.menu-content-panel')) {
+                        e.preventDefault();
+                        window.toggleAndScroll(targetId);
+                    } else if (el) {
+                        const parent = el.closest('details');
+                        if (parent) parent.open = true;
+                        if (el.tagName === 'DETAILS') el.open = true;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
