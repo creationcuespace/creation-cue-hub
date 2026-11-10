@@ -1,18 +1,18 @@
 {
-  "lastUpdated": "2026-11-09T02:58:55.402Z",
+  "lastUpdated": "2026-11-10T04:47:49.093Z",
   "reviews": [
     {
-      "reviewId": "f5985a11-3908-4c82-8703-41985a7d8f9d",
-      "packageName": "com.creation.cue128watchface",
-      "title": "Analog Watch Face cue128",
-      "wfId": "cue128",
-      "authorName": "Siegfried Heilmeier",
+      "reviewId": "f804a871-b6e9-48bf-b042-81352c73ffd1",
+      "packageName": "com.creation.cue168watchface",
+      "title": "Watch Face CUE168",
+      "wfId": "cue168",
+      "authorName": "Jos van Merode",
       "starRating": 5,
-      "reviewerLanguage": "de",
-      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
+      "reviewerLanguage": "nl",
+      "deviceMetadata": "pa3q (Galaxy S25 Ultra)",
       "topics": [],
-      "text": "\tSehr schön ,und ich nutze es noch immer !",
-      "lastModified": "2026-11-08T16:54:16.000Z"
+      "text": "\terg mooie heldere wijzerplaat",
+      "lastModified": "2026-11-09T23:04:34.000Z"
     }
   ]
 }
