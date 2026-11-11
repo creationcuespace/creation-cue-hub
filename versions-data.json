@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-10T04:47:49.084Z",
+  "lastUpdated": "2026-11-11T03:02:06.278Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -224,6 +224,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 30,
       "totalWeight": 3863
+    },
+    {
+      "date": "2026-11-11",
+      "timestamp": "2026-11-11T03:02:06.278Z",
+      "avgRating": 4.49,
+      "weightedAvg": 4.52,
+      "ratedCount": 30,
+      "totalWeight": 3868
     }
   ],
   "results": [
@@ -1914,7 +1922,7 @@
       "storeLanguages": [
         "en-GB"
       ],
-      "lastUpdatedDate": "Oct 22, 2026",
+      "lastUpdatedDate": "Oct 21, 2026",
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
@@ -2333,7 +2341,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 3,
-      "ratingCount": "8",
+      "ratingCount": "7",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -2487,7 +2495,7 @@
         "en-US",
         "ko-KR"
       ],
-      "lastUpdatedDate": "Aug 27, 2026",
+      "lastUpdatedDate": "Aug 26, 2026",
       "downloads": "10K+",
       "rating": 4.4,
       "ratingCount": "97",
@@ -3156,17 +3164,17 @@
       "companionStatus": "completed",
       "companionRollout": "100%",
       "companionNotes": "None",
-      "wearVersion": "Wear OS SDK 35 Update (v10000003)",
-      "wearStatus": "completed",
-      "wearRollout": "100%",
-      "wearNotes": "Updated for Wear OS target SDK 35 compatibility, performance improvements, and bug fixes.",
+      "wearVersion": "10000005 (1.2.0)",
+      "wearStatus": "inProgress",
+      "wearRollout": "20%",
+      "wearNotes": "We've added even more color themes!",
       "storeLanguages": [
         "en-GB"
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "332",
+      "ratingCount": "338",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
