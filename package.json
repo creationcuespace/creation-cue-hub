@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "copilot": "node scripts/growth-copilot.js"
+    "copilot": "node scripts/growth-copilot.js",
+    "deploy": "node scripts/safe_deploy.js"
   },
   "keywords": [],
   "author": "",
