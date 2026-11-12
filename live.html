@@ -3817,6 +3817,16 @@
         }
       };
 
+      // Handle Ctrl+S / Cmd+S: save note & slide away side panel without opening browser Save Page window
+      notesTextarea.onkeydown = function(e) {
+        if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+          e.preventDefault();
+          e.stopPropagation();
+          notesTextarea.blur();
+          closeDetailsPanel();
+        }
+      };
+
       // Populate Watch Face Catalog Properties
       document.getElementById('details-type').textContent = rawWf.type || 'N/A';
       document.getElementById('details-pricing').textContent = rawWf.is_free ? 'Free' : 'Paid';
@@ -5360,6 +5370,52 @@
         }
       });
     }
+
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const detailsPanel = document.getElementById('details-panel');
+        if (detailsPanel && detailsPanel.classList.contains('open')) {
+          const notesTextarea = document.getElementById('details-notes-textarea');
+          if (notesTextarea) notesTextarea.blur();
+          closeDetailsPanel();
+        }
+        const reviewsPanel = document.getElementById('reviews-panel');
+        if (reviewsPanel && reviewsPanel.classList.contains('open') && typeof closeReviewsPanel === 'function') {
+          closeReviewsPanel();
+        }
+        const roadmapPanel = document.getElementById('roadmap-panel');
+        if (roadmapPanel && roadmapPanel.classList.contains('open') && typeof closeRoadmapPanel === 'function') {
+          closeRoadmapPanel();
+        }
+      }
+      if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+        let handled = false;
+        const detailsPanel = document.getElementById('details-panel');
+        if (detailsPanel && detailsPanel.classList.contains('open')) {
+          e.preventDefault();
+          const notesTextarea = document.getElementById('details-notes-textarea');
+          if (notesTextarea) notesTextarea.blur();
+          closeDetailsPanel();
+          handled = true;
+        }
+        const reviewsPanel = document.getElementById('reviews-panel');
+        if (reviewsPanel && reviewsPanel.classList.contains('open') && typeof closeReviewsPanel === 'function') {
+          e.preventDefault();
+          closeReviewsPanel();
+          handled = true;
+        }
+        const roadmapPanel = document.getElementById('roadmap-panel');
+        if (roadmapPanel && roadmapPanel.classList.contains('open') && typeof closeRoadmapPanel === 'function') {
+          e.preventDefault();
+          closeRoadmapPanel();
+          handled = true;
+        }
+        if (!handled && document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('note-textarea')) {
+          e.preventDefault();
+          document.activeElement.blur();
+        }
+      }
+    });
 
   </script>
 

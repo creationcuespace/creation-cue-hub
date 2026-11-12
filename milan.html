@@ -482,67 +482,370 @@
             opacity: 0.8;
         }
 
-        /* Timeline */
+        /* Timeline & Day Cards */
         .timeline {
             display: flex;
             flex-direction: column;
-            gap: 32px;
+            gap: 36px;
             position: relative;
-            margin-top: 25px;
+            margin-top: 20px;
         }
 
         .timeline::before {
-            content: '';
-            position: absolute;
-            left: 20px;
+            display: none;
+        }
+
+        /* Quick Day Navigation Chips */
+        .day-quick-nav {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 20px 0 28px 0;
+            position: sticky;
             top: 10px;
-            bottom: 10px;
-            width: 3px;
-            background: linear-gradient(180deg, var(--accent) 0%, #818cf8 50%, var(--gold) 100%);
-            border-radius: 2px;
+            z-index: 25;
+            background: rgba(10, 15, 29, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 8px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
         }
 
-        .timeline-day {
-            position: relative;
-            padding-left: 55px;
+        .day-nav-chip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: left;
+            font-family: inherit;
         }
 
-        .day-marker {
-            position: absolute;
-            left: 2px;
-            top: 0;
-            width: 38px;
-            height: 38px;
+        .day-nav-chip:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+        }
+
+        .day-nav-chip .chip-d {
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent) 0%, #6366f1 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 0.95rem;
-            color: white;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
-            z-index: 2;
+            font-size: 0.85rem;
+            color: #fff;
+            flex-shrink: 0;
         }
 
-        .day-marker.gala-marker {
-            background: linear-gradient(135deg, #ef4444 0%, #f59e0b 100%);
-            box-shadow: 0 0 20px rgba(245, 158, 11, 0.8);
+        .day-nav-chip .chip-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.25;
+            overflow: hidden;
+        }
+
+        .day-nav-chip .chip-title {
+            font-size: 0.92rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .day-nav-chip .chip-sub {
+            font-size: 0.74rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Day Chip Color Themes */
+        .chip-day-1 .chip-d { background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%); box-shadow: 0 0 12px rgba(56, 189, 248, 0.5); }
+        .chip-day-1:hover, .chip-day-1.active { border-color: #38bdf8; background: rgba(14, 165, 233, 0.22); box-shadow: 0 0 15px rgba(56, 189, 248, 0.35); }
+
+        .chip-day-2 .chip-d { background: linear-gradient(135deg, #ef4444 0%, #f59e0b 100%); box-shadow: 0 0 12px rgba(245, 158, 11, 0.6); }
+        .chip-day-2:hover, .chip-day-2.active { border-color: #f59e0b; background: rgba(245, 158, 11, 0.22); box-shadow: 0 0 15px rgba(245, 158, 11, 0.35); }
+
+        .chip-day-3 .chip-d { background: linear-gradient(135deg, #059669 0%, #10b981 100%); box-shadow: 0 0 12px rgba(16, 185, 129, 0.5); }
+        .chip-day-3:hover, .chip-day-3.active { border-color: #10b981; background: rgba(16, 185, 129, 0.22); box-shadow: 0 0 15px rgba(16, 185, 129, 0.35); }
+
+        .chip-day-4 .chip-d { background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); box-shadow: 0 0 12px rgba(168, 85, 247, 0.5); }
+        .chip-day-4:hover, .chip-day-4.active { border-color: #a855f7; background: rgba(168, 85, 247, 0.22); box-shadow: 0 0 15px rgba(168, 85, 247, 0.35); }
+
+        /* Day Container Box (Distinct Backgrounds per Day) */
+        .timeline-day.day-card {
+            position: relative;
+            border-radius: 24px;
+            padding: 26px 24px 22px 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        /* DAY 1: Cyan / Sky Blue (Ταξίδι & Άφιξη στο Μιλάνο) */
+        .timeline-day.day-card-1 {
+            background: linear-gradient(180deg, rgba(14, 165, 233, 0.16) 0%, rgba(15, 23, 42, 0.88) 100%);
+            border: 2px solid rgba(56, 189, 248, 0.48);
+            box-shadow: 0 14px 40px rgba(14, 165, 233, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        /* DAY 2: Gala Gold / Amber & Crimson (Huawei Summit & Da Vinci) */
+        .timeline-day.day-card-2 {
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.18) 0%, rgba(45, 19, 24, 0.92) 100%);
+            border: 2px solid rgba(245, 158, 11, 0.6);
+            box-shadow: 0 16px 45px rgba(245, 158, 11, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+        }
+
+        /* DAY 3: Lombardy Emerald & Mint (Duomo, Brera, Navigli) */
+        .timeline-day.day-card-3 {
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.16) 0%, rgba(6, 78, 59, 0.88) 100%);
+            border: 2px solid rgba(16, 185, 129, 0.48);
+            box-shadow: 0 14px 40px rgba(16, 185, 129, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        /* DAY 4: Royal Violet & Lavender (Panettone & Επιστροφή) */
+        .timeline-day.day-card-4 {
+            background: linear-gradient(180deg, rgba(168, 85, 247, 0.16) 0%, rgba(59, 7, 100, 0.88) 100%);
+            border: 2px solid rgba(168, 85, 247, 0.48);
+            box-shadow: 0 14px 40px rgba(168, 85, 247, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        /* Day Card Pulse Highlight on Jump */
+        @keyframes dayCardPulse {
+            0% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.012); filter: brightness(1.22); }
+            100% { transform: scale(1); filter: brightness(1); }
+        }
+        .day-card-highlight {
+            animation: dayCardPulse 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Day Hero Banner */
+        .day-hero-banner {
+            margin-bottom: 22px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .day-hero-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .day-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.84rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .badge-d1 { background: rgba(14, 165, 233, 0.28); border: 1.5px solid #38bdf8; color: #7dd3fc; }
+        .badge-d2 { background: rgba(245, 158, 11, 0.28); border: 1.5px solid #f59e0b; color: #fde68a; box-shadow: 0 0 15px rgba(245, 158, 11, 0.35); }
+        .badge-d3 { background: rgba(16, 185, 129, 0.28); border: 1.5px solid #10b981; color: #a7f3d0; }
+        .badge-d4 { background: rgba(168, 85, 247, 0.28); border: 1.5px solid #a855f7; color: #e9d5ff; }
+
+        .day-hero-status {
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.06);
+            color: #e2e8f0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .day-hero-title {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 6px 0 10px 0;
+            line-height: 1.35;
+        }
+
+        .day-hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .dtag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 5px 11px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #cbd5e1;
+        }
+
+        /* Color harmonized inner event cards per day */
+        .day-card-1 .event-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(56, 189, 248, 0.22);
+        }
+        .day-card-1 .event-card:hover {
+            border-color: rgba(56, 189, 248, 0.5);
+        }
+
+        .day-card-2 .event-card {
+            background: rgba(28, 20, 36, 0.72);
+            border: 1px solid rgba(245, 158, 11, 0.28);
+        }
+        .day-card-2 .event-card:hover {
+            border-color: rgba(245, 158, 11, 0.58);
+        }
+
+        .day-card-3 .event-card {
+            background: rgba(10, 30, 24, 0.7);
+            border: 1px solid rgba(16, 185, 129, 0.22);
+        }
+        .day-card-3 .event-card:hover {
+            border-color: rgba(16, 185, 129, 0.5);
+        }
+
+        .day-card-4 .event-card {
+            background: rgba(25, 15, 42, 0.7);
+            border: 1px solid rgba(168, 85, 247, 0.22);
+        }
+        .day-card-4 .event-card:hover {
+            border-color: rgba(168, 85, 247, 0.5);
+        }
+
+        .day-marker {
+            display: none;
         }
 
         .day-header {
-            margin-bottom: 16px;
+            display: none;
         }
 
-        .day-header h3 {
-            font-size: 1.4rem;
-            font-weight: 700;
+        /* Live Current Event & Auto-Scroll Pulse */
+        .event-card.event-card-live {
+            border: 2px solid #ef4444 !important;
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.45), inset 0 0 15px rgba(239, 68, 68, 0.15) !important;
+            position: relative;
+        }
+
+        .live-event-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+
+        .live-event-badge.badge-in-progress {
+            background: rgba(239, 68, 68, 0.25);
+            border: 1px solid #ef4444;
+            color: #fca5a5;
+            animation: liveGlowPulse 2s infinite ease-in-out;
+        }
+
+        .live-event-badge.badge-upcoming {
+            background: rgba(56, 189, 248, 0.2);
+            border: 1px solid #38bdf8;
+            color: #7dd3fc;
+        }
+
+        .live-pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ef4444;
+            box-shadow: 0 0 8px #ef4444;
+            animation: liveDotBlink 1.2s infinite ease-in-out;
+        }
+
+        @keyframes liveDotBlink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.75); }
+        }
+
+        @keyframes liveGlowPulse {
+            0%, 100% { box-shadow: 0 0 8px rgba(239, 68, 68, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.85); }
+        }
+
+        .today-live-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #ef4444 0%, #f43f5e 100%);
             color: #fff;
+            font-weight: 800;
+            font-size: 0.74rem;
+            padding: 3px 10px;
+            border-radius: 999px;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.7);
+            letter-spacing: 0.5px;
         }
 
-        .day-header p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
+        .live-dot-pulse {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #ffffff;
+            animation: liveDotBlink 1s infinite;
+        }
+
+        @keyframes eventPulseGlow {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); filter: brightness(1.2); }
+            100% { transform: scale(1); }
+        }
+        .event-pulse-highlight {
+            animation: eventPulseGlow 1.4s ease;
+        }
+
+        .live-now-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(239, 68, 68, 0.18);
+            border: 1.5px solid #ef4444;
+            color: #fca5a5;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .live-now-btn:hover {
+            background: rgba(239, 68, 68, 0.35);
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
         }
 
         .event-card {
@@ -905,13 +1208,49 @@
             
             /* Timeline & Cards */
             .timeline {
-                gap: 20px;
+                gap: 24px;
                 margin-top: 15px;
             }
-            .timeline::before { left: 12px; }
-            .timeline-day { padding-left: 36px; }
-            .day-marker { width: 26px; height: 26px; font-size: 0.72rem; left: 0; top: 0; }
-            .day-header h3 { font-size: 1.25rem; }
+            .timeline::before { display: none; }
+            .timeline-day.day-card {
+                padding: 16px 12px 14px 12px;
+                border-radius: 18px;
+                margin-bottom: 22px;
+            }
+            .day-quick-nav {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+                padding: 6px;
+                border-radius: 14px;
+                top: 6px;
+            }
+            .day-nav-chip {
+                padding: 8px 10px;
+                gap: 8px;
+                border-radius: 10px;
+            }
+            .day-nav-chip .chip-d {
+                width: 28px;
+                height: 28px;
+                font-size: 0.78rem;
+            }
+            .day-nav-chip .chip-title {
+                font-size: 0.82rem;
+            }
+            .day-nav-chip .chip-sub {
+                font-size: 0.68rem;
+            }
+            .day-hero-title {
+                font-size: 1.18rem;
+            }
+            .day-hero-badge {
+                font-size: 0.74rem;
+                padding: 4px 10px;
+            }
+            .dtag {
+                font-size: 0.74rem;
+                padding: 3px 8px;
+            }
             .event-card {
                 padding: 14px 10px;
                 border-radius: 12px;
@@ -2167,19 +2506,69 @@
 
         <!-- 9. ITINERARY TIMELINE -->
         <div id="section-timeline">
-            <h2 class="section-title"><i class="fa-solid fa-route"></i> Το Αναλυτικό Πρόγραμμα (4 Ημέρες)</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+                <h2 class="section-title" style="margin-bottom: 0;"><i class="fa-solid fa-route"></i> Το Αναλυτικό Πρόγραμμα (4 Ημέρες)</h2>
+                <button type="button" class="live-now-btn" id="btn-live-now" onclick="checkAndAutoScrollLive(true)">
+                    <span class="live-pulse-dot"></span> <span>Σκρολ στο Τρέχον (ΤΩΡΑ)</span>
+                </button>
+            </div>
+
+            <!-- Quick Day Selector Navigation -->
+            <div class="day-quick-nav" id="day-quick-nav">
+                <button type="button" class="day-nav-chip chip-day-1 active" onclick="jumpToDay('day-2026-11-18')">
+                    <span class="chip-d">D1</span>
+                    <span class="chip-info">
+                        <span class="chip-title">Τετάρτη 18/11</span>
+                        <span class="chip-sub"><i class="fa-solid fa-plane-arrival"></i> Άφιξη & Navigli</span>
+                    </span>
+                </button>
+                <button type="button" class="day-nav-chip chip-day-2" onclick="jumpToDay('day-2026-11-19')">
+                    <span class="chip-d">D2</span>
+                    <span class="chip-info">
+                        <span class="chip-title">Πέμπτη 19/11</span>
+                        <span class="chip-sub"><i class="fa-solid fa-crown"></i> Gala Summit</span>
+                    </span>
+                </button>
+                <button type="button" class="day-nav-chip chip-day-3" onclick="jumpToDay('day-2026-11-20')">
+                    <span class="chip-d">D3</span>
+                    <span class="chip-info">
+                        <span class="chip-title">Παρασκευή 20/11</span>
+                        <span class="chip-sub"><i class="fa-solid fa-landmark"></i> Duomo & Brera</span>
+                    </span>
+                </button>
+                <button type="button" class="day-nav-chip chip-day-4" onclick="jumpToDay('day-2026-11-21')">
+                    <span class="chip-d">D4</span>
+                    <span class="chip-info">
+                        <span class="chip-title">Σάββατο 21/11</span>
+                        <span class="chip-sub"><i class="fa-solid fa-plane-departure"></i> Επιστροφή</span>
+                    </span>
+                </button>
+            </div>
 
             <div class="timeline">
                 
                 <!-- Day 1: Wednesday 18 Nov -->
-                <div class="timeline-day" id="day-2026-11-18">
-                    <div class="day-marker">D1</div>
-                    <div class="day-header">
-                        <h3>Από τα Γιάννενα & την Αθήνα ➔ Άφιξη στο Μιλάνο</h3>
-                        <p>Τετάρτη, 18 Νοεμβρίου 2026</p>
+                <div class="timeline-day day-card day-card-1" id="day-2026-11-18">
+                    <div class="day-hero-banner">
+                        <div class="day-hero-top">
+                            <div class="day-hero-badge badge-d1">
+                                <i class="fa-solid fa-plane-arrival"></i>
+                                <span>ΗΜΕΡΑ 1 • ΤΕΤΑΡΤΗ 18 ΝΟΕΜΒΡΙΟΥ 2026</span>
+                            </div>
+                            <span class="day-hero-status"><i class="fa-solid fa-location-dot" style="color: #38bdf8;"></i> Άφιξη στο Μιλάνο</span>
+                        </div>
+                        <h3 class="day-hero-title">Από τα Γιάννενα & την Αθήνα ➔ Άφιξη στο Μιλάνο & Navigli</h3>
+                        <div class="day-hero-tags">
+                            <span class="dtag"><i class="fa-solid fa-car" style="color: #38bdf8;"></i> Οδικό Γιάννενα ➔ Αθήνα (06:15)</span>
+                            <span class="dtag"><i class="fa-solid fa-square-parking" style="color: #38bdf8;"></i> 5 Stars Parking ATH (12:00)</span>
+                            <span class="dtag"><i class="fa-solid fa-plane" style="color: #38bdf8;"></i> Πτήση Aegean A3664 (16:15)</span>
+                            <span class="dtag"><i class="fa-solid fa-train" style="color: #38bdf8;"></i> Malpensa Express ➔ Cadorna</span>
+                            <span class="dtag"><i class="fa-solid fa-hotel" style="color: #38bdf8;"></i> Check-in B&B Sant'Ambrogio</span>
+                            <span class="dtag"><i class="fa-solid fa-martini-glass-citrus" style="color: #38bdf8;"></i> Aperitivo στα Navigli</span>
+                        </div>
                     </div>
 
-                    <div class="event-card glass" style="border-left: 4px solid #38bdf8;">
+                    <div class="event-card glass" style="border-left: 4px solid #38bdf8;" data-start="2026-11-18T06:15:00" data-end="2026-11-18T11:15:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 06:15 - 11:15</span>
                         </div>
@@ -2190,7 +2579,7 @@
                         </div>
                     </div>
 
-                    <div class="event-card glass" style="border-left: 4px solid #f43f5e;">
+                    <div class="event-card glass" style="border-left: 4px solid #f43f5e;" data-start="2026-11-18T11:15:00" data-end="2026-11-18T11:50:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 11:15 - 11:50</span>
                         </div>
@@ -2201,7 +2590,7 @@
                         </div>
                     </div>
 
-                    <div class="event-card glass" style="border-left: 4px solid var(--accent);">
+                    <div class="event-card glass" style="border-left: 4px solid var(--accent);" data-start="2026-11-18T12:00:00" data-end="2026-11-18T13:45:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 12:00 - 13:45</span>
                             <a href="#" class="add-to-cal-btn" data-title="5 Stars Parking - Στάθμευση & Μετάβαση ATH" data-start="20261118T120000" data-end="20261118T134500" data-loc="5 Stars Parking, 22ο χλμ Λεωφ. Μαρκοπούλου"><i class="fa-regular fa-calendar-plus"></i> Ημερολόγιο</a>
@@ -2221,7 +2610,7 @@
                         </div>
                     </div>
 
-                    <div class="event-card glass">
+                    <div class="event-card glass" data-start="2026-11-18T13:45:00" data-end="2026-11-18T17:50:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 13:45 - 17:50</span>
                             <a href="#" class="add-to-cal-btn" data-title="Πτήση Aegean A3664 Αθήνα - Μιλάνο" data-start="20261118T161500" data-end="20261118T175000" data-loc="Athens El. Venizelos Airport"><i class="fa-regular fa-calendar-plus"></i> Ημερολόγιο</a>
@@ -2234,7 +2623,7 @@
                         </div>
                     </div>
 
-                    <div class="event-card glass">
+                    <div class="event-card glass" data-start="2026-11-18T18:20:00" data-end="2026-11-18T19:30:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 18:20 - 19:30</span>
                         </div>
@@ -2277,7 +2666,7 @@
                         </div>
                     </div>
 
-                    <div class="event-card glass">
+                    <div class="event-card glass" data-start="2026-11-18T20:15:00" data-end="2026-11-18T23:30:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 20:15 - 23:00</span>
                         </div>
@@ -2316,15 +2705,28 @@
                 </div>
 
                 <!-- Day 2: Thursday 19 Nov - THE GALA DAY -->
-                <div class="timeline-day" id="day-2026-11-19">
-                    <div class="day-marker">D2</div>
-                    <div class="day-header">
-                        <h3 style="color: #fbbf24;">Ο Μυστικός Δείπνος (Da Vinci) & HUAWEI WATCH FACE SUMMIT 2026</h3>
-                        <p>Πέμπτη, 19 Νοεμβρίου 2026 • Η Μεγάλη Ημέρα Τέχνης & του Επίσημου Summit</p>
+                <div class="timeline-day day-card day-card-2" id="day-2026-11-19">
+                    <div class="day-hero-banner">
+                        <div class="day-hero-top">
+                            <div class="day-hero-badge badge-d2">
+                                <i class="fa-solid fa-crown"></i>
+                                <span>ΗΜΕΡΑ 2 • ΠΕΜΠΤΗ 19 ΝΟΕΜΒΡΙΟΥ 2026 (THE GALA DAY)</span>
+                            </div>
+                            <span class="day-hero-status" style="color: #fbbf24; background: rgba(245, 158, 11, 0.2); border-color: rgba(245, 158, 11, 0.4);">
+                                <i class="fa-solid fa-award"></i> Huawei Summit & Da Vinci
+                            </span>
+                        </div>
+                        <h3 class="day-hero-title" style="color: #fbbf24;">Ο Μυστικός Δείπνος (Da Vinci) & HUAWEI WATCH FACE SUMMIT 2026</h3>
+                        <div class="day-hero-tags">
+                            <span class="dtag" style="border-color: rgba(245, 158, 11, 0.4); color: #fde68a;"><i class="fa-solid fa-paintbrush" style="color: #fbbf24;"></i> Santa Maria delle Grazie (11:00 Check-in / 11:30 Tour)</span>
+                            <span class="dtag" style="border-color: rgba(245, 158, 11, 0.4); color: #fde68a;"><i class="fa-solid fa-user-tie" style="color: #fbbf24;"></i> Dress Code Gala / Smart Business</span>
+                            <span class="dtag" style="border-color: rgba(245, 158, 11, 0.4); color: #fde68a;"><i class="fa-solid fa-award" style="color: #fbbf24;"></i> Summit Meliá Milano (15:30)</span>
+                            <span class="dtag" style="border-color: rgba(245, 158, 11, 0.4); color: #fde68a;"><i class="fa-solid fa-utensils" style="color: #fbbf24;"></i> Gala Dinner & Awards (19:30)</span>
+                        </div>
                     </div>
 
                     <!-- Event 1: Morning breakfast & walk -->
-                    <div class="event-card glass">
+                    <div class="event-card glass" data-start="2026-11-19T08:30:00" data-end="2026-11-19T10:45:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 08:30 - 10:45</span>
                         </div>
@@ -2337,7 +2739,7 @@
                     </div>
 
                     <!-- Event 2: Highlight - The Last Supper (Leonardo da Vinci) -->
-                    <div class="event-card glass" style="border: 2px solid rgba(245, 158, 11, 0.55); box-shadow: 0 10px 30px rgba(245, 158, 11, 0.15);">
+                    <div class="event-card glass" style="border: 2px solid rgba(245, 158, 11, 0.55); box-shadow: 0 10px 30px rgba(245, 158, 11, 0.15);" data-start="2026-11-19T11:00:00" data-end="2026-11-19T12:30:00">
                         <div class="event-time">
                             <span style="color: #fbbf24; font-weight: 700;"><i class="fa-regular fa-clock"></i> 11:00 - 12:30 (Κορυφαίο Πολιτιστικό Event)</span>
                             <a href="#" class="add-to-cal-btn" data-title="Ο Μυστικός Δείπνος (Da Vinci) - Santa Maria delle Grazie" data-start="20261119T113000" data-end="20261119T123000" data-loc="Piazza Santa Maria delle Grazie 2, Milano"><i class="fa-regular fa-calendar-plus"></i> Ημερολόγιο</a>
@@ -2395,7 +2797,7 @@
                     </div>
 
                     <!-- Event 3: Lunch & rest before Gala -->
-                    <div class="event-card glass">
+                    <div class="event-card glass" data-start="2026-11-19T12:30:00" data-end="2026-11-19T15:00:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 12:30 - 15:00</span>
                         </div>
@@ -2408,7 +2810,7 @@
                     </div>
 
                     <!-- Event 4: Transit to Melia Milano -->
-                    <div class="event-card glass">
+                    <div class="event-card glass" data-start="2026-11-19T15:00:00" data-end="2026-11-19T15:30:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 15:00 - 15:30</span>
                         </div>
@@ -2447,7 +2849,7 @@
                     </div>
 
                     <!-- GALA EVENT CARD -->
-                    <div class="event-card glass gala-card" id="timeline-gala">
+                    <div class="event-card glass gala-card" id="timeline-gala" data-start="2026-11-19T15:30:00" data-end="2026-11-19T22:30:00">
                         <div class="event-time">
                             <span style="color: #fbbf24; font-size: 1rem;"><i class="fa-solid fa-award" style="color: #ef4444;"></i> 15:30 – 22:00 (Κύριο Event)</span>
                             <a href="#" class="add-to-cal-btn" data-title="Huawei Watch Face Summit Milano 2026" data-start="20261119T153000" data-end="20261119T220000" data-loc="Hotel Melia Milano, Via Masaccio 19, Milan"><i class="fa-regular fa-calendar-plus"></i> Ημερολόγιο</a>
@@ -2493,15 +2895,29 @@
                 </div>
 
                 <!-- Day 3: Friday 20 Nov -->
-                <div class="timeline-day" id="day-2026-11-20">
-                    <div class="day-marker">D3</div>
-                    <div class="day-header">
-                        <h3 style="color: #fbbf24;">Duomo, Galleria, Τέχνη Brera & Ατμοσφαιρικά Navigli</h3>
-                        <p>Παρασκευή, 20 Νοεμβρίου 2026 • Ημέρα Απεργίας (Απόλυτη Ασφάλεια: Όλα τα σημεία βρίσκονται σε απόσταση περιπάτου!)</p>
+                <div class="timeline-day day-card day-card-3" id="day-2026-11-20">
+                    <div class="day-hero-banner">
+                        <div class="day-hero-top">
+                            <div class="day-hero-badge badge-d3">
+                                <i class="fa-solid fa-landmark"></i>
+                                <span>ΗΜΕΡΑ 3 • ΠΑΡΑΣΚΕΥΗ 20 ΝΟΕΜΒΡΙΟΥ 2026</span>
+                            </div>
+                            <span class="day-hero-status" style="color: #34d399; background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.4);">
+                                <i class="fa-solid fa-shield-halved"></i> 100% Ασφαλές Πρόγραμμα Απεργίας
+                            </span>
+                        </div>
+                        <h3 class="day-hero-title" style="color: #34d399;">Duomo, Galleria, Τέχνη Brera & Ατμοσφαιρικά Navigli</h3>
+                        <div class="day-hero-tags">
+                            <span class="dtag" style="border-color: rgba(16, 185, 129, 0.35); color: #a7f3d0;"><i class="fa-solid fa-church" style="color: #10b981;"></i> Καθεδρικός Duomo & Terraces (10:00)</span>
+                            <span class="dtag" style="border-color: rgba(16, 185, 129, 0.35); color: #a7f3d0;"><i class="fa-solid fa-bag-shopping" style="color: #10b981;"></i> Galleria & Luini Panzerotti</span>
+                            <span class="dtag" style="border-color: rgba(16, 185, 129, 0.35); color: #a7f3d0;"><i class="fa-solid fa-palette" style="color: #10b981;"></i> Brera & Quadrilatero della Moda</span>
+                            <span class="dtag" style="border-color: rgba(16, 185, 129, 0.35); color: #a7f3d0;"><i class="fa-solid fa-fort-awesome" style="color: #10b981;"></i> Castello Sforzesco & Sempione</span>
+                            <span class="dtag" style="border-color: rgba(16, 185, 129, 0.35); color: #a7f3d0;"><i class="fa-solid fa-person-walking" style="color: #10b981;"></i> Όλα σε απόσταση περιπάτου</span>
+                        </div>
                     </div>
 
                     <!-- Event 1: Duomo & Galleria -->
-                    <div class="event-card glass">
+                    <div class="event-card glass" data-start="2026-11-20T09:30:00" data-end="2026-11-20T13:30:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 09:30 - 13:30</span>
                         </div>
@@ -2542,7 +2958,7 @@
                     </div>
 
                     <!-- Event 2: Brera & Fashion District -->
-                    <div class="event-card glass">
+                    <div class="event-card glass" data-start="2026-11-20T13:30:00" data-end="2026-11-20T16:30:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 13:30 - 16:30</span>
                         </div>
@@ -2556,7 +2972,7 @@
                     </div>
 
                     <!-- Event 3: Castello Sforzesco & Sempione -->
-                    <div class="event-card glass">
+                    <div class="event-card glass" data-start="2026-11-20T16:30:00" data-end="2026-11-20T18:30:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 16:30 - 18:30</span>
                         </div>
@@ -2569,7 +2985,7 @@
                     </div>
 
                     <!-- Event 4: Navigli Grande & Aperitivo -->
-                    <div class="event-card glass">
+                    <div class="event-card glass" data-start="2026-11-20T19:00:00" data-end="2026-11-20T23:00:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 19:00 - 22:30</span>
                         </div>
@@ -2607,14 +3023,29 @@
                     </div>
                 </div>
 
-                <div class="timeline-day" id="day-2026-11-21">
-                    <div class="day-marker">D4</div>
-                    <div class="day-header">
-                        <h3>Αγορές, Panettone & Ασφαλής Επιστροφή στην Αθήνα</h3>
-                        <p>Σάββατο, 21 Νοεμβρίου 2026 • Επιστροφή</p>
+                <!-- Day 4: Saturday 21 Nov -->
+                <div class="timeline-day day-card day-card-4" id="day-2026-11-21">
+                    <div class="day-hero-banner">
+                        <div class="day-hero-top">
+                            <div class="day-hero-badge badge-d4">
+                                <i class="fa-solid fa-plane-departure"></i>
+                                <span>ΗΜΕΡΑ 4 • ΣΑΒΒΑΤΟ 21 ΝΟΕΜΒΡΙΟΥ 2026 (ΕΠΙΣΤΡΟΦΗ)</span>
+                            </div>
+                            <span class="day-hero-status" style="color: #c084fc; background: rgba(168, 85, 247, 0.2); border-color: rgba(168, 85, 247, 0.4);">
+                                <i class="fa-solid fa-plane-departure"></i> Αναχώρηση & Πτήση Επιστροφής
+                            </span>
+                        </div>
+                        <h3 class="day-hero-title" style="color: #c084fc;">Αγορές, Panettone & Ασφαλής Επιστροφή στην Αθήνα</h3>
+                        <div class="day-hero-tags">
+                            <span class="dtag" style="border-color: rgba(168, 85, 247, 0.35); color: #e9d5ff;"><i class="fa-solid fa-door-open" style="color: #c084fc;"></i> Check-out B&B Sant'Ambrogio (10:30)</span>
+                            <span class="dtag" style="border-color: rgba(168, 85, 247, 0.35); color: #e9d5ff;"><i class="fa-solid fa-bread-slice" style="color: #c084fc;"></i> Παραδοσιακό Panettone Cucchi</span>
+                            <span class="dtag" style="border-color: rgba(168, 85, 247, 0.35); color: #e9d5ff;"><i class="fa-solid fa-train" style="color: #c084fc;"></i> Malpensa Express από Cadorna (15:00)</span>
+                            <span class="dtag" style="border-color: rgba(168, 85, 247, 0.35); color: #e9d5ff;"><i class="fa-solid fa-plane" style="color: #c084fc;"></i> Πτήση Aegean A3665 (18:45 ➔ 22:15 ATH)</span>
+                            <span class="dtag" style="border-color: rgba(168, 85, 247, 0.35); color: #e9d5ff;"><i class="fa-solid fa-heart" style="color: #f43f5e;"></i> Θεία Βάσω, Σταυριάνα & Αντωνία</span>
+                        </div>
                     </div>
 
-                    <div class="event-card glass">
+                    <div class="event-card glass" data-start="2026-11-21T09:00:00" data-end="2026-11-21T14:45:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 09:00 - 12:00</span>
                         </div>
@@ -2627,7 +3058,7 @@
                         </div>
                     </div>
 
-                    <div class="event-card glass" style="border: 2px solid rgba(56, 189, 248, 0.45); box-shadow: 0 10px 30px rgba(56, 189, 248, 0.1);">
+                    <div class="event-card glass" style="border: 2px solid rgba(56, 189, 248, 0.45); box-shadow: 0 10px 30px rgba(56, 189, 248, 0.1);" data-start="2026-11-21T14:45:00" data-end="2026-11-21T22:15:00">
                         <div class="event-time">
                             <span style="color: var(--accent); font-weight: 700;"><i class="fa-regular fa-clock"></i> 14:45 - 18:45</span>
                             <a href="#" class="add-to-cal-btn" data-title="Πτήση Aegean A3665 Μιλάνο - Αθήνα" data-start="20261121T184500" data-end="20261121T221500" data-loc="Milan Malpensa Airport T1"><i class="fa-regular fa-calendar-plus"></i> Ημερολόγιο</a>
@@ -2743,7 +3174,7 @@
                         </div>
                     </div>
 
-                    <div class="event-card glass" style="border-left: 4px solid var(--accent);">
+                    <div class="event-card glass" style="border-left: 4px solid var(--accent);" data-start="2026-11-21T22:15:00" data-end="2026-11-21T23:15:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 22:15 - 23:15</span>
                         </div>
@@ -2763,7 +3194,7 @@
                         </div>
                     </div>
 
-                    <div class="event-card glass" style="border-left: 4px solid #f43f5e;">
+                    <div class="event-card glass" style="border-left: 4px solid #f43f5e;" data-start="2026-11-21T23:15:00" data-end="2026-11-22T03:00:00">
                         <div class="event-time">
                             <span><i class="fa-regular fa-clock"></i> 23:15+</span>
                         </div>
@@ -3184,6 +3615,169 @@
                     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             };
+
+            // Jump to Day with offset and pulse highlight
+            window.jumpToDay = function(dayId) {
+                const el = document.getElementById(dayId);
+                if (!el) return;
+                
+                const yOffset = -70;
+                const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+
+                el.classList.remove('day-card-highlight');
+                void el.offsetWidth;
+                el.classList.add('day-card-highlight');
+                setTimeout(() => {
+                    el.classList.remove('day-card-highlight');
+                }, 1400);
+
+                document.querySelectorAll('.day-nav-chip').forEach(chip => chip.classList.remove('active'));
+                if (dayId === 'day-2026-11-18') document.querySelector('.chip-day-1')?.classList.add('active');
+                if (dayId === 'day-2026-11-19') document.querySelector('.chip-day-2')?.classList.add('active');
+                if (dayId === 'day-2026-11-20') document.querySelector('.chip-day-3')?.classList.add('active');
+                if (dayId === 'day-2026-11-21') document.querySelector('.chip-day-4')?.classList.add('active');
+            };
+
+            // Day Chips scroll spy
+            if ('IntersectionObserver' in window) {
+                const dayCards = document.querySelectorAll('.timeline-day.day-card');
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '-20% 0px -60% 0px',
+                    threshold: 0
+                };
+                const dayObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const id = entry.target.id;
+                            document.querySelectorAll('.day-nav-chip').forEach(chip => chip.classList.remove('active'));
+                            if (id === 'day-2026-11-18') document.querySelector('.chip-day-1')?.classList.add('active');
+                            if (id === 'day-2026-11-19') document.querySelector('.chip-day-2')?.classList.add('active');
+                            if (id === 'day-2026-11-20') document.querySelector('.chip-day-3')?.classList.add('active');
+                            if (id === 'day-2026-11-21') document.querySelector('.chip-day-4')?.classList.add('active');
+                        }
+                    });
+                }, observerOptions);
+
+                dayCards.forEach(card => dayObserver.observe(card));
+            }
+
+            // LIVE AUTO-SCROLL TO CURRENT DAY & EVENT
+            window.checkAndAutoScrollLive = function(userTriggered = false, overrideTime = null) {
+                // Get target time (allows ?now=2026-11-19T11:30 or param)
+                const urlParams = new URLSearchParams(window.location.search);
+                const queryNow = urlParams.get('now');
+                let now = new Date();
+                if (overrideTime) {
+                    now = new Date(overrideTime);
+                } else if (queryNow) {
+                    now = new Date(queryNow);
+                }
+
+                const y = now.getFullYear();
+                const m = String(now.getMonth() + 1).padStart(2, '0');
+                const d = String(now.getDate()).padStart(2, '0');
+                const todayStr = `${y}-${m}-${d}`;
+                const todayDayId = `day-${todayStr}`;
+
+                const targetDayEl = document.getElementById(todayDayId);
+
+                // If not during the trip
+                if (!targetDayEl) {
+                    if (userTriggered) {
+                        const toastMsg = `Το ταξίδι ξεκινάει την Τετάρτη 18 Νοεμβρίου! <br><a href="?now=2026-11-19T16:00" style="color: #fbbf24; text-decoration: underline; font-weight: bold; display: inline-block; margin-top: 6px;">👉 Δείτε Ζωντανή Προσομοίωση (Gala Summit)</a>`;
+                        const tc = document.getElementById('toast-container');
+                        if (tc) {
+                            const toast = document.createElement('div');
+                            toast.className = 'toast';
+                            toast.style.borderColor = '#ef4444';
+                            toast.innerHTML = `<i class="fa-solid fa-clock" style="color: #ef4444; font-size: 1.2rem;"></i><div>${toastMsg}</div>`;
+                            tc.appendChild(toast);
+                            setTimeout(() => {
+                                toast.style.opacity = '0';
+                                setTimeout(() => toast.remove(), 400);
+                            }, 5000);
+                        }
+                    }
+                    return;
+                }
+
+                // Activate day tab chip
+                document.querySelectorAll('.day-nav-chip').forEach(chip => chip.classList.remove('active'));
+                if (todayDayId === 'day-2026-11-18') document.querySelector('.chip-day-1')?.classList.add('active');
+                if (todayDayId === 'day-2026-11-19') document.querySelector('.chip-day-2')?.classList.add('active');
+                if (todayDayId === 'day-2026-11-20') document.querySelector('.chip-day-3')?.classList.add('active');
+                if (todayDayId === 'day-2026-11-21') document.querySelector('.chip-day-4')?.classList.add('active');
+
+                // Mark Day with a pulsing "ΣΗΜΕΡΑ" badge on the banner
+                const bannerTop = targetDayEl.querySelector('.day-hero-top');
+                if (bannerTop && !targetDayEl.querySelector('.today-live-pill')) {
+                    const todayPill = document.createElement('span');
+                    todayPill.className = 'today-live-pill';
+                    todayPill.innerHTML = '<span class="live-dot-pulse"></span> ΣΗΜΕΡΑ';
+                    bannerTop.appendChild(todayPill);
+                }
+
+                // Find active or next upcoming event within this day
+                const eventCards = targetDayEl.querySelectorAll('.event-card[data-start]');
+                let activeCard = null;
+                let nextUpcomingCard = null;
+
+                eventCards.forEach(card => {
+                    card.classList.remove('event-card-live', 'event-pulse-highlight');
+                    const oldBadge = card.querySelector('.live-event-badge');
+                    if (oldBadge) oldBadge.remove();
+
+                    const start = new Date(card.getAttribute('data-start'));
+                    const end = new Date(card.getAttribute('data-end'));
+
+                    if (now >= start && now <= end) {
+                        activeCard = card;
+                    } else if (now < start && !nextUpcomingCard) {
+                        nextUpcomingCard = card;
+                    }
+                });
+
+                const targetCard = activeCard || nextUpcomingCard;
+
+                if (targetCard) {
+                    targetCard.classList.add('event-card-live');
+                    
+                    const timeEl = targetCard.querySelector('.event-time');
+                    if (timeEl && !targetCard.querySelector('.live-event-badge')) {
+                        const badge = document.createElement('span');
+                        badge.className = 'live-event-badge ' + (activeCard ? 'badge-in-progress' : 'badge-upcoming');
+                        badge.innerHTML = activeCard 
+                            ? '<span class="live-pulse-dot"></span> ΤΩΡΑ ΣΕ ΕΞΕΛΙΞΗ' 
+                            : '<i class="fa-regular fa-clock"></i> ΕΠΟΜΕΝΟ EVENT';
+                        timeEl.appendChild(badge);
+                    }
+
+                    // Auto-scroll directly to target card
+                    setTimeout(() => {
+                        const yOffset = -75;
+                        const y = targetCard.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+
+                        targetCard.classList.add('event-pulse-highlight');
+                        setTimeout(() => targetCard.classList.remove('event-pulse-highlight'), 2200);
+                    }, userTriggered ? 50 : 800);
+
+                } else {
+                    // All events finished today, scroll to day banner
+                    setTimeout(() => {
+                        const yOffset = -75;
+                        const y = targetDayEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                    }, userTriggered ? 50 : 800);
+                }
+            };
+
+            // Run check on initial load (with delay to let layout settle)
+            setTimeout(() => {
+                window.checkAndAutoScrollLive(false);
+            }, 600);
 
             // Auto-expand and open panel on anchor clicks
             document.querySelectorAll('a[href^="#"]').forEach(link => {
