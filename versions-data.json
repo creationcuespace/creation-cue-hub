@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-12T04:16:25.886Z",
+  "lastUpdated": "2026-11-12T16:15:13.735Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -235,11 +235,11 @@
     },
     {
       "date": "2026-11-12",
-      "timestamp": "2026-11-12T04:16:25.886Z",
+      "timestamp": "2026-11-12T16:15:13.734Z",
       "avgRating": 4.49,
       "weightedAvg": 4.52,
       "ratedCount": 30,
-      "totalWeight": 3882
+      "totalWeight": 3884
     }
   ],
   "results": [
@@ -2506,7 +2506,7 @@
       "lastUpdatedDate": "Aug 26, 2026",
       "downloads": "10K+",
       "rating": 4.4,
-      "ratingCount": "98",
+      "ratingCount": "99",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -2600,10 +2600,10 @@
       "companionStatus": "completed",
       "companionRollout": "100%",
       "companionNotes": "None",
-      "wearVersion": "Wear OS SDK 35 Update (v10000012)",
+      "wearVersion": "10000014 (4.0.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "Updated for Wear OS target SDK 35 compatibility, performance improvements, and bug fixes.",
+      "wearNotes": "• Added an optional shadow ring (on/off).\n• Improved image shortcut positioning.\n• Added an option for a pure black background.\n• Minor visual improvements and refinements.",
       "storeLanguages": [
         "en-US"
       ],
@@ -3173,8 +3173,8 @@
       "companionRollout": "100%",
       "companionNotes": "None",
       "wearVersion": "10000005 (1.2.0)",
-      "wearStatus": "inProgress",
-      "wearRollout": "20%",
+      "wearStatus": "completed",
+      "wearRollout": "100%",
       "wearNotes": "We've added even more color themes!",
       "storeLanguages": [
         "en-GB"
@@ -3182,7 +3182,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "349",
+      "ratingCount": "350",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,

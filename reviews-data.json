@@ -1,18 +1,33 @@
 {
-  "lastUpdated": "2026-11-12T04:16:25.887Z",
+  "lastUpdated": "2026-11-12T16:15:13.738Z",
   "reviews": [
     {
-      "reviewId": "8490d8fe-a991-43b3-a19e-decd8406086c",
-      "packageName": "com.creationcue.crc069watchface",
-      "title": "Digital Watch Face CRC069",
-      "wfId": "crc069",
-      "authorName": "Movies and TV Series",
+      "reviewId": "5c7a2663-982e-4145-88c9-272a78a5e855",
+      "packageName": "com.creation.cue136watchface",
+      "title": "Analog Watch Face CUE136",
+      "wfId": "cue136",
+      "authorName": "Gabriel Moura",
       "starRating": 5,
-      "reviewerLanguage": "ru",
-      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
       "topics": [],
-      "text": "\tкласс.есть всё что нужно для часов.",
-      "lastModified": "2026-11-11T11:30:52.000Z"
+      "text": "\tMuito bom, números grandes",
+      "lastModified": "2026-11-12T14:43:59.000Z"
+    },
+    {
+      "reviewId": "7727c321-1758-44b7-b3bb-98547ffae896",
+      "packageName": "com.creation.cue136watchface",
+      "title": "Analog Watch Face CUE136",
+      "wfId": "cue136",
+      "authorName": "Max Ponomaryov (azzimov)",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "Unknown",
+      "topics": [
+        "Battery"
+      ],
+      "text": "\tVery good, thank you for sharing. Please add an option to switch off the blinking animation of index and power icon, it can be irritating due everyday use.",
+      "lastModified": "2026-11-12T11:32:21.000Z"
     }
   ]
 }
