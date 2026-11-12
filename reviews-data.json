@@ -1,46 +1,18 @@
 {
-  "lastUpdated": "2026-11-11T03:02:06.280Z",
+  "lastUpdated": "2026-11-12T04:16:25.887Z",
   "reviews": [
     {
-      "reviewId": "a4372da7-375a-4f75-9494-b427b4968a34",
-      "packageName": "com.creation.cueinduswatchface",
-      "title": "Watch Face CUE Indus",
-      "wfId": "cueindus",
-      "authorName": "Satya",
+      "reviewId": "8490d8fe-a991-43b3-a19e-decd8406086c",
+      "packageName": "com.creationcue.crc069watchface",
+      "title": "Digital Watch Face CRC069",
+      "wfId": "crc069",
+      "authorName": "Movies and TV Series",
       "starRating": 5,
-      "reviewerLanguage": "en",
-      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
-      "topics": [
-        "Loved it"
-      ],
-      "text": "\tBig. Bold. Beautiful",
-      "lastModified": "2026-11-10T14:54:47.000Z"
-    },
-    {
-      "reviewId": "93558fdd-b2e1-4edb-be13-1976260a6d03",
-      "packageName": "com.creation.cueinduswatchface",
-      "title": "Watch Face CUE Indus",
-      "wfId": "cueindus",
-      "authorName": "SuperMan Bat",
-      "starRating": 5,
-      "reviewerLanguage": "en",
+      "reviewerLanguage": "ru",
       "deviceMetadata": "e3q (Galaxy S24 Ultra)",
       "topics": [],
-      "text": "\tcooool",
-      "lastModified": "2026-11-10T10:56:50.000Z"
-    },
-    {
-      "reviewId": "55c14386-876e-4185-936a-19a4410994e9",
-      "packageName": "com.creation.cue180watchface",
-      "title": "Digital Watch Face CUE180",
-      "wfId": "cue180",
-      "authorName": "Jos van Merode",
-      "starRating": 5,
-      "reviewerLanguage": "nl",
-      "deviceMetadata": "pa3q (Galaxy S25 Ultra)",
-      "topics": [],
-      "text": "\terg mooie heldere wijzerplaat",
-      "lastModified": "2026-11-10T08:35:57.000Z"
+      "text": "\tкласс.есть всё что нужно для часов.",
+      "lastModified": "2026-11-11T11:30:52.000Z"
     }
   ]
 }

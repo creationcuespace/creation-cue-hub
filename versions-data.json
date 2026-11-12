@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-11T03:02:06.278Z",
+  "lastUpdated": "2026-11-12T04:16:25.886Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -232,6 +232,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 30,
       "totalWeight": 3868
+    },
+    {
+      "date": "2026-11-12",
+      "timestamp": "2026-11-12T04:16:25.886Z",
+      "avgRating": 4.49,
+      "weightedAvg": 4.52,
+      "ratedCount": 30,
+      "totalWeight": 3882
     }
   ],
   "results": [
@@ -593,10 +601,10 @@
         "de-DE",
         "ko-KR"
       ],
-      "lastUpdatedDate": "Aug 4, 2026",
+      "lastUpdatedDate": "Nov 2, 2026",
       "downloads": "1K+",
       "rating": 5,
-      "ratingCount": "60",
+      "ratingCount": "61",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -950,10 +958,10 @@
       "companionStatus": "completed",
       "companionRollout": "100%",
       "companionNotes": "None",
-      "wearVersion": "Wear OS SDK 35 Update (v10000006)",
+      "wearVersion": "10000008 (1.2.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "Updated for Wear OS target SDK 35 compatibility, performance improvements, and bug fixes.",
+      "wearNotes": "Added a few more colours and slightly lengthened the minute hand for an improved look.",
       "storeLanguages": [
         "en-GB"
       ],
@@ -1769,7 +1777,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
       "rating": 4.5,
-      "ratingCount": "97",
+      "ratingCount": "98",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -2498,7 +2506,7 @@
       "lastUpdatedDate": "Aug 26, 2026",
       "downloads": "10K+",
       "rating": 4.4,
-      "ratingCount": "97",
+      "ratingCount": "98",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -3174,7 +3182,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "338",
+      "ratingCount": "349",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
