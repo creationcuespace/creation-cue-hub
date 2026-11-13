@@ -1,33 +1,21 @@
 {
-  "lastUpdated": "2026-11-12T16:15:13.738Z",
+  "lastUpdated": "2026-11-13T03:36:11.627Z",
   "reviews": [
     {
-      "reviewId": "5c7a2663-982e-4145-88c9-272a78a5e855",
-      "packageName": "com.creation.cue136watchface",
-      "title": "Analog Watch Face CUE136",
-      "wfId": "cue136",
-      "authorName": "Gabriel Moura",
-      "starRating": 5,
-      "reviewerLanguage": "pt",
-      "deviceMetadata": "dm3q (Galaxy S23 Ultra)",
-      "topics": [],
-      "text": "\tMuito bom, números grandes",
-      "lastModified": "2026-11-12T14:43:59.000Z"
-    },
-    {
-      "reviewId": "7727c321-1758-44b7-b3bb-98547ffae896",
-      "packageName": "com.creation.cue136watchface",
-      "title": "Analog Watch Face CUE136",
-      "wfId": "cue136",
-      "authorName": "Max Ponomaryov (azzimov)",
+      "reviewId": "d2cbaadc-e08a-4da8-84cc-304e47990db8",
+      "packageName": "com.creation.cue140watchface",
+      "title": "Hybrid Watch Face CUE140",
+      "wfId": "cue140",
+      "authorName": "Neal Becker",
       "starRating": 5,
       "reviewerLanguage": "en",
       "deviceMetadata": "Unknown",
       "topics": [
-        "Battery"
+        "Hardware",
+        "Loved it"
       ],
-      "text": "\tVery good, thank you for sharing. Please add an option to switch off the blinking animation of index and power icon, it can be irritating due everyday use.",
-      "lastModified": "2026-11-12T11:32:21.000Z"
+      "text": "\tThis app provides great customer service and the watch faces are PRIMO! I mistakenly thought this site was another and mentioned a promo I had responded to , they informed me it was not their promo, BUT honored it anyway! Will go back for more watch faces!! GalaxyWatch8",
+      "lastModified": "2026-11-12T16:55:13.000Z"
     }
   ]
 }
