@@ -2990,11 +2990,46 @@
       background: rgba(255, 255, 255, 0.07) !important;
     }
 
-    .filter-select {
-      background: rgba(255, 255, 255, 0.04) !important;
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    /* High-Contrast Dropdowns & Selects */
+    select, .filter-select, select.filter-select, .task-modal-select {
+      background-color: #0d1527 !important;
+      border: 1px solid rgba(255, 255, 255, 0.18) !important;
       border-radius: 8px !important;
-      color: #cbd5e1 !important;
+      color: #ffffff !important;
+      font-weight: 600 !important;
+      font-size: 13px !important;
+      padding: 8px 12px !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
+      transition: all 0.2s ease !important;
+      cursor: pointer !important;
+    }
+
+    select:hover, .filter-select:hover {
+      border-color: rgba(56, 189, 248, 0.5) !important;
+      background-color: #111c33 !important;
+    }
+
+    select:focus, .filter-select:focus {
+      border-color: #38bdf8 !important;
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35) !important;
+      background-color: #111c33 !important;
+      color: #ffffff !important;
+      outline: none !important;
+    }
+
+    /* All Dropdown Options - Pure White Text on Deep Opaque Midnight Background */
+    select option, .filter-select option, .task-modal-select option, option {
+      background-color: #0b1120 !important;
+      color: #ffffff !important;
+      font-weight: 600 !important;
+      font-size: 13px !important;
+      padding: 10px 14px !important;
+    }
+
+    select option:hover, .filter-select option:hover,
+    select option:checked, .filter-select option:checked {
+      background-color: #1d4ed8 !important;
+      color: #ffffff !important;
     }
 
     .header-btn {
@@ -3377,7 +3412,7 @@
           <span id="rating-filter-pill-text">⭐ Rating Filter</span>
           <span style="font-size: 10px; opacity: 0.8; margin-left: 2px;">✕</span>
         </div>
-        <select class="filter-select" id="sort-select" onchange="onSortDropdownChange(this.value)" style="border-color: rgba(129, 199, 132, 0.4); color: #81c784;" title="Sort Watch Faces">
+        <select class="filter-select" id="sort-select" onchange="onSortDropdownChange(this.value)" title="Sort Watch Faces">
           <option value="rating-desc">⭐ Rating (High → Low)</option>
           <option value="vitals-desc">💥 Highest Crash Rate</option>
           <option value="rating-asc">⭐ Rating (Low → High)</option>
