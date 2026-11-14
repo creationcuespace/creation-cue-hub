@@ -18,8 +18,6 @@ Disallow: /titles
 Disallow: /titles.html
 Disallow: /play-versions
 Disallow: /play-versions.html
-Disallow: /play-versions-v2
-Disallow: /play-versions-v2.html
 Disallow: /month-planner
 Disallow: /month-planner.html
 Disallow: /social-generator
