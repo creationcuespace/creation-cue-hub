@@ -14,6 +14,8 @@ Disallow: /manage-coupons
 Disallow: /manage-coupons.html
 Disallow: /play-deploy
 Disallow: /play-deploy.html
+Disallow: /titles
+Disallow: /titles.html
 Disallow: /play-versions
 Disallow: /play-versions.html
 Disallow: /month-planner
