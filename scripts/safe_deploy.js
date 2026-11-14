@@ -22,8 +22,9 @@ try {
 
   if (status) {
     console.log('\n[1/4] Uncommitted changes detected. Staging website files...');
-    // Stage modified tracked files and critical web assets
+    // Stage modified tracked files and any root HTML files
     run('git add -u');
+    run('git add *.html');
     
     console.log(`\n[2/4] Committing changes ("${commitMsg}")...`);
     try {

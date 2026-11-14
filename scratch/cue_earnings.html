@@ -1,0 +1,2634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#141414">
+  <title>CUE Earnings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Teko:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://creationcue.web.app/admin-bar.js?v=2.5" onerror="this.onerror=null;this.src='/admin-bar.js?v=2.5';" defer></script>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23141414'/><text x='16' y='23' font-family='Inter, sans-serif' font-size='20' font-weight='bold' fill='%23f5c518' text-anchor='middle'>$</text></svg>">
+  <style>
+    :root {
+      --red: #e8281e;
+      --blue: #1a3a6b;
+      --yellow: #f5c518;
+      --black: #141414;
+      --dark: #1e1e1e;
+      --mid: #2a2a2a;
+      --border: #3a3a3a;
+      --text: #f0f0f0;
+      --muted: #888;
+      --green: #4caf50;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Custom Scrollbar Styling - Premium Floating Design */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 10px;
+      border: 3px solid var(--black);
+      background-clip: content-box;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: var(--yellow);
+    }
+
+    /* Firefox Support */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 90px;
+      overflow-x: hidden;
+    }
+
+    .header {
+      width: 100%;
+      background: var(--dark);
+      border-bottom: 2px solid var(--yellow);
+      padding: 14px 20px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+    }
+
+    .logo-mark span {
+      display: block;
+      width: 7px;
+      height: 22px;
+      border-radius: 1px;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      border-radius: 50%;
+      transition: transform 0.2s ease;
+    }
+
+    .header-left:hover .brand-logo {
+      transform: scale(1.08);
+    }
+
+    .logo-mark .r {
+      background: var(--red);
+    }
+
+    .logo-mark .b {
+      background: var(--blue);
+    }
+
+    .logo-mark .y {
+      background: var(--yellow);
+    }
+
+    .header-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .header-title span {
+      color: var(--yellow);
+    }
+
+    .header-btns {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .header-btn {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Teko', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      line-height: 1;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-btn:hover {
+      background: var(--border);
+      color: var(--text);
+      border-color: var(--muted);
+      transform: translateY(-1px);
+    }
+
+    .header-btn:active {
+      transform: translateY(0);
+    }
+
+    .header-btn.analytics-btn {
+      border: 1px solid var(--yellow);
+      color: var(--yellow);
+      background: rgba(255, 184, 0, 0.04);
+    }
+
+    .header-btn.analytics-btn:hover {
+      background: var(--yellow);
+      color: var(--bg);
+      border-color: var(--yellow);
+      box-shadow: 0 0 8px rgba(255, 184, 0, 0.25);
+    }
+
+    .header-btn svg {
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .header-btn:hover svg {
+      opacity: 1;
+    }
+
+    .datebar {
+      width: 100%;
+      background: var(--mid);
+      padding: 10px 20px 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .main {
+      width: 100%;
+      max-width: 420px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .desktop-columns {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .col-left,
+    .col-right {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding-bottom: 40px;
+      }
+
+      .header {
+        padding: 14px 40px 12px;
+      }
+
+      .datebar {
+        padding: 12px 40px 10px;
+        font-size: 14px;
+      }
+
+      .main {
+        max-width: 1000px;
+        padding: 30px 40px;
+        gap: 24px;
+        margin: 0 auto;
+      }
+
+      .stats-oneline {
+        background: var(--dark);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 16px 24px;
+        justify-content: space-evenly;
+      }
+
+      .s-item {
+        gap: 8px;
+      }
+
+      .s-key {
+        font-size: 14px;
+      }
+
+      .s-val {
+        font-size: 22px;
+      }
+
+      .s-sep {
+        font-size: 24px;
+      }
+
+      .desktop-columns {
+        flex-direction: row;
+        gap: 30px;
+        align-items: flex-start;
+      }
+
+      .col-left,
+      .col-right {
+        flex: 1;
+        gap: 20px;
+      }
+
+      .col-left {
+        position: sticky;
+        top: 20px;
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding-bottom: 20px;
+      }
+
+      .col-left::-webkit-scrollbar {
+        display: none;
+      }
+
+      .card-value {
+        font-size: 56px;
+      }
+
+      .card {
+        padding-bottom: 4px;
+      }
+
+      .paste-input {
+        font-size: 18px;
+        padding: 14px 20px;
+      }
+
+      .btn {
+        padding: 16px 12px;
+        font-size: 18px;
+      }
+
+      .btn.small {
+        padding: 16px 14px;
+        font-size: 16px;
+      }
+
+      .bottom-row {
+        display: none !important;
+      }
+    }
+
+    .card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: visible;
+    }
+
+    .card-label {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 10px 16px 0;
+    }
+
+    .card-value {
+      font-family: 'Teko', sans-serif;
+      font-size: 60px;
+      padding: 2px 16px 2px;
+      color: var(--yellow);
+      letter-spacing: 0px;
+      line-height: 1;
+    }
+
+    .card-value.positive {
+      color: var(--green);
+    }
+
+    .card-value.negative {
+      color: var(--red);
+    }
+
+    .card-value.zero {
+      color: var(--muted);
+    }
+
+    .card-sub {
+      font-size: 13px;
+      color: var(--muted);
+      padding: 0 16px 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .stats-oneline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Teko', sans-serif;
+      font-size: 18px;
+      padding: 6px 4px;
+      flex-wrap: wrap;
+      row-gap: 2px;
+    }
+
+    .s-item {
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+    }
+
+    .s-key {
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    .s-val {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .s-blue {
+      color: #5b9cf6;
+    }
+
+    .s-green {
+      color: var(--green);
+    }
+
+    .s-yellow {
+      color: var(--yellow);
+    }
+
+    .s-red {
+      color: #f87171;
+    }
+
+    .s-orange {
+      color: #f5a623;
+    }
+
+    .s-sep {
+      color: var(--border);
+      font-size: 20px;
+    }
+
+    .last-amount-bar {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .last-amount-bar:hover {
+      border-color: var(--yellow);
+      background: var(--border);
+    }
+
+    .last-amount-bar:active {
+      transform: scale(0.98);
+    }
+
+    .last-amount-label {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .last-amount-value {
+      font-family: 'Teko', sans-serif;
+      font-size: 32px;
+      color: var(--text);
+      letter-spacing: 0px;
+      line-height: 1;
+    }
+
+    .paste-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .paste-label {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .paste-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .paste-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .paste-input {
+      width: 100%;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-size: 16px;
+      padding: 10px 16px;
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+
+    .paste-input:focus {
+      border-color: var(--yellow);
+    }
+
+    .paste-input::placeholder {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .btn {
+      flex: 1;
+      background: var(--red);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Teko', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 10px 8px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      white-space: nowrap;
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    .btn.blue {
+      background: var(--blue);
+    }
+
+    .btn.blue:active {
+      background: #142d55;
+    }
+
+    .btn.ghost {
+      background: var(--mid);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      font-size: 16px;
+      letter-spacing: 1px;
+    }
+
+    .btn.ghost:active {
+      background: var(--border);
+    }
+
+    .btn.console {
+      background: var(--mid);
+      color: var(--yellow);
+      border: 1px solid var(--yellow);
+      font-size: 16px;
+      letter-spacing: 1px;
+    }
+
+    .btn.console:active {
+      background: #2a2000;
+    }
+
+    .btn.orange {
+      background: #e07b00;
+      color: white;
+    }
+
+    .btn.orange:active {
+      background: #b56300;
+    }
+
+    .btn.small {
+      font-size: 16px;
+      padding: 10px 8px;
+    }
+
+    .month-panel {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-bottom: 2px solid var(--yellow);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .month-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      cursor: pointer;
+      user-select: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .month-panel-header:active {
+      background: var(--mid);
+    }
+
+    .month-panel-title {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .month-panel-body {
+      display: none;
+      padding: 12px 16px;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .month-panel-body.open {
+      display: flex;
+    }
+
+    .month-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .month-info {
+      font-size: 16px;
+      font-family: 'Teko', sans-serif;
+      color: var(--muted);
+    }
+
+    .month-guide {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .guide-item {
+      font-size: 11px;
+      line-height: 1.4;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .guide-title {
+      font-family: 'Teko', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .guide-title.orange { color: #e07b00; }
+    .guide-title.payment { color: var(--text); opacity: 0.9; }
+    .guide-title.reset { color: var(--red); }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--border);
+      animation: slideIn 0.2s ease;
+    }
+
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .history-time {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .history-amount {
+      color: var(--text);
+      font-family: 'Teko', sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .history-delta {
+      font-family: 'Teko', sans-serif;
+      font-size: 18px;
+    }
+
+    .history-delta.pos {
+      color: var(--green);
+    }
+
+    .history-delta.neg {
+      color: var(--red);
+    }
+
+    .history-delta.base {
+      color: var(--yellow);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .entry-del-btn {
+      background: none;
+      border: none;
+      color: var(--red);
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0.6;
+      padding: 0 4px;
+      transition: opacity 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 4px;
+    }
+
+    .entry-del-btn:hover {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+    .entry-del-btn:active {
+      transform: scale(0.9);
+    }
+
+    .day-block {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .day-block:last-child {
+      border-bottom: none;
+    }
+
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 11px 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .day-header:active {
+      background: var(--mid);
+    }
+
+    .day-date {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .day-earned {
+      font-family: 'Teko', sans-serif;
+      font-size: 22px;
+    }
+
+    .day-earned.pos {
+      color: var(--green);
+    }
+
+    .day-earned.neg {
+      color: var(--red);
+    }
+
+    .day-earned.zero {
+      color: var(--muted);
+    }
+
+    .day-entries {
+      display: none;
+    }
+
+    .day-entries.open {
+      display: block;
+    }
+
+    .day-entry {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 16px 8px 24px;
+      border-top: 1px solid var(--border);
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .day-entry .pos {
+      color: var(--green);
+      font-weight: 500;
+    }
+
+    .day-entry .neg {
+      color: var(--red);
+      font-weight: 500;
+    }
+
+    .day-entry .base-tag {
+      color: var(--yellow);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .bottom-row {
+      display: flex;
+      gap: 10px;
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 420px;
+      padding: 12px 16px 24px;
+      background: rgba(20, 20, 20, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 50;
+      box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.6);
+      border-radius: 12px 12px 0 0;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(40px);
+      background: var(--yellow);
+      color: #000;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border-radius: 4px;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+      z-index: 100;
+      white-space: nowrap;
+      opacity: 0;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 24px;
+      width: 90%;
+      max-width: 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .modal-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .modal-input {
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      padding: 10px 14px;
+      outline: none;
+      width: 100%;
+      -webkit-appearance: none;
+    }
+
+    .modal-input:focus {
+      border-color: var(--yellow);
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .empty-state {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      padding: 18px 16px;
+    }
+
+    /* Sticky Header */
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Admin Bar Top Offset & Layout Stability */
+    body.admin-mode {
+      padding-top: 40px !important;
+    }
+
+    body.admin-mode .sticky-header {
+      top: 40px !important;
+    }
+
+    #admin-bar {
+      display: flex;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      height: 40px !important;
+      background: rgba(26, 26, 26, 0.96) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      z-index: 99999 !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Mobile Header Adjustments */
+    @media (max-width: 600px) {
+      .header {
+        padding: 10px 12px;
+      }
+
+      .header-title {
+        font-size: 20px;
+        letter-spacing: 1px;
+      }
+
+      .header-left {
+        gap: 6px;
+      }
+
+      .logo-mark span {
+        width: 5px;
+        height: 18px;
+      }
+
+      .brand-logo {
+        width: 26px;
+        height: 26px;
+      }
+
+      .header-btns {
+        gap: 5px !important;
+      }
+
+      .header-btn {
+        padding: 4px 8px;
+        font-size: 13px;
+        line-height: 1.2;
+        text-align: center;
+      }
+
+      .hide-mobile {
+        display: none;
+      }
+    }
+
+    .show-older-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--mid);
+      border: none;
+      border-top: 1px solid var(--border);
+      color: var(--yellow);
+      font-family: 'Teko', sans-serif;
+      font-size: 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .show-older-btn:active {
+      background: var(--border);
+    }
+
+    @keyframes pulseMax {
+      0% { transform: scale(1) rotate(0deg); color: var(--blue-light); text-shadow: 0 0 0px var(--blue); }
+      15% { transform: scale(1.8) rotate(6deg); color: #00ff66; text-shadow: 0 0 25px #00ff66, 0 0 45px #00cc44; }
+      30% { transform: scale(1.3) rotate(-6deg); color: #ccff00; text-shadow: 0 0 20px #ccff00, 0 0 35px #aacc00; }
+      45% { transform: scale(1.8) rotate(6deg); color: #00ff66; text-shadow: 0 0 25px #00ff66, 0 0 45px #00cc44; }
+      60% { transform: scale(1.3) rotate(-6deg); color: #ccff00; text-shadow: 0 0 20px #ccff00, 0 0 35px #aacc00; }
+      75% { transform: scale(1.8) rotate(6deg); color: #00ff66; text-shadow: 0 0 25px #00ff66, 0 0 45px #00cc44; }
+      100% { transform: scale(1) rotate(0deg); color: var(--blue-light); text-shadow: 0 0 0px var(--blue); }
+    }
+    .pulse-max {
+      animation: pulseMax 2.2s cubic-bezier(0.25, 1, 0.5, 1);
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body class="admin-mode">
+  <div id="admin-bar"></div>
+  <div class="sticky-header">
+    <div class="header">
+      <a href="https://creationcue.web.app/" target="_blank" class="header-left" style="text-decoration:none; color:inherit;">
+        <img src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" class="brand-logo" alt="CreationCue Logo">
+        <div class="header-title">CUE <span>Earnings</span></div>
+      </a>
+      <div class="header-btns">
+        <button class="header-btn hide-mobile" id="btn-undo-header" title="Undo last entry">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;">
+            <path d="M3 10h10a8 8 0 0 1 8 8v2"></path>
+            <polyline points="8 5 3 10 8 15"></polyline>
+          </svg>UNDO
+        </button>
+        <button class="header-btn hide-mobile" id="btn-export-header" title="Export data as TXT">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>EXPORT
+        </button>
+        <button class="header-btn"
+          onclick="window.open('https://play.google.com/store/apps/category/WATCH_FACE?hl=en', '_blank')"
+          title="Play Store Category">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>STORE
+        </button>
+      </div>
+    </div>
+    <div class="datebar" id="datebar">-- <span
+        style="float:right; opacity:1; color:var(--red); font-family:'Teko', sans-serif; font-size:14px; letter-spacing:1px; font-weight:bold;">v1.6.3</span>
+    </div>
+  </div>
+  <div class="main">
+    <div class="stats-oneline">
+      <span class="s-item"><span class="s-key">/hr td </span><span class="s-val s-blue" id="stat-perhour">--</span><span id="stat-perhour-trend" style="margin-left: 4px; font-size: 0.75em; font-weight: 500; display: none; opacity: 0.9;"></span></span>
+      <span class="s-sep">·</span>
+      <span class="s-item"><span class="s-key">max /hr </span><span class="s-val s-blue" id="stat-maxperhour" style="opacity:0.85;">--</span></span>
+      <span class="s-sep">·</span>
+      <span class="s-item"><span class="s-key">d frcst </span><span class="s-val s-green"
+          id="stat-dayforecast">--</span></span>
+      <span class="s-sep">·</span>
+      <span class="s-item"><span class="s-key">mo td </span><span class="s-val s-orange"
+          id="stat-monthsofar">--</span></span>
+      <span class="s-sep">·</span>
+      <span class="s-item"><span class="s-key">mo fcst </span><span class="s-val s-yellow"
+          id="stat-monthforecast">--</span></span>
+    </div>
+    <div class="desktop-columns">
+      <div class="col-left">
+        <div class="card">
+          <div class="card-label">Today's Earnings</div>
+          <div class="card-value zero" id="today-display">--</div>
+          <div class="card-sub" id="today-sub" style="padding-bottom: 4px;">no baseline set</div>
+
+          <div id="today-progress-container" style="display:none; padding: 0 16px 12px;">
+            <div
+              style="position:relative; height:14px; font-size:11px; color:var(--muted); font-family:sans-serif; margin-bottom:8px; width:100%;">
+              <span id="prog-min" style="position:absolute; left:0;">&euro;0</span>
+              <span id="prog-target-label" style="position:absolute; transform:translateX(-50%); display:none; color:#00d2ff; text-shadow:0 0 6px rgba(0,210,255,0.6); font-weight:600; font-size:10px; letter-spacing:0.5px; white-space:nowrap; transition:left 0.4s ease;">7d avg: &euro;0.00</span>
+              <span id="prog-max" style="position:absolute; right:0;">&euro;80</span>
+            </div>
+            <div style="width:100%; height:4px; background:var(--border); border-radius:2px; position:relative;">
+              <!-- Subtle gradient track -->
+              <div
+                style="position:absolute; inset:0; border-radius:2px; background: linear-gradient(90deg, var(--red) 0%, var(--yellow) 50%, var(--green) 100%); opacity: 0.25;">
+              </div>
+              <!-- Target daily goal marker (7d average) -->
+              <div id="today-progress-target"
+                style="position:absolute; left:0%; top:-7px; width:2px; height:18px; background:#00d2ff; box-shadow:0 0 6px #00d2ff; border-radius:1px; transition:left 0.4s ease; z-index:1; display:none;"
+                title="7-Day Average Target">
+              </div>
+              <!-- The pointer dot -->
+              <div id="today-progress-pointer"
+                style="position:absolute; left:0%; top:-4px; width:12px; height:12px; margin-left:-6px; border-radius:50%; background:var(--yellow); box-shadow:0 0 6px rgba(0,0,0,0.8); transition:left 0.4s ease, background 0.4s ease; z-index:2; border: 2px solid var(--dark);">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="last-amount-bar" id="last-amount-bar" style="display:none"
+          onclick="window.open('https://play.google.com/console/u/0/developers/7609098870161748513/paymentssettings', '_blank')"
+          title="Open Play Console">
+          <div class="last-amount-label">Last Pasted <span style="font-size:10px; opacity:0.6; margin-left:4px;">(OPEN
+              CONSOLE)</span></div>
+          <div class="last-amount-value" id="last-amount-value">--</div>
+        </div>
+        <div class="paste-section">
+          <div class="paste-label">Paste Current Amount</div>
+          <div class="paste-row">
+            <input class="paste-input" id="paste-input" type="text" inputmode="decimal" placeholder="e.g. EUR 1,413.70">
+            <div class="paste-buttons">
+              <button class="btn blue" id="btn-update">UPDATE</button>
+              <button class="btn console" id="btn-console">PLAY CONSOLE</button>
+            </div>
+          </div>
+        </div>
+        <div class="divider">today's log</div>
+        <div class="card log-card">
+          <div class="history-list" id="history-list">
+            <div class="empty-state">no entries yet</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-right">
+        <div class="divider" style="margin-top: 0;">past days</div>
+        <div class="card past-card">
+          <div class="empty-state" id="past-empty">no past days yet</div>
+          <div id="past-list"></div>
+        </div>
+
+        <div class="month-panel">
+          <div class="month-panel-header" onclick="toggleMonthPanel()">
+            <span class="month-panel-title">Month Management</span>
+            <span id="month-panel-arrow" style="color:var(--muted); font-size:12px;">+ expand</span>
+          </div>
+          <div class="month-panel-body" id="month-panel-body">
+            <div class="month-info" id="month-carryover-info">Carry-over: not set</div>
+            <div class="month-row">
+              <button class="btn orange" id="btn-new-month">NEW MONTH</button>
+              <button class="btn ghost" id="btn-payment">PAYMENT RECV'D</button>
+            </div>
+            <div class="month-row">
+              <button class="btn ghost" id="btn-baseline" style="border-color:var(--yellow); color:var(--yellow);">SET BASE</button>
+              <button class="btn ghost" id="btn-reset" style="border-color:var(--red); color:var(--red);">RESET TODAY</button>
+            </div>
+            <div class="month-info" id="month-payment-info">Last payment: not recorded</div>
+            <div class="month-guide">
+              <div class="guide-item">
+                <span class="guide-title orange">NEW MONTH</span>
+                <span>At the end of the month, enter the carry-over amount (unpaid earnings) from your Play Console. Enter current unpaid estimated balance in Play Console to initialize carry-over. Keeps Month-To-Date (MTD) tracking accurate.</span>
+              </div>
+              <div class="guide-item">
+                <span class="guide-title payment">PAYMENT RECV'D</span>
+                <span>Record the payout amount received from Google and the remaining balance. Clears carry-over and resets month baseline.</span>
+              </div>
+              <div class="guide-item">
+                <span class="guide-title reset">RESET TODAY</span>
+                <span>Clears all logs and baseline for today. Use this to restart today's estimations from scratch.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Time Machine & Local Backups Section -->
+        <div class="month-panel" style="border-bottom: 2px solid var(--yellow);">
+          <div class="month-panel-header" onclick="toggleTimeMachine()">
+            <span class="month-panel-title">Backups & Recovery</span>
+            <span id="tm-panel-arrow" style="color:var(--muted); font-size:12px;">+ expand</span>
+          </div>
+          <div class="month-panel-body" id="tm-panel-body">
+            <!-- Cloud Time Machine -->
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <div
+                style="font-size:10px; font-weight:bold; color:var(--muted); text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid #222; padding-bottom:4px;">
+                Cloud Snapshots
+              </div>
+              <div id="tm-snapshot-list" style="display:flex; flex-direction:column; gap:8px; margin-top:4px;">
+                <div class="empty-state">Loading backups...</div>
+              </div>
+              <div style="font-size:9px; color:var(--muted); line-height:1.2; opacity:0.8; margin-top:2px;">
+                Automatically records your daily states (max 10 snapshots).
+              </div>
+            </div>
+
+            <!-- Local JSON Backups -->
+            <div
+              style="margin-top:16px; display:flex; flex-direction:column; gap:8px; border-top:1px solid #222; padding-top:12px;">
+              <div
+                style="font-size:10px; font-weight:bold; color:var(--muted); text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid #222; padding-bottom:4px;">
+                Local Backup Files
+              </div>
+              <div style="display:flex; gap:8px; margin-top:4px;">
+                <button onclick="downloadJSONBackup()" class="btn ghost"
+                  style="flex:1; font-size:11px; padding:6px 8px; border-color:var(--border); color:var(--text); letter-spacing:0.5px; line-height:1.2; height:auto; text-transform:uppercase;">Export
+                  JSON</button>
+                <button onclick="document.getElementById('emergency-import').click()" class="btn ghost"
+                  style="flex:1; font-size:11px; padding:6px 8px; border-color:var(--red); color:var(--red); background:rgba(235, 87, 87, 0.03); letter-spacing:0.5px; line-height:1.2; height:auto; text-transform:uppercase;">Restore
+                  JSON</button>
+              </div>
+              <div style="font-size:9px; color:var(--muted); line-height:1.2; opacity:0.8; margin-top:2px;">Use manual
+                JSON files to save hard copies or recover history.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-row">
+    <button class="btn ghost" id="btn-undo">UNDO</button>
+    <button class="btn ghost" id="btn-export">EXPORT</button>
+  </div>
+  <div class="modal-overlay" id="modal-newmonth">
+    <div class="modal">
+      <div class="modal-title">New Month</div>
+      <div class="modal-desc">Enter the carry-over amount (the total showing in Play Console right now, which is last
+        month's earnings not yet paid).</div>
+      <input class="modal-input" id="modal-newmonth-input" type="text" inputmode="decimal" placeholder="e.g. 1250.00">
+      <div class="modal-buttons">
+        <button class="btn orange" id="modal-newmonth-ok">CONFIRM</button>
+        <button class="btn ghost" id="modal-newmonth-cancel">CANCEL</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay" id="modal-payment">
+    <div class="modal">
+      <div class="modal-title">Payment Received</div>
+      <div class="modal-desc">Enter the amount paid out by Google, today's earnings before payment, and the current Play Console balance after payment.
+      </div>
+      <div
+        style="font-size:13px; color:var(--muted); font-family:'Teko',sans-serif; letter-spacing:1px; margin-top:-6px;">
+        AMOUNT PAID OUT</div>
+      <input class="modal-input" id="modal-payment-input" type="text" inputmode="decimal" placeholder="e.g. 1513.76">
+      <div
+        style="font-size:13px; color:var(--muted); font-family:'Teko',sans-serif; letter-spacing:1px; margin-top:2px;">
+        TODAY'S EARNINGS BEFORE PAYMENT</div>
+      <input class="modal-input" id="modal-payment-preearned" type="text" inputmode="decimal" placeholder="e.g. 15.50">
+      <div
+        style="font-size:13px; color:var(--muted); font-family:'Teko',sans-serif; letter-spacing:1px; margin-top:2px;">
+        CONSOLE BALANCE NOW (after payment)</div>
+      <input class="modal-input" id="modal-payment-postamt" type="text" inputmode="decimal" placeholder="e.g. 632.69">
+      <div class="modal-buttons">
+        <button class="btn orange" id="modal-payment-ok">CONFIRM</button>
+        <button class="btn ghost" id="modal-payment-cancel">CANCEL</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay" id="modal-catchup">
+    <div class="modal" style="max-width: 360px; width: 92%; max-height: 85vh; display: flex; flex-direction: column;">
+      <div class="modal-title"
+        style="color: var(--yellow); display: flex; align-items: center; gap: 8px; font-size: 22px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          style="color: var(--yellow);">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        MISSING DAYS DETECTED
+      </div>
+      <div class="modal-desc" style="font-size: 14px; margin-bottom: 6px;">
+        You have missing days since your last login. Please enter earnings for each day:
+      </div>
+      <div id="catchup-inputs-container"
+        style="display: flex; flex-direction: column; gap: 10px; margin: 4px 0; overflow-y: auto; padding-right: 4px; max-height: 45vh;">
+        <!-- Filled dynamically -->
+      </div>
+      <div class="modal-buttons" style="margin-top: 10px;">
+        <button class="btn orange" id="modal-catchup-confirm" style="width: 100%;">CONFIRM & CATCH UP</button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <div id="login-overlay"
+    style="display:none; position:fixed; inset:0; background:var(--black); z-index:100000; flex-direction:column; align-items:center; justify-content:center; gap:24px;">
+    <div class="logo-mark" style="transform:scale(2); margin-bottom:20px;"><span class="r"></span><span
+        class="b"></span><span class="y"></span></div>
+    <div style="font-size:32px; font-weight:600; letter-spacing:4px; text-transform:uppercase;">CUE <span
+        style="color:var(--yellow)">Earnings</span></div>
+    <div style="font-size:16px; color:var(--muted); font-family:'Inter', sans-serif; letter-spacing:0.5px;">sign in to
+      access your data</div>
+    <button id="btn-google-login"
+      style="display:flex; align-items:center; gap:12px; background:white; color:#333; border:none; border-radius:4px; padding:10px 24px; font-family:'Teko', sans-serif; font-size:20px; font-weight:500; letter-spacing:1px; cursor:pointer; margin-top:10px;">
+      <svg width="20" height="20" viewBox="0 0 48 48">
+        <path fill="#EA4335"
+          d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+        <path fill="#4285F4"
+          d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+        <path fill="#FBBC05"
+          d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+        <path fill="#34A853"
+          d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+      </svg>
+      SIGN IN WITH GOOGLE
+    </button>
+  </div>
+
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyChVB2KnOSbOjC4DbFT9427n6F5CQIbY1A",
+      authDomain: "creation-cue-manage.firebaseapp.com",
+      databaseURL: "https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "creation-cue-manage",
+      storageBucket: "creation-cue-manage.firebasestorage.app",
+      messagingSenderId: "186324516022",
+      appId: "1:186324516022:web:ac18f988659a18e5ad3a17"
+    };
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.database();
+    var auth = firebase.auth();
+    var currentUser = null;
+
+    var KEY_TODAY = 'cue_today';
+    var KEY_DAYS = 'cue_days';
+    var KEY_MONTH = 'cue_month';
+
+    var todayData = null;
+    var days = [];
+    var monthData = null;
+    var finalizedMonths = {};
+    var showAllPastDays = false;
+
+    var isCatchingUp = false;
+    var fbLoadedDays = false;
+    var fbLoadedToday = false;
+    var checkedCatchUpThisSession = false;
+
+    var fbLoadedPaths = {
+      days: false,
+      today: false,
+      month: false,
+      finalizedMonths: false,
+      lastRestoreAt: false
+    };
+
+    function isFirebaseLoaded() {
+      return fbLoadedPaths.days && fbLoadedPaths.today && fbLoadedPaths.month && fbLoadedPaths.finalizedMonths && fbLoadedPaths.lastRestoreAt;
+    }
+
+    function todayKey() { return new Date().toDateString(); }
+
+    function parseAmount(str) {
+      if (!str) return null;
+      var s = '';
+      for (var i = 0; i < str.length; i++) {
+        var c = str.charCodeAt(i);
+        if (c >= 48 && c <= 57) s += str[i];
+        else if (c === 46) s += '.';
+        else if (c === 44) s += ',';
+      }
+      s = s.trim();
+      if (!s) return null;
+      var hasDot = s.indexOf('.') >= 0;
+      var hasComma = s.indexOf(',') >= 0;
+      if (hasDot && hasComma) {
+        if (s.lastIndexOf('.') > s.lastIndexOf(',')) { s = s.split(',').join(''); }
+        else { s = s.split('.').join('').replace(',', '.'); }
+      } else if (hasComma) {
+        var parts = s.split(',');
+        s = (parts.length === 2 && parts[1].length <= 2) ? s.replace(',', '.') : s.split(',').join('');
+      }
+      var val = parseFloat(s);
+      return isNaN(val) ? null : val;
+    }
+
+    function getEntryTimestamp(e, dateStr) {
+      if (e.timestamp) return e.timestamp;
+      var d = new Date(dateStr);
+      var parts = e.time.split(':');
+      if (parts.length >= 3) {
+        d.setHours(parseInt(parts[0], 10), parseInt(parts[1], 10), parseInt(parts[2], 10), 0);
+        return d.getTime();
+      }
+      return 0;
+    }
+
+    function fmt(val) { return val != null ? val.toFixed(2) : '--'; }
+    function fmtDelta(val) { if (val == null) return ''; return (val >= 0 ? '+' : '') + val.toFixed(2); }
+    function fmtDeltaEuro(val) { if (val == null) return ''; return (val >= 0 ? '+' : '-') + '€' + Math.abs(val).toFixed(2); }
+    function nowStr() { return new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }); }
+
+    function animateValue(obj, start, end, duration) {
+      if (obj.animId) cancelAnimationFrame(obj.animId);
+      var startTimestamp = null;
+      var step = function (timestamp) {
+        if (!startTimestamp) startTimestamp = timestamp;
+        var progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        var easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+        var current = start + (end - start) * easeOut;
+        obj.textContent = fmtDelta(current);
+        if (progress < 1) obj.animId = window.requestAnimationFrame(step);
+        else obj.textContent = fmtDelta(end);
+      };
+      obj.animId = window.requestAnimationFrame(step);
+    }
+    function dateLabel(ds) { return new Date(ds).toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' }); }
+
+    function netAmount(raw) {
+      if (!monthData || raw == null) return raw;
+      if (monthData.paymentReceived != null) return raw - monthData.paymentReceived;
+      
+      // Auto-detect if payment occurred to avoid hysteresis bug when balance grows back
+      var paymentDetected = false;
+      if (monthData.carryOver != null && raw > 0) {
+        var carryOver = monthData.carryOver;
+        var setTime = monthData.carryOverSetDate || 0;
+        if (raw < carryOver) {
+          paymentDetected = true;
+        }
+        if (!paymentDetected && days) {
+          for (var i = 0; i < days.length; i++) {
+            var d = days[i];
+            var dTimeStart = new Date(d.date).getTime();
+            if (dTimeStart + 86400000 < setTime) continue;
+            if (d.entries && d.entries.some(e => getEntryTimestamp(e, d.date) >= setTime && e.amount < carryOver)) {
+              paymentDetected = true;
+              break;
+            }
+          }
+        }
+        if (!paymentDetected && todayData && todayData.entries) {
+          if (todayData.entries.some(e => getEntryTimestamp(e, todayData.date) >= setTime && e.amount < carryOver)) {
+            paymentDetected = true;
+          }
+        }
+      }
+      
+      if (monthData.carryOver != null && !paymentDetected) return raw - monthData.carryOver;
+      return raw;
+    }
+
+    function rawDiff(rawLast, rawBaseline) {
+      if (rawLast == null || rawBaseline == null) return null;
+      return rawLast - rawBaseline;
+    }
+
+    function mergeDays(listA, listB) {
+      var a = Array.isArray(listA) ? listA : (listA ? Object.values(listA) : []);
+      var b = Array.isArray(listB) ? listB : (listB ? Object.values(listB) : []);
+
+      var map = {};
+      var nowLimit = new Date();
+      nowLimit.setHours(23, 59, 59, 999);
+
+      [].concat(a, b).forEach(function (d) {
+        if (!d || !d.date || d.date === "Invalid Date") return;
+        var dDate = new Date(d.date);
+        if (dDate.getTime() > nowLimit.getTime()) return;
+
+        var key = dDate.toDateString();
+        if (!map[key]) {
+          d.date = key;
+          map[key] = d;
+        } else {
+          var currentEarned = map[key].earned || 0;
+          var newEarned = d.earned || 0;
+          if (newEarned > currentEarned) {
+            d.date = key;
+            map[key] = d;
+          }
+          else if (newEarned === currentEarned && d.entries && d.entries.length > (map[key].entries || []).length) {
+            d.date = key;
+            map[key] = d;
+          }
+        }
+      });
+
+      var result = Object.values(map).sort(function (a, b) {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      });
+
+      return result;
+    }
+
+
+    function defaultMonth() {
+      return { carryOver: null, carryOverSetDate: null, paymentReceived: null, paymentDate: null, prevMonthEarned: null, monthKey: null, todayEarnedBeforePayment: null, paymentResetDate: null };
+    }
+
+    function loadFromLocal() {
+      var ds = localStorage.getItem(KEY_DAYS);
+      days = ds ? JSON.parse(ds) : [];
+      var md = localStorage.getItem(KEY_MONTH);
+      monthData = md ? JSON.parse(md) : defaultMonth();
+      var fm = localStorage.getItem('cue_finalized_months');
+      finalizedMonths = fm ? JSON.parse(fm) : {};
+      if (monthData.carryOverSetDate === undefined) monthData.carryOverSetDate = null;
+      var td = localStorage.getItem(KEY_TODAY);
+      if (td) {
+        todayData = JSON.parse(td);
+        if (todayData.date !== todayKey()) {
+          var lastDate = new Date(todayData.date);
+          var today = new Date(todayKey());
+          lastDate.setHours(0, 0, 0, 0);
+          today.setHours(0, 0, 0, 0);
+          var diffDays = Math.round((today - lastDate) / 86400000);
+          if (diffDays === 1) {
+            archiveToday(true);
+          } else if (diffDays > 1) {
+            isCatchingUp = true;
+          }
+        }
+      } else {
+        todayData = { date: todayKey(), baseline: null, entries: [], baselineTime: null };
+      }
+
+      // May 15th migration script safely removed to prevent offline save loops
+    }
+
+    function syncWithData(data) {
+      if (!data) return;
+      var localDaysStr = localStorage.getItem(KEY_DAYS);
+      var localDays = localDaysStr ? JSON.parse(localDaysStr) : [];
+      var fbDays = data.days || [];
+      days = mergeDays(localDays, fbDays);
+      var localTodayStr = localStorage.getItem(KEY_TODAY);
+      var localToday = localTodayStr ? JSON.parse(localTodayStr) : null;
+      var fbToday = data.today || { date: todayKey(), baseline: null, entries: [], baselineTime: null };
+      if (localToday) {
+        var ltMs = new Date(localToday.date).getTime();
+        var fbMs = new Date(fbToday.date).getTime();
+        if (ltMs > fbMs) todayData = localToday;
+        else if (ltMs === fbMs && (localToday.entries || []).length >= (fbToday.entries || []).length) {
+          todayData = localToday;
+        } else {
+          todayData = fbToday;
+        }
+      } else {
+        todayData = fbToday;
+      }
+      monthData = data.month || (localStorage.getItem(KEY_MONTH) ? JSON.parse(localStorage.getItem(KEY_MONTH)) : defaultMonth());
+      if (monthData.carryOverSetDate === undefined) monthData.carryOverSetDate = null;
+      finalizedMonths = data.finalizedMonths || {};
+      if (todayData.date !== todayKey()) {
+        var lastDate = new Date(todayData.date);
+        var today = new Date(todayKey());
+        lastDate.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+        var diffDays = Math.round((today - lastDate) / 86400000);
+        if (diffDays === 1) {
+          archiveToday();
+        } else if (diffDays > 1) {
+          isCatchingUp = true;
+        }
+      }
+      localStorage.setItem(KEY_TODAY, JSON.stringify(todayData));
+      localStorage.setItem(KEY_DAYS, JSON.stringify(days));
+      localStorage.setItem(KEY_MONTH, JSON.stringify(monthData));
+      localStorage.setItem('cue_finalized_months', JSON.stringify(finalizedMonths));
+      checkMonthTransitions();
+    }
+
+    function load() {
+      if (!todayData || todayData.baseline === null) {
+        document.getElementById('today-display').textContent = '--';
+      }
+      loadFromLocal();
+      render();
+
+      // Offline fallback: if Firebase doesn't load within 2.5 seconds, treat local as loaded
+      setTimeout(function () {
+        if (!isFirebaseLoaded()) {
+          console.log("Firebase load timed out or user offline. Falling back to local storage.");
+          checkMonthTransitions();
+          if (!checkedCatchUpThisSession) {
+            checkedCatchUpThisSession = true;
+            checkMissingDays();
+          }
+          render();
+        }
+      }, 2500);
+
+      var baseRef = db.ref('cue-earnings/' + currentUser.uid);
+
+      var paths = ['days', 'today', 'month', 'finalizedMonths', 'lastRestoreAt'];
+      paths.forEach(function (path) {
+        baseRef.child(path).on('value', function (snapshot) {
+          var val = snapshot.val();
+          var killswitch = localStorage.getItem('cue_sync_kill');
+          if (killswitch && Date.now() < parseInt(killswitch)) return;
+
+          var allLoadedBefore = isFirebaseLoaded();
+          if (fbLoadedPaths.hasOwnProperty(path)) {
+            fbLoadedPaths[path] = true;
+          }
+          var allLoadedAfter = isFirebaseLoaded();
+
+          if (path === 'days') {
+            if (val) {
+              days = mergeDays(days, val);
+              localStorage.setItem(KEY_DAYS, JSON.stringify(days));
+            }
+            fbLoadedDays = true;
+            checkMissingDaysTrigger();
+          } else if (path === 'today') {
+            if (val) {
+              var incMs = val.updatedAt || 0;
+              var locMs = todayData ? (todayData.updatedAt || 0) : 0;
+
+              var incDateMs = new Date(val.date || "").getTime();
+              var locDateMs = todayData ? new Date(todayData.date || "").getTime() : 0;
+              if (isNaN(incDateMs)) incDateMs = 0;
+              if (isNaN(locDateMs)) locDateMs = 0;
+
+              var accept = false;
+              if (todayData.baseline === null && (todayData.entries || []).length === 0) {
+                accept = true;
+              } else if (incDateMs > locDateMs) {
+                accept = true;
+              } else if (incDateMs === locDateMs && incMs >= locMs) {
+                accept = true;
+              }
+
+              if (accept) {
+                todayData = val;
+                localStorage.setItem(KEY_TODAY, JSON.stringify(todayData));
+              } else {
+                setTimeout(save, 1000); // push local better data to cloud
+              }
+            }
+            fbLoadedToday = true;
+            checkMissingDaysTrigger();
+          } else if (path === 'month') {
+            if (val) {
+              var incMs = val.updatedAt || 0;
+              var locMs = monthData ? (monthData.updatedAt || 0) : 0;
+              if (incMs >= locMs) {
+                monthData = val;
+                localStorage.setItem(KEY_MONTH, JSON.stringify(monthData));
+              } else {
+                setTimeout(save, 1000);
+              }
+            }
+          } else if (path === 'finalizedMonths' && val) {
+            finalizedMonths = val;
+            localStorage.setItem('cue_finalized_months', JSON.stringify(finalizedMonths));
+          } else if (path === 'lastRestoreAt' && val) {
+            var localLastRestore = parseInt(localStorage.getItem('cue_last_restore') || '0');
+            if (val > localLastRestore) {
+              localStorage.setItem('cue_last_restore', val.toString());
+              localStorage.removeItem(KEY_DAYS);
+              localStorage.removeItem(KEY_TODAY);
+              localStorage.removeItem(KEY_MONTH);
+              localStorage.removeItem('cue_finalized_months');
+              location.reload();
+              return;
+            }
+          }
+
+          if (!allLoadedBefore && allLoadedAfter) {
+            // First time everything finished loading from Firebase
+            if (todayData && todayData.date !== todayKey()) {
+              var lastDate = new Date(todayData.date);
+              var today = new Date(todayKey());
+              lastDate.setHours(0, 0, 0, 0);
+              today.setHours(0, 0, 0, 0);
+              var diffDays = Math.round((today - lastDate) / 86400000);
+              if (diffDays === 1) {
+                archiveToday();
+              } else if (diffDays > 1) {
+                isCatchingUp = true;
+              }
+            }
+            checkMonthTransitions();
+            render();
+          } else if (allLoadedBefore) {
+            // Real-time update to an already-loaded dataset
+            if (path === 'today' && todayData && todayData.date !== todayKey()) {
+              var lastDate = new Date(todayData.date);
+              var today = new Date(todayKey());
+              lastDate.setHours(0, 0, 0, 0);
+              today.setHours(0, 0, 0, 0);
+              var diffDays = Math.round((today - lastDate) / 86400000);
+              if (diffDays === 1) {
+                archiveToday();
+              } else if (diffDays > 1) {
+                isCatchingUp = true;
+              }
+            }
+            render();
+          }
+
+          checkMonthPrompts();
+          if (path === 'days' && val && val.length > 500) {
+            setTimeout(checkAndCreateSnapshot, 5000);
+          }
+        }, function(err) {
+          console.warn("Error loading path " + path + ":", err);
+        });
+      });
+    }
+
+    function archiveToday(doNotSave, force) {
+      if (isCatchingUp && !force) return;
+      if (!todayData || todayData.date === todayKey()) return;
+
+      var dObj = new Date(todayData.date);
+      var dStr = dObj.toDateString();
+
+      var baseline = todayData.baseline;
+      var entries = todayData.entries || [];
+      var last = entries.length > 0 ? entries[entries.length - 1].amount : null;
+
+      if (baseline !== null && baseline !== undefined && last !== null && dStr !== "Invalid Date") {
+        var postPaymentDelta = last - baseline;
+        var prePayment = (monthData && monthData.paymentResetDate === todayData.date && monthData.todayEarnedBeforePayment != null)
+          ? monthData.todayEarnedBeforePayment : 0;
+        var earned = prePayment + postPaymentDelta;
+
+        var nowLimit = new Date();
+        nowLimit.setHours(23, 59, 59, 999);
+        if (dObj.getTime() <= nowLimit.getTime() && !days.some(d => d.date === dStr)) {
+          days.push({ date: dStr, earned: earned, entries: entries });
+        }
+      }
+
+      checkMonthTransitions(true);
+
+      todayData = {
+        date: todayKey(),
+        baseline: last !== null ? last : baseline,
+        entries: last !== null ? [{ time: nowStr(), amount: last, delta: 0, isBaseline: true, isAutoBaseline: true, timestamp: Date.now() }] : [],
+        baselineTime: Date.now()
+      };
+
+      localStorage.setItem(KEY_DAYS, JSON.stringify(days));
+      localStorage.setItem(KEY_TODAY, JSON.stringify(todayData));
+      if (!doNotSave) save();
+    }
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === 'visible' && window.currentUser) {
+        loadFromLocal();
+        render();
+      }
+    });
+
+    function save() {
+      var ts = Date.now();
+      if (!todayData.updatedAt) todayData.updatedAt = ts;
+      else todayData.updatedAt = Math.max(ts, todayData.updatedAt + 1);
+
+      if (!monthData) monthData = {};
+      if (!monthData.updatedAt) monthData.updatedAt = ts;
+      else monthData.updatedAt = Math.max(ts, monthData.updatedAt + 1);
+
+      localStorage.setItem(KEY_TODAY, JSON.stringify(todayData));
+      localStorage.setItem(KEY_DAYS, JSON.stringify(days));
+      localStorage.setItem(KEY_MONTH, JSON.stringify(monthData));
+      localStorage.setItem('cue_finalized_months', JSON.stringify(finalizedMonths));
+
+      var isLocalEmpty = (!days || days.length === 0) && (!todayData || todayData.baseline === null);
+      var shouldWriteToFirebase = currentUser && (!isLocalEmpty || isFirebaseLoaded());
+
+      if (shouldWriteToFirebase) {
+        var updates = { today: todayData, days: days, month: monthData, finalizedMonths: finalizedMonths };
+        return db.ref('cue-earnings/' + currentUser.uid + '/').update(updates);
+      }
+      return Promise.resolve();
+    }
+
+    window.performRestore = function (importedData, isWipe) {
+      var restoreTime = Date.now();
+      localStorage.setItem('cue_last_restore', restoreTime.toString());
+      localStorage.setItem('cue_sync_kill', Date.now() + 10000);
+
+      if (isWipe) {
+        days = importedData.days || [];
+      } else {
+        days = mergeDays(days || [], importedData.days || []);
+      }
+      if (importedData.month) monthData = importedData.month;
+      if (importedData.today) todayData = importedData.today;
+      if (importedData.finalizedMonths) finalizedMonths = importedData.finalizedMonths;
+
+      if (todayData && todayData.date !== todayKey()) {
+        var lastDate = new Date(todayData.date);
+        var today = new Date(todayKey());
+        lastDate.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+        var diffDays = Math.round((today - lastDate) / 86400000);
+        if (diffDays === 1) {
+          archiveToday(true, true);
+        } else if (diffDays > 1) {
+          isCatchingUp = true;
+        }
+      }
+
+      localStorage.setItem(KEY_TODAY, JSON.stringify(todayData));
+      localStorage.setItem(KEY_DAYS, JSON.stringify(days));
+      localStorage.setItem(KEY_MONTH, JSON.stringify(monthData));
+      localStorage.setItem('cue_finalized_months', JSON.stringify(finalizedMonths));
+
+      if (currentUser) {
+        var updates = {
+          today: todayData,
+          days: days,
+          month: monthData,
+          finalizedMonths: finalizedMonths,
+          lastRestoreAt: restoreTime
+        };
+        db.ref('cue-earnings/' + currentUser.uid + '/').update(updates).then(function () {
+          alert("Restored!");
+          render();
+        });
+      } else {
+        alert("Restored locally. Log in to sync.");
+        render();
+      }
+    };
+
+    function getDayEarningsAvg() {
+      var now = new Date();
+      var total = 0; var count = 0;
+      var co = monthData ? monthData.carryOver : null;
+      var paid = monthData ? monthData.paymentReceived : null;
+      var coSetDate = monthData ? monthData.carryOverSetDate : null;
+
+      for (var i = 0; i < days.length; i++) {
+        if (days[i].isToday) continue;
+        var d = new Date(days[i].date);
+        if (d.getMonth() !== now.getMonth() || d.getFullYear() !== now.getFullYear()) continue;
+        if (days[i].earned == null) continue;
+
+        if (paid == null && co != null) {
+          if (!coSetDate) continue;
+          var dayStart = new Date(days[i].date); dayStart.setHours(0, 0, 0, 0);
+          if (dayStart.getTime() < coSetDate) continue;
+        }
+        total += (days[i].earned || 0); count++;
+      }
+      return count > 0 ? total / count : null;
+    }
+
+    function get30DayEarningsAvg() {
+      var total = 0; var count = 0;
+      for (var i = 0; i < days.length; i++) {
+        if (days[i].isToday) continue;
+        if (days[i].earned == null) continue;
+        total += (days[i].earned || 0);
+        count++;
+        if (count === 30) break;
+      }
+      return count > 0 ? total / count : null;
+    }
+
+    function render() {
+      try {
+        days = window.days || days || [];
+        document.getElementById('datebar').innerHTML = new Date().toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) +
+          ' <span style="float:right; opacity:1; color:var(--red); font-family:\'Teko\', sans-serif; font-size:14px; letter-spacing:1px; font-weight:bold;">v1.6.3</span>';
+
+        var dbg = document.getElementById('debug-log');
+        if (dbg) dbg.innerHTML = "System Status: v1.6.3 | Memory: " + (days ? days.length : 0) + " days | " + (window.currentUser ? "Logged In" : "OFFLINE");
+
+        if (!todayData) todayData = { date: todayKey(), baseline: null, entries: [], earned: 0, baselineTime: null };
+        var entries = todayData.entries || [];
+        var baseline = todayData.baseline;
+        var last = entries.length > 0 ? entries[entries.length - 1].amount : null;
+        var display = document.getElementById('today-display');
+        var sub = document.getElementById('today-sub');
+        var lastBar = document.getElementById('last-amount-bar');
+        if (last !== null && entries.length > 1) {
+          lastBar.style.display = 'flex';
+          document.getElementById('last-amount-value').textContent = fmt(last);
+        } else {
+          lastBar.style.display = 'none';
+        }
+
+        var todayEarned = null;
+        if (baseline === null || baseline === undefined || isNaN(baseline)) {
+          display.textContent = '--';
+          display.className = 'card-value zero';
+          display.removeAttribute('data-val');
+          if (display.animId) cancelAnimationFrame(display.animId);
+          sub.textContent = (!isFirebaseLoaded() && window.currentUser) ? 'syncing with cloud...' : 'no baseline set -- tap SET BASE first';
+          var progC = document.getElementById('today-progress-container');
+          if (progC) progC.style.display = 'none';
+        } else {
+          var postPaymentDelta = (last !== null ? last : baseline) - baseline;
+          var prePayment = (monthData && monthData.paymentResetDate === todayKey() && monthData.todayEarnedBeforePayment != null)
+            ? monthData.todayEarnedBeforePayment : 0;
+          todayEarned = prePayment + postPaymentDelta;
+          var prevEarned = parseFloat(display.getAttribute('data-val'));
+          if (!isNaN(prevEarned) && prevEarned !== todayEarned) {
+            animateValue(display, prevEarned, todayEarned, 400);
+          } else {
+            if (display.animId) cancelAnimationFrame(display.animId);
+            display.textContent = fmtDelta(todayEarned);
+          }
+          display.setAttribute('data-val', todayEarned);
+          display.className = 'card-value ' + (todayEarned > 0 ? 'positive' : todayEarned < 0 ? 'negative' : 'zero');
+          sub.textContent = 'baseline: ' + fmt(baseline) + (last !== null ? '  ->  now: ' + fmt(last) : '');
+
+          var progContainer = document.getElementById('today-progress-container');
+          var progPointer = document.getElementById('today-progress-pointer');
+          var progTarget = document.getElementById('today-progress-target');
+          if (progContainer && progPointer && days && days.length > 3) {
+            var bestHistorical = Math.max.apply(null, days.map(d => d.earned || 0));
+            var avgBest = Math.max(80, bestHistorical);
+            document.getElementById('prog-min').textContent = '\u20AC0';
+            document.getElementById('prog-max').textContent = '\u20AC' + avgBest.toFixed(0);
+            progContainer.style.display = 'block';
+            var pct = Math.max(0, Math.min(100, (todayEarned / avgBest) * 100));
+            progPointer.style.left = pct + '%';
+            progPointer.style.background = (pct < 30) ? 'var(--red)' : (pct < 80 ? 'var(--yellow)' : 'var(--green)');
+
+            // Calculate 7-day rolling average and position the target marker & label
+            var r7Count = Math.min(days.length, 7);
+            var r7 = r7Count > 0 ? days.slice(0, 7).reduce(function (s, d) { return s + (d.earned || 0); }, 0) / r7Count : 0;
+            var targetLabel = document.getElementById('prog-target-label');
+            if (r7 > 0 && progTarget) {
+              var targetPct = Math.max(0, Math.min(100, (r7 / avgBest) * 100));
+              progTarget.style.left = targetPct + '%';
+              progTarget.style.display = 'block';
+              if (targetLabel) {
+                targetLabel.innerHTML = '7d avg: &euro;' + fmt(r7);
+                targetLabel.style.left = targetPct + '%';
+                targetLabel.style.display = 'block';
+              }
+            } else {
+              if (progTarget) progTarget.style.display = 'none';
+              if (targetLabel) targetLabel.style.display = 'none';
+            }
+          } else {
+            if (progContainer) progContainer.style.display = 'none';
+          }
+        }
+
+        var now = new Date();
+        var perhourEl = document.getElementById('stat-perhour');
+        var maxperhourEl = document.getElementById('stat-maxperhour');
+        var dayFcEl = document.getElementById('stat-dayforecast');
+        var monthSoFarEl = document.getElementById('stat-monthsofar');
+        var monthFcEl = document.getElementById('stat-monthforecast');
+
+        var perHourToday = null;
+        var maxPerHourToday = null;
+        var midnight = new Date(); midnight.setHours(0, 0, 0, 0);
+        var tenAM = new Date(); tenAM.setHours(10, 0, 0, 0);
+
+        if (todayEarned !== null && todayEarned > 0) {
+          var elapsed = (Date.now() - midnight.getTime()) / 3600000;
+          if (elapsed > 0.5) {
+            var perHour = todayEarned / elapsed;
+            perHourToday = perHour;
+            perhourEl.textContent = fmtDeltaEuro(perHour);
+            dayFcEl.textContent = fmtDeltaEuro(todayEarned + perHour * (24 - elapsed));
+          } else {
+            perhourEl.textContent = '--';
+            dayFcEl.textContent = '--';
+          }
+
+          var rates = [];
+          if (Date.now() >= tenAM.getTime() && perHourToday !== null) {
+            rates.push(perHourToday);
+          }
+
+          if (baseline !== null && baseline !== undefined && entries.length > 0) {
+            var prePayment = (monthData && monthData.paymentResetDate === todayKey() && monthData.todayEarnedBeforePayment != null)
+              ? monthData.todayEarnedBeforePayment : 0;
+
+            entries.forEach(function (e) {
+              if (e.isBaseline) return;
+              var entryTs = getEntryTimestamp(e, todayData.date);
+              if (entryTs >= tenAM.getTime()) {
+                var entryElapsed = (entryTs - midnight.getTime()) / 3600000;
+                if (entryElapsed > 0) {
+                  var postPaymentDelta = e.amount - baseline;
+                  var entryEarned = prePayment + postPaymentDelta;
+                  rates.push(entryEarned / entryElapsed);
+                }
+              }
+            });
+          }
+
+          if (rates.length > 0) {
+            maxPerHourToday = Math.max.apply(null, rates);
+          }
+        } else {
+          perhourEl.textContent = '--';
+          dayFcEl.textContent = '--';
+        }
+
+        if (maxperhourEl) {
+          maxperhourEl.textContent = maxPerHourToday !== null ? fmtDeltaEuro(maxPerHourToday) : '--';
+          
+          if (maxPerHourToday !== null) {
+            if (window.previousMaxPerHour !== undefined && window.previousMaxPerHour !== null) {
+              if (maxPerHourToday > window.previousMaxPerHour) {
+                // Trigger pulse animation
+                maxperhourEl.classList.remove('pulse-max');
+                void maxperhourEl.offsetWidth; // Force reflow to restart animation
+                maxperhourEl.classList.add('pulse-max');
+              }
+            }
+            window.previousMaxPerHour = maxPerHourToday;
+          }
+        }
+
+        var trendEl = document.getElementById('stat-perhour-trend');
+        if (trendEl) {
+          if (perHourToday !== null && perHourToday > 0) {
+            var avgDaily = get30DayEarningsAvg();
+            var labelSuffix = ' vs 30d avg';
+            if (avgDaily === null || isNaN(avgDaily) || avgDaily <= 0) {
+              avgDaily = getRecentAvgValue();
+              labelSuffix = ' vs 14d avg';
+            }
+            var avgPerHour = avgDaily / 24;
+            if (avgPerHour > 0) {
+              var pct = ((perHourToday - avgPerHour) / avgPerHour) * 100;
+              if (perHourToday > avgPerHour) {
+                trendEl.textContent = '▲ +' + pct.toFixed(0) + '%' + labelSuffix;
+                trendEl.style.color = 'var(--green)';
+                trendEl.style.display = 'inline';
+              } else if (perHourToday < avgPerHour) {
+                trendEl.textContent = '▼ ' + pct.toFixed(0) + '%' + labelSuffix;
+                trendEl.style.color = 'var(--red)';
+                trendEl.style.display = 'inline';
+              } else {
+                trendEl.style.display = 'none';
+              }
+            } else {
+              trendEl.style.display = 'none';
+            }
+          } else {
+            trendEl.style.display = 'none';
+          }
+        }
+
+        // MTD is now calculated strictly from the raw pasted amounts per user request.
+        // It takes the current console balance, and subtracts the previous month's carryover.
+        // If the current balance has dropped BELOW the carryover, we auto-detect that a payment 
+        // occurred and ignore the carryover.
+        var currentConsoleBalance = (last !== null ? last : baseline);
+        var paymentDetected = false;
+        if (monthData && monthData.carryOver != null) {
+          var carryOver = monthData.carryOver;
+          var setTime = monthData.carryOverSetDate || 0;
+          if (currentConsoleBalance > 0 && currentConsoleBalance < carryOver) {
+            paymentDetected = true;
+          }
+          if (!paymentDetected && days) {
+            for (var i = 0; i < days.length; i++) {
+              var d = days[i];
+              var dTimeStart = new Date(d.date).getTime();
+              if (dTimeStart + 86400000 < setTime) continue;
+              if (d.entries && d.entries.some(e => getEntryTimestamp(e, d.date) >= setTime && e.amount < carryOver)) {
+                paymentDetected = true;
+                break;
+              }
+            }
+          }
+          if (!paymentDetected && todayData && todayData.entries) {
+            if (todayData.entries.some(e => getEntryTimestamp(e, todayData.date) >= setTime && e.amount < carryOver)) {
+              paymentDetected = true;
+            }
+          }
+        }
+
+        var mtdTotal = currentConsoleBalance || 0;
+        if (monthData && monthData.carryOver != null && !paymentDetected && currentConsoleBalance >= monthData.carryOver) {
+          mtdTotal = currentConsoleBalance - monthData.carryOver;
+        }
+
+        if (mtdTotal > 0) {
+          monthSoFarEl.textContent = fmtDeltaEuro(mtdTotal);
+          var bestDayRate = getDayEarningsAvg();
+          if (bestDayRate === null) {
+            bestDayRate = (perHourToday !== null ? perHourToday * 24 : 0);
+          }
+          var daysLeft = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate() - now.getDate();
+          monthFcEl.textContent = fmtDeltaEuro(mtdTotal + (bestDayRate * daysLeft));
+        }
+
+        // prev month stat removed from index page
+
+        var list = document.getElementById('history-list');
+        if (entries.length === 0) list.innerHTML = '<div class="empty-state">no entries yet</div>';
+        else {
+          list.innerHTML = entries.slice().reverse().map((e, i) => {
+            var idx = entries.length - 1 - i;
+            var dh = e.isBaseline ? '<span class="history-delta base">BASE</span>' : '<span class="history-delta ' + (e.delta >= 0 ? 'pos' : 'neg') + '">' + fmtDelta(e.delta) + '</span>';
+            var delBtn = e.isBaseline ? '' : '<button class="entry-del-btn" onclick="deleteSpecificEntry(' + idx + ')">&times;</button>';
+            return '<div class="history-item"><div style="display:flex;align-items:center;gap:12px;"><span class="history-time">' + e.time + '</span><span class="history-amount">' + fmt(e.amount) + '</span></div><div style="display:flex;align-items:center;gap:8px;">' + dh + delBtn + '</div></div>';
+          }).join('');
+        }
+
+        var pastList = document.getElementById('past-list');
+        var pastEmpty = document.getElementById('past-empty');
+        if (!days || days.length === 0) { pastEmpty.style.display = 'block'; pastList.innerHTML = ''; }
+        else {
+          pastEmpty.style.display = 'none';
+          var limit = showAllPastDays ? days.length : Math.min(days.length, 14);
+          pastList.innerHTML = days.slice(0, limit).map((day, j) => {
+            var earned = day.earned || 0;
+            var cls = earned > 0 ? 'pos' : earned < 0 ? 'neg' : 'zero';
+            var ehtml = (day.entries || []).map(en => "<div class=day-entry><span>" + en.time + "</span> <span>" + fmt(en.amount) + "</span> <span class=" + (en.isBaseline ? "base-tag" : (en.delta >= 0 ? "pos" : "neg")) + ">" + (en.isBaseline ? "BASE" : fmtDelta(en.delta)) + "</span></div>").join('');
+            return "<div class='day-block'><div class='day-header' onclick='toggleDay(" + j + ")'><span class='day-date'>" + dateLabel(day.date) + "</span><span class='day-earned " + cls + "'>" + fmtDelta(earned) + "</span></div><div class='day-entries' id='day-" + j + "'>" + ehtml + "</div></div>";
+          }).join('') + (days.length > 14 && !showAllPastDays ? "<button class='show-older-btn' onclick='toggleShowAllPastDays()'>SHOW OLDER</button>" : "");
+        }
+      } catch (e) { console.error(e); }
+    }
+
+    function toggleShowAllPastDays() { showAllPastDays = true; render(); }
+    function toggleDay(i) { var el = document.getElementById('day-' + i); if (el) el.classList.toggle('open'); }
+    function toggleMonthPanel() {
+      var body = document.getElementById('month-panel-body');
+      body.classList.toggle('open');
+      document.getElementById('month-panel-arrow').textContent = body.classList.contains('open') ? '- collapse' : '+ expand';
+    }
+    function toggleTimeMachine() {
+      var body = document.getElementById('tm-panel-body');
+      body.classList.toggle('open');
+      document.getElementById('tm-panel-arrow').textContent = body.classList.contains('open') ? '- collapse' : '+ expand';
+      if (body.classList.contains('open')) renderSnapshots();
+    }
+    function snapshotKey() { return new Date().getFullYear() + "-" + String(new Date().getMonth() + 1).padStart(2, '0') + "-" + String(new Date().getDate()).padStart(2, '0'); }
+
+    async function checkAndCreateSnapshot() {
+      if (!currentUser || !days || days.length < 10) return;
+      var today = snapshotKey();
+      if (localStorage.getItem('cue_last_snap') === today) return;
+      localStorage.setItem('cue_last_snap', today);
+      try {
+        await db.ref('cue-earnings/' + currentUser.uid + '/snapshots/' + today).set({ days, today: todayData, month: monthData, finalizedMonths, timestamp: Date.now(), dateStr: new Date().toDateString() });
+        pruneSnapshots();
+      } catch (e) { localStorage.removeItem('cue_last_snap'); }
+    }
+
+    async function pruneSnapshots() {
+      if (!currentUser) return;
+      var snapRef = db.ref('cue-earnings/' + currentUser.uid + '/snapshots');
+      var snap = await snapRef.once('value');
+      var data = snap.val() || {};
+      var keys = Object.keys(data).sort();
+      if (keys.length > 10) {
+        for (var i = 0; i < keys.length - 10; i++) await snapRef.child(keys[i]).remove();
+      }
+    }
+
+    function renderSnapshots() {
+      var listEl = document.getElementById('tm-snapshot-list');
+      if (!currentUser) return;
+      db.ref('cue-earnings/' + currentUser.uid + '/snapshots').once('value').then(function (snapshot) {
+        var data = snapshot.val();
+        if (!data) { listEl.innerHTML = '<div class="empty-state">No backups found.</div>'; return; }
+        listEl.innerHTML = Object.keys(data).sort().reverse().map(k => {
+          var s = data[k];
+          return '<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:var(--mid); border:1px solid var(--border); border-radius:4px; gap:16px;"><div style="font-size:13px; flex-shrink:0;"><div style="font-weight:500;">' + (s.dateStr || k) + '</div><div style="font-size:11px; color:var(--muted);">' + (s.days ? s.days.length : 0) + ' days</div></div><button class="btn small" style="flex:none; width:auto; margin:0;" onclick="restoreSnapshot(\'' + k + '\')">RESTORE</button></div>';
+        }).join('');
+      });
+    }
+
+    window.restoreSnapshot = async function (key) {
+      if (!confirm("RESTORE DATA FROM " + key + "?")) return;
+      var s = (await db.ref('cue-earnings/' + currentUser.uid + '/snapshots/' + key).once('value')).val();
+      if (!s) return;
+      days = s.days; todayData = s.today; monthData = s.month; finalizedMonths = s.finalizedMonths;
+
+      var restoreTime = Date.now();
+      localStorage.setItem('cue_last_restore', restoreTime.toString());
+      localStorage.setItem('cue_sync_kill', Date.now() + 10000);
+
+      localStorage.setItem(KEY_TODAY, JSON.stringify(todayData));
+      localStorage.setItem(KEY_DAYS, JSON.stringify(days));
+      localStorage.setItem(KEY_MONTH, JSON.stringify(monthData));
+      localStorage.setItem('cue_finalized_months', JSON.stringify(finalizedMonths));
+
+      var updates = {
+        today: todayData,
+        days: days,
+        month: monthData,
+        finalizedMonths: finalizedMonths,
+        lastRestoreAt: restoreTime
+      };
+      await db.ref('cue-earnings/' + currentUser.uid + '/').update(updates);
+      location.reload();
+    }
+
+    function showToast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg; t.classList.add('show');
+      setTimeout(function () { t.classList.remove('show'); }, 2200);
+    }
+
+    function doUpdate(rawStr) {
+      if (todayData.baseline === null || todayData.baseline === undefined) { showToast('Set baseline first'); return; }
+      var val = parseAmount(rawStr);
+      if (val === null) { showToast('Paste amount first'); return; }
+      todayData.entries.push({ time: nowStr(), amount: val, delta: val - todayData.baseline, isBaseline: false, timestamp: Date.now() });
+      document.getElementById('paste-input').value = '';
+      save(); render(); showToast('Updated!');
+    }
+
+    function doSetBase(rawStr) {
+      var val = parseAmount(rawStr);
+      if (val === null) { showToast('Paste amount first'); return; }
+      todayData.baseline = val;
+      todayData.baselineTime = Date.now();
+      todayData.entries = [{ time: nowStr(), amount: val, delta: 0, isBaseline: true, timestamp: Date.now() }];
+      document.getElementById('paste-input').value = '';
+      save(); render(); showToast('Baseline set!');
+    }
+
+    document.getElementById('btn-baseline').addEventListener('click', () => {
+      var v = document.getElementById('paste-input').value.trim();
+      if (!v && navigator.clipboard) navigator.clipboard.readText().then(doSetBase); else doSetBase(v);
+    });
+
+    document.getElementById('btn-update').addEventListener('click', () => {
+      var v = document.getElementById('paste-input').value.trim();
+      if (!v && navigator.clipboard) navigator.clipboard.readText().then(doUpdate); else doUpdate(v);
+    });
+
+    function handleUndo() {
+      if (todayData.entries.length <= 1) { showToast('Nothing to undo'); return; }
+      todayData.entries.pop();
+      if (todayData.entries.length === 0) { todayData.baseline = null; }
+      save(); render(); showToast('Undone');
+    }
+
+    document.getElementById('btn-undo').addEventListener('click', handleUndo);
+    document.getElementById('btn-undo-header').addEventListener('click', handleUndo);
+
+    document.getElementById('btn-reset').addEventListener('click', function () {
+      if (!confirm("Reset today?")) return;
+      todayData = { date: todayKey(), baseline: null, entries: [], baselineTime: null };
+      save(); render(); showToast('Reset done');
+    });
+
+    document.getElementById('btn-console').addEventListener('click', () => window.open('https://play.google.com/console/u/0/developers/7609098870161748513/paymentssettings', '_blank'));
+
+    function handleExport() {
+      var lines = ['CUE EXPORT', '==================', '', 'TODAY: ' + (todayData.baseline !== null ? fmtDelta(rawDiff(todayData.entries[todayData.entries.length - 1].amount, todayData.baseline)) : 'No data'), '', 'PAST DAYS:'];
+      days.forEach(d => lines.push(dateLabel(d.date) + '   ' + fmtDelta(d.earned)));
+      var a = document.createElement('a'); a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(lines.join('\n')); a.download = 'cue-export.txt'; a.click(); showToast('Exported!');
+    }
+
+    document.getElementById('btn-export').addEventListener('click', handleExport);
+    document.getElementById('btn-export-header').addEventListener('click', handleExport);
+
+    document.getElementById('btn-new-month').addEventListener('click', () => {
+      document.getElementById('modal-newmonth').classList.add('open');
+      document.getElementById('modal-newmonth-input').focus();
+    });
+    document.getElementById('modal-newmonth-cancel').addEventListener('click', () => document.getElementById('modal-newmonth').classList.remove('open'));
+    document.getElementById('modal-newmonth-ok').addEventListener('click', () => {
+      var val = parseAmount(document.getElementById('modal-newmonth-input').value);
+      if (val === null) return;
+      monthData.carryOver = val;
+      monthData.carryOverSetDate = Date.now();
+      monthData.prevMonthEarned = val;
+      document.getElementById('modal-newmonth').classList.remove('open');
+      save(); render();
+    });
+
+    document.getElementById('btn-payment').addEventListener('click', () => {
+      var preEarnedEl = document.getElementById('modal-payment-preearned');
+      if (preEarnedEl) {
+        var currentTodayEarned = 0;
+        if (todayData && todayData.baseline !== null && todayData.entries && todayData.entries.length > 0) {
+          var lastEntry = todayData.entries[todayData.entries.length - 1];
+          var postPaymentDelta = lastEntry.amount - todayData.baseline;
+          var prePayment = (monthData && monthData.paymentResetDate === todayKey() && monthData.todayEarnedBeforePayment != null)
+            ? monthData.todayEarnedBeforePayment : 0;
+          currentTodayEarned = prePayment + postPaymentDelta;
+        }
+        preEarnedEl.value = currentTodayEarned > 0 ? currentTodayEarned.toFixed(2) : '0';
+      }
+      document.getElementById('modal-payment').classList.add('open');
+    });
+    document.getElementById('modal-payment-cancel').addEventListener('click', () => document.getElementById('modal-payment').classList.remove('open'));
+    document.getElementById('modal-payment-ok').addEventListener('click', () => {
+      var val = parseAmount(document.getElementById('modal-payment-input').value);
+      var preEarnedInput = parseAmount(document.getElementById('modal-payment-preearned').value);
+      var postAmt = parseAmount(document.getElementById('modal-payment-postamt').value);
+      if (val === null || postAmt === null) return;
+      monthData.paymentReceived = val;
+      monthData.carryOver = null;
+      monthData.paymentResetDate = todayKey();
+      monthData.todayEarnedBeforePayment = (preEarnedInput !== null ? preEarnedInput : 0);
+      todayData.baseline = postAmt;
+      todayData.entries = [{ time: nowStr(), amount: postAmt, delta: 0, isBaseline: true, timestamp: Date.now() }];
+      document.getElementById('modal-payment').classList.remove('open');
+      save(); render();
+    });
+
+    setInterval(() => { if (!isCatchingUp && todayData.date !== todayKey()) { archiveToday(); render(); } }, 60000);
+
+    function deleteSpecificEntry(index) {
+      if (!confirm('Delete entry?')) return;
+      todayData.entries.splice(index, 1);
+      save(); render();
+    }
+
+    function checkMonthTransitions(preventSave) {
+      if (isCatchingUp) return;
+      var now = new Date();
+      var currentMonthKey = now.getFullYear() + '-' + now.getMonth();
+
+      if (!monthData) monthData = defaultMonth();
+
+      if (monthData.carryOver != null && monthData.prevMonthEarned !== monthData.carryOver) {
+        monthData.prevMonthEarned = monthData.carryOver;
+        if (!preventSave && window.currentUser) {
+          setTimeout(save, 500);
+        }
+      }
+
+      if (monthData.monthKey !== currentMonthKey) {
+        var lastBalance = null;
+
+        if (todayData && todayData.date) {
+          var tDate = new Date(todayData.date);
+          if (tDate.getMonth() !== now.getMonth() || tDate.getFullYear() !== now.getFullYear()) {
+            if (todayData.entries && todayData.entries.length > 0) {
+              lastBalance = todayData.entries[todayData.entries.length - 1].amount;
+            } else if (todayData.baseline !== null) {
+              lastBalance = todayData.baseline;
+            }
+          }
+        }
+
+        if (lastBalance === null && days && days.length > 0) {
+          for (var i = 0; i < days.length; i++) {
+            var dDate = new Date(days[i].date);
+            if (dDate.getMonth() !== now.getMonth() || dDate.getFullYear() !== now.getFullYear()) {
+              var entries = days[i].entries || [];
+              if (entries.length > 0) {
+                lastBalance = entries[entries.length - 1].amount;
+              }
+              break;
+            }
+          }
+        }
+
+        if (lastBalance !== null) {
+          monthData.carryOver = lastBalance;
+          monthData.carryOverSetDate = Date.now();
+        }
+
+        var prevMonthNum = now.getMonth() - 1;
+        var prevYearNum = now.getFullYear();
+        if (prevMonthNum < 0) {
+          prevMonthNum = 11;
+          prevYearNum -= 1;
+        }
+
+        var sum = 0;
+        if (todayData && todayData.date && (!days || !days.some(d => d.date === todayData.date))) {
+          var tDate = new Date(todayData.date);
+          if (tDate.getMonth() === prevMonthNum && tDate.getFullYear() === prevYearNum) {
+            var baseline = todayData.baseline;
+            var entries = todayData.entries || [];
+            var last = entries.length > 0 ? entries[entries.length - 1].amount : null;
+            if (baseline !== null && last !== null) {
+              sum += (last - baseline);
+            }
+          }
+        }
+
+        if (days) {
+          days.forEach(function (d) {
+            var dDate = new Date(d.date);
+            if (dDate.getMonth() === prevMonthNum && dDate.getFullYear() === prevYearNum) {
+              sum += (d.earned || 0);
+            }
+          });
+        }
+        monthData.prevMonthEarned = sum;
+
+        monthData.paymentReceived = null;
+        monthData.paymentDate = null;
+        monthData.monthKey = currentMonthKey;
+
+        localStorage.setItem(KEY_MONTH, JSON.stringify(monthData));
+        if (!preventSave && window.currentUser) {
+          save();
+        }
+        render();
+        showToast("Welcome to " + now.toLocaleString('default', { month: 'long' }) + "! Carry-over set automatically.");
+      }
+    }
+
+    function checkMonthPrompts() {
+      var now = new Date();
+      var mk = now.getFullYear() + '-' + now.getMonth();
+      if (now.getDate() === 1 && localStorage.getItem('cue_prompted_newmonth') !== mk && monthData.carryOver == null) {
+        localStorage.setItem('cue_prompted_newmonth', mk);
+        document.getElementById('modal-newmonth').classList.add('open');
+      }
+    }
+
+    function checkMissingDaysTrigger() {
+      if (fbLoadedDays && fbLoadedToday && !checkedCatchUpThisSession) {
+        checkedCatchUpThisSession = true;
+        checkMissingDays();
+      }
+    }
+
+    function getRecentAvgValue() {
+      var avg = getDayEarningsAvg();
+      if (avg === null || isNaN(avg) || avg <= 0) {
+        if (days && days.length > 0) {
+          var sum = 0;
+          var count = Math.min(14, days.length);
+          for (var i = 0; i < count; i++) {
+            sum += (days[i].earned || 0);
+          }
+          return sum / count;
+        }
+        return 40.0;
+      }
+      return avg;
+    }
+
+    function checkMissingDays() {
+      if (!todayData || !todayData.date) return;
+
+      var lastDate = new Date(todayData.date);
+      var today = new Date(todayKey());
+
+      lastDate.setHours(0, 0, 0, 0);
+      today.setHours(0, 0, 0, 0);
+
+      var diffMs = today.getTime() - lastDate.getTime();
+      var diffDays = Math.round(diffMs / 86400000);
+
+      if (diffDays > 1) {
+        var missingDaysQueue = [];
+        var current = new Date(lastDate.getTime() + 86400000);
+        while (current < today) {
+          missingDaysQueue.push(current.toDateString());
+          current.setDate(current.getDate() + 1);
+        }
+
+        if (missingDaysQueue.length > 0) {
+          isCatchingUp = true;
+          showCatchUpModal(missingDaysQueue);
+        }
+      }
+    }
+
+    function showCatchUpModal(queue) {
+      var container = document.getElementById('catchup-inputs-container');
+      var avgVal = getRecentAvgValue();
+
+      container.innerHTML = queue.map((dateStr, idx) => {
+        var displayDate = new Date(dateStr).toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' });
+        return `
+          <div style="display: flex; flex-direction: column; gap: 4px; padding: 10px; background: var(--mid); border: 1px solid var(--border); border-radius: 4px;">
+            <div style="font-size: 14px; font-weight: 500; text-transform: uppercase; color: var(--text); letter-spacing: 1px; font-family: 'Teko', sans-serif;">
+              ${displayDate}
+            </div>
+            <input class="modal-input catchup-day-input" 
+                   data-date="${dateStr}" 
+                   type="text" 
+                   inputmode="decimal" 
+                   placeholder="Earnings (e.g. ${avgVal.toFixed(2)})" 
+                   style="font-size: 20px; padding: 6px 12px;">
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('modal-catchup').classList.add('open');
+    }
+
+    document.getElementById('modal-catchup-confirm').addEventListener('click', async function () {
+      var btn = document.getElementById('modal-catchup-confirm');
+      btn.disabled = true;
+      btn.textContent = 'SAVING...';
+
+      try {
+        // 1. Archive the previous todayData first, force bypassing the guard
+        archiveToday(true, true);
+
+        // 2. Read inputs and populate historical entries for each missing day
+        var inputs = document.querySelectorAll('.catchup-day-input');
+        inputs.forEach(input => {
+          var dateStr = input.getAttribute('data-date');
+          var val = parseAmount(input.value.trim());
+          if (val === null || isNaN(val)) val = 0.0;
+
+          if (!days.some(d => d.date === dateStr)) {
+            days.push({
+              date: dateStr,
+              earned: val,
+              entries: [{ time: "00:00:00", amount: val, delta: val, isBaseline: false, isCatchUp: true }]
+            });
+          }
+        });
+
+        // 3. Sort days to maintain chronological ordering
+        days = mergeDays(days, []);
+
+        // 4. Close modal and reset catching-up state
+        document.getElementById('modal-catchup').classList.remove('open');
+        isCatchingUp = false;
+
+        // 5. Save everything and refresh dashboard rendering
+        await save();
+        render();
+        showToast('Catch-up completed!');
+      } catch (e) {
+        console.error(e);
+        alert('Error catching up: ' + e.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'CONFIRM & CATCH UP';
+      }
+    });
+
+    // Immediate optimistic local render on page startup
+    try {
+      loadFromLocal();
+      render();
+    } catch (e) {
+      console.warn("Immediate local render failed:", e);
+    }
+
+    auth.onAuthStateChanged(function (user) {
+      if (user) { currentUser = user; document.getElementById('login-overlay').style.display = 'none'; load(); }
+      else { currentUser = null; document.getElementById('login-overlay').style.display = 'flex'; }
+    });
+
+    document.getElementById('btn-google-login').addEventListener('click', () => auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()));
+  </script>
+
+  <script>
+    function downloadJSONBackup() {
+      var backupData = {
+        days: days,
+        today: todayData,
+        month: monthData,
+        finalizedMonths: finalizedMonths
+      };
+      var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2));
+      var downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      var dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '_');
+      downloadAnchor.setAttribute("download", "CUE_Backup_" + dateStr + ".json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast('JSON Backup downloaded!');
+    }
+
+    function emergencyImport(input) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        try {
+          var importedData = JSON.parse(e.target.result);
+          if (importedData['cue-earnings']) importedData = Object.values(importedData['cue-earnings'])[0];
+          window.performRestore(importedData, confirm("Wipe current data?"));
+        } catch (err) { alert("Restore failed"); }
+      };
+      reader.readAsText(input.files[0]);
+    };
+  </script>
+
+  <div
+    style="margin-top:40px; border-top:1px solid #222; padding:20px; display:flex; flex-direction:column; align-items:center;">
+    <input type="file" id="emergency-import" style="display:none" onchange="emergencyImport(this)">
+    <div id="debug-log"
+      style="font-family:monospace; font-size:11px; color:var(--yellow); padding:10px; text-align:center; opacity:0.8;">
+      System Status: v1.6.3 | Ready
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creation Cue | Play Store Title Optimizer (20 Watch Faces)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --card: #151821;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --primary: #38bdf8;
+      --accent: #f5c518;
+      --success: #10b981;
+      --danger: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      padding: 24px 16px 60px 16px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .header {
+      background: linear-gradient(135deg, rgba(21, 24, 33, 0.95), rgba(30, 36, 51, 0.9));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .header h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-top: 4px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 10px;
+    }
+    .nav-btn {
+      padding: 8px 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .progress-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+    .progress-bar-bg {
+      flex: 1;
+      height: 10px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #10b981);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .progress-label {
+      font-weight: 700;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      color: #fff;
+    }
+    .table-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    th {
+      background: rgba(10, 12, 18, 0.85);
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.5px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      vertical-align: middle;
+    }
+    tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    tr.is-done {
+      background: rgba(16, 185, 129, 0.04);
+      opacity: 0.65;
+    }
+    tr.is-done td.col-new .new-title-text {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+    .text-center { text-align: center; }
+    .col-check { width: 44px; }
+    .col-num { width: 36px; color: var(--muted); font-size: 0.8rem; }
+    .col-face { width: 170px; }
+    .col-current { width: 140px; }
+    .col-new { min-width: 280px; }
+    .col-action { width: 150px; }
+    .col-store { width: 120px; }
+
+    .face-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .face-thumb {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .face-id {
+      font-weight: 700;
+      color: #fff;
+      font-size: 0.92rem;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    .badge-digital { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-hybrid { background: rgba(245, 197, 24, 0.15); color: #f5c518; border: 1px solid rgba(245, 197, 24, 0.3); }
+
+    .current-title-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    .new-title-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 6px 10px;
+      border-radius: 8px;
+    }
+    .new-title-text {
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.2px;
+    }
+    .btn-copy {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      color: #fff;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-copy:hover {
+      background: rgba(255,255,255,0.18);
+    }
+    .btn-copy.copied {
+      background: var(--success) !important;
+      color: #000 !important;
+      border-color: var(--success) !important;
+    }
+    .btn-console {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #38bdf8;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 7px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(56, 189, 248, 0.25);
+    }
+    .btn-console:hover {
+      background: #7dd3fc;
+      transform: translateY(-1px);
+    }
+    .btn-store {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-store:hover {
+      color: #fff;
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    /* Custom Checkbox */
+    .custom-checkbox {
+      position: relative;
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    .custom-checkbox input { opacity: 0; width: 0; height: 0; }
+    .checkmark {
+      position: absolute;
+      top: 0; left: 0;
+      height: 18px; width: 18px;
+      background-color: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .custom-checkbox:hover .checkmark { border-color: var(--primary); }
+    .custom-checkbox input:checked ~ .checkmark {
+      background-color: var(--success);
+      border-color: var(--success);
+    }
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 5px; top: 2px;
+      width: 4px; height: 8px;
+      border: solid #000;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .custom-checkbox input:checked ~ .checkmark:after { display: block; }
+
+    @media (max-width: 768px) {
+      body { padding: 12px 8px; }
+      table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>🚀 Play Store Title Optimizer</h1>
+        <p>Scheduled for <strong>Monday, Nov 16, 2026</strong> • 1-Click Copy & Direct Console Links</p>
+      </div>
+      <div class="nav-links">
+        <a href="month-planner.html" class="nav-btn">📅 Month Planner</a>
+        <a href="play-versions.html" class="nav-btn">⚙️ Play Versions</a>
+      </div>
+    </div>
+
+    <div class="progress-box">
+      <div class="progress-label" id="progress-text">0 of 20 Completed (0%)</div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-check text-center">Done</th>
+            <th class="col-num text-center">#</th>
+            <th class="col-face">Watch Face</th>
+            <th class="col-current">Current Title</th>
+            <th class="col-new">Recommended New Title (1-Click Copy)</th>
+            <th class="col-action text-center">Direct Edit</th>
+            <th class="col-store text-center">Live Store</th>
+          </tr>
+        </thead>
+        <tbody>
+
+    <tr id="row-CUE179" data-id="CUE179">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE179" onchange="toggleDone('CUE179')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">1</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue179.png" alt="CUE179" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE179</div>
+            <span class="badge badge-digital">Digital</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE179</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE179">Digital Watch Face CUE179</span>
+          <button class="btn-copy" onclick="copyTitle('CUE179', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976049174786684820/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE179')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue179watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE173" data-id="CUE173">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE173" onchange="toggleDone('CUE173')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">2</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue173.png" alt="CUE173" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE173</div>
+            <span class="badge badge-hybrid">Hybrid</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE173</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE173">Hybrid Watch Face CUE173</span>
+          <button class="btn-copy" onclick="copyTitle('CUE173', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975889140195445370/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE173')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue173watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE172" data-id="CUE172">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE172" onchange="toggleDone('CUE172')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">3</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue172.png" alt="CUE172" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE172</div>
+            <span class="badge badge-digital">Digital</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE172</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE172">Digital Watch Face CUE172</span>
+          <button class="btn-copy" onclick="copyTitle('CUE172', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972964843252212952/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE172')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue172watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE171" data-id="CUE171">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE171" onchange="toggleDone('CUE171')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">4</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue171.png" alt="CUE171" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE171</div>
+            <span class="badge badge-digital">Digital</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE171</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE171">Digital Watch Face CUE171</span>
+          <button class="btn-copy" onclick="copyTitle('CUE171', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972118076910981120/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE171')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue171watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE170" data-id="CUE170">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE170" onchange="toggleDone('CUE170')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">5</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue170.png" alt="CUE170" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE170</div>
+            <span class="badge badge-hybrid">Hybrid</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE170</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE170">Hybrid Watch Face CUE170</span>
+          <button class="btn-copy" onclick="copyTitle('CUE170', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972670266110187664/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE170')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue170watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE169" data-id="CUE169">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE169" onchange="toggleDone('CUE169')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">6</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue169.png" alt="CUE169" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE169</div>
+            <span class="badge badge-digital">Digital</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE169</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE169">Digital Watch Face CUE169</span>
+          <button class="btn-copy" onclick="copyTitle('CUE169', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972674831247014711/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE169')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue169watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE168" data-id="CUE168">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE168" onchange="toggleDone('CUE168')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">7</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue168.png" alt="CUE168" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE168</div>
+            <span class="badge badge-digital">Digital</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE168</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE168">Digital Watch Face CUE168</span>
+          <button class="btn-copy" onclick="copyTitle('CUE168', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974184231953708127/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE168')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue168watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE167" data-id="CUE167">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE167" onchange="toggleDone('CUE167')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">8</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue167.png" alt="CUE167" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE167</div>
+            <span class="badge badge-digital">Digital</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE167</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE167">Digital Watch Face CUE167</span>
+          <button class="btn-copy" onclick="copyTitle('CUE167', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972264987059145017/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE167')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue167watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE165" data-id="CUE165">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE165" onchange="toggleDone('CUE165')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">9</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue165.png" alt="CUE165" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE165</div>
+            <span class="badge badge-hybrid">Hybrid</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE165</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE165">Hybrid Watch Face CUE165</span>
+          <button class="btn-copy" onclick="copyTitle('CUE165', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975105011328348719/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE165')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue165watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE164" data-id="CUE164">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE164" onchange="toggleDone('CUE164')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">10</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue164.png" alt="CUE164" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE164</div>
+            <span class="badge badge-hybrid">Hybrid</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE164</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE164">Hybrid Watch Face CUE164</span>
+          <button class="btn-copy" onclick="copyTitle('CUE164', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972297491721046790/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE164')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue164watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE163" data-id="CUE163">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE163" onchange="toggleDone('CUE163')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">11</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue163.png" alt="CUE163" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE163</div>
+            <span class="badge badge-hybrid">Hybrid</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE163</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE163">Hybrid Watch Face CUE163</span>
+          <button class="btn-copy" onclick="copyTitle('CUE163', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975475839948184110/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE163')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue163watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE162" data-id="CUE162">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE162" onchange="toggleDone('CUE162')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">12</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue162.png" alt="CUE162" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE162</div>
+            <span class="badge badge-hybrid">Hybrid</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE162</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE162">Hybrid Watch Face CUE162</span>
+          <button class="btn-copy" onclick="copyTitle('CUE162', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973461486322462577/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE162')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue162watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE161" data-id="CUE161">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE161" onchange="toggleDone('CUE161')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">13</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue161.png" alt="CUE161" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE161</div>
+            <span class="badge badge-digital">Digital</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE161</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE161">Digital Watch Face CUE161</span>
+          <button class="btn-copy" onclick="copyTitle('CUE161', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4975523197225093895/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE161')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue161watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE160" data-id="CUE160">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE160" onchange="toggleDone('CUE160')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">14</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue160.png" alt="CUE160" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE160</div>
+            <span class="badge badge-digital">Digital</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE160</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE160">Digital Watch Face CUE160</span>
+          <button class="btn-copy" onclick="copyTitle('CUE160', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4976170803793660368/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE160')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue160watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE159" data-id="CUE159">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE159" onchange="toggleDone('CUE159')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">15</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue159.png" alt="CUE159" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE159</div>
+            <span class="badge badge-digital">Digital</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE159</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE159">Digital Watch Face CUE159</span>
+          <button class="btn-copy" onclick="copyTitle('CUE159', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973134053595425139/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE159')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue159watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE158" data-id="CUE158">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE158" onchange="toggleDone('CUE158')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">16</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue158.png" alt="CUE158" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE158</div>
+            <span class="badge badge-hybrid">Hybrid</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE158</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE158">Hybrid Watch Face CUE158</span>
+          <button class="btn-copy" onclick="copyTitle('CUE158', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973881096802295407/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE158')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue158watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE157" data-id="CUE157">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE157" onchange="toggleDone('CUE157')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">17</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue157.png" alt="CUE157" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE157</div>
+            <span class="badge badge-digital">Digital</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE157</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE157">Digital Watch Face CUE157</span>
+          <button class="btn-copy" onclick="copyTitle('CUE157', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4973034253392951728/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE157')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue157watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE156" data-id="CUE156">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE156" onchange="toggleDone('CUE156')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">18</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue156.png" alt="CUE156" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE156</div>
+            <span class="badge badge-digital">Digital</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE156</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE156">Digital Watch Face CUE156</span>
+          <button class="btn-copy" onclick="copyTitle('CUE156', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972848101978410325/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE156')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue156watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE155" data-id="CUE155">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE155" onchange="toggleDone('CUE155')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">19</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue155.png" alt="CUE155" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE155</div>
+            <span class="badge badge-hybrid">Hybrid</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE155</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE155">Hybrid Watch Face CUE155</span>
+          <button class="btn-copy" onclick="copyTitle('CUE155', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4974575027411711914/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE155')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue155watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+
+    <tr id="row-CUE154" data-id="CUE154">
+      <td class="col-check text-center">
+        <label class="custom-checkbox">
+          <input type="checkbox" id="chk-CUE154" onchange="toggleDone('CUE154')">
+          <span class="checkmark"></span>
+        </label>
+      </td>
+      <td class="col-num text-center">20</td>
+      <td class="col-face">
+        <div class="face-cell">
+          <img src="https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue154.png" alt="CUE154" class="face-thumb" onerror="this.style.opacity='0.2'">
+          <div>
+            <div class="face-id">CUE154</div>
+            <span class="badge badge-digital">Digital</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-current">
+        <span class="current-title-badge">CUE154</span>
+      </td>
+      <td class="col-new">
+        <div class="new-title-box">
+          <span class="new-title-text" id="text-CUE154">Digital Watch Face CUE154</span>
+          <button class="btn-copy" onclick="copyTitle('CUE154', this)" title="Copy new title to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="copy-lbl">Copy</span>
+          </button>
+        </div>
+      </td>
+      <td class="col-action text-center">
+        <a href="https://play.google.com/console/u/0/developers/7609098870161748513/app/4972985465748276837/store-listings/default/edit" target="_blank" rel="noopener" class="btn-console" onclick="markTouched('CUE154')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Edit in Console
+        </a>
+      </td>
+      <td class="col-store text-center">
+        <a href="https://play.google.com/store/apps/details?id=com.creation.cue154watchface" target="_blank" rel="noopener" class="btn-store" title="View live Google Play Store page">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          View Store
+        </a>
+      </td>
+    </tr>
+  
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'cc_title_optimization_progress_2026';
+
+    function getSavedState() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch(e) {
+        return {};
+      }
+    }
+
+    function saveState(state) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch(e) {}
+    }
+
+    function updateProgress() {
+      const state = getSavedState();
+      const allRows = document.querySelectorAll('tr[data-id]');
+      let doneCount = 0;
+
+      allRows.forEach(row => {
+        const id = row.getAttribute('data-id');
+        const isDone = !!state[id];
+        const chk = document.getElementById('chk-' + id);
+        if (chk) chk.checked = isDone;
+        if (isDone) {
+          row.classList.add('is-done');
+          doneCount++;
+        } else {
+          row.classList.remove('is-done');
+        }
+      });
+
+      const total = allRows.length || 20;
+      const pct = Math.round((doneCount / total) * 100);
+      document.getElementById('progress-text').textContent = `${doneCount} of ${total} Completed (${pct}%)`;
+      document.getElementById('progress-fill').style.width = pct + '%';
+    }
+
+    function toggleDone(id) {
+      const state = getSavedState();
+      state[id] = !state[id];
+      saveState(state);
+      updateProgress();
+    }
+
+    function markTouched(id) {
+      // Optional: don't auto-check, let user check manually after saving in Play Console
+    }
+
+    function copyTitle(id, btn) {
+      const textEl = document.getElementById('text-' + id);
+      if (!textEl) return;
+      const text = textEl.textContent.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        const lbl = btn.querySelector('.copy-lbl');
+        if (lbl) lbl.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          if (lbl) lbl.textContent = 'Copy';
+        }, 1800);
+      }).catch(err => {
+        console.error('Copy failed:', err);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', updateProgress);
+  </script>
+</body>
+</html>

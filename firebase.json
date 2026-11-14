@@ -39,6 +39,10 @@
         "destination": "/tax.html"
       },
       {
+        "source": "/titles",
+        "destination": "/titles.html"
+      },
+      {
         "source": "/month-planner",
         "destination": "/month-planner.html"
       },
