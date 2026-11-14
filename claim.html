@@ -928,7 +928,7 @@
           showState('error');
           document.getElementById('error-title').textContent = "Connection Error";
           document.getElementById('error-msg').textContent = "Connection timeout. Your network, Ad Blocker, or in-app browser may be blocking secure connections. Please try opening this link in a standard browser like Chrome or Safari.";
-        }, 8000);
+        }, 15000);
         
         auth.signInAnonymously().then(function() {
           clearTimeout(authTimeout);
@@ -968,9 +968,64 @@
           document.getElementById('error-title').textContent = "Connection Error";
           document.getElementById('error-msg').textContent = "Database connection timed out. Please disable Ad Blockers, or open this link in a standard browser like Chrome or Safari.";
         }
-      }, 10000);
+      }, 20000);
       
       if (isTokenClaim) {
+        // Fast REST fetch fallback (bypasses ad blockers / DNS firewalls blocking WebSockets and renders in ~150ms)
+        fetch('https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app/one_time_tokens/' + tokenId + '.json')
+          .then(function(res) { if (res.ok) return res.json(); return null; })
+          .then(function(data) {
+            if (data && !tokenData) {
+              tokenData = data;
+              promoId = tokenData.promoId;
+
+              if (tokenData.claimed) {
+                if (currentUser && tokenData.claimedBy === currentUser.uid) {
+                  // User already claimed this token, fetch promo and show code
+                  fetch('https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app/promotions/' + promoId + '/public.json')
+                    .then(function(r) { return r.ok ? r.json() : null; })
+                    .then(function(pData) {
+                      if (pData) {
+                        clearTimeout(dbLoadTimeout);
+                        promoData = pData;
+                        renderPromotion();
+                        if (tokenData.code && tokenData.code !== '--------') {
+                          showClaimedCoupon(tokenData.code, false);
+                        } else {
+                          fetchTokenCodeFallback(promoId, currentUser.uid, tokenId);
+                        }
+                      }
+                    });
+                } else {
+                  clearTimeout(dbLoadTimeout);
+                  showState('error');
+                  document.getElementById('error-msg').textContent = "This one-time claim link has already been used.";
+                }
+                return;
+              }
+
+              // Load public details of the promotion via fast REST
+              fetch('https://creation-cue-manage-default-rtdb.europe-west1.firebasedatabase.app/promotions/' + promoId + '/public.json')
+                .then(function(r) { return r.ok ? r.json() : null; })
+                .then(function(pData) {
+                  if (pData && !promoData) {
+                    clearTimeout(dbLoadTimeout);
+                    promoData = pData;
+                    if (promoData.active === false) {
+                      showState('error');
+                      document.getElementById('error-msg').textContent = "This promotion is currently paused.";
+                      return;
+                    }
+                    renderPromotion();
+                  }
+                });
+            } else if (data === null && !tokenData) {
+              clearTimeout(dbLoadTimeout);
+              showState('error');
+              document.getElementById('error-msg').textContent = "This claim link is invalid or expired.";
+            }
+          }).catch(function(e) { console.warn("REST token fetch fallback note:", e); });
+
         // One-time token redemption flow
         db.ref('one_time_tokens/' + tokenId).on('value', function(tokenSnapshot) {
           clearTimeout(dbLoadTimeout);
