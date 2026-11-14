@@ -1,21 +1,35 @@
 {
-  "lastUpdated": "2026-11-13T03:36:11.627Z",
+  "lastUpdated": "2026-11-14T03:34:08.747Z",
   "reviews": [
     {
-      "reviewId": "d2cbaadc-e08a-4da8-84cc-304e47990db8",
-      "packageName": "com.creation.cue140watchface",
-      "title": "Hybrid Watch Face CUE140",
-      "wfId": "cue140",
-      "authorName": "Neal Becker",
+      "reviewId": "9439b7fe-8f27-4a56-8188-7df4ec1f7acd",
+      "packageName": "com.creation.cue136watchface",
+      "title": "Analog Watch Face CUE136",
+      "wfId": "cue136",
+      "authorName": "Brian Clem",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "mustang (Pixel 10 Pro XL)",
+      "topics": [
+        "Hardware"
+      ],
+      "text": "\tGood looking on my pixel 5 watch",
+      "lastModified": "2026-11-13T22:01:26.000Z"
+    },
+    {
+      "reviewId": "b69af37c-1c3c-4ce5-abb4-813d90b8dc15",
+      "packageName": "com.creation.cue136watchface",
+      "title": "Analog Watch Face CUE136",
+      "wfId": "cue136",
+      "authorName": "Sameer Motiwala",
       "starRating": 5,
       "reviewerLanguage": "en",
       "deviceMetadata": "Unknown",
       "topics": [
-        "Hardware",
         "Loved it"
       ],
-      "text": "\tThis app provides great customer service and the watch faces are PRIMO! I mistakenly thought this site was another and mentioned a promo I had responded to , they informed me it was not their promo, BUT honored it anyway! Will go back for more watch faces!! GalaxyWatch8",
-      "lastModified": "2026-11-12T16:55:13.000Z"
+      "text": "\tSimple yet superb looking, minimalist yet attractive.",
+      "lastModified": "2026-11-13T14:22:10.000Z"
     }
   ]
 }
