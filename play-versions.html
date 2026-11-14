@@ -3813,8 +3813,150 @@
     </div>
 
     <!-- Task List Container -->
-    <div id="roadmap-content" style="padding: 16px 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 12px;">
-      <div style="color: var(--muted); text-align: center; margin-top: 40px; font-size: 13px;">Loading roadmap tasks...</div>
+    <div id="roadmap-content" style="padding: 16px 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 14px;">
+      <!-- Google Play Explore & Recommendation Playbook Card (Collapsible) -->
+      <div id="roadmap-playbook-card" class="playbook-guide-card" style="background: linear-gradient(135deg, rgba(24, 18, 43, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%); border: 1px solid rgba(139, 92, 246, 0.35); border-radius: 10px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35); margin-bottom: 2px;">
+        <!-- Card Header (Click to toggle) -->
+        <div onclick="togglePlaybookGuide()" style="padding: 12px 16px; background: rgba(124, 58, 237, 0.12); border-bottom: 1px solid rgba(139, 92, 246, 0.25); display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none;">
+          <div style="display: flex; align-items: center; gap: 10px; min-width: 0;">
+            <div style="width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #7C3AED, #38BDF8); display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);">
+              🎯
+            </div>
+            <div style="min-width: 0;">
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <span style="font-family: 'Teko', sans-serif; font-size: 19px; font-weight: 600; letter-spacing: 0.5px; color: #fff; line-height: 1.1;">
+                  Google Play Explore &amp; Recommendation Playbook
+                </span>
+                <span style="font-size: 9px; font-weight: 700; text-transform: uppercase; background: rgba(124, 58, 237, 0.3); color: #c4b5fd; border: 1px solid rgba(167, 139, 250, 0.4); padding: 1px 6px; border-radius: 4px; letter-spacing: 0.5px;">
+                  Strategy Guide
+                </span>
+              </div>
+              <div style="font-size: 11px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px;">
+                How to get &amp; keep watch faces in Google Play's Recommended / Category Carousels
+              </div>
+            </div>
+          </div>
+          <button type="button" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #c4b5fd; border-radius: 5px; padding: 4px 10px; font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 5px; cursor: pointer; flex-shrink: 0;">
+            <span id="playbook-toggle-text">Collapse</span>
+            <span id="playbook-toggle-icon" style="font-size: 9px;">▼</span>
+          </button>
+        </div>
+
+        <!-- Collapsible Body -->
+        <div id="playbook-guide-body" style="padding: 14px 16px;">
+          <!-- Core North Star Principle -->
+          <div style="background: rgba(245, 158, 11, 0.1); border-left: 3px solid #f59e0b; padding: 8px 12px; border-radius: 0 6px 6px 0; margin-bottom: 12px;">
+            <div style="font-size: 10px; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;">
+              💡 North Star Principle
+            </div>
+            <div style="font-size: 12px; color: #e2e8f0; line-height: 1.4;">
+              Every single action should have one goal: <strong>get and keep your watch faces on Google Play's Recommended, Category Carousels, and Top Chart pages</strong> with minimal wasted effort.
+            </div>
+          </div>
+
+          <!-- 6 Pillars Grid -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; margin-bottom: 12px;">
+            
+            <!-- Pillar 1 -->
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 12px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                <span style="font-size: 14px;">🐴</span>
+                <span style="font-size: 12px; font-weight: 700; color: #38bdf8;">1. Rotate 100% Free "Trojan Horses"</span>
+              </div>
+              <div style="font-size: 11px; color: #cbd5e1; line-height: 1.4;">
+                <strong style="color: #fff;">Why:</strong> Real store installs push free faces into Google Play's <em>Top 45 Free Chart</em> (e.g. CUE Indus #8, CUE136 #37).<br>
+                <strong style="color: #fff;">Action:</strong> Every 1–2 weeks, post 1 free face on <code style="color: #93c5fd; background: rgba(56,189,248,0.1); padding: 1px 4px; border-radius: 3px;">r/GalaxyWatchFace</code> / <code style="color: #93c5fd; background: rgba(56,189,248,0.1); padding: 1px 4px; border-radius: 3px;">r/AndroidWatchFaces</code>.<br>
+                <strong style="color: #fff;">Funnel:</strong> Top 3 lines of listing must link directly to its Paid Twin &amp; Dev Page.
+              </div>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 12px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                <span style="font-size: 14px;">🏷️</span>
+                <span style="font-size: 12px; font-weight: 700; color: #a78bfa;">2. Category Carousels Title Optimization</span>
+              </div>
+              <div style="font-size: 11px; color: #cbd5e1; line-height: 1.4;">
+                <strong style="color: #fff;">Why:</strong> In Hybrid, Digital, Analog carousels, Google sorts alphabetically by package ID (A → Z). <code style="color: #c4b5fd; background: rgba(167,139,250,0.1); padding: 1px 4px; border-radius: 3px;">com.creation.*</code> ranks at <strong style="color: #34d399;">#2 to #12</strong>!<br>
+                <strong style="color: #fff;">Action:</strong> Rename 20 faces with category keywords.
+                <div style="margin-top: 6px;">
+                  <a href="/titles.html" target="_blank" style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; color: #fff; background: #7C3AED; padding: 3px 8px; border-radius: 4px; text-decoration: none;">
+                    🏷️ Open Titles Checklist (titles.html) ↗
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 12px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                <span style="font-size: 14px;">💰</span>
+                <span style="font-size: 12px; font-weight: 700; color: #34d399;">3. Staggered €0.49 Play Store Sales</span>
+              </div>
+              <div style="font-size: 11px; color: #cbd5e1; line-height: 1.4;">
+                <strong style="color: #fff;">Why:</strong> Explore algorithm ignores €0 coupons, but counts €0.49 as full paid sales. The strikethrough badge (<s style="opacity:0.7;">€1.99</s> <strong>€0.49</strong>) spikes conversion rate from ~2% to <strong>6–10%</strong>.<br>
+                <strong style="color: #fff;">Action:</strong> Keep 3–4 paid faces on €0.49 sales on rotation (respecting 30-day cooldown).
+              </div>
+            </div>
+
+            <!-- Pillar 4 -->
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 12px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                <span style="font-size: 14px;">🎁</span>
+                <span style="font-size: 12px; font-weight: 700; color: #f472b6;">4. 2-Line "BOGO" (Buy 1 Get 1) Offer</span>
+              </div>
+              <div style="font-size: 11px; color: #cbd5e1; line-height: 1.4;">
+                <strong style="color: #fff;">Why:</strong> Converts store visitors into paying buyers and incentivizes organic 5-star reviews without giving away public coupons.<br>
+                <strong style="color: #fff;">Copy:</strong> <em>"Special Offer: Buy this watch face and get any other Creation Cue face FREE! Simply email your receipt to creationcue@gmail.com with your requested face."</em>
+              </div>
+            </div>
+
+            <!-- Pillar 5 -->
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 12px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                <span style="font-size: 14px;">🛡️</span>
+                <span style="font-size: 12px; font-weight: 700; color: #fbbf24;">5. Protect First 7 Days on New Launches</span>
+              </div>
+              <div style="font-size: 11px; color: #cbd5e1; line-height: 1.4;">
+                <strong style="color: #fff;">Why:</strong> Google gives fresh releases a 7-day algorithmic honeymoon boost.<br>
+                <strong style="color: #fff;">Action:</strong> Send 7–10 private VIP codes on Day 1 to trusted supporters (like CUE180) to cross threshold and show a <strong style="color: #fbbf24;">5.0★</strong> badge immediately.<br>
+                <strong style="color: #fff;">Quality:</strong> Keep 0% crash and zero ANR rate so Google doesn't throttle discovery.
+              </div>
+            </div>
+
+            <!-- Pillar 6 -->
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 12px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                <span style="font-size: 14px;">📲</span>
+                <span style="font-size: 12px; font-weight: 700; color: #38bdf8;">6. Cross-Link via Companion App &amp; Hit Faces</span>
+              </div>
+              <div style="font-size: 11px; color: #cbd5e1; line-height: 1.4;">
+                <strong style="color: #fff;">Why:</strong> Hit faces (CRC046 with 100K+ installs, CUE166 with 3.59M impressions, CUE Indus) are massive free traffic funnels.<br>
+                <strong style="color: #fff;">Action:</strong> Every companion app install loads live <code style="color: #93c5fd; background: rgba(56,189,248,0.1); padding: 1px 4px; border-radius: 3px;">manager.json</code>. Pin newest releases and active €0.49 sale faces at top to convert free traffic into sales.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Weekly Routine Strip -->
+          <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 10px 14px;">
+            <div style="font-size: 11px; font-weight: 700; color: #34d399; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+              <span>🗓️</span> Weekly Routine (Simple &amp; Low-Stress)
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; font-size: 11px; color: #e2e8f0;">
+              <div><strong>🗓️ Monday:</strong> Check category carousels &amp; update titles via <a href="/titles.html" target="_blank" style="color: #38bdf8;">titles.html</a>.</div>
+              <div><strong>🚀 Once a Week:</strong> Post 1 free face on Reddit to maintain Top 45 Free Chart ranking.</div>
+              <div><strong>🏷️ Once a Week:</strong> Rotate 3–4 paid faces onto €0.49 Play Store Sale (spike conversion rate).</div>
+              <div><strong>🌟 Launch Day:</strong> Send 7–10 VIP codes on Day 1 to unlock 5.0★ rating badge immediately.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actionable Roadmap Tasks List -->
+      <div id="roadmap-tasks-container" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="color: var(--muted); text-align: center; margin-top: 20px; font-size: 13px;">Loading roadmap tasks...</div>
+      </div>
     </div>
   </div>
 
@@ -6536,7 +6678,115 @@
 
     // Roadmap & Operations Tasks Logic
     // ─────────────────────────────────────────────────────────────────────────
+    function togglePlaybookGuide(force) {
+      const body = document.getElementById('playbook-guide-body');
+      const icon = document.getElementById('playbook-toggle-icon');
+      const btnText = document.getElementById('playbook-toggle-text');
+      if (!body) return;
+      const isCurrentlyOpen = body.style.display !== 'none';
+      const willOpen = typeof force === 'boolean' ? force : !isCurrentlyOpen;
+      body.style.display = willOpen ? 'block' : 'none';
+      if (icon) icon.textContent = willOpen ? '▼' : '▶';
+      if (btnText) btnText.textContent = willOpen ? 'Collapse' : 'Expand Guide';
+      try {
+        localStorage.setItem('cc_playbook_guide_collapsed', willOpen ? 'false' : 'true');
+      } catch (e) {}
+    }
+
     const DEFAULT_ROADMAP_TASKS = [
+      {
+        id: "task-explore-titles",
+        title: "🏷️ [Explore Playbook] Category Carousel Title Optimization (20 Faces)",
+        category: "Store Optimization",
+        priority: "high",
+        status: "ready",
+        statusLabel: "⚡ Ready to Action",
+        description: "Update the 20 watch faces to include Digital / Hybrid / Analog / Minimal keywords in titles to qualify for Google Play Category Carousels. Once in the carousel, com.creation.* ranks near the top (#2 - #12) alphabetically.",
+        actionUrl: "/titles.html",
+        actionLabel: "🏷️ Open Titles Checklist",
+        checkpoints: [
+          { text: "Check titles.html checklist for 20 faces", done: false },
+          { text: "Update CUE179 - CUE168 titles in Play Console", done: false },
+          { text: "Update CUE167 - CUE154 titles in Play Console", done: false },
+          { text: "Verify category carousels on Wear OS Play Store", done: false }
+        ],
+        completed: false,
+        createdAt: 1731580000000
+      },
+      {
+        id: "task-trojan-horse-reddit",
+        title: "🐴 [Explore Playbook] Weekly Free \"Trojan Horse\" Reddit Post",
+        category: "Marketing",
+        priority: "medium",
+        status: "planned",
+        statusLabel: "📋 Planned",
+        description: "Post one 100% Free watch face (CUE Indus, CUE136, CRC046, etc.) on r/GalaxyWatchFace or r/AndroidWatchFaces to maintain Top 45 Free Chart ranking. Ensure store listing top lines funnel to Paid Twin (CUE Indus Pro, CUE136PLUS).",
+        actionUrl: "https://www.reddit.com/r/GalaxyWatchFace/",
+        actionLabel: "🔗 Open r/GalaxyWatchFace",
+        checkpoints: [
+          { text: "Select free face (verify 30-day repost cooldown)", done: false },
+          { text: "Verify Play Store description links to Paid Twin & Dev Page", done: false },
+          { text: "Post clean screenshot & direct Play Store link on Reddit", done: false },
+          { text: "Monitor Free Chart ranking in Play Console", done: false }
+        ],
+        completed: false,
+        createdAt: 1731580000000
+      },
+      {
+        id: "task-staggered-sales",
+        title: "💰 [Explore Playbook] Staggered €0.49 Promotional Sales Rotation",
+        category: "Monetization",
+        priority: "medium",
+        status: "planned",
+        statusLabel: "📋 Planned",
+        description: "Maintain 3-4 paid watch faces on staggered €0.49 sales to spike store listing conversion rates (6-10%) and trigger Google Play Explore recommendation algorithms. Respect 30-day cooldown.",
+        actionUrl: "https://play.google.com/console/u/0/developers/7609098870161748513/app-list",
+        actionLabel: "🔗 Open Play Console",
+        checkpoints: [
+          { text: "Check cooldown dates across paid catalog", done: false },
+          { text: "Schedule next batch of 3-4 faces at €0.49 in Play Console", done: false },
+          { text: "Announce sales in companion app catalog (manager.json)", done: false }
+        ],
+        completed: false,
+        createdAt: 1731580000000
+      },
+      {
+        id: "task-bogo-descriptions",
+        title: "🎁 [Explore Playbook] Add 2-Line BOGO Offer to Paid Store Listings",
+        category: "Store Optimization",
+        priority: "medium",
+        status: "planned",
+        statusLabel: "📋 Planned",
+        description: "Add 2-line Buy 1 Get 1 Free offer to paid store descriptions to turn store visitors into paying buyers and encourage organic 5-star reviews without giving away coupons.\n\nTemplate:\n\"Special Offer: Buy this watch face and get any other Creation Cue face FREE! Simply email your Google Play receipt to creationcue@gmail.com with the face name you want.\"",
+        actionUrl: "",
+        actionLabel: "",
+        checkpoints: [
+          { text: "Draft standard 2-line BOGO copy (email receipt to creationcue@gmail.com)", done: false },
+          { text: "Batch update paid store listings via Play Console / API", done: false },
+          { text: "Monitor inbound receipt emails and fulfill bonus promo codes", done: false }
+        ],
+        completed: false,
+        createdAt: 1731580000000
+      },
+      {
+        id: "task-day1-vip-launches",
+        title: "🛡️ [Explore Playbook] New Release Day-1 VIP Rating Protocol",
+        category: "Store Optimization",
+        priority: "high",
+        status: "planned",
+        statusLabel: "📋 Planned",
+        description: "For all new watch face launches (e.g. CUE181+), distribute 7-10 private VIP codes on Day 1 to unlock the 5.0★ rating badge during the crucial 7-day algorithmic honeymoon window.",
+        actionUrl: "",
+        actionLabel: "",
+        checkpoints: [
+          { text: "Test release on watch for 0% crash / zero ANR", done: false },
+          { text: "Send 7-10 VIP codes to trusted supporters on launch day", done: false },
+          { text: "Confirm first 5 reviews appear to cross public badge threshold", done: false },
+          { text: "Pin new release to top of companion app catalog", done: false }
+        ],
+        completed: false,
+        createdAt: 1731580000000
+      },
       {
         id: "task-store-localization",
         title: "🌐 Mass Store Listing Localization (German + Spanish / Italian)",
@@ -6642,6 +6892,14 @@
       renderRoadmapTasks();
       updateRoadmapBadge();
 
+      // Restore Playbook Guide collapsed preference
+      try {
+        const isCollapsed = localStorage.getItem('cc_playbook_guide_collapsed') === 'true';
+        if (isCollapsed) {
+          togglePlaybookGuide(false);
+        }
+      } catch (e) {}
+
       // 2. Realtime Database Sync
       if (typeof db !== 'undefined' && db) {
         db.ref('roadmap_tasks').on('value', function(snapshot) {
@@ -6693,6 +6951,14 @@
 
       renderRoadmapTasks();
       updateRoadmapBadge();
+
+      // Restore Playbook Guide collapsed preference
+      try {
+        const isCollapsed = localStorage.getItem('cc_playbook_guide_collapsed') === 'true';
+        if (isCollapsed) {
+          togglePlaybookGuide(false);
+        }
+      } catch (e) {}
     }
 
     function updateRoadmapBadge() {
@@ -6901,7 +7167,7 @@
 
     function renderRoadmapTasks() {
       try {
-        const container = document.getElementById('roadmap-content');
+        const container = document.getElementById('roadmap-tasks-container') || document.getElementById('roadmap-content');
         if (!container) return;
 
       let filtered = roadmapTasks;
