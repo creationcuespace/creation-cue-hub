@@ -67,6 +67,10 @@
         "destination": "/play-versions.html"
       },
       {
+        "source": "/play-versions-v2",
+        "destination": "/play-versions-v2.html"
+      },
+      {
         "source": "/brazil-pricing-tracker",
         "destination": "/brazil-pricing-tracker.html"
       },
@@ -128,6 +132,19 @@
     ],
     "maxReleases": 2,
     "headers": [
+      {
+        "source": "/play-versions-v2*",
+        "headers": [
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex, nofollow, noarchive"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }
+        ]
+      },
       {
         "source": "/titles*",
         "headers": [
