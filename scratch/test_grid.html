@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#reviews-content {
+  padding: 16px;
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 14px;
+  align-content: start;
+  overflow-y: auto;
+  background: #111;
+  width: 900px;
+}
+#reviews-content > .card {
+  align-self: start;
+}
+.card {
+  background: rgba(14, 21, 37, 0.72) !important;
+  backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  color: white;
+}
+</style>
+</head>
+<body>
+<div id="reviews-content">
+  <div class="card" id="c1">
+    <h3>Card 1</h3>
+    <button onclick="document.getElementById('b1').style.display='block'">Reply</button>
+    <div id="b1" style="display:none; height: 300px; background: red;">Reply Box 1</div>
+  </div>
+  <div class="card" id="c2">
+    <h3>Card 2</h3>
+    <button onclick="document.getElementById('b2').style.display='block'">Reply</button>
+    <div id="b2" style="display:none; height: 300px; background: red;">Reply Box 2</div>
+  </div>
+  <div class="card" id="c3">
+    <h3>Card 3</h3>
+    <button>Reply</button>
+  </div>
+  <div class="card" id="c4">
+    <h3>Card 4</h3>
+    <button>Reply</button>
+  </div>
+</div>
+</body>
+</html>

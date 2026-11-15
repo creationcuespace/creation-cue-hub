@@ -1808,6 +1808,7 @@
       padding: 16px;
       display: grid !important;
       grid-template-columns: repeat(2, 1fr) !important;
+      grid-auto-rows: max-content !important;
       gap: 14px;
       align-content: start;
       overflow-y: auto;
@@ -1815,6 +1816,15 @@
 
     #reviews-content > .card {
       align-self: start;
+      position: relative;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    #reviews-content > .card.replying {
+      grid-column: 1 / -1 !important;
+      z-index: 10 !important;
+      border-color: rgba(56, 189, 248, 0.45) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 12px 28px -3px rgba(0, 0, 0, 0.65), 0 0 18px rgba(56, 189, 248, 0.15) !important;
     }
 
     #reviews-content > .card:last-child:nth-child(odd) {
@@ -3901,7 +3911,7 @@
         <button class="review-filter-btn" data-topic="AOD" onclick="filterReviewsByTopic('AOD', this)" style="font-size: 11px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #ccc; cursor: pointer;">🕒 AOD</button>
         <button class="review-filter-btn" data-topic="Loved it" onclick="filterReviewsByTopic('Loved it', this)" style="font-size: 11px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #ccc; cursor: pointer;">⭐ Loved it</button>
       </div>
-      <div class="details-body" id="reviews-content" style="padding: 16px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; align-content: start; overflow-y: auto;">
+      <div class="details-body" id="reviews-content" style="padding: 16px; display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: max-content; gap: 14px; align-content: start; overflow-y: auto;">
         <!-- Reviews will be injected here -->
         <div style="color: var(--text-muted); text-align: center; margin-top: 40px; font-size: 14px; grid-column: 1 / -1;">Loading reviews...</div>
       </div>
@@ -7940,8 +7950,31 @@
 
     function toggleReplyBox(reviewId) {
       const box = document.getElementById(`reply-box-${reviewId}`);
-      if (box) {
-        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+      if (!box) return;
+
+      const isOpening = box.style.display === 'none' || box.style.display === '';
+      const card = box.closest('.card');
+
+      if (isOpening) {
+        // Close any other open reply boxes cleanly
+        document.querySelectorAll('#reviews-content .card.replying').forEach(c => {
+          c.classList.remove('replying');
+          const otherBox = c.querySelector('[id^="reply-box-"]');
+          if (otherBox && otherBox !== box) otherBox.style.display = 'none';
+        });
+
+        box.style.display = 'block';
+        if (card) {
+          card.classList.add('replying');
+          setTimeout(() => {
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            const textarea = document.getElementById(`reply-text-${reviewId}`);
+            if (textarea) textarea.focus();
+          }, 80);
+        }
+      } else {
+        box.style.display = 'none';
+        if (card) card.classList.remove('replying');
       }
     }
 
