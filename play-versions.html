@@ -3952,6 +3952,8 @@
         <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
           <span style="font-size: 11px; color: var(--muted); font-weight: 600;">Filter:</span>
           <button class="review-filter-btn active" data-topic="all" onclick="filterReviewsByTopic('all', this)" style="font-size: 11px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--border); background: var(--purple); color: #fff; cursor: pointer;">All</button>
+          <button class="review-filter-btn" data-topic="with_text" onclick="filterReviewsByTopic('with_text', this)" style="font-size: 11px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #38bdf8; cursor: pointer;">💬 With Comment</button>
+          <button class="review-filter-btn" data-topic="rating_only" onclick="filterReviewsByTopic('rating_only', this)" style="font-size: 11px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #ccc; cursor: pointer;">⭐ Rating Only</button>
           <button class="review-filter-btn" data-topic="5star" onclick="filterReviewsByTopic('5star', this)" style="font-size: 11px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #fbbf24; cursor: pointer;">5 ★</button>
           <button class="review-filter-btn" data-topic="4star" onclick="filterReviewsByTopic('4star', this)" style="font-size: 11px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #ccc; cursor: pointer;">4 ★</button>
           <button class="review-filter-btn" data-topic="lowstar" onclick="filterReviewsByTopic('lowstar', this)" style="font-size: 11px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #f87171; cursor: pointer;">1-3 ★</button>
@@ -7753,6 +7755,11 @@
       if (firebaseRepliedReviews) {
         Object.values(firebaseRepliedReviews).forEach(fb => {
           if (fb && fb.reviewId) {
+            const hasExisting = historyMap.has(fb.reviewId);
+            const hasRealData = !!(fb.replyText || (fb.packageName && fb.text));
+            // Skip ghost dismissal stubs that lack app packageName, title, or review text
+            if (!hasExisting && !hasRealData) return;
+
             const existing = historyMap.get(fb.reviewId) || {};
             historyMap.set(fb.reviewId, {
               ...existing,
@@ -7765,7 +7772,7 @@
               deviceMetadata: fb.deviceMetadata || existing.deviceMetadata || '',
               reviewerLanguage: fb.reviewerLanguage || existing.reviewerLanguage || 'en',
               lastModified: fb.lastModified || existing.lastModified || fb.repliedAt || new Date().toISOString(),
-              hasDeveloperReply: !!fb.replyText || existing.hasDeveloperReply,
+              hasDeveloperReply: !!(fb.replyText || existing.hasDeveloperReply),
               developerReplyText: fb.replyText || existing.developerReplyText,
               developerReplyTime: fb.repliedAt || existing.developerReplyTime
             });
@@ -8011,8 +8018,10 @@
             if (!textMatch && !authorMatch && !titleMatch) return false;
           }
 
-          // Topic / star filter
+          // Topic / star / comment filter
           if (currentReviewTopicFilter === 'all') return true;
+          if (currentReviewTopicFilter === 'with_text') return !!(r.text && r.text.trim() && r.text !== 'No text');
+          if (currentReviewTopicFilter === 'rating_only') return !r.text || !r.text.trim() || r.text === 'No text';
           if (currentReviewTopicFilter === '5star') return r.starRating === 5;
           if (currentReviewTopicFilter === '4star') return r.starRating === 4;
           if (currentReviewTopicFilter === 'lowstar') return r.starRating <= 3;
