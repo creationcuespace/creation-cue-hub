@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-14T03:34:08.744Z",
+  "lastUpdated": "2026-11-15T03:05:44.462Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -256,6 +256,14 @@
       "weightedAvg": 4.53,
       "ratedCount": 30,
       "totalWeight": 3894
+    },
+    {
+      "date": "2026-11-15",
+      "timestamp": "2026-11-15T03:05:44.462Z",
+      "avgRating": 4.5,
+      "weightedAvg": 4.53,
+      "ratedCount": 30,
+      "totalWeight": 3903
     }
   ],
   "results": [
@@ -620,7 +628,7 @@
       "lastUpdatedDate": "Nov 2, 2026",
       "downloads": "1K+",
       "rating": 5,
-      "ratingCount": "61",
+      "ratingCount": "62",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -1078,10 +1086,10 @@
       "companionStatus": "completed",
       "companionRollout": "100%",
       "companionNotes": "None",
-      "wearVersion": "Wear OS SDK 35 Update (v10000005)",
+      "wearVersion": "10000007 (2.0.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "Updated for Wear OS target SDK 35 compatibility, performance improvements, and bug fixes.",
+      "wearNotes": "Added a new outlined time font.",
       "storeLanguages": [
         "en-GB"
       ],
@@ -1374,7 +1382,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.7,
-      "ratingCount": "428",
+      "ratingCount": "433",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -2026,8 +2034,8 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
-      "rating": 4.3,
-      "ratingCount": "37",
+      "rating": 4.2,
+      "ratingCount": "39",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -2522,7 +2530,7 @@
       "lastUpdatedDate": "Aug 27, 2026",
       "downloads": "10K+",
       "rating": 4.4,
-      "ratingCount": "99",
+      "ratingCount": "100",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,

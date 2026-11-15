@@ -1,35 +1,77 @@
 {
-  "lastUpdated": "2026-11-14T03:34:08.747Z",
+  "lastUpdated": "2026-11-15T03:05:44.464Z",
   "reviews": [
     {
-      "reviewId": "9439b7fe-8f27-4a56-8188-7df4ec1f7acd",
-      "packageName": "com.creation.cue136watchface",
-      "title": "Analog Watch Face CUE136",
-      "wfId": "cue136",
-      "authorName": "Brian Clem",
+      "reviewId": "d3e06c09-7a3a-4d1b-a94f-b233bd175fb9",
+      "packageName": "com.creation.cueinduswatchface",
+      "title": "Watch Face CUE Indus",
+      "wfId": "cueindus",
+      "authorName": "Cris Silveira",
       "starRating": 5,
-      "reviewerLanguage": "en",
-      "deviceMetadata": "mustang (Pixel 10 Pro XL)",
-      "topics": [
-        "Hardware"
-      ],
-      "text": "\tGood looking on my pixel 5 watch",
-      "lastModified": "2026-11-13T22:01:26.000Z"
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "dm1q (Galaxy S23)",
+      "topics": [],
+      "text": "\tmuito bom!!",
+      "lastModified": "2026-11-15T01:39:41.000Z"
     },
     {
-      "reviewId": "b69af37c-1c3c-4ce5-abb4-813d90b8dc15",
+      "reviewId": "f2431ac0-a3de-48ac-bbfb-ca695a6d4432",
       "packageName": "com.creation.cue136watchface",
       "title": "Analog Watch Face CUE136",
       "wfId": "cue136",
-      "authorName": "Sameer Motiwala",
+      "authorName": "TBG HYPE",
+      "starRating": 4,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "r8q (Galaxy S20 FE 5G)",
+      "topics": [
+        "AOD",
+        "Loved it"
+      ],
+      "text": "\tA nice, clean easy to read watch face. Good customisation options. I always have aod active so appreciate the vibrant aod of this face.",
+      "lastModified": "2026-11-14T23:20:59.000Z"
+    },
+    {
+      "reviewId": "fb5af74d-9a57-4051-a9fd-296969039969",
+      "packageName": "com.creation.cueinduswatchface",
+      "title": "Watch Face CUE Indus",
+      "wfId": "cueindus",
+      "authorName": "Etienne Willemse",
       "starRating": 5,
       "reviewerLanguage": "en",
-      "deviceMetadata": "Unknown",
+      "deviceMetadata": "r13s (Galaxy S25 FE)",
       "topics": [
         "Loved it"
       ],
-      "text": "\tSimple yet superb looking, minimalist yet attractive.",
-      "lastModified": "2026-11-13T14:22:10.000Z"
+      "text": "\tBest designer around. Amazing watch face. thank you",
+      "lastModified": "2026-11-14T17:54:33.000Z"
+    },
+    {
+      "reviewId": "2610986a-e7ec-4ed1-bbf5-0241a95e4ec6",
+      "packageName": "com.creation.cue154watchface",
+      "title": "Watch Face CUE154",
+      "wfId": "cue154",
+      "authorName": "Abdmouleh Hichem",
+      "starRating": 5,
+      "reviewerLanguage": "fr",
+      "deviceMetadata": "a55x (Galaxy A55 5G)",
+      "topics": [
+        "Loved it"
+      ],
+      "text": "\tnice watchface love it",
+      "lastModified": "2026-11-14T15:33:38.000Z"
+    },
+    {
+      "reviewId": "2517e3ef-1022-4141-ab74-701e5e12712c",
+      "packageName": "com.creation.cue104watchface",
+      "title": "Digital Watch Face CUE104",
+      "wfId": "cue104",
+      "authorName": "Jackie Hungahunga",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "a07 (Galaxy A07)",
+      "topics": [],
+      "text": "\twatch",
+      "lastModified": "2026-11-14T10:18:53.000Z"
     }
   ]
 }
