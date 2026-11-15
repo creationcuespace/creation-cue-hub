@@ -2,7 +2,7 @@ const { google } = require('googleapis');
 const fs = require('fs');
 const { execSync } = require('child_process');
 
-function updateAndCommitReviews(reviewId, reason) {
+function updateAndCommitReviews(reviewId, reason, replyText = null) {
   try {
     if (!fs.existsSync('reviews-data.json')) {
       console.log('reviews-data.json not found, skipping file update.');
@@ -11,13 +11,34 @@ function updateAndCommitReviews(reviewId, reason) {
 
     const data = JSON.parse(fs.readFileSync('reviews-data.json', 'utf8'));
     if (data && Array.isArray(data.reviews)) {
-      const initialCount = data.reviews.length;
-      data.reviews = data.reviews.filter(r => r.reviewId !== reviewId);
+      let changed = false;
+      let commitMessage = '';
 
-      if (data.reviews.length < initialCount) {
+      if (reason === 'replied via API' && replyText) {
+        // Keep review in history and mark as replied
+        const target = data.reviews.find(r => r.reviewId === reviewId);
+        if (target) {
+          target.hasDeveloperReply = true;
+          target.developerReplyText = replyText;
+          target.developerReplyTime = new Date().toISOString();
+          changed = true;
+          commitMessage = `chore(reviews): record developer reply for review ${reviewId} [skip ci]`;
+          console.log(`Recorded developer reply for review ${reviewId} in reviews-data.json.`);
+        }
+      } else {
+        // 404 or removed: filter out
+        const initialCount = data.reviews.length;
+        data.reviews = data.reviews.filter(r => r.reviewId !== reviewId);
+        if (data.reviews.length < initialCount) {
+          changed = true;
+          commitMessage = `chore(reviews): remove review ${reviewId} (${reason}) [skip ci]`;
+          console.log(`Removed review ${reviewId} from reviews-data.json (${reason}).`);
+        }
+      }
+
+      if (changed) {
         data.lastUpdated = new Date().toISOString();
         fs.writeFileSync('reviews-data.json', JSON.stringify(data, null, 2), 'utf8');
-        console.log(`Removed review ${reviewId} from reviews-data.json (${reason}).`);
 
         // If running in GitHub Actions CI, commit and push changes back to repository
         if (process.env.GITHUB_ACTIONS === 'true') {
@@ -26,7 +47,7 @@ function updateAndCommitReviews(reviewId, reason) {
             execSync('git config user.name "github-actions[bot]"', { stdio: 'inherit' });
             execSync('git config user.email "github-actions[bot]@users.noreply.github.com"', { stdio: 'inherit' });
             execSync('git add reviews-data.json', { stdio: 'inherit' });
-            execSync(`git commit -m "chore(reviews): remove review ${reviewId} (${reason}) [skip ci]"`, { stdio: 'inherit' });
+            execSync(`git commit -m "${commitMessage}"`, { stdio: 'inherit' });
             execSync('git pull --rebase origin main', { stdio: 'inherit' });
             execSync('git push origin main', { stdio: 'inherit' });
             console.log('Successfully pushed changes to GitHub.');
@@ -79,7 +100,7 @@ async function main() {
     });
 
     console.log('Successfully replied to review via Google Play Developer API.');
-    updateAndCommitReviews(reviewId, 'replied via API');
+    updateAndCommitReviews(reviewId, 'replied via API', replyText);
 
   } catch (error) {
     const status = error.status || (error.response && error.response.status) || (error.response && error.response.data && error.response.data.error && error.response.data.error.code);

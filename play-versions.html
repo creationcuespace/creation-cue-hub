@@ -4649,6 +4649,20 @@
           db.ref('watch_face_replied_reviews').on('value', function(snapshot) {
             firebaseRepliedReviews = snapshot.val() || {};
 
+            // Clean up any answered reviews from localIgnored if they were stored there previously
+            try {
+              let localIgnored = JSON.parse(localStorage.getItem('ignored_reviews') || '[]');
+              const initialLen = localIgnored.length;
+              localIgnored = localIgnored.filter(id => {
+                const k = encodeFirebaseKey(id);
+                const fb = firebaseRepliedReviews[k] || firebaseRepliedReviews[id];
+                return !(fb && fb.replyText);
+              });
+              if (localIgnored.length < initialLen) {
+                localStorage.setItem('ignored_reviews', JSON.stringify(localIgnored));
+              }
+            } catch (e) {}
+
             // Auto-migrate any local ignored reviews to Firebase so other devices pick them up
             try {
               const localIgnored = JSON.parse(localStorage.getItem('ignored_reviews') || '[]');
@@ -4657,7 +4671,8 @@
                 let hasNew = false;
                 localIgnored.forEach(id => {
                   const k = encodeFirebaseKey(id);
-                  if (!firebaseRepliedReviews[k] && !firebaseRepliedReviews[id]) {
+                  const existingFb = firebaseRepliedReviews[k] || firebaseRepliedReviews[id];
+                  if (!existingFb) {
                     updates['watch_face_replied_reviews/' + k] = {
                       dismissedAt: new Date().toISOString(),
                       reviewId: id,
@@ -7801,7 +7816,7 @@
     }
 
     function ignoreReview(reviewId, skipConfirm = false) {
-      if (!skipConfirm && !confirm("Are you sure you want to remove this review from the list?")) return;
+      if (!skipConfirm && !confirm("Are you sure you want to dismiss this review from the unreplied list?")) return;
       let ignoredReviewIds = [];
       try {
         ignoredReviewIds = JSON.parse(localStorage.getItem('ignored_reviews') || '[]');
@@ -7812,19 +7827,22 @@
         localStorage.setItem('ignored_reviews', JSON.stringify(ignoredReviewIds));
       }
 
-      // Sync to Firebase Realtime Database so other tabs/devices update immediately
+      // Sync to Firebase with update() so existing replyText is NEVER destroyed
       const fbKey = encodeFirebaseKey(reviewId);
       if (!firebaseRepliedReviews) firebaseRepliedReviews = {};
-      firebaseRepliedReviews[fbKey] = {
+      const existingFb = firebaseRepliedReviews[fbKey] || {};
+
+      const dismissUpdate = {
         dismissedAt: new Date().toISOString(),
         reviewId: reviewId
       };
+      firebaseRepliedReviews[fbKey] = {
+        ...existingFb,
+        ...dismissUpdate
+      };
 
       if (typeof db !== 'undefined' && db) {
-        db.ref('watch_face_replied_reviews/' + fbKey).set({
-          dismissedAt: new Date().toISOString(),
-          reviewId: reviewId
-        }).catch(err => console.warn("Could not sync dismissed review to Firebase:", err));
+        db.ref('watch_face_replied_reviews/' + fbKey).update(dismissUpdate).catch(err => console.warn("Could not sync dismissed review to Firebase:", err));
       }
 
       recomputeUnrepliedReviews();
@@ -7836,6 +7854,27 @@
           }
         }, 800);
       }
+    }
+
+    function undismissReview(reviewId) {
+      let ignoredReviewIds = [];
+      try {
+        ignoredReviewIds = JSON.parse(localStorage.getItem('ignored_reviews') || '[]');
+      } catch(e) {}
+      ignoredReviewIds = ignoredReviewIds.filter(id => id !== reviewId);
+      localStorage.setItem('ignored_reviews', JSON.stringify(ignoredReviewIds));
+
+      const fbKey = encodeFirebaseKey(reviewId);
+      if (firebaseRepliedReviews && firebaseRepliedReviews[fbKey]) {
+        delete firebaseRepliedReviews[fbKey].dismissedAt;
+      }
+
+      if (typeof db !== 'undefined' && db) {
+        db.ref('watch_face_replied_reviews/' + fbKey + '/dismissedAt').remove().catch(err => console.warn("Could not remove dismissed status in Firebase:", err));
+      }
+
+      recomputeUnrepliedReviews();
+      showToast('Review restored to active queue! ✓');
     }
 
     const CANNED_REVIEW_REPLIES = [
@@ -8049,12 +8088,15 @@
           const isDismissed = !!(fbData && fbData.dismissedAt && !devReplyText);
 
           let statusBadgeHtml = '';
+          let headerActionBtnHtml = '';
           if (isReplied) {
             statusBadgeHtml = `<span style="font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.35);">✓ Replied</span>`;
           } else if (isDismissed) {
             statusBadgeHtml = `<span style="font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(148, 163, 184, 0.12); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.25);">Dismissed</span>`;
+            headerActionBtnHtml = `<button onclick="undismissReview('${r.reviewId}')" style="font-size: 10px; padding: 2px 8px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 4px; font-weight: 600; cursor: pointer; transition: all 0.2s;" title="Restore to Unreplied queue">↩️ Restore</button>`;
           } else {
             statusBadgeHtml = `<span style="font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35);">⏳ Pending</span>`;
+            headerActionBtnHtml = `<button onclick="ignoreReview('${r.reviewId}')" style="font-size: 11px; padding: 4px 8px; background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border-color); border-radius: 4px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" title="Dismiss from unreplied list">✕</button>`;
           }
 
           let devReplyBoxHtml = '';
@@ -8087,7 +8129,7 @@
                 
                 <div style="display: flex; gap: 6px; align-items: center;">
                   ${statusBadgeHtml}
-                  ${!isReplied ? `<button onclick="ignoreReview('${r.reviewId}')" style="font-size: 11px; padding: 4px 8px; background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border-color); border-radius: 4px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" title="Dismiss from unreplied list">✕</button>` : ''}
+                  ${headerActionBtnHtml}
                 </div>
               </div>
 
@@ -8127,34 +8169,34 @@
                   </div>
                 </div>
                 
-                ${!isReplied ? `
-                  <div style="display: flex; gap: 6px; align-items: center;">
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  ${isReplied ? `
+                    <button onclick="toggleReplyBox('${r.reviewId}', true)" style="font-size: 11px; padding: 4px 10px; background: rgba(255,255,255,0.06); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; font-weight: 600; cursor: pointer; transition: all 0.2s;">✏️ Edit Reply</button>
+                  ` : `
                     <button onclick="toggleReplyBox('${r.reviewId}')" style="font-size: 11px; padding: 5px 12px; background: var(--primary); color: #fff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Reply</button>
-                  </div>
-                ` : ''}
+                  `}
+                </div>
               </div>
               
-              <!-- Hidden Reply Box (For pending reviews) -->
-              ${!isReplied ? `
-                <div id="reply-box-${r.reviewId}" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">
-                  <div style="font-size: 10.5px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
-                    <span>⚡ Quick Answers (Tap to paste):</span>
-                    <span style="font-size: 9.5px; opacity: 0.7;">2 lines preview</span>
-                  </div>
-                  <div id="canned-replies-${r.reviewId}" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; margin-bottom: 10px;">
-                    ${cannedButtonsHtml}
-                  </div>
-                  <textarea id="reply-text-${r.reviewId}" maxlength="350" spellcheck="true" autocorrect="on" autocapitalize="sentences" placeholder="Type your reply here..." style="width: 100%; height: 68px; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 6px; color: #fff; padding: 8px 10px; font-size: 12px; line-height: 1.4; resize: vertical; margin-bottom: 4px;" oninput="document.getElementById('reply-char-count-${r.reviewId}').innerText = this.value.length + '/350'"></textarea>
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 10px; color: var(--text-muted);">Max 350 chars (Google Play limit)</span>
-                    <span style="font-size: 10px; color: #888;" id="reply-char-count-${r.reviewId}">0/350</span>
-                  </div>
-                  <div style="display: flex; justify-content: flex-end; gap: 8px;">
-                    <button onclick="toggleReplyBox('${r.reviewId}')" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); padding: 5px 14px; border-radius: 4px; font-size: 11px; cursor: pointer;">Cancel</button>
-                    <button onclick="submitReply('${r.packageName}', '${r.reviewId}')" id="btn-submit-${r.reviewId}" style="background: var(--yellow); border: none; color: #000; padding: 5px 16px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer;">Send Reply</button>
-                  </div>
+              <!-- Reply Box (Hidden by default, supports reply & edit) -->
+              <div id="reply-box-${r.reviewId}" data-reply-text="${escapeHtml(devReplyText)}" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <div style="font-size: 10.5px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+                  <span>⚡ Quick Answers (Tap to paste):</span>
+                  <span style="font-size: 9.5px; opacity: 0.7;">2 lines preview</span>
                 </div>
-              ` : ''}
+                <div id="canned-replies-${r.reviewId}" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; margin-bottom: 10px;">
+                  ${cannedButtonsHtml}
+                </div>
+                <textarea id="reply-text-${r.reviewId}" maxlength="350" spellcheck="true" autocorrect="on" autocapitalize="sentences" placeholder="Type your reply here..." style="width: 100%; height: 68px; background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 6px; color: #fff; padding: 8px 10px; font-size: 12px; line-height: 1.4; resize: vertical; margin-bottom: 4px;" oninput="document.getElementById('reply-char-count-${r.reviewId}').innerText = this.value.length + '/350'"></textarea>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 10px; color: var(--text-muted);">Max 350 chars (Google Play limit)</span>
+                  <span style="font-size: 10px; color: #888;" id="reply-char-count-${r.reviewId}">0/350</span>
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 8px;">
+                  <button onclick="toggleReplyBox('${r.reviewId}')" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); padding: 5px 14px; border-radius: 4px; font-size: 11px; cursor: pointer;">Cancel</button>
+                  <button onclick="submitReply('${r.packageName}', '${r.reviewId}')" id="btn-submit-${r.reviewId}" style="background: var(--yellow); border: none; color: #000; padding: 5px 16px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer;">${isReplied ? 'Update Reply' : 'Send Reply'}</button>
+                </div>
+              </div>
             </div>
           `;
         });
@@ -8165,7 +8207,7 @@
       }
     }
 
-    function toggleReplyBox(reviewId) {
+    function toggleReplyBox(reviewId, prefillExisting = false) {
       const box = document.getElementById(`reply-box-${reviewId}`);
       if (!box) return;
 
@@ -8186,7 +8228,15 @@
           setTimeout(() => {
             card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             const textarea = document.getElementById(`reply-text-${reviewId}`);
-            if (textarea) textarea.focus();
+            if (textarea) {
+              if (prefillExisting && !textarea.value) {
+                const existingText = box.getAttribute('data-reply-text') || '';
+                textarea.value = existingText;
+                const counter = document.getElementById(`reply-char-count-${reviewId}`);
+                if (counter) counter.innerText = textarea.value.length + '/350';
+              }
+              textarea.focus();
+            }
           }, 80);
         }
       } else {
@@ -8253,26 +8303,49 @@
 
           // Record reply immediately to Firebase Realtime Database
           const fbKey = encodeFirebaseKey(reviewId);
-          const reviewObj = (allReviewsHistory || []).find(r => r.reviewId === reviewId) || {};
+          const reviewObj = (allReviewsHistory || []).find(r => r.reviewId === reviewId) || (rawReviewsCache || []).find(r => r.reviewId === reviewId) || {};
+          const replyRecord = {
+            repliedAt: new Date().toISOString(),
+            reviewId: reviewId,
+            packageName: packageName,
+            replyText: replyText,
+            authorName: reviewObj.authorName || 'Google User',
+            title: reviewObj.title || '',
+            starRating: reviewObj.starRating || 5,
+            text: reviewObj.text || '',
+            deviceMetadata: reviewObj.deviceMetadata || '',
+            reviewerLanguage: reviewObj.reviewerLanguage || 'en',
+            lastModified: reviewObj.lastModified || new Date().toISOString(),
+            hasDeveloperReply: true
+          };
+
           if (typeof db !== 'undefined' && db) {
-            db.ref('watch_face_replied_reviews/' + fbKey).set({
-              repliedAt: new Date().toISOString(),
-              reviewId: reviewId,
-              packageName: packageName,
-              replyText: replyText,
-              authorName: reviewObj.authorName || 'Google User',
-              title: reviewObj.title || '',
-              starRating: reviewObj.starRating || 5,
-              text: reviewObj.text || '',
-              deviceMetadata: reviewObj.deviceMetadata || '',
-              reviewerLanguage: reviewObj.reviewerLanguage || 'en',
-              lastModified: reviewObj.lastModified || new Date().toISOString()
-            }).catch(err => console.warn("Could not sync reply to Firebase:", err));
+            db.ref('watch_face_replied_reviews/' + fbKey).set(replyRecord).catch(err => console.warn("Could not sync reply to Firebase:", err));
+            // Ensure dismissedAt is removed if it previously existed
+            db.ref('watch_face_replied_reviews/' + fbKey + '/dismissedAt').remove().catch(() => {});
           }
 
+          if (!firebaseRepliedReviews) firebaseRepliedReviews = {};
+          firebaseRepliedReviews[fbKey] = replyRecord;
+
+          // Remove from local ignored list if present
+          try {
+            let localIgnored = JSON.parse(localStorage.getItem('ignored_reviews') || '[]');
+            localIgnored = localIgnored.filter(id => id !== reviewId);
+            localStorage.setItem('ignored_reviews', JSON.stringify(localIgnored));
+          } catch(e) {}
+
+          // Do NOT call ignoreReview! Recompute reviews and refresh UI
           setTimeout(() => {
-            ignoreReview(reviewId, true);
-          }, 1200);
+            recomputeUnrepliedReviews();
+            showToast('Reply saved & synced! ✓');
+            if (unrepliedReviews.length === 0 && currentReviewsTab === 'unreplied') {
+              const panel = document.getElementById('reviews-panel');
+              if (panel && panel.classList.contains('open')) {
+                closeReviewsPanel();
+              }
+            }
+          }, 600);
         } else {
           const errData = await response.json().catch(() => ({}));
           console.error(errData);
