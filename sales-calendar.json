@@ -1,0 +1,292 @@
+{
+  "lastUpdated": "2026-11-15T17:42:43.196Z",
+  "note": "Tracks scheduled, active, and completed Google Play sales and enforces the 30-day Google Play sale cooldown rule.",
+  "sales": [
+    {
+      "id": "cue140",
+      "title": "CUE140",
+      "packageName": "com.creation.cue140watchface",
+      "salePriceEur": 0.5,
+      "startDate": "2026-11-11",
+      "endDate": "2026-11-15",
+      "type": "4-Day Flash Sale",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-15"
+    },
+    {
+      "id": "cue116",
+      "title": "CUE116",
+      "packageName": "com.creation.cue116watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue166",
+      "title": "CUE166",
+      "packageName": "com.creation.cue166watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue135",
+      "title": "CUE135",
+      "packageName": "com.creation.cue135watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "crc072",
+      "title": "CRC072",
+      "packageName": "com.creationcue.crc072watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue178",
+      "title": "CUE178",
+      "packageName": "com.creation.cue178watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue149",
+      "title": "CUE149",
+      "packageName": "com.creation.cue149watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue147",
+      "title": "CUE147",
+      "packageName": "com.creation.cue147watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue101",
+      "title": "CUE101",
+      "packageName": "com.creation.cue101watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue097",
+      "title": "CUE097",
+      "packageName": "com.creation.cue097watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cc010",
+      "title": "CRC010",
+      "packageName": "com.watchfacestudio.cc010",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue142",
+      "title": "CUE142",
+      "packageName": "com.creation.cue142watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue151",
+      "title": "CUE151",
+      "packageName": "com.creation.cue151watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue111",
+      "title": "CUE111",
+      "packageName": "com.creation.cue111watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue145",
+      "title": "CUE145",
+      "packageName": "com.creation.cue145watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue154",
+      "title": "CUE154",
+      "packageName": "com.creation.cue154watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "crc042",
+      "title": "CRC042",
+      "packageName": "com.watchfacestudio.crc042",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue148",
+      "title": "CUE148",
+      "packageName": "com.creation.cue148watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue153",
+      "title": "CUE153",
+      "packageName": "com.creation.cue153watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "crc028",
+      "title": "CRC028",
+      "packageName": "com.watchfacestudio.crc028",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue146",
+      "title": "CUE146",
+      "packageName": "com.creation.cue146watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "crc030",
+      "title": "CRC030",
+      "packageName": "com.watchfacestudio.crc030",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue144",
+      "title": "CUE144",
+      "packageName": "com.creation.cue144watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "crc065",
+      "title": "CRC065",
+      "packageName": "com.creationcue.crc065",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue131",
+      "title": "CUE131",
+      "packageName": "com.creation.cue131watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue175",
+      "title": "CUE175",
+      "packageName": "com.creation.cue175watchface",
+      "salePriceEur": 0.49,
+      "startDate": "2026-11-23",
+      "endDate": "2026-12-01",
+      "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    }
+  ]
+}
