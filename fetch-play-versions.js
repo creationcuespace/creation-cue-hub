@@ -310,8 +310,9 @@ async function main() {
           const userCommentObj = comments.find(c => c.userComment);
           const devReplyObj = comments.find(c => c.developerComment);
           
-          if (userCommentObj && !devReplyObj) {
+          if (userCommentObj) {
             const c = userCommentObj.userComment;
+            const devReply = devReplyObj ? devReplyObj.developerComment : null;
             allReviews.push({
               reviewId: review.reviewId,
               packageName,
@@ -323,6 +324,9 @@ async function main() {
               deviceMetadata: c.deviceMetadata ? c.deviceMetadata.productName : 'Unknown',
               topics: extractReviewTopics(c.text),
               text: c.text,
+              hasDeveloperReply: !!devReplyObj,
+              developerReplyText: devReply ? devReply.text : null,
+              developerReplyTime: devReply && devReply.lastModified ? new Date(parseInt(devReply.lastModified.seconds, 10) * 1000).toISOString() : null,
               lastModified: c.lastModified ? new Date(parseInt(c.lastModified.seconds, 10) * 1000).toISOString() : new Date().toISOString()
             });
           }
@@ -497,13 +501,15 @@ async function main() {
       const existingReviewsData = JSON.parse(fs.readFileSync(reviewsDataPath, 'utf8'));
       const existingReviews = existingReviewsData.reviews || [];
       
-      // Remove old reviews for the packages we just scanned
-      const scannedPackages = new Set(targetWatchFaces.map(wf => getPackageName(wf.play_store_url)).filter(Boolean));
-      const retainedReviews = existingReviews.filter(r => !scannedPackages.has(r.packageName));
-      
-      finalReviews = [...retainedReviews, ...allReviews];
-      
-      // Sort reviews by date descending
+      // Merge by reviewId so all historical reviews are permanently preserved
+      const reviewMap = new Map();
+      existingReviews.forEach(r => {
+        if (r && r.reviewId) reviewMap.set(r.reviewId, r);
+      });
+      allReviews.forEach(r => {
+        if (r && r.reviewId) reviewMap.set(r.reviewId, r);
+      });
+      finalReviews = Array.from(reviewMap.values());
       finalReviews.sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified));
     } catch (e) {
       console.warn("Could not merge with existing reviews data, overwriting instead:", e.message);
