@@ -117,6 +117,7 @@ async function main() {
     let downloads = 'N/A';
     let rating = null;
     let ratingCount = null;
+    let ratingsByCountry = {};
 
     let companionStatus = 'N/A';
     let companionRollout = '100%';
@@ -132,6 +133,7 @@ async function main() {
     if (prevItem) {
       if (prevItem.rating !== undefined) rating = prevItem.rating;
       if (prevItem.ratingCount !== undefined) ratingCount = prevItem.ratingCount;
+      if (prevItem.ratingsByCountry) ratingsByCountry = { ...prevItem.ratingsByCountry };
       if (prevItem.companionStatus) companionStatus = prevItem.companionStatus;
       if (prevItem.companionRollout) companionRollout = prevItem.companionRollout;
       if (prevItem.companionNotes) companionNotes = prevItem.companionNotes;
@@ -269,27 +271,49 @@ async function main() {
         downloads = downloadsMatch[1].trim();
       }
 
-      // Only extract rating and review count if the app itself has its own public star rating header
-      if (html.includes('itemprop="starRating"')) {
-        const ratingChunk = html.substring(html.indexOf('itemprop="starRating"'), html.indexOf('itemprop="starRating"') + 600);
-        const ratingMatch = ratingChunk.match(/aria-label="Rated\s+([0-9.]+)\s+stars?\s+out\s+of\s+five\s+stars?"/i);
-        if (ratingMatch) {
-          rating = parseFloat(ratingMatch[1]);
-        }
-        const reviewsRegex = /([0-9.,]+K?)\s*(?:reviews|ratings)/i;
-        const reviewsMatch = ratingChunk.match(reviewsRegex);
-        if (reviewsMatch) {
-          ratingCount = reviewsMatch[1].trim();
-        }
+      const parseStarRatingFromHtml = (pageHtml) => {
+        if (!pageHtml || !pageHtml.includes('itemprop="starRating"')) return { rating: null, ratingCount: null };
+        const chunk = pageHtml.substring(pageHtml.indexOf('itemprop="starRating"'), pageHtml.indexOf('itemprop="starRating"') + 600);
+        const rMatch = chunk.match(/aria-label="Rated\s+([0-9.]+)\s+stars?\s+out\s+of\s+five\s+stars?"/i);
+        const cMatch = chunk.match(/([0-9.,]+K?)\s*(?:reviews|ratings)/i);
+        return {
+          rating: rMatch ? parseFloat(rMatch[1]) : null,
+          ratingCount: cMatch ? cMatch[1].trim() : null
+        };
+      };
+
+      const usParsed = parseStarRatingFromHtml(html);
+      if (usParsed.rating !== null) {
+        rating = usParsed.rating;
+        if (usParsed.ratingCount) ratingCount = usParsed.ratingCount;
+        ratingsByCountry.US = rating;
+      } else if (prevItem && prevItem.rating !== undefined && prevItem.rating !== null) {
+        rating = prevItem.rating;
+        ratingCount = prevItem.ratingCount;
+        if (ratingsByCountry.US === undefined) ratingsByCountry.US = rating;
       } else {
-        if (prevItem && prevItem.rating !== undefined && prevItem.rating !== null) {
-          rating = prevItem.rating;
-          ratingCount = prevItem.ratingCount;
-        } else {
-          rating = null;
-          ratingCount = null;
-        }
+        rating = null;
+        ratingCount = null;
       }
+
+      // Fetch ratings for other top sales countries (DE, GB, PL, KR)
+      const extraCountries = ['DE', 'GB', 'PL', 'KR'];
+      await Promise.all(extraCountries.map(async (cc) => {
+        try {
+          const cUrl = `https://play.google.com/store/apps/details?id=${packageName}&hl=en&gl=${cc.toLowerCase()}`;
+          const cRes = await axios.get(cUrl, {
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+              'Accept-Language': 'en-US,en;q=0.9',
+            },
+            timeout: 5000
+          });
+          const parsed = parseStarRatingFromHtml(cRes.data);
+          if (parsed.rating !== null) {
+            ratingsByCountry[cc] = parsed.rating;
+          }
+        } catch (_) {}
+      }));
 
     } catch (scrapeError) {
       lastUpdatedDate = 'Fetch Failed';
@@ -371,6 +395,7 @@ async function main() {
       downloads,
       rating,
       ratingCount,
+      ratingsByCountry,
       vitals: prevItem && prevItem.vitals ? prevItem.vitals : {
         crashRate: 0.0,
         anrRate: 0.0,

@@ -299,6 +299,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.8
       }
     },
     {
@@ -325,7 +328,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue177",
@@ -351,7 +355,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue176",
@@ -377,7 +382,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue175",
@@ -404,7 +410,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue174",
@@ -431,7 +438,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue173",
@@ -457,7 +465,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue172",
@@ -483,7 +492,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue171",
@@ -509,7 +519,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue170",
@@ -535,7 +546,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue169",
@@ -561,7 +573,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue168",
@@ -587,7 +600,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue167",
@@ -613,7 +627,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue166",
@@ -641,6 +656,10 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 5,
+        "KR": 4.4
       }
     },
     {
@@ -667,7 +686,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue164",
@@ -693,7 +713,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue163",
@@ -719,7 +740,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue162",
@@ -745,7 +767,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue161",
@@ -771,6 +794,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.2
       }
     },
     {
@@ -797,7 +823,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue159",
@@ -823,7 +850,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue158",
@@ -849,7 +877,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue157",
@@ -875,7 +904,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue156",
@@ -901,7 +931,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue155",
@@ -927,7 +958,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue154",
@@ -953,6 +985,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.8
       }
     },
     {
@@ -979,6 +1014,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.8
       }
     },
     {
@@ -1005,7 +1043,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue151",
@@ -1031,6 +1070,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.3
       }
     },
     {
@@ -1057,7 +1099,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue149",
@@ -1083,6 +1126,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.2
       }
     },
     {
@@ -1109,6 +1155,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.2
       }
     },
     {
@@ -1135,7 +1184,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue146",
@@ -1161,6 +1211,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4
       }
     },
     {
@@ -1187,6 +1240,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.7
       }
     },
     {
@@ -1213,6 +1269,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.9
       }
     },
     {
@@ -1239,7 +1298,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue142",
@@ -1265,6 +1325,11 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.6,
+        "DE": 4.1,
+        "KR": 4.5
       }
     },
     {
@@ -1291,7 +1356,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue140",
@@ -1317,6 +1383,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.6
       }
     },
     {
@@ -1343,7 +1412,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue137",
@@ -1369,7 +1439,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue136",
@@ -1395,6 +1466,13 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.7,
+        "KR": 4.5,
+        "DE": 4.8,
+        "GB": 4.3,
+        "PL": 5
       }
     },
     {
@@ -1421,7 +1499,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue135",
@@ -1447,6 +1526,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.6
       }
     },
     {
@@ -1473,7 +1555,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue133",
@@ -1499,7 +1582,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue132",
@@ -1525,6 +1609,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "KR": 5
       }
     },
     {
@@ -1551,6 +1638,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 5
       }
     },
     {
@@ -1577,7 +1667,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue129",
@@ -1603,7 +1694,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue128",
@@ -1629,7 +1721,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue127",
@@ -1655,7 +1748,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue126",
@@ -1681,7 +1775,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue125",
@@ -1707,7 +1802,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue124",
@@ -1733,7 +1829,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue123",
@@ -1759,7 +1856,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue122",
@@ -1785,7 +1883,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue116",
@@ -1814,6 +1913,10 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.5,
+        "DE": 4.8
       }
     },
     {
@@ -1840,7 +1943,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue114",
@@ -1866,7 +1970,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue111",
@@ -1892,6 +1997,11 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.6,
+        "KR": 4.7,
+        "DE": 4.6
       }
     },
     {
@@ -1918,7 +2028,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue109",
@@ -1944,7 +2055,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue107",
@@ -1970,7 +2082,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue106",
@@ -1996,7 +2109,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue105",
@@ -2022,7 +2136,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue104",
@@ -2048,6 +2163,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.2
       }
     },
     {
@@ -2074,7 +2192,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue102",
@@ -2100,7 +2219,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue101",
@@ -2126,7 +2246,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue100",
@@ -2152,7 +2273,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue099",
@@ -2178,7 +2300,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue098",
@@ -2204,7 +2327,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue097",
@@ -2230,7 +2354,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc094",
@@ -2256,7 +2381,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc092",
@@ -2282,7 +2408,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc091",
@@ -2308,7 +2435,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc090",
@@ -2334,7 +2462,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc087",
@@ -2360,7 +2489,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc082",
@@ -2386,6 +2516,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 3
       }
     },
     {
@@ -2412,7 +2545,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc080",
@@ -2438,6 +2572,13 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.3,
+        "GB": 4.4,
+        "PL": 4.4,
+        "DE": 4.3,
+        "KR": 4.2
       }
     },
     {
@@ -2464,7 +2605,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc072",
@@ -2490,6 +2632,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.2
       }
     },
     {
@@ -2516,7 +2661,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc069",
@@ -2543,6 +2689,10 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.4,
+        "KR": 4.9
       }
     },
     {
@@ -2569,6 +2719,10 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.9,
+        "KR": 4.4
       }
     },
     {
@@ -2595,7 +2749,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc065",
@@ -2621,6 +2776,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.8
       }
     },
     {
@@ -2647,7 +2805,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc050",
@@ -2673,7 +2832,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc046",
@@ -2699,6 +2859,13 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.7,
+        "GB": 4.5,
+        "DE": 4.5,
+        "PL": 4,
+        "KR": 4.5
       }
     },
     {
@@ -2725,7 +2892,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc043",
@@ -2751,7 +2919,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc042",
@@ -2777,7 +2946,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc041",
@@ -2803,6 +2973,13 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.2,
+        "GB": 4.7,
+        "PL": 4.9,
+        "DE": 4.5,
+        "KR": 4.5
       }
     },
     {
@@ -2829,7 +3006,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc036",
@@ -2855,7 +3033,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc035",
@@ -2881,7 +3060,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc034",
@@ -2907,7 +3087,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc032",
@@ -2933,7 +3114,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc031",
@@ -2959,7 +3141,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc030",
@@ -2985,6 +3168,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.3
       }
     },
     {
@@ -3011,6 +3197,9 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.8
       }
     },
     {
@@ -3037,7 +3226,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue024",
@@ -3063,7 +3253,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "crc023",
@@ -3089,7 +3280,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "ccwf022",
@@ -3115,7 +3307,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cc014",
@@ -3141,7 +3334,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cc010",
@@ -3167,7 +3361,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cc005",
@@ -3193,7 +3388,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cueindus",
@@ -3219,6 +3415,13 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
+      },
+      "ratingsByCountry": {
+        "US": 4.6,
+        "KR": 4.6,
+        "GB": 4.8,
+        "PL": 4.9,
+        "DE": 4.2
       }
     },
     {
@@ -3247,7 +3450,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue179",
@@ -3273,7 +3477,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     },
     {
       "id": "cue180",
@@ -3299,7 +3504,8 @@
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      }
+      },
+      "ratingsByCountry": {}
     }
   ]
 }

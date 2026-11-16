@@ -3309,7 +3309,13 @@
       <div class="stat-card clickable-card" id="card-rating" style="display: flex; flex-direction: column; justify-content: space-between; border-left-color: #f5c518;">
         <div>
           <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="display: inline-flex; align-items: center; gap: 5px;">Average Rating <span style="font-size: 9px; font-weight: 600; opacity: 0.65; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 1px 5px; border-radius: 4px; letter-spacing: 0.4px;" title="Public ratings from US Google Play Store (gl=US)">🇺🇸 US</span></span>
+            <span style="display: inline-flex; align-items: center; gap: 5px;">Average Rating <select id="rating-country-select" onclick="event.stopPropagation();" onchange="event.stopPropagation(); onRatingCountryChange(this.value);" title="Select Play Store country for ratings" style="padding: 1px 4px !important; font-size: 10px !important; font-weight: 600 !important; border-radius: 4px !important; background-color: rgba(255,255,255,0.06) !important; border: 1px solid rgba(255,255,255,0.14) !important; color: #e2e8f0 !important; box-shadow: none !important; line-height: 1.2;">
+              <option value="US">🇺🇸 US</option>
+              <option value="DE">🇩🇪 DE</option>
+              <option value="GB">🇬🇧 GB</option>
+              <option value="PL">🇵🇱 PL</option>
+              <option value="KR">🇰🇷 KR</option>
+            </select></span>
             <div style="display: flex; gap: 6px; align-items: center;">
               <span style="font-size: 10px; opacity: 0.75; color: var(--yellow); cursor: pointer;" title="Sort by Rating" onclick="event.stopPropagation(); onRatingCardClick();">⇅ Sort</span>
               <button type="button" class="header-btn" style="padding: 2px 6px; font-size: 10px; margin: 0; line-height: 1.2; border-color: rgba(245, 197, 24, 0.4); color: var(--yellow);" onclick="event.stopPropagation(); openRatingHistoryModal();" title="View Full Rating History & Analytics">📈 History</button>
@@ -4745,7 +4751,33 @@
       }
     }
 
+    window.currentRatingCountry = localStorage.getItem('cc_rating_country') || 'US';
+
+    function getCountryRating(ratingsByCountry, fallbackUsRating) {
+      const cc = window.currentRatingCountry || 'US';
+      if (ratingsByCountry && ratingsByCountry[cc] !== undefined && ratingsByCountry[cc] !== null) {
+        return ratingsByCountry[cc];
+      }
+      if (cc === 'US' && fallbackUsRating !== undefined) return fallbackUsRating;
+      return null;
+    }
+
+    function onRatingCountryChange(cc) {
+      window.currentRatingCountry = cc || 'US';
+      localStorage.setItem('cc_rating_country', window.currentRatingCountry);
+      const sel = document.getElementById('rating-country-select');
+      if (sel && sel.value !== window.currentRatingCountry) sel.value = window.currentRatingCountry;
+      combinedData.forEach(wf => {
+        const playInfo = versionsData[wf.packageName] || {};
+        wf.rating = getCountryRating(wf.ratingsByCountry || playInfo.ratingsByCountry, playInfo.rating);
+      });
+      renderDashboard();
+      if (activeDetailsWfId) openDetailsPanel(activeDetailsWfId);
+    }
+
     function buildCombinedData() {
+      const sel = document.getElementById('rating-country-select');
+      if (sel && sel.value !== window.currentRatingCountry) sel.value = window.currentRatingCountry;
       combinedData = managerData.map(wf => {
         const packageName = getPackageName(wf.play_store_url) || '';
         const playInfo = versionsData[packageName] || {};
@@ -4785,7 +4817,8 @@
           wearNotes: playInfo.wearNotes || 'None',
           lastUpdatedDate: playInfo.lastUpdatedDate || 'N/A',
           downloads: playInfo.downloads || 'N/A',
-          rating: (playInfo.rating !== undefined) ? playInfo.rating : null,
+          ratingsByCountry: playInfo.ratingsByCountry || (playInfo.rating !== undefined && playInfo.rating !== null ? { US: playInfo.rating } : {}),
+          rating: getCountryRating(playInfo.ratingsByCountry, playInfo.rating),
           ratingCount: playInfo.ratingCount || null,
           playStoreTitle: playInfo.playStoreTitle || '',
           isFree: wf.is_free || false,
