@@ -641,6 +641,48 @@
             transform: scale(1.15);
         }
 
+        /* QR Code Lightbox Modal */
+        .qr-modal-overlay {
+            z-index: 1100;
+        }
+
+        .qr-modal-box {
+            background: #111622;
+            border: 1px solid rgba(241, 179, 28, 0.5);
+            border-radius: 26px;
+            padding: 24px 24px 22px;
+            max-width: 340px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.92);
+            position: relative;
+        }
+
+        .qr-frame-white {
+            background: #FFFFFF;
+            padding: 16px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 8px auto 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+        }
+
+        .qr-frame-white img {
+            width: 210px;
+            height: 210px;
+            display: block;
+            image-rendering: pixelated;
+        }
+
+        .qr-modal-hint {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.45;
+            margin-bottom: 16px;
+        }
+
         /* Floating Contact Toast Notification */
         .contact-toast {
             position: fixed;
@@ -988,6 +1030,27 @@
         </div>
     </div>
 
+    <!-- QR Code Lightbox Modal -->
+    <div id="qr-modal" class="modal-overlay qr-modal-overlay" onclick="closeQrModal(event)">
+        <div class="qr-modal-box" onclick="event.stopPropagation()">
+            <div class="modal-header-row" style="margin-bottom: 10px;">
+                <div class="modal-title-group">
+                    <h3 id="qr-modal-title" style="font-size: 16px;">Watch Face QR</h3>
+                    <p>Huawei Health Direct Scan</p>
+                </div>
+                <button type="button" class="modal-x-btn" onclick="closeQrModal()" title="Close">&times;</button>
+            </div>
+            <div class="qr-frame-white">
+                <img id="qr-modal-img" src="" alt="Watch Face QR Code">
+            </div>
+            <p class="qr-modal-hint">Point your phone camera or Huawei Health scanner at this code to open the watch face.</p>
+            <a id="qr-modal-link" href="#" target="_blank" class="huawei-app-btn" style="width: 100%; justify-content: center;">
+                <span>Open Watch Face</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+        </div>
+    </div>
+
     <!-- Floating Contact Download Guidance Toast -->
     <div id="contact-toast" class="contact-toast">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -1046,6 +1109,43 @@
         function closeHuaweiNotice() {
             document.getElementById('huawei-modal').classList.remove('active');
         }
+
+        function openQrModal(qrSrc, title, deepLink) {
+            document.getElementById('qr-modal-img').src = qrSrc;
+            document.getElementById('qr-modal-title').textContent = title || 'Watch Face QR';
+            const linkEl = document.getElementById('qr-modal-link');
+            if (linkEl) {
+                linkEl.href = deepLink || '#';
+                linkEl.style.display = deepLink ? 'inline-flex' : 'none';
+            }
+            document.getElementById('qr-modal').classList.add('active');
+        }
+
+        function closeQrModal() {
+            document.getElementById('qr-modal').classList.remove('active');
+        }
+
+        // Open QR lightbox when clicking any QR thumbnail in the Huawei carousel
+        document.getElementById('huawei-track')?.addEventListener('click', (e) => {
+            const qrLink = e.target.closest('a[href*="qr_"]');
+            if (!qrLink) return;
+            e.preventDefault();
+            const card = qrLink.closest('.huawei-slide-card');
+            const title = card?.querySelector('.huawei-slide-title')?.textContent?.trim() || 'Watch Face QR';
+            const deepLink = card?.querySelector('.huawei-app-btn')?.getAttribute('href') || '';
+            openQrModal(qrLink.getAttribute('href'), title, deepLink);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const qrModal = document.getElementById('qr-modal');
+                if (qrModal && qrModal.classList.contains('active')) {
+                    closeQrModal();
+                } else {
+                    closeHuaweiNotice();
+                }
+            }
+        });
 
         // Touch swipe support for Huawei Carousel
         (function() {
