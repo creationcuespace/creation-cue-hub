@@ -1,10 +1,61 @@
 {
-  "lastUpdated": "2026-11-15T15:56:07.416Z",
+  "lastUpdated": "2026-11-16T03:08:50.552Z",
   "reviews": [
+    {
+      "reviewId": "6e5a5b0d-4eec-4286-a350-896ad279c77f",
+      "packageName": "com.creation.cueinduswatchface",
+      "title": "Watch Face CUE Indus",
+      "wfId": "cueindus",
+      "authorName": "Adlin 91",
+      "starRating": 5,
+      "reviewerLanguage": "ms",
+      "deviceMetadata": "V2446 (Y19s 5G)",
+      "topics": [],
+      "text": "\tAF oh dang that'd",
+      "hasDeveloperReply": false,
+      "developerReplyText": null,
+      "developerReplyTime": null,
+      "lastModified": "2026-11-16T02:57:31.000Z"
+    },
+    {
+      "reviewId": "b707022a-b340-49ff-b032-7113d6d65ac6",
+      "packageName": "com.creationcue.crc046",
+      "title": "Analog watch face CRC046",
+      "wfId": "crc046",
+      "authorName": "G H",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "panther (Pixel 7)",
+      "topics": [],
+      "text": "\tthis one good",
+      "hasDeveloperReply": false,
+      "developerReplyText": null,
+      "developerReplyTime": null,
+      "lastModified": "2026-11-15T23:28:12.000Z"
+    },
+    {
+      "reviewId": "5cc2e0ff-cd85-4bc1-9399-c7189626e0db",
+      "packageName": "com.creation.cue136watchface",
+      "title": "Analog Watch Face CUE136",
+      "wfId": "cue136",
+      "authorName": "Ott Saame",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "pa2q (Galaxy S25+)",
+      "topics": [
+        "Battery",
+        "Complications"
+      ],
+      "text": "\tThat's the WF I've been looking for. Just please make the complications more like the date and battery now, they're too small and messing with the digits. But definitely a keeper.",
+      "hasDeveloperReply": false,
+      "developerReplyText": null,
+      "developerReplyTime": null,
+      "lastModified": "2026-11-15T19:18:21.000Z"
+    },
     {
       "reviewId": "63f5ec29-1d0d-47dc-ae5e-d5d2be4630e0",
       "packageName": "com.creationcue.crc082watchface",
-      "title": "CRC082",
+      "title": "Analogue Watch Face CRC082",
       "wfId": "crc082",
       "authorName": "Brian Clem",
       "starRating": 5,
@@ -22,7 +73,7 @@
     {
       "reviewId": "a1eef50f-262f-4987-9c2b-8154c4c0b975",
       "packageName": "com.creationscue.crc080watchface",
-      "title": "CRC080",
+      "title": "Digital Watch Face CRC080",
       "wfId": "crc080",
       "authorName": "Van K",
       "starRating": 5,
@@ -40,7 +91,7 @@
     {
       "reviewId": "d3e06c09-7a3a-4d1b-a94f-b233bd175fb9",
       "packageName": "com.creation.cueinduswatchface",
-      "title": "Cue Indus",
+      "title": "Watch Face CUE Indus",
       "wfId": "cueindus",
       "authorName": "Cris Silveira",
       "starRating": 5,
@@ -48,15 +99,15 @@
       "deviceMetadata": "dm1q (Galaxy S23)",
       "topics": [],
       "text": "\tmuito bom!!",
-      "lastModified": "2026-11-15T01:39:41.000Z",
       "hasDeveloperReply": true,
       "developerReplyText": "Thank you.",
-      "developerReplyTime": "2026-11-15T07:54:48.000Z"
+      "developerReplyTime": "2026-11-15T07:54:48.000Z",
+      "lastModified": "2026-11-15T01:39:41.000Z"
     },
     {
       "reviewId": "f2431ac0-a3de-48ac-bbfb-ca695a6d4432",
       "packageName": "com.creation.cue136watchface",
-      "title": "CUE136",
+      "title": "Analog Watch Face CUE136",
       "wfId": "cue136",
       "authorName": "TBG HYPE",
       "starRating": 4,
@@ -67,15 +118,15 @@
         "Loved it"
       ],
       "text": "\tA nice, clean easy to read watch face. Good customisation options. I always have aod active so appreciate the vibrant aod of this face.",
-      "lastModified": "2026-11-14T23:20:59.000Z",
       "hasDeveloperReply": true,
       "developerReplyText": "Thank you for your kind words and support.",
-      "developerReplyTime": "2026-11-15T07:55:28.000Z"
+      "developerReplyTime": "2026-11-15T07:55:28.000Z",
+      "lastModified": "2026-11-14T23:20:59.000Z"
     },
     {
       "reviewId": "fb5af74d-9a57-4051-a9fd-296969039969",
       "packageName": "com.creation.cueinduswatchface",
-      "title": "Cue Indus",
+      "title": "Watch Face CUE Indus",
       "wfId": "cueindus",
       "authorName": "Etienne Willemse",
       "starRating": 5,
@@ -85,15 +136,15 @@
         "Loved it"
       ],
       "text": "\tBest designer around. Amazing watch face. thank you",
-      "lastModified": "2026-11-14T17:54:33.000Z",
       "hasDeveloperReply": true,
       "developerReplyText": "👍",
-      "developerReplyTime": "2026-11-15T07:55:37.000Z"
+      "developerReplyTime": "2026-11-15T07:55:37.000Z",
+      "lastModified": "2026-11-14T17:54:33.000Z"
     },
     {
       "reviewId": "2610986a-e7ec-4ed1-bbf5-0241a95e4ec6",
       "packageName": "com.creation.cue154watchface",
-      "title": "CUE154",
+      "title": "Watch Face CUE154",
       "wfId": "cue154",
       "authorName": "Abdmouleh Hichem",
       "starRating": 5,
@@ -103,15 +154,15 @@
         "Loved it"
       ],
       "text": "\tnice watchface love it",
-      "lastModified": "2026-11-14T15:33:38.000Z",
       "hasDeveloperReply": true,
       "developerReplyText": "Thank you, glad you are enjoying it.",
-      "developerReplyTime": "2026-11-15T07:55:56.000Z"
+      "developerReplyTime": "2026-11-15T07:55:56.000Z",
+      "lastModified": "2026-11-14T15:33:38.000Z"
     },
     {
       "reviewId": "2517e3ef-1022-4141-ab74-701e5e12712c",
       "packageName": "com.creation.cue104watchface",
-      "title": "CUE104",
+      "title": "Digital Watch Face CUE104",
       "wfId": "cue104",
       "authorName": "Jackie Hungahunga",
       "starRating": 5,
@@ -119,22 +170,22 @@
       "deviceMetadata": "a07 (Galaxy A07)",
       "topics": [],
       "text": "\twatch",
-      "lastModified": "2026-11-14T10:18:53.000Z",
       "hasDeveloperReply": true,
       "developerReplyText": "👍",
-      "developerReplyTime": "2026-11-15T07:56:52.000Z"
+      "developerReplyTime": "2026-11-15T07:56:52.000Z",
+      "lastModified": "2026-11-14T10:18:53.000Z"
     },
     {
       "reviewId": "9439b7fe-8f27-4a56-8188-7df4ec1f7acd",
       "packageName": "com.creation.cue136watchface",
-      "title": "CUE136",
+      "title": "Analog Watch Face CUE136",
       "wfId": "cue136",
       "authorName": "Brian Clem",
       "starRating": 5,
       "reviewerLanguage": "en",
       "deviceMetadata": "mustang (Pixel 10 Pro XL)",
       "topics": [
-        "Loved it"
+        "Hardware"
       ],
       "text": "\tGood looking on my pixel 5 watch",
       "hasDeveloperReply": true,
@@ -145,13 +196,15 @@
     {
       "reviewId": "b69af37c-1c3c-4ce5-abb4-813d90b8dc15",
       "packageName": "com.creation.cue136watchface",
-      "title": "CUE136",
+      "title": "Analog Watch Face CUE136",
       "wfId": "cue136",
       "authorName": "Sameer Motiwala",
       "starRating": 5,
       "reviewerLanguage": "en",
       "deviceMetadata": "Unknown",
-      "topics": [],
+      "topics": [
+        "Loved it"
+      ],
       "text": "\tSimple yet superb looking, minimalist yet attractive.",
       "hasDeveloperReply": true,
       "developerReplyText": "Thank you, glad you are enjoying it.",
@@ -161,13 +214,14 @@
     {
       "reviewId": "d2cbaadc-e08a-4da8-84cc-304e47990db8",
       "packageName": "com.creation.cue140watchface",
-      "title": "CUE140",
+      "title": "Hybrid Watch Face CUE140",
       "wfId": "cue140",
       "authorName": "Neal Becker",
       "starRating": 5,
       "reviewerLanguage": "en",
       "deviceMetadata": "Unknown",
       "topics": [
+        "Hardware",
         "Loved it"
       ],
       "text": "\tThis app provides great customer service and the watch faces are PRIMO! I mistakenly thought this site was another and mentioned a promo I had responded to , they informed me it was not their promo, BUT honored it anyway! Will go back for more watch faces!! GalaxyWatch8",
@@ -179,7 +233,7 @@
     {
       "reviewId": "5c7a2663-982e-4145-88c9-272a78a5e855",
       "packageName": "com.creation.cue136watchface",
-      "title": "CUE136",
+      "title": "Analog Watch Face CUE136",
       "wfId": "cue136",
       "authorName": "Gabriel Moura",
       "starRating": 5,
@@ -195,7 +249,7 @@
     {
       "reviewId": "8490d8fe-a991-43b3-a19e-decd8406086c",
       "packageName": "com.creationcue.crc069watchface",
-      "title": "CRC069",
+      "title": "Digital Watch Face CRC069",
       "wfId": "crc069",
       "authorName": "Movies and TV Series",
       "starRating": 5,
@@ -211,7 +265,7 @@
     {
       "reviewId": "a4372da7-375a-4f75-9494-b427b4968a34",
       "packageName": "com.creation.cueinduswatchface",
-      "title": "Cue Indus",
+      "title": "Watch Face CUE Indus",
       "wfId": "cueindus",
       "authorName": "Satya",
       "starRating": 5,
@@ -229,7 +283,7 @@
     {
       "reviewId": "93558fdd-b2e1-4edb-be13-1976260a6d03",
       "packageName": "com.creation.cueinduswatchface",
-      "title": "Cue Indus",
+      "title": "Watch Face CUE Indus",
       "wfId": "cueindus",
       "authorName": "SuperMan Bat",
       "starRating": 5,
@@ -245,7 +299,7 @@
     {
       "reviewId": "55c14386-876e-4185-936a-19a4410994e9",
       "packageName": "com.creation.cue180watchface",
-      "title": "CUE180",
+      "title": "Digital Watch Face CUE180",
       "wfId": "cue180",
       "authorName": "Jos van Merode",
       "starRating": 5,
@@ -261,7 +315,7 @@
     {
       "reviewId": "f804a871-b6e9-48bf-b042-81352c73ffd1",
       "packageName": "com.creation.cue168watchface",
-      "title": "CUE168",
+      "title": "Watch Face CUE168",
       "wfId": "cue168",
       "authorName": "Jos van Merode",
       "starRating": 5,

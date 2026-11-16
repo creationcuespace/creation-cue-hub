@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-15T03:05:44.462Z",
+  "lastUpdated": "2026-11-16T03:08:50.551Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -264,6 +264,14 @@
       "weightedAvg": 4.53,
       "ratedCount": 30,
       "totalWeight": 3903
+    },
+    {
+      "date": "2026-11-16",
+      "timestamp": "2026-11-16T03:08:50.551Z",
+      "avgRating": 4.5,
+      "weightedAvg": 4.53,
+      "ratedCount": 30,
+      "totalWeight": 3912
     }
   ],
   "results": [
@@ -940,7 +948,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.8,
-      "ratingCount": "29",
+      "ratingCount": "30",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -1304,7 +1312,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": 4.6,
-      "ratingCount": "15",
+      "ratingCount": "16",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -1382,7 +1390,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.7,
-      "ratingCount": "433",
+      "ratingCount": "435",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -2035,7 +2043,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
       "rating": 4.2,
-      "ratingCount": "39",
+      "ratingCount": "40",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -2790,7 +2798,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.2,
-      "ratingCount": "473",
+      "ratingCount": "474",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -3206,7 +3214,7 @@
       "lastUpdatedDate": "Nov 10, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "350",
+      "ratingCount": "353",
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
