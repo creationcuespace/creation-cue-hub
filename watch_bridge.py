@@ -724,10 +724,61 @@ def find_app_browser():
             return c
     return None
 
+def ensure_installed_on_system():
+    """Ensure WatchRecorder.exe, icon, and Start Menu / Desktop shortcuts exist when run frozen on Windows."""
+    if sys.platform != "win32" or not getattr(sys, 'frozen', False):
+        return
+
+    try:
+        local_app = os.environ.get("LOCALAPPDATA", os.path.expanduser("~"))
+        install_dir = os.path.join(local_app, "Programs", "CreationCue", "WatchRecorder")
+        os.makedirs(install_dir, exist_ok=True)
+
+        target_exe = os.path.join(install_dir, "WatchRecorder.exe")
+        current_exe = os.path.abspath(sys.executable)
+        if current_exe.lower() != os.path.abspath(target_exe).lower():
+            try:
+                shutil.copy2(current_exe, target_exe)
+            except (PermissionError, OSError):
+                pass
+
+        target_ico = os.path.join(install_dir, "favicon.ico")
+        src_ico = os.path.join(BUNDLE_DIR, "favicon.ico")
+        if not os.path.exists(src_ico):
+            src_ico = os.path.join(EXE_DIR, "favicon.ico")
+        if os.path.exists(src_ico):
+            try:
+                shutil.copy2(src_ico, target_ico)
+            except (PermissionError, OSError):
+                pass
+
+        ico_loc = f"{target_ico},0" if os.path.exists(target_ico) else f"{target_exe},0"
+        esc_exe = target_exe.replace("'", "''")
+        esc_dir = install_dir.replace("'", "''")
+        esc_ico = ico_loc.replace("'", "''")
+
+        ps_cmd = (
+            "$ws = New-Object -ComObject WScript.Shell; "
+            f"$target = '{esc_exe}'; $wdir = '{esc_dir}'; $ico = '{esc_ico}'; "
+            "foreach ($folder in @('Programs', 'Desktop')) { "
+            "  try { "
+            "    $lnkPath = Join-Path ([Environment]::GetFolderPath($folder)) 'WatchRecorder.lnk'; "
+            "    $s = $ws.CreateShortcut($lnkPath); "
+            "    $s.TargetPath = $target; $s.WorkingDirectory = $wdir; $s.IconLocation = $ico; $s.Save() "
+            "  } catch {} "
+            "}"
+        )
+        run_cmd(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", ps_cmd],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=10)
+    except Exception:
+        pass
+
 def start_app():
     if "--cli" in sys.argv or "--headless" in sys.argv or "-c" in sys.argv:
         run_server()
         return
+
+    threading.Thread(target=ensure_installed_on_system, daemon=True).start()
 
     # Start the HTTP server in a background daemon thread
     server_thread = threading.Thread(target=run_server, daemon=True)
