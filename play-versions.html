@@ -4752,7 +4752,7 @@
       }
     }
 
-    window.currentRatingCountry = localStorage.getItem('cc_rating_country') || 'ALL';
+    window.currentRatingCountry = 'ALL';
 
     function getCountryRating(ratingsByCountry, fallbackUsRating) {
       const cc = window.currentRatingCountry || 'ALL';
@@ -4774,7 +4774,6 @@
 
     function onRatingCountryChange(cc) {
       window.currentRatingCountry = cc || 'ALL';
-      localStorage.setItem('cc_rating_country', window.currentRatingCountry);
       const sel = document.getElementById('rating-country-select');
       if (sel && sel.value !== window.currentRatingCountry) sel.value = window.currentRatingCountry;
       combinedData.forEach(wf => {
