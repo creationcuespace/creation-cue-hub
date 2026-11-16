@@ -3310,6 +3310,7 @@
         <div>
           <div class="stat-label" style="display:flex; justify-content:space-between; align-items:center;">
             <span style="display: inline-flex; align-items: center; gap: 5px;">Average Rating <select id="rating-country-select" onclick="event.stopPropagation();" onchange="event.stopPropagation(); onRatingCountryChange(this.value);" title="Select Play Store country for ratings" style="padding: 1px 4px !important; font-size: 10px !important; font-weight: 600 !important; border-radius: 4px !important; background-color: rgba(255,255,255,0.06) !important; border: 1px solid rgba(255,255,255,0.14) !important; color: #e2e8f0 !important; box-shadow: none !important; line-height: 1.2;">
+              <option value="ALL">🌍 All (Avg)</option>
               <option value="US">🇺🇸 US</option>
               <option value="DE">🇩🇪 DE</option>
               <option value="GB">🇬🇧 GB</option>
@@ -4751,10 +4752,19 @@
       }
     }
 
-    window.currentRatingCountry = localStorage.getItem('cc_rating_country') || 'US';
+    window.currentRatingCountry = localStorage.getItem('cc_rating_country') || 'ALL';
 
     function getCountryRating(ratingsByCountry, fallbackUsRating) {
-      const cc = window.currentRatingCountry || 'US';
+      const cc = window.currentRatingCountry || 'ALL';
+      if (cc === 'ALL') {
+        if (ratingsByCountry) {
+          const vals = Object.values(ratingsByCountry).filter(v => typeof v === 'number' && v > 0);
+          if (vals.length > 0) {
+            return vals.reduce((a, b) => a + b, 0) / vals.length;
+          }
+        }
+        return (fallbackUsRating !== undefined) ? fallbackUsRating : null;
+      }
       if (ratingsByCountry && ratingsByCountry[cc] !== undefined && ratingsByCountry[cc] !== null) {
         return ratingsByCountry[cc];
       }
@@ -4763,7 +4773,7 @@
     }
 
     function onRatingCountryChange(cc) {
-      window.currentRatingCountry = cc || 'US';
+      window.currentRatingCountry = cc || 'ALL';
       localStorage.setItem('cc_rating_country', window.currentRatingCountry);
       const sel = document.getElementById('rating-country-select');
       if (sel && sel.value !== window.currentRatingCountry) sel.value = window.currentRatingCountry;
