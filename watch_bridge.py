@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import time
+import shutil
 import subprocess
 import threading
 import webbrowser
@@ -29,10 +30,41 @@ else:
     BUNDLE_DIR = os.path.dirname(os.path.abspath(__file__))
     EXE_DIR = BUNDLE_DIR
 
+def get_persistent_adb_path():
+    """Copy bundled ADB binaries to a persistent directory so _MEIPASS is never locked on exit."""
+    persistent_dir = os.path.join(
+        os.environ.get("LOCALAPPDATA", os.path.expanduser("~")),
+        "CreationCue",
+        "WatchRecorder",
+        "bin_adb"
+    )
+    os.makedirs(persistent_dir, exist_ok=True)
+    for filename in ("adb.exe", "AdbWinApi.dll", "AdbWinUsbApi.dll"):
+        src = os.path.join(BUNDLE_DIR, filename)
+        if not os.path.exists(src):
+            src = os.path.join(BUNDLE_DIR, "bin_adb", filename)
+        dst = os.path.join(persistent_dir, filename)
+        if os.path.exists(src):
+            try:
+                shutil.copy2(src, dst)
+            except (PermissionError, OSError):
+                # Ignore lock errors when adb.exe is already running from persistent_dir
+                pass
+    persistent_adb = os.path.join(persistent_dir, "adb.exe")
+    return persistent_adb if os.path.exists(persistent_adb) else None
+
+PERSISTENT_ADB_PATH = get_persistent_adb_path()
+
 # Auto-detect ADB executable
-POSSIBLE_ADB_PATHS = [
-    os.path.join(BUNDLE_DIR, "adb.exe"),
-    os.path.join(BUNDLE_DIR, "bin_adb", "adb.exe"),
+POSSIBLE_ADB_PATHS = []
+if PERSISTENT_ADB_PATH:
+    POSSIBLE_ADB_PATHS.append(PERSISTENT_ADB_PATH)
+if not getattr(sys, 'frozen', False):
+    POSSIBLE_ADB_PATHS.extend([
+        os.path.join(BUNDLE_DIR, "adb.exe"),
+        os.path.join(BUNDLE_DIR, "bin_adb", "adb.exe"),
+    ])
+POSSIBLE_ADB_PATHS.extend([
     os.path.join(EXE_DIR, "adb.exe"),
     os.path.join(EXE_DIR, "bin_adb", "adb.exe"),
     r"C:\Users\smash\.dronehacks\platform-tools\adb.exe",
@@ -40,7 +72,7 @@ POSSIBLE_ADB_PATHS = [
     r"C:\Users\User\Mega\WATCHFACESTUDIO\platform-tools\adb.exe",
     r"C:\Users\solio\Documents\MEGAsync\MEGAsync\WATCHFACESTUDIO\platform-tools\adb.exe",
     "adb"
-]
+])
 
 def _win32_no_window_kwargs(kwargs):
     if sys.platform == "win32":
