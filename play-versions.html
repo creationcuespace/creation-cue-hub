@@ -7962,6 +7962,23 @@
       }
     }
 
+    function getLanguageFlag(langCode) {
+      if (!langCode) return '🌐';
+      const l = langCode.toLowerCase();
+      if (l.includes('en') || l.includes('gb') || l.includes('us')) return '🇬🇧';
+      if (l.includes('de')) return '🇩🇪';
+      if (l.includes('el') || l.includes('gr')) return '🇬🇷';
+      if (l.includes('it')) return '🇮🇹';
+      if (l.includes('fr')) return '🇫🇷';
+      if (l.includes('es')) return '🇪🇸';
+      if (l.includes('ko')) return '🇰🇷';
+      if (l.includes('ja')) return '🇯🇵';
+      if (l.includes('pt')) return '🇵🇹';
+      if (l.includes('ru')) return '🇷🇺';
+      if (l.includes('ar')) return '🇸🇦';
+      return '🌐';
+    }
+
     var currentReviewTopicFilter = 'all';
 
     function filterReviewsByTopic(topic, btn) {
