@@ -1087,6 +1087,168 @@
             -webkit-box-orient: vertical;
         }
 
+        /* Reddit Tab & Mockup Specifics */
+        .reddit-suggestions-bar {
+            background: linear-gradient(135deg, rgba(255, 69, 0, 0.08), rgba(245, 197, 24, 0.06));
+            border: 1px solid rgba(255, 69, 0, 0.25);
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+        }
+        .reddit-suggestions-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #ff8b60;
+        }
+        .reddit-suggestions-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .reddit-suggestion-chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-primary);
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 11.5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            text-align: left;
+        }
+        .reddit-suggestion-chip:hover {
+            border-color: #ff4500;
+            background: rgba(255, 69, 0, 0.14);
+            transform: translateY(-1px);
+        }
+        .reddit-suggestion-chip .chip-tag {
+            font-size: 9.5px;
+            font-weight: 800;
+            padding: 2px 5px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .chip-tag-free { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .chip-tag-sale { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .chip-tag-paid { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+
+        .reddit-sub-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        .reddit-sub-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            padding: 5px 9px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .reddit-sub-btn.active {
+            background: rgba(255, 69, 0, 0.16);
+            border-color: #ff4500;
+            color: #ff8b60;
+        }
+        .reddit-mockup-card {
+            width: 100%;
+            max-width: 340px;
+            background: #0f1113;
+            border: 1px solid #2a2f35;
+            border-radius: 14px;
+            padding: 14px;
+            color: #e2e8f0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+        }
+        .reddit-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+        .reddit-card-avatar {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ff4500;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #fff;
+            font-size: 10px;
+        }
+        .reddit-card-flair {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.18);
+            color: #34d399;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 999px;
+            margin-bottom: 6px;
+        }
+        .reddit-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #f8fafc;
+            line-height: 1.35;
+            margin-bottom: 10px;
+        }
+        .reddit-card-media {
+            background: radial-gradient(circle at center, #1e293b 0%, #090b0d 100%);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            border: 1px solid #1e242a;
+        }
+        .reddit-card-media img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            border-radius: 50%;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+        }
+        .reddit-card-body {
+            font-size: 11.5px;
+            line-height: 1.45;
+            color: #cbd5e1;
+            white-space: pre-line;
+            margin-bottom: 10px;
+        }
+        .reddit-card-comment {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 2px solid #ff4500;
+            padding: 8px 10px;
+            border-radius: 0 6px 6px 0;
+            font-size: 10.5px;
+            color: #94a3b8;
+            white-space: pre-line;
+            word-break: break-word;
+            max-height: 130px;
+            overflow-y: auto;
+        }
+
         /* Fallback Prompt Container */
         .fallback-container {
             display: none;
@@ -1744,6 +1906,13 @@
                         <h3 style="font-family: var(--font-display); font-size:18px; margin-bottom: 6px; color: var(--text-primary);">No Captions Generated</h3>
                         <p style="font-size:13px; color:var(--text-muted); max-width: 300px; margin: 0 auto; line-height: 1.5;">Enter watch face details and click "Fast Generate" to create platform-optimized posts.</p>
                     </div>
+                    <div class="reddit-suggestions-bar" id="empty-reddit-suggestions" style="max-width: 520px; width: 100%; text-align: left; display: none;">
+                        <div class="reddit-suggestions-header">
+                            <span>📌 Today's Reddit Post Suggestions</span>
+                            <span style="font-size: 10px; color: var(--text-muted); font-weight: 500; text-transform: none;">Click one to auto-fill &amp; open Reddit tab</span>
+                        </div>
+                        <div class="reddit-suggestions-list" id="empty-reddit-suggestions-list"></div>
+                    </div>
                 </div>
 
                 <!-- Results Output Grid -->
@@ -1761,6 +1930,9 @@
                         </button>
                         <button class="tab-btn" id="tab-btn-reels" onclick="switchSocialTab('reels')">
                             Facebook
+                        </button>
+                        <button class="tab-btn" id="tab-btn-reddit" onclick="switchSocialTab('reddit')">
+                            Reddit
                         </button>
                     </div>
 
@@ -2100,6 +2272,107 @@
                         </div>
                     </div>
 
+                    <!-- Reddit Tab Content -->
+                    <div class="tab-content" id="content-reddit">
+                        <div class="result-container result-grid">
+                            <div class="col-left">
+                                <!-- Today's Post Suggestions -->
+                                <div class="reddit-suggestions-bar" id="reddit-tab-suggestions" style="display: none;">
+                                    <div class="reddit-suggestions-header">
+                                        <span>📌 Today's Post Suggestions</span>
+                                        <span style="font-size: 10px; color: var(--text-muted); font-weight: 500; text-transform: none;">1-click load</span>
+                                    </div>
+                                    <div class="reddit-suggestions-list" id="reddit-tab-suggestions-list"></div>
+                                </div>
+
+                                <!-- Subreddit Selector + Submit Link -->
+                                <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:6px; flex-wrap:wrap;">
+                                    <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin:0;">Target Subreddit</label>
+                                    <a id="reddit-submit-link" href="https://www.reddit.com/r/GalaxyWatchFace/submit" target="_blank" style="font-size:11px; font-weight:700; color:#ff8b60; text-decoration:none; background:rgba(255,69,0,0.12); padding:3px 9px; border-radius:5px; border:1px solid rgba(255,69,0,0.3);">Open Submit Page ↗</a>
+                                </div>
+                                <div class="reddit-sub-pills">
+                                    <button type="button" class="reddit-sub-btn active" id="rsub-GalaxyWatchFace" onclick="setRedditSub('GalaxyWatchFace')">r/GalaxyWatchFace (53k)</button>
+                                    <button type="button" class="reddit-sub-btn" id="rsub-androidwatchfaces" onclick="setRedditSub('androidwatchfaces')">r/AndroidWatchFaces (16.8k)</button>
+                                    <button type="button" class="reddit-sub-btn" id="rsub-SamsungWatchFace" onclick="setRedditSub('SamsungWatchFace')">r/SamsungWatchFace (4.8k)</button>
+                                    <button type="button" class="reddit-sub-btn" id="rsub-WearOSFaces" onclick="setRedditSub('WearOSFaces')">r/WearOSFaces (1.5k)</button>
+                                </div>
+
+                                <!-- Post Type Switcher -->
+                                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; gap:8px; flex-wrap:wrap; background:rgba(255,255,255,0.03); padding:6px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.08);">
+                                    <div style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px;">Post Type:</div>
+                                    <div class="fb-mode-toggle" style="display:inline-flex; background:rgba(255,255,255,0.06); padding:3px; border-radius:8px; gap:4px; flex-wrap:wrap;">
+                                        <button type="button" class="fb-mode-btn active" id="rtype-free" onclick="setRedditPostType('free')">🆓 Free</button>
+                                        <button type="button" class="fb-mode-btn" id="rtype-paid" onclick="setRedditPostType('paid')">💎 Paid</button>
+                                        <button type="button" class="fb-mode-btn" id="rtype-sale" onclick="setRedditPostType('sale')">🏷️ Sale</button>
+                                        <button type="button" class="fb-mode-btn" id="rtype-coupons" onclick="setRedditPostType('coupons')">🎫 Coupons</button>
+                                    </div>
+                                </div>
+
+                                <div id="reddit-rule-hint" style="font-size:11px; color:#94a3b8; margin-bottom:10px; display:flex; align-items:center; gap:6px; background:rgba(255,69,0,0.08); padding:6px 10px; border-radius:6px; border:1px solid rgba(255,69,0,0.2);">
+                                    <span id="reddit-rule-hint-text"><strong>r/GalaxyWatchFace:</strong> Flair: <strong>Free</strong> • Max 1 post/24h • 30-day rule per face.</span>
+                                </div>
+
+                                <!-- Post Title -->
+                                <div style="margin-bottom: 12px;">
+                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                                        <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin:0;">1. Post Title</label>
+                                        <button class="header-btn primary-btn" style="padding: 4px 10px; font-size:11px;" onclick="copyRedditTitle(this)">Copy Title</button>
+                                    </div>
+                                    <input type="text" id="res-title-reddit" class="result-box" style="min-height: 40px; height: 40px; padding: 8px 12px; font-size:13px; width: 100%; border-radius:8px; border:1px solid var(--border); background:var(--surface); color:var(--text-primary);" oninput="syncMockups()">
+                                </div>
+
+                                <!-- Post Body -->
+                                <div style="margin-bottom: 6px;">
+                                    <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 4px; display:block;">2. Post Body (Below Image/Video)</label>
+                                    <div class="result-box-wrapper">
+                                        <textarea class="result-box caption-textarea" id="res-text-reddit" oninput="syncMockups()"></textarea>
+                                    </div>
+                                </div>
+                                <div class="result-actions">
+                                    <div class="char-counter-wrapper">
+                                        <svg class="char-progress-ring" id="ring-reddit">
+                                            <circle class="bg-ring" cx="8" cy="8" r="7"></circle>
+                                            <circle class="active-ring" id="ring-active-reddit" cx="8" cy="8" r="7"></circle>
+                                        </svg>
+                                        <span id="char-count-reddit">0 / 1000</span>
+                                    </div>
+                                    <button class="header-btn primary-btn" onclick="copyResultText('reddit', this)">Copy Body</button>
+                                </div>
+                            </div>
+
+                            <div class="col-right">
+                                <!-- First Comment Box -->
+                                <div>
+                                    <label style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom: 6px; display:block;">3. First Comment (Paste Immediately After Posting)</label>
+                                    <div class="result-box-wrapper">
+                                        <textarea class="result-box comment-textarea" id="res-comment-reddit" style="min-height: 210px;" oninput="syncMockups()"></textarea>
+                                    </div>
+                                    <div class="result-actions" style="margin-top: 8px; justify-content: flex-end;">
+                                        <button class="header-btn primary-btn" onclick="copyCommentText('reddit', this)">Copy Comment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reddit Post Card Mockup -->
+                        <div class="mockup-wrapper">
+                            <div class="mockup-label">Reddit Post Preview</div>
+                            <div class="reddit-mockup-card">
+                                <div class="reddit-card-meta">
+                                    <span class="reddit-card-avatar">r/</span>
+                                    <span><strong id="mock-reddit-sub" style="color:#f8fafc;">r/GalaxyWatchFace</strong> • Just now</span>
+                                </div>
+                                <span class="reddit-card-flair" id="mock-reddit-flair">Free</span>
+                                <div class="reddit-card-title" id="mock-reddit-title">Post Title will appear here...</div>
+                                <div class="reddit-card-media">
+                                    <img id="mock-watch-face-reddit" src="https://cdn.jsdelivr.net/gh/creationcuespace/creation-cue-hub@main/images/logo.png" alt="Watch Face">
+                                </div>
+                                <div class="reddit-card-body" id="mock-caption-reddit">Post body will appear here...</div>
+                                <div class="reddit-card-comment" id="mock-reddit-comment">First comment with Google Play link...</div>
+                            </div>
+                        </div>
+                    </div>
+
 
                 </div>
             </main>
@@ -2277,6 +2550,12 @@
             if (reelsWatchFace) {
                 reelsWatchFace.src = currentWatchFaceImage;
             }
+
+            // 5. Reddit Card Image
+            const redditWatchFace = document.getElementById('mock-watch-face-reddit');
+            if (redditWatchFace) {
+                redditWatchFace.src = currentWatchFaceImage;
+            }
         }
 
         async function loadCatalog() {
@@ -2298,6 +2577,7 @@
                     catalogFaces = parsed.watch_faces || parsed.faces || [];
                     renderDropdownItems(catalogFaces);
                 }
+                loadRedditSuggestionsData();
 
                 // Auto-select face from URL param ?face=ID (from play-versions quick open)
                 const urlFaceId = new URLSearchParams(window.location.search).get('face');
@@ -2379,6 +2659,16 @@
                     // Hide dropdown and set search input value to face title
                     document.getElementById('catalog-search').value = f.title;
                     dropdown.style.display = 'none';
+
+                    // Auto-set Reddit post type based on free/paid status
+                    currentRedditPostType = f.is_free ? 'free' : 'paid';
+                    ['free', 'paid', 'sale', 'coupons'].forEach(t => {
+                        const btn = document.getElementById('rtype-' + t);
+                        if (btn) btn.classList.toggle('active', t === currentRedditPostType);
+                    });
+                    const flairMap = { free: 'Free', paid: 'Paid', sale: 'Sale', coupons: 'Coupons' };
+                    const mockFlair = document.getElementById('mock-reddit-flair');
+                    if (mockFlair) mockFlair.textContent = flairMap[currentRedditPostType] || 'Free';
                     
                     // Trigger dynamic comments update
                     updateCommentsUI();
@@ -2412,6 +2702,12 @@
         let currentPreset = 'sleek';
         let currentSocialTab = 'tiktok';
         let currentFbMode = 'reel'; // 'reel' or 'post'
+        let currentRedditSub = 'GalaxyWatchFace';
+        let currentRedditPostType = 'free'; // 'free', 'paid', 'sale', 'coupons'
+        let currentRedditSalePrice = '€0.49';
+        let salesCalendarData = [];
+        let marketingCampaignsData = [];
+        let redditSuggestionsCache = [];
         let generatedData = {
             tiktok: '',
             instagram: '',
@@ -2419,8 +2715,184 @@
             shorts: '',
             reels: '',
             fb_reel: '',
-            fb_post: ''
+            fb_post: '',
+            reddit_title: '',
+            reddit_body: '',
+            reddit_comment: ''
         };
+
+        const REDDIT_SUB_INFO = {
+            GalaxyWatchFace: { label: 'r/GalaxyWatchFace', rule: '<strong>r/GalaxyWatchFace:</strong> Flair: <strong>Free / Paid</strong> • Max 1 post/24h • 30-day rule per face.' },
+            androidwatchfaces: { label: 'r/AndroidWatchFaces', rule: '<strong>r/AndroidWatchFaces:</strong> Open to Free, Paid &amp; Sale posts • 16.8k members.' },
+            SamsungWatchFace: { label: 'r/SamsungWatchFace', rule: '<strong>r/SamsungWatchFace:</strong> Great for cross-posting Free faces &amp; Galaxy Watch setups • 4.8k members.' },
+            WearOSFaces: { label: 'r/WearOSFaces', rule: '<strong>r/WearOSFaces:</strong> Smaller Wear OS community • 1.5k members.' }
+        };
+
+        function setRedditSub(sub) {
+            currentRedditSub = sub;
+            Object.keys(REDDIT_SUB_INFO).forEach(k => {
+                const btn = document.getElementById('rsub-' + k);
+                if (btn) btn.classList.toggle('active', k === sub);
+            });
+            const submitLink = document.getElementById('reddit-submit-link');
+            if (submitLink) submitLink.href = `https://www.reddit.com/r/${sub}/submit`;
+            const hint = document.getElementById('reddit-rule-hint-text');
+            if (hint && REDDIT_SUB_INFO[sub]) hint.innerHTML = REDDIT_SUB_INFO[sub].rule;
+            const mockSub = document.getElementById('mock-reddit-sub');
+            if (mockSub && REDDIT_SUB_INFO[sub]) mockSub.textContent = REDDIT_SUB_INFO[sub].label;
+        }
+
+        function setRedditPostType(type) {
+            currentRedditPostType = type;
+            ['free', 'paid', 'sale', 'coupons'].forEach(t => {
+                const btn = document.getElementById('rtype-' + t);
+                if (btn) btn.classList.toggle('active', t === type);
+            });
+            const flairMap = { free: 'Free', paid: 'Paid', sale: 'Sale', coupons: 'Coupons' };
+            const mockFlair = document.getElementById('mock-reddit-flair');
+            if (mockFlair) mockFlair.textContent = flairMap[type] || 'Free';
+            if (document.getElementById('watch-name').value.trim()) {
+                generateFastSocialDescriptions();
+            }
+        }
+
+        function copyRedditTitle(btn) {
+            const el = document.getElementById('res-title-reddit');
+            const text = el ? el.value : '';
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Reddit Title copied!");
+                markButtonCopied(btn || (window.event && window.event.currentTarget));
+            });
+        }
+
+        async function loadRedditSuggestionsData() {
+            try {
+                const [salesRes, campRes] = await Promise.allSettled([
+                    fetch('sales-calendar.json?v=' + Date.now()).then(r => r.ok ? r.json() : null),
+                    fetch('marketing_campaigns.json?v=' + Date.now()).then(r => r.ok ? r.json() : null)
+                ]);
+                if (salesRes.status === 'fulfilled' && salesRes.value && Array.isArray(salesRes.value.sales)) {
+                    salesCalendarData = salesRes.value.sales;
+                }
+                if (campRes.status === 'fulfilled' && Array.isArray(campRes.value)) {
+                    marketingCampaignsData = campRes.value;
+                }
+            } catch (e) {
+                console.warn('Could not load Reddit suggestion metadata:', e);
+            }
+            renderRedditSuggestions();
+        }
+
+        function renderRedditSuggestions() {
+            if (!catalogFaces || catalogFaces.length === 0) return;
+            const todayStr = new Date().toISOString().slice(0, 10);
+            const suggestions = [];
+
+            // 1. Check active or upcoming sale in sales-calendar.json
+            const activeSale = salesCalendarData.find(s => s.startDate <= todayStr && todayStr <= s.endDate);
+            if (activeSale) {
+                const face = catalogFaces.find(f => f.id === activeSale.id);
+                if (face) {
+                    suggestions.push({
+                        faceId: face.id,
+                        type: 'sale',
+                        salePrice: `€${Number(activeSale.salePriceEur || 0.49).toFixed(2)}`,
+                        sub: 'GalaxyWatchFace',
+                        tag: 'Sale',
+                        tagClass: 'chip-tag-sale',
+                        label: `${face.title} (€${Number(activeSale.salePriceEur || 0.49).toFixed(2)} Sale ends ${activeSale.endDate})`
+                    });
+                }
+            }
+
+            // 2. Top Free Watch Faces (rotate ones that push Top Free chart)
+            const freePriority = ['cueindus', 'cue136', 'crc080', 'crc046', 'cue132', 'cue104'];
+            const freeFaces = catalogFaces.filter(f => f.is_free);
+            freeFaces.sort((a, b) => {
+                const ia = freePriority.indexOf(a.id);
+                const ib = freePriority.indexOf(b.id);
+                return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+            });
+            freeFaces.slice(0, 2).forEach((face, idx) => {
+                const sub = idx === 0 ? 'GalaxyWatchFace' : 'androidwatchfaces';
+                suggestions.push({
+                    faceId: face.id,
+                    type: 'free',
+                    sub,
+                    tag: 'Free',
+                    tagClass: 'chip-tag-free',
+                    label: `${face.title} on r/${sub === 'androidwatchfaces' ? 'AndroidWatchFaces' : sub}`
+                });
+            });
+
+            // 3. Latest Paid Release
+            const latestPaid = catalogFaces.find(f => !f.is_free && !f.is_coming_soon);
+            if (latestPaid) {
+                suggestions.push({
+                    faceId: latestPaid.id,
+                    type: 'paid',
+                    sub: 'GalaxyWatchFace',
+                    tag: 'Paid',
+                    tagClass: 'chip-tag-paid',
+                    label: `${latestPaid.title} (Latest Release)`
+                });
+            }
+
+            redditSuggestionsCache = suggestions;
+            const targets = [
+                { box: document.getElementById('empty-reddit-suggestions'), list: document.getElementById('empty-reddit-suggestions-list') },
+                { box: document.getElementById('reddit-tab-suggestions'), list: document.getElementById('reddit-tab-suggestions-list') }
+            ];
+            targets.forEach(({ box, list }) => {
+                if (!box || !list) return;
+                if (suggestions.length === 0) {
+                    box.style.display = 'none';
+                    return;
+                }
+                box.style.display = 'block';
+                list.innerHTML = suggestions.map((s, idx) => `
+                    <button type="button" class="reddit-suggestion-chip" onclick="applyRedditSuggestion(${idx})">
+                        <span class="chip-tag ${s.tagClass}">${s.tag}</span>
+                        <span>${s.label}</span>
+                    </button>
+                `).join('');
+            });
+        }
+
+        function applyRedditSuggestion(idx) {
+            const s = redditSuggestionsCache[idx];
+            if (!s) return;
+            const face = catalogFaces.find(f => f.id === s.faceId);
+            if (!face) return;
+
+            currentFaceId = face.id;
+            currentRedditSalePrice = s.salePrice || '€0.49';
+            document.getElementById('watch-link').value = getWebUrl(face.play_store_url);
+            document.getElementById('watch-name').value = face.title;
+            document.getElementById('play-store-desc').value = face.description_en || '';
+            const searchEl = document.getElementById('catalog-search');
+            if (searchEl) searchEl.value = face.title;
+            if (document.getElementById('free-coupons-active')) {
+                document.getElementById('free-coupons-active').checked = (s.type === 'coupons');
+            }
+            if (document.getElementById('coming-soon-active')) {
+                document.getElementById('coming-soon-active').checked = false;
+            }
+            setRedditSub(s.sub || 'GalaxyWatchFace');
+            currentRedditPostType = s.type || (face.is_free ? 'free' : 'paid');
+            ['free', 'paid', 'sale', 'coupons'].forEach(t => {
+                const btn = document.getElementById('rtype-' + t);
+                if (btn) btn.classList.toggle('active', t === currentRedditPostType);
+            });
+            const flairMap = { free: 'Free', paid: 'Paid', sale: 'Sale', coupons: 'Coupons' };
+            const mockFlair = document.getElementById('mock-reddit-flair');
+            if (mockFlair) mockFlair.textContent = flairMap[currentRedditPostType] || 'Free';
+
+            updateMockupImages(face.image_url);
+            generateFastSocialDescriptions();
+            switchSocialTab('reddit');
+        }
 
         function setFbMode(mode) {
             currentFbMode = mode;
@@ -2595,11 +3067,13 @@
             document.getElementById('tab-btn-instagram').classList.remove('active');
             document.getElementById('tab-btn-shorts').classList.remove('active');
             document.getElementById('tab-btn-reels').classList.remove('active');
+            if (document.getElementById('tab-btn-reddit')) document.getElementById('tab-btn-reddit').classList.remove('active');
 
             document.getElementById('content-tiktok').classList.remove('active');
             document.getElementById('content-instagram').classList.remove('active');
             document.getElementById('content-shorts').classList.remove('active');
             document.getElementById('content-reels').classList.remove('active');
+            if (document.getElementById('content-reddit')) document.getElementById('content-reddit').classList.remove('active');
 
             document.getElementById('tab-btn-' + platform).classList.add('active');
             document.getElementById('content-' + platform).classList.add('active');
@@ -2782,6 +3256,18 @@
             document.getElementById('mock-caption-instagram').innerHTML = formatMockupText(document.getElementById('res-text-instagram').value);
             document.getElementById('mock-caption-shorts').innerHTML = `<strong>${document.getElementById('res-title-shorts').value}</strong><br>${formatMockupText(document.getElementById('res-text-shorts').value)}`;
             document.getElementById('mock-caption-reels').innerHTML = formatMockupText(document.getElementById('res-text-reels').value);
+            const rTitleEl = document.getElementById('res-title-reddit');
+            const rTextEl = document.getElementById('res-text-reddit');
+            const rCommentEl = document.getElementById('res-comment-reddit');
+            if (document.getElementById('mock-reddit-title') && rTitleEl) {
+                document.getElementById('mock-reddit-title').textContent = rTitleEl.value || 'Post Title will appear here...';
+            }
+            if (document.getElementById('mock-caption-reddit') && rTextEl) {
+                document.getElementById('mock-caption-reddit').textContent = rTextEl.value || 'Post body will appear here...';
+            }
+            if (document.getElementById('mock-reddit-comment') && rCommentEl) {
+                document.getElementById('mock-reddit-comment').textContent = rCommentEl.value || 'First comment...';
+            }
         }
 
         function formatMockupText(text) {
@@ -3042,6 +3528,75 @@
                 fbPostText = `${captionIntro} for Wear OS! ⌚\n\n${hook}\n\n📥 Download on the Google Play Store:\n🔗 ${link}\n\n🔍 Explore more watch faces here:\nhttps://is.gd/NxAEME${weatherNotice}${realNotice}${feedbackNotice}\n\n#CreationCue #SamsungWatchFace #GalaxyWatch #Smartwatch #Samsung #WearableTech`;
             }
 
+            // Build Reddit Post (calm, unhyped, zero battery mentions)
+            const matchedFace = (catalogFaces || []).find(f => f.id === currentFaceId || (f.title && f.title.toLowerCase() === displayName.toLowerCase()));
+            const rawType = matchedFace && matchedFace.type ? matchedFace.type.charAt(0).toUpperCase() + matchedFace.type.slice(1) : '';
+            const faceTypeLabel = rawType ? `${rawType} Watch Face` : 'Watch Face';
+
+            // Clean hook: strip any battery-related sentences/phrases for Reddit
+            let redditHook = (desc || '').replace(/\r/g, '\n')
+                .split(/[\n.!?]+/)
+                .map(s => s.replace(/[▸❖•⚠︎\-]+/g, ' ').trim())
+                .filter(s => s.length > 15 && !/battery|this is (the )?(free )?(wear os )?watch\s*face|for samsung|enjoying|leave a review/i.test(s))
+                .slice(0, 2)
+                .join('. ');
+            if (redditHook && !redditHook.endsWith('.')) redditHook += '.';
+            if (!redditHook) {
+                redditHook = `Clean ${rawType ? rawType.toLowerCase() + ' ' : ''}layout with customizable complications and full AOD support.`;
+            }
+
+            let effectiveRedditType = currentRedditPostType;
+            if (couponsActive) effectiveRedditType = 'coupons';
+
+            let redditTitle = '';
+            let redditBody = '';
+            let redditComment = '';
+
+            if (effectiveRedditType === 'free') {
+                redditTitle = `[Free] ${displayName} – 100% Free ${faceTypeLabel} for Wear OS (No coupons needed)`;
+                redditBody = `${displayName} is 100% free on Google Play—no promo codes or coupon links needed, you can download it directly from the store.\n\n${redditHook}\n\n(Google Play link is in the first comment below)`;
+            } else if (effectiveRedditType === 'sale') {
+                redditTitle = `[Sale] ${displayName} – ${faceTypeLabel} for Wear OS (${currentRedditSalePrice} limited-time discount)`;
+                redditBody = `${displayName} is currently on sale on Google Play for ${currentRedditSalePrice}.\n\n${redditHook}\n\n(Google Play link is in the first comment below)`;
+            } else if (effectiveRedditType === 'coupons') {
+                const cLink = couponsLink || 'https://...';
+                redditTitle = `[Coupons] ${displayName} – ${faceTypeLabel} for Wear OS`;
+                redditBody = `Sharing free promo codes for ${displayName} on Wear OS.\n\n${redditHook}\n\n(Coupon & Google Play links are in the first comment below)`;
+                redditComment = `🎫 Claim a coupon here:\n${cLink}\n\n`;
+            } else {
+                redditTitle = `[Paid] ${displayName} – ${faceTypeLabel} for Wear OS`;
+                redditBody = `${displayName} is now available on Google Play for Wear OS.\n\n${redditHook}\n\n(Google Play link is in the first comment below)`;
+            }
+
+            if (effectiveRedditType !== 'coupons') {
+                redditComment = `📥 Download ${displayName}${effectiveRedditType === 'free' ? ' (100% Free)' : ''}:\n${link}\n\n`;
+            } else {
+                redditComment += `📥 Google Play:\n${link}\n\n`;
+            }
+
+            // Free-to-Pro/PLUS upsell if matching Pro/PLUS face exists
+            if (matchedFace && matchedFace.is_free) {
+                const proTwin = (catalogFaces || []).find(f =>
+                    !f.is_free && (
+                        f.id === matchedFace.id + 'plus' ||
+                        f.id === matchedFace.id + '_pro' ||
+                        f.id === matchedFace.id + 'pro' ||
+                        (f.title && (f.title.toLowerCase() === (matchedFace.title + 'plus').toLowerCase() || f.title.toLowerCase() === (matchedFace.title + ' pro').toLowerCase()))
+                    )
+                );
+                if (proTwin) {
+                    redditComment += `⭐ Want more features & color styles? Check out ${proTwin.title}:\n${getWebUrl(proTwin.play_store_url)}\n\n`;
+                }
+            }
+
+            // Cross-promo flagship (CUE180 or CUE166)
+            if (!/cue180/i.test(displayName)) {
+                redditComment += `🚀 Looking for a rugged digital setup with 6 complications? Check out CUE180 (rated 5.0 ★):\nhttps://play.google.com/store/apps/details?id=com.creation.cue180watchface\n\n`;
+            } else {
+                redditComment += `⭐ Looking for a detailed hybrid design? Check out CUE166:\nhttps://play.google.com/store/apps/details?id=com.creation.cue166watchface\n\n`;
+            }
+            redditComment += `Reviews and ratings on Google Play are always appreciated.`;
+
             // Update state
             generatedData = {
                 tiktok: tiktokText,
@@ -3050,7 +3605,10 @@
                 shorts: shortsText,
                 reels: (currentFbMode === 'post') ? fbPostText : fbReelText,
                 fb_reel: fbReelText,
-                fb_post: fbPostText
+                fb_post: fbPostText,
+                reddit_title: redditTitle,
+                reddit_body: redditBody,
+                reddit_comment: redditComment
             };
 
             // Show Results UI
@@ -3068,12 +3626,18 @@
             document.getElementById('res-title-shorts').value = generatedData.shorts_title;
             document.getElementById('res-text-shorts').value = generatedData.shorts;
             document.getElementById('res-text-reels').value = generatedData.reels;
+            if (document.getElementById('res-title-reddit')) document.getElementById('res-title-reddit').value = generatedData.reddit_title || '';
+            if (document.getElementById('res-text-reddit')) document.getElementById('res-text-reddit').value = generatedData.reddit_body || '';
+            if (document.getElementById('res-comment-reddit')) document.getElementById('res-comment-reddit').value = generatedData.reddit_comment || '';
 
             // Update counters
             updateCharCounter('tiktok', generatedData.tiktok, 2200);
             updateCharCounter('instagram', generatedData.instagram, 2200);
             updateCharCounter('shorts', generatedData.shorts, 5000);
             updateCharCounter('reels', generatedData.reels, 2000);
+            if (document.getElementById('char-count-reddit')) {
+                updateCharCounter('reddit', generatedData.reddit_body || '', 1000);
+            }
 
             // Reset any copied button states on generation
             document.querySelectorAll('.header-btn.btn-copied').forEach(btn => {
