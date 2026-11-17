@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-16T03:08:50.551Z",
+  "lastUpdated": "2026-11-17T05:15:24.072Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -272,6 +272,14 @@
       "weightedAvg": 4.53,
       "ratedCount": 30,
       "totalWeight": 3912
+    },
+    {
+      "date": "2026-11-17",
+      "timestamp": "2026-11-17T05:15:24.072Z",
+      "avgRating": 4.51,
+      "weightedAvg": 4.53,
+      "ratedCount": 30,
+      "totalWeight": 3926
     }
   ],
   "results": [
@@ -295,13 +303,13 @@
       "downloads": "100+",
       "rating": 4.8,
       "ratingCount": "14",
+      "ratingsByCountry": {
+        "US": 4.8
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.8
       }
     },
     {
@@ -324,12 +332,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue177",
@@ -351,12 +359,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue176",
@@ -378,12 +386,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue175",
@@ -406,12 +414,12 @@
       "downloads": "500+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue174",
@@ -434,12 +442,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue173",
@@ -461,12 +469,12 @@
       "downloads": "50+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue172",
@@ -488,12 +496,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue171",
@@ -515,12 +523,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue170",
@@ -542,12 +550,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue169",
@@ -569,12 +577,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue168",
@@ -596,12 +604,12 @@
       "downloads": "50+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue167",
@@ -623,12 +631,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue166",
@@ -652,14 +660,14 @@
       "downloads": "1K+",
       "rating": 5,
       "ratingCount": "62",
+      "ratingsByCountry": {
+        "US": 5,
+        "KR": 4.4
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 5,
-        "KR": 4.4
       }
     },
     {
@@ -682,12 +690,12 @@
       "downloads": "50+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue164",
@@ -709,12 +717,12 @@
       "downloads": "500+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue163",
@@ -736,12 +744,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue162",
@@ -763,12 +771,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue161",
@@ -790,13 +798,13 @@
       "downloads": "100+",
       "rating": 4.2,
       "ratingCount": "14",
+      "ratingsByCountry": {
+        "US": 4.2
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.2
       }
     },
     {
@@ -819,12 +827,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue159",
@@ -846,12 +854,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue158",
@@ -873,12 +881,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue157",
@@ -900,12 +908,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue156",
@@ -927,12 +935,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue155",
@@ -954,12 +962,12 @@
       "downloads": "500+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue154",
@@ -981,13 +989,13 @@
       "downloads": "1K+",
       "rating": 4.8,
       "ratingCount": "30",
+      "ratingsByCountry": {
+        "US": 4.8
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.8
       }
     },
     {
@@ -1010,13 +1018,13 @@
       "downloads": "500+",
       "rating": 4.8,
       "ratingCount": "24",
+      "ratingsByCountry": {
+        "US": 4.8
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.8
       }
     },
     {
@@ -1039,12 +1047,12 @@
       "downloads": "500+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue151",
@@ -1066,13 +1074,13 @@
       "downloads": "1K+",
       "rating": 4.3,
       "ratingCount": "52",
+      "ratingsByCountry": {
+        "US": 4.3
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.3
       }
     },
     {
@@ -1095,12 +1103,12 @@
       "downloads": "50+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue149",
@@ -1122,13 +1130,13 @@
       "downloads": "100+",
       "rating": 4.2,
       "ratingCount": "13",
+      "ratingsByCountry": {
+        "US": 4.2
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.2
       }
     },
     {
@@ -1151,13 +1159,13 @@
       "downloads": "500+",
       "rating": 4.2,
       "ratingCount": "26",
+      "ratingsByCountry": {
+        "US": 4.2
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.2
       }
     },
     {
@@ -1180,12 +1188,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue146",
@@ -1207,13 +1215,13 @@
       "downloads": "500+",
       "rating": 4,
       "ratingCount": "20",
+      "ratingsByCountry": {
+        "US": 4
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4
       }
     },
     {
@@ -1236,13 +1244,13 @@
       "downloads": "1K+",
       "rating": 4.7,
       "ratingCount": "47",
+      "ratingsByCountry": {
+        "US": 4.7
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.7
       }
     },
     {
@@ -1265,13 +1273,13 @@
       "downloads": "500+",
       "rating": 4.9,
       "ratingCount": "19",
+      "ratingsByCountry": {
+        "US": 4.9
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.9
       }
     },
     {
@@ -1294,12 +1302,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue142",
@@ -1321,15 +1329,15 @@
       "downloads": "1K+",
       "rating": 4.6,
       "ratingCount": "82",
-      "vitals": {
-        "crashRate": 0,
-        "anrRate": 0,
-        "status": "healthy"
-      },
       "ratingsByCountry": {
         "US": 4.6,
         "DE": 4.1,
         "KR": 4.5
+      },
+      "vitals": {
+        "crashRate": 0,
+        "anrRate": 0,
+        "status": "healthy"
       }
     },
     {
@@ -1352,12 +1360,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue140",
@@ -1379,13 +1387,13 @@
       "downloads": "500+",
       "rating": 4.6,
       "ratingCount": "16",
+      "ratingsByCountry": {
+        "US": 4.6
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.6
       }
     },
     {
@@ -1408,12 +1416,12 @@
       "downloads": "50+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue137",
@@ -1435,12 +1443,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue136",
@@ -1461,18 +1469,18 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.7,
-      "ratingCount": "435",
-      "vitals": {
-        "crashRate": 0,
-        "anrRate": 0,
-        "status": "healthy"
-      },
+      "ratingCount": "436",
       "ratingsByCountry": {
         "US": 4.7,
         "KR": 4.5,
         "DE": 4.8,
         "GB": 4.3,
         "PL": 5
+      },
+      "vitals": {
+        "crashRate": 0,
+        "anrRate": 0,
+        "status": "healthy"
       }
     },
     {
@@ -1495,12 +1503,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue135",
@@ -1522,13 +1530,13 @@
       "downloads": "1K+",
       "rating": 4.6,
       "ratingCount": "20",
+      "ratingsByCountry": {
+        "US": 4.6
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.6
       }
     },
     {
@@ -1551,12 +1559,12 @@
       "downloads": "500+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue133",
@@ -1578,12 +1586,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue132",
@@ -1605,13 +1613,13 @@
       "downloads": "5K+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {
+        "KR": 5
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "KR": 5
       }
     },
     {
@@ -1634,13 +1642,13 @@
       "downloads": "500+",
       "rating": 5,
       "ratingCount": "9",
+      "ratingsByCountry": {
+        "US": 5
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 5
       }
     },
     {
@@ -1663,12 +1671,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue129",
@@ -1690,12 +1698,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue128",
@@ -1717,12 +1725,12 @@
       "downloads": "500+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue127",
@@ -1744,12 +1752,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue126",
@@ -1771,12 +1779,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue125",
@@ -1798,12 +1806,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue124",
@@ -1825,12 +1833,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue123",
@@ -1852,12 +1860,12 @@
       "downloads": "50+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue122",
@@ -1879,12 +1887,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue116",
@@ -1908,15 +1916,15 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
       "rating": 4.5,
-      "ratingCount": "98",
+      "ratingCount": "97",
+      "ratingsByCountry": {
+        "US": 4.5,
+        "DE": 4.8
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.5,
-        "DE": 4.8
       }
     },
     {
@@ -1939,12 +1947,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue114",
@@ -1966,12 +1974,12 @@
       "downloads": "50+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue111",
@@ -1993,15 +2001,15 @@
       "downloads": "1K+",
       "rating": 4.6,
       "ratingCount": "48",
-      "vitals": {
-        "crashRate": 0,
-        "anrRate": 0,
-        "status": "healthy"
-      },
       "ratingsByCountry": {
         "US": 4.6,
         "KR": 4.7,
         "DE": 4.6
+      },
+      "vitals": {
+        "crashRate": 0,
+        "anrRate": 0,
+        "status": "healthy"
       }
     },
     {
@@ -2024,12 +2032,12 @@
       "downloads": "500+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue109",
@@ -2051,12 +2059,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue107",
@@ -2074,16 +2082,16 @@
       "storeLanguages": [
         "en-GB"
       ],
-      "lastUpdatedDate": "Oct 22, 2026",
+      "lastUpdatedDate": "Oct 21, 2026",
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue106",
@@ -2105,12 +2113,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue105",
@@ -2132,12 +2140,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue104",
@@ -2159,13 +2167,13 @@
       "downloads": "5K+",
       "rating": 4.2,
       "ratingCount": "40",
+      "ratingsByCountry": {
+        "US": 4.2
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.2
       }
     },
     {
@@ -2188,12 +2196,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue102",
@@ -2215,12 +2223,12 @@
       "downloads": "500+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue101",
@@ -2242,12 +2250,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue100",
@@ -2269,12 +2277,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue099",
@@ -2296,12 +2304,12 @@
       "downloads": "50+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue098",
@@ -2323,12 +2331,12 @@
       "downloads": "50+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue097",
@@ -2350,12 +2358,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc094",
@@ -2377,12 +2385,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc092",
@@ -2404,12 +2412,12 @@
       "downloads": "50+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc091",
@@ -2431,12 +2439,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc090",
@@ -2458,12 +2466,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc087",
@@ -2485,12 +2493,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc082",
@@ -2510,15 +2518,15 @@
       ],
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": 3,
-      "ratingCount": "7",
+      "rating": 3.3,
+      "ratingCount": "8",
+      "ratingsByCountry": {
+        "US": 3.3
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 3
       }
     },
     {
@@ -2541,12 +2549,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc080",
@@ -2567,18 +2575,18 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.3,
-      "ratingCount": "656",
-      "vitals": {
-        "crashRate": 0,
-        "anrRate": 0,
-        "status": "healthy"
-      },
+      "ratingCount": "657",
       "ratingsByCountry": {
         "US": 4.3,
         "GB": 4.4,
         "PL": 4.4,
         "DE": 4.3,
         "KR": 4.2
+      },
+      "vitals": {
+        "crashRate": 0,
+        "anrRate": 0,
+        "status": "healthy"
       }
     },
     {
@@ -2601,12 +2609,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc072",
@@ -2628,13 +2636,13 @@
       "downloads": "1K+",
       "rating": 4.2,
       "ratingCount": "20",
+      "ratingsByCountry": {
+        "US": 4.2
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.2
       }
     },
     {
@@ -2657,12 +2665,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc069",
@@ -2681,18 +2689,18 @@
         "en-US",
         "ko-KR"
       ],
-      "lastUpdatedDate": "Aug 27, 2026",
+      "lastUpdatedDate": "Aug 26, 2026",
       "downloads": "10K+",
       "rating": 4.4,
       "ratingCount": "100",
+      "ratingsByCountry": {
+        "US": 4.4,
+        "KR": 4.9
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.4,
-        "KR": 4.9
       }
     },
     {
@@ -2715,14 +2723,14 @@
       "downloads": "10K+",
       "rating": 4.9,
       "ratingCount": "70",
+      "ratingsByCountry": {
+        "US": 4.9,
+        "KR": 4.4
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.9,
-        "KR": 4.4
       }
     },
     {
@@ -2745,12 +2753,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc065",
@@ -2772,13 +2780,13 @@
       "downloads": "500+",
       "rating": 4.8,
       "ratingCount": "12",
+      "ratingsByCountry": {
+        "US": 4.8
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.8
       }
     },
     {
@@ -2801,12 +2809,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc050",
@@ -2828,12 +2836,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc046",
@@ -2854,18 +2862,18 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100K+",
       "rating": 4.7,
-      "ratingCount": "1.11K",
-      "vitals": {
-        "crashRate": 0,
-        "anrRate": 0,
-        "status": "healthy"
-      },
+      "ratingCount": "1.12K",
       "ratingsByCountry": {
         "US": 4.7,
         "GB": 4.5,
         "DE": 4.5,
         "PL": 4,
         "KR": 4.5
+      },
+      "vitals": {
+        "crashRate": 0,
+        "anrRate": 0,
+        "status": "healthy"
       }
     },
     {
@@ -2888,12 +2896,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc043",
@@ -2915,12 +2923,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc042",
@@ -2942,12 +2950,12 @@
       "downloads": "1K+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc041",
@@ -2969,17 +2977,17 @@
       "downloads": "50K+",
       "rating": 4.2,
       "ratingCount": "474",
-      "vitals": {
-        "crashRate": 0,
-        "anrRate": 0,
-        "status": "healthy"
-      },
       "ratingsByCountry": {
         "US": 4.2,
         "GB": 4.7,
         "PL": 4.9,
         "DE": 4.5,
         "KR": 4.5
+      },
+      "vitals": {
+        "crashRate": 0,
+        "anrRate": 0,
+        "status": "healthy"
       }
     },
     {
@@ -3002,12 +3010,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc036",
@@ -3029,12 +3037,12 @@
       "downloads": "500+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc035",
@@ -3056,12 +3064,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc034",
@@ -3083,12 +3091,12 @@
       "downloads": "500+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc032",
@@ -3110,12 +3118,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc031",
@@ -3137,12 +3145,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc030",
@@ -3164,13 +3172,13 @@
       "downloads": "500+",
       "rating": 4.3,
       "ratingCount": "20",
+      "ratingsByCountry": {
+        "US": 4.3
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.3
       }
     },
     {
@@ -3193,13 +3201,13 @@
       "downloads": "500+",
       "rating": 4.8,
       "ratingCount": "21",
+      "ratingsByCountry": {
+        "US": 4.8
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {
-        "US": 4.8
       }
     },
     {
@@ -3222,12 +3230,12 @@
       "downloads": "50+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue024",
@@ -3249,12 +3257,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "crc023",
@@ -3276,12 +3284,12 @@
       "downloads": "5K+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "ccwf022",
@@ -3303,12 +3311,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cc014",
@@ -3330,12 +3338,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cc010",
@@ -3357,12 +3365,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cc005",
@@ -3384,12 +3392,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cueindus",
@@ -3410,18 +3418,18 @@
       "lastUpdatedDate": "Nov 10, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "353",
-      "vitals": {
-        "crashRate": 0,
-        "anrRate": 0,
-        "status": "healthy"
-      },
+      "ratingCount": "355",
       "ratingsByCountry": {
         "US": 4.6,
         "KR": 4.6,
         "GB": 4.8,
         "PL": 4.9,
         "DE": 4.2
+      },
+      "vitals": {
+        "crashRate": 0,
+        "anrRate": 0,
+        "status": "healthy"
       }
     },
     {
@@ -3446,12 +3454,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue179",
@@ -3473,12 +3481,12 @@
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     },
     {
       "id": "cue180",
@@ -3500,12 +3508,12 @@
       "downloads": "50+",
       "rating": null,
       "ratingCount": null,
+      "ratingsByCountry": {},
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
         "status": "healthy"
-      },
-      "ratingsByCountry": {}
+      }
     }
   ]
 }

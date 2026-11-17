@@ -1,6 +1,40 @@
 {
-  "lastUpdated": "2026-11-16T03:08:50.552Z",
+  "lastUpdated": "2026-11-17T05:15:24.073Z",
   "reviews": [
+    {
+      "reviewId": "07c25f8a-3f03-4d80-b2fe-7bd9818016c7",
+      "packageName": "com.creationscue.crc080watchface",
+      "title": "Digital Watch Face CRC080",
+      "wfId": "crc080",
+      "authorName": "AkWingnut",
+      "starRating": 5,
+      "reviewerLanguage": "en",
+      "deviceMetadata": "OP611FL1 (OnePlus 15)",
+      "topics": [
+        "Loved it"
+      ],
+      "text": "\tvery clean, nice set of customization",
+      "hasDeveloperReply": false,
+      "developerReplyText": null,
+      "developerReplyTime": null,
+      "lastModified": "2026-11-16T22:33:20.000Z"
+    },
+    {
+      "reviewId": "bc0647f5-7f99-4aef-aec6-074f90034473",
+      "packageName": "com.creationcue.crc082watchface",
+      "title": "Analogue Watch Face CRC082",
+      "wfId": "crc082",
+      "authorName": "VIKTOR PUZANOV",
+      "starRating": 5,
+      "reviewerLanguage": "ru",
+      "deviceMetadata": "r8q (Galaxy S20 FE 5G)",
+      "topics": [],
+      "text": "\tКлассные часы! Стильный дизайн! Спасибо!👍",
+      "hasDeveloperReply": false,
+      "developerReplyText": null,
+      "developerReplyTime": null,
+      "lastModified": "2026-11-16T18:29:16.000Z"
+    },
     {
       "reviewId": "6e5a5b0d-4eec-4286-a350-896ad279c77f",
       "packageName": "com.creation.cueinduswatchface",
@@ -12,9 +46,9 @@
       "deviceMetadata": "V2446 (Y19s 5G)",
       "topics": [],
       "text": "\tAF oh dang that'd",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you.",
+      "developerReplyTime": "2026-11-16T07:03:11.000Z",
       "lastModified": "2026-11-16T02:57:31.000Z"
     },
     {
@@ -28,9 +62,9 @@
       "deviceMetadata": "panther (Pixel 7)",
       "topics": [],
       "text": "\tthis one good",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you, glad you are enjoying it.",
+      "developerReplyTime": "2026-11-16T07:03:22.000Z",
       "lastModified": "2026-11-15T23:28:12.000Z"
     },
     {
@@ -47,9 +81,9 @@
         "Complications"
       ],
       "text": "\tThat's the WF I've been looking for. Just please make the complications more like the date and battery now, they're too small and messing with the digits. But definitely a keeper.",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thanks! I'll see what I can do about resizing the complications for the next update. Added to the todo list.",
+      "developerReplyTime": "2026-11-16T07:05:49.000Z",
       "lastModified": "2026-11-15T19:18:21.000Z"
     },
     {
@@ -65,9 +99,9 @@
         "Loved it"
       ],
       "text": "\tJust saying, I have a bunch of this devs watch faces. It has a great sleep face.",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you for your kind words.",
+      "developerReplyTime": "2026-11-16T07:05:41.000Z",
       "lastModified": "2026-11-15T15:20:18.000Z"
     },
     {
@@ -83,9 +117,9 @@
         "Loved it"
       ],
       "text": "\tclean & simple",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "👍",
+      "developerReplyTime": "2026-11-16T07:02:37.000Z",
       "lastModified": "2026-11-15T13:59:27.000Z"
     },
     {
