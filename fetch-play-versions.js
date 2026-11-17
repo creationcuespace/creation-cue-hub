@@ -58,6 +58,11 @@ async function main() {
     auth,
   });
 
+  const playReporting = google.playdeveloperreporting({
+    version: 'v1beta1',
+    auth,
+  });
+
   const managerPath = path.join(__dirname, 'manager.json');
   if (!fs.existsSync(managerPath)) {
     console.error(`\x1b[31mError: manager.json not found at ${managerPath}\x1b[0m`);
@@ -128,6 +133,15 @@ async function main() {
     let wearNotes = 'None';
 
     let storeLanguages = [];
+    let testingTracks = [];
+    let bundleCount = 0;
+    let latestBundleVersionCode = null;
+    let vitals = {
+      crashRate: 0.0,
+      anrRate: 0.0,
+      anomaliesCount: 0,
+      status: 'healthy'
+    };
 
     const prevItem = existingMap.get(packageName);
     if (prevItem) {
@@ -141,6 +155,10 @@ async function main() {
       if (prevItem.wearRollout) wearRollout = prevItem.wearRollout;
       if (prevItem.wearNotes) wearNotes = prevItem.wearNotes;
       if (prevItem.storeLanguages) storeLanguages = prevItem.storeLanguages;
+      if (prevItem.testingTracks) testingTracks = prevItem.testingTracks;
+      if (prevItem.bundleCount !== undefined) bundleCount = prevItem.bundleCount;
+      if (prevItem.latestBundleVersionCode !== undefined) latestBundleVersionCode = prevItem.latestBundleVersionCode;
+      if (prevItem.vitals) vitals = { ...vitals, ...prevItem.vitals };
     }
 
     let editId = null;
@@ -165,14 +183,20 @@ async function main() {
 
     if (editSuccess && editId) {
       try {
-        const track = await play.edits.tracks.get({
+        const tracksRes = await play.edits.tracks.list({
           packageName,
           editId,
-          track: 'production',
         });
-        if (track.data.releases && track.data.releases.length > 0) {
-          const activeRelease = track.data.releases.find(r => r.status === 'completed' || r.status === 'inProgress') || track.data.releases[0];
-          if (activeRelease) {
+        const allTracks = tracksRes.data.tracks || [];
+        const newTestingTracks = [];
+
+        for (const t of allTracks) {
+          const releases = t.releases || [];
+          if (releases.length === 0) continue;
+          const activeRelease = releases.find(r => r.status === 'completed' || r.status === 'inProgress') || releases[0];
+          if (!activeRelease) continue;
+
+          if (t.track === 'production') {
             companionVersion = activeRelease.name || (activeRelease.versionCodes ? activeRelease.versionCodes.join(', ') : 'N/A');
             companionStatus = activeRelease.status || 'completed';
             if (activeRelease.userFraction !== undefined && activeRelease.userFraction !== null) {
@@ -183,19 +207,7 @@ async function main() {
             if (activeRelease.releaseNotes && activeRelease.releaseNotes.length > 0) {
               companionNotes = activeRelease.releaseNotes.map(rn => rn.text).filter(Boolean).join('\n') || 'None';
             }
-          }
-        }
-      } catch (e) {}
-
-      try {
-        const wearTrack = await play.edits.tracks.get({
-          packageName,
-          editId,
-          track: 'wear:production',
-        });
-        if (wearTrack.data.releases && wearTrack.data.releases.length > 0) {
-          const activeRelease = wearTrack.data.releases.find(r => r.status === 'completed' || r.status === 'inProgress') || wearTrack.data.releases[0];
-          if (activeRelease) {
+          } else if (t.track === 'wear:production') {
             wearVersion = activeRelease.name || (activeRelease.versionCodes ? activeRelease.versionCodes.join(', ') : 'N/A');
             wearStatus = activeRelease.status || 'completed';
             if (activeRelease.userFraction !== undefined && activeRelease.userFraction !== null) {
@@ -206,7 +218,27 @@ async function main() {
             if (activeRelease.releaseNotes && activeRelease.releaseNotes.length > 0) {
               wearNotes = activeRelease.releaseNotes.map(rn => rn.text).filter(Boolean).join('\n') || 'None';
             }
+          } else {
+            newTestingTracks.push({
+              track: t.track,
+              version: activeRelease.name || (activeRelease.versionCodes ? activeRelease.versionCodes.join(', ') : 'N/A'),
+              status: activeRelease.status || 'unknown',
+              versionCodes: activeRelease.versionCodes || []
+            });
           }
+        }
+        testingTracks = newTestingTracks;
+      } catch (e) {}
+
+      try {
+        const bundlesRes = await play.edits.bundles.list({
+          packageName,
+          editId,
+        });
+        const bundles = bundlesRes.data.bundles || [];
+        bundleCount = bundles.length;
+        if (bundles.length > 0) {
+          latestBundleVersionCode = Math.max(...bundles.map(b => b.versionCode || 0));
         }
       } catch (e) {}
 
@@ -225,6 +257,58 @@ async function main() {
           packageName,
           editId,
         });
+      } catch (e) {}
+
+      // Fetch real Vitals & Anomalies from Play Developer Reporting API (last 28 days)
+      try {
+        const now = new Date();
+        const end = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+        const start = new Date(end.getTime() - 28 * 24 * 60 * 60 * 1000);
+        const startTime = { year: start.getUTCFullYear(), month: start.getUTCMonth() + 1, day: start.getUTCDate() };
+        const endTime = { year: end.getUTCFullYear(), month: end.getUTCMonth() + 1, day: end.getUTCDate() };
+
+        const [anomRes, crashRes, anrRes] = await Promise.all([
+          playReporting.anomalies.list({ parent: 'apps/' + packageName }).catch(() => ({ data: {} })),
+          playReporting.vitals.crashrate.query({
+            name: 'apps/' + packageName + '/crashRateMetricSet',
+            requestBody: {
+              timelineSpec: { aggregationPeriod: 'DAILY', startTime, endTime },
+              metrics: ['userPerceivedCrashRate', 'distinctUsers']
+            }
+          }).catch(() => ({ data: {} })),
+          playReporting.vitals.anrrate.query({
+            name: 'apps/' + packageName + '/anrRateMetricSet',
+            requestBody: {
+              timelineSpec: { aggregationPeriod: 'DAILY', startTime, endTime },
+              metrics: ['userPerceivedAnrRate', 'distinctUsers']
+            }
+          }).catch(() => ({ data: {} }))
+        ]);
+
+        const calcWeightedRate = (rows, metricKey) => {
+          if (!rows || rows.length === 0) return 0.0;
+          let sumWeighted = 0;
+          let sumUsers = 0;
+          for (const row of rows) {
+            const m = row.metrics || {};
+            const rate = m[metricKey] && m[metricKey].decimalValue ? parseFloat(m[metricKey].decimalValue) * 100 : 0;
+            const users = m.distinctUsers && m.distinctUsers.decimalValue ? parseFloat(m.distinctUsers.decimalValue) : 1;
+            sumWeighted += rate * users;
+            sumUsers += users;
+          }
+          return sumUsers > 0 ? +(sumWeighted / sumUsers).toFixed(2) : 0.0;
+        };
+
+        const crashRate = calcWeightedRate(crashRes.data.rows, 'userPerceivedCrashRate');
+        const anrRate = calcWeightedRate(anrRes.data.rows, 'userPerceivedAnrRate');
+        const anomaliesCount = (anomRes.data.anomalies || []).length;
+
+        vitals = {
+          crashRate,
+          anrRate,
+          anomaliesCount,
+          status: (crashRate >= 1.09 || anrRate >= 0.47 || anomaliesCount > 0) ? 'warning' : 'healthy'
+        };
       } catch (e) {}
     } else if (apiError) {
       const prev = existingMap.get(packageName);
@@ -391,16 +475,15 @@ async function main() {
       wearRollout,
       wearNotes,
       storeLanguages,
+      testingTracks,
+      bundleCount,
+      latestBundleVersionCode,
       lastUpdatedDate,
       downloads,
       rating,
       ratingCount,
       ratingsByCountry,
-      vitals: prevItem && prevItem.vitals ? prevItem.vitals : {
-        crashRate: 0.0,
-        anrRate: 0.0,
-        status: 'healthy'
-      },
+      vitals,
     };
     if (inReview) {
       itemResult.inReview = true;

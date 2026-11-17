@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-17T05:15:24.073Z",
+  "lastUpdated": "2026-11-17T10:42:31.394Z",
   "reviews": [
     {
       "reviewId": "07c25f8a-3f03-4d80-b2fe-7bd9818016c7",
@@ -14,9 +14,9 @@
         "Loved it"
       ],
       "text": "\tvery clean, nice set of customization",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you for your kind words and support.",
+      "developerReplyTime": "2026-11-17T06:51:50.000Z",
       "lastModified": "2026-11-16T22:33:20.000Z"
     },
     {
@@ -30,9 +30,9 @@
       "deviceMetadata": "r8q (Galaxy S20 FE 5G)",
       "topics": [],
       "text": "\tКлассные часы! Стильный дизайн! Спасибо!👍",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you, glad you are enjoying it.",
+      "developerReplyTime": "2026-11-17T06:52:13.000Z",
       "lastModified": "2026-11-16T18:29:16.000Z"
     },
     {

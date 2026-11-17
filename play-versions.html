@@ -3781,6 +3781,7 @@
             </div>
           </div>
         </div>
+        <div id="details-testing-bundles-box" style="margin-top: 8px; display: flex; flex-direction: column; gap: 6px;"></div>
       </div>
 
       <!-- Store Listing Languages & Translations -->
@@ -4824,6 +4825,10 @@
           wearStatus: playInfo.wearStatus || 'N/A',
           wearRollout: playInfo.wearRollout || '100%',
           wearNotes: playInfo.wearNotes || 'None',
+          testingTracks: playInfo.testingTracks || [],
+          bundleCount: playInfo.bundleCount || 0,
+          latestBundleVersionCode: playInfo.latestBundleVersionCode || null,
+          vitals: playInfo.vitals || { crashRate: 0.0, anrRate: 0.0, anomaliesCount: 0, status: 'healthy' },
           lastUpdatedDate: playInfo.lastUpdatedDate || 'N/A',
           downloads: playInfo.downloads || 'N/A',
           ratingsByCountry: playInfo.ratingsByCountry || (playInfo.rating !== undefined && playInfo.rating !== null ? { US: playInfo.rating } : {}),
@@ -6022,6 +6027,21 @@
       document.getElementById('details-wear-rollout').textContent = wf.wearRollout || '100%';
       document.getElementById('details-wear-notes').textContent = wf.wearNotes || 'None';
 
+      const tbBox = document.getElementById('details-testing-bundles-box');
+      if (tbBox) {
+        let tbHtml = '';
+        if (wf.bundleCount > 0 || wf.latestBundleVersionCode) {
+          tbHtml += `<div style="font-size:11px; color:#cbd5e1; background:rgba(255,255,255,0.04); border:1px solid var(--border); padding:6px 10px; border-radius:6px; display:flex; justify-content:space-between; align-items:center;"><span>📦 Uploaded Bundles: <strong>${wf.bundleCount}</strong></span><span>Latest Code: <strong style="color:var(--yellow);">${wf.latestBundleVersionCode || 'N/A'}</strong></span></div>`;
+        }
+        if (Array.isArray(wf.testingTracks) && wf.testingTracks.length > 0) {
+          const badges = wf.testingTracks.map(t => `<span style="font-size:10px; padding:2px 7px; border-radius:4px; background:rgba(56,189,248,0.12); color:#38bdf8; border:1px solid rgba(56,189,248,0.3);">🧪 ${t.track}: ${t.version} (${t.status})</span>`).join(' ');
+          tbHtml += `<div style="display:flex; flex-wrap:wrap; gap:5px;">${badges}</div>`;
+        } else {
+          tbHtml += `<div style="font-size:10.5px; color:var(--muted);">No active testing tracks (alpha/beta/internal)</div>`;
+        }
+        tbBox.innerHTML = tbHtml;
+      }
+
       // Populate Store Languages
       const langCountEl = document.getElementById('details-languages-count');
       const langBadgesEl = document.getElementById('details-languages-badges');
@@ -6058,7 +6078,8 @@
         const consoleId = consoleAppIds[wf.packageName] || consoleAppIds[(wf.id || id || '').toLowerCase()];
         const crashRate = (wf.vitals && wf.vitals.crashRate !== undefined) ? wf.vitals.crashRate : 0.0;
         const anrRate = (wf.vitals && wf.vitals.anrRate !== undefined) ? wf.vitals.anrRate : 0.0;
-        const isHealthy = crashRate < 1.09 && anrRate < 0.47;
+        const anomaliesCount = (wf.vitals && typeof wf.vitals.anomaliesCount === 'number') ? wf.vitals.anomaliesCount : 0;
+        const isHealthy = crashRate < 1.09 && anrRate < 0.47 && anomaliesCount === 0;
 
         if (vitalsBadgeEl) {
           vitalsBadgeEl.textContent = isHealthy ? 'Healthy (<1.09%)' : 'Needs Review';
@@ -6087,8 +6108,8 @@
               ${consoleVitalsLink}
             </div>
             <div style="font-size:11px; color:#94a3b8; display:flex; align-items:center; gap:5px; border-top:1px solid rgba(255,255,255,0.05); padding-top:6px; margin-top:4px;">
-              <span>✅</span>
-              <span>Well below Google Bad Behavior thresholds (Crash: 1.09% • ANR: 0.47%). API Active.</span>
+              <span>${isHealthy ? '✅' : '⚠️'}</span>
+              <span>${anomaliesCount > 0 ? anomaliesCount + ' Play anomaly alert(s) detected • ' : ''}Thresholds: Crash 1.09% • ANR 0.47%.</span>
             </div>
           </div>
         `;
