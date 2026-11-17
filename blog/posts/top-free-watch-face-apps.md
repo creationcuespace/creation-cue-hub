@@ -5,7 +5,7 @@ Here are all **13 free Creation Cue™ watch face apps** available for Samsung G
 ---
 
 ## 1. Analog Watch Face CRC046 (100K+ Downloads)
-![Analog Watch Face CRC046](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc046.png)
+![Analog Watch Face CRC046](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/blog_free_faces/crc046.webp)
 
 Our most popular free watch face with over 100,000 downloads. **CRC046** blends classic mechanical chronograph styling with modern smartwatch clarity, featuring crisp analog hands, subtle dial depth, and essential daily indicators.
 
@@ -14,7 +14,7 @@ Our most popular free watch face with over 100,000 downloads. **CRC046** blends 
 ---
 
 ## 2. Analog Watch Face CUE136 (50K+ Downloads)
-![Analog Watch Face CUE136](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue136.png)
+![Analog Watch Face CUE136](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/blog_free_faces/cue136.webp)
 
 A refined, clean analog design crafted for everyday elegance. **CUE136** delivers sharp legibility, balanced dial proportions, and a minimalist battery-conscious Always-On Display.
 
@@ -23,7 +23,7 @@ A refined, clean analog design crafted for everyday elegance. **CUE136** deliver
 ---
 
 ## 3. Digital Watch Face CRC080 (50K+ Downloads)
-![Digital Watch Face CRC080](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc080.png)
+![Digital Watch Face CRC080](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/blog_free_faces/crc080.webp)
 
 A bold, high-contrast digital watch face built for instant glanceability. **CRC080** presents large time digits alongside quick fitness and battery stats in a sleek dark layout.
 
@@ -32,7 +32,7 @@ A bold, high-contrast digital watch face built for instant glanceability. **CRC0
 ---
 
 ## 4. Digital Watch Face CRC041 (50K+ Downloads)
-![Digital Watch Face CRC041](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc041.png)
+![Digital Watch Face CRC041](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/blog_free_faces/crc041.webp)
 
 Sporty, structured, and easy to read in any lighting. **CRC041** keeps your time, date, steps, and key smartwatch metrics organized into clean, modern panels.
 
@@ -41,7 +41,7 @@ Sporty, structured, and easy to read in any lighting. **CRC041** keeps your time
 ---
 
 ## 5. Watch Face CUE Indus (10K+ Downloads)
-![Watch Face CUE Indus](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cueindus.png)
+![Watch Face CUE Indus](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/blog_free_faces/cueindus.webp)
 
 An industrial-inspired digital watch face with rugged character and sharp typography. **CUE Indus** combines tactical styling with smooth Wear OS performance.
 
@@ -50,7 +50,7 @@ An industrial-inspired digital watch face with rugged character and sharp typogr
 ---
 
 ## 6. Digital Watch Face CRC069 (10K+ Downloads)
-![Digital Watch Face CRC069](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc069.png)
+![Digital Watch Face CRC069](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/blog_free_faces/crc069.webp)
 
 Clean, modern, and built for daily productivity. **CRC069** offers a crisp digital readout with balanced spacing and customizable complication slots.
 
@@ -59,7 +59,7 @@ Clean, modern, and built for daily productivity. **CRC069** offers a crisp digit
 ---
 
 ## 7. Digital Watch Face CRC068 (10K+ Downloads)
-![Digital Watch Face CRC068](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc068.png)
+![Digital Watch Face CRC068](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/blog_free_faces/crc068.webp)
 
 A sleek, dark-themed digital watch face designed to save AMOLED battery while keeping your essential stats front and center.
 
@@ -68,7 +68,7 @@ A sleek, dark-themed digital watch face designed to save AMOLED battery while ke
 ---
 
 ## 8. Analog Watch Face CUE132 (5K+ Downloads)
-![Analog Watch Face CUE132](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue132.png)
+![Analog Watch Face CUE132](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/blog_free_faces/cue132.webp)
 
 Timeless analog proportions with a modern twist. **CUE132** pairs classic watch hands and clean hour markers with smart complication support for both dress and casual wear.
 
@@ -77,7 +77,7 @@ Timeless analog proportions with a modern twist. **CUE132** pairs classic watch 
 ---
 
 ## 9. Digital Watch Face CUE104 (5K+ Downloads)
-![Digital Watch Face CUE104](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/cue104.png)
+![Digital Watch Face CUE104](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/blog_free_faces/cue104.webp)
 
 A streamlined digital layout focused on clarity and speed. **CUE104** displays oversized time digits with subtle accent highlights and low-power AOD.
 
@@ -86,7 +86,7 @@ A streamlined digital layout focused on clarity and speed. **CUE104** displays o
 ---
 
 ## 10. Streamline Watch Face CRC023 (5K+ Downloads)
-![Streamline Watch Face CRC023](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc023.png)
+![Streamline Watch Face CRC023](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/blog_free_faces/crc023.webp)
 
 Minimalist and fluid, **CRC023** strips away visual clutter to leave you with a fast, distraction-free digital smartwatch experience.
 
@@ -95,7 +95,7 @@ Minimalist and fluid, **CRC023** strips away visual clutter to leave you with a 
 ---
 
 ## 11. Analogue Watch Face CRC082 (1K+ Downloads)
-![Analogue Watch Face CRC082](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc082.png)
+![Analogue Watch Face CRC082](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/blog_free_faces/crc082.webp)
 
 A sharp, versatile analog watch face featuring clean dial markers, refined hands, and subtle smartwatch data integration.
 
@@ -104,7 +104,7 @@ A sharp, versatile analog watch face featuring clean dial markers, refined hands
 ---
 
 ## 12. Commander Watch Face CRC036
-![Commander Watch Face CRC036](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc036.png)
+![Commander Watch Face CRC036](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/blog_free_faces/crc036.webp)
 
 Built with a tactical command-center aesthetic, **CRC036** frames your time and daily activity data inside structured, high-legibility digital modules.
 
@@ -113,7 +113,7 @@ Built with a tactical command-center aesthetic, **CRC036** frames your time and 
 ---
 
 ## 13. Japan Fusion Watch Face CRC027
-![Japan Fusion Watch Face CRC027](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/crc027.png)
+![Japan Fusion Watch Face CRC027](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/blog_free_faces/crc027.webp)
 
 Inspired by retro-futuristic Japanese digital watches, **CRC027** brings a distinctive, stylish digital look to modern Wear OS smartwatches.
 
