@@ -26,6 +26,11 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://creationcue.web.app/blog/post.html?slug=top-free-watch-face-apps</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://creationcue.web.app/blog/post.html?slug=why-custom-color-pickers-are-missing-from-wear-os-watch-faces</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
