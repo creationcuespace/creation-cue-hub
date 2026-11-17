@@ -1,4 +1,4 @@
-Looking to upgrade your Wear OS smartwatch without spending a cent? Every watch face below is built with Google's battery-friendly **Watch Face Format (WFF)**, features true-black Always-On Display (AOD) support, and is **100% free** to download on the Google Play Store.
+Looking for the **best free Wear OS watch faces** for your **Samsung Galaxy Watch** (Watch Ultra, Watch 7, Watch 6, Watch 5, Watch 4) or **Google Pixel Watch** without spending a cent? Every watch face below is built with Google's official battery-friendly **Watch Face Format (WFF)**, features true-black Always-On Display (AOD) support, and is **100% free** to download on the Google Play Store.
 
 Here are all **13 free Creation Cue™ watch face apps** available for Samsung Galaxy Watch, Google Pixel Watch, TicWatch, OnePlus Watch, and other Wear OS smartwatches.
 
@@ -121,5 +121,18 @@ Inspired by retro-futuristic Japanese digital watches, **CRC027** brings a disti
 
 ---
 
+## Frequently Asked Questions (FAQ)
+
+### How do I install these free watch faces on my Samsung Galaxy Watch or Pixel Watch?
+Tap any **Google Play** link above on your phone, select your smartwatch from the **Install on more devices** dropdown, and wait a couple of minutes for it to sync. Need step-by-step screenshots? Check our **[Wear OS Watch Face Installation Guide](https://creationcue.web.app/install)**.
+
+### Do these free watch faces drain smartwatch battery?
+No. Every Creation Cue™ watch face adheres to Google's native **Watch Face Format (WFF)** standard—meaning zero background code execution and true-black Always-On Display (AOD) modes optimized for AMOLED screens.
+
+### Are all 13 watch faces really 100% free?
+Yes! All 13 watch faces listed in this guide are completely free to install and use on Google Play with no hidden subscriptions.
+
+---
+
 ### Want to Explore More?
-Browse the full collection of over 115 Wear OS watch faces—including analog, hybrid, neon, and weather-ready designs—on the **[Creation Cue™ Hub](https://creationcue.web.app/)**.
+Browse the full collection of over 115 Wear OS watch faces—including analog, digital, hybrid, neon, and weather-ready designs—on the **[Creation Cue™ Hub](https://creationcue.web.app/)**.

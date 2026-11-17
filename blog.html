@@ -1269,7 +1269,7 @@
 
             const card = document.createElement('a');
             card.className = 'article-card-small';
-            card.href = `blog/post.html?id=${post.slug}`;
+            card.href = `blog/${post.slug}`;
             card.innerHTML = `
               <div class="article-thumb-container">
                 <img class="article-thumb" src="${thumbImg}" alt="${post.title}" loading="lazy">
@@ -1307,7 +1307,7 @@
 
               const card = document.createElement('a');
               card.className = 'article-card';
-              card.href = `blog/post.html?id=${post.slug}`;
+              card.href = `blog/${post.slug}`;
               card.innerHTML = `
                 <div class="article-thumb-container">
                   <img class="article-thumb" src="${thumbImg}" alt="${post.title}" loading="lazy">

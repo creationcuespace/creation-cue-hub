@@ -26,57 +26,62 @@
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://creationcue.web.app/blog/post.html?slug=top-free-watch-face-apps</loc>
+    <loc>https://creationcue.web.app/blog/top-free-watch-face-apps</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://creationcue.web.app/blog/post.html?slug=why-custom-color-pickers-are-missing-from-wear-os-watch-faces</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://creationcue.web.app/blog/post.html?slug=richer-complications</loc>
+    <loc>https://creationcue.web.app/blog/understanding-play-store-download-numbers</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://creationcue.web.app/blog/post.html?slug=weather-complications</loc>
+    <loc>https://creationcue.web.app/blog/why-custom-color-pickers-are-missing-from-wear-os-watch-faces</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://creationcue.web.app/blog/post.html?slug=redeem-your-google-play-gift-card-or-gift-code</loc>
+    <loc>https://creationcue.web.app/blog/richer-complications</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://creationcue.web.app/blog/post.html?slug=form-meets-function-the-design-philosophy-at-creation-cue</loc>
+    <loc>https://creationcue.web.app/blog/weather-complications</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://creationcue.web.app/blog/post.html?slug=google-s-new-api-rules-for-watch-faces</loc>
+    <loc>https://creationcue.web.app/blog/redeem-your-google-play-gift-card-or-gift-code</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://creationcue.web.app/blog/post.html?slug=galaxy-watch-ultra-2-2026-what-new-tech-we-expect</loc>
+    <loc>https://creationcue.web.app/blog/form-meets-function-the-design-philosophy-at-creation-cue</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://creationcue.web.app/blog/post.html?slug=your-watch-your-data-the-power-of-smart-customization-on-wear-os</loc>
+    <loc>https://creationcue.web.app/blog/google-s-new-api-rules-for-watch-faces</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://creationcue.web.app/blog/post.html?slug=new-release-cue178</loc>
+    <loc>https://creationcue.web.app/blog/galaxy-watch-ultra-2-2026-what-new-tech-we-expect</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://creationcue.web.app/blog/post.html?slug=wear-os-watch-faces-navigating-community-customization-and-creator-trust</loc>
+    <loc>https://creationcue.web.app/blog/your-watch-your-data-the-power-of-smart-customization-on-wear-os</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://creationcue.web.app/blog/new-release-cue178</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://creationcue.web.app/blog/wear-os-watch-faces-navigating-community-customization-and-creator-trust</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
