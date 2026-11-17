@@ -3545,30 +3545,49 @@
                 redditHook = `Clean ${rawType ? rawType.toLowerCase() + ' ' : ''}layout with customizable complications and full AOD support.`;
             }
 
+            const redditRealNote = realRecordingActive
+                ? `\n\nReal-time screen recording of the actual watch face in motion.`
+                : '';
+            const redditWeatherNote = simpleWeatherActive
+                ? `\n\nNote: Weather data shown on the watch face is provided by the free companion app "Simple Weather".`
+                : '';
+            const redditFeedbackNote = feedbackInviteActive
+                ? `\n\nIf you have any suggestions or requests for future updates, feel free to leave a comment.`
+                : '';
+            const redditExtras = `${redditWeatherNote}${redditRealNote}${redditFeedbackNote}`;
+
             let effectiveRedditType = currentRedditPostType;
-            if (couponsActive) effectiveRedditType = 'coupons';
+            if (comingSoonActive) effectiveRedditType = 'coming_soon';
+            else if (couponsActive) effectiveRedditType = 'coupons';
 
             let redditTitle = '';
             let redditBody = '';
             let redditComment = '';
 
-            if (effectiveRedditType === 'free') {
+            if (effectiveRedditType === 'coming_soon') {
+                const csName = name || 'New Creation Cue Watch Face';
+                redditTitle = `[Coming Soon] ${csName} – ${faceTypeLabel} for Wear OS`;
+                redditBody = `${csName} is coming soon to Google Play for Wear OS.\n\n${redditHook}${redditExtras}\n\n(Store link is in the first comment below)`;
+                redditComment = `⏳ Coming soon! Explore all Creation Cue watch faces on Google Play:\n${generalDevLink}\n\n`;
+            } else if (effectiveRedditType === 'free') {
                 redditTitle = `[Free] ${displayName} – 100% Free ${faceTypeLabel} for Wear OS (No coupons needed)`;
-                redditBody = `${displayName} is 100% free on Google Play—no promo codes or coupon links needed, you can download it directly from the store.\n\n${redditHook}\n\n(Google Play link is in the first comment below)`;
+                redditBody = `${displayName} is 100% free on Google Play—no promo codes or coupon links needed, you can download it directly from the store.\n\n${redditHook}${redditExtras}\n\n(Google Play link is in the first comment below)`;
             } else if (effectiveRedditType === 'sale') {
                 redditTitle = `[Sale] ${displayName} – ${faceTypeLabel} for Wear OS (${currentRedditSalePrice} limited-time discount)`;
-                redditBody = `${displayName} is currently on sale on Google Play for ${currentRedditSalePrice}.\n\n${redditHook}\n\n(Google Play link is in the first comment below)`;
+                redditBody = `${displayName} is currently on sale on Google Play for ${currentRedditSalePrice}.\n\n${redditHook}${redditExtras}\n\n(Google Play link is in the first comment below)`;
             } else if (effectiveRedditType === 'coupons') {
                 const cLink = couponsLink || 'https://...';
                 redditTitle = `[Coupons] ${displayName} – ${faceTypeLabel} for Wear OS`;
-                redditBody = `Sharing free promo codes for ${displayName} on Wear OS.\n\n${redditHook}\n\n(Coupon & Google Play links are in the first comment below)`;
+                redditBody = `Sharing free promo codes for ${displayName} on Wear OS.\n\n${redditHook}${redditExtras}\n\n(Coupon & Google Play links are in the first comment below)`;
                 redditComment = `🎫 Claim a coupon here:\n${cLink}\n\n`;
             } else {
                 redditTitle = `[Paid] ${displayName} – ${faceTypeLabel} for Wear OS`;
-                redditBody = `${displayName} is now available on Google Play for Wear OS.\n\n${redditHook}\n\n(Google Play link is in the first comment below)`;
+                redditBody = `${displayName} is now available on Google Play for Wear OS.\n\n${redditHook}${redditExtras}\n\n(Google Play link is in the first comment below)`;
             }
 
-            if (effectiveRedditType !== 'coupons') {
+            if (effectiveRedditType === 'coming_soon') {
+                // Dev link already added above
+            } else if (effectiveRedditType !== 'coupons') {
                 redditComment = `📥 Download ${displayName}${effectiveRedditType === 'free' ? ' (100% Free)' : ''}:\n${link}\n\n`;
             } else {
                 redditComment += `📥 Google Play:\n${link}\n\n`;
