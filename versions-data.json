@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-17T10:42:31.390Z",
+  "lastUpdated": "2026-11-18T04:43:41.344Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -280,6 +280,14 @@
       "weightedAvg": 4.53,
       "ratedCount": 30,
       "totalWeight": 3926
+    },
+    {
+      "date": "2026-11-18",
+      "timestamp": "2026-11-18T04:43:41.344Z",
+      "avgRating": 4.51,
+      "weightedAvg": 4.53,
+      "ratedCount": 30,
+      "totalWeight": 3933
     }
   ],
   "results": [
@@ -2474,7 +2482,7 @@
       ],
       "bundleCount": 11,
       "latestBundleVersionCode": 10000015,
-      "lastUpdatedDate": "Oct 22, 2026",
+      "lastUpdatedDate": "Oct 21, 2026",
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
@@ -2596,10 +2604,10 @@
       "latestBundleVersionCode": 10000010,
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
-      "rating": 4.2,
-      "ratingCount": "40",
+      "rating": 4.3,
+      "ratingCount": "42",
       "ratingsByCountry": {
-        "US": 4.2
+        "US": 4.3
       },
       "vitals": {
         "crashRate": 0,
@@ -3119,7 +3127,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 3.3,
-      "ratingCount": "8",
+      "ratingCount": "10",
       "ratingsByCountry": {
         "US": 3.3
       },
@@ -3201,7 +3209,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.3,
-      "ratingCount": "657",
+      "ratingCount": "658",
       "ratingsByCountry": {
         "US": 4.3,
         "GB": 4.4,
@@ -3367,7 +3375,7 @@
       ],
       "bundleCount": 11,
       "latestBundleVersionCode": 10000011,
-      "lastUpdatedDate": "Aug 27, 2026",
+      "lastUpdatedDate": "Aug 26, 2026",
       "downloads": "10K+",
       "rating": 4.4,
       "ratingCount": "100",
@@ -3413,7 +3421,7 @@
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "10K+",
       "rating": 4.9,
-      "ratingCount": "70",
+      "ratingCount": "71",
       "ratingsByCountry": {
         "US": 4.9,
         "KR": 4.4
@@ -4389,7 +4397,7 @@
       "lastUpdatedDate": "Nov 10, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "355",
+      "ratingCount": "356",
       "ratingsByCountry": {
         "US": 4.6,
         "KR": 4.6,
@@ -4496,7 +4504,7 @@
       ],
       "bundleCount": 4,
       "latestBundleVersionCode": 10000002,
-      "lastUpdatedDate": "Oct 27, 2026",
+      "lastUpdatedDate": "Nov 7, 2026",
       "downloads": "50+",
       "rating": null,
       "ratingCount": null,
