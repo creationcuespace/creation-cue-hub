@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-18T04:43:41.344Z",
+  "lastUpdated": "2026-11-19T04:31:16.239Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -288,6 +288,14 @@
       "weightedAvg": 4.53,
       "ratedCount": 30,
       "totalWeight": 3933
+    },
+    {
+      "date": "2026-11-19",
+      "timestamp": "2026-11-19T04:31:16.239Z",
+      "avgRating": 4.51,
+      "weightedAvg": 4.53,
+      "ratedCount": 31,
+      "totalWeight": 3959
     }
   ],
   "results": [
@@ -1587,7 +1595,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": 4.6,
-      "ratingCount": "16",
+      "ratingCount": "17",
       "ratingsByCountry": {
         "US": 4.6
       },
@@ -1682,7 +1690,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.7,
-      "ratingCount": "436",
+      "ratingCount": "437",
       "ratingsByCountry": {
         "US": 4.7,
         "KR": 4.5,
@@ -1847,7 +1855,7 @@
       "rating": null,
       "ratingCount": null,
       "ratingsByCountry": {
-        "KR": 5
+        "KR": 4.7
       },
       "vitals": {
         "crashRate": 0,
@@ -2404,9 +2412,11 @@
       "latestBundleVersionCode": 10000018,
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
-      "rating": null,
-      "ratingCount": null,
-      "ratingsByCountry": {},
+      "rating": 4.4,
+      "ratingCount": "18",
+      "ratingsByCountry": {
+        "US": 4.4
+      },
       "vitals": {
         "crashRate": 0,
         "anrRate": 0,
@@ -2482,7 +2492,7 @@
       ],
       "bundleCount": 11,
       "latestBundleVersionCode": 10000015,
-      "lastUpdatedDate": "Oct 21, 2026",
+      "lastUpdatedDate": "Oct 22, 2026",
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
@@ -2605,7 +2615,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
       "rating": 4.3,
-      "ratingCount": "42",
+      "ratingCount": "45",
       "ratingsByCountry": {
         "US": 4.3
       },
@@ -3209,7 +3219,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.3,
-      "ratingCount": "658",
+      "ratingCount": "659",
       "ratingsByCountry": {
         "US": 4.3,
         "GB": 4.4,
@@ -3375,10 +3385,10 @@
       ],
       "bundleCount": 11,
       "latestBundleVersionCode": 10000011,
-      "lastUpdatedDate": "Aug 26, 2026",
+      "lastUpdatedDate": "Aug 27, 2026",
       "downloads": "10K+",
       "rating": 4.4,
-      "ratingCount": "100",
+      "ratingCount": "101",
       "ratingsByCountry": {
         "US": 4.4,
         "KR": 4.9
@@ -3421,7 +3431,7 @@
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "10K+",
       "rating": 4.9,
-      "ratingCount": "71",
+      "ratingCount": "72",
       "ratingsByCountry": {
         "US": 4.9,
         "KR": 4.4
@@ -3543,7 +3553,7 @@
       ],
       "bundleCount": 11,
       "latestBundleVersionCode": 10000014,
-      "lastUpdatedDate": "Aug 4, 2026",
+      "lastUpdatedDate": "Nov 12, 2026",
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
@@ -3792,7 +3802,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.2,
-      "ratingCount": "474",
+      "ratingCount": "475",
       "ratingsByCountry": {
         "US": 4.2,
         "GB": 4.7,
@@ -4397,7 +4407,7 @@
       "lastUpdatedDate": "Nov 10, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "356",
+      "ratingCount": "355",
       "ratingsByCountry": {
         "US": 4.6,
         "KR": 4.6,
