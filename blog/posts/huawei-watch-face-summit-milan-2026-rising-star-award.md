@@ -1,0 +1,18 @@
+I am proud to share a major milestone for **Creation Cue™ Studio**: at the **Huawei Watch Face Summit Milano 2026** on November 19, 2026, I was honored with the **Rising Star Award**!
+
+Out of the European creator community, **only 7 watch face designers** were invited in person to the Milan summit and gala to receive awards—making this recognition especially meaningful.
+
+---
+
+## Highlights from Milan
+
+- **Rising Star Award**: Recognized by Huawei Themes for craft, visual clarity, and momentum across smartwatch watch face design.
+- **Connecting with Fellow Creators**: Meeting other talented watch face designers and the Huawei team in Milan was an inspiring reminder of how fast wearable design is evolving.
+- **Looking Ahead**: This award motivates me even more to keep pushing clean typography, battery-optimized layouts, and refined aesthetics across both **Huawei** and **Wear OS** smartwatches.
+
+---
+
+## Thank You!
+A huge thank you to everyone who wears, rates, and supports Creation Cue™ watch faces every day—none of this happens without you.
+
+👉 Explore our **[Huawei Watch Collection](/go)** or browse all **[Wear OS Watch Faces](https://creationcue.web.app/)**!
