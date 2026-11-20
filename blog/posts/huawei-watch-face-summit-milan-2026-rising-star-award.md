@@ -1,6 +1,6 @@
 I am proud to share a major milestone for **Creation Cue™ Studio**: at the **Huawei Watch Face Summit Milano 2026** on November 19, 2026, I was honored with the **Rising Star Award**!
 
-Out of the European creator community, **only 7 watch face designers** were invited in person to the Milan summit and gala to receive awards—making this recognition especially meaningful.
+Being invited in person to the Milan summit and gala to receive this recognition makes this milestone especially meaningful.
 
 ---
 
