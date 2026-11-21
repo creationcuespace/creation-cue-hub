@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-20T04:18:50.186Z",
+  "lastUpdated": "2026-11-21T04:17:50.380Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -300,6 +300,14 @@
     {
       "date": "2026-11-20",
       "timestamp": "2026-11-20T04:18:50.186Z",
+      "avgRating": 4.5,
+      "weightedAvg": 4.52,
+      "ratedCount": 31,
+      "totalWeight": 3970
+    },
+    {
+      "date": "2026-11-21",
+      "timestamp": "2026-11-21T04:17:50.380Z",
       "avgRating": 4.5,
       "weightedAvg": 4.52,
       "ratedCount": 31,
@@ -2500,7 +2508,7 @@
       ],
       "bundleCount": 11,
       "latestBundleVersionCode": 10000015,
-      "lastUpdatedDate": "Oct 21, 2026",
+      "lastUpdatedDate": "Oct 22, 2026",
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
@@ -2623,7 +2631,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
       "rating": 4.3,
-      "ratingCount": "44",
+      "ratingCount": "43",
       "ratingsByCountry": {
         "US": 4.3
       },
@@ -3393,7 +3401,7 @@
       ],
       "bundleCount": 11,
       "latestBundleVersionCode": 10000011,
-      "lastUpdatedDate": "Aug 26, 2026",
+      "lastUpdatedDate": "Aug 27, 2026",
       "downloads": "10K+",
       "rating": 4.4,
       "ratingCount": "102",
@@ -4415,7 +4423,7 @@
       "lastUpdatedDate": "Nov 10, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "358",
+      "ratingCount": "359",
       "ratingsByCountry": {
         "US": 4.6,
         "KR": 4.6,
@@ -4466,7 +4474,7 @@
     {
       "id": "cue179",
       "title": "CUE179",
-      "playStoreTitle": "Watch Face CUE179",
+      "playStoreTitle": "Digital Watch Face CUE179",
       "packageName": "com.creation.cue179watchface",
       "companionVersion": "2 (6.1.0)",
       "companionStatus": "completed",
