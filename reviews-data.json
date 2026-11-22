@@ -1,6 +1,38 @@
 {
-  "lastUpdated": "2026-11-21T04:17:50.381Z",
+  "lastUpdated": "2026-11-22T03:30:34.614Z",
   "reviews": [
+    {
+      "reviewId": "ce948d90-3a98-4bf9-8e9f-a92b2a690391",
+      "packageName": "com.creationcue.crc068watchface",
+      "title": "Digital Watch Face CRC068",
+      "wfId": "crc068",
+      "authorName": "Jamerson Carlos",
+      "starRating": 5,
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "a53x (Galaxy A53 5G UW)",
+      "topics": [],
+      "text": "\tsimples e Top",
+      "hasDeveloperReply": false,
+      "developerReplyText": null,
+      "developerReplyTime": null,
+      "lastModified": "2026-11-21T09:52:53.000Z"
+    },
+    {
+      "reviewId": "9253a31d-d0b2-4ff5-a7e0-0e45eabbb2cf",
+      "packageName": "com.watchfacestudio.crc023",
+      "title": "Streamline Watch Face crc023",
+      "wfId": "crc023",
+      "authorName": "Jamerson Carlos",
+      "starRating": 5,
+      "reviewerLanguage": "pt",
+      "deviceMetadata": "a53x (Galaxy A53 5G UW)",
+      "topics": [],
+      "text": "\tachei TOP",
+      "hasDeveloperReply": false,
+      "developerReplyText": null,
+      "developerReplyTime": null,
+      "lastModified": "2026-11-21T09:39:01.000Z"
+    },
     {
       "reviewId": "236789d3-163d-445a-aa1e-8aee620cead5",
       "packageName": "com.creation.cue163watchface",
@@ -299,7 +331,7 @@
       "authorName": "Adlin 91",
       "starRating": 5,
       "reviewerLanguage": "ms",
-      "deviceMetadata": "V2446 (Y19s 5G)",
+      "deviceMetadata": "V2446 (Y29s 5G)",
       "topics": [],
       "text": "\tAF oh dang that'd",
       "hasDeveloperReply": true,
