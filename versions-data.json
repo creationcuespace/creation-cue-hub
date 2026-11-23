@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-22T03:30:34.613Z",
+  "lastUpdated": "2026-11-23T04:00:43.108Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -320,6 +320,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 31,
       "totalWeight": 3976
+    },
+    {
+      "date": "2026-11-23",
+      "timestamp": "2026-11-23T04:00:43.108Z",
+      "avgRating": 4.49,
+      "weightedAvg": 4.52,
+      "ratedCount": 31,
+      "totalWeight": 3981
     }
   ],
   "results": [
@@ -1340,7 +1348,7 @@
     {
       "id": "cue148",
       "title": "CUE148",
-      "playStoreTitle": "Watch Face CUE148",
+      "playStoreTitle": "Digital Watch Face CUE148",
       "packageName": "com.creation.cue148watchface",
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "companionStatus": "completed",
@@ -1356,7 +1364,7 @@
       "testingTracks": [],
       "bundleCount": 10,
       "latestBundleVersionCode": 10000007,
-      "lastUpdatedDate": "Aug 4, 2026",
+      "lastUpdatedDate": "Nov 14, 2026",
       "downloads": "500+",
       "rating": 4.2,
       "ratingCount": "26",
@@ -1714,7 +1722,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.6,
-      "ratingCount": "437",
+      "ratingCount": "436",
       "ratingsByCountry": {
         "US": 4.6,
         "KR": 4.5,
@@ -2270,7 +2278,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
       "rating": 4.5,
-      "ratingCount": "97",
+      "ratingCount": "98",
       "ratingsByCountry": {
         "US": 4.5,
         "DE": 4.8
@@ -2516,7 +2524,7 @@
       ],
       "bundleCount": 11,
       "latestBundleVersionCode": 10000015,
-      "lastUpdatedDate": "Oct 21, 2026",
+      "lastUpdatedDate": "Oct 22, 2026",
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
@@ -2639,7 +2647,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
       "rating": 4.3,
-      "ratingCount": "45",
+      "ratingCount": "46",
       "ratingsByCountry": {
         "US": 4.3
       },
@@ -3160,10 +3168,10 @@
       "latestBundleVersionCode": 10000013,
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
-      "rating": 3.3,
-      "ratingCount": "10",
+      "rating": 3,
+      "ratingCount": "9",
       "ratingsByCountry": {
-        "US": 3.3
+        "US": 3
       },
       "vitals": {
         "crashRate": 0,
@@ -3409,10 +3417,10 @@
       ],
       "bundleCount": 11,
       "latestBundleVersionCode": 10000011,
-      "lastUpdatedDate": "Aug 26, 2026",
+      "lastUpdatedDate": "Aug 27, 2026",
       "downloads": "10K+",
       "rating": 4.4,
-      "ratingCount": "103",
+      "ratingCount": "104",
       "ratingsByCountry": {
         "US": 4.4,
         "KR": 4.9
@@ -3455,7 +3463,7 @@
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "10K+",
       "rating": 4.9,
-      "ratingCount": "72",
+      "ratingCount": "73",
       "ratingsByCountry": {
         "US": 4.9,
         "KR": 4.4
@@ -4431,7 +4439,7 @@
       "lastUpdatedDate": "Nov 10, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "360",
+      "ratingCount": "363",
       "ratingsByCountry": {
         "US": 4.6,
         "KR": 4.6,
