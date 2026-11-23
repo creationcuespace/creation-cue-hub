@@ -15,4 +15,4 @@ Being invited in person to the Milan summit and gala to receive this recognition
 ## Thank You!
 A huge thank you to everyone who wears, rates, and supports Creation Cue™ watch faces every day—none of this happens without you.
 
-👉 Explore our **[Huawei Watch Collection](/go)** or browse all **[Wear OS Watch Faces](https://creationcue.web.app/)**!
+👉 Explore our **[Huawei Watch Collection](/huawei)** or browse all **[Wear OS Watch Faces](https://creationcue.web.app/)**!

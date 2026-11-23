@@ -83,6 +83,10 @@
         "destination": "/install.html"
       },
       {
+        "source": "/huawei",
+        "destination": "/huawei.html"
+      },
+      {
         "source": "/live",
         "destination": "/live.html"
       },

@@ -86,7 +86,7 @@ function main() {
       author: {
         '@type': 'Person',
         name: 'Sotirios Liontos',
-        url: 'https://creationcue.web.app/go'
+        url: 'https://creationcue.web.app/'
       },
       publisher: {
         '@type': 'Organization',
@@ -176,6 +176,7 @@ function main() {
     { loc: 'https://creationcue.web.app/', changefreq: 'daily', priority: '1.0' },
     { loc: 'https://creationcue.web.app/blog', changefreq: 'daily', priority: '0.8' },
     { loc: 'https://creationcue.web.app/install', changefreq: 'monthly', priority: '0.6' },
+    { loc: 'https://creationcue.web.app/huawei', changefreq: 'weekly', priority: '0.8' },
     { loc: 'https://creationcue.web.app/privacy', changefreq: 'monthly', priority: '0.3' },
     { loc: 'https://creationcue.web.app/privacy_manager.html', changefreq: 'monthly', priority: '0.3' },
     ...published.map(p => ({
