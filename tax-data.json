@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-16T10:00:30+03:00",
+  "lastUpdated": "2026-11-23T10:00:25+03:00",
   "taxpayer": {
     "name": "Σωτήριος Λιόντος του Κωνσταντίνου",
     "afm": "047155049",
@@ -312,8 +312,8 @@
     "status": "Οριστικό κλείσιμο Ο.Ε. & μετάβαση σε 100% Digital / Asset Cashflow"
   },
   "subsidiesMonitor": {
-    "lastCheck": "16/11/2026",
-    "nextCheck": "23/11/2026",
+    "lastCheck": "23/11/2026",
+    "nextCheck": "30/11/2026",
     "checkFrequency": "Εβδομαδιαίος Έλεγχος (Κάθε Δευτέρα στις 10:00 π.μ.)",
     "mobileNotificationChannel": {
       "service": "ntfy.sh",
@@ -343,8 +343,8 @@
         "targetItem": "Ηλεκτρικό Αυτοκίνητο (Leasing) & Αντικατάσταση Subaru",
         "description": "Επιδότηση μακροχρόνιας μίσθωσης (leasing) αμιγώς ηλεκτρικού επιβατικού οχήματος. Μειώνει άμεσα το μηνιαίο μίσθωμα. Σε συνδυασμό με την υπερέκπτωση δαπάνης 50% στο Ε3, αποτελεί την ιδανική λύση για αντικατάσταση του Subaru Impreza.",
         "link": "https://kinoumeilektrika3.gov.gr",
-        "daysRemaining": 45,
-        "expiryAlert": "ΕΠΙΚΕΙΜΕΝΗ ΛΗΞΗ: Απομένουν 45 ημέρες (31/12/2026)",
+        "daysRemaining": 38,
+        "expiryAlert": "ΕΠΙΚΕΙΜΕΝΗ ΛΗΞΗ: Απομένουν 38 ημέρες (31/12/2026)",
         "urgency": "WARNING"
       },
       {
@@ -360,8 +360,8 @@
         "targetItem": "Hardware (MacBook, Monitors) & AI Tools / Cloud",
         "description": "Κάλυψη δαπανών για hardware (MacBook, σταθμοί εργασίας, monitors), επαγγελματικό λογισμικό (Adobe, JetBrains, AI tools), cloud services & κυβερνοασφάλεια. Επιλέξιμος ο ΚΑΔ 62011100.",
         "link": "https://www.espa.gr",
-        "daysRemaining": 226,
-        "expiryAlert": "Ενεργό (226 ημέρες απομένουν)",
+        "daysRemaining": 219,
+        "expiryAlert": "Ενεργό (219 ημέρες απομένουν)",
         "urgency": "NORMAL"
       },
       {
@@ -377,8 +377,8 @@
         "targetItem": "Εκσυγχρονισμός Τοπικής Επιχείρησης Ιωαννίνων",
         "description": "Στοχευμένες περιφερειακές δράσεις για επιχειρήσεις με έδρα τα Ιωάννινα. Αφορά αναβάθμιση τεχνολογικού εξοπλισμού, marketing και διεθνή προώθηση. Σημείωση: Η τρέχουσα πρόσκληση ΠΗΠΕ-06 'Νέα Ευκαιρία' (λήξη 21/10/2026) απευθύνεται σε ανέργους/μισθωτούς (μη επιλέξιμος), ενώ αναμένεται η δράση εκσυγχρονισμού υφιστάμενων ΜμΕ.",
         "link": "https://espa-epirus.gr",
-        "daysRemaining": 45,
-        "expiryAlert": "ΕΠΙΚΕΙΜΕΝΗ ΛΗΞΗ: Απομένουν 45 ημέρες (31/12/2026)",
+        "daysRemaining": 38,
+        "expiryAlert": "ΕΠΙΚΕΙΜΕΝΗ ΛΗΞΗ: Απομένουν 38 ημέρες (31/12/2026)",
         "urgency": "WARNING"
       },
       {
@@ -394,8 +394,8 @@
         "targetItem": "Εξαγωγική Δραστηριότητα & Πνευματικά Δικαιώματα",
         "description": "Απευθύνεται σε ψηφιακές επιχειρήσεις με εξαγωγικό χαρακτήρα. Η Creation Cue τιμολογεί 100% B2B προς Google Play (Google Ireland), πληρώντας το βασικό κριτήριο εξωστρέφειας.",
         "link": "https://www.espa.gr",
-        "daysRemaining": 410,
-        "expiryAlert": "Ενεργό (410 ημέρες απομένουν)",
+        "daysRemaining": 403,
+        "expiryAlert": "Ενεργό (403 ημέρες απομένουν)",
         "urgency": "NORMAL"
       }
     ],
@@ -417,34 +417,34 @@
       "kinoume-ilektrika-3": {
         "url": "https://kinoumeilektrika3.gov.gr",
         "online": true,
-        "checkedAt": "16/11/2026 10:00"
+        "checkedAt": "23/11/2026 10:00"
       },
       "espa-digital-sme": {
         "url": "https://www.espa.gr",
         "online": true,
-        "checkedAt": "16/11/2026 10:00"
+        "checkedAt": "23/11/2026 10:00"
       },
       "pep-epirus-2021-2027": {
         "url": "https://espa-epirus.gr",
         "online": true,
-        "checkedAt": "16/11/2026 10:00"
+        "checkedAt": "23/11/2026 10:00"
       },
       "innovation-export-fund": {
         "url": "https://www.espa.gr",
         "online": true,
-        "checkedAt": "16/11/2026 10:00"
+        "checkedAt": "23/11/2026 10:00"
       }
     },
     "activeExpiryAlerts": [
       {
         "title": "Κινούμαι Ηλεκτρικά 3 (Επαγγελματικό Leasing & Αγορά BEV)",
-        "daysRemaining": 45,
+        "daysRemaining": 38,
         "deadline": "31/12/2026",
         "urgency": "WARNING"
       },
       {
         "title": "ΠΕΠ Ηπείρου («Ήπειρος 2021-2027») - Ενίσχυση Πολύ Μικρών Επιχειρήσεων ΤΠΕ",
-        "daysRemaining": 45,
+        "daysRemaining": 38,
         "deadline": "31/12/2026",
         "urgency": "WARNING"
       }
