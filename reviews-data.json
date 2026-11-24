@@ -1,6 +1,24 @@
 {
-  "lastUpdated": "2026-11-24T06:25:50.638Z",
+  "lastUpdated": "2026-11-24T07:06:23.354Z",
   "reviews": [
+    {
+      "reviewId": "5015ed8b-0312-4238-ae74-3057eca936f2",
+      "packageName": "com.creation.cue177watchface",
+      "title": "Analog Watch Face CUE177",
+      "wfId": "cue177",
+      "authorName": "יאיר לוי",
+      "starRating": 5,
+      "reviewerLanguage": "iw",
+      "deviceMetadata": "crownlte (Galaxy Note9)",
+      "topics": [
+        "Loved it"
+      ],
+      "text": "\tPerfect watch face work flawless.",
+      "hasDeveloperReply": false,
+      "developerReplyText": null,
+      "developerReplyTime": null,
+      "lastModified": "2026-11-24T07:04:03.000Z"
+    },
     {
       "reviewId": "e234b49e-c14e-49a2-b748-364204442452",
       "packageName": "com.creation.cue166watchface",
@@ -12,9 +30,9 @@
       "deviceMetadata": "q7q (Galaxy Z Fold7)",
       "topics": [],
       "text": "\t설치해보니 너무 조잡해요 ㅠ",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "소중한 의견과 별점 4개 감사합니다! 복잡하게 느껴지셨다면 죄송합니다. 워치 화면을 길게 누른 뒤 '사용자 설정'에서 색상과 정보 표시(컴플리케이션)를 줄이거나 변경하시면 훨씬 깔끔하게 사용하실 수 있습니다. 개선 의견이나 문의는 creationcuespace@gmail.com 으로 편하게 연락 주세요.",
+      "developerReplyTime": "2026-11-24T06:52:42.000Z",
       "lastModified": "2026-11-24T05:40:20.000Z"
     },
     {
@@ -28,9 +46,9 @@
       "deviceMetadata": "b7r (Galaxy Z Flip7 FE)",
       "topics": [],
       "text": "\tmuito elegante!! normalmente gosto com várias complicações, mas eu amei e achei este bem elegante!! compro diariamente um watchface e com pelo menos 3 complicações, mas mesmo sem esta opção, instalem e vejam o quão elegante este é!!!Parabéns ao desenvolvedor!!!!!🙌🙌🙌",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you for your kind words and support.",
+      "developerReplyTime": "2026-11-24T06:53:15.000Z",
       "lastModified": "2026-11-24T02:45:57.000Z"
     },
     {
@@ -44,9 +62,9 @@
       "deviceMetadata": "pa3q (Galaxy S25 Ultra)",
       "topics": [],
       "text": "\tmooie heldere wijzerplaat dank U wel",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you for the rating and support.",
+      "developerReplyTime": "2026-11-24T06:53:43.000Z",
       "lastModified": "2026-11-23T20:29:06.000Z"
     },
     {
@@ -60,9 +78,9 @@
       "deviceMetadata": "q4q (Galaxy Z Fold4)",
       "topics": [],
       "text": "\tсупер",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you.",
+      "developerReplyTime": "2026-11-24T06:54:08.000Z",
       "lastModified": "2026-11-23T19:37:55.000Z"
     },
     {
@@ -76,9 +94,9 @@
       "deviceMetadata": "e3q (Galaxy S24 Ultra)",
       "topics": [],
       "text": "\tunique watch face",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you for the review and support.",
+      "developerReplyTime": "2026-11-24T06:54:15.000Z",
       "lastModified": "2026-11-23T18:56:43.000Z"
     },
     {
@@ -94,9 +112,9 @@
         "Loved it"
       ],
       "text": "\tNice Watch Face",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you.",
+      "developerReplyTime": "2026-11-24T06:54:28.000Z",
       "lastModified": "2026-11-23T18:55:57.000Z"
     },
     {
@@ -110,9 +128,9 @@
       "deviceMetadata": "OP62A3L1 (A6x)",
       "topics": [],
       "text": "\tMe gusta, es bastante completa",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you, glad you are enjoying it.",
+      "developerReplyTime": "2026-11-24T06:54:57.000Z",
       "lastModified": "2026-11-23T18:20:35.000Z"
     },
     {
@@ -128,9 +146,9 @@
         "Loved it"
       ],
       "text": "\tPerfect",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you for the review and support.",
+      "developerReplyTime": "2026-11-24T06:55:09.000Z",
       "lastModified": "2026-11-23T13:06:46.000Z"
     },
     {
@@ -146,9 +164,9 @@
         "Loved it"
       ],
       "text": "\tclassy good mix of colors very clean thank you",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you for your feedback, much appreciated.",
+      "developerReplyTime": "2026-11-24T06:55:16.000Z",
       "lastModified": "2026-11-23T12:15:02.000Z"
     },
     {
@@ -162,9 +180,9 @@
       "deviceMetadata": "pa2q (Galaxy S25+)",
       "topics": [],
       "text": "\tDopo questo aggiornamento risolte piccole imperfezioni estetiche che avevo comunicato allo sviluppatore che ha dato un supporto a riguardo. Consigliato.",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you for the review and support.",
+      "developerReplyTime": "2026-11-24T06:55:45.000Z",
       "lastModified": "2026-11-23T10:21:15.000Z"
     },
     {

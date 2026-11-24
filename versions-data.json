@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-24T06:25:50.637Z",
+  "lastUpdated": "2026-11-24T07:06:23.351Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -331,7 +331,7 @@
     },
     {
       "date": "2026-11-24",
-      "timestamp": "2026-11-24T06:25:50.636Z",
+      "timestamp": "2026-11-24T07:06:23.351Z",
       "avgRating": 4.49,
       "weightedAvg": 4.52,
       "ratedCount": 31,
@@ -2532,7 +2532,7 @@
       ],
       "bundleCount": 11,
       "latestBundleVersionCode": 10000015,
-      "lastUpdatedDate": "Oct 22, 2026",
+      "lastUpdatedDate": "Oct 21, 2026",
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
@@ -3425,7 +3425,7 @@
       ],
       "bundleCount": 11,
       "latestBundleVersionCode": 10000011,
-      "lastUpdatedDate": "Aug 27, 2026",
+      "lastUpdatedDate": "Aug 26, 2026",
       "downloads": "10K+",
       "rating": 4.4,
       "ratingCount": "105",
