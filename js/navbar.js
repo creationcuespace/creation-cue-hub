@@ -132,16 +132,7 @@
                       </a>
                       <a href="/huawei" role="menuitem" class="nav-dropdown-item ${active === 'huawei' ? 'active' : ''}" onclick="closeFacesDropdown(); closeMobileMenu();">
                         <span class="nav-dropdown-icon ndi-huawei" aria-hidden="true">
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 2.5C11.5 5 10.6 8.3 12 11.2C13.4 8.3 12.5 5 12 2.5Z" fill="#ED002F"/>
-                            <path d="M14.2 3.5C12.8 5.6 11.3 8.8 13.3 11.3C14.7 8.7 15.2 5.6 14.2 3.5Z" fill="#ED002F"/>
-                            <path d="M16.1 5.3C14.1 7 12.1 9.8 14.4 11.7C15.9 9.5 16.8 6.9 16.1 5.3Z" fill="#ED002F"/>
-                            <path d="M17.4 7.7C14.9 9 12.5 11.3 15.1 12.7C16.6 10.8 17.8 8.8 17.4 7.7Z" fill="#ED002F"/>
-                            <path d="M9.8 3.5C11.2 5.6 12.7 8.8 10.7 11.3C9.3 8.7 8.8 5.6 9.8 3.5Z" fill="#ED002F"/>
-                            <path d="M7.9 5.3C9.9 7 11.9 9.8 9.6 11.7C8.1 9.5 7.2 6.9 7.9 5.3Z" fill="#ED002F"/>
-                            <path d="M6.6 7.7C9.1 9 11.5 11.3 8.9 12.7C7.4 10.8 6.2 8.8 6.6 7.7Z" fill="#ED002F"/>
-                            <path d="M7.5 15.6H16.5" stroke="#ED002F" stroke-width="1.4" stroke-linecap="round"/>
-                          </svg>
+                          <img src="/images/huawei/huawei_mark.png" alt="" width="22" height="22" style="width:22px;height:22px;object-fit:contain;display:block;">
                         </span>
                         <span class="nav-dropdown-text">
                           <span class="nav-dropdown-title">Huawei</span>
