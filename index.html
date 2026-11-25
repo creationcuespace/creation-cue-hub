@@ -2241,10 +2241,6 @@
     html.dark-mode .hero-watch-arrow:hover svg {
       stroke: #000000 !important;
     }
-    html.dark-mode .section-collapse-header {
-      background: var(--card-bg) !important;
-      border-color: var(--border) !important;
-    }
     html.dark-mode .catalog-toolbar {
       background: rgba(17, 18, 22, 0.88) !important;
       border-color: #232730 !important;
@@ -2373,10 +2369,6 @@
       }
       html:not(.light-mode) .hero-watch-arrow:hover svg {
         stroke: #000000 !important;
-      }
-      html:not(.light-mode) .section-collapse-header {
-        background: var(--card-bg) !important;
-        border-color: var(--border) !important;
       }
       html:not(.light-mode) .catalog-toolbar {
         background: rgba(17, 18, 22, 0.88) !important;
@@ -2599,6 +2591,20 @@
       .section-collapsible.is-open .section-collapse-header {
         border-color: var(--primary) !important;
       }
+      html.dark-mode .section-collapse-header {
+        background: var(--card-bg) !important;
+        border-color: var(--border) !important;
+      }
+      html.dark-mode .section-collapse-header:hover,
+      html.dark-mode .section-collapse-header:active {
+        background: #1b1e26 !important;
+        border-color: #334155 !important;
+      }
+      html.dark-mode .section-collapsible.is-open .section-collapse-btn {
+        background: #ffffff !important;
+        color: #090a0c !important;
+        border-color: #ffffff !important;
+      }
 
       .collapse-header-info {
         text-align: left !important;
@@ -2681,6 +2687,23 @@
           opacity: 1;
           transform: translateY(0);
         }
+      }
+    }
+
+    @media (max-width: 900px) and (prefers-color-scheme: dark) {
+      html:not(.light-mode) .section-collapse-header {
+        background: var(--card-bg) !important;
+        border-color: var(--border) !important;
+      }
+      html:not(.light-mode) .section-collapse-header:hover,
+      html:not(.light-mode) .section-collapse-header:active {
+        background: #1b1e26 !important;
+        border-color: #334155 !important;
+      }
+      html:not(.light-mode) .section-collapsible.is-open .section-collapse-btn {
+        background: #ffffff !important;
+        color: #090a0c !important;
+        border-color: #ffffff !important;
       }
     }
 
