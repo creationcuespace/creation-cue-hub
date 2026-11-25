@@ -328,6 +328,7 @@
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 20px;
       margin-bottom: 44px;
+      align-items: start;
     }
     .huawei-card {
       background: var(--bg-card);
@@ -353,14 +354,21 @@
       position: relative;
       width: 100%;
       max-width: 245px;
-      aspect-ratio: 9 / 16;
+      aspect-ratio: 3 / 4;
       margin-bottom: 16px;
       border-radius: 16px;
       overflow: hidden;
       border: 1px solid var(--border);
       background: #000;
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+      cursor: default;
+      transition: aspect-ratio 0.25s ease;
+    }
+    .huawei-card-img-box.has-video {
       cursor: pointer;
+    }
+    .huawei-card-img-box.is-playing {
+      aspect-ratio: 9 / 16;
     }
     .huawei-card-img-box img {
       width: 100%;
@@ -824,9 +832,10 @@
       </div>
 
       <div class="filter-bar" role="tablist" aria-label="Filter Huawei watch faces">
-        <button type="button" class="filter-pill active" data-filter="all" onclick="filterHuawei('all', this)">All (8)</button>
-        <button type="button" class="filter-pill" data-filter="round" onclick="filterHuawei('round', this)">Round / GT Series (4)</button>
-        <button type="button" class="filter-pill" data-filter="fit" onclick="filterHuawei('fit', this)">FIT Series (4)</button>
+        <button type="button" class="filter-pill active" data-filter="all" onclick="filterHuawei('all', this)">All (24)</button>
+        <button type="button" class="filter-pill" data-filter="video" onclick="filterHuawei('video', this)">With Video (6)</button>
+        <button type="button" class="filter-pill" data-filter="round" onclick="filterHuawei('round', this)">Round / GT Series (14)</button>
+        <button type="button" class="filter-pill" data-filter="fit" onclick="filterHuawei('fit', this)">FIT Series (10)</button>
       </div>
     </div>
   </section>
@@ -834,184 +843,463 @@
   <!-- MAIN COLLECTION GRID -->
   <main class="container">
     <div class="huawei-grid" id="huawei-grid">
-      <!-- 1: CHU180 Round Edition -->
-      <article class="huawei-card" data-category="round">
-        <div class="huawei-card-img-box" data-yt-id="cBXod8ybm5o" role="button" tabindex="0" aria-label="Play CHU180 Round Edition video">
-          <img src="https://i.ytimg.com/vi/cBXod8ybm5o/oardefault.jpg" onerror="this.onerror=null;this.src='/images/huawei/wf_180_round.webp'" alt="CHU180 Round Edition Video Preview" loading="lazy">
-          <span class="video-badge">▶ YouTube Short</span>
+      <!-- 1: CHU180 Round -->
+      <article class="huawei-card" data-category="round" data-has-video="true">
+        <div class="huawei-card-img-box has-video" data-yt-id="cBXod8ybm5o" role="button" tabindex="0" aria-label="Play CHU180 Round video">
+          <img src="/images/huawei/catalog/wf_chu180_round.webp" alt="CHU180 Round" loading="lazy">
+          <span class="video-badge">▶ Video</span>
           <span class="video-play-btn" aria-hidden="true">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
           </span>
         </div>
-        <h2 class="huawei-card-title">CHU180 Round Edition</h2>
-        <p class="huawei-card-compat">GT4 • GT5 • Ultimate • Watch 4 / 3</p>
+        <h2 class="huawei-card-title">CHU180 Round</h2>
+        <p class="huawei-card-compat">GT5 • GT4 • GT3 Pro • Ultimate • Watch 4 / 3</p>
         <div class="huawei-card-actions">
           <a href="https://urldre.cloud.huawei.com/CQObprmo8g" target="_blank" rel="noopener" class="huawei-app-btn">
             <span>Open Watch Face</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </a>
-          <a href="/images/huawei/qr_180_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
-            <img src="/images/huawei/qr_180_round.png" alt="Scan QR for CHU180 Round Edition" class="huawei-qr-thumb">
+          <a href="/images/huawei/catalog/qr_chu180_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu180_round.png" alt="Scan QR for CHU180 Round" class="huawei-qr-thumb">
           </a>
         </div>
       </article>
 
-      <!-- 2: CHU180 Fit Edition -->
-      <article class="huawei-card" data-category="fit">
-        <div class="huawei-card-img-box" data-mp4-src="/videos/huawei/chu180_fit.mp4" role="button" tabindex="0" aria-label="Play CHU180 Fit Edition video">
-          <img src="/images/huawei/wf_180_fit.webp" alt="CHU180 Fit Edition Video Preview" loading="lazy">
-          <span class="video-badge">▶ Video Preview</span>
+      <!-- 2: CHU180 FIT -->
+      <article class="huawei-card" data-category="fit" data-has-video="true">
+        <div class="huawei-card-img-box has-video" data-mp4-src="/videos/huawei/chu180_fit.mp4" role="button" tabindex="0" aria-label="Play CHU180 FIT video">
+          <img src="/images/huawei/catalog/wf_chu180_fit.webp" alt="CHU180 FIT" loading="lazy">
+          <span class="video-badge">▶ Video</span>
           <span class="video-play-btn" aria-hidden="true">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
           </span>
         </div>
-        <h2 class="huawei-card-title">CHU180 Fit Edition</h2>
+        <h2 class="huawei-card-title">CHU180 FIT</h2>
         <p class="huawei-card-compat">Huawei Watch FIT 3 / 2 / SE</p>
         <div class="huawei-card-actions">
           <a href="https://urldre.cloud.huawei.com/CRdesO0gFO" target="_blank" rel="noopener" class="huawei-app-btn">
             <span>Open Watch Face</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </a>
-          <a href="/images/huawei/qr_180_fit.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
-            <img src="/images/huawei/qr_180_fit.png" alt="Scan QR for CHU180 Fit Edition" class="huawei-qr-thumb">
+          <a href="/images/huawei/catalog/qr_chu180_fit.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu180_fit.png" alt="Scan QR for CHU180 FIT" class="huawei-qr-thumb">
           </a>
         </div>
       </article>
 
-      <!-- 3: CUE 179 Cyber Hybrid -->
-      <article class="huawei-card" data-category="round">
-        <div class="huawei-card-img-box" data-yt-id="5uXOIbdXn0o" role="button" tabindex="0" aria-label="Play CUE 179 Cyber Hybrid video">
-          <img src="https://i.ytimg.com/vi/5uXOIbdXn0o/oardefault.jpg" onerror="this.onerror=null;this.src='/images/huawei/wf_179_round.webp'" alt="CUE 179 Cyber Hybrid Video Preview" loading="lazy">
-          <span class="video-badge">▶ YouTube Short</span>
+      <!-- 3: CHU179 Round -->
+      <article class="huawei-card" data-category="round" data-has-video="true">
+        <div class="huawei-card-img-box has-video" data-yt-id="5uXOIbdXn0o" role="button" tabindex="0" aria-label="Play CHU179 Round video">
+          <img src="/images/huawei/catalog/wf_chu179_round.webp" alt="CHU179 Round" loading="lazy">
+          <span class="video-badge">▶ Video</span>
           <span class="video-play-btn" aria-hidden="true">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
           </span>
         </div>
-        <h2 class="huawei-card-title">CUE 179 Cyber Hybrid</h2>
-        <p class="huawei-card-compat">GT4 • GT5 • Ultimate • Watch 4 / 3</p>
+        <h2 class="huawei-card-title">CHU179 Round</h2>
+        <p class="huawei-card-compat">GT5 • GT4 • GT3 Pro • Ultimate • Watch 4 / 3</p>
         <div class="huawei-card-actions">
           <a href="https://urldre.cloud.huawei.com/Ct2KjTN1sI" target="_blank" rel="noopener" class="huawei-app-btn">
             <span>Open Watch Face</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </a>
-          <a href="/images/huawei/qr_179.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
-            <img src="/images/huawei/qr_179.png" alt="Scan QR for CUE 179 Cyber Hybrid" class="huawei-qr-thumb">
+          <a href="/images/huawei/catalog/qr_chu179_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu179_round.png" alt="Scan QR for CHU179 Round" class="huawei-qr-thumb">
           </a>
         </div>
       </article>
 
-      <!-- 4: CUE 178 Digital Fit -->
-      <article class="huawei-card" data-category="fit">
-        <div class="huawei-card-img-box" data-yt-id="a-k7YFXOAUI" role="button" tabindex="0" aria-label="Play CUE 178 Digital Fit video">
-          <img src="https://i.ytimg.com/vi/a-k7YFXOAUI/oardefault.jpg" onerror="this.onerror=null;this.src='/images/huawei/wf_178_fit.webp'" alt="CUE 178 Digital Fit Video Preview" loading="lazy">
-          <span class="video-badge">▶ YouTube Short</span>
+      <!-- 4: CHU179 FIT -->
+      <article class="huawei-card" data-category="fit" data-has-video="true">
+        <div class="huawei-card-img-box has-video" data-yt-id="qg4jHNeGVCY" role="button" tabindex="0" aria-label="Play CHU179 FIT video">
+          <img src="/images/huawei/catalog/wf_chu179_fit.webp" alt="CHU179 FIT" loading="lazy">
+          <span class="video-badge">▶ Video</span>
           <span class="video-play-btn" aria-hidden="true">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
           </span>
         </div>
-        <h2 class="huawei-card-title">CUE 178 Digital Fit</h2>
-        <p class="huawei-card-compat">Huawei Watch FIT 3 / 2 / SE</p>
-        <div class="huawei-card-actions">
-          <a href="https://urldre.cloud.huawei.com/Cc1HrqATYY" target="_blank" rel="noopener" class="huawei-app-btn">
-            <span>Open Watch Face</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </a>
-          <a href="/images/huawei/qr_178.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
-            <img src="/images/huawei/qr_178.png" alt="Scan QR for CUE 178 Digital Fit" class="huawei-qr-thumb">
-          </a>
-        </div>
-      </article>
-
-      <!-- 5: CUE 175 Titanium Chrono -->
-      <article class="huawei-card" data-category="round">
-        <div class="huawei-card-img-box" data-yt-id="ngZu_DrTdME" role="button" tabindex="0" aria-label="Play CUE 175 Titanium Chrono video">
-          <img src="https://i.ytimg.com/vi/ngZu_DrTdME/oardefault.jpg" onerror="this.onerror=null;this.src='/images/huawei/wf_175_chrono.webp'" alt="CUE 175 Titanium Chrono Video Preview" loading="lazy">
-          <span class="video-badge">▶ YouTube Short</span>
-          <span class="video-play-btn" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-          </span>
-        </div>
-        <h2 class="huawei-card-title">CUE 175 Titanium Chrono</h2>
-        <p class="huawei-card-compat">GT4 • GT3 Pro • Ultimate Round</p>
-        <div class="huawei-card-actions">
-          <a href="https://urldre.cloud.huawei.com/CbAfGPK9DG" target="_blank" rel="noopener" class="huawei-app-btn">
-            <span>Open Watch Face</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </a>
-          <a href="/images/huawei/qr_175.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
-            <img src="/images/huawei/qr_175.png" alt="Scan QR for CUE 175 Titanium Chrono" class="huawei-qr-thumb">
-          </a>
-        </div>
-      </article>
-
-      <!-- 6: CUE 179 Fit Edition -->
-      <article class="huawei-card" data-category="fit">
-        <div class="huawei-card-img-box" data-yt-id="qg4jHNeGVCY" role="button" tabindex="0" aria-label="Play CUE 179 Fit Edition video">
-          <img src="https://i.ytimg.com/vi/qg4jHNeGVCY/oardefault.jpg" onerror="this.onerror=null;this.src='/images/huawei/wf_179_fit.webp'" alt="CUE 179 Fit Edition Video Preview" loading="lazy">
-          <span class="video-badge">▶ YouTube Short</span>
-          <span class="video-play-btn" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-          </span>
-        </div>
-        <h2 class="huawei-card-title">CUE 179 Fit Edition</h2>
+        <h2 class="huawei-card-title">CHU179 FIT</h2>
         <p class="huawei-card-compat">Huawei Watch FIT 3 / 2 / SE</p>
         <div class="huawei-card-actions">
           <a href="https://urldre.cloud.huawei.com/Ct2HX1W0i4" target="_blank" rel="noopener" class="huawei-app-btn">
             <span>Open Watch Face</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </a>
-          <a href="/images/huawei/qr_179.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
-            <img src="/images/huawei/qr_179.png" alt="Scan QR for CUE 179 Fit Edition" class="huawei-qr-thumb">
+          <a href="/images/huawei/catalog/qr_chu179_fit.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu179_fit.png" alt="Scan QR for CHU179 FIT" class="huawei-qr-thumb">
           </a>
         </div>
       </article>
 
-      <!-- 7: CUE 175 Sport Edition -->
-      <article class="huawei-card" data-category="round">
-        <div class="huawei-card-img-box" data-yt-id="ngZu_DrTdME" role="button" tabindex="0" aria-label="Play CUE 175 Sport Edition video">
-          <img src="/images/huawei/wf_175_variant.webp" alt="CUE 175 Sport Edition Video Preview" loading="lazy">
-          <span class="video-badge">▶ YouTube Short</span>
-          <span class="video-play-btn" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-          </span>
+      <!-- 5: CHU178 Round -->
+      <article class="huawei-card" data-category="round" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_chu178_round.webp" alt="CHU178 Round" loading="lazy">
         </div>
-        <h2 class="huawei-card-title">CUE 175 Sport Edition</h2>
-        <p class="huawei-card-compat">GT4 • GT3 Pro • Ultimate Round</p>
+        <h2 class="huawei-card-title">CHU178 Round</h2>
+        <p class="huawei-card-compat">GT5 • GT4 • GT3 Pro • Ultimate • Watch 4 / 3</p>
         <div class="huawei-card-actions">
-          <a href="https://urldre.cloud.huawei.com/CbAfGPK9DG" target="_blank" rel="noopener" class="huawei-app-btn">
+          <a href="https://urldre.cloud.huawei.com/CbAd9TypS8" target="_blank" rel="noopener" class="huawei-app-btn">
             <span>Open Watch Face</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </a>
-          <a href="/images/huawei/qr_175.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
-            <img src="/images/huawei/qr_175.png" alt="Scan QR for CUE 175 Sport Edition" class="huawei-qr-thumb">
+          <a href="/images/huawei/catalog/qr_chu178_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu178_round.png" alt="Scan QR for CHU178 Round" class="huawei-qr-thumb">
           </a>
         </div>
       </article>
 
-      <!-- 8: CUE 178 Stealth Gold -->
-      <article class="huawei-card" data-category="fit">
-        <div class="huawei-card-img-box" data-yt-id="a-k7YFXOAUI" role="button" tabindex="0" aria-label="Play CUE 178 Stealth Gold video">
-          <img src="/images/huawei/wf_178_v2.webp" alt="CUE 178 Stealth Gold Video Preview" loading="lazy">
-          <span class="video-badge">▶ YouTube Short</span>
+      <!-- 6: CHU178 FIT -->
+      <article class="huawei-card" data-category="fit" data-has-video="true">
+        <div class="huawei-card-img-box has-video" data-yt-id="a-k7YFXOAUI" role="button" tabindex="0" aria-label="Play CHU178 FIT video">
+          <img src="/images/huawei/catalog/wf_chu178_fit.webp" alt="CHU178 FIT" loading="lazy">
+          <span class="video-badge">▶ Video</span>
           <span class="video-play-btn" aria-hidden="true">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
           </span>
         </div>
-        <h2 class="huawei-card-title">CUE 178 Stealth Gold</h2>
-        <p class="huawei-card-compat">Huawei Watch FIT Series</p>
+        <h2 class="huawei-card-title">CHU178 FIT</h2>
+        <p class="huawei-card-compat">Huawei Watch FIT 3 / 2 / SE</p>
         <div class="huawei-card-actions">
           <a href="https://urldre.cloud.huawei.com/Cc1HrqATYY" target="_blank" rel="noopener" class="huawei-app-btn">
             <span>Open Watch Face</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </a>
-          <a href="/images/huawei/qr_178.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
-            <img src="/images/huawei/qr_178.png" alt="Scan QR for CUE 178 Stealth Gold" class="huawei-qr-thumb">
+          <a href="/images/huawei/catalog/qr_chu178_fit.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu178_fit.png" alt="Scan QR for CHU178 FIT" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 7: CHU177 Round -->
+      <article class="huawei-card" data-category="round" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_chu177_round.webp" alt="CHU177 Round" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">CHU177 Round</h2>
+        <p class="huawei-card-compat">GT5 • GT4 • GT3 Pro • Ultimate • Watch 4 / 3</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/CbAeJWp1OE" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_chu177_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu177_round.png" alt="Scan QR for CHU177 Round" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 8: CHU177 FIT -->
+      <article class="huawei-card" data-category="fit" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_chu177_fit.webp" alt="CHU177 FIT" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">CHU177 FIT</h2>
+        <p class="huawei-card-compat">Huawei Watch FIT 3 / 2 / SE</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/Cc1HTND5YI" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_chu177_fit.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu177_fit.png" alt="Scan QR for CHU177 FIT" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 9: CHU175 Round -->
+      <article class="huawei-card" data-category="round" data-has-video="true">
+        <div class="huawei-card-img-box has-video" data-yt-id="ngZu_DrTdME" role="button" tabindex="0" aria-label="Play CHU175 Round video">
+          <img src="/images/huawei/catalog/wf_chu175_round.webp" alt="CHU175 Round" loading="lazy">
+          <span class="video-badge">▶ Video</span>
+          <span class="video-play-btn" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </span>
+        </div>
+        <h2 class="huawei-card-title">CHU175 Round</h2>
+        <p class="huawei-card-compat">GT5 • GT4 • GT3 Pro • Ultimate • Watch 4 / 3</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/CbAfGPK9DG" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_chu175_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu175_round.png" alt="Scan QR for CHU175 Round" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 10: CHU175 FIT -->
+      <article class="huawei-card" data-category="fit" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_chu175_fit.webp" alt="CHU175 FIT" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">CHU175 FIT</h2>
+        <p class="huawei-card-compat">Huawei Watch FIT 3 / 2 / SE</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/Cc1GEQDfIk" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_chu175_fit.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu175_fit.png" alt="Scan QR for CHU175 FIT" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 11: CHU152 Round -->
+      <article class="huawei-card" data-category="round" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_chu152_round.webp" alt="CHU152 Round" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">CHU152 Round</h2>
+        <p class="huawei-card-compat">GT5 • GT4 • GT3 Pro • Ultimate • Watch 4 / 3</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/CbAfVMwsgg" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_chu152_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu152_round.png" alt="Scan QR for CHU152 Round" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 12: CHU117 Round -->
+      <article class="huawei-card" data-category="round" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_chu117_round.webp" alt="CHU117 Round" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">CHU117 Round</h2>
+        <p class="huawei-card-compat">GT5 • GT4 • GT3 Pro • Ultimate • Watch 4 / 3</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/CbAgiAOQUM" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_chu117_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu117_round.png" alt="Scan QR for CHU117 Round" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 13: CHU117 FIT -->
+      <article class="huawei-card" data-category="fit" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_chu117_fit.webp" alt="CHU117 FIT" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">CHU117 FIT</h2>
+        <p class="huawei-card-compat">Huawei Watch FIT 3 / 2 / SE</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/Cc1G9nQZdS" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_chu117_fit.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu117_fit.png" alt="Scan QR for CHU117 FIT" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 14: CHU004 Round -->
+      <article class="huawei-card" data-category="round" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_chu004_round.webp" alt="CHU004 Round" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">CHU004 Round</h2>
+        <p class="huawei-card-compat">GT5 • GT4 • GT3 Pro • Ultimate • Watch 4 / 3</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/CbAetZKaiY" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_chu004_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu004_round.png" alt="Scan QR for CHU004 Round" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 15: CHU004 FIT -->
+      <article class="huawei-card" data-category="fit" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_chu004_fit.webp" alt="CHU004 FIT" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">CHU004 FIT</h2>
+        <p class="huawei-card-compat">Huawei Watch FIT 3 / 2 / SE</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/Cc1HE32aXK" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_chu004_fit.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu004_fit.png" alt="Scan QR for CHU004 FIT" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 16: CHU003 Round -->
+      <article class="huawei-card" data-category="round" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_chu003_round.webp" alt="CHU003 Round" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">CHU003 Round</h2>
+        <p class="huawei-card-compat">GT5 • GT4 • GT3 Pro • Ultimate • Watch 4 / 3</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/ADomSJVFaE" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_chu003_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu003_round.png" alt="Scan QR for CHU003 Round" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 17: CHU003 FIT -->
+      <article class="huawei-card" data-category="fit" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_chu003_fit.webp" alt="CHU003 FIT" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">CHU003 FIT</h2>
+        <p class="huawei-card-compat">Huawei Watch FIT 3 / 2 / SE</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/Cc1Gora5r2" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_chu003_fit.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu003_fit.png" alt="Scan QR for CHU003 FIT" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 18: CHU002 Round -->
+      <article class="huawei-card" data-category="round" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_chu002_round.webp" alt="CHU002 Round" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">CHU002 Round</h2>
+        <p class="huawei-card-compat">GT5 • GT4 • GT3 Pro • Ultimate • Watch 4 / 3</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/CbAguL9Pu8" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_chu002_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chu002_round.png" alt="Scan QR for CHU002 Round" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 19: IndPro Round -->
+      <article class="huawei-card" data-category="round" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_indpro_round.webp" alt="IndPro Round" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">IndPro Round</h2>
+        <p class="huawei-card-compat">GT5 • GT4 • GT3 Pro • Ultimate • Watch 4 / 3</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/CbAg7vbyIo" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_indpro_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_indpro_round.png" alt="Scan QR for IndPro Round" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 20: CHUneon Round -->
+      <article class="huawei-card" data-category="round" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_chuneon_round.webp" alt="CHUneon Round" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">CHUneon Round</h2>
+        <p class="huawei-card-compat">GT5 • GT4 • GT3 Pro • Ultimate • Watch 4 / 3</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/CbAfrag0XS" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_chuneon_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_chuneon_round.png" alt="Scan QR for CHUneon Round" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 21: DC26CH Round -->
+      <article class="huawei-card" data-category="round" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_dc26ch_round.webp" alt="DC26CH Round" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">DC26CH Round</h2>
+        <p class="huawei-card-compat">GT5 • GT4 • GT3 Pro • Ultimate • Watch 4 / 3</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/CbAdOUrSuY" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_dc26ch_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_dc26ch_round.png" alt="Scan QR for DC26CH Round" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 22: DC26CH FIT -->
+      <article class="huawei-card" data-category="fit" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_dc26ch_fit.webp" alt="DC26CH FIT" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">DC26CH FIT</h2>
+        <p class="huawei-card-compat">Huawei Watch FIT 3 / 2 / SE</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/Cc1GWdhM52" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_dc26ch_fit.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_dc26ch_fit.png" alt="Scan QR for DC26CH FIT" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 23: DC31CH Round -->
+      <article class="huawei-card" data-category="round" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_dc31ch_round.webp" alt="DC31CH Round" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">DC31CH Round</h2>
+        <p class="huawei-card-compat">GT5 • GT4 • GT3 Pro • Ultimate • Watch 4 / 3</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/CbAedWpIaI" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_dc31ch_round.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_dc31ch_round.png" alt="Scan QR for DC31CH Round" class="huawei-qr-thumb">
+          </a>
+        </div>
+      </article>
+
+      <!-- 24: DC31CH FIT -->
+      <article class="huawei-card" data-category="fit" data-has-video="false">
+        <div class="huawei-card-img-box">
+          <img src="/images/huawei/catalog/wf_dc31ch_fit.webp" alt="DC31CH FIT" loading="lazy">
+        </div>
+        <h2 class="huawei-card-title">DC31CH FIT</h2>
+        <p class="huawei-card-compat">Huawei Watch FIT 3 / 2 / SE</p>
+        <div class="huawei-card-actions">
+          <a href="https://urldre.cloud.huawei.com/Cc1Hbcc4I8" target="_blank" rel="noopener" class="huawei-app-btn">
+            <span>Open Watch Face</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+          <a href="/images/huawei/catalog/qr_dc31ch_fit.png" target="_blank" rel="noopener" class="qr-trigger-link" title="Scan QR Code">
+            <img src="/images/huawei/catalog/qr_dc31ch_fit.png" alt="Scan QR for DC31CH FIT" class="huawei-qr-thumb">
           </a>
         </div>
       </article>
     </div>
-
-    <!-- CROSS-LINK BANNER -->
+<!-- CROSS-LINK BANNER -->
     <section class="cross-link-banner">
       <div class="cross-link-text">
         <h2>Also available on Wear OS & featured at Milan 2026</h2>
@@ -1142,11 +1430,11 @@
         pill.classList.toggle('active', pill === btnEl);
       });
       document.querySelectorAll('#huawei-grid .huawei-card').forEach((card) => {
-        if (category === 'all' || card.getAttribute('data-category') === category) {
-          card.hidden = false;
-        } else {
-          card.hidden = true;
-        }
+        const show =
+          category === 'all' ||
+          (category === 'video' && card.getAttribute('data-has-video') === 'true') ||
+          card.getAttribute('data-category') === category;
+        card.hidden = !show;
       });
     }
 
@@ -1192,7 +1480,7 @@
         return;
       }
 
-      const videoBox = e.target.closest('.huawei-card-img-box');
+      const videoBox = e.target.closest('.huawei-card-img-box.has-video');
       if (videoBox) {
         playCardVideo(videoBox);
       }
@@ -1200,7 +1488,7 @@
 
     huaweiGrid?.addEventListener('keydown', (e) => {
       if (e.key !== 'Enter' && e.key !== ' ') return;
-      const videoBox = e.target.closest('.huawei-card-img-box');
+      const videoBox = e.target.closest('.huawei-card-img-box.has-video');
       if (videoBox) {
         e.preventDefault();
         playCardVideo(videoBox);
