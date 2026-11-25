@@ -52,11 +52,29 @@
     window.setThemePreference(nextTheme);
   };
 
+  window.closeFacesDropdown = function() {
+    const dropdown = document.getElementById('nav-faces-dropdown');
+    if (!dropdown) return;
+    dropdown.classList.remove('open');
+    const trigger = dropdown.querySelector('.nav-dropdown-trigger');
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
+  };
+
+  window.toggleFacesDropdown = function(event) {
+    if (event) event.stopPropagation();
+    const dropdown = document.getElementById('nav-faces-dropdown');
+    if (!dropdown) return;
+    const isOpen = dropdown.classList.toggle('open');
+    const trigger = dropdown.querySelector('.nav-dropdown-trigger');
+    if (trigger) trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  };
+
   window.closeMobileMenu = function() {
     const nav = document.getElementById('nav-links');
     if (nav) nav.classList.remove('mobile-open');
     const toggleBtn = document.querySelector('.menu-toggle');
     if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+    window.closeFacesDropdown();
   };
 
   window.toggleMobileMenu = function() {
@@ -82,6 +100,7 @@
         : 'closeMobileMenu();';
 
       const freeHref = isHome ? '#catalog' : '/#catalog';
+      const isFacesSection = active === 'faces' || active === 'huawei';
 
       this.innerHTML = `
         <header class="header">
@@ -96,7 +115,41 @@
               <!-- Navigation Menu -->
               <nav>
                 <ul class="nav-links" id="nav-links">
-                  <li><a href="${catalogHref}" class="${active === 'faces' ? 'active' : ''}" onclick="closeMobileMenu()">Watch Faces</a></li>
+                  <li class="nav-dropdown" id="nav-faces-dropdown">
+                    <button type="button" class="nav-dropdown-trigger ${isFacesSection ? 'active' : ''}" aria-expanded="false" aria-haspopup="true" aria-controls="nav-faces-menu" onclick="toggleFacesDropdown(event)">
+                      <span>Watch Faces</span>
+                      <svg class="nav-chevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="nav-dropdown-menu" id="nav-faces-menu" role="menu">
+                      <a href="${catalogHref}" role="menuitem" class="nav-dropdown-item ${active === 'faces' ? 'active' : ''}" onclick="closeFacesDropdown(); closeMobileMenu();">
+                        <span class="nav-dropdown-icon ndi-wearos" aria-hidden="true">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6"></circle><polyline points="12 9 12 12 14 13"></polyline><path d="M9 2h6l.7 3.5a7.5 7.5 0 0 0-7.4 0L9 2z"></path><path d="M9 22h6l.7-3.5a7.5 7.5 0 0 1-7.4 0L9 22z"></path></svg>
+                        </span>
+                        <span class="nav-dropdown-text">
+                          <span class="nav-dropdown-title">Wear OS</span>
+                          <span class="nav-dropdown-sub">Galaxy Watch, Pixel &amp; Play Store</span>
+                        </span>
+                      </a>
+                      <a href="/huawei" role="menuitem" class="nav-dropdown-item ${active === 'huawei' ? 'active' : ''}" onclick="closeFacesDropdown(); closeMobileMenu();">
+                        <span class="nav-dropdown-icon ndi-huawei" aria-hidden="true">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2.5C11.5 5 10.6 8.3 12 11.2C13.4 8.3 12.5 5 12 2.5Z" fill="#ED002F"/>
+                            <path d="M14.2 3.5C12.8 5.6 11.3 8.8 13.3 11.3C14.7 8.7 15.2 5.6 14.2 3.5Z" fill="#ED002F"/>
+                            <path d="M16.1 5.3C14.1 7 12.1 9.8 14.4 11.7C15.9 9.5 16.8 6.9 16.1 5.3Z" fill="#ED002F"/>
+                            <path d="M17.4 7.7C14.9 9 12.5 11.3 15.1 12.7C16.6 10.8 17.8 8.8 17.4 7.7Z" fill="#ED002F"/>
+                            <path d="M9.8 3.5C11.2 5.6 12.7 8.8 10.7 11.3C9.3 8.7 8.8 5.6 9.8 3.5Z" fill="#ED002F"/>
+                            <path d="M7.9 5.3C9.9 7 11.9 9.8 9.6 11.7C8.1 9.5 7.2 6.9 7.9 5.3Z" fill="#ED002F"/>
+                            <path d="M6.6 7.7C9.1 9 11.5 11.3 8.9 12.7C7.4 10.8 6.2 8.8 6.6 7.7Z" fill="#ED002F"/>
+                            <path d="M7.5 15.6H16.5" stroke="#ED002F" stroke-width="1.4" stroke-linecap="round"/>
+                          </svg>
+                        </span>
+                        <span class="nav-dropdown-text">
+                          <span class="nav-dropdown-title">Huawei</span>
+                          <span class="nav-dropdown-sub">Watch GT, Ultimate &amp; FIT</span>
+                        </span>
+                      </a>
+                    </div>
+                  </li>
                   <li><a href="${freeHref}" class="${active === 'free' ? 'active' : ''}" onclick="${freeClick}">Free Faces</a></li>
                   <li>
                     <a href="/blog.html" class="nav-link-blog ${active === 'blog' ? 'active' : ''}" onclick="closeMobileMenu()">
@@ -197,7 +250,7 @@
 
   customElements.define('site-header', SiteHeader);
 
-  // Global event listeners for mobile menu and theme listener
+  // Global event listeners for mobile menu, dropdown, and theme listener
   document.addEventListener('click', (e) => {
     const nav = document.getElementById('nav-links');
     const toggleBtn = document.querySelector('.menu-toggle');
@@ -205,6 +258,17 @@
       if (!nav.contains(e.target) && (!toggleBtn || !toggleBtn.contains(e.target))) {
         window.closeMobileMenu();
       }
+    }
+
+    const dropdown = document.getElementById('nav-faces-dropdown');
+    if (dropdown && dropdown.classList.contains('open') && !dropdown.contains(e.target)) {
+      window.closeFacesDropdown();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      window.closeFacesDropdown();
     }
   });
 
