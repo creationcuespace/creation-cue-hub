@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-24T07:06:23.351Z",
+  "lastUpdated": "2026-11-25T05:41:42.829Z",
   "ratingHistory": [
     {
       "date": "2026-10-14",
@@ -336,6 +336,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 31,
       "totalWeight": 3984
+    },
+    {
+      "date": "2026-11-25",
+      "timestamp": "2026-11-25T05:41:42.829Z",
+      "avgRating": 4.49,
+      "weightedAvg": 4.52,
+      "ratedCount": 31,
+      "totalWeight": 3995
     }
   ],
   "results": [
@@ -370,7 +378,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": 4.8,
-      "ratingCount": "14",
+      "ratingCount": "15",
       "ratingsByCountry": {
         "US": 4.8
       },
@@ -804,7 +812,7 @@
       "lastUpdatedDate": "Nov 2, 2026",
       "downloads": "1K+",
       "rating": 5,
-      "ratingCount": "62",
+      "ratingCount": "63",
       "ratingsByCountry": {
         "US": 5,
         "KR": 4.4
@@ -1375,7 +1383,7 @@
       "lastUpdatedDate": "Nov 14, 2026",
       "downloads": "500+",
       "rating": 4.2,
-      "ratingCount": "26",
+      "ratingCount": "27",
       "ratingsByCountry": {
         "US": 4.2
       },
@@ -1472,7 +1480,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.7,
-      "ratingCount": "47",
+      "ratingCount": "48",
       "ratingsByCountry": {
         "US": 4.7
       },
@@ -1730,7 +1738,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.6,
-      "ratingCount": "437",
+      "ratingCount": "438",
       "ratingsByCountry": {
         "US": 4.6,
         "KR": 4.5,
@@ -2409,7 +2417,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.6,
-      "ratingCount": "48",
+      "ratingCount": "49",
       "ratingsByCountry": {
         "US": 4.6,
         "KR": 4.7,
@@ -3345,7 +3353,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "1K+",
       "rating": 4.2,
-      "ratingCount": "20",
+      "ratingCount": "21",
       "ratingsByCountry": {
         "US": 4.2
       },
@@ -3428,7 +3436,7 @@
       "lastUpdatedDate": "Aug 26, 2026",
       "downloads": "10K+",
       "rating": 4.4,
-      "ratingCount": "105",
+      "ratingCount": "106",
       "ratingsByCountry": {
         "US": 4.4,
         "KR": 4.9
@@ -3554,7 +3562,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "500+",
       "rating": 4.8,
-      "ratingCount": "12",
+      "ratingCount": "13",
       "ratingsByCountry": {
         "US": 4.8
       },
@@ -3842,7 +3850,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.2,
-      "ratingCount": "475",
+      "ratingCount": "476",
       "ratingsByCountry": {
         "US": 4.2,
         "GB": 4.7,
@@ -4447,7 +4455,7 @@
       "lastUpdatedDate": "Nov 10, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "364",
+      "ratingCount": "365",
       "ratingsByCountry": {
         "US": 4.6,
         "KR": 4.6,
@@ -4535,10 +4543,10 @@
       "companionStatus": "completed",
       "companionRollout": "100%",
       "companionNotes": "None",
-      "wearVersion": "10000002 (1.1.0)",
+      "wearVersion": "10000003 (1.2.0)",
       "wearStatus": "completed",
       "wearRollout": "100%",
-      "wearNotes": "Centered the long text slightly higher and added a few more colors.",
+      "wearNotes": "• Fixed missing minus (-) and degree (°) symbols in the font so negative temperatures display properly.",
       "storeLanguages": [
         "en-GB"
       ],
@@ -4552,8 +4560,8 @@
           ]
         }
       ],
-      "bundleCount": 4,
-      "latestBundleVersionCode": 10000002,
+      "bundleCount": 5,
+      "latestBundleVersionCode": 10000003,
       "lastUpdatedDate": "Nov 7, 2026",
       "downloads": "50+",
       "rating": null,
