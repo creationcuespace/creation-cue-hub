@@ -885,6 +885,167 @@
       border-color: rgba(220, 38, 38, 0.2);
     }
 
+    /* Milan 2026 Rising Star Award Spotlight */
+    .milan-award-section {
+      padding: 36px 0 40px;
+      background: var(--bg);
+    }
+    .milan-award-card {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 248px minmax(0, 1fr);
+      align-items: center;
+      gap: 32px;
+      padding: 28px 32px;
+      border-radius: var(--radius-lg, 24px);
+      background: linear-gradient(135deg, #ffffff 0%, #fffbf2 60%, #fef7e6 100%);
+      border: 1px solid rgba(217, 119, 6, 0.25);
+      box-shadow: 0 12px 34px rgba(180, 83, 9, 0.08);
+    }
+    .milan-award-card::after {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.16) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .milan-award-media {
+      display: block;
+      position: relative;
+      width: 248px;
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+      background: #0f1115;
+      flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+    }
+    .milan-award-media:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.22);
+    }
+    .milan-award-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .milan-award-body {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .milan-award-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    .milan-award-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      background: rgba(245, 158, 11, 0.14);
+      color: #92400e;
+      border: 1px solid rgba(217, 119, 6, 0.28);
+    }
+    .milan-award-date {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .milan-award-title {
+      font-size: clamp(22px, 2.8vw, 31px);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin: 0;
+    }
+    .milan-award-title span {
+      color: #b45309;
+    }
+    .milan-award-desc {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0;
+    }
+    .milan-award-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 12px;
+      margin-top: 4px;
+    }
+    .milan-btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 18px;
+      border-radius: var(--radius-full, 9999px);
+      font-size: 13.5px;
+      font-weight: 700;
+      text-decoration: none;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #111114;
+      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.28);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .milan-btn-gold:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(245, 158, 11, 0.38);
+    }
+    .milan-btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 16px;
+      border-radius: var(--radius-full, 9999px);
+      font-size: 13.5px;
+      font-weight: 700;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.75);
+      color: var(--text);
+      border: 1px solid var(--border);
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .milan-btn-outline:hover {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+    }
+    .milan-press-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #b45309;
+      text-decoration: none;
+      padding: 6px 4px;
+      transition: color 0.2s ease;
+    }
+    .milan-press-link:hover {
+      text-decoration: underline;
+    }
+
     /* "At a Glance" Feature Grid (WOW Space style) */
     .glance-grid {
       display: grid;
@@ -2241,6 +2402,31 @@
     html.dark-mode .hero-watch-arrow:hover svg {
       stroke: #000000 !important;
     }
+    html.dark-mode .milan-award-card {
+      background: linear-gradient(135deg, #13151b 0%, #1a1612 58%, #12141a 100%) !important;
+      border-color: rgba(245, 158, 11, 0.3) !important;
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.45) !important;
+    }
+    html.dark-mode .milan-award-pill {
+      background: rgba(245, 158, 11, 0.16) !important;
+      color: #fbbf24 !important;
+      border-color: rgba(251, 191, 36, 0.32) !important;
+    }
+    html.dark-mode .milan-award-title span {
+      color: #fbbf24 !important;
+    }
+    html.dark-mode .milan-btn-outline {
+      background: rgba(255, 255, 255, 0.06) !important;
+      color: #f1f5f9 !important;
+      border-color: rgba(255, 255, 255, 0.16) !important;
+    }
+    html.dark-mode .milan-btn-outline:hover {
+      background: rgba(255, 255, 255, 0.12) !important;
+      border-color: rgba(255, 255, 255, 0.3) !important;
+    }
+    html.dark-mode .milan-press-link {
+      color: #fbbf24 !important;
+    }
     html.dark-mode .catalog-toolbar {
       background: rgba(17, 18, 22, 0.88) !important;
       border-color: #232730 !important;
@@ -2369,6 +2555,31 @@
       }
       html:not(.light-mode) .hero-watch-arrow:hover svg {
         stroke: #000000 !important;
+      }
+      html:not(.light-mode) .milan-award-card {
+        background: linear-gradient(135deg, #13151b 0%, #1a1612 58%, #12141a 100%) !important;
+        border-color: rgba(245, 158, 11, 0.3) !important;
+        box-shadow: 0 16px 44px rgba(0, 0, 0, 0.45) !important;
+      }
+      html:not(.light-mode) .milan-award-pill {
+        background: rgba(245, 158, 11, 0.16) !important;
+        color: #fbbf24 !important;
+        border-color: rgba(251, 191, 36, 0.32) !important;
+      }
+      html:not(.light-mode) .milan-award-title span {
+        color: #fbbf24 !important;
+      }
+      html:not(.light-mode) .milan-btn-outline {
+        background: rgba(255, 255, 255, 0.06) !important;
+        color: #f1f5f9 !important;
+        border-color: rgba(255, 255, 255, 0.16) !important;
+      }
+      html:not(.light-mode) .milan-btn-outline:hover {
+        background: rgba(255, 255, 255, 0.12) !important;
+        border-color: rgba(255, 255, 255, 0.3) !important;
+      }
+      html:not(.light-mode) .milan-press-link {
+        color: #fbbf24 !important;
       }
       html:not(.light-mode) .catalog-toolbar {
         background: rgba(17, 18, 22, 0.88) !important;
@@ -2743,6 +2954,26 @@
         display: inline-flex !important;
         align-items: center;
         line-height: 1.4;
+      }
+      .milan-award-section {
+        padding: 22px 0 26px !important;
+      }
+      .milan-award-card {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+        padding: 20px 18px !important;
+        text-align: center !important;
+      }
+      .milan-award-media {
+        width: min(220px, 68vw) !important;
+        margin: 0 auto !important;
+      }
+      .milan-award-body {
+        align-items: center !important;
+      }
+      .milan-award-badges,
+      .milan-award-actions {
+        justify-content: center !important;
       }
       .watch-grid {
         grid-template-columns: repeat(2, 1fr) !important;
@@ -3260,9 +3491,46 @@
         </a>
 
         <a href="/blog/huawei-watch-face-summit-milan-2026-rising-star-award" class="trust-item" title="Read about the Huawei Rising Star Award">
-          <span class="trust-badge-pill trust-badge-hw">🏆 HUAWEI RISING STAR</span>
+          <span class="trust-badge-pill trust-badge-hw" style="display:inline-flex;align-items:center;gap:5px;">
+            <img src="images/huawei/huawei_mark.png" alt="" width="13" height="13" style="width:13px;height:13px;object-fit:contain;display:block;">
+            HUAWEI RISING STAR
+          </span>
           <span>Summit Milano 2026 Award ↗</span>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MILAN RISING STAR AWARD SPOTLIGHT -->
+  <section class="milan-award-section" id="milan-award" aria-labelledby="milan-award-heading">
+    <div class="container">
+      <div class="milan-award-card">
+        <a href="/blog/huawei-watch-face-summit-milan-2026-rising-star-award" class="milan-award-media" title="Read about the Huawei Watch Faces Summit Milano 2026 Rising Star Award">
+          <img src="images/creationcue_rising_star_square.webp" alt="Creation Cue Rising Star Award Trophy from Huawei Watch Faces Summit Milano 2026" loading="lazy" decoding="async" width="512" height="512">
+        </a>
+        <div class="milan-award-body">
+          <div class="milan-award-badges">
+            <span class="milan-award-pill">
+              <img src="images/huawei/huawei_mark.png" alt="" width="15" height="15" style="width:15px;height:15px;object-fit:contain;display:block;">
+              🏆 Rising Star Award • Milano 2026
+            </span>
+            <span class="milan-award-date">Meliá Milano • Nov 19, 2026</span>
+          </div>
+          <h2 class="milan-award-title" id="milan-award-heading">Creation Cue™ Honored at <span>Huawei Watch Faces Summit Milano 2026</span></h2>
+          <p class="milan-award-desc">Invited in person to Milan's summit &amp; Gran Gala and recognized by Huawei Themes with the Rising Star Award for craft, visual clarity, and momentum across smartwatch design.</p>
+          <div class="milan-award-actions">
+            <a href="/blog/huawei-watch-face-summit-milan-2026-rising-star-award" class="milan-btn-gold">
+              Read the Full Story →
+            </a>
+            <a href="/huawei" class="milan-btn-outline">
+              <img src="images/huawei/huawei_mark.png" alt="" width="16" height="16" style="width:16px;height:16px;object-fit:contain;display:block;">
+              <span>Huawei Collection</span>
+            </a>
+            <a href="https://www.prnewswire.com/news-releases/huawei-unites-europes-creative-talent-at-the-huawei-watch-faces-summit-milano-2026-302946012.html" target="_blank" rel="noopener" class="milan-press-link">
+              PR Newswire Release ↗
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
