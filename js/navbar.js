@@ -123,7 +123,7 @@
                     <div class="nav-dropdown-menu" id="nav-faces-menu" role="menu">
                       <a href="${catalogHref}" role="menuitem" class="nav-dropdown-item ${active === 'faces' ? 'active' : ''}" onclick="closeFacesDropdown(); closeMobileMenu();">
                         <span class="nav-dropdown-icon ndi-wearos" aria-hidden="true">
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6"></circle><polyline points="12 9 12 12 14 13"></polyline><path d="M9 2h6l.7 3.5a7.5 7.5 0 0 0-7.4 0L9 2z"></path><path d="M9 22h6l.7-3.5a7.5 7.5 0 0 1-7.4 0L9 22z"></path></svg>
+                          <img src="/images/wear_os_logo.svg" alt="" width="22" height="17" style="width:22px;height:22px;object-fit:contain;display:block;">
                         </span>
                         <span class="nav-dropdown-text">
                           <span class="nav-dropdown-title">Wear OS</span>
