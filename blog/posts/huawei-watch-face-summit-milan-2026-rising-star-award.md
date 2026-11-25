@@ -2,6 +2,8 @@ I am proud to share a major milestone for **Creation Cue™ Studio**: at the **H
 
 Being invited in person to the Milan summit and gala to receive this recognition makes this milestone especially meaningful.
 
+![Creation Cue™ Rising Star Award — Huawei Watch Face Summit Milano 2026](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/creationcue_rising_star_portrait.webp)
+
 ---
 
 ## Highlights from Milan
