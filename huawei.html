@@ -350,15 +350,17 @@
       display: none;
     }
     .huawei-card-img-box {
+      position: relative;
       width: 100%;
-      max-width: 240px;
-      aspect-ratio: 3 / 4;
+      max-width: 245px;
+      aspect-ratio: 9 / 16;
       margin-bottom: 16px;
       border-radius: 16px;
       overflow: hidden;
       border: 1px solid var(--border);
       background: #000;
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+      cursor: pointer;
     }
     .huawei-card-img-box img {
       width: 100%;
@@ -367,8 +369,87 @@
       display: block;
       transition: transform 0.35s ease;
     }
-    .huawei-card:hover .huawei-card-img-box img {
+    .huawei-card:hover .huawei-card-img-box:not(.is-playing) img {
       transform: scale(1.03);
+    }
+    .video-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 3;
+      background: rgba(15, 23, 42, 0.78);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      pointer-events: none;
+      letter-spacing: 0.2px;
+    }
+    .video-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(237, 0, 47, 0.92);
+      color: #ffffff;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+      border: 2px solid rgba(255, 255, 255, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      pointer-events: none;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .huawei-card-img-box:hover .video-play-btn {
+      transform: translate(-50%, -50%) scale(1.08);
+      background: #ed002f;
+    }
+    .huawei-card-img-box.is-playing .video-play-btn,
+    .huawei-card-img-box.is-playing .video-badge {
+      display: none;
+    }
+    .huawei-card-img-box iframe,
+    .huawei-card-img-box video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      object-fit: cover;
+      display: block;
+      background: #000;
+      z-index: 4;
+    }
+    .video-close-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 6;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.85);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      line-height: 1;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .video-close-btn:hover {
+      background: #ed002f;
+      transform: scale(1.08);
     }
     .huawei-card-title {
       font-size: 18px;
@@ -735,7 +816,7 @@
       </div>
       <div class="eyebrow"><span class="eyebrow-dot"></span> WEARABLES & THEMES OFFICIAL STORE</div>
       <h1 class="page-title"><span>Huawei Health</span> Collection</h1>
-      <p class="page-desc">Official Creation Cue™ watch faces designed for Huawei Watch GT5, GT4, GT3 Pro, Ultimate, Watch 4 / 3, and Watch FIT smartwatches. Tap any watch face to open directly in Huawei Health, or scan its QR code.</p>
+      <p class="page-desc">Official Creation Cue™ watch faces designed for Huawei Watch GT5, GT4, GT3 Pro, Ultimate, Watch 4 / 3, and Watch FIT smartwatches. Tap any preview to play its video demo, open directly in Huawei Health, or scan its QR code.</p>
 
       <div class="huawei-search-hint">
         <span>In Huawei Health App search: <strong>Creation Cue</strong></span>
@@ -755,8 +836,12 @@
     <div class="huawei-grid" id="huawei-grid">
       <!-- 1: CHU180 Round Edition -->
       <article class="huawei-card" data-category="round">
-        <div class="huawei-card-img-box">
-          <img src="/images/huawei/wf_180_round.webp" alt="CHU180 Round Edition" loading="lazy">
+        <div class="huawei-card-img-box" data-yt-id="cBXod8ybm5o" role="button" tabindex="0" aria-label="Play CHU180 Round Edition video">
+          <img src="https://i.ytimg.com/vi/cBXod8ybm5o/oardefault.jpg" onerror="this.onerror=null;this.src='/images/huawei/wf_180_round.webp'" alt="CHU180 Round Edition Video Preview" loading="lazy">
+          <span class="video-badge">▶ YouTube Short</span>
+          <span class="video-play-btn" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </span>
         </div>
         <h2 class="huawei-card-title">CHU180 Round Edition</h2>
         <p class="huawei-card-compat">GT4 • GT5 • Ultimate • Watch 4 / 3</p>
@@ -773,8 +858,12 @@
 
       <!-- 2: CHU180 Fit Edition -->
       <article class="huawei-card" data-category="fit">
-        <div class="huawei-card-img-box">
-          <img src="/images/huawei/wf_180_fit.webp" alt="CHU180 Fit Edition" loading="lazy">
+        <div class="huawei-card-img-box" data-mp4-src="/videos/huawei/chu180_fit.mp4" role="button" tabindex="0" aria-label="Play CHU180 Fit Edition video">
+          <img src="/images/huawei/wf_180_fit.webp" alt="CHU180 Fit Edition Video Preview" loading="lazy">
+          <span class="video-badge">▶ Video Preview</span>
+          <span class="video-play-btn" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </span>
         </div>
         <h2 class="huawei-card-title">CHU180 Fit Edition</h2>
         <p class="huawei-card-compat">Huawei Watch FIT 3 / 2 / SE</p>
@@ -791,8 +880,12 @@
 
       <!-- 3: CUE 179 Cyber Hybrid -->
       <article class="huawei-card" data-category="round">
-        <div class="huawei-card-img-box">
-          <img src="/images/huawei/wf_179_round.webp" alt="CUE 179 Cyber Hybrid" loading="lazy">
+        <div class="huawei-card-img-box" data-yt-id="5uXOIbdXn0o" role="button" tabindex="0" aria-label="Play CUE 179 Cyber Hybrid video">
+          <img src="https://i.ytimg.com/vi/5uXOIbdXn0o/oardefault.jpg" onerror="this.onerror=null;this.src='/images/huawei/wf_179_round.webp'" alt="CUE 179 Cyber Hybrid Video Preview" loading="lazy">
+          <span class="video-badge">▶ YouTube Short</span>
+          <span class="video-play-btn" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </span>
         </div>
         <h2 class="huawei-card-title">CUE 179 Cyber Hybrid</h2>
         <p class="huawei-card-compat">GT4 • GT5 • Ultimate • Watch 4 / 3</p>
@@ -809,8 +902,12 @@
 
       <!-- 4: CUE 178 Digital Fit -->
       <article class="huawei-card" data-category="fit">
-        <div class="huawei-card-img-box">
-          <img src="/images/huawei/wf_178_fit.webp" alt="CUE 178 Digital Fit" loading="lazy">
+        <div class="huawei-card-img-box" data-yt-id="a-k7YFXOAUI" role="button" tabindex="0" aria-label="Play CUE 178 Digital Fit video">
+          <img src="https://i.ytimg.com/vi/a-k7YFXOAUI/oardefault.jpg" onerror="this.onerror=null;this.src='/images/huawei/wf_178_fit.webp'" alt="CUE 178 Digital Fit Video Preview" loading="lazy">
+          <span class="video-badge">▶ YouTube Short</span>
+          <span class="video-play-btn" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </span>
         </div>
         <h2 class="huawei-card-title">CUE 178 Digital Fit</h2>
         <p class="huawei-card-compat">Huawei Watch FIT 3 / 2 / SE</p>
@@ -827,8 +924,12 @@
 
       <!-- 5: CUE 175 Titanium Chrono -->
       <article class="huawei-card" data-category="round">
-        <div class="huawei-card-img-box">
-          <img src="/images/huawei/wf_175_chrono.webp" alt="CUE 175 Titanium Chrono" loading="lazy">
+        <div class="huawei-card-img-box" data-yt-id="ngZu_DrTdME" role="button" tabindex="0" aria-label="Play CUE 175 Titanium Chrono video">
+          <img src="https://i.ytimg.com/vi/ngZu_DrTdME/oardefault.jpg" onerror="this.onerror=null;this.src='/images/huawei/wf_175_chrono.webp'" alt="CUE 175 Titanium Chrono Video Preview" loading="lazy">
+          <span class="video-badge">▶ YouTube Short</span>
+          <span class="video-play-btn" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </span>
         </div>
         <h2 class="huawei-card-title">CUE 175 Titanium Chrono</h2>
         <p class="huawei-card-compat">GT4 • GT3 Pro • Ultimate Round</p>
@@ -845,8 +946,12 @@
 
       <!-- 6: CUE 179 Fit Edition -->
       <article class="huawei-card" data-category="fit">
-        <div class="huawei-card-img-box">
-          <img src="/images/huawei/wf_179_fit.webp" alt="CUE 179 Fit Edition" loading="lazy">
+        <div class="huawei-card-img-box" data-yt-id="qg4jHNeGVCY" role="button" tabindex="0" aria-label="Play CUE 179 Fit Edition video">
+          <img src="https://i.ytimg.com/vi/qg4jHNeGVCY/oardefault.jpg" onerror="this.onerror=null;this.src='/images/huawei/wf_179_fit.webp'" alt="CUE 179 Fit Edition Video Preview" loading="lazy">
+          <span class="video-badge">▶ YouTube Short</span>
+          <span class="video-play-btn" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </span>
         </div>
         <h2 class="huawei-card-title">CUE 179 Fit Edition</h2>
         <p class="huawei-card-compat">Huawei Watch FIT 3 / 2 / SE</p>
@@ -863,8 +968,12 @@
 
       <!-- 7: CUE 175 Sport Edition -->
       <article class="huawei-card" data-category="round">
-        <div class="huawei-card-img-box">
-          <img src="/images/huawei/wf_175_variant.webp" alt="CUE 175 Sport Edition" loading="lazy">
+        <div class="huawei-card-img-box" data-yt-id="ngZu_DrTdME" role="button" tabindex="0" aria-label="Play CUE 175 Sport Edition video">
+          <img src="/images/huawei/wf_175_variant.webp" alt="CUE 175 Sport Edition Video Preview" loading="lazy">
+          <span class="video-badge">▶ YouTube Short</span>
+          <span class="video-play-btn" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </span>
         </div>
         <h2 class="huawei-card-title">CUE 175 Sport Edition</h2>
         <p class="huawei-card-compat">GT4 • GT3 Pro • Ultimate Round</p>
@@ -881,8 +990,12 @@
 
       <!-- 8: CUE 178 Stealth Gold -->
       <article class="huawei-card" data-category="fit">
-        <div class="huawei-card-img-box">
-          <img src="/images/huawei/wf_178_v2.webp" alt="CUE 178 Stealth Gold" loading="lazy">
+        <div class="huawei-card-img-box" data-yt-id="a-k7YFXOAUI" role="button" tabindex="0" aria-label="Play CUE 178 Stealth Gold video">
+          <img src="/images/huawei/wf_178_v2.webp" alt="CUE 178 Stealth Gold Video Preview" loading="lazy">
+          <span class="video-badge">▶ YouTube Short</span>
+          <span class="video-play-btn" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </span>
         </div>
         <h2 class="huawei-card-title">CUE 178 Stealth Gold</h2>
         <p class="huawei-card-compat">Huawei Watch FIT Series</p>
@@ -973,7 +1086,58 @@
   </footer>
 
   <script>
+    let activeVideoBox = null;
+
+    function stopActiveVideo() {
+      if (!activeVideoBox) return;
+      activeVideoBox.querySelectorAll('iframe, video, .video-close-btn').forEach((el) => el.remove());
+      activeVideoBox.classList.remove('is-playing');
+      activeVideoBox = null;
+    }
+
+    function playCardVideo(box) {
+      if (!box || box.classList.contains('is-playing')) return;
+      stopActiveVideo();
+
+      const ytId = box.getAttribute('data-yt-id');
+      const mp4Src = box.getAttribute('data-mp4-src');
+      if (!ytId && !mp4Src) return;
+
+      box.classList.add('is-playing');
+      activeVideoBox = box;
+
+      if (ytId) {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&loop=1&playlist=${ytId}&playsinline=1&rel=0&modestbranding=1`;
+        iframe.title = 'Watch Face Video';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allowFullscreen = true;
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        box.appendChild(iframe);
+      } else if (mp4Src) {
+        const video = document.createElement('video');
+        video.src = mp4Src;
+        video.autoplay = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.controls = true;
+        box.appendChild(video);
+      }
+
+      const closeBtn = document.createElement('button');
+      closeBtn.type = 'button';
+      closeBtn.className = 'video-close-btn';
+      closeBtn.setAttribute('aria-label', 'Close video');
+      closeBtn.innerHTML = '&times;';
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        stopActiveVideo();
+      });
+      box.appendChild(closeBtn);
+    }
+
     function filterHuawei(category, btnEl) {
+      stopActiveVideo();
       document.querySelectorAll('.filter-pill').forEach((pill) => {
         pill.classList.toggle('active', pill === btnEl);
       });
@@ -1001,6 +1165,7 @@
     }
 
     function openQrModal(qrSrc, title, deepLink) {
+      stopActiveVideo();
       document.getElementById('qr-modal-img').src = qrSrc;
       document.getElementById('qr-modal-title').textContent = title || 'Watch Face QR';
       const linkEl = document.getElementById('qr-modal-link');
@@ -1015,14 +1180,31 @@
       document.getElementById('qr-modal').classList.remove('active');
     }
 
-    document.getElementById('huawei-grid')?.addEventListener('click', (e) => {
+    const huaweiGrid = document.getElementById('huawei-grid');
+    huaweiGrid?.addEventListener('click', (e) => {
       const qrLink = e.target.closest('a[href*="qr_"]');
-      if (!qrLink) return;
-      e.preventDefault();
-      const card = qrLink.closest('.huawei-card');
-      const title = card?.querySelector('.huawei-card-title')?.textContent?.trim() || 'Watch Face QR';
-      const deepLink = card?.querySelector('.huawei-app-btn')?.getAttribute('href') || '';
-      openQrModal(qrLink.getAttribute('href'), title, deepLink);
+      if (qrLink) {
+        e.preventDefault();
+        const card = qrLink.closest('.huawei-card');
+        const title = card?.querySelector('.huawei-card-title')?.textContent?.trim() || 'Watch Face QR';
+        const deepLink = card?.querySelector('.huawei-app-btn')?.getAttribute('href') || '';
+        openQrModal(qrLink.getAttribute('href'), title, deepLink);
+        return;
+      }
+
+      const videoBox = e.target.closest('.huawei-card-img-box');
+      if (videoBox) {
+        playCardVideo(videoBox);
+      }
+    });
+
+    huaweiGrid?.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const videoBox = e.target.closest('.huawei-card-img-box');
+      if (videoBox) {
+        e.preventDefault();
+        playCardVideo(videoBox);
+      }
     });
 
     document.addEventListener('keydown', (e) => {
@@ -1030,6 +1212,8 @@
         const qrModal = document.getElementById('qr-modal');
         if (qrModal && qrModal.classList.contains('active')) {
           closeQrModal();
+        } else {
+          stopActiveVideo();
         }
       }
     });
