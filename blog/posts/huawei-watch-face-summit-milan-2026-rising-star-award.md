@@ -14,6 +14,14 @@ Being invited in person to the Milan summit and gala to receive this recognition
 
 ---
 
+## Official Press Coverage
+
+Read Huawei's official press release covering the summit and award winners on PR Newswire:
+
+- **[Huawei Unites Europe's Creative Talent at the HUAWEI Watch Faces Summit Milano 2026](https://www.prnewswire.com/news-releases/huawei-unites-europes-creative-talent-at-the-huawei-watch-faces-summit-milano-2026-302946012.html)** *(PR Newswire — English)*
+
+---
+
 ## Thank You!
 A huge thank you to everyone who wears, rates, and supports Creation Cue™ watch faces every day—none of this happens without you.
 
