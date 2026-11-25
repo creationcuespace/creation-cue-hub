@@ -10,6 +10,8 @@ Being invited in person to the Milan summit and gala to receive this recognition
 - **Connecting with Fellow Creators**: Meeting other talented watch face designers and the Huawei team in Milan was an inspiring reminder of how fast wearable design is evolving.
 - **Looking Ahead**: This award motivates me even more to keep pushing clean typography, battery-optimized layouts, and refined aesthetics across both **Huawei** and **Wear OS** smartwatches.
 
+![Huawei Gran Gala — Huawei Watch Faces Summit Milano 2026 at Meliá Milano](https://raw.githubusercontent.com/creationcuespace/creation-cue-hub/main/images/huawei_gran_gala_milano_2026.webp)
+
 ---
 
 ## Thank You!
