@@ -2928,6 +2928,9 @@
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
         gap: 8px !important;
       }
+      .trust-grid > :last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+      }
       .trust-item {
         flex-direction: column !important;
         justify-content: center !important;
@@ -3484,11 +3487,6 @@
           <span class="trust-badge-pill">#1 & #2</span>
           <span>Top Charts in S. Korea (Personalization)</span>
         </div>
-
-        <a href="https://play.google.com/store/apps/dev?id=7609098870161748513" target="_blank" rel="noopener" class="trust-item">
-          <span class="trust-badge-pill trust-badge-star">★ 4.6</span>
-          <span>Average Play Store Rating</span>
-        </a>
 
         <a href="/blog/huawei-watch-face-summit-milan-2026-rising-star-award" class="trust-item" title="Read about the Huawei Rising Star Award">
           <span class="trust-badge-pill trust-badge-hw" style="display:inline-flex;align-items:center;gap:5px;">

@@ -19,6 +19,14 @@ site-header {
   transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
+.header .container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
 .header-inner {
   display: flex;
   align-items: center;
@@ -651,6 +659,9 @@ html.dark-mode .nav-dropdown-title {
 
 /* Small screens <= 600px */
 @media (max-width: 600px) {
+  .header .container {
+    padding: 0 16px;
+  }
   .header-inner {
     height: 64px !important;
   }
