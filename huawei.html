@@ -1403,12 +1403,23 @@
         box.appendChild(iframe);
       } else if (mp4Src) {
         const video = document.createElement('video');
+        const previewImg = box.querySelector('img');
+        if (previewImg) video.poster = previewImg.src;
         video.src = mp4Src;
+        video.preload = 'auto';
         video.autoplay = true;
         video.loop = true;
         video.playsInline = true;
+        video.setAttribute('playsinline', '');
         video.controls = true;
         box.appendChild(video);
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(() => {
+            video.muted = true;
+            video.play().catch(() => {});
+          });
+        }
       }
 
       const closeBtn = document.createElement('button');
