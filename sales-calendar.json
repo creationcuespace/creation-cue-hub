@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-15T17:42:43.196Z",
+  "lastUpdated": "2026-11-26T15:59:30.000Z",
   "note": "Tracks scheduled, active, and completed Google Play sales and enforces the 30-day Google Play sale cooldown rule.",
   "sales": [
     {
@@ -285,6 +285,83 @@
       "startDate": "2026-11-23",
       "endDate": "2026-12-01",
       "type": "Black Friday 2026 (75% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue110",
+      "title": "CUE110",
+      "packageName": "com.creation.cue110watchface",
+      "salePriceEur": 0.99,
+      "startDate": "2026-11-27",
+      "endDate": "2026-12-01",
+      "type": "Black Friday Wave 2 (50% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue164",
+      "title": "CUE164",
+      "packageName": "com.creation.cue164watchface",
+      "salePriceEur": 0.99,
+      "startDate": "2026-11-27",
+      "endDate": "2026-12-01",
+      "type": "Black Friday Wave 2 (50% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue134",
+      "title": "CUE134",
+      "packageName": "com.creation.cue134watchface",
+      "salePriceEur": 0.99,
+      "startDate": "2026-11-27",
+      "endDate": "2026-12-01",
+      "type": "Black Friday Wave 2 (50% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue177",
+      "title": "CUE177",
+      "packageName": "com.creation.cue177watchface",
+      "salePriceEur": 0.99,
+      "startDate": "2026-11-27",
+      "endDate": "2026-12-01",
+      "type": "Black Friday Wave 2 (50% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue176",
+      "title": "CUE176",
+      "packageName": "com.creation.cue176watchface",
+      "salePriceEur": 0.99,
+      "startDate": "2026-11-27",
+      "endDate": "2026-12-01",
+      "type": "Black Friday Wave 2 (50% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue172",
+      "title": "CUE172",
+      "packageName": "com.creation.cue172watchface",
+      "salePriceEur": 0.99,
+      "startDate": "2026-11-27",
+      "endDate": "2026-12-01",
+      "type": "Black Friday Wave 2 (50% OFF)",
+      "status": "Scheduled",
+      "cooldownUntil": "2026-12-31"
+    },
+    {
+      "id": "cue170",
+      "title": "CUE170",
+      "packageName": "com.creation.cue170watchface",
+      "salePriceEur": 0.99,
+      "startDate": "2026-11-27",
+      "endDate": "2026-12-01",
+      "type": "Black Friday Wave 2 (50% OFF)",
       "status": "Scheduled",
       "cooldownUntil": "2026-12-31"
     }
