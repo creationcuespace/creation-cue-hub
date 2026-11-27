@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-26T05:28:48.027Z",
+  "lastUpdated": "2026-11-27T05:22:11.859Z",
   "reviews": [
     {
       "reviewId": "ee69b1f8-ede9-45d8-a1ff-d99572a4b3d8",
@@ -12,9 +12,9 @@
       "deviceMetadata": "pa3q (Galaxy S25 Ultra)",
       "topics": [],
       "text": "\terg mooie heldere wijzerplaat dank U",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you for the review and support.",
+      "developerReplyTime": "2026-11-26T06:22:20.000Z",
       "lastModified": "2026-11-25T13:27:37.000Z"
     },
     {
@@ -30,9 +30,9 @@
         "Loved it"
       ],
       "text": "\tBeautifully and unique",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you for the review and support.",
+      "developerReplyTime": "2026-11-26T06:22:18.000Z",
       "lastModified": "2026-11-25T07:38:20.000Z"
     },
     {
@@ -48,9 +48,9 @@
         "Loved it"
       ],
       "text": "\tAmazing Work",
-      "hasDeveloperReply": false,
-      "developerReplyText": null,
-      "developerReplyTime": null,
+      "hasDeveloperReply": true,
+      "developerReplyText": "Thank you for the review and support.",
+      "developerReplyTime": "2026-11-26T06:22:31.000Z",
       "lastModified": "2026-11-25T07:37:33.000Z"
     },
     {
@@ -381,8 +381,8 @@
       "topics": [],
       "text": "\ttemperatura este arătată cu plus chiar dacă afara este cu minus",
       "hasDeveloperReply": true,
-      "developerReplyText": "Mulțumesc că ați semnalat problema! Uneori mai scapă mici erori: fontului îi lipseau simbolurile minus (-) și grad (°). Am rezolvat și actualizarea este pe drum. Vă rog să actualizați cadranul când apare, iar pentru orice altceva îmi puteți scrie la creationcuespace@gmail.com.",
-      "developerReplyTime": "2026-11-25T07:45:35.000Z",
+      "developerReplyText": "Bună! Actualizarea v1.2.0 este acum live pe Google Play. Simbolurile minus (-) și grad (°) care lipseau din font au fost adăugate. Vă rog să actualizați cadranul pe ceas și să verificați. Dacă totul e în regulă acum, o actualizare a recenziei m-ar ajuta mult! Contact: creationcuespace@gmail.com",
+      "developerReplyTime": "2026-11-26T16:36:34.000Z",
       "lastModified": "2026-11-24T18:24:36.000Z"
     },
     {

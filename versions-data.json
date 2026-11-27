@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-26T05:28:48.025Z",
+  "lastUpdated": "2026-11-27T05:22:11.857Z",
   "ratingHistory": [
     {
       "date": "2026-10-15",
@@ -344,6 +344,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 31,
       "totalWeight": 4023
+    },
+    {
+      "date": "2026-11-27",
+      "timestamp": "2026-11-27T05:22:11.857Z",
+      "avgRating": 4.5,
+      "weightedAvg": 4.52,
+      "ratedCount": 31,
+      "totalWeight": 4029
     }
   ],
   "results": [
@@ -970,7 +978,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": 4.2,
-      "ratingCount": "14",
+      "ratingCount": "15",
       "ratingsByCountry": {
         "US": 4.2
       },
@@ -1350,7 +1358,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "100+",
       "rating": 4.2,
-      "ratingCount": "14",
+      "ratingCount": "15",
       "ratingsByCountry": {
         "US": 4.2
       },
@@ -2294,10 +2302,10 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "5K+",
       "rating": 4.5,
-      "ratingCount": "98",
+      "ratingCount": "99",
       "ratingsByCountry": {
         "US": 4.5,
-        "DE": 4.8
+        "DE": 4.6
       },
       "vitals": {
         "crashRate": 0,
@@ -3267,7 +3275,7 @@
       "lastUpdatedDate": "Aug 4, 2026",
       "downloads": "50K+",
       "rating": 4.3,
-      "ratingCount": "659",
+      "ratingCount": "660",
       "ratingsByCountry": {
         "US": 4.3,
         "GB": 4.4,
@@ -3436,7 +3444,7 @@
       "lastUpdatedDate": "Aug 26, 2026",
       "downloads": "10K+",
       "rating": 4.4,
-      "ratingCount": "107",
+      "ratingCount": "108",
       "ratingsByCountry": {
         "US": 4.4,
         "KR": 4.9
@@ -3479,7 +3487,7 @@
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "10K+",
       "rating": 4.9,
-      "ratingCount": "73",
+      "ratingCount": "74",
       "ratingsByCountry": {
         "US": 4.9,
         "KR": 4.4
@@ -4562,7 +4570,7 @@
       ],
       "bundleCount": 5,
       "latestBundleVersionCode": 10000003,
-      "lastUpdatedDate": "Nov 7, 2026",
+      "lastUpdatedDate": "Nov 24, 2026",
       "downloads": "50+",
       "rating": null,
       "ratingCount": null,
