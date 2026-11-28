@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-27T05:22:11.857Z",
+  "lastUpdated": "2026-11-28T04:58:29.170Z",
   "ratingHistory": [
     {
       "date": "2026-10-15",
@@ -352,6 +352,14 @@
       "weightedAvg": 4.52,
       "ratedCount": 31,
       "totalWeight": 4029
+    },
+    {
+      "date": "2026-11-28",
+      "timestamp": "2026-11-28T04:58:29.169Z",
+      "avgRating": 4.5,
+      "weightedAvg": 4.52,
+      "ratedCount": 31,
+      "totalWeight": 4032
     }
   ],
   "results": [
@@ -928,7 +936,7 @@
     {
       "id": "cue162",
       "title": "CUE162",
-      "playStoreTitle": "Watch Face CUE162",
+      "playStoreTitle": "Hybrid Watch Face CUE162",
       "packageName": "com.creation.cue162watchface",
       "companionVersion": "Android 16 API & Design Update (v10000007)",
       "companionStatus": "completed",
@@ -959,7 +967,7 @@
     {
       "id": "cue161",
       "title": "CUE161",
-      "playStoreTitle": "Watch Face CUE161",
+      "playStoreTitle": "Digital Watch Face CUE161",
       "packageName": "com.creation.cue161watchface",
       "companionVersion": "Android 16 API & Design Update (v10000008)",
       "companionStatus": "completed",
@@ -992,7 +1000,7 @@
     {
       "id": "cue160",
       "title": "CUE160",
-      "playStoreTitle": "Watch Face CUE160",
+      "playStoreTitle": "Digital Watch Face CUE160",
       "packageName": "com.creation.cue160watchface",
       "companionVersion": "Android 16 API & Design Update (v10000008)",
       "companionStatus": "completed",
@@ -1023,7 +1031,7 @@
     {
       "id": "cue159",
       "title": "CUE159",
-      "playStoreTitle": "Watch Face CUE159",
+      "playStoreTitle": "Digital Watch Face CUE159",
       "packageName": "com.creation.cue159watchface",
       "companionVersion": "Android 16 API & Design Update (v10000007)",
       "companionStatus": "completed",
@@ -1054,7 +1062,7 @@
     {
       "id": "cue158",
       "title": "CUE158",
-      "playStoreTitle": "Watch Face CUE158",
+      "playStoreTitle": "Hybrid Watch Face CUE158",
       "packageName": "com.creation.cue158watchface",
       "companionVersion": "Android 16 API & Design Update (v10000006)",
       "companionStatus": "completed",
@@ -1085,7 +1093,7 @@
     {
       "id": "cue157",
       "title": "CUE157",
-      "playStoreTitle": "Watch Face CUE157",
+      "playStoreTitle": "Digital Watch Face CUE157",
       "packageName": "com.creation.cue157watchface",
       "companionVersion": "Android 16 API & Design Update (v10000007)",
       "companionStatus": "completed",
@@ -1116,7 +1124,7 @@
     {
       "id": "cue156",
       "title": "CUE156",
-      "playStoreTitle": "Watch Face CUE156",
+      "playStoreTitle": "Digital Watch Face CUE156",
       "packageName": "com.creation.cue156watchface",
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "companionStatus": "completed",
@@ -1147,7 +1155,7 @@
     {
       "id": "cue155",
       "title": "CUE155",
-      "playStoreTitle": "Watch Face CUE155",
+      "playStoreTitle": "Hybrid Watch Face CUE155",
       "packageName": "com.creation.cue155watchface",
       "companionVersion": "Android 16 API & Design Update (v10000012)",
       "companionStatus": "completed",
@@ -1244,7 +1252,7 @@
     {
       "id": "cue152",
       "title": "CUE152",
-      "playStoreTitle": "Watch Face CUE152",
+      "playStoreTitle": "Analog Watch Face CUE152",
       "packageName": "com.creation.cue152watchface",
       "companionVersion": "Android 16 API & Design Update (v10000007)",
       "companionStatus": "completed",
@@ -1308,7 +1316,7 @@
     {
       "id": "cue150",
       "title": "CUE150",
-      "playStoreTitle": "Watch Face CUE150",
+      "playStoreTitle": "Digital Watch Face CUE150",
       "packageName": "com.creation.cue150watchface",
       "companionVersion": "Android 16 API & Design Update (v10000004)",
       "companionStatus": "completed",
@@ -2548,7 +2556,7 @@
       ],
       "bundleCount": 11,
       "latestBundleVersionCode": 10000015,
-      "lastUpdatedDate": "Oct 21, 2026",
+      "lastUpdatedDate": "Oct 22, 2026",
       "downloads": "100+",
       "rating": null,
       "ratingCount": null,
@@ -3441,7 +3449,7 @@
       ],
       "bundleCount": 11,
       "latestBundleVersionCode": 10000011,
-      "lastUpdatedDate": "Aug 26, 2026",
+      "lastUpdatedDate": "Aug 27, 2026",
       "downloads": "10K+",
       "rating": 4.4,
       "ratingCount": "108",
@@ -3487,7 +3495,7 @@
       "lastUpdatedDate": "Aug 25, 2026",
       "downloads": "10K+",
       "rating": 4.9,
-      "ratingCount": "74",
+      "ratingCount": "75",
       "ratingsByCountry": {
         "US": 4.9,
         "KR": 4.4
@@ -4463,7 +4471,7 @@
       "lastUpdatedDate": "Nov 10, 2026",
       "downloads": "10K+",
       "rating": 4.6,
-      "ratingCount": "368",
+      "ratingCount": "370",
       "ratingsByCountry": {
         "US": 4.6,
         "KR": 4.6,

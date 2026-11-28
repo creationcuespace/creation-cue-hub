@@ -1,10 +1,44 @@
 {
-  "lastUpdated": "2026-11-27T05:22:11.859Z",
+  "lastUpdated": "2026-11-28T04:58:29.172Z",
   "reviews": [
+    {
+      "reviewId": "e6ce11a4-c8ff-4f1b-9e95-20929e790b0e",
+      "packageName": "com.watchfacestudio.cc014",
+      "title": "Watch face CRC014",
+      "wfId": "cc014",
+      "authorName": "Jim Gom",
+      "starRating": 5,
+      "reviewerLanguage": "el",
+      "deviceMetadata": "OB-P10 (OB-P12)",
+      "topics": [
+        "Loved it"
+      ],
+      "text": "\tBig, beautiful, easy to read, rich in data, highly customizable. Simply perfect!⭐⭐⭐⭐⭐⭐",
+      "hasDeveloperReply": false,
+      "developerReplyText": null,
+      "developerReplyTime": null,
+      "lastModified": "2026-11-27T20:57:03.000Z"
+    },
+    {
+      "reviewId": "e3c7fe37-9cc2-464e-bc8a-e90998e4ec98",
+      "packageName": "com.creation.cue180watchface",
+      "title": "Digital Watch Face CUE180",
+      "wfId": "cue180",
+      "authorName": "Adrian Maciuca",
+      "starRating": 5,
+      "reviewerLanguage": "ro",
+      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
+      "topics": [],
+      "text": "\tSolved",
+      "hasDeveloperReply": true,
+      "developerReplyText": "Bună! Actualizarea v1.2.0 este acum live pe Google Play. Simbolurile minus (-) și grad (°) care lipseau din font au fost adăugate. Vă rog să actualizați cadranul pe ceas și să verificați. Dacă totul e în regulă acum, o actualizare a recenziei m-ar ajuta mult! Contact: creationcuespace@gmail.com",
+      "developerReplyTime": "2026-11-26T16:36:34.000Z",
+      "lastModified": "2026-11-27T15:10:41.000Z"
+    },
     {
       "reviewId": "ee69b1f8-ede9-45d8-a1ff-d99572a4b3d8",
       "packageName": "com.creation.cue160watchface",
-      "title": "Watch Face CUE160",
+      "title": "Digital Watch Face CUE160",
       "wfId": "cue160",
       "authorName": "Jos van Merode",
       "starRating": 5,
@@ -38,7 +72,7 @@
     {
       "reviewId": "4de7f6eb-962c-4261-840d-2bc6e61a8c62",
       "packageName": "com.creation.cue161watchface",
-      "title": "Watch Face CUE161",
+      "title": "Digital Watch Face CUE161",
       "wfId": "cue161",
       "authorName": "Emanuel Bruno Rocha Dias",
       "starRating": 5,
@@ -370,22 +404,6 @@
       "lastModified": "2026-11-24T19:00:57.000Z"
     },
     {
-      "reviewId": "e3c7fe37-9cc2-464e-bc8a-e90998e4ec98",
-      "packageName": "com.creation.cue180watchface",
-      "title": "Digital Watch Face CUE180",
-      "wfId": "cue180",
-      "authorName": "Adrian Maciuca",
-      "starRating": 1,
-      "reviewerLanguage": "ro",
-      "deviceMetadata": "e3q (Galaxy S24 Ultra)",
-      "topics": [],
-      "text": "\ttemperatura este arătată cu plus chiar dacă afara este cu minus",
-      "hasDeveloperReply": true,
-      "developerReplyText": "Bună! Actualizarea v1.2.0 este acum live pe Google Play. Simbolurile minus (-) și grad (°) care lipseau din font au fost adăugate. Vă rog să actualizați cadranul pe ceas și să verificați. Dacă totul e în regulă acum, o actualizare a recenziei m-ar ajuta mult! Contact: creationcuespace@gmail.com",
-      "developerReplyTime": "2026-11-26T16:36:34.000Z",
-      "lastModified": "2026-11-24T18:24:36.000Z"
-    },
-    {
       "reviewId": "517fdaba-129d-4f6e-970e-1e19110b6615",
       "packageName": "com.creation.cue136watchface",
       "title": "Analog Watch Face CUE136",
@@ -691,7 +709,7 @@
       "authorName": "Jamerson Carlos",
       "starRating": 5,
       "reviewerLanguage": "pt",
-      "deviceMetadata": "a53x (Galaxy A53 5G UW)",
+      "deviceMetadata": "a53x (Galaxy A53 5G)",
       "topics": [],
       "text": "\tsimples e Top",
       "hasDeveloperReply": true,
@@ -707,7 +725,7 @@
       "authorName": "Jamerson Carlos",
       "starRating": 5,
       "reviewerLanguage": "pt",
-      "deviceMetadata": "a53x (Galaxy A53 5G UW)",
+      "deviceMetadata": "a53x (Galaxy A53 5G)",
       "topics": [],
       "text": "\tachei TOP",
       "hasDeveloperReply": true,
